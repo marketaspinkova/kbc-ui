@@ -32,6 +32,18 @@ const routeSettings = {
     ]
   },
   row: {
+    actions: {
+      info: function(configuration) {
+        return fromJS({
+          configData: {
+            parameters: {
+              '#token': configuration.getIn(['parameters', '#token']),
+              url: configuration.getIn(['parameters', 'url'])
+            }
+          }
+        });
+      }
+    },
     onConform: (configuration) => {
       const configDraft = fromJS({
         storage: {

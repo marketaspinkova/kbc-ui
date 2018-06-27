@@ -11,7 +11,25 @@ export default React.createClass({
       incremental: PropTypes.bool.isRequired
     }),
     onChange: PropTypes.func.isRequired,
-    disabled: PropTypes.bool.isRequired
+    disabled: PropTypes.bool.isRequired,
+    onAction: PropTypes.func.isRequired
+  },
+
+  getInitialState() {
+    return {
+      project: null,
+      bucket: null
+    };
+  },
+
+  componentDidMount() {
+    this.props.onAction('info').then(
+      (response) =>
+        this.setState({
+          project: response.projectName,
+          bucket: response.bucket
+        })
+    );
   },
 
   render() {
@@ -19,6 +37,26 @@ export default React.createClass({
     return (
       <Form horizontal>
         <h3>Destination</h3>
+        <FormGroup>
+          <Col componentClass={ControlLabel} sm={4}>
+            Project
+          </Col>
+          <Col sm={8}>
+            <FormControl.Static>
+              {this.state.project}
+            </FormControl.Static>
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col componentClass={ControlLabel} sm={4}>
+            Bucket
+          </Col>
+          <Col sm={8}>
+            <FormControl.Static>
+              {this.state.bucket}
+            </FormControl.Static>
+          </Col>
+        </FormGroup>
         <FormGroup>
           <Col componentClass={ControlLabel} sm={4}>
             Table Name

@@ -28,6 +28,9 @@ import LatestJobs from '../../../components/react/components/SidebarJobs';
 import isParsableConfiguration from '../../utils/isParsableConfiguration';
 import sections from '../../utils/sections';
 
+// sync api
+import callAction from '../../../components/DockerActionsApi';
+
 export default React.createClass({
   mixins: [createStoreMixin(Store, TablesStore, LatestJobsStore)],
 
@@ -65,6 +68,9 @@ export default React.createClass({
       configurationId: configurationId,
       rowId: rowId,
       row: row,
+
+      rawConfiguration: ConfigurationsStore.get(componentId, configurationId),
+      rawRowConfiguration: Store.getConfiguration(componentId, configurationId, rowId),
 
       jsonConfigurationValue: Store.getEditingJsonConfigurationString(componentId, configurationId, rowId),
       isJsonConfigurationSaving: Store.getPendingActions(componentId, configurationId, rowId).has('save-json'),
@@ -249,6 +255,7 @@ export default React.createClass({
   },
 
   renderSections() {
+    const state = this.state;
     const settingsSections = this.state.settings.getIn(['row', 'sections']);
     const { storedConfigurationSections } = this.state;
     const returnTrue = () => true;
@@ -264,6 +271,12 @@ export default React.createClass({
             disabled={this.state.isSaving}
             onChange={diff => this.onUpdateSection(key, diff)}
             value={this.state.configurationBySections.get(key).toJS()}
+            onAction={actionName => {
+              const componentId = state.settings.get('componentId');
+              const actionDataFn = state.settings.getIn(['row', 'actions', actionName]);
+              const actionData = actionDataFn(state.rawConfiguration.get('configuration'), state.rawRowConfiguration.get('configuration'));
+              return callAction(componentId, actionName, actionData);
+            }}
           />
         </div>
       );
