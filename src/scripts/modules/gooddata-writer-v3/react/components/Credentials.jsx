@@ -17,8 +17,11 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      newProject: {},
-      showModal: false
+      showModal: false,
+      newProject: {
+        action: 'create',
+        tokenType: 'demo'
+      }
     };
   },
 
@@ -30,7 +33,7 @@ export default React.createClass({
 
   closeModal() {
     if (!this.props.disabled) {
-      this.setState({showModal: false, newProject: {}});
+      this.setState(this.getInitialState());
     }
   },
 
