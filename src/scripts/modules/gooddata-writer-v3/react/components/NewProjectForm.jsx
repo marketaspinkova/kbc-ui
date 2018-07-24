@@ -23,6 +23,7 @@ export default React.createClass({
         <FormGroup>
           <Col sm={12}>
             <ReactSelect
+              searchable={false}
               clearable={false}
               disabled={disabled}
               value={value.action}

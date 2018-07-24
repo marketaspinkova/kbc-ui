@@ -45,7 +45,7 @@ export default React.createClass({
       <Modal onHide={this.closeModal} show={this.state.showModal}>
         <Modal.Header closeButton={true}>
           <Modal.Title>
-            + Create Project
+            Setup GoodData Project
           </Modal.Title>
         </Modal.Header>
 
@@ -62,7 +62,7 @@ export default React.createClass({
           <ConfirmButtons
             isSaving={this.props.disabled}
             isDisabled={!this.isValid()}
-            saveLabel="Create"
+            saveLabel={this.state.newProject.action === ActionTypes.CREATE ? 'Create' : 'Save'}
             onCancel={this.closeModal}
             onSave={this.handleCreate}/>
         </Modal.Footer>
@@ -94,8 +94,9 @@ export default React.createClass({
   handleCreate(e) {
     e.preventDefault();
     e.stopPropagation();
-    const projectToSave = ProvisioningUtils.prepareProject(this.state.newProject);
-    this.props.onSave({projectToSave}).then(this.closeModal);
+    ProvisioningUtils.prepareProject(this.state.newProject).then( projectToSave =>
+      this.props.onSave(projectToSave).then(this.closeModal)
+    );
   }
 
 });

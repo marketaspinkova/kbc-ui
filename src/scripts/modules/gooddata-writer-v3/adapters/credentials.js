@@ -5,7 +5,7 @@ export default {
     return fromJS({
       pid: params.getIn(['project', 'pid'], ''),
       login: params.getIn(['user', 'login'], ''),
-      password: params.getIn(['user', 'password'], '')
+      password: params.getIn(['user', '#password'], '')
     });
   },
   createConfiguration(localState) {
