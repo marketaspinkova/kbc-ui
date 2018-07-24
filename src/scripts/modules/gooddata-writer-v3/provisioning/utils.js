@@ -1,4 +1,5 @@
 import api from './api';
+import Promise from 'bluebird';
 
 export const ActionTypes = {
   CREATE: 'CREATE',
@@ -11,10 +12,28 @@ export const TokenTypes = {
   CUSTOM: 'custom'
 };
 
-
+const isCustomToken = (token) => token === TokenTypes.CUSTOM;
 
 export default {
-  prepareProject(name, gdToken) {
-    api.createProjectAndUser(name, gdToken);
+  isNewProjectValid({ name, action, tokenType, customToken, login, password, pid }) {
+    if (action === ActionTypes.CREATE) {
+      return !!name && (isCustomToken(tokenType) ? !!customToken : true);
+    }
+
+    if (action === ActionTypes.USE_EXISTING) {
+      return !!login && !!password && !!pid;
+    }
+    return false;
+  },
+
+  prepareProject({ name, action, tokenType, customToken, login, password, pid }) {
+    if (action === ActionTypes.CREATE) {
+      const token = isCustomToken(tokenType) ? customToken : tokenType;
+      api.createProjectAndUser(name, token);
+    } else {
+      return Promise.resolve({
+        pid, login, password
+      });
+    }
   }
 };

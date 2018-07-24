@@ -18,7 +18,7 @@ export default {
       name,
       [tokenProperty]: token
     };
-    return createRequest('POST', 'projects')
+    return createRequest('POST', 'projects/?user=True')
       .send(requestData)
       .promise()
       .then(response => response.body);

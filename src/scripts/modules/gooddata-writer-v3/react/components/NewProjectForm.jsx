@@ -35,7 +35,7 @@ export default React.createClass({
           </Col>
         </FormGroup>
         {value.action === ActionTypes.CREATE ?
-         this.renderAuthTokenGroup() :
+         this.renderNewProjectGroup() :
          this.renderExistingProjectGroup()
         }
       </Form>
@@ -59,7 +59,7 @@ export default React.createClass({
         </Col>
         <Col sm={9}>
           <FormControl
-            type="text"
+            type={fieldName === 'password' ? 'password' : 'text'}
             disabled={disabled}
             onChange={e => this.handleChange({[fieldName]: e.target.value})}
             value={value[fieldName]}
@@ -70,11 +70,12 @@ export default React.createClass({
     );
   },
 
-  renderAuthTokenGroup() {
+  renderNewProjectGroup() {
     const {disabled, value} = this.props;
     const {tokenType} = value;
-    return (
-      <FormGroup>
+    return [
+      this.renderInputControlGroup('Project Name', 'name'),
+      <FormGroup key="authToken">
         <Col componentClass={ControlLabel} sm={3}>Auth Token</Col>
         <Col sm={9}>
           <div>
@@ -120,6 +121,6 @@ export default React.createClass({
           }
         </Col>
       </FormGroup>
-    );
+    ];
   }
 });

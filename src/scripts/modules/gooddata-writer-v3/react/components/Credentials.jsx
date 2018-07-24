@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import { Modal } from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import NewProjectForm from './NewProjectForm';
-import {ActionTypes, TokenTypes} from '../../provisioning/utils';
+import ProvisioningUtils, {ActionTypes, TokenTypes} from '../../provisioning/utils';
 import ApplicationStore from '../../../../stores/ApplicationStore';
 
 export default React.createClass({
@@ -88,15 +88,14 @@ export default React.createClass({
   },
 
   isValid() {
-    return true;
+    return ProvisioningUtils.isNewProjectValid(this.state.newProject);
   },
 
   handleCreate(e) {
     e.preventDefault();
     e.stopPropagation();
-    // TODO
-    const newProject = {...this.state.newProject};
-    this.props.onSave({newProject}).then(this.closeModal);
+    const projectToSave = ProvisioningUtils.prepareProject(this.state.newProject);
+    this.props.onSave({projectToSave}).then(this.closeModal);
   }
 
 });
