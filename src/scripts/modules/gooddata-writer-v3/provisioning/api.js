@@ -1,5 +1,5 @@
-import request from '../../utils/request';
-import ApplicationStore from '../../stores/ApplicationStore';
+import request from '../../../utils/request';
+import ApplicationStore from '../../../stores/ApplicationStore';
 
 const createUrl = function(path) {
   const  baseUrl = 'https://gooddata-provisioning.keboola.com';

@@ -1,15 +1,14 @@
 import React, {PropTypes} from 'react';
 import {Form, Col, FormControl, ControlLabel, FormGroup, Radio, HelpBlock} from 'react-bootstrap';
 import ReactSelect from 'react-select';
-
-/* import RadioGroup from 'react-radio-group';
- * import {Input} from '../../../../react/common/KbcBootstrap'; */
+import {ActionTypes, TokenTypes} from '../../provisioning/utils';
 
 export default React.createClass({
   propTypes: {
     disabled: PropTypes.bool.isRequired,
     onChange: PropTypes.func.isRequired,
-    value: PropTypes.object.isRequired
+    value: PropTypes.object.isRequired,
+    canCreateProdProject: PropTypes.bool.isRequired
   },
 
   handleChange(newDiff) {
@@ -29,13 +28,13 @@ export default React.createClass({
               value={value.action}
               onChange={(selected) => this.handleChange({action: selected.value})}
               options={[
-                {label: 'Create new GoodData Project', value: 'create'},
-                {label: 'Use Existing GoodData Project', value: 'useExisting'}
+                {label: 'Create new GoodData Project', value: ActionTypes.CREATE},
+                {label: 'Use Existing GoodData Project', value: ActionTypes.USE_EXISTING}
               ]}
             />
           </Col>
         </FormGroup>
-        {value.action === 'create' ?
+        {value.action === ActionTypes.CREATE ?
          this.renderAuthTokenGroup() :
          this.renderExistingProjectGroup()
         }
@@ -80,8 +79,9 @@ export default React.createClass({
         <Col sm={9}>
           <div>
             <Radio
-              value="demo"
-              checked={tokenType === 'demo'}
+              disabled={disabled}
+              value={TokenTypes.DEMO}
+              checked={tokenType === TokenTypes.DEMO}
               onChange={e => this.handleChange({tokenType: e.target.value})}
               name="authtokengroup">
               Demo
@@ -90,9 +90,10 @@ export default React.createClass({
           </div>
           <div>
             <Radio
-              value="production"
+              disabled={this.props.canCreateProdProject || disabled}
+              value={TokenTypes.PRODUCTION}
               onChange={e => this.handleChange({tokenType: e.target.value})}
-              checked={tokenType === 'production'}
+              checked={tokenType === TokenTypes.PRODUCTION}
               name="authtokengroup">
               Production
             </Radio>
@@ -100,15 +101,16 @@ export default React.createClass({
           </div>
           <div>
             <Radio
-              value="custom"
-              checked={tokenType === 'custom'}
+              disabled={disabled}
+              value={TokenTypes.CUSTOM}
+              checked={tokenType === TokenTypes.CUSTOM}
               onChange={e => this.handleChange({tokenType: e.target.value})}
               name="authtokengroup">
               Custom
             </Radio>
             <HelpBlock>You have your own token</HelpBlock>
           </div>
-          {tokenType === 'custom' &&
+          {tokenType === TokenTypes.CUSTOM &&
            <FormControl
              type="text"
              disabled={disabled}

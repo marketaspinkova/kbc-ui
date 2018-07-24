@@ -2,6 +2,8 @@ import React, {PropTypes} from 'react';
 import { Modal } from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import NewProjectForm from './NewProjectForm';
+import {ActionTypes, TokenTypes} from '../../provisioning/utils';
+import ApplicationStore from '../../../../stores/ApplicationStore';
 
 export default React.createClass({
   propTypes: {
@@ -18,9 +20,10 @@ export default React.createClass({
   getInitialState() {
     return {
       showModal: false,
+      canCreateProdProject: !!ApplicationStore.getCurrentProject().getIn(['limits', 'goodData.prodTokenEnabled', 'value']),
       newProject: {
-        action: 'create',
-        tokenType: 'demo'
+        action: ActionTypes.CREATE,
+        tokenType: TokenTypes.DEMO
       }
     };
   },
@@ -48,6 +51,7 @@ export default React.createClass({
 
         <Modal.Body>
           <NewProjectForm
+            canCreateProdProject={this.state.canCreateProdProject}
             value={this.state.newProject}
             onChange={val => this.setState({newProject: val})}
             disabled={this.props.disabled}
