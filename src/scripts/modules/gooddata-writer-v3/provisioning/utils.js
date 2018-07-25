@@ -66,7 +66,7 @@ export default {
           if (err.status === 404) {
             return Promise.resolve({state: OWN_CREDENTIALS});
           } else {
-            return Promise.resolve({state: ERROR, data: err});
+            return Promise.resolve({state: ERROR, error: err});
           }
         });
   }
