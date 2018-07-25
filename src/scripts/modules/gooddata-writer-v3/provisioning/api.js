@@ -18,8 +18,20 @@ export default {
       name,
       [tokenProperty]: token
     };
-    return createRequest('POST', 'projects')
+    return createRequest('POST', 'projects?user=true')
       .send(requestData)
+      .promise()
+      .then(response => response.body);
+  },
+
+  getProjectDetail(pid) {
+    return createRequest('GET', `projects/${pid}`)
+      .promise()
+      .then(response => response.body);
+  },
+
+  getSSOAccess(pid) {
+    return createRequest('GET', `projects/${pid}/access`)
       .promise()
       .then(response => response.body);
   }
