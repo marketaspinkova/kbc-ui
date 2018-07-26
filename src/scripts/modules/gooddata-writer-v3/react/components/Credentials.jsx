@@ -10,8 +10,7 @@ export default React.createClass({
     value: PropTypes.shape({
       pid: PropTypes.string.isRequired,
       login: PropTypes.string.isRequired,
-      password: PropTypes.string.isRequired,
-      provisioning: PropTypes.object.isRequired
+      password: PropTypes.string.isRequired
     }),
     onChange: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
@@ -20,13 +19,19 @@ export default React.createClass({
 
   getInitialState() {
     return {
+      loading: false,
       showModal: false,
+      provisioning: {},
       canCreateProdProject: !!ApplicationStore.getCurrentProject().getIn(['limits', 'goodData.prodTokenEnabled', 'value']),
       newProject: {
         action: ActionTypes.CREATE,
         tokenType: TokenTypes.DEMO
       }
     };
+  },
+
+  componentDidMount() {
+
   },
 
   openModal(e) {
@@ -81,8 +86,27 @@ export default React.createClass({
     );
   },
 
+
+  renderTestSelect() {
+    const states = Object.keys(ProvisioningStates);
+    const data = {
+      [ProvisioningStates.NONE]: {},
+      [ProvisioningStates.OWN_CREDENTIALS]: {},
+      [ProvisioningStates.KBC_NO_SSO]: {authToken: 'keboola_demo'},
+      [ProvisioningStates.NONE]: {},
+      [ProvisioningStates.NONE]: ,
+    };
+    return (
+      <div>
+        <select onChange={e => this.setState({provisioning: {state: e.target.value}})}>
+          {states.map(ps => <option key={ps} value={ps}>{ps}</option>)}
+        </select>
+      </div>
+    );
+  },
+
   renderByProvisioningState() {
-    switch (this.props.value.provisioning.state) {
+    switch (this.state.provisioning.state) {
       case ProvisioningStates.NONE:
         return this.renderNoCredentials();
       case ProvisioningStates.OWN_CREDENTIALS:
@@ -99,7 +123,7 @@ export default React.createClass({
   },
 
   renderProvisioningError() {
-    const {provisioning} = this.props.value;
+    const {provisioning} = this.state;
     const {error} = provisioning;
     return (
       <div>
@@ -109,7 +133,8 @@ export default React.createClass({
   },
 
   renderKbcWithSSO() {
-    const {provisioning, pid} = this.props.value;
+    const {pid} = this.props.value;
+    const {provisioning} = this.state;
     const {authToken, link} = provisioning;
     return (
       <div>
@@ -123,7 +148,8 @@ export default React.createClass({
   },
 
   renderKbcNoSSO() {
-    const {provisioning, pid} = this.props.value;
+    const {pid} = this.props.value;
+    const {provisioning} = this.state;
     const {authToken} = provisioning;
     return (
       <div>
@@ -149,7 +175,7 @@ export default React.createClass({
 
   renderNoCredentials() {
     return (
-      <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
+      <div className="component-empty-state text-center">
         <p>No project set up yet.</p>
         <button
           disabled={this.props.disabled}
