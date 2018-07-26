@@ -48,10 +48,10 @@ export default React.createClass({
 
   renderLoadTypeHelp() {
     if (this.props.value.type === 'full') {
-      return 'Full load gets all files from S3 and overwrites the table in Storage. CSV header is extracted directly from the file.';
+      return 'Full load gets all files from S3 and overwrites the table in Storage. Header is extracted directly from the CSV file.';
     }
     if (this.props.value.type === 'full-headless') {
-      return 'Full load gets all files from S3 and overwrites the table in Storage. CSV file does not contain the header.';
+      return 'Full load gets all files from S3 and overwrites the table in Storage. CSV file is expected to have no header.';
     }
     if (this.props.value.type === 'incremental' || this.props.value.type === 'incremental-headless') {
       return 'The extractor will only get new files each time and will load them incrementally to Storage. CSV header must be set manually.';
