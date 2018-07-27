@@ -13,7 +13,6 @@ export const TokenTypes = {
 };
 
 export const ProvisioningStates = {
-  NONE: 'NONE',
   OWN_CREDENTIALS: 'OWND_CREDENTIALS',
   KBC_NO_SSO: 'KBC_NO_SSO',
   KBC_WITH_SSO: 'KBC_WITH_SSO',
@@ -34,27 +33,13 @@ export default {
     return false;
   },
 
-  prepareProject({ name, action, tokenType, customToken, login, password, pid }) {
-    if (action === ActionTypes.CREATE) {
-      const token = isCustomToken(tokenType) ? customToken : tokenType;
-      api.createProjectAndUser(name, token);
-    } else {
-      return Promise.resolve({
-        pid,
-        login,
-        password
-      });
-    }
+  prepareProject(name, tokenType, customToken) {
+    const token = isCustomToken(tokenType) ? customToken : tokenType;
+    api.createProjectAndUser(name, token);
   },
 
-  loadProvisioningData({ pid, login, password }) {
-    const { NONE, OWN_CREDENTIALS, KBC_WITH_SSO, KBC_NO_SSO, ERROR } = ProvisioningStates;
-
-    // no valid credentials stored
-    if (!pid || !login || !password) {
-      return Promise.resolve({ state: NONE });
-    }
-
+  loadProvisioningData(pid) {
+    const { OWN_CREDENTIALS, KBC_WITH_SSO, KBC_NO_SSO, ERROR } = ProvisioningStates;
     return api.getProjectDetail(pid).then(
       ({ authToken }) =>
         api
