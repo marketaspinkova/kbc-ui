@@ -4,7 +4,7 @@ import createColumnsEditorSection from '../configurations/utils/createColumnsEdi
 import TitleSection from './react/components/TitleSection';
 import LoadTypeSection from './react/components/LoadTypeSection';
 import LoadTypeSectionTitle from './react/components/LoadTypeSectionTitle';
-import Credentials from './react/components/Credentials';
+import Credentials from './react/components/CredentialsContainer';
 import title from './adapters/title';
 import loadType from './adapters/loadType';
 import credentials from './adapters/credentials';
