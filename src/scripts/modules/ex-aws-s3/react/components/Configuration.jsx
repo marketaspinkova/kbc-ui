@@ -118,7 +118,7 @@ export default React.createClass({
             </span>
           </div>
         </div>
-        <h3>S3 Settings</h3>
+        <h3>Source</h3>
         <Input
           type="text"
           label="S3 Bucket"
@@ -194,10 +194,10 @@ export default React.createClass({
           disabled={this.props.disabled}
           help={(<span>Field enclosure used in CSV file. Default value is <code>"</code>.</span>)}
           />
-        <h3>Save Settings</h3>
+        <h3>Destination</h3>
         <Input
           type="text"
-          label="Table Name"
+          label="Storage Table Name"
           labelClassName="col-xs-4"
           wrapperClassName="col-xs-8"
           value={this.props.value.name}
