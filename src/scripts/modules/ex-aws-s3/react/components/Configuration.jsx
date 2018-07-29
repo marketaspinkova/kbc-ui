@@ -59,14 +59,40 @@ export default React.createClass({
   },
 
   renderCsvHeaderHelp() {
-    if (this.props.value.type === 'full') {
-      return 'This load type obtains the headers automatically from the CSV file.';
-    }
     if (this.props.value.type === 'full-headless' || this.props.value.type === 'incremental-headless') {
       return 'Set headers of the headless CSV file.';
     }
     if (this.props.value.type === 'incremental') {
       return 'Please set the CSV header manually. Incremental loads can yield empty files, so the header is required.';
+    }
+  },
+
+  renderCsvHeader() {
+    if (this.props.value.type !== 'full') {
+      const props = this.props;
+      return (
+        <div className="form-group">
+          <div className="col-xs-4 control-label">CSV Header</div>
+          <div className="col-xs-8">
+            <Select
+              name="columns"
+              value={this.props.value.columns}
+              multi={true}
+              allowCreate={true}
+              delimiter=","
+              placeholder="Add a column"
+              emptyStrings={false}
+              onChange={function(value) {
+                props.onChange({columns: value});
+              }}
+              disabled={this.props.disabled || this.props.value.type === 'full'}
+            />
+            <span className="help-block">
+              {this.renderCsvHeaderHelp()}
+            </span>
+          </div>
+        </div>
+      );
     }
   },
 
@@ -97,27 +123,7 @@ export default React.createClass({
             </span>
           </div>
         </div>
-        <div className="form-group">
-          <div className="col-xs-4 control-label">CSV Header</div>
-          <div className="col-xs-8">
-            <Select
-              name="columns"
-              value={this.props.value.columns}
-              multi={true}
-              allowCreate={true}
-              delimiter=","
-              placeholder="Add a column"
-              emptyStrings={false}
-              onChange={function(value) {
-                props.onChange({columns: value});
-              }}
-              disabled={this.props.disabled || this.props.value.type === 'full'}
-            />
-            <span className="help-block">
-              {this.renderCsvHeaderHelp()}
-            </span>
-          </div>
-        </div>
+        {this.renderCsvHeader()}
         <h3>Source</h3>
         <Input
           type="text"
