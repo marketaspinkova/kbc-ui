@@ -3,6 +3,7 @@ import immutableMixin from 'react-immutable-render-mixin';
 import { Input } from './../../../../react/common/KbcBootstrap';
 import CsvDelimiterInput from '../../../../react/common/CsvDelimiterInput';
 import Select from '../../../../react/common/Select';
+import {PanelWithDetails} from '@keboola/indigo-ui';
 
 const typeOptions = [
   {
@@ -150,32 +151,37 @@ export default React.createClass({
           disabled={this.props.disabled}
           help={(<span>Filename including folders or a prefix. Do not type <code>*</code> or <code>%</code> wildcards, use <strong>Wildcard</strong> checkbox instead.</span>)}
           />
-        <Input
-          type="checkbox"
-          label="Wildcard"
-          wrapperClassName="col-xs-8 col-xs-offset-4"
-          checked={this.props.value.wildcard}
-          onChange={function(e) {
-            let change = {wildcard: e.target.checked};
-            if (change.wildcard === false) {
-              change.subfolders = false;
-            }
-            props.onChange(change);
-          }}
-          disabled={this.props.disabled}
-          help={(<span>Match all files beginning with the specified key.</span>)}
-        />
-        <Input
-          type="checkbox"
-          label="Subfolders"
-          wrapperClassName="col-xs-8 col-xs-offset-4"
-          checked={this.props.value.subfolders}
-          onChange={function(e) {
-            props.onChange({subfolders: e.target.checked});
-          }}
-          disabled={this.props.disabled || !this.props.value.wildcard}
-          help={(<span>Download subfolders recursively.</span>)}
-          />
+        <PanelWithDetails
+          defaultExpanded={this.props.value.wildcard || this.props.value.subfolders}
+          placement="bottom"
+          >
+          <Input
+            type="checkbox"
+            label="Wildcard"
+            wrapperClassName="col-xs-8 col-xs-offset-4"
+            checked={this.props.value.wildcard}
+            onChange={function(e) {
+              let change = {wildcard: e.target.checked};
+              if (change.wildcard === false) {
+                change.subfolders = false;
+              }
+              props.onChange(change);
+            }}
+            disabled={this.props.disabled}
+            help={(<span>Match all files beginning with the specified key.</span>)}
+            />
+          <Input
+            type="checkbox"
+            label="Subfolders"
+            wrapperClassName="col-xs-8 col-xs-offset-4"
+            checked={this.props.value.subfolders}
+            onChange={function(e) {
+              props.onChange({subfolders: e.target.checked});
+            }}
+            disabled={this.props.disabled || !this.props.value.wildcard}
+            help={(<span>Download subfolders recursively.</span>)}
+            />
+        </PanelWithDetails>
         <h3>CSV Settings</h3>
         <CsvDelimiterInput
           type="text"
@@ -214,25 +220,30 @@ export default React.createClass({
           disabled={this.props.disabled}
           help={(<span>Name of the table stored in Storage.</span>)}
           />
-        <div className="form-group">
-          <div className="col-xs-4 control-label">Primary Key</div>
-          <div className="col-xs-8">
-            <Select
-              name="primaryKey"
-              value={this.props.value.primaryKey}
-              multi={true}
-              allowCreate={true}
-              delimiter=","
-              placeholder="Add a column to the primary key"
-              emptyStrings={false}
-              onChange={function(value) {
-                props.onChange({primaryKey: value});
-              }}
-              disabled={this.props.disabled}
-            />
-            <div className="help-block">If primary key is set, updates can be done on table by selecting <strong>incremental loads</strong>. Primary key can consist of multiple columns. Primary key of an existing table cannot be changed.</div>
+        <PanelWithDetails
+          defaultExpanded={this.props.value.primaryKey.length > 0}
+          placement="bottom"
+          >
+          <div className="form-group">
+            <div className="col-xs-4 control-label">Primary Key</div>
+            <div className="col-xs-8">
+              <Select
+                name="primaryKey"
+                value={this.props.value.primaryKey}
+                multi={true}
+                allowCreate={true}
+                delimiter=","
+                placeholder="Add a column to the primary key"
+                emptyStrings={false}
+                onChange={function(value) {
+                  props.onChange({primaryKey: value});
+                }}
+                disabled={this.props.disabled}
+              />
+              <div className="help-block">If primary key is set, updates can be done on table by selecting <strong>incremental loads</strong>. Primary key can consist of multiple columns. Primary key of an existing table cannot be changed.</div>
+            </div>
           </div>
-        </div>
+        </PanelWithDetails>
         <h3>Processing Settings</h3>
         <Input
           type="checkbox"
@@ -245,29 +256,33 @@ export default React.createClass({
           disabled={this.props.disabled}
           help={(<span>Decompress downloaded file(s). All files in all archives will be imported into a single Storage table.</span>)}
           />
-        <Input
-          type="checkbox"
-          label="Add Filename Column"
-          wrapperClassName="col-xs-8 col-xs-offset-4"
-          checked={this.props.value.addFilenameColumn}
-          onChange={function(e) {
-            props.onChange({addFilenameColumn: e.target.checked});
-          }}
-          help={(<span>Add an <code>s3_filename</code> column that will store the processed file name.</span>)}
-          disabled={this.props.disabled}
-        />
-        <Input
-          type="checkbox"
-          label="Add Row Number Column"
-          wrapperClassName="col-xs-8 col-xs-offset-4"
-          checked={this.props.value.addRowNumberColumn}
-          onChange={function(e) {
-            props.onChange({addRowNumberColumn: e.target.checked});
-          }}
-          help={(<span>Add an <code>s3_row_number</code> column that will store the row number from the processed file.</span>)}
-          disabled={this.props.disabled}
-        />
-
+        <PanelWithDetails
+          defaultExpanded={this.props.value.addFilenameColumn || this.props.value.addRowNumberColumn}
+          placement="bottom"
+          >
+          <Input
+            type="checkbox"
+            label="Add Filename Column"
+            wrapperClassName="col-xs-8 col-xs-offset-4"
+            checked={this.props.value.addFilenameColumn}
+            onChange={function(e) {
+              props.onChange({addFilenameColumn: e.target.checked});
+            }}
+            help={(<span>Add an <code>s3_filename</code> column that will store the processed file name.</span>)}
+            disabled={this.props.disabled}
+            />
+          <Input
+            type="checkbox"
+            label="Add Row Number Column"
+            wrapperClassName="col-xs-8 col-xs-offset-4"
+            checked={this.props.value.addRowNumberColumn}
+            onChange={function(e) {
+              props.onChange({addRowNumberColumn: e.target.checked});
+            }}
+            help={(<span>Add an <code>s3_row_number</code> column that will store the row number from the processed file.</span>)}
+            disabled={this.props.disabled}
+            />
+        </PanelWithDetails>
       </div>
     );
   }
