@@ -4,7 +4,7 @@ import Credentials from './Credentials';
 import ProvisioningActions from '../../provisioning/actions';
 import ProvisioningStore from '../../provisioning/store';
 
-// import ProvisioningUtils, {ProvisioningStates, ActionTypes, TokenTypes} from '../../provisioning/utils';
+// import ProvisioningUtils, {ProvisioningStates, TokenTypes} from '../../provisioning/utils';
 import ApplicationStore from '../../../../stores/ApplicationStore';
 
 export default React.createClass({
@@ -24,11 +24,11 @@ export default React.createClass({
   getStateFromStores() {
     const canCreateProdProject = !!ApplicationStore.getCurrentProject().getIn(['limits', 'goodData.prodTokenEnabled', 'value']);
     const {pid} = this.props.value;
-    const provisioning = ProvisioningStore.getProvisioning(pid);
+    const data = ProvisioningStore.getProvisioning(pid);
 
     return {
       canCreateProdProject,
-      provisioning,
+      data,
       isCreating: ProvisioningStore.getIsCreating(),
       isLoading: pid && ProvisioningStore.getIsLoading(pid)
     };
@@ -42,11 +42,23 @@ export default React.createClass({
     }
   },
 
+  handleCreate(newProject) {
+    if (newProject.isCreateNewProject) {
+      const {name, tokenType, customToken} = newProject;
+      return ProvisioningActions.createProject(name, tokenType, customToken).then( this.props.onSave);
+    } else {
+      const {pid, login, password} = newProject;
+      return this.props.onSave({pid, login, password});
+    }
+  },
+
   render() {
     return (
       <Credentials
-        {...this.props}
+        disabled={this.props.disabled}
+        config={this.props.value}
         provisioning={this.state}
+        onHandleCreate={this.handleCreate}
       />
     );
   }

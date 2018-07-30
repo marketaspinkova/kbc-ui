@@ -1,6 +1,7 @@
-import {ProvisioningActionTypes} from './store';
+import {ProvisioningActionTypes} from '../helpers/Constants';
 import dispatcher from '../../../Dispatcher';
-import utils from './utils';
+import {isCustomToken, loadProvisioningData} from './utils';
+import api from './api';
 
 export default {
   loadProvisioningData(pid) {
@@ -8,7 +9,7 @@ export default {
       type: ProvisioningActionTypes.GD_PROVISIONING_LOAD_START,
       pid
     });
-    return utils.loadProvisioningData(pid).then(
+    return loadProvisioningData(pid).then(
       data => dispatcher.handleViewAction({
         type: ProvisioningActionTypes.GD_PROVISIONING_LOAD_SUCCESS,
         data
@@ -25,7 +26,8 @@ export default {
     dispatcher.handleViewAction({
       type: ProvisioningActionTypes.GD_PROVISIONING_CREATE_START
     });
-    return utils.prepareProject(name, tokenType, customToken).then(
+    const token = isCustomToken(tokenType) ? customToken : tokenType;
+    return api.createProjectAndUser(name, token).then(
       data => dispatcher.handleViewAction({
         type: ProvisioningActionTypes.GD_PROVISIONING_CREATE_SUCCESS,
         data

@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {Form, Col, FormControl, ControlLabel, FormGroup, Radio, HelpBlock} from 'react-bootstrap';
 import ReactSelect from 'react-select';
-import {ActionTypes, TokenTypes} from '../../provisioning/utils';
+import {TokenTypes} from '../../provisioning/utils';
 
 export default React.createClass({
   propTypes: {
@@ -26,16 +26,16 @@ export default React.createClass({
               searchable={false}
               clearable={false}
               disabled={disabled}
-              value={value.action}
-              onChange={(selected) => this.handleChange({action: selected.value})}
+              value={value.isCreateNewProject}
+              onChange={(selected) => this.handleChange({isCreateNewProject: selected.value})}
               options={[
-                {label: 'Create new GoodData Project', value: ActionTypes.CREATE},
-                {label: 'Use Existing GoodData Project', value: ActionTypes.USE_EXISTING}
+                {label: 'Create new GoodData Project', value: true},
+                {label: 'Use Existing GoodData Project', value: false}
               ]}
             />
           </Col>
         </FormGroup>
-        {value.action === ActionTypes.CREATE ?
+        {value.isCreateNewProject ?
          this.renderNewProjectGroup() :
          this.renderExistingProjectGroup()
         }

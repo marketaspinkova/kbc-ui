@@ -2,29 +2,36 @@ import React, {PropTypes} from 'react';
 import { Modal } from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import NewProjectForm from './NewProjectForm';
-import ProvisioningUtils, {ProvisioningStates, ActionTypes, TokenTypes} from '../../provisioning/utils';
+import {isNewProjectValid, ProvisioningStates, TokenTypes} from '../../provisioning/utils';
 
 
 export default React.createClass({
   propTypes: {
-    canCreateProdProject: PropTypes.bool.isRequired,
-    provisioning: PropTypes.object,
-    value: PropTypes.shape({
+    provisioning: PropTypes.shape({
+      isCreating: PropTypes.bool.isRequired,
+      isLoading: PropTypes.bool.isRequired,
+      canCreateProdProject: PropTypes.bool.isRequired,
+      data: PropTypes.object
+    }),
+    config: PropTypes.shape({
       pid: PropTypes.string.isRequired,
       login: PropTypes.string.isRequired,
       password: PropTypes.string.isRequired
     }),
-    onChange: PropTypes.func.isRequired,
-    onSave: PropTypes.func.isRequired,
-    disabled: PropTypes.bool.isRequired
+    disabled: PropTypes.bool.isRequired,
+    onHandleCreate: PropTypes.func.isRequired
   },
 
   getInitialState() {
     return {
-      loading: false,
       showModal: false,
       newProject: {
-        action: ActionTypes.CREATE,
+        name: '',
+        login: '',
+        password: '',
+        pid: '',
+        customToken: '',
+        isCreateNewProject: true,
         tokenType: TokenTypes.DEMO
       }
     };
@@ -53,7 +60,7 @@ export default React.createClass({
 
         <Modal.Body>
           <NewProjectForm
-            canCreateProdProject={this.state.canCreateProdProject}
+            canCreateProdProject={this.props.provisioning.canCreateProdProject}
             value={this.state.newProject}
             onChange={val => this.setState({newProject: val})}
             disabled={this.props.disabled}
@@ -64,7 +71,7 @@ export default React.createClass({
           <ConfirmButtons
             isSaving={this.props.disabled}
             isDisabled={!this.isValid()}
-            saveLabel={this.state.newProject.action === ActionTypes.CREATE ? 'Create' : 'Save'}
+            saveLabel={this.state.newProject.isCreateNewProject ? 'Create' : 'Save'}
             onCancel={this.closeModal}
             onSave={this.handleCreate}/>
         </Modal.Footer>
@@ -129,7 +136,7 @@ export default React.createClass({
   },
 
   renderKbcWithSSO() {
-    const {pid} = this.props.value;
+    const {pid} = this.props.config;
     const {provisioning} = this.state;
     const {authToken, link} = provisioning;
     return (
@@ -144,7 +151,7 @@ export default React.createClass({
   },
 
   renderKbcNoSSO() {
-    const {pid} = this.props.value;
+    const {pid} = this.props.config;
     const {provisioning} = this.state;
     const {authToken} = provisioning;
     return (
@@ -159,7 +166,7 @@ export default React.createClass({
   },
 
   renderOwnCredentials() {
-    const {pid, login} = this.props.value;
+    const {pid, login} = this.props.config;
     return (
       <div>
         <h4>The GoodDataProject is not provisioned by Keboola</h4>
@@ -184,15 +191,13 @@ export default React.createClass({
   },
 
   isValid() {
-    return ProvisioningUtils.isNewProjectValid(this.state.newProject);
+    return isNewProjectValid(this.state.newProject);
   },
 
   handleCreate(e) {
     e.preventDefault();
     e.stopPropagation();
-    ProvisioningUtils.prepareProject(this.state.newProject).then( projectToSave =>
-      this.props.onSave(projectToSave).then(this.closeModal)
-    );
+    this.props.onHandleCreate(this.state.newProject).then(this.closeModal);
   }
 
 });
