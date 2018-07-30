@@ -61,10 +61,10 @@ export default React.createClass({
 
   renderCsvHeaderHelp() {
     if (this.props.value.type === 'full-headless' || this.props.value.type === 'incremental-headless') {
-      return 'Set headers of the headless CSV file.';
+      return 'Set columns of the headless CSV file.';
     }
     if (this.props.value.type === 'incremental') {
-      return 'Please set the CSV header manually. Incremental loads can yield empty files, so the header is required.';
+      return 'Please set the CSV columns manually. Incremental loads can yield empty files, so the header is required.';
     }
   },
 
