@@ -4,7 +4,7 @@ import Credentials from './Credentials';
 import ProvisioningActions from '../../provisioning/actions';
 import ProvisioningStore from '../../provisioning/store';
 
-// import ProvisioningUtils, {ProvisioningStates, TokenTypes} from '../../provisioning/utils';
+// import ProvisioningUtils, {TokenTypes} from '../../provisioning/utils';
 import ApplicationStore from '../../../../stores/ApplicationStore';
 
 export default React.createClass({
@@ -24,7 +24,7 @@ export default React.createClass({
   getStateFromStores() {
     const canCreateProdProject = !!ApplicationStore.getCurrentProject().getIn(['limits', 'goodData.prodTokenEnabled', 'value']);
     const {pid} = this.props.value;
-    const data = ProvisioningStore.getProvisioning(pid);
+    const data = ProvisioningStore.getData(pid);
 
     return {
       canCreateProdProject,

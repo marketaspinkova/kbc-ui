@@ -12,7 +12,7 @@ let _store = Map({
 const ProvisioningStore = StoreUtils.createStore({
   getIsCreating: () => _store.getIn(['isCreating'], false),
   getIsLoading: (pid) => _store.getIn(['isLoading', pid], false),
-  getData: (pid) => _store.getIn(['provisioning', pid], Map())
+  getData: (pid) => pid ? _store.getIn(['provisioning', pid], Map()) : Map()
 });
 
 dispatcher.register(payload => {
@@ -51,3 +51,4 @@ dispatcher.register(payload => {
     default:
   }
 });
+export default ProvisioningStore;

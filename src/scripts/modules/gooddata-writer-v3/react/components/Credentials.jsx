@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import { Modal } from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import NewProjectForm from './NewProjectForm';
-import {isNewProjectValid, ProvisioningStates, TokenTypes} from '../../provisioning/utils';
+import {isNewProjectValid, TokenTypes} from '../../provisioning/utils';
 
 
 export default React.createClass({
@@ -83,46 +83,27 @@ export default React.createClass({
     return (
       <div>
         {this.renderModal()}
-        {this.renderTestSelect()}
-        {this.renderByProvisioningState()}
+         {this.renderByProvisioningState()}
       </div>
     );
   },
 
-
-  renderTestSelect() {
-    const states = Object.keys(ProvisioningStates);
-    const data = {
-      [ProvisioningStates.NONE]: {},
-      [ProvisioningStates.OWN_CREDENTIALS]: {},
-      [ProvisioningStates.KBC_NO_SSO]: {authToken: 'keboola_demo'},
-      [ProvisioningStates.KBC_WITH_SSO]: {authToken: 'keboola_demo', link: 'https://www.example.com'},
-      [ProvisioningStates.ERROR]: {error: 'There has been error'}
-    };
-    return (
-      <div>
-        <select onChange={e => this.setState({provisioning: {state: e.target.value, data}})}>
-          {states.map(ps => <option key={ps} value={ps}>{ps}</option>)}
-        </select>
-      </div>
-    );
-  },
-
-  renderByProvisioningState() {
-    switch (this.state.provisioning.state) {
-      case ProvisioningStates.NONE:
-        return this.renderNoCredentials();
-      case ProvisioningStates.OWN_CREDENTIALS:
-        return this.renderOwnCredentials();
-      case ProvisioningStates.KBC_NO_SSO:
-        return this.renderKbcNoSSO();
-      case ProvisioningStates.KBC_WITH_SSO:
-        return this.renderKbcWithSSO();
-      case ProvisioningStates.ERROR:
-        return this.renderProvisioningError();
-      default:
-        return null;
+  renderByProvisioning() {
+    const {data} = this.props.provisioning;
+    const {pid} = this.props.config;
+    if (!pid) {
+      return this.renderNoCredentials();
     }
+    if (!data) {
+      return this.renderOwnCredentials();
+    }
+    if (data.error) {
+      this.renderProvisioningError();
+    }
+    if (!data.link) {
+      return this.renderKbcNoSSO();
+    }
+    return this.renderKbcWithSSO();
   },
 
   renderProvisioningError() {
