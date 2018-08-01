@@ -6,10 +6,12 @@ import {Input} from './../../../../../react/common/KbcBootstrap';
 
 import Select from '../../../../../react/common/Select';
 import SapiTableSelector from '../../../../components/react/components/SapiTableSelector';
-import SnowflakeDataTypesContainer from './input/SnowflakeDataTypesContainer';
+import DatatypeForm from './input/DatatypeForm';
 import ChangedSinceInput from '../../../../../react/common/ChangedSinceInput';
 import whereOperatorConstants from '../../../../../react/common/whereOperatorConstants';
 import {PanelWithDetails} from '@keboola/indigo-ui';
+import MetadataStore from '../../../../components/stores/MetadataStore';
+import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 
 export default React.createClass({
   propTypes: {
@@ -19,6 +21,29 @@ export default React.createClass({
     disabled: React.PropTypes.bool.isRequired,
     initialShowDetails: React.PropTypes.bool.isRequired,
     isDestinationDuplicate: React.PropTypes.bool.isRequired
+  },
+
+  mixins: [createStoreMixin(MetadataStore)],
+
+  getStateFromStores() {
+    const source = this.props.value.get('source');
+    return {
+      hasMetadataDatatypes: source ? MetadataStore.tableHasMetadataDatatypes(source) : false,
+      tableColumnMetadata: source ? MetadataStore.getTableColumnsMetadata(source) : Immutable.Map()
+    };
+  },
+
+  componentWillReceiveProps(nextProps) {
+    if (
+      nextProps.value.has('source')
+      && nextProps.value.get('source') !== this.props.value.get('source')
+      && nextProps.value.get('source') !== ''
+    ) {
+      this.setState({
+        hasMetadataDatatypes: MetadataStore.tableHasMetadataDatatypes(nextProps.value.get('source')),
+        tableColumnMetadata: MetadataStore.getTableColumnsMetadata(nextProps.value.get('source'))
+      });
+    }
   },
 
   _handleChangeSource(value) {
@@ -82,39 +107,46 @@ export default React.createClass({
     return this.props.onChange(this.props.value.set('datatypes', datatypes));
   },
 
-  _getColumns() {
+  getSelectedTable() {
     if (!this.props.value.get('source')) {
-      return [];
+      return Immutable.Map();
     }
     const selectedTable = this.props.tables.find((table) => {
       return table.get('id') === this.props.value.get('source');
     });
-    if (selectedTable) {
-      return selectedTable.get('columns').toJS();
-    }
-    return [];
+    return selectedTable;
+  },
+
+  _getColumns() {
+    return this.getSelectedTable().get('columns', Immutable.List());
+  },
+
+  isPrimaryKeyColumn(column) {
+    return this.getSelectedTable().get('primaryKey', Immutable.List()).has(column);
   },
 
   _getColumnsOptions() {
-    const columns = this._getColumns();
-    return _.map(columns, (column) => {
+    return this._getColumns().map((column) => {
       return {
         label: column,
         value: column
       };
-    });
+    }).toJS();
+  },
+
+  _getFilteredColumns() {
+    return this.props.value.get('columns', Immutable.List()).count() > 0
+      ? this.props.value.get('columns')
+      : this._getColumns();
   },
 
   _getFilteredColumnsOptions() {
-    const columns = this.props.value.get('columns', Immutable.List()).count() > 0
-      ? this.props.value.get('columns').toJS()
-      : this._getColumns();
-    return _.map(columns, (column) => {
+    return this._getFilteredColumns().map((column) => {
       return {
         label: column,
         value: column
       };
-    });
+    }).toJS();
   },
 
   getChangedSinceValue() {
@@ -126,10 +158,131 @@ export default React.createClass({
     return null;
   },
 
+  snowflakeDatatypesMap: new Immutable.fromJS({
+    NUMBER: {
+      name: 'NUMBER',
+      basetype: 'NUMERIC',
+      size: true
+    },
+    INTEGER: {
+      name: 'INTEGER',
+      basetype: 'INTEGER',
+      size: false
+    },
+    FLOAT: {
+      name: 'FLOAT',
+      basetype: 'FLOAT',
+      size: false
+    },
+    VARCHAR: {
+      name: 'VARCHAR',
+      basetype: 'STRING',
+      size: true
+    },
+    DATE: {
+      name: 'DATE',
+      basetype: 'DATE',
+      size: false
+    },
+    TIMESTAMP: {
+      name: 'TIMESTAMP',
+      basetype: 'TIMESTAMP',
+      size: false
+    },
+    TIMESTAMP_LTZ: {
+      name: 'TIMESTAMP_LTZ',
+      size: false
+    },
+    TIMESTAMP_NTZ: {
+      name: 'TIMESTAMP_NTZ',
+      size: false
+    },
+    TIMESTAMP_TZ: {
+      name: 'TIMESTAMP_TZ',
+      size: false
+    },
+    VARIANT: {
+      name: 'VARIANT',
+      size: false
+    }
+  }),
+
+  getMetadataDataTypes(columnMetadata) {
+    return columnMetadata.map((metadata, colname) => {
+      let datatypeLength = metadata.filter((entry) => {
+        return entry.get('key') === 'KBC.datatype.length';
+      });
+      if (datatypeLength.count() > 0) {
+        datatypeLength = datatypeLength.get(0);
+      }
+      let datatypeNullable = metadata.filter((entry) => {
+        return entry.get('key') === 'KBC.datatype.nullable';
+      });
+      if (datatypeNullable.count() > 0) {
+        datatypeNullable = datatypeNullable.get(0);
+      }
+      let basetype = metadata.filter((entry) => {
+        return entry.get('key') === 'KBC.datatype.basetype';
+      });
+
+      if (basetype.count() === 0) {
+        return null;
+      } else {
+        basetype = basetype.get(0);
+      }
+      let datatypeName = null;
+
+      let datatype = this.snowflakeDatatypesMap.map((mappedDatatype) => {
+        if (mappedDatatype.get('basetype') === basetype.get('value')) {
+          datatypeName = mappedDatatype.get('name');
+          return mappedDatatype;
+        }
+      });
+
+      return Immutable.fromJS({
+        column: colname,
+        type: datatypeName,
+        length: datatype.get(datatypeName).get('size') ? datatypeLength.get('value') : null,
+        convertEmptyValuesToNull: !!datatypeNullable.get('value')
+      });
+    });
+  },
+
+  getDefaultDatatypes() {
+    if (this.state.hasMetadataDatatypes) {
+      const metadataSet = this.state.tableColumnMetadata.filter((metadata, colname) => {
+        return this._getFilteredColumns().indexOf(colname) > -1;
+      });
+      return this.getMetadataDataTypes(metadataSet);
+    } else {
+      return Immutable.fromJS(this._getFilteredColumns()).reduce((memo, column) => {
+        return memo.set(column, Immutable.fromJS({
+          column: column,
+          type: 'VARCHAR',
+          length: this.isPrimaryKeyColumn(column) ? 255 : null,
+          convertEmptyValuesToNull: false
+        }));
+      }, Immutable.Map());
+    }
+  },
+
+  getDatatypes() {
+    return this.getDefaultDatatypes().map((defaultType) => {
+      const existingTypeFilter = this.props.value.get('datatypes').filter((existingType) => {
+        return existingType.get('column') === defaultType.get('column');
+      });
+      if (existingTypeFilter.count() > 0) {
+        return existingTypeFilter.get(defaultType.get('column'));
+      } else {
+        return defaultType;
+      }
+    });
+  },
+
   render() {
     return (
-      <div className="form-horizontal clearfix">
-        <div className="row col-md-12">
+      <div>
+        <div className="form-horizontal">
           <div className="form-group">
             <label className="col-xs-2 control-label">Source</label>
             <div className="col-xs-10">
@@ -163,8 +316,8 @@ export default React.createClass({
             }
           />
         </div>
-        <div className="row col-md-12">
-          <PanelWithDetails defaultExpanded={this.props.initialShowDetails}>
+        <PanelWithDetails defaultExpanded={this.props.initialShowDetails}>
+          <div className="row col-md-12">
             <div className="form-horizontal clearfix">
               <div className="form-group">
                 <label className="col-xs-2 control-label">Columns</label>
@@ -183,15 +336,15 @@ export default React.createClass({
                   </div>
                 </div>
               </div>
-              <div className="form-group">
-                <label className="col-xs-2 control-label">Changed in last</label>
-                <div className="col-xs-10">
-                  <ChangedSinceInput
-                    value={this.getChangedSinceValue()}
-                    disabled={this.props.disabled}
-                    onChange={this._handleChangeChangedSince}
-                  />
-                </div>
+            </div>
+            <div className="form-group">
+              <label className="col-xs-2 control-label">Changed in last</label>
+              <div className="col-xs-10">
+                <ChangedSinceInput
+                  value={this.getChangedSinceValue()}
+                  disabled={this.props.disabled}
+                  onChange={this._handleChangeChangedSince}
+                />
               </div>
               <div className="form-group">
                 <label className="col-xs-2 control-label">Data filter</label>
@@ -230,20 +383,41 @@ export default React.createClass({
                   />
                 </div>
               </div>
-              <div className="form-group">
-                <label className="col-xs-2 control-label">Data types</label>
-                <div className="col-xs-10">
-                  <SnowflakeDataTypesContainer
-                    value={this.props.value.get('datatypes', Immutable.Map())}
-                    disabled={this.props.disabled || !this.props.value.get('source')}
-                    onChange={this._handleChangeDataTypes}
-                    columnsOptions={this._getFilteredColumnsOptions()}
-                  />
-                </div>
+              <div className="col-xs-2">
+                <Input
+                  type="select"
+                  name="whereOperator"
+                  value={this.props.value.get('whereOperator')}
+                  disabled={this.props.disabled}
+                  onChange={this._handleChangeWhereOperator}
+                >
+                  <option value="eq">= (IN)</option>
+                  <option value="ne">!= (NOT IN)</option>
+                </Input>
+              </div>
+              <div className="col-xs-4">
+                <Select
+                  name="whereValues"
+                  value={this.props.value.get('whereValues')}
+                  multi={true}
+                  disabled={this.props.disabled}
+                  allowCreate={true}
+                  placeholder="Add a value..."
+                  emptyStrings={true}
+                  onChange={this._handleChangeWhereValues}
+                />
               </div>
             </div>
-          </PanelWithDetails>
-        </div>
+            <label className="control-label">Data types</label>
+          </div>
+          <DatatypeForm
+            datatypes={this.getDatatypes()}
+            columns={this._getFilteredColumns()}
+            datatypesMap={this.snowflakeDatatypesMap}
+            disabled={this.props.disabled || !this.props.value.get('source')}
+            onChange={this._handleChangeDataTypes}
+          />
+        </PanelWithDetails>
       </div>
     );
   }
