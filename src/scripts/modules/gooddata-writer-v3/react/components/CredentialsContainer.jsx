@@ -42,6 +42,14 @@ export default React.createClass({
     }
   },
 
+  handleToggleProjectAccess(pid, enable) {
+    return ProvisioningActions.toggleProjectAccess(pid, enable).then(() => {
+      if (enable) {
+        ProvisioningActions.loadProvisioningData(pid);
+      }
+    });
+  },
+
   handleCreate(newProject) {
     if (newProject.isCreateNewProject) {
       const {name, tokenType, customToken} = newProject;
@@ -59,6 +67,7 @@ export default React.createClass({
         config={this.props.value}
         provisioning={this.state}
         onHandleCreate={this.handleCreate}
+        onToggleEnableAcess={this.handleToggleProjectAccess}
       />
     );
   }

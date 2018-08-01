@@ -12,11 +12,13 @@ export default {
     return loadProvisioningData(pid).then(
       data => dispatcher.handleViewAction({
         type: ProvisioningActionTypes.GD_PROVISIONING_LOAD_SUCCESS,
-        data
+        data,
+        pid
       }),
       err => dispatcher.handleViewAction({
         type: ProvisioningActionTypes.GD_PROVISIONING_LOAD_ERROR,
-        error: err
+        error: err,
+        pid
       })
     );
   },
@@ -34,6 +36,27 @@ export default {
       }),
       err => dispatcher.handleViewAction({
         type: ProvisioningActionTypes.GD_PROVISIONING_CREATE_ERROR,
+        error: err
+      })
+    );
+  },
+
+  toggleProjectAccess(pid, enable) {
+    dispatcher.handleViewAction({
+      type: ProvisioningActionTypes.GD_PROVISIONING_ENABLESSO_START,
+      pid
+    });
+    const apiPromise = enable ? api.enableSSOAccess(pid) : api.disableSSOAccess(pid);
+    return apiPromise.then(
+      data => dispatcher.handleViewAction({
+        type: ProvisioningActionTypes.GD_PROVISIONING_ENABLESSO_SUCCESS,
+        pid,
+        enable,
+        data
+      }),
+      err => dispatcher.handleViewAction({
+        type: ProvisioningActionTypes.GD_PROVISIONING_ENABLESSO_ERROR,
+        pid,
         error: err
       })
     );

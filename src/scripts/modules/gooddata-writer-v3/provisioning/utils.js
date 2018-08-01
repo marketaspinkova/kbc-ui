@@ -21,8 +21,11 @@ export function isNewProjectValid({ name, isCreateNewProject, tokenType, customT
 
 export function loadProvisioningData(pid) {
   return api.getProjectDetail(pid).then(
-    ({ authToken }) =>
-      api.getSSOAccess(pid).then(({ link }) => ({ link, authToken }), () => ({ authToken })),
-    err => err.status !== 404 ? Promise.reject({ error: err }) : null
+    ({ token }) =>
+      api.getSSOAccess(pid).then(sso => ({ sso, token }), () => ({ token })),
+    err => {
+      const status = (err.response || {}).status;
+      return status !== 404 ? Promise.reject({ error: err.message || err }) : null;
+    }
   );
 }

@@ -34,5 +34,17 @@ export default {
     return createRequest('GET', `projects/${pid}/access`)
       .promise()
       .then(response => response.body);
+  },
+
+  disableSSOAccess(pid) {
+    return createRequest('DELETE', `projects/${pid}/access`)
+      .promise()
+      .then(response => response.body);
+  },
+
+  enableSSOAccess(pid) {
+    return createRequest('POST', `projects/${pid}/access`)
+      .promise()
+      .then(response => response.body);
   }
 };
