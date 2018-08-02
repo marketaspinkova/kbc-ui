@@ -9,6 +9,7 @@ import ResetProjectModal from './ResetProjectModal';
 export default React.createClass({
   propTypes: {
     provisioning: PropTypes.shape({
+      isDeleting: PropTypes.bool.isRequired,
       isCreating: PropTypes.bool.isRequired,
       isLoading: PropTypes.bool.isRequired,
       canCreateProdProject: PropTypes.bool.isRequired,
@@ -50,7 +51,7 @@ export default React.createClass({
   },
 
   closeModal() {
-    if (!this.props.disabled) {
+    if (!this.props.disabled && !this.props.provisioning.isCreating) {
       this.setState(this.getInitialState());
     }
   },
@@ -69,13 +70,13 @@ export default React.createClass({
             canCreateProdProject={this.props.provisioning.canCreateProdProject}
             value={this.state.newProject}
             onChange={val => this.setState({newProject: val})}
-            disabled={this.props.disabled}
+            disabled={this.props.disabled || this.props.provisioning.isCreating}
           />
         </Modal.Body>
 
         <Modal.Footer>
           <ConfirmButtons
-            isSaving={this.props.disabled}
+            isSaving={this.props.disabled || this.props.provisioning.isCreating}
             isDisabled={!this.isValid()}
             saveLabel={this.state.newProject.isCreateNewProject ? 'Create' : 'Save'}
             onCancel={this.closeModal}
@@ -113,14 +114,26 @@ export default React.createClass({
     return this.renderKbcWithSSO();
   },
 
+  closeResetModal() {
+    if (!this.props.disabled && !this.props.provisioning.isDeleting) {
+      this.setState(this.getInitialState());
+    }
+  },
+
+  handleResetProject(deleteProject) {
+    return this.props.onHandleResetProject(deleteProject).then(this.closeResetModal);
+  },
+
   renderResetProject() {
     return (
       <span>
         <ResetProjectModal
+          isReseting={this.props.provisioning.isDeleting}
           show={this.state.showResetProjectModal}
           pid={this.props.config.pid}
           onHide={() => this.setState({showResetProjectModal: false})}
-          onConfirm={this.props.onHandleResetProject}
+          onConfirm={this.handleResetProject}
+          disabled={this.props.disabled}
         />
         <button type="button"
           onClick={() => this.setState({showResetProjectModal: true})}
@@ -204,7 +217,7 @@ export default React.createClass({
       <div className="component-empty-state text-center">
         <p>No project set up yet.</p>
         <button
-          disabled={this.props.disabled}
+          disabled={this.props.disabled || this.props.provisioning.isCreating}
           onClick={this.openModal}
           className="btn btn-success">
           Setup GoodData Project

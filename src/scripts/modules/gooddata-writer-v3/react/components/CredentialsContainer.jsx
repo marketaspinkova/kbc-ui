@@ -30,8 +30,13 @@ export default React.createClass({
       canCreateProdProject,
       data,
       isCreating: ProvisioningStore.getIsCreating(),
-      isLoading: pid && ProvisioningStore.getIsLoading(pid)
+      isLoading: ProvisioningStore.getIsLoading(pid),
+      isDeleting: ProvisioningStore.getIsDeleting(pid)
     };
+  },
+
+  componentWillReceiveProps() {
+    this.setState(this.getStateFromStores());
   },
 
   componentDidMount() {
@@ -53,7 +58,9 @@ export default React.createClass({
   handleCreate(newProject) {
     if (newProject.isCreateNewProject) {
       const {name, tokenType, customToken} = newProject;
-      return ProvisioningActions.createProject(name, tokenType, customToken).then( this.props.onSave);
+      return ProvisioningActions.createProject(name, tokenType, customToken).then(
+        ({pid, login, password}) => this.props.onSave({pid, login, password})
+      );
     } else {
       const {pid, login, password} = newProject;
       return this.props.onSave({pid, login, password});

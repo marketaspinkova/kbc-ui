@@ -13,6 +13,7 @@ let _store = Map({
 const ProvisioningStore = StoreUtils.createStore({
   getIsCreating: () => _store.getIn(['isCreating'], false),
   getIsLoading: (pid) => _store.getIn(['isLoading', pid], false),
+  getIsDeleting: (pid) => _store.getIn(['isDeleting', pid], false),
   getData: (pid) => pid ? _store.getIn(['provisioning', pid], null) : null
 });
 

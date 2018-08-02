@@ -65,14 +65,13 @@ export default {
           data
         });
         return data;
-      }).catch(
-        err => {
-          dispatcher.handleViewAction({
-            type: ProvisioningActionTypes.GD_PROVISIONING_CREATE_ERROR,
-            error: err
-          });
-          handleError(err);
-        }
+      }).catch(err => {
+        dispatcher.handleViewAction({
+          type: ProvisioningActionTypes.GD_PROVISIONING_CREATE_ERROR,
+          error: err
+        });
+        handleError(err);
+      }
       );
   },
 

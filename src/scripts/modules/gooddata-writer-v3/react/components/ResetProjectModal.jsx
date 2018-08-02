@@ -7,20 +7,27 @@ export default React.createClass({
     pid: React.PropTypes.string,
     onConfirm: React.PropTypes.func.isRequired,
     onHide: React.PropTypes.func.isRequired,
-    show: React.PropTypes.bool.isRequired
+    show: React.PropTypes.bool.isRequired,
+    disabled: React.PropTypes.bool.isRequired,
+    isReseting: React.PropTypes.bool.isRequired
   },
 
   getInitialState() {
     return {
-      deleteProject: false,
-      isReseting: false
+      deleteProject: false
     };
+  },
+
+  onHide() {
+    if (!this.props.isReseting && !this.props.disabled) {
+      this.props.onHide();
+    }
   },
 
   render() {
     const {pid} = this.props;
     return (
-      <Modal onHide={this.props.onHide} show={this.props.show}>
+      <Modal onHide={this.onHide} show={this.props.show}>
         <Modal.Header closeButton>
           <Modal.Title>
             Reset Project
@@ -38,7 +45,7 @@ export default React.createClass({
           <ConfirmButtons
             saveLabel="Reset"
             saveStyle="danger"
-            isSaving={this.state.isReseting}
+            isSaving={this.props.isReseting || this.props.disabled}
             onCancel={this.props.onHide}
             onSave={this.handleConfirm}
           />
@@ -48,8 +55,6 @@ export default React.createClass({
   },
 
   handleConfirm() {
-    return this.setState({isReseting: true}, () => {
-      return this.props.onConfirm(this.state.deleteProject).then(this.props.onHide, this.props.onHide);
-    });
+    return this.props.onConfirm(this.state.deleteProject);
   }
 });
