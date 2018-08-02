@@ -52,7 +52,7 @@ export default React.createClass({
     const mutatedValue = this.props.value.withMutations((mapping) => {
       let mutation = mapping.set('source', value);
       mutation = mutation.set('destination', destination);
-      mutation = mutation.set('datatypes', Immutable.Map());
+      mutation = mutation.set('datatypes', this.getInitialDatatypes(value));
       mutation = mutation.set('whereColumn', '');
       mutation = mutation.set('whereValues', Immutable.List());
       mutation = mutation.set('whereOperator', 'eq');
@@ -256,6 +256,23 @@ export default React.createClass({
       return this.getMetadataDataTypes(metadataSet);
     } else {
       return Immutable.fromJS(this._getFilteredColumns()).reduce((memo, column) => {
+        return memo.set(column, Immutable.fromJS({
+          column: column,
+          type: 'VARCHAR',
+          length: this.isPrimaryKeyColumn(column) ? 255 : null,
+          convertEmptyValuesToNull: false
+        }));
+      }, Immutable.Map());
+    }
+  },
+
+  getInitialDatatypes(sourceTable) {
+    if (MetadataStore.tableHasMetadataDatatypes(sourceTable)) {
+      return this.getMetadataDataTypes(MetadataStore.getTableColumnsMetadata(sourceTable));
+    } else {
+      return this.props.tables.find((table) => {
+        return table.get('id') === sourceTable;
+      }).get('columns').reduce((memo, column) => {
         return memo.set(column, Immutable.fromJS({
           column: column,
           type: 'VARCHAR',
