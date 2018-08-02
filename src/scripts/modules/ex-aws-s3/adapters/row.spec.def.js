@@ -222,7 +222,7 @@ export const cases = {
       primaryKey: [],
       delimiter: ',',
       enclosure: '"',
-      columns: ['col1', 'col2'],
+      columns: [],
       decompress: false,
       addRowNumberColumn: false,
       addFilenameColumn: false
@@ -255,7 +255,7 @@ export const cases = {
               enclosure: '"',
               incremental: true,
               primary_key: [],
-              columns: ['col1', 'col2']
+              columns_from: "header"
             }
           },
           {

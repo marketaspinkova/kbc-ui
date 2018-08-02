@@ -55,24 +55,15 @@ export default React.createClass({
       return 'Gets all files from the specified S3 bucket and overwrites the output table in Storage. The files must have the same structure and be without a header.';
     }
     if (this.props.value.type === 'incremental') {
-      return 'Gets only new files from the S3 bucket and adds them to the output table in Storage. All non-empty files are expected to have the same header.';
+      return 'Gets only new files from the S3 bucket and adds them to the output table in Storage. All files are expected to have the same header.';
     }
     if (this.props.value.type === 'incremental-headless') {
       return 'Gets only new files from the S3 bucket and adds them to the output table in Storage. The files must have the same structure and be without a header.';
     }
   },
 
-  renderCsvHeaderHelp() {
-    if (this.props.value.type === 'full-headless' || this.props.value.type === 'incremental-headless') {
-      return 'Specify the columns of the headless files.';
-    }
-    if (this.props.value.type === 'incremental') {
-      return 'Because incremental load can yield empty files, specify the header manually as well.';
-    }
-  },
-
   renderCsvHeader() {
-    if (this.props.value.type !== 'full') {
+    if (this.props.value.type === 'full-headless' || this.props.value.type === 'incremental-headless') {
       const props = this.props;
       return (
         <div className="form-group">
@@ -92,7 +83,7 @@ export default React.createClass({
               disabled={this.props.disabled || this.props.value.type === 'full'}
             />
             <span className="help-block">
-              {this.renderCsvHeaderHelp()}
+              Specify the columns of the headless files.
             </span>
           </div>
         </div>

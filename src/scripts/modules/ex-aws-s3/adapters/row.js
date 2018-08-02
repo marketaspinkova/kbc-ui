@@ -17,7 +17,7 @@ export function createConfiguration(localState) {
     }
   });
 
-  if (type === 'full') {
+  if (type === 'full' || type === 'incremental') {
     createManifestProcessor = createManifestProcessor.setIn(['parameters', 'columns_from'], 'header');
   } else {
     createManifestProcessor = createManifestProcessor.setIn(['parameters', 'columns'], localState.get('columns', Immutable.List()));
