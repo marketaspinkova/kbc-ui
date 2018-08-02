@@ -4,7 +4,7 @@ import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import NewProjectForm from './NewProjectForm';
 import {isNewProjectValid, TokenTypes} from '../../provisioning/utils';
 import {Loader} from '@keboola/indigo-ui';
-import api from '../../provisioning/api';
+import ResetProjectModal from './ResetProjectModal';
 
 export default React.createClass({
   propTypes: {
@@ -21,12 +21,14 @@ export default React.createClass({
     }),
     disabled: PropTypes.bool.isRequired,
     onHandleCreate: PropTypes.func.isRequired,
-    onToggleEnableAcess: PropTypes.func.isRequired
+    onToggleEnableAcess: PropTypes.func.isRequired,
+    onHandleResetProject: PropTypes.func.isRequired
   },
 
   getInitialState() {
     return {
       showModal: false,
+      showResetProjectModal: false,
       newProject: {
         name: '',
         login: '',
@@ -123,10 +125,22 @@ export default React.createClass({
     );
   },
 
-  tryJsonLogin(sso) {
-    return api.jsonLogin(sso).then(result => {
-      return result;
-    });
+  renderResetProject() {
+    return (
+      <span>
+        <ResetProjectModal
+          show={this.state.showResetProjectModal}
+          pid={this.props.config.pid}
+          onHide={() => this.setState({showResetProjectModal: false})}
+          onConfirm={this.props.onHandleResetProject}
+        />
+        <button type="button"
+          onClick={() => this.setState({showResetProjectModal: true})}
+          className="btn btn-danger">
+          Reset Project
+        </button>
+      </span>
+    );
   },
 
   renderKbcWithSSO() {
@@ -154,6 +168,7 @@ export default React.createClass({
             Disable Access
           </button>
         </form>
+        {this.renderResetProject()}
       </div>
     );
   },
@@ -170,6 +185,7 @@ export default React.createClass({
           className="btn btn-success">
           Enable Access
         </button>
+        {this.renderResetProject()}
       </div>
     );
   },

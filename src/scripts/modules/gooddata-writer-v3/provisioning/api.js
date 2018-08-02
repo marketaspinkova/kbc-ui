@@ -46,5 +46,11 @@ export default {
     return createRequest('POST', `projects/${pid}/access`)
       .promise()
       .then(response => response.body);
+  },
+
+  deleteProject(pid) {
+    return createRequest('DELETE', `projects/${pid}?user=true`)
+      .promise()
+      .then(response => response.body);
   }
 };

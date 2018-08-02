@@ -60,6 +60,19 @@ export default React.createClass({
     }
   },
 
+  resetConfigCredentials() {
+    return this.props.onSave({pid: '', login: '', password: ''});
+  },
+
+  handleResetProject(deleteProject) {
+    const {pid} = this.props.value;
+    if (deleteProject) {
+      return ProvisioningActions.deleteProject(pid).then(this.resetConfigCredentials);
+    } else {
+      return this.resetConfigCredentials();
+    }
+  },
+
   render() {
     return (
       <Credentials
@@ -68,6 +81,7 @@ export default React.createClass({
         provisioning={this.state}
         onHandleCreate={this.handleCreate}
         onToggleEnableAcess={this.handleToggleProjectAccess}
+        onHandleResetProject={this.handleResetProject}
       />
     );
   }

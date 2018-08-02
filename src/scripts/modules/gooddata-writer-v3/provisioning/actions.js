@@ -23,6 +23,23 @@ export default {
     );
   },
 
+  deleteProject(pid) {
+    dispatcher.handleViewAction({
+      type: ProvisioningActionTypes.GD_PROVISIONING_DELETE_START,
+      pid
+    });
+    return api.deleteProject(pid).then(
+      () => dispatcher.handleViewAction({
+        type: ProvisioningActionTypes.GD_PROVISIONING_DELETE_SUCCESS,
+        pid
+      }),
+      err => dispatcher.handleViewAction({
+        type: ProvisioningActionTypes.GD_PROVISIONING_DELETE_ERROR,
+        error: err,
+        pid
+      })
+    );
+  },
 
   createProject(name, tokenType, customToken) {
     dispatcher.handleViewAction({

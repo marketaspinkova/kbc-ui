@@ -6,6 +6,7 @@ import {ProvisioningActionTypes} from '../helpers/Constants';
 let _store = Map({
   isCreating: false,
   isLoading: Map(),
+  isDeleting: Map(),
   provisioning: Map() // pid -> {}
 });
 
@@ -69,6 +70,24 @@ dispatcher.register(payload => {
     }
     case ProvisioningActionTypes.GD_PROVISIONING_CREATE_ERROR: {
       _store = _store.setIn(['isCreating'], false);
+      return ProvisioningStore.emitChange();
+    }
+
+    case ProvisioningActionTypes.GD_PROVISIONING_DELETE_START: {
+      const {pid} = action;
+      _store = _store.setIn(['isDeleting', pid], true);
+      return ProvisioningStore.emitChange();
+    }
+    case ProvisioningActionTypes.GD_PROVISIONING_DELETE_SUCCESS: {
+      const {pid} = action;
+      _store = _store.setIn(['isDeleting', pid], false);
+      _store = _store.removeIn(['provisioning', pid]);
+      return ProvisioningStore.emitChange();
+    }
+    case ProvisioningActionTypes.GD_PROVISIONING_DELETE_ERROR: {
+      const {pid, error} = action;
+      _store = _store.setIn(['isDeleting', pid], false);
+      _store = _store.setIn(['provisioning', pid], fromJS(error));
       return ProvisioningStore.emitChange();
     }
     default:
