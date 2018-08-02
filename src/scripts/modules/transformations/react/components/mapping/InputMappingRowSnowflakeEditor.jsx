@@ -118,7 +118,7 @@ export default React.createClass({
   },
 
   _getColumns() {
-    return this.getSelectedTable().get('columns', Immutable.List());
+    return this.getSelectedTable() ? this.getSelectedTable().get('columns', Immutable.List()) : Immutable.List();
   },
 
   isPrimaryKeyColumn(column) {
