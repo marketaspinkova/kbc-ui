@@ -49,22 +49,26 @@ export default React.createClass({
 
   renderLoadTypeHelp() {
     if (this.props.value.type === 'full') {
-      return 'Full load gets all files from S3 and overwrites the table in Storage. Header is extracted directly from the CSV file.';
+      return 'Gets all files from the specified S3 bucket and overwrites the output(?) table in Storage. All files are expected to have the same header.';
     }
     if (this.props.value.type === 'full-headless') {
-      return 'Full load gets all files from S3 and overwrites the table in Storage. CSV file is expected to have no header.';
+      return 'Gets all files from the specified S3 bucket and overwrites the output table in Storage. The files must have the same structure and be without a header.';
     }
-    if (this.props.value.type === 'incremental' || this.props.value.type === 'incremental-headless') {
-      return 'The extractor will only get new files each time and will load them incrementally to Storage. CSV header must be set manually.';
+    if (this.props.value.type === 'incremental') {
+      return 'Gets only new files from the S3 bucket and adds them to the output table in Storage. All non-empty files are expected to have the same header.';
     }
+    if (this.props.value.type === 'incremental-headless') {
+      return 'Gets only new files from the S3 bucket and adds them to the output table in Storage. The files must have the same structure and be without a header.';
+    }
+
   },
 
   renderCsvHeaderHelp() {
     if (this.props.value.type === 'full-headless' || this.props.value.type === 'incremental-headless') {
-      return 'Set columns of the headless CSV file.';
+      return 'Specify the columns of the headless files.';
     }
     if (this.props.value.type === 'incremental') {
-      return 'Please set the CSV columns manually. Incremental loads can yield empty files, so the header is required.';
+      return 'Because incremental load can yield empty files, specify the header manually as well.';
     }
   },
 
