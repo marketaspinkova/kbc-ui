@@ -31,9 +31,8 @@ dispatcher.register(payload => {
       return ProvisioningStore.emitChange();
     }
     case ProvisioningActionTypes.GD_PROVISIONING_LOAD_ERROR: {
-      const {pid, error} = action;
+      const {pid} = action;
       _store = _store.setIn(['isLoading', pid], false);
-      _store = _store.setIn(['provisioning', pid], fromJS(error));
       return ProvisioningStore.emitChange();
     }
     case ProvisioningActionTypes.GD_PROVISIONING_ENABLESSO_START: {
@@ -53,9 +52,8 @@ dispatcher.register(payload => {
       return ProvisioningStore.emitChange();
     }
     case ProvisioningActionTypes.GD_PROVISIONING_ENABLESSO_ERROR: {
-      const {pid, error} = action;
+      const {pid} = action;
       _store = _store.setIn(['isLoading', pid], false);
-      _store = _store.setIn(['provisioning', pid, 'sso'], fromJS(error));
       return ProvisioningStore.emitChange();
     }
     case ProvisioningActionTypes.GD_PROVISIONING_CREATE_START: {
@@ -85,9 +83,8 @@ dispatcher.register(payload => {
       return ProvisioningStore.emitChange();
     }
     case ProvisioningActionTypes.GD_PROVISIONING_DELETE_ERROR: {
-      const {pid, error} = action;
+      const {pid} = action;
       _store = _store.setIn(['isDeleting', pid], false);
-      _store = _store.setIn(['provisioning', pid], fromJS(error));
       return ProvisioningStore.emitChange();
     }
     default:

@@ -2,6 +2,15 @@ import {ProvisioningActionTypes} from '../helpers/Constants';
 import dispatcher from '../../../Dispatcher';
 import {isCustomToken, loadProvisioningData} from './utils';
 import api from './api';
+import HttpError from '../../../utils/HttpError';
+
+function handleError(error) {
+  if (error.response) {
+    throw new HttpError(error.response);
+  } else {
+    throw error;
+  }
+}
 
 export default {
   loadProvisioningData(pid) {
@@ -14,13 +23,14 @@ export default {
         type: ProvisioningActionTypes.GD_PROVISIONING_LOAD_SUCCESS,
         data,
         pid
-      }),
-      err => dispatcher.handleViewAction({
-        type: ProvisioningActionTypes.GD_PROVISIONING_LOAD_ERROR,
-        error: err,
-        pid
-      })
-    );
+      })).catch(err => {
+        dispatcher.handleViewAction({
+          type: ProvisioningActionTypes.GD_PROVISIONING_LOAD_ERROR,
+          error: err,
+          pid
+        });
+        handleError(err);
+      });
   },
 
   deleteProject(pid) {
@@ -32,13 +42,14 @@ export default {
       () => dispatcher.handleViewAction({
         type: ProvisioningActionTypes.GD_PROVISIONING_DELETE_SUCCESS,
         pid
-      }),
-      err => dispatcher.handleViewAction({
-        type: ProvisioningActionTypes.GD_PROVISIONING_DELETE_ERROR,
-        error: err,
-        pid
-      })
-    );
+      })).catch(err => {
+        dispatcher.handleViewAction({
+          type: ProvisioningActionTypes.GD_PROVISIONING_DELETE_ERROR,
+          error: err,
+          pid
+        });
+        handleError(err);
+      });
   },
 
   createProject(name, tokenType, customToken) {
@@ -47,15 +58,22 @@ export default {
     });
     const token = isCustomToken(tokenType) ? customToken : tokenType;
     return api.createProjectAndUser(name, token).then(
-      data => dispatcher.handleViewAction({
-        type: ProvisioningActionTypes.GD_PROVISIONING_CREATE_SUCCESS,
-        data
-      }),
-      err => dispatcher.handleViewAction({
-        type: ProvisioningActionTypes.GD_PROVISIONING_CREATE_ERROR,
-        error: err
-      })
-    );
+      data => {
+        data.token = token;
+        dispatcher.handleViewAction({
+          type: ProvisioningActionTypes.GD_PROVISIONING_CREATE_SUCCESS,
+          data
+        });
+        return data;
+      }).catch(
+        err => {
+          dispatcher.handleViewAction({
+            type: ProvisioningActionTypes.GD_PROVISIONING_CREATE_ERROR,
+            error: err
+          });
+          handleError(err);
+        }
+      );
   },
 
   toggleProjectAccess(pid, enable) {
@@ -70,12 +88,13 @@ export default {
         pid,
         enable,
         data
-      }),
-      err => dispatcher.handleViewAction({
-        type: ProvisioningActionTypes.GD_PROVISIONING_ENABLESSO_ERROR,
-        pid,
-        error: err
-      })
-    );
+      })).catch(err => {
+        dispatcher.handleViewAction({
+          type: ProvisioningActionTypes.GD_PROVISIONING_ENABLESSO_ERROR,
+          pid,
+          error: err
+        });
+        handleError(err);
+      });
   }
 };

@@ -107,22 +107,10 @@ export default React.createClass({
     if (!data) {
       return this.renderOwnCredentials();
     }
-    if (data.has('error')) {
-      return this.renderProvisioningError();
-    }
-    if (!data.has('sso')) {
+    if (!data.get('sso')) {
       return this.renderKbcNoSSO();
     }
     return this.renderKbcWithSSO();
-  },
-
-  renderProvisioningError() {
-    const error = this.props.provisioning.data.get('error');
-    return (
-      <div>
-        There was an error: {error}
-      </div>
-    );
   },
 
   renderResetProject() {
