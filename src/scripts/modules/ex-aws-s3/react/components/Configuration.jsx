@@ -60,7 +60,6 @@ export default React.createClass({
     if (this.props.value.type === 'incremental-headless') {
       return 'Gets only new files from the S3 bucket and adds them to the output table in Storage. The files must have the same structure and be without a header.';
     }
-
   },
 
   renderCsvHeaderHelp() {
