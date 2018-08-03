@@ -18,16 +18,10 @@ export default React.createClass({
     };
   },
 
-  onHide() {
-    if (!this.props.isReseting && !this.props.disabled) {
-      this.props.onHide();
-    }
-  },
-
   render() {
     const {pid} = this.props;
     return (
-      <Modal onHide={this.onHide} show={this.props.show}>
+      <Modal onHide={this.props.onHide} show={this.props.show}>
         <Modal.Header closeButton>
           <Modal.Title>
             Reset Project

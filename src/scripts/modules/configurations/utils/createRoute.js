@@ -5,7 +5,7 @@ import installedComponentsActions from '../../components/InstalledComponentsActi
 import storageActions from '../../components/StorageActionCreators';
 import versionsActions from '../../components/VersionsActionCreators';
 import rowVersionsActions from '../RowVersionsActionCreators';
-import jobsActions from '../../jobs/ActionCreators';
+// import jobsActions from '../../jobs/ActionCreators';
 import InstalledComponentsStore from '../../components/stores/InstalledComponentsStore';
 import ComponentsStore from '../../components/stores/ComponentsStore';
 import ConfigurationRowsStore from '../ConfigurationRowsStore';

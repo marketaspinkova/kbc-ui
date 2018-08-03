@@ -1,10 +1,7 @@
 import React, {PropTypes} from 'react';
-import { Modal } from 'react-bootstrap';
-import ConfirmButtons from '../../../../react/common/ConfirmButtons';
-import NewProjectForm from './NewProjectForm';
-import {isNewProjectValid, TokenTypes} from '../../provisioning/utils';
 import {Loader} from '@keboola/indigo-ui';
 import ResetProjectModal from './ResetProjectModal';
+import CreateProjectModal from './CreateProjectModal';
 
 export default React.createClass({
   propTypes: {
@@ -28,62 +25,31 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      showModal: false,
-      showResetProjectModal: false,
-      newProject: {
-        name: '',
-        login: '',
-        password: '',
-        pid: '',
-        customToken: '',
-        isCreateNewProject: true,
-        tokenType: TokenTypes.DEMO
-      }
+      showCreateProjectModal: false,
+      showResetProjectModal: false
     };
   },
 
-  openModal(e) {
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-    this.setState({showModal: true});
-  },
-
-  closeModal() {
+  closeCreateProjectModal() {
     if (!this.props.disabled && !this.props.provisioning.isCreating) {
-      this.setState(this.getInitialState());
+      this.setState({showCreateProjectModal: false});
     }
   },
 
-  renderModal() {
-    return (
-      <Modal onHide={this.closeModal} show={this.state.showModal}>
-        <Modal.Header closeButton={true}>
-          <Modal.Title>
-            Setup GoodData Project
-          </Modal.Title>
-        </Modal.Header>
+  handleCreateProject(newProject) {
+    this.props.onHandleCreate(newProject).then(this.closeCreateProjectModal);
+  },
 
-        <Modal.Body>
-          <NewProjectForm
-            canCreateProdProject={this.props.provisioning.canCreateProdProject}
-            value={this.state.newProject}
-            onChange={val => this.setState({newProject: val})}
-            disabled={this.props.disabled || this.props.provisioning.isCreating}
-          />
-        </Modal.Body>
 
-        <Modal.Footer>
-          <ConfirmButtons
-            isSaving={this.props.disabled || this.props.provisioning.isCreating}
-            isDisabled={!this.isValid()}
-            saveLabel={this.state.newProject.isCreateNewProject ? 'Create' : 'Save'}
-            onCancel={this.closeModal}
-            onSave={this.handleCreate}/>
-        </Modal.Footer>
-      </Modal>
-    );
+  closeResetProjectModal() {
+    if (!this.props.disabled && !this.props.provisioning.isDeleting) {
+      this.setState({showResetProjectModal: false});
+    }
+  },
+
+  handleResetProject(deleteProject) {
+    return this.props.onHandleResetProject(deleteProject)
+               .then(this.closeResetProjectModal);
   },
 
   render() {
@@ -97,7 +63,15 @@ export default React.createClass({
           onConfirm={this.handleResetProject}
           disabled={this.props.disabled}
         />
-        {this.renderModal()}
+        <CreateProjectModal
+          isCreating={this.props.provisioning.isCreating}
+          show={this.state.showCreateProjectModal}
+          onHide={this.closeCreateProjectModal}
+          onCreate={this.handleCreateProject}
+          disabled={this.props.disabled}
+          canCreateProdProject={this.props.provisioning.canCreateProdProject}
+          config={this.props.config}
+        />
         {this.renderProvisioning()}
       </div>
     );
@@ -120,14 +94,6 @@ export default React.createClass({
       return this.renderKbcNoSSO();
     }
     return this.renderKbcWithSSO();
-  },
-
-  handleResetProject(deleteProject) {
-    return this.props.onHandleResetProject(deleteProject).then(() => {
-      if (!this.props.disabled && !this.props.provisioning.isDeleting) {
-        this.setState({showResetProjectModal: false});
-      }
-    });
   },
 
   renderResetProject() {
@@ -189,13 +155,6 @@ export default React.createClass({
     );
   },
 
-  onEditCredentials(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    const newProject = {...this.props.config, isCreateNewProject: false};
-    this.setState({newProject}, () => this.openModal());
-  },
-
   renderOwnCredentials() {
     const {pid, login} = this.props.config;
     return (
@@ -203,7 +162,8 @@ export default React.createClass({
         <h4>The GoodDataProject is not provisioned by Keboola</h4>
         <div> Project: {pid}</div>
         <div> User: {login}</div>
-        <button onClick={this.onEditCredentials} className="btn btn-success">
+        <button onClick={() => this.setState({showCreateProjectModal: true})}
+          className="btn btn-success">
           Edit
         </button>
       </div>
@@ -215,23 +175,13 @@ export default React.createClass({
       <div className="component-empty-state text-center">
         <p>No project set up yet.</p>
         <button
-          disabled={this.props.disabled || this.props.provisioning.isCreating}
-          onClick={this.openModal}
+          disabled={this.props.disabled}
+          onClick={() => this.setState({showCreateProjectModal: true})}
           className="btn btn-success">
           Setup GoodData Project
         </button>
       </div>
     );
-  },
-
-  isValid() {
-    return isNewProjectValid(this.state.newProject);
-  },
-
-  handleCreate(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    this.props.onHandleCreate(this.state.newProject).then(this.closeModal);
   }
 
 });

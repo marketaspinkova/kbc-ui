@@ -68,7 +68,9 @@ export default React.createClass({
   },
 
   resetConfigCredentials() {
-    return this.props.onSave({pid: '', login: '', password: ''});
+    return this.props.onSave({pid: '', login: '', password: ''}).then( () =>
+      this.props.onChange({pid: '', login: '', password: ''})
+    );
   },
 
   handleResetProject(deleteProject) {

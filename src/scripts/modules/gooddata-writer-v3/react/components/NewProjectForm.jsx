@@ -45,9 +45,9 @@ export default React.createClass({
 
   renderExistingProjectGroup() {
     return [
+      this.renderInputControlGroup('Project Id', 'pid'),
       this.renderInputControlGroup('Username', 'login'),
-      this.renderInputControlGroup('Password', 'password'),
-      this.renderInputControlGroup('Project Id', 'pid')
+      this.renderInputControlGroup('Password', 'password')
     ];
   },
 
