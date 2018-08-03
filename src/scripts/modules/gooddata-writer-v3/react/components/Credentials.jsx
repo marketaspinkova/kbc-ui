@@ -89,6 +89,14 @@ export default React.createClass({
   render() {
     return (
       <div>
+        <ResetProjectModal
+          isReseting={this.props.provisioning.isDeleting}
+          show={this.state.showResetProjectModal}
+          pid={this.props.config.pid}
+          onHide={() => this.setState({showResetProjectModal: false})}
+          onConfirm={this.handleResetProject}
+          disabled={this.props.disabled}
+        />
         {this.renderModal()}
         {this.renderProvisioning()}
       </div>
@@ -114,27 +122,17 @@ export default React.createClass({
     return this.renderKbcWithSSO();
   },
 
-  closeResetModal() {
-    if (!this.props.disabled && !this.props.provisioning.isDeleting) {
-      this.setState(this.getInitialState());
-    }
-  },
-
   handleResetProject(deleteProject) {
-    return this.props.onHandleResetProject(deleteProject).then(this.closeResetModal);
+    return this.props.onHandleResetProject(deleteProject).then(() => {
+      if (!this.props.disabled && !this.props.provisioning.isDeleting) {
+        this.setState({showResetProjectModal: false});
+      }
+    });
   },
 
   renderResetProject() {
     return (
       <span>
-        <ResetProjectModal
-          isReseting={this.props.provisioning.isDeleting}
-          show={this.state.showResetProjectModal}
-          pid={this.props.config.pid}
-          onHide={() => this.setState({showResetProjectModal: false})}
-          onConfirm={this.handleResetProject}
-          disabled={this.props.disabled}
-        />
         <button type="button"
           onClick={() => this.setState({showResetProjectModal: true})}
           className="btn btn-danger">
