@@ -45,13 +45,13 @@ export default React.createClass({
 
   renderExistingProjectGroup() {
     return [
-      this.renderInputControlGroup('Project Id', 'pid'),
-      this.renderInputControlGroup('Username', 'login'),
-      this.renderInputControlGroup('Password', 'password')
+      this.renderInputControlGroup('Project Id', 'pid', 'type pid', 'Id of GoodData project'),
+      this.renderInputControlGroup('Username', 'login', 'type username', 'Username of GoodData user'),
+      this.renderInputControlGroup('Password', 'password', 'type password', 'Password of GoodData user')
     ];
   },
 
-  renderInputControlGroup(label, fieldName) {
+  renderInputControlGroup(label, fieldName, placeholder, help) {
     const {disabled, value} = this.props;
     return (
       <FormGroup key={fieldName}>
@@ -60,11 +60,14 @@ export default React.createClass({
         </Col>
         <Col sm={9}>
           <FormControl
+            helpBlock={help}
+            placeholder={placeholder}
             type={fieldName === 'password' ? 'password' : 'text'}
             disabled={disabled}
             onChange={e => this.handleChange({[fieldName]: e.target.value})}
             value={value[fieldName]}
           />
+          {help && <HelpBlock>{help}</HelpBlock>}
         </Col>
       </FormGroup>
 
@@ -75,7 +78,7 @@ export default React.createClass({
     const {disabled, value} = this.props;
     const {tokenType} = value;
     return [
-      this.renderInputControlGroup('Project Name', 'name'),
+      this.renderInputControlGroup('Project Name', 'name', 'name of GoodData project'),
       <FormGroup key="authToken">
         <Col componentClass={ControlLabel} sm={3}>Auth Token</Col>
         <Col sm={9}>

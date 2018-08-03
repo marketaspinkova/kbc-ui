@@ -48,8 +48,7 @@ export default React.createClass({
   },
 
   handleResetProject(deleteProject) {
-    return this.props.onHandleResetProject(deleteProject)
-               .then(this.closeResetProjectModal);
+    return this.props.onHandleResetProject(deleteProject).then(this.closeResetProjectModal);
   },
 
   render() {
@@ -78,9 +77,9 @@ export default React.createClass({
   },
 
   renderProvisioning() {
-    const {data} = this.props.provisioning;
+    const {data, isLoading} = this.props.provisioning;
     const {pid} = this.props.config;
-    const {isLoading} = this.props.provisioning;
+
     if (isLoading) {
       return <Loader />;
     }
