@@ -24,15 +24,15 @@ export default React.createClass({
       <Modal onHide={this.props.onHide} show={this.props.show}>
         <Modal.Header closeButton>
           <Modal.Title>
-            Reset Project
+            Reset GoodData Project
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          You are about to disconnect GoodData Project {pid} from this configuration.
+          You are about to disconnect GoodData Project {pid} from the configuration.
           <Checkbox
             checked={this.state.deleteProject}
             onChange={(e) => this.setState({deleteProject: e.target.checked})}>
-            Remove GoodData Project {pid}
+            Also remove GoodData Project
           </Checkbox>
         </Modal.Body>
         <Modal.Footer>

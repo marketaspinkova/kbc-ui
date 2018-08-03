@@ -113,7 +113,8 @@ export default React.createClass({
     const sso = this.props.provisioning.data.get('sso');
     return (
       <div>
-        <div>Keboola Provisioned GoodData Project({pid}).</div>
+        <h4>Provisioned By Keboola</h4>
+        <div> Project Id: {pid}</div>
         <div> Token: {token}</div>
         <form
           target="_blank noopener noreferrer"
@@ -124,13 +125,15 @@ export default React.createClass({
           ).toArray()}
           <input key="targetUrl" type="hidden" name="targetUrl" value={`/#s=/gdc/projects/${pid}|projectDashboardPage`}/>
           <button type="submit"
-            className="btn btn-success">
+            className="btn btn-link">
+            <span className="fa fa-bar-chart-o fa-fw"/>
             Go To Project
           </button>
-          <button type="button"
+          <span className="btn btn-link"
             onClick={() => this.props.onToggleEnableAcess(pid, false)}>
-            Disable Access
-          </button>
+            <span className="fa fa-unlink fa-fw" />
+            Disable Access To Project
+          </span>
         </form>
         {this.renderResetProject()}
       </div>
@@ -142,13 +145,15 @@ export default React.createClass({
     const token = this.props.provisioning.data.get('token');
     return (
       <div>
-        <div>Keboola Provisioned GoodData Project({pid}).</div>
+        <h4>Provisioned by Keboola</h4>
+        <div> GoodData Project Id: {pid}</div>
         <div> Token: {token}</div>
-        <button
+        <span
           onClick={() => this.props.onToggleEnableAcess(pid, true)}
-          className="btn btn-success">
-          Enable Access
-        </button>
+          className="btn btn-link">
+          <span className="fa fa-link fa-fw" />
+          Enable Access To Project
+        </span>
         {this.renderResetProject()}
       </div>
     );
@@ -158,12 +163,12 @@ export default React.createClass({
     const {pid, login} = this.props.config;
     return (
       <div>
-        <h4>The GoodDataProject is not provisioned by Keboola</h4>
-        <div> Project: {pid}</div>
-        <div> User: {login}</div>
+        <h4>Not provisioned by Keboola</h4>
+        <div>GoodData Project Id: {pid}</div>
+        <div>GoodData Username: {login}</div>
         <button onClick={() => this.setState({showCreateProjectModal: true})}
           className="btn btn-success">
-          Edit
+          change
         </button>
       </div>
     );
