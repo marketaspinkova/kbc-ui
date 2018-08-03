@@ -243,7 +243,9 @@ export default React.createClass({
         column: colname,
         type: datatypeName,
         length: datatype.get(datatypeName).get('size') ? datatypeLength.get('value') : null,
-        convertEmptyValuesToNull: !!datatypeNullable.get('value')
+        convertEmptyValuesToNull: isNaN(datatypeNullable.get('value'))
+          ? datatypeNullable.get('value')
+          : !!parseInt(datatypeNullable.get('value'), 10)
       });
     });
   },
