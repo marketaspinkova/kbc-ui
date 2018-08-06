@@ -255,7 +255,7 @@ export const cases = {
               enclosure: '"',
               incremental: true,
               primary_key: [],
-              columns_from: "header"
+              columns_from: 'header'
             }
           },
           {
