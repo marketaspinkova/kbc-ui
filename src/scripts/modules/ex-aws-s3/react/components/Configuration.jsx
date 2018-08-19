@@ -214,30 +214,25 @@ export default React.createClass({
           disabled={this.props.disabled}
           help={(<span>Name of the table stored in Storage.</span>)}
           />
-        <PanelWithDetails
-          defaultExpanded={this.props.value.primaryKey.length > 0}
-          placement="bottom"
-          >
-          <div className="form-group">
-            <div className="col-xs-4 control-label">Primary Key</div>
-            <div className="col-xs-8">
-              <Select
-                name="primaryKey"
-                value={this.props.value.primaryKey}
-                multi={true}
-                allowCreate={true}
-                delimiter=","
-                placeholder="Add a column to the primary key"
-                emptyStrings={false}
-                onChange={function(value) {
-                  props.onChange({primaryKey: value});
-                }}
-                disabled={this.props.disabled}
-              />
-              <div className="help-block">If primary key is set, updates can be done on table by selecting <strong>incremental loads</strong>. Primary key can consist of multiple columns. Primary key of an existing table cannot be changed.</div>
-            </div>
+        <div className="form-group">
+          <div className="col-xs-4 control-label">Primary Key</div>
+          <div className="col-xs-8">
+            <Select
+              name="primaryKey"
+              value={this.props.value.primaryKey}
+              multi={true}
+              allowCreate={true}
+              delimiter=","
+              placeholder="Add a column to the primary key"
+              emptyStrings={false}
+              onChange={function(value) {
+                props.onChange({primaryKey: value});
+              }}
+              disabled={this.props.disabled}
+            />
+            <div className="help-block">If primary key is set, updates can be done on table by selecting <strong>incremental loads</strong>. Primary key can consist of multiple columns. Primary key of an existing table cannot be changed.</div>
           </div>
-        </PanelWithDetails>
+        </div>
         <h3>Processing Settings</h3>
         <Input
           type="checkbox"
