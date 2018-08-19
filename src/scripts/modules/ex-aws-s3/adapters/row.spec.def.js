@@ -1,16 +1,18 @@
 export const cases = {
   emptyWithDefaults: {
     localState: {
-      type: 'full',
       bucket: '',
       key: '',
       name: '',
       wildcard: false,
       subfolders: false,
+      incremental: false,
+      newFilesOnly: false,
       primaryKey: [],
       delimiter: ',',
       enclosure: '"',
       columns: [],
+      columnsFrom: 'header',
       decompress: false,
       addRowNumberColumn: false,
       addFilenameColumn: false
@@ -60,16 +62,18 @@ export const cases = {
   },
   simple: {
     localState: {
-      type: 'full-headless',
       bucket: 'mybucket',
       key: 'mykey',
       name: 'mytable',
       wildcard: false,
       subfolders: false,
+      incremental: false,
+      newFilesOnly: false,
       primaryKey: ['col1'],
       delimiter: ',',
       enclosure: '"',
       columns: ['col1', 'col2'],
+      columnsFrom: 'manual',
       decompress: false,
       addRowNumberColumn: false,
       addFilenameColumn: false
@@ -111,16 +115,18 @@ export const cases = {
   },
   wildcard: {
     localState: {
-      type: 'full-headless',
       bucket: 'mybucket',
       key: 'mykey',
       name: 'mytable',
       wildcard: true,
       subfolders: false,
+      incremental: false,
+      newFilesOnly: false,
       primaryKey: [],
       delimiter: ',',
       enclosure: '"',
       columns: ['col1', 'col2'],
+      columnsFrom: 'manual',
       decompress: false,
       addRowNumberColumn: false,
       addFilenameColumn: false
@@ -162,16 +168,18 @@ export const cases = {
   },
   subfolders: {
     localState: {
-      type: 'full-headless',
       bucket: 'mybucket',
       key: 'mykey',
       name: 'mytable',
       wildcard: false,
       subfolders: true,
+      incremental: false,
+      newFilesOnly: false,
       primaryKey: [],
       delimiter: ',',
       enclosure: '"',
       columns: ['col1', 'col2'],
+      columnsFrom: 'manual',
       decompress: false,
       addRowNumberColumn: false,
       addFilenameColumn: false
@@ -213,75 +221,18 @@ export const cases = {
   },
   incremental: {
     localState: {
-      type: 'incremental',
       bucket: 'mybucket',
       key: 'mykey',
       name: 'mytable',
       wildcard: false,
       subfolders: false,
-      primaryKey: [],
-      delimiter: ',',
-      enclosure: '"',
-      columns: [],
-      decompress: false,
-      addRowNumberColumn: false,
-      addFilenameColumn: false
-    },
-    configuration: {
-      parameters: {
-        bucket: 'mybucket',
-        key: 'mykey',
-        includeSubfolders: false,
-        newFilesOnly: true
-      },
-      processors: {
-        after: [
-          {
-            definition: {
-              component: 'keboola.processor-move-files'
-            },
-            parameters: {
-              direction: 'tables',
-              addCsvSuffix: true,
-              folder: 'mytable'
-            }
-          },
-          {
-            definition: {
-              component: 'keboola.processor-create-manifest'
-            },
-            parameters: {
-              delimiter: ',',
-              enclosure: '"',
-              incremental: true,
-              primary_key: [],
-              columns_from: 'header'
-            }
-          },
-          {
-            definition: {
-              component: 'keboola.processor-skip-lines'
-            },
-            parameters: {
-              lines: 1
-            }
-          }
-        ]
-      }
-    }
-  },
-  incrementalHeadless: {
-    localState: {
-      type: 'incremental-headless',
-      bucket: 'mybucket',
-      key: 'mykey',
-      name: 'mytable',
-      wildcard: false,
-      subfolders: false,
+      incremental: true,
+      newFilesOnly: false,
       primaryKey: [],
       delimiter: ',',
       enclosure: '"',
       columns: ['col1', 'col2'],
+      columnsFrom: 'manual',
       decompress: false,
       addRowNumberColumn: false,
       addFilenameColumn: false
@@ -291,7 +242,7 @@ export const cases = {
         bucket: 'mybucket',
         key: 'mykey',
         includeSubfolders: false,
-        newFilesOnly: true
+        newFilesOnly: false
       },
       processors: {
         after: [
@@ -321,18 +272,73 @@ export const cases = {
       }
     }
   },
-  primaryKey: {
+  newFilesOnly: {
     localState: {
-      type: 'full-headless',
       bucket: 'mybucket',
       key: 'mykey',
       name: 'mytable',
       wildcard: false,
       subfolders: false,
+      incremental: false,
+      newFilesOnly: true,
+      primaryKey: [],
+      delimiter: ',',
+      enclosure: '"',
+      columns: ['col1', 'col2'],
+      columnsFrom: 'manual',
+      decompress: false,
+      addRowNumberColumn: false,
+      addFilenameColumn: false
+    },
+    configuration: {
+      parameters: {
+        bucket: 'mybucket',
+        key: 'mykey',
+        includeSubfolders: false,
+        newFilesOnly: true
+      },
+      processors: {
+        after: [
+          {
+            definition: {
+              component: 'keboola.processor-move-files'
+            },
+            parameters: {
+              direction: 'tables',
+              addCsvSuffix: true,
+              folder: 'mytable'
+            }
+          },
+          {
+            definition: {
+              component: 'keboola.processor-create-manifest'
+            },
+            parameters: {
+              delimiter: ',',
+              enclosure: '"',
+              incremental: false,
+              primary_key: [],
+              columns: ['col1', 'col2']
+            }
+          }
+        ]
+      }
+    }
+  },
+  primaryKey: {
+    localState: {
+      bucket: 'mybucket',
+      key: 'mykey',
+      name: 'mytable',
+      wildcard: false,
+      subfolders: false,
+      incremental: false,
+      newFilesOnly: false,
       primaryKey: ['col'],
       delimiter: ',',
       enclosure: '"',
       columns: ['col1', 'col2'],
+      columnsFrom: 'manual',
       decompress: false,
       addRowNumberColumn: false,
       addFilenameColumn: false
@@ -374,16 +380,18 @@ export const cases = {
   },
   delimiter: {
     localState: {
-      type: 'full-headless',
       bucket: 'mybucket',
       key: 'mykey',
       name: 'mytable',
       wildcard: false,
       subfolders: false,
+      incremental: false,
+      newFilesOnly: false,
       primaryKey: [],
       delimiter: ';',
       enclosure: '"',
       columns: ['col1', 'col2'],
+      columnsFrom: 'manual',
       decompress: false,
       addRowNumberColumn: false,
       addFilenameColumn: false
@@ -425,16 +433,18 @@ export const cases = {
   },
   tabDelimiter: {
     localState: {
-      type: 'full-headless',
       bucket: 'mybucket',
       key: 'mykey',
       name: 'mytable',
       wildcard: false,
       subfolders: false,
+      incremental: false,
+      newFilesOnly: false,
       primaryKey: [],
       delimiter: '\t',
       enclosure: '"',
       columns: ['col1', 'col2'],
+      columnsFrom: 'manual',
       decompress: false,
       addRowNumberColumn: false,
       addFilenameColumn: false
@@ -476,16 +486,18 @@ export const cases = {
   },
   enclosure: {
     localState: {
-      type: 'full-headless',
       bucket: 'mybucket',
       key: 'mykey',
       name: 'mytable',
       wildcard: false,
       subfolders: false,
+      incremental: false,
+      newFilesOnly: false,
       primaryKey: [],
       delimiter: ',',
       enclosure: '\'',
       columns: ['col1', 'col2'],
+      columnsFrom: 'manual',
       decompress: false,
       addRowNumberColumn: false,
       addFilenameColumn: false
@@ -525,18 +537,134 @@ export const cases = {
       }
     }
   },
-  decompress: {
+  manualColumns: {
     localState: {
-      type: 'full',
       bucket: 'mybucket',
       key: 'mykey',
       name: 'mytable',
       wildcard: false,
       subfolders: false,
+      incremental: false,
+      newFilesOnly: false,
+      primaryKey: [],
+      delimiter: ',',
+      enclosure: '\'',
+      columns: ['col1', 'col2'],
+      columnsFrom: 'manual',
+      decompress: false,
+      addRowNumberColumn: false,
+      addFilenameColumn: false
+    },
+    configuration: {
+      parameters: {
+        bucket: 'mybucket',
+        key: 'mykey',
+        includeSubfolders: false,
+        newFilesOnly: false
+      },
+      processors: {
+        after: [
+          {
+            definition: {
+              component: 'keboola.processor-move-files'
+            },
+            parameters: {
+              direction: 'tables',
+              addCsvSuffix: true,
+              folder: 'mytable'
+            }
+          },
+          {
+            definition: {
+              component: 'keboola.processor-create-manifest'
+            },
+            parameters: {
+              delimiter: ',',
+              enclosure: '\'',
+              incremental: false,
+              primary_key: [],
+              columns: ['col1', 'col2']
+            }
+          }
+        ]
+      }
+    }
+  },
+  headerColumns: {
+    localState: {
+      bucket: 'mybucket',
+      key: 'mykey',
+      name: 'mytable',
+      wildcard: false,
+      subfolders: false,
+      incremental: false,
+      newFilesOnly: false,
       primaryKey: [],
       delimiter: ',',
       enclosure: '\'',
       columns: [],
+      columnsFrom: 'header',
+      decompress: false,
+      addRowNumberColumn: false,
+      addFilenameColumn: false
+    },
+    configuration: {
+      parameters: {
+        bucket: 'mybucket',
+        key: 'mykey',
+        includeSubfolders: false,
+        newFilesOnly: false
+      },
+      processors: {
+        after: [
+          {
+            definition: {
+              component: 'keboola.processor-move-files'
+            },
+            parameters: {
+              direction: 'tables',
+              addCsvSuffix: true,
+              folder: 'mytable'
+            }
+          },
+          {
+            definition: {
+              component: 'keboola.processor-create-manifest'
+            },
+            parameters: {
+              delimiter: ',',
+              enclosure: '\'',
+              incremental: false,
+              primary_key: [],
+              columns_from: 'header'
+            }
+          },
+          {
+            definition: {
+              component: 'keboola.processor-skip-lines'
+            },
+            parameters: {
+              lines: 1
+            }
+          }
+        ]
+      }
+    }
+  },
+  decompress: {
+    localState: {
+      bucket: 'mybucket',
+      key: 'mykey',
+      name: 'mytable',
+      wildcard: false,
+      subfolders: false,
+      incremental: false,
+      newFilesOnly: false,
+      primaryKey: [],
+      delimiter: ',',
+      enclosure: '\'',
+      columns: [],
+      columnsFrom: 'header',
       decompress: true,
       addRowNumberColumn: false,
       addFilenameColumn: false
@@ -599,16 +727,18 @@ export const cases = {
   },
   addRowNumberColumn: {
     localState: {
-      type: 'full',
       bucket: 'mybucket',
       key: 'mykey',
       name: 'mytable',
       wildcard: false,
       subfolders: false,
+      incremental: false,
+      newFilesOnly: false,
       primaryKey: [],
       delimiter: ',',
       enclosure: '"',
       columns: [],
+      columnsFrom: 'header',
       decompress: false,
       addRowNumberColumn: true,
       addFilenameColumn: false
@@ -667,16 +797,18 @@ export const cases = {
   },
   addFilenameColumn: {
     localState: {
-      type: 'full',
       bucket: 'mybucket',
       key: 'mykey',
       name: 'mytable',
       wildcard: false,
       subfolders: false,
+      incremental: false,
+      newFilesOnly: false,
       primaryKey: [],
       delimiter: ',',
       enclosure: '"',
       columns: [],
+      columnsFrom: 'header',
       decompress: false,
       addRowNumberColumn: false,
       addFilenameColumn: true

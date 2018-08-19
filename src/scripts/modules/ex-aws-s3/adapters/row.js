@@ -1,7 +1,6 @@
 import Immutable from 'immutable';
 
 export function createConfiguration(localState) {
-  const type = localState.get('type', 'full');
   let skipLinesProcessor;
   let decompressProcessor;
   let flattenFoldersProcessor;
@@ -12,17 +11,13 @@ export function createConfiguration(localState) {
     parameters: {
       delimiter: localState.get('delimiter', ','),
       enclosure: localState.get('enclosure', '"'),
-      incremental: type === 'incremental' || type === 'incremental-headless',
+      incremental: localState.get('incremental', false),
       primary_key: localState.get('primaryKey', Immutable.List())
     }
   });
 
-  if (type === 'full' || type === 'incremental') {
+  if (localState.get('columnsFrom', 'header') === 'header') {
     createManifestProcessor = createManifestProcessor.setIn(['parameters', 'columns_from'], 'header');
-  } else {
-    createManifestProcessor = createManifestProcessor.setIn(['parameters', 'columns'], localState.get('columns', Immutable.List()));
-  }
-  if (type === 'incremental' || type === 'full') {
     skipLinesProcessor = Immutable.fromJS({
       definition: {
         component: 'keboola.processor-skip-lines'
@@ -31,6 +26,8 @@ export function createConfiguration(localState) {
         lines: 1
       }
     });
+  } else if (localState.get('columnsFrom', 'manual') === 'manual') {
+    createManifestProcessor = createManifestProcessor.setIn(['parameters', 'columns'], localState.get('columns', Immutable.List()));
   }
 
   if (localState.get('decompress', false) === true) {
@@ -54,7 +51,7 @@ export function createConfiguration(localState) {
       bucket: localState.get('bucket', ''),
       key: localState.get('key', '') + (localState.get('wildcard', false) ? '*' : ''),
       includeSubfolders: localState.get('subfolders', false),
-      newFilesOnly: type === 'incremental' || type === 'incremental-headless'
+      newFilesOnly: localState.get('newFilesOnly', false)
     },
     processors: {
       after: []
@@ -120,23 +117,6 @@ export function createConfiguration(localState) {
 }
 
 export function parseConfiguration(configuration) {
-  if (configuration.isEmpty()) {
-    return Immutable.fromJS({
-      type: 'full',
-      bucket: '',
-      key: '',
-      name: '',
-      wildcard: false,
-      subfolders: false,
-      primaryKey: [],
-      delimiter: ',',
-      enclosure: '"',
-      columns: [],
-      decompress: false,
-      addRowNumberColumn: false,
-      addFilenameColumn: false
-    });
-  }
   const key = configuration.getIn(['parameters', 'key'], '');
   const isWildcard = key.slice(-1) === '*' ? true : false;
   const processorCreateManifest = configuration.getIn(['processors', 'after'], Immutable.List()).find(function(processor) {
@@ -157,32 +137,24 @@ export function parseConfiguration(configuration) {
     return processor.getIn(['definition', 'component']) === 'keboola.processor-move-files';
   }, null, Immutable.Map());
 
-  const hasProcessorSkipLines = configuration.getIn(['processors', 'after'], Immutable.List()).findIndex(function(processor) {
-    return processor.getIn(['definition', 'component']) === 'keboola.processor-skip-lines';
-  }) >= 0;
-
-  let type = 'full';
-  if (!hasProcessorSkipLines) {
-    type = 'full-headless';
-  }
-  if (processorCreateManifest.getIn(['parameters', 'incremental'], false) && configuration.getIn(['parameters', 'newFilesOnly'], false)) {
-    type = 'incremental';
-    if (!hasProcessorSkipLines) {
-      type = 'incremental-headless';
-    }
+  let columnsFrom = processorCreateManifest.getIn(['parameters', 'columns_from'], 'header');
+  if (processorCreateManifest.hasIn(['parameters', 'columns'])) {
+    columnsFrom = 'manual';
   }
 
   return Immutable.fromJS({
-    type: type,
     bucket: configuration.getIn(['parameters', 'bucket'], ''),
     key: isWildcard ? key.substring(0, key.length - 1) : key,
     name: processorMoveFiles.getIn(['parameters', 'folder'], ''),
     wildcard: isWildcard,
     subfolders: configuration.getIn(['parameters', 'includeSubfolders'], false),
+    incremental: processorCreateManifest.getIn(['parameters', 'incremental'], false),
+    newFilesOnly: configuration.getIn(['parameters', 'newFilesOnly'], false),
     primaryKey: processorCreateManifest.getIn(['parameters', 'primary_key'], Immutable.List()).toJS(),
     delimiter: processorCreateManifest.getIn(['parameters', 'delimiter'], ','),
     enclosure: processorCreateManifest.getIn(['parameters', 'enclosure'], '"'),
     columns: processorCreateManifest.getIn(['parameters', 'columns'], Immutable.List()).toJS(),
+    columnsFrom: columnsFrom,
     decompress: processorDecompress ? true : false,
     addRowNumberColumn: processorAddRowNumberColumn ? true : false,
     addFilenameColumn: processorAddFilenameColumn ? true : false

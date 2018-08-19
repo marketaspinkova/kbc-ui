@@ -5,22 +5,14 @@ import CsvDelimiterInput from '../../../../react/common/CsvDelimiterInput';
 import Select from '../../../../react/common/Select';
 import {PanelWithDetails} from '@keboola/indigo-ui';
 
-const typeOptions = [
+const columnsFromOptions = [
   {
-    label: 'Full load',
-    value: 'full'
+    label: 'CSV files contain a header row',
+    value: 'header'
   },
   {
-    label: 'Full load, CSV without headers',
-    value: 'full-headless'
-  },
-  {
-    label: 'Incremental',
-    value: 'incremental'
-  },
-  {
-    label: 'Incremental, CSV without headers',
-    value: 'incremental-headless'
+    label: 'Headerless CSV files',
+    value: 'manual'
   }
 ];
 
@@ -33,37 +25,24 @@ export default React.createClass({
       key: PropTypes.string.isRequired,
       wildcard: PropTypes.bool.isRequired,
       subfolders: PropTypes.bool.isRequired,
+      newFilesOnly: PropTypes.bool.isRequired,
       decompress: PropTypes.bool.isRequired,
       name: PropTypes.string.isRequired,
+      incremental: PropTypes.string.isRequired,
       delimiter: PropTypes.string.isRequired,
       enclosure: PropTypes.string.isRequired,
       columns: PropTypes.array.isRequired,
+      columnsFrom: PropTypes.oneOf(['manual', 'header']),
       primaryKey: PropTypes.array.isRequired,
       addRowNumberColumn: PropTypes.bool.isRequired,
-      addFilenameColumn: PropTypes.bool.isRequired,
-      type: PropTypes.string.isRequired
+      addFilenameColumn: PropTypes.bool.isRequired
     }),
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired
   },
 
-  renderLoadTypeHelp() {
-    if (this.props.value.type === 'full') {
-      return 'Gets all files from the specified S3 bucket and overwrites the output(?) table in Storage. All files are expected to have the same header.';
-    }
-    if (this.props.value.type === 'full-headless') {
-      return 'Gets all files from the specified S3 bucket and overwrites the output table in Storage. The files must have the same structure and be without a header.';
-    }
-    if (this.props.value.type === 'incremental') {
-      return 'Gets only new files from the S3 bucket and adds them to the output table in Storage. All files are expected to have the same header.';
-    }
-    if (this.props.value.type === 'incremental-headless') {
-      return 'Gets only new files from the S3 bucket and adds them to the output table in Storage. The files must have the same structure and be without a header.';
-    }
-  },
-
   renderCsvHeader() {
-    if (this.props.value.type === 'full-headless' || this.props.value.type === 'incremental-headless') {
+    if (this.props.value.columnsFrom === 'manual') {
       const props = this.props;
       return (
         <div className="form-group">
@@ -80,10 +59,10 @@ export default React.createClass({
               onChange={function(value) {
                 props.onChange({columns: value});
               }}
-              disabled={this.props.disabled || this.props.value.type === 'full'}
+              disabled={this.props.disabled || this.props.value.columnsFrom === 'header'}
             />
             <span className="help-block">
-              Specify the columns of the headless files.
+              Specify the columns of the headerless files.
             </span>
           </div>
         </div>
@@ -95,30 +74,6 @@ export default React.createClass({
     const props = this.props;
     return (
       <div className="form-horizontal">
-        <h3>Job Settings</h3>
-        <div className="form-group">
-          <div className="col-xs-4 control-label">Load Type</div>
-          <div className="col-xs-8">
-            <Select
-              name="type"
-              value={this.props.value.type}
-              multi={false}
-              allowCreate={false}
-              emptyStrings={false}
-              searchable={false}
-              clearable={false}
-              options={typeOptions}
-              disabled={this.props.disabled}
-              onChange={function(value) {
-                props.onChange({type: value});
-              }}
-            />
-            <span className="help-block">
-              {this.renderLoadTypeHelp()}
-            </span>
-          </div>
-        </div>
-        {this.renderCsvHeader()}
         <h3>Source</h3>
         <Input
           type="text"
@@ -146,9 +101,20 @@ export default React.createClass({
           help={(<span>Filename including folders or a prefix. Do not type <code>*</code> or <code>%</code> wildcards, use <strong>Wildcard</strong> checkbox instead.</span>)}
           />
         <PanelWithDetails
-          defaultExpanded={this.props.value.wildcard || this.props.value.subfolders}
+          defaultExpanded={this.props.value.newFilesOnly || this.props.value.wildcard || this.props.value.subfolders}
           placement="bottom"
           >
+          <Input
+            type="checkbox"
+            label="New Files Only"
+            wrapperClassName="col-xs-8 col-xs-offset-4"
+            checked={this.props.value.newFilesOnly}
+            onChange={function(e) {
+              props.onChange({newFilesOnly: e.target.checked});
+            }}
+            disabled={this.props.disabled}
+            help={(<span>Every job stores the timestamp of the last downloaded file and a subsequent job can pick up from there.</span>)}
+            />
           <Input
             type="checkbox"
             label="Wildcard"
@@ -200,6 +166,26 @@ export default React.createClass({
           disabled={this.props.disabled}
           help={(<span>Field enclosure used in CSV file. Default value is <code>"</code>.</span>)}
           />
+        <div className="form-group">
+          <div className="col-xs-4 control-label">Header</div>
+          <div className="col-xs-8">
+            <Select
+              name="columnsFrom"
+              value={this.props.value.columnsFrom}
+              multi={false}
+              allowCreate={false}
+              emptyStrings={false}
+              searchable={false}
+              clearable={false}
+              options={columnsFromOptions}
+              disabled={this.props.disabled}
+              onChange={function(value) {
+                props.onChange({columnsFrom: value});
+              }}
+            />
+          </div>
+        </div>
+        {this.renderCsvHeader()}
         <h3>Destination</h3>
         <Input
           type="text"
@@ -213,6 +199,17 @@ export default React.createClass({
           placeholder="mytable"
           disabled={this.props.disabled}
           help={(<span>Name of the table stored in Storage.</span>)}
+          />
+        <Input
+          type="checkbox"
+          label="Incremental Load"
+          wrapperClassName="col-xs-8 col-xs-offset-4"
+          checked={this.props.value.incremental}
+          onChange={function(e) {
+            props.onChange({incremental: e.target.checked});
+          }}
+          help={(<span>If incremental load is turned on, table will be updated instead of rewritten. Tables with primary key will update rows, tables without primary key will append rows.</span>)}
+          disabled={this.props.disabled}
           />
         <div className="form-group">
           <div className="col-xs-4 control-label">Primary Key</div>
