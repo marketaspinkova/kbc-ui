@@ -80,6 +80,10 @@ export default function(settings) {
         const configurationRow = ConfigurationRowsStore.get(settingsWithDefaults.componentId, configId, rowId);
         return configurationRow.get('name') !== '' ? configurationRow.get('name') : 'Untitled ' + settingsWithDefaults.row.name.singular;
       },
+      poll: {
+        interval: 10,
+        action: (params) => jobsActions.loadComponentConfigurationLatestJobs(settingsWithDefaults.componentId, params.config)
+      },
       requireData: [
         (params) => rowVersionsActions.loadVersions(settingsWithDefaults.componentId, params.config, params.row),
         () => storageActions.loadTables()
