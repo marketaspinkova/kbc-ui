@@ -14,6 +14,7 @@ StorageBucketsStore = require('../../../../components/stores/StorageBucketsStore
 ApplicationStore = require('../../../../../stores/ApplicationStore')
 RoutesStore = require '../../../../../stores/RoutesStore'
 VersionsStore = require('../../../../components/stores/VersionsStore')
+RowVersionsStore = require('../../../../configurations/RowVersionsStore')
 TransformationsActionCreators = require '../../../ActionCreators'
 RunComponentButton = React.createFactory(require '../../../../components/react/components/RunComponentButton')
 ActivateDeactivateButton = React.createFactory(require('../../../../../react/common/ActivateDeactivateButton').default)
@@ -35,7 +36,7 @@ module.exports = React.createClass
 
   mixins: [
     createStoreMixin(TransformationsStore,
-    TransformationBucketsStore, StorageTablesStore, StorageBucketsStore, VersionsStore),
+    TransformationBucketsStore, StorageTablesStore, StorageBucketsStore, VersionsStore, RowVersionsStore),
     Router.Navigation, Router.State
   ]
 
