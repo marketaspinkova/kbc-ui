@@ -15,6 +15,8 @@ ApplicationStore = require('../../../../../stores/ApplicationStore')
 RoutesStore = require '../../../../../stores/RoutesStore'
 VersionsStore = require('../../../../components/stores/VersionsStore')
 RowVersionsStore = require('../../../../configurations/RowVersionsStore')
+LatestJobsStore = require('../../../../jobs/stores/LatestJobsStore')
+
 TransformationsActionCreators = require '../../../ActionCreators'
 RunComponentButton = React.createFactory(require '../../../../components/react/components/RunComponentButton')
 ActivateDeactivateButton = React.createFactory(require('../../../../../react/common/ActivateDeactivateButton').default)
@@ -28,6 +30,8 @@ sandboxUtils = require('../../../utils/sandboxUtils')
 LatestRowVersions = React.createFactory(
   require('../../../../configurations/react/components/SidebarRowVersionsWrapper').default
 )
+LatestJobs = React.createFactory(require('../../../../components/react/components/SidebarJobs'))
+
 
 {div, span, ul, li, a, em} = React.DOM
 
@@ -35,8 +39,15 @@ module.exports = React.createClass
   displayName: 'TransformationDetail'
 
   mixins: [
-    createStoreMixin(TransformationsStore,
-    TransformationBucketsStore, StorageTablesStore, StorageBucketsStore, VersionsStore, RowVersionsStore),
+    createStoreMixin(
+      TransformationsStore,
+      TransformationBucketsStore,
+      StorageTablesStore,
+      StorageBucketsStore,
+      VersionsStore,
+      RowVersionsStore,
+      LatestJobsStore
+    ),
     Router.Navigation, Router.State
   ]
 
@@ -66,6 +77,7 @@ module.exports = React.createClass
     )
     highlightQueryNumber: highlightQueryNumber
     latestVersionId: latestVersionId
+    latestJobs: LatestJobsStore.getTransformationJobs(bucketId, transformationId)
 
   getInitialState: ->
     validateModalOpen: false
@@ -207,6 +219,9 @@ module.exports = React.createClass
             ,
               span className: 'fa fa-question-circle fa-fw'
               ' Documentation'
+        LatestJobs
+          jobs: @state.latestJobs
+          limit: 3
         LatestRowVersions
           componentId: 'transformation'
           configId: @state.bucketId
