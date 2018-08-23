@@ -75,8 +75,7 @@ export default React.createClass({
   },
 
   renderNewProjectGroup() {
-    const {disabled, value} = this.props;
-    const {tokenType} = value;
+    const {disabled, value: {tokenType, customToken}} = this.props;
     return [
       this.renderInputControlGroup('Project Name', 'name', 'name of GoodData project'),
       <FormGroup key="authToken">
@@ -120,7 +119,7 @@ export default React.createClass({
              type="text"
              disabled={disabled}
              onChange={e => this.handleChange({customToken: e.target.value})}
-             value={value.customToken}
+             value={customToken}
            />
           }
         </Col>
