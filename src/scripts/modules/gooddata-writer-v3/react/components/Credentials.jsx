@@ -77,8 +77,7 @@ export default React.createClass({
   },
 
   renderProvisioning() {
-    const {data, isLoading} = this.props.provisioning;
-    const {pid} = this.props.config;
+    const {provisioning: {data, isLoading}, config: {pid}} = this.props;
 
     if (isLoading) {
       return <Loader />;
@@ -90,9 +89,9 @@ export default React.createClass({
       return this.renderOwnCredentials();
     }
     if (!data.get('sso')) {
-      return this.renderKbcNoSSO();
+      return this.renderKeboolaCredentialsWithoutSSO();
     }
-    return this.renderKbcWithSSO();
+    return this.renderKeboolaCredentialsWithSSO();
   },
 
   renderResetProject() {
@@ -107,10 +106,12 @@ export default React.createClass({
     );
   },
 
-  renderKbcWithSSO() {
+  renderKeboolaCredentialsWithSSO() {
     const {pid} = this.props.config;
     const token = this.props.provisioning.data.get('token');
     const sso = this.props.provisioning.data.get('sso');
+    const targetUrl = `/#s=/gdc/projects/${pid}|projectDashboardPage`;
+    const submitUrl = 'https://secure.gooddata.com/gdc/account/customerlogin';
     return (
       <div>
         <h4>Provisioned By Keboola</h4>
@@ -119,11 +120,11 @@ export default React.createClass({
         <form
           target="_blank noopener noreferrer"
           method="POST"
-          action="https://secure.gooddata.com/gdc/account/customerlogin">
+          action={submitUrl}>
           {sso.map((value, name) =>
             <input key={name} type="hidden" name={name} value={value}/>
           ).toArray()}
-          <input key="targetUrl" type="hidden" name="targetUrl" value={`/#s=/gdc/projects/${pid}|projectDashboardPage`}/>
+          <input key="targetUrl" type="hidden" name="targetUrl" value={targetUrl}/>
           <button type="submit"
             className="btn btn-link">
             <span className="fa fa-bar-chart-o fa-fw"/>
@@ -140,14 +141,14 @@ export default React.createClass({
     );
   },
 
-  renderKbcNoSSO() {
+  renderKeboolaCredentialsWithoutSSO() {
     const {pid} = this.props.config;
     const token = this.props.provisioning.data.get('token');
     return (
       <div>
         <h4>Provisioned by Keboola</h4>
-        <div> GoodData Project Id: {pid}</div>
-        <div> Token: {token}</div>
+        <div>GoodData Project Id: {pid}</div>
+        <div>Token: {token}</div>
         <span
           onClick={() => this.props.onToggleEnableAcess(pid, true)}
           className="btn btn-link">
