@@ -1,19 +1,20 @@
 import request from '../../../utils/request';
 import ApplicationStore from '../../../stores/ApplicationStore';
+import {TokenTypes} from './utils';
 
 const createUrl = function(path) {
-  const  baseUrl = 'https://gooddata-provisioning.keboola.com';
-  return baseUrl + '/' + path;
+  return 'https://gooddata-provisioning.keboola.com/' + path;
 };
 
 const createRequest = function(method, path) {
-  const sapiToken = ApplicationStore.getSapiTokenString();
-  return request(method, createUrl(path)).set('X-StorageApi-Token', sapiToken);
+  return request(method, createUrl(path))
+    .set('X-StorageApi-Token', ApplicationStore.getSapiTokenString());
 };
 
 export default {
   createProjectAndUser(name, token) {
-    const tokenProperty = ['demo', 'production'].includes(token) ? 'keboolaToken' : 'customToken';
+    const keboolaTokens = [TokenTypes.DEMO, TokenTypes.PRODUCTION];
+    const tokenProperty = keboolaTokens.includes(token) ? 'keboolaToken' : 'customToken';
     const requestData = {
       name,
       [tokenProperty]: token
