@@ -21,11 +21,19 @@ export function isNewProjectValid({ name, isCreateNewProject, tokenType, customT
 
 export function loadProvisioningData(pid) {
   return api.getProjectDetail(pid).then(
-    ({ token }) =>
-      api.getSSOAccess(pid).then(sso => ({ sso, token }), () => ({ token })),
+    ({ token }) => {
+      return api.getSSOAccess(pid).then(
+        sso => ({ sso, token }),
+        () => ({ token })
+      );
+    },
     err => {
+      let result = null;
       const status = (err.response || {}).status;
-      return status !== 404 ? Promise.reject({ error: err.message || err }) : null;
+      if (status !== 404) {
+        result = Promise.reject({ error: err.message || err });
+      }
+      return result;
     }
   );
 }
