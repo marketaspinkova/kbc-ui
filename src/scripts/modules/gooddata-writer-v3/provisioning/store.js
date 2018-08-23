@@ -27,8 +27,9 @@ dispatcher.register(payload => {
     }
     case ProvisioningActionTypes.GD_PROVISIONING_LOAD_SUCCESS: {
       const {pid} = action;
-      _store = _store.setIn(['isLoading', pid], false);
-      _store = _store.setIn(['provisioning', pid], fromJS(action.data));
+      _store = _store
+        .setIn(['isLoading', pid], false)
+        .setIn(['provisioning', pid], fromJS(action.data));
       return ProvisioningStore.emitChange();
     }
     case ProvisioningActionTypes.GD_PROVISIONING_LOAD_ERROR: {
@@ -63,8 +64,9 @@ dispatcher.register(payload => {
     }
     case ProvisioningActionTypes.GD_PROVISIONING_CREATE_SUCCESS: {
       const {data} = action;
-      _store = _store.setIn(['isCreating'], false);
-      _store = _store.setIn(['provisioning', data.pid], fromJS(data));
+      _store = _store
+        .setIn(['isCreating'], false)
+        .setIn(['provisioning', data.pid], fromJS(data));
       return ProvisioningStore.emitChange();
     }
     case ProvisioningActionTypes.GD_PROVISIONING_CREATE_ERROR: {
@@ -79,8 +81,9 @@ dispatcher.register(payload => {
     }
     case ProvisioningActionTypes.GD_PROVISIONING_DELETE_SUCCESS: {
       const {pid} = action;
-      _store = _store.setIn(['isDeleting', pid], false);
-      _store = _store.removeIn(['provisioning', pid]);
+      _store = _store
+        .setIn(['isDeleting', pid], false)
+        .removeIn(['provisioning', pid]);
       return ProvisioningStore.emitChange();
     }
     case ProvisioningActionTypes.GD_PROVISIONING_DELETE_ERROR: {
