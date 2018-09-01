@@ -39,7 +39,7 @@ module.exports = React.createClass
         input
           type: 'checkbox'
           disabled: false
-          checked: @props.task.get('active')
+          checked: @_checkedByStatus()
           onChange: @_handleActiveChange
 
   _renderConfiguration: ->
@@ -52,3 +52,9 @@ module.exports = React.createClass
 
   _handleActiveChange: ->
     @props.onTaskUpdate @props.task.set('active', !@props.task.get('active'))
+
+  _checkedByStatus: ->
+    if @props.task.get('status') != "success"
+      return true
+    else
+      return false

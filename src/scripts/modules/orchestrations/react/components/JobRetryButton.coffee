@@ -55,14 +55,18 @@ module.exports = React.createClass
         status is 'warning' ||
           status is 'warn'
 
+  _getTasks: ->
+    editingTasks = OrchestrationJobStore.getEditingValue(@props.job.get('id'), 'tasks') or List()
+    taskStatuses = @state.job.getIn ['results', 'tasks'], List()
+    mergedTasks = editingTasks.merge(taskStatuses)
+    fromJS(rephaseTasks(mergedTasks.toJS()))
+
   render: ->
     tasks = @state.job.get('tasks')
     if @_canBeRetried() && tasks
-      editingTasks = OrchestrationJobStore.getEditingValue(@props.job.get('id'), 'tasks') or List()
-
       TaskSelectModal
         job: @props.job
-        tasks: fromJS(rephaseTasks(editingTasks.toJS()))
+        tasks: @_getTasks()
         onChange: @_handleTaskChange
         onRun: @_handleRun
         onOpen: @_handleRetrySelectStart
