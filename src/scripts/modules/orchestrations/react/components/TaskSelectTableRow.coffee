@@ -15,6 +15,7 @@ ComponentName = require('../../../../react/common/ComponentName').default
 module.exports = React.createClass
   displayName: 'TaskSelectTableRow'
   propTypes:
+    job: React.PropTypes.object
     task: React.PropTypes.object.isRequired
     component: React.PropTypes.object
     onTaskUpdate: React.PropTypes.func.isRequired
@@ -54,7 +55,11 @@ module.exports = React.createClass
     @props.onTaskUpdate @props.task.set('active', !@props.task.get('active'))
 
   _checkedByStatus: ->
-    if @props.task.get('status') != "success"
-      return true
+    if !!@props.job
+      if @props.job.get('status') == "success" || @props.task.get('status') != "success"
+        return true
+      else
+        return false
     else
-      return false
+      return true
+

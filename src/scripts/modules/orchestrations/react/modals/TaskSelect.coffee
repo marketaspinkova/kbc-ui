@@ -62,6 +62,7 @@ module.exports = React.createClass
           ,
             div className: 'row',
               React.createElement TaskSelectTable,
+                job: @props.job
                 tasks: tasks
                 onTaskUpdate: @_handleTaskUpdate
 
