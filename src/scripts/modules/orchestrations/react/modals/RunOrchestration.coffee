@@ -7,6 +7,7 @@ ModalBody = React.createFactory(require('react-bootstrap').Modal.Body)
 ModalFooter = React.createFactory(require('react-bootstrap').Modal.Footer)
 Button = React.createFactory(require('react-bootstrap').Button)
 Panel = React.createFactory(require('react-bootstrap').Panel)
+PanelWithDetails = React.createFactory(require('@keboola/indigo-ui').PanelWithDetails)
 ConfirmButtons = require('../../../../react/common/ConfirmButtons').default
 TaskSelectTable = require '../components/TaskSelectTable'
 Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
@@ -56,15 +57,14 @@ module.exports = React.createClass
             'You are about to run the orchestration ',
              strong null, @props.orchestration.get('name'),
              ' manually and the notifications will be sent only to you.'
+          ,
           if @props.tasks
-            Panel
-              header: 'Choose orchestration tasks to run'
-              collapsible: true
-            ,
-              div className: 'row',
-                React.createElement TaskSelectTable,
-                  tasks: @props.tasks
-                  onTaskUpdate: @_handleTaskUpdate
+            PanelWithDetails
+              placement: 'top'
+              preview: 'normal'
+              React.createElement TaskSelectTable,
+                tasks: @props.tasks
+                onTaskUpdate: @_handleTaskUpdate
 
         ModalFooter null,
           React.createElement ConfirmButtons,

@@ -56,15 +56,11 @@ module.exports = React.createClass
         ModalBody null,
           p null,
             'You are about to run orchestration again'
-          Panel
-            header: 'Choose orchestration tasks to run'
-            collapsible: true
           ,
-            div className: 'row',
-              React.createElement TaskSelectTable,
-                job: @props.job
-                tasks: tasks
-                onTaskUpdate: @_handleTaskUpdate
+          React.createElement TaskSelectTable,
+            job: @props.job
+            tasks: tasks
+            onTaskUpdate: @_handleTaskUpdate
 
         ModalFooter null,
           div null,
