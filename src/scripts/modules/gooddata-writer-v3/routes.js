@@ -12,7 +12,6 @@ import credentials from './adapters/credentials';
 import DimensionsSection from './react/components/DimensionsSection';
 import dimensionsAdapter from './adapters/dimensions';
 import columnsEditorDefinition from './helpers/columnsEditorDefinition';
-import ToggleProjectAccess from './react/components/ToggleProjectAccess';
 import {CollapsibleSection} from '../configurations/utils/renderHelpers';
 import {parseParameters} from './helpers/rowTableParameters';
 
@@ -22,9 +21,6 @@ const routeSettings = {
   componentId: 'keboola.gooddata-writer',
   componentType: 'writer',
   index: {
-    sidebarCustomItems: [
-      ToggleProjectAccess
-    ],
     show: true,
     sections: [
       {
