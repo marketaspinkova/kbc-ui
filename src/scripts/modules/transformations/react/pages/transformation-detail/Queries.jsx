@@ -3,6 +3,9 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Edit from './QueriesEdit';
 import Clipboard from '../../../../../react/common/Clipboard';
 import SaveButtons from '../../../../../react/common/SaveButtons';
+import {AlertBlock} from '@keboola/indigo-ui';
+import {Col, Row} from 'react-bootstrap';
+
 
 /* global require */
 require('codemirror/mode/sql/sql');
@@ -32,6 +35,14 @@ export default React.createClass({
   },
 
   render() {
+    const dummyerror = (
+      <li>
+        <a>
+          Transformatin ABC at line #1
+        </a>
+        <p>Unable to proceed with syntax parsing at line 5 column 1. CRETE TABLE "out_table" AS SELEC * FOM "in_table"; ^</p>
+      </li>
+    );
     return (
       <div>
         <h2 style={{lineHeight: '32px'}}>
@@ -41,6 +52,29 @@ export default React.createClass({
           </small>
           {this.renderButtons()}
         </h2>
+        <AlertBlock
+          type="danger"
+          title="SQL Validation found 8 errors">
+          <Row>
+            <Col md={9}>
+              <span>
+                <p>
+                    Your query has been saved, however the script didn't pass validation.
+                    Ignoring errors will result in failed job, when running transformation
+                </p>
+                <p>
+                    Tables defined in output mapping that does not yet exist in Storage are not validated.
+                </p>
+                <h4>Please resolve folowing errors.</h4>
+                <ul className="list-unstyled">
+                  {dummyerror}
+                  {dummyerror}
+                  {dummyerror}
+                </ul>
+              </span>
+            </Col>
+          </Row>
+        </AlertBlock>
         {this.queries()}
       </div>
     );
