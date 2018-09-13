@@ -28,6 +28,30 @@ export default React.createClass({
     disabled: PropTypes.bool
   },
 
+  getInitialState: function() {
+    // DUMMY STATE
+    return {
+      errorLineNumber: 1,
+      errors: [
+        {
+          message: 'Unable to proceed with syntax parsing at line 5 column 1. CRETE TABLE "out_table" AS ' +
+          'SELEC * FOM "in_table";',
+          lineNumber: 2
+        },
+        {
+          message: 'Unable to proceed with syntax parsing at line 5 column 1. CRETE TABLE "out_table" AS ' +
+          'SELEC * FOM "in_table";',
+          lineNumber: 4
+        },
+        {
+          message: 'Unable to proceed with syntax parsing at line 5 column 1. CRETE TABLE "out_table" AS ' +
+          'SELEC * FOM "in_table";',
+          lineNumber: 6
+        }
+      ]
+    };
+  },
+
   getDefaultProps() {
     return {
       disabled: false
@@ -35,14 +59,6 @@ export default React.createClass({
   },
 
   render() {
-    const dummyerror = (
-      <li>
-        <a>
-          Transformatin ABC at line #1
-        </a>
-        <p>Unable to proceed with syntax parsing at line 5 column 1. CRETE TABLE "out_table" AS SELEC * FOM "in_table"; ^</p>
-      </li>
-    );
     return (
       <div>
         <h2 style={{lineHeight: '32px'}}>
@@ -52,29 +68,9 @@ export default React.createClass({
           </small>
           {this.renderButtons()}
         </h2>
-        <AlertBlock
-          type="danger"
-          title="SQL Validation found 8 errors">
-          <Row>
-            <Col md={9}>
-              <span>
-                <p>
-                    Your query has been saved, however the script didn't pass validation.
-                    Ignoring errors will result in failed job, when running transformation
-                </p>
-                <p>
-                    Tables defined in output mapping that does not yet exist in Storage are not validated.
-                </p>
-                <h4>Please resolve folowing errors.</h4>
-                <ul className="list-unstyled">
-                  {dummyerror}
-                  {dummyerror}
-                  {dummyerror}
-                </ul>
-              </span>
-            </Col>
-          </Row>
-        </AlertBlock>
+        {this.state.errors.length > 0 &&
+          this.renderValidationAlert()
+        }
         {this.queries()}
       </div>
     );
@@ -105,6 +101,51 @@ export default React.createClass({
         highlightQueryNumber={this.props.highlightQueryNumber}
         highlightingQueryDisabled={this.props.highlightingQueryDisabled}
       />
+    );
+  },
+
+  scrollToError(lineNumber) {
+    this.state.errorLineNumber = lineNumber;
+    // todo: napojit na highlightQueryNumber
+  },
+
+  renderValidationAlert() {
+    return (
+      <AlertBlock
+        type="danger"
+        title={'SQL Validation found ' + this.state.errors.length + ' errors'}>
+        <Row>
+          <Col md={9}>
+            <p>
+              Your query has been saved, however the script didn't pass validation.
+              Ignoring errors will result in failed job, when running transformation
+            </p>
+            <p>
+              Tables defined in output mapping that does not yet exist in Storage are not validated.
+            </p>
+            <h4>
+              Please resolve folowing errors.
+            </h4>
+          </Col>
+        </Row>
+        <Row>
+          <Col md={12}>
+            <ul className="list-unstyled">
+              {this.state.errors.map(
+                (error) => (
+                  <li>
+                    <a onClick={this.scrollToError(error.lineNumber)}>
+                      Transformatin ABC at line #{error.lineNumber}
+                    </a>
+                    <p>{error.message}</p>
+                  </li>
+                )
+              )
+              }
+            </ul>
+          </Col>
+        </Row>
+      </AlertBlock>
     );
   }
 });
