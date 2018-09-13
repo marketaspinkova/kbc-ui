@@ -118,13 +118,13 @@ export default React.createClass({
           <Col md={9}>
             <p>
               Your query has been saved, however the script didn't pass validation.
-              Ignoring errors will result in failed job, when running transformation
+              Ignoring errors will result in failed job, when running transformation.
             </p>
             <p>
-              Tables defined in output mapping that does not yet exist in Storage are not validated.
+              Tables defined in Output Mapping that does not yet exist in Storage are not validated.
             </p>
             <h4>
-              Please resolve folowing errors.
+              Please resolve folowing errors:
             </h4>
           </Col>
         </Row>
