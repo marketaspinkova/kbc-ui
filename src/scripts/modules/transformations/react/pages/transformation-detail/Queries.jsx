@@ -113,7 +113,7 @@ export default React.createClass({
     return (
       <AlertBlock
         type="danger"
-        title={'SQL Validation found ' + this.state.errors.length + ' errors'}>
+        title={'SQL Validation found ' + this.state.errors.length + ' error' + (this.state.errors.length > 1 ? 's' : '')}>
         <Row>
           <Col md={9}>
             <p>
