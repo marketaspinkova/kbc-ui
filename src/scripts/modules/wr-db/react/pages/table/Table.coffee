@@ -12,8 +12,8 @@ DataTypes = require('../../../templates/dataTypes').default
 
 storageApi = require '../../../../components/StorageApi'
 
-WrDbStore = require '../../../store'
-WrDbActions = require '../../../actionCreators'
+WrDbStore = require('../../../store').default
+WrDbActions = require('../../../actionCreators').default
 V2Actions = require('../../../v2-actions').default
 RoutesStore = require '../../../../../stores/RoutesStore'
 StorageTablesStore = require '../../../../components/stores/StorageTablesStore'
