@@ -376,8 +376,7 @@ export default componentId => {
     _getSizeParam(dataType) {
       const dtypes = this._getComponentDataTypes();
       const dt = _.find(dtypes, d => _.isObject(d) && _.keys(d)[0] === dataType);
-      const result = dt && dt[dataType] && dt[dataType].defaultSize;
-      return result;
+      return dt && dt[dataType] && dt[dataType].defaultSize;
     },
 
     _getDataTypes() {

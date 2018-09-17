@@ -76,8 +76,7 @@ export default React.createClass({
 
   _getSizeParam(dataType) {
     const dt = _.find(this.props.dataTypes, d => _.isObject(d) && _.keys(d)[0] === dataType);
-    const value = dt ? dt[dataType] : null;
-    return value ? value.defaultSize : null;
+    return dt && dt[dataType] && dt[dataType].defaultSize;
   },
 
   _getDataTypes() {
