@@ -68,6 +68,7 @@ module.exports = React.createClass
 
         ModalFooter null,
           React.createElement ConfirmButtons,
+            isSaving: false
             isDisabled: !@_isValid()
             saveLabel: 'Run'
             onCancel: @_handleCancel

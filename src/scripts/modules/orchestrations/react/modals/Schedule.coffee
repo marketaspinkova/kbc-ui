@@ -19,7 +19,7 @@ module.exports = React.createClass
   displayName: 'Schedule'
   propTypes:
     orchestrationId: React.PropTypes.number.isRequired
-    crontabRecord: React.PropTypes.string.isRequired
+    crontabRecord: React.PropTypes.string
 
   getInitialState: ->
     crontabRecord: @props.crontabRecord || '0 0 * * *'

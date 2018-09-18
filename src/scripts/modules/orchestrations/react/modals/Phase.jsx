@@ -6,7 +6,7 @@ import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 export default React.createClass({
   mixins: [PureRenderMixin],
   propTypes: {
-    phaseId: PropTypes.object.isRequired,
+    phaseId: PropTypes.string,
     existingIds: PropTypes.object.isRequired,
     onPhaseUpdate: React.PropTypes.func.isRequired,
     onHide: React.PropTypes.func.isRequired,
