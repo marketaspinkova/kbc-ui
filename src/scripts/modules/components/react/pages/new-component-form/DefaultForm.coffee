@@ -1,10 +1,12 @@
 React = require 'react'
 
 FormHeader = React.createFactory(require './FormHeader')
+ComponentIcon = React.createFactory(require('../../../../../react/common/ComponentIcon').default)
+ComponentName = React.createFactory(require('../../../../../react/common/ComponentName').default)
 Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Input)
 AppVendorInfo = React.createFactory(require './AppVendorInfo')
 AppUsageInfo = React.createFactory(require('./AppUsageInfo').default)
-{div, p, form, label, span, h3} = React.DOM
+{div, p, form, label, span, h3, h2} = React.DOM
 Immutable = require('immutable')
 
 ModalHeader = React.createFactory(require('react-bootstrap').ModalHeader)
@@ -39,12 +41,23 @@ module.exports = React.createClass
       ModalHeader
         closeButton: true
         onHide: @props.onClose
-        className: "add-configuration-form"
+        className: 'modal-configuration-header'
       ,
-        FormHeader
-          component: @props.component
-          withButtons: false
-      ModalBody null,
+        div className: 'row',
+          div className: 'col-xs-3',
+            ComponentIcon
+              component: @props.component
+              className: 'modal-configuration-icon',
+              size: 64
+          div className: 'col-xs-9',
+            h2
+              className: 'modal-configuration-name'
+              ComponentName
+                component: @props.component
+            p null, @props.component.get 'description'
+      ModalBody
+        className: 'modal-configuration-body'
+        ,
         form
           className: 'form-horizontal'
           onSubmit: @_handleSubmit
@@ -68,7 +81,6 @@ module.exports = React.createClass
             wrapperClassName: 'col-xs-9'
             onChange: @_handleChange.bind @, 'description'
             disabled: @props.isSaving
-          @_renderAppUsageInfo() if @_is3rdPartyApp()
           @_renderAppVendorInfo() if @_is3rdPartyApp()
       ModalFooter null,
         ButtonToolbar null,

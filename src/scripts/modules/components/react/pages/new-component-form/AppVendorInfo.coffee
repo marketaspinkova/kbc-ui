@@ -1,7 +1,6 @@
 React = require 'react'
 Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Input)
 List = require('immutable').List
-VendorInfo = React.createFactory(require '../component-detail/VendorInfo.coffee')
 
 {div, label, ul, li, p, span, strong, address, a, br, em, table, tr, td, h2} = React.DOM
 module.exports = React.createClass
@@ -13,12 +12,7 @@ module.exports = React.createClass
 
   render: ->
     div className: 'form-group',
-      label className: 'control-label col-xs-3', 'Vendor'
-      div className: 'col-xs-9',
-        VendorInfo
-        div null,
-          "Application developed by"
-          @_renderAddress()
+      div className: 'col-xs-9 col-xs-offset-3',
         Input
           type: 'checkbox'
           label: @_renderCheckboxLabel()
@@ -36,18 +30,3 @@ module.exports = React.createClass
         "#{msg} and with "
         a {href: licenseUrl, target: '_blank'}, "vendor license terms and conditions"
         "."
-
-
-  _renderAddress: ->
-    contactData = @props.component.getIn(['data', 'vendor', 'contact'], 'No Address')
-    firstLine = strong(null, contactData)
-    restLines = null
-    if List.isList(contactData)
-      firstLine = strong(null, contactData.first())
-      restLines = contactData.rest().map (line) ->
-        span null,
-          br()
-          line
-    address null,
-      firstLine
-      restLines

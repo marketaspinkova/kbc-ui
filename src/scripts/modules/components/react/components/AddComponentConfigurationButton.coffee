@@ -44,6 +44,7 @@ module.exports = React.createClass
       Modal
         show: @state.showModal
         onHide: @close
+        className: 'modal-configuration'
       ,
         NewComponentModal
           component: @props.component
