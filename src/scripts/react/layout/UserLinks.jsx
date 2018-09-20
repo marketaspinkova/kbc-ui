@@ -35,7 +35,7 @@ export default React.createClass({
           <li>
             <ExternalLink href="https://portal.productboard.com/ltulbdlwnurf2accjn3ukkww">
               <span className="fa fa-tasks" />
-              {' Keboola Wishlist '}
+              {' Feature Wishlist '}
             </ExternalLink>
           </li>
         </ul>
