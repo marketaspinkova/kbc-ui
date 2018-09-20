@@ -10,7 +10,7 @@ ActivateDeactivateButton = React.createFactory(require('../../../../react/common
 CreateSandboxButton = require('./CreateSandboxButton').default
 TransformationsActionCreators = require '../../ActionCreators'
 descriptionExcerpt = require('../../../../utils/descriptionExcerpt').default
-TransformationStore = require('../../stores/TransformationsStore')
+TransformationStore = require('../../stores/TransformationsStore').default
 sandboxUtils = require('../../utils/sandboxUtils')
 
 {span, div, a, button, i, h4, small, em} = React.DOM

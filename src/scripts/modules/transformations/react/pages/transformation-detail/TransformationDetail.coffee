@@ -7,8 +7,8 @@ classnames = require 'classnames'
 TransformationDetailStatic = React.createFactory(require './TransformationDetailStatic')
 
 createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
-TransformationsStore  = require('../../../stores/TransformationsStore')
-TransformationBucketsStore  = require('../../../stores/TransformationBucketsStore')
+TransformationsStore  = require('../../../stores/TransformationsStore').default
+TransformationBucketsStore  = require('../../../stores/TransformationBucketsStore').default
 StorageTablesStore = require('../../../../components/stores/StorageTablesStore')
 StorageBucketsStore = require('../../../../components/stores/StorageBucketsStore')
 ApplicationStore = require('../../../../../stores/ApplicationStore')

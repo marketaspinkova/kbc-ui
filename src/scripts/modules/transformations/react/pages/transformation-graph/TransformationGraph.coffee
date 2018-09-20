@@ -2,8 +2,8 @@ React = require('react')
 Router = require 'react-router'
 
 createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
-TransformationsStore  = require('../../../stores/TransformationsStore')
-TransformationBucketsStore  = require('../../../stores/TransformationBucketsStore')
+TransformationsStore  = require('../../../stores/TransformationsStore').default
+TransformationBucketsStore  = require('../../../stores/TransformationBucketsStore').default
 StorageTablesStore  = require('../../../../components/stores/StorageTablesStore')
 RoutesStore = require '../../../../../stores/RoutesStore'
 TransformationsActionCreators = require '../../../ActionCreators'
