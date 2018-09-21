@@ -8,10 +8,10 @@ ImmutableRenderMixin = require 'react-immutable-render-mixin'
 TransformationsActionCreators = require '../../../ActionCreators'
 ApplicationStore = require '../../../../../stores/ApplicationStore'
 
-InputMappingRow = React.createFactory(require './InputMappingRow')
-InputMappingDetail = React.createFactory(require './InputMappingDetail')
-OutputMappingRow = React.createFactory(require './OutputMappingRow')
-OutputMappingDetail = React.createFactory(require './OutputMappingDetail')
+InputMappingRow = React.createFactory(require('./InputMappingRow').default)
+InputMappingDetail = React.createFactory(require('./InputMappingDetail').default)
+OutputMappingRow = React.createFactory(require('./OutputMappingRow').default)
+OutputMappingDetail = React.createFactory(require('./OutputMappingDetail').default)
 {Panel} = require('react-bootstrap')
 Panel  = React.createFactory Panel
 TransformationTypeLabel = React.createFactory(require '../../components/TransformationTypeLabel')
@@ -323,10 +323,7 @@ module.exports = React.createClass
                         disabled: @_isMySqlTransformation()
                 ,
                   OutputMappingDetail
-                    fill: true
-                    transformationBackend: @props.transformation.get('backend')
                     outputMapping: output
-                    tables: @props.tables
 
               , @).toArray()
           else
