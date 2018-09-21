@@ -247,7 +247,7 @@ export default React.createClass({
 
     return _.map(columns, function(column) {
       return {
-        label: column.name,
+        label: column.type ? (column.name + ' [' + column.type.toUpperCase() + ']') : column.name,
         value: column.name
       };
     });
