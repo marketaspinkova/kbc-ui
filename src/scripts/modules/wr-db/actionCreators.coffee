@@ -6,7 +6,7 @@ dispatcher = require('../../Dispatcher')
 constants = require './constants'
 provisioningUtils = require './provisioningUtils'
 {fromJS} = require 'immutable'
-provisioningTemplates = require './templates/provisioning'
+provisioningTemplates = require('./templates/provisioning').default
 
 
 convertFromProvCredentials = (creds, driver) ->

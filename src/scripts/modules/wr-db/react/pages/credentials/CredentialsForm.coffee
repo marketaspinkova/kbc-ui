@@ -1,8 +1,8 @@
 React = require 'react'
 {Map} = require 'immutable'
 Clipboard = React.createFactory(require('../../../../../react/common/Clipboard').default)
-fieldsTemplates = require '../../../templates/credentialsFields'
-hasSshTunnel = require '../../../templates/hasSshTunnel'
+fieldsTemplates = require('../../../templates/credentialsFields').default
+hasSshTunnel = require('../../../templates/hasSshTunnel').default
 isDockerBasedWriter = require('../../../templates/dockerProxyApi').default
 Tooltip = require('../../../../../react/common/Tooltip').default
 SshTunnelRow = require('../../../../../react/common/SshTunnelRow').default

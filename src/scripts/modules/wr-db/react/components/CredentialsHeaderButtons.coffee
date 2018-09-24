@@ -9,7 +9,7 @@ InstalledComponentsStore = require '../../../components/stores/InstalledComponen
 InstalledComponentsActions = require '../../../components/InstalledComponentsActionCreators'
 Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
 {States} = require '../pages/credentials/StateConstants'
-credentialsTemplates = require '../../templates/credentialsFields'
+credentialsTemplates = require('../../templates/credentialsFields').default
 {isProvisioningCredentials} = require '../../provisioningUtils'
 {button, span} = React.DOM
 

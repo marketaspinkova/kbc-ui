@@ -7,7 +7,7 @@ createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
 TableNameEdit = React.createFactory require './TableNameEdit'
 ColumnsEditor = React.createFactory require './ColumnsEditor'
 ColumnRow = require './ColumnRow'
-DataTypes = require '../../../templates/dataTypes'
+DataTypes = require('../../../templates/dataTypes').default
 {Check, Loader} = require '@keboola/indigo-ui'
 
 storageApi = require '../../../../components/StorageApi'
