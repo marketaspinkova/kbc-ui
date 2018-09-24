@@ -12,7 +12,6 @@ TaskSelectTableRow = React.createFactory(require './TaskSelectTableRow')
 module.exports = React.createClass
   displayName: 'TaskSelectTable'
   propTypes:
-    job: React.PropTypes.object
     tasks: React.PropTypes.object.isRequired
     onTaskUpdate: React.PropTypes.func.isRequired
 
@@ -25,7 +24,6 @@ module.exports = React.createClass
       tasks = tasks.push(@renderPhaseRow(phase.get('id')))
       tasksRows = phase.get('tasks').map((task) =>
         TaskSelectTableRow
-          job: @props.job
           task: task
           component: @state.components.get(task.get('component'))
           onTaskUpdate: @props.onTaskUpdate
