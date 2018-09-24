@@ -34,13 +34,6 @@ module.exports = React.createClass
     components: ComponentsStore.getAll()
     isSaving: false
 
-  componentDidMount: ->
-    enabledTaskStatuses = @props.job.getIn(['results', 'tasks'], List()).filter((task) -> task.get('active'))
-    jobSucceeded = @props.job.get('status') == 'success'
-    enabledTaskStatuses.forEach((task) =>
-      @_handleTaskChange(task.set('active', jobSucceeded or task.get('status') != 'success'))
-    )
-
   getStateFromStores: ->
     jobId = @_getJobId()
     job: JobsStore.getJob jobId
@@ -77,8 +70,16 @@ module.exports = React.createClass
     else
       null
 
+  reactivateJobTasks: ->
+    enabledTaskStatuses = @props.job.getIn(['results', 'tasks'], List()).filter((task) -> task.get('active'))
+    jobSucceeded = @props.job.get('status') == 'success'
+    enabledTaskStatuses.forEach((task) =>
+      @_handleTaskChange(task.set('active', jobSucceeded or task.get('status') != 'success'))
+    )
+
   _handleRetrySelectStart: ->
     JobActionCreators.startJobRetryTasksEdit(@state.job.get('id'))
+    @reactivateJobTasks()
 
   _handleTaskChange: (updatedTask) ->
     tasks = OrchestrationJobStore.getEditingValue(@props.job.get('id'), 'tasks')
