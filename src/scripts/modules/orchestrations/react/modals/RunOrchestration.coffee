@@ -53,7 +53,7 @@ module.exports = React.createClass
             'Run orchestration ' + @props.orchestration.get('name')
 
         ModalBody null,
-          p null,
+          div null,
             'You are about to run the orchestration ',
              strong null, @props.orchestration.get('name'),
              ' manually and the notifications will be sent only to you.'
