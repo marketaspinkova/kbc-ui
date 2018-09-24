@@ -34,6 +34,13 @@ module.exports = React.createClass
     components: ComponentsStore.getAll()
     isSaving: false
 
+  componentDidMount: ->
+    enabledTaskStatuses = @props.job.getIn(['results', 'tasks'], List()).filter((task) -> task.get('active'))
+    jobSucceeded = @props.job.get('status') == 'success'
+    enabledTaskStatuses.forEach((task) =>
+      @_handleTaskChange(task.set('active', jobSucceeded or task.get('status') != 'success'))
+    )
+
   getStateFromStores: ->
     jobId = @_getJobId()
     job: JobsStore.getJob jobId
@@ -55,18 +62,13 @@ module.exports = React.createClass
         status is 'warning' ||
           status is 'warn'
 
-  _getTasks: ->
-    editingTasks = OrchestrationJobStore.getEditingValue(@props.job.get('id'), 'tasks') or List()
-    taskStatuses = @state.job.getIn ['results', 'tasks'], List()
-    mergedTasks = editingTasks.merge(taskStatuses)
-    fromJS(rephaseTasks(mergedTasks.toJS()))
-
   render: ->
     tasks = @state.job.get('tasks')
     if @_canBeRetried() && tasks
+      editingTasks = OrchestrationJobStore.getEditingValue(@props.job.get('id'), 'tasks') or List()
       TaskSelectModal
         job: @props.job
-        tasks: @_getTasks()
+        tasks: fromJS(rephaseTasks(editingTasks.toJS()))
         onChange: @_handleTaskChange
         onRun: @_handleRun
         onOpen: @_handleRetrySelectStart
@@ -79,10 +81,10 @@ module.exports = React.createClass
     JobActionCreators.startJobRetryTasksEdit(@state.job.get('id'))
 
   _handleTaskChange: (updatedTask) ->
-    tasks = OrchestrationJobStore.getEditingValue @props.job.get('id'), 'tasks'
-    index = tasks.findIndex((task) -> task.get('id') == updatedTask.get('id'))
-
-    JobActionCreators.updateJobRetryTasksEdit(
-      @props.job.get('id')
-      tasks.set(index, tasks.get(index).set('active', updatedTask.get('active')))
-    )
+    tasks = OrchestrationJobStore.getEditingValue(@props.job.get('id'), 'tasks')
+    if tasks
+      index = tasks.findIndex((task) -> task.get('id') == updatedTask.get('id'))
+      JobActionCreators.updateJobRetryTasksEdit(
+        @props.job.get('id')
+        tasks.set(index, tasks.get(index).set('active', updatedTask.get('active')))
+      )
