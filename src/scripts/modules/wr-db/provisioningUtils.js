@@ -34,7 +34,7 @@ const getDriverAndPermission = (driverParam, permissionParam, componentId) => {
 
 // load credentials and if they dont exists then create new
 const loadCredentials = (permission, token, driver, forceRecreate, componentId) => {
-  const { realDriver, realPermission } = getDriverAndPermission(driver, permission, componentId);
+  const { driver: realDriver, permission: realPermission } = getDriverAndPermission(driver, permission, componentId);
   return provisioningActions.loadWrDbCredentials(realPermission, token, realDriver).then(() => {
     const creds = wrDbProvStore.getCredentials(realPermission, token);
     if (creds && !forceRecreate) {
