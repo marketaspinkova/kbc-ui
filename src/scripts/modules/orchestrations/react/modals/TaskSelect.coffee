@@ -58,7 +58,6 @@ module.exports = React.createClass
             'You are about to run orchestration again'
           ,
           React.createElement TaskSelectTable,
-            job: @props.job
             tasks: tasks
             onTaskUpdate: @_handleTaskUpdate
 
