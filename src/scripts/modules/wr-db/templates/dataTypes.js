@@ -173,7 +173,8 @@ const pgsql = [
   'interval',
   { enum: { defaultSize: 'my_enum_type' } },
   'json',
-  'jsonb'
+  'jsonb',
+  'integer[]'
 ];
 const thoughtspot = [
   'int',
