@@ -73,7 +73,7 @@ module.exports = React.createClass
             SelectCreatable
               options: []
               name: 'tags'
-              autofocus: true
+              autoFocus: true
               value: @_getTags()
               disabled: @props.disabled
               placeholder: "Add tags"

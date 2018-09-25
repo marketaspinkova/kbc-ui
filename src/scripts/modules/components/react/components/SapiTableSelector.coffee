@@ -48,7 +48,7 @@ module.exports = React.createClass
       disabled: @props.disabled
       name: 'source'
       clearable: @props.clearable
-      autofocus: @props.autoFocus
+      autoFocus: @props.autoFocus
       value: @props.value
       isLoading: @state.isTablesLoading
       placeholder: @props.placeholder

@@ -47,7 +47,7 @@ export default React.createClass({
               placeholder="Source table"
               onChange={this.handleChangeSource}
               options={this.getTables()}
-              autofocus
+              autoFocus
             />
             <span className="help-block">
               Select source table from Storage
