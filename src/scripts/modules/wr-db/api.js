@@ -22,7 +22,6 @@ export default function(componentId) {
     },
 
     postCredentials(configId, credentials) {
-      credentials.allowedTypes = null;
       const proxyPromise = proxyApi ? proxyApi.postCredentials(configId, credentials) : false;
       return (
         proxyPromise ||
