@@ -7,8 +7,7 @@ export default React.createClass({
     task: React.PropTypes.object.isRequired,
     notify: React.PropTypes.bool,
     tooltipPlacement: React.PropTypes.string,
-    onRun: React.PropTypes.func.isRequired,
-    buttonStyle: React.PropTypes.object.isRequired
+    onRun: React.PropTypes.func.isRequired
   },
 
   getDefaultProps() {
