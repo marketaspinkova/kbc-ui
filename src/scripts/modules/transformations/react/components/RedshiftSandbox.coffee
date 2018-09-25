@@ -6,7 +6,7 @@ ComponentsStore = require('../../../components/stores/ComponentsStore')
 RedshiftSandboxCredentialsStore = require('../../../provisioning/stores/RedshiftSandboxCredentialsStore').default
 CredentialsActionCreators = require('../../../provisioning/ActionCreators')
 RedshiftCredentials = React.createFactory(require('../../../provisioning/react/components/RedshiftCredentials').default)
-ConfigureSandbox = React.createFactory(require '../components/ConfigureSandbox')
+ConfigureSandbox = React.createFactory(require('../components/ConfigureSandbox').default)
 RunComponentButton =
   React.createFactory(require '../../../components/react/components/RunComponentButton')
 DeleteButton = React.createFactory(require('../../../../react/common/DeleteButton').default)
