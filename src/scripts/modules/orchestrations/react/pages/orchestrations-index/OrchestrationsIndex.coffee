@@ -50,7 +50,7 @@ Index = React.createClass
     div className: 'row',
       h2 null,
         'Orchestrations allow you to group together related tasks and schedule their execution.'
-      p null,
+      div null,
         React.createElement NewOrchestrationButton
 
   _renderNotFound: ->
