@@ -105,7 +105,6 @@ TaskParametersEdit = React.createClass
 
   _handleSet: ->
     @close()
-    if @props.isEditable
-      @props.onSet @state.parameters
+    @props.onSet @state.parameters
 
 module.exports = TaskParametersEdit
