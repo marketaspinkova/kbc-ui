@@ -1,7 +1,7 @@
 React = require 'react'
 
 InlineEditText = React.createFactory(require '../../../../../react/common/InlineEditTextInput')
-actionCreators = require '../../../actionCreators'
+actionCreators = require('../../../actionCreators').default
 
 module.exports = React.createClass
   displayName: 'TableDatabaseNameEdit'

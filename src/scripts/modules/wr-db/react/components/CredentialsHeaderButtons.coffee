@@ -1,16 +1,16 @@
 React = require 'react'
 _ = require 'underscore'
 createStoreMixin = require '../../../../react/mixins/createStoreMixin'
-WrDbStore = require '../../store'
+WrDbStore = require('../../store').default
 RoutesStore = require '../../../../stores/RoutesStore'
-ActionCreators = require '../../actionCreators'
+ActionCreators = require('../../actionCreators').default
 {Navigation} = require 'react-router'
 InstalledComponentsStore = require '../../../components/stores/InstalledComponentsStore'
 InstalledComponentsActions = require '../../../components/InstalledComponentsActionCreators'
 Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
 {States} = require '../pages/credentials/StateConstants'
 credentialsTemplates = require('../../templates/credentialsFields').default
-{isProvisioningCredentials} = require '../../provisioningUtils'
+{isProvisioningCredentials} = require('../../provisioningUtils').default
 {button, span} = React.DOM
 
 module.exports = (componentId, driver, isProvisioning) ->

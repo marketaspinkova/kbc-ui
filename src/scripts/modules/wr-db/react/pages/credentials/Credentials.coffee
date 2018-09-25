@@ -5,18 +5,18 @@ createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
 ApplicationStore = require '../../../../../stores/ApplicationStore'
 
 {States} = require './StateConstants'
-WrDbActions = require '../../../actionCreators'
+WrDbActions = require('../../../actionCreators').default
 InstalledComponentsActions = require '../../../../components/InstalledComponentsActionCreators'
 V2Actions = require('../../../v2-actions').default
 {Loader} = require '@keboola/indigo-ui'
 credentialsTemplate = require('../../../templates/credentialsFields').default
 provisioningTemplates = require('../../../templates/provisioning').default
-WrDbStore = require '../../../store'
+WrDbStore = require('../../../store').default
 RoutesStore = require '../../../../../stores/RoutesStore'
 InstalledComponentsStore = require '../../../../components/stores/InstalledComponentsStore'
 MissingRedshiftModal = require('./MissingRedshiftModal').default
 CredentialsForm = require './CredentialsForm'
-{isProvisioningCredentials} = require '../../../provisioningUtils'
+{isProvisioningCredentials} = require('../../../provisioningUtils').default
 {div} = React.DOM
 {Protected} = require '@keboola/indigo-ui'
 
