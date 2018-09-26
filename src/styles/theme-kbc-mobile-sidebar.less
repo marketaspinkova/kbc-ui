@@ -1,0 +1,34 @@
+@media screen and (max-width: 768px) {
+  body {
+    padding-top: 120px;
+  }
+
+  .kbc-logo {
+    position: initial;
+  }
+
+  .kbc-navbar > .kbc-main-header-container {
+    float: left;
+    width: 100%;
+    background: white;
+  }
+
+  .sidebar-offset-row {
+    position: relative;
+
+    &.active .sidebar-offset {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .sidebar-offset {
+    position: absolute;
+    top: -60px;
+    left: 0;
+    z-index: 1040;
+    width: 275px;
+    height: 100%;
+    transition: all 0.5s ease-out;
+    transform: translate3d(-100%, 0, 0);
+  }
+}

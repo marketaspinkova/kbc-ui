@@ -56,8 +56,8 @@ App = React.createClass
         notifications: @state.notifications
       React.createElement(FloatingNotifications)
       div className: 'container-fluid',
-        div className: 'row',
-          div className: 'col-xs-3 kbc-sidebar',
+        div className: 'row sidebar-offset-row',
+          div className: 'col-sm-3 kbc-sidebar sidebar-offset',
             ProjectSelect
               organizations: @state.organizations
               currentProject: @state.currentProject
@@ -74,7 +74,7 @@ App = React.createClass
                 canManageApps: @state.canManageApps
                 dropup: true
               UserLinks()
-          div className: 'col-xs-9 col-xs-offset-3 kbc-main',
+          div className: 'col-xs-12 col-xs-offset-0 col-sm-9 col-sm-offset-3 kbc-main',
             if @props.isError
               ErrorPage()
             else if @props.isLoading

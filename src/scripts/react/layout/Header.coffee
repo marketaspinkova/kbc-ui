@@ -39,11 +39,11 @@ Header = React.createClass
 
   render: ->
     nav {className: 'navbar navbar-fixed-top kbc-navbar', role: 'navigation'},
-      div {className: 'col-xs-3 kbc-logo'},
+      div {className: 'col-xs-12 col-sm-3 kbc-logo'},
         a href: @props.homeUrl,
           span className: "kbc-icon-keboola-logo", null
         @_renderNotifications()
-      div {className: 'col-xs-9 col-xs-offset-3 kbc-main-header-container'},
+      div {className: 'col-xs-12 col-xs-offset-0 col-sm-9 col-sm-offset-3 kbc-main-header-container'},
         div {className: 'kbc-main-header kbc-header'},
           div {className: 'kbc-title'},
             @_renderComponentIcon()
