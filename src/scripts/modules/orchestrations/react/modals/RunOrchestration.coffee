@@ -61,7 +61,6 @@ module.exports = React.createClass
           if @props.tasks
             PanelWithDetails
               placement: 'top'
-              preview: 'normal'
               React.createElement TaskSelectTable,
                 tasks: @props.tasks
                 onTaskUpdate: @_handleTaskUpdate
