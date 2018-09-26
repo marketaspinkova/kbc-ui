@@ -14,6 +14,7 @@ ConfiguratinRowName = React.createFactory(
   require('../../modules/configurations/react/components/ConfigurationRowName').default
 )
 NotificationsAccess = require('../../react/common/NotificationsAccess').default
+SidebarToggleButton = React.createFactory(require('../../react/common/SidebarToggleButton').default)
 
 {div, nav, span, a, h1} = React.DOM
 
@@ -40,6 +41,7 @@ Header = React.createClass
   render: ->
     nav {className: 'navbar navbar-fixed-top kbc-navbar', role: 'navigation'},
       div {className: 'col-xs-12 col-sm-3 kbc-logo'},
+        SidebarToggleButton()
         a href: @props.homeUrl,
           span className: "kbc-icon-keboola-logo", null
         @_renderNotifications()
