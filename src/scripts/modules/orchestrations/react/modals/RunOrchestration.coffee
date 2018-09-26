@@ -61,6 +61,8 @@ module.exports = React.createClass
           if @props.tasks
             PanelWithDetails
               placement: 'top'
+              labelCollapse: 'Hide Tasks'
+              labelOpen: 'Show Tasks'
               React.createElement TaskSelectTable,
                 tasks: @props.tasks
                 onTaskUpdate: @_handleTaskUpdate
