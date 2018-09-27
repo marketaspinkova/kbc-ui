@@ -17,17 +17,30 @@
     position: initial;
   }
 
-  .kbc-navbar > .kbc-main-header-container {
-    float: left;
-    width: 100%;
-    background: white;
+  .kbc-navbar {
+    height: 120px;
+
+    & > .kbc-main-header-container {
+      float: left;
+      width: 100%;
+      background: white;
+    }
   }
 
   .sidebar-offset-row {
     position: relative;
 
-    &.active .sidebar-offset {
-      transform: translate3d(0, 0, 0);
+    &.active {
+      .sidebar-offset {
+        transform: translate3d(0, 0, 0);
+      }
+
+      .kbc-main > .container-fluid {
+        opacity: 0.3;
+        overflow: hidden;
+        max-height: calc(100vh - 150px);
+        transition: all 0.4s ease-out;
+      }
     }
   }
 
@@ -37,7 +50,6 @@
     left: 0;
     z-index: 1040;
     width: 275px;
-    height: 100%;
     transition: all 0.5s ease-out;
     transform: translate3d(-100%, 0, 0);
   }
