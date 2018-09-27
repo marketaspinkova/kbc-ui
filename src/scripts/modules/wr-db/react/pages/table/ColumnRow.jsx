@@ -123,11 +123,7 @@ export default React.createClass({
     );
   },
 
-  _createInput(property, type) {
-    let inputType = 'text';
-    if (type) {
-      inputType = type;
-    }
+  _createInput(property, type = 'text') {
     if (property === 'default' && this.props.disabledFields.includes('default')) {
       return '';
     }
@@ -137,7 +133,7 @@ export default React.createClass({
 
     return (
       <Input
-        type={inputType}
+        type={type}
         bsSize="small"
         value={this.props.editingColumn.get(property)}
         disabled={this.props.isSaving}
@@ -187,7 +183,7 @@ export default React.createClass({
 
   _renderNull() {
     const isChecked = this.props.column.get('null') === '1';
-    let nullVal = Check({ isChecked });
+    let nullVal = <Check isChecked={isChecked} />;
     if (this._isIgnored()) {
       nullVal = 'N/A';
     }

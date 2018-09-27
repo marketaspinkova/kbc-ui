@@ -366,11 +366,15 @@ export default componentId => {
     },
 
     _getComponentDataTypes() {
-      return DataTypes[componentId] ? DataTypes[componentId].typesList : defaultDataTypes;
+      return DataTypes[componentId] && DataTypes[componentId].typesList
+        ? DataTypes[componentId].typesList
+        : defaultDataTypes;
     },
 
     _getDisabledColumnFields() {
-      return DataTypes[componentId] ? DataTypes[componentId].disabledFields : [];
+      return DataTypes[componentId] && DataTypes[componentId].disabledFields
+        ? DataTypes[componentId].disabledFields
+        : [];
     },
 
     _getSizeParam(dataType) {
