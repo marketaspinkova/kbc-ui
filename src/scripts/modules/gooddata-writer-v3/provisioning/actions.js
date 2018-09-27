@@ -77,19 +77,19 @@ export default {
 
   toggleProjectAccess(pid, enable) {
     dispatcher.handleViewAction({
-      type: ProvisioningActionTypes.GD_PROVISIONING_ENABLESSO_START,
+      type: ProvisioningActionTypes.GD_PROVISIONING_TOGGLESSO_START,
       pid
     });
     const apiPromise = enable ? api.enableSSOAccess(pid) : api.disableSSOAccess(pid);
     return apiPromise.then(
       data => dispatcher.handleViewAction({
-        type: ProvisioningActionTypes.GD_PROVISIONING_ENABLESSO_SUCCESS,
+        type: ProvisioningActionTypes.GD_PROVISIONING_TOGGLESSO_SUCCESS,
         pid,
         enable,
         data
       })).catch(err => {
         dispatcher.handleViewAction({
-          type: ProvisioningActionTypes.GD_PROVISIONING_ENABLESSO_ERROR,
+          type: ProvisioningActionTypes.GD_PROVISIONING_TOGGLESSO_ERROR,
           pid,
           error: err
         });

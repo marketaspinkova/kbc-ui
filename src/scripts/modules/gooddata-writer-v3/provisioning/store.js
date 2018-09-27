@@ -37,12 +37,12 @@ dispatcher.register(payload => {
       _store = _store.setIn(['isLoading', pid], false);
       return ProvisioningStore.emitChange();
     }
-    case ProvisioningActionTypes.GD_PROVISIONING_ENABLESSO_START: {
+    case ProvisioningActionTypes.GD_PROVISIONING_TOGGLESSO_START: {
       const {pid} = action;
       _store = _store.setIn(['isLoading', pid], true);
       return ProvisioningStore.emitChange();
     }
-    case ProvisioningActionTypes.GD_PROVISIONING_ENABLESSO_SUCCESS: {
+    case ProvisioningActionTypes.GD_PROVISIONING_TOGGLESSO_SUCCESS: {
       const {pid} = action;
       const {enable} = action;
       _store = _store.setIn(['isLoading', pid], false);
@@ -53,7 +53,7 @@ dispatcher.register(payload => {
       }
       return ProvisioningStore.emitChange();
     }
-    case ProvisioningActionTypes.GD_PROVISIONING_ENABLESSO_ERROR: {
+    case ProvisioningActionTypes.GD_PROVISIONING_TOGGLESSO_ERROR: {
       const {pid} = action;
       _store = _store.setIn(['isLoading', pid], false);
       return ProvisioningStore.emitChange();
