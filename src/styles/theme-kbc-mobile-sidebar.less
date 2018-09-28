@@ -1,25 +1,77 @@
+#toggle {
+  float: right;
+  display: none;
+  width: 38px;
+  height: 30px;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
 @media screen and (max-width: 768px) {
   body {
     padding-top: 120px;
   }
 
-  .navbar-toggle {
-    float: left;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    padding: 7px 10px;
+  #toggle {
+    display: inline-block;
 
-    .icon-bar {
-      background: white;
+    .toggle-bar:after,
+    .toggle-bar:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: -9px;
+    }
+
+    .toggle-bar:after {
+      top: 9px;
+    }
+
+    .toggle-bar {
+      position: relative;
+      display: block;
+    }
+
+    .toggle-bar,
+    .toggle-bar:after,
+    .toggle-bar:before {
+      width: 100%;
+      height: 3px;
+      background-color: white;
+      transition: all 0.125s ease-in-out;
+      backface-visibility: hidden;
+    }
+
+    &.active .toggle-bar {
+      background-color: transparent;
+    }
+
+    &.active .toggle-bar:before {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    &.active .toggle-bar:after {
+      transform: rotate(-45deg) translate(7px, -8px);
     }
   }
 
   .kbc-logo {
     position: initial;
+    border-bottom: none;
+
+    > a:nth-child(2) {
+      display: none;
+    }
+  }
+
+  .kbc-sidebar .kbc-project-select .dropdown-toggle > .icon {
+    top: 19px;
   }
 
   .kbc-navbar {
     height: 120px;
+    background: none;
 
     & > .kbc-main-header-container {
       float: left;
