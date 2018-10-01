@@ -6,7 +6,6 @@ import ChangedSinceInput from '../../../../react/common/ChangedSinceInput';
 export default React.createClass({
   propTypes: {
     value: PropTypes.shape({
-      incremental: PropTypes.bool.isRequired,
       changedSince: PropTypes.string.isRequired,
       grainColumns: PropTypes.array.isRequired,
       hasConnectionPoint: PropTypes.bool.isRequired,
@@ -18,7 +17,7 @@ export default React.createClass({
 
   render() {
     const {value, onChange, disabled} = this.props;
-    const isIncremental = value.incremental;
+    const isIncremental = !!value.changedSince;
     return (
       <Form horizontal>
         <FormGroup>
@@ -30,7 +29,7 @@ export default React.createClass({
               type="radio"
               title="Full Load"
               disabled={disabled}
-              onChange={() => onChange({incremental: false, grain: [], changedSince: ''})}
+              onChange={() => onChange({grain: [], changedSince: ''})}
               checked={!isIncremental}>
               Full Load
             </Radio>
@@ -41,7 +40,7 @@ export default React.createClass({
               type="radio"
               title="Incremental"
               disabled={disabled}
-              onChange={() => onChange({incremental: true})}
+              onChange={() => onChange({changedSince: '-1 days'})}
               checked={isIncremental}>
               Incremental
             </Radio>

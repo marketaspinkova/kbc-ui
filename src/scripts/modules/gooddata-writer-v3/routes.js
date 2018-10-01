@@ -4,13 +4,14 @@ import createColumnsEditorSection from '../configurations/utils/createColumnsEdi
 import TitleSection from './react/components/TitleSection';
 import LoadTypeSection from './react/components/LoadTypeSection';
 import LoadTypeSectionTitle from './react/components/LoadTypeSectionTitle';
+import Credentials from './react/components/CredentialsContainer';
 import title from './adapters/title';
 import loadType from './adapters/loadType';
+import credentials from './adapters/credentials';
 
 import DimensionsSection from './react/components/DimensionsSection';
 import dimensionsAdapter from './adapters/dimensions';
 import columnsEditorDefinition from './helpers/columnsEditorDefinition';
-import ToggleProjectAccess from './react/components/ToggleProjectAccess';
 import {CollapsibleSection} from '../configurations/utils/renderHelpers';
 import {parseParameters} from './helpers/rowTableParameters';
 
@@ -20,11 +21,17 @@ const routeSettings = {
   componentId: 'keboola.gooddata-writer',
   componentType: 'writer',
   index: {
-    sidebarCustomItems: [
-      ToggleProjectAccess
-    ],
     show: true,
     sections: [
+      {
+        render: CollapsibleSection({
+          title: 'Gooddata Project',
+          contentComponent: Credentials
+        }),
+        onSave: credentials.createConfiguration,
+        onLoad: credentials.parseConfiguration,
+        isComplete: () => false
+      },
       {
         render: CollapsibleSection({
           title: 'Date Dimensions',

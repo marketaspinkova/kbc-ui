@@ -27,12 +27,11 @@ const casesDefinition = {
       grainColumns: [],
       hasConnectionPoint: false,
       tableId: tableId,
-      incremental: false,
       changedSince: '',
       grain: []
     },
     configuration: {
-      storage: inputMapping({changed_since: '', incremental: false}),
+      storage: inputMapping({changed_since: ''}),
       parameters: makeParameters({grain: null})
     }
   },
@@ -42,12 +41,11 @@ const casesDefinition = {
       grainColumns: ['a', 'b', 'c'],
       hasConnectionPoint: false,
       tableId: tableId,
-      incremental: false,
       changedSince: '',
       grain: ['a', 'b']
     },
     configuration: {
-      storage: inputMapping({changed_since: '', incremental: false}),
+      storage: inputMapping({changed_since: ''}),
       parameters: makeParameters({
         columns: {
           'a': {type: Types.ATTRIBUTE, title: 'a'},
@@ -58,7 +56,7 @@ const casesDefinition = {
       })
     },
     configurationToCreate: {
-      storage: inputMapping({changed_since: '', incremental: false}),
+      storage: inputMapping({changed_since: ''}),
       parameters: makeParameters({
         grain: ['a', 'b']
       })
@@ -70,13 +68,12 @@ const casesDefinition = {
       grainColumns: [],
       hasConnectionPoint: false,
       tableId: tableId,
-      incremental: true,
       changedSince: '5 days ago',
       grain: []
 
     },
     configuration: {
-      storage: inputMapping({incremental: true, changed_since: '5 days ago'}),
+      storage: inputMapping({changed_since: '5 days ago'}),
       parameters: makeParameters({grain: null})
     }
 
