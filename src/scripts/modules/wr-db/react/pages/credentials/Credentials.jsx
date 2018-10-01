@@ -223,21 +223,6 @@ export default (componentId, driver, isProvisioning) => {
       return '';
     },
 
-    _prepareProvReadCredentials() {
-      const creds = this.state.provisioningCredentials && this.state.provisioningCredentials.get('read');
-      if (!creds) {
-        return null;
-      }
-      const mappings = provisioningTemplates[driver].fieldsMapping;
-      const result = {};
-      for (let key of _.keys(mappings)) {
-        result[key] = creds.get(mappings[key]);
-      }
-      result.port = provisioningTemplates[driver].defaultPort;
-      result.driver = driver;
-      return fromJS(result);
-    },
-
     _renderCredentialsForm(credentials, isEditing) {
       const state = this.state.localState.get('credentialsState');
       const isSaving = state === States.SAVING_NEW_CREDS;
