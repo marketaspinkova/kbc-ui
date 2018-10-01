@@ -1,5 +1,5 @@
 _ = require 'underscore'
-OrchestrationsStore = require '../orchestrations/stores/OrchestrationsStore'
+OrchestrationsStore = require('../orchestrations/stores/OrchestrationsStore').default
 OrchestrationsActions = require '../orchestrations/ActionCreators'
 {fromJS} = require 'immutable'
 

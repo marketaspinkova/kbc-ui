@@ -1,6 +1,6 @@
 React = require 'react'
 createStoreMixin = require '../../../../react/mixins/createStoreMixin'
-OrchestrationsStore = require '../../stores/OrchestrationsStore'
+OrchestrationsStore = require('../../stores/OrchestrationsStore').default
 RoutesStore = require '../../../../stores/RoutesStore'
 OrchestrationsActionCreators = require '../../ActionCreators'
 EditButtons = React.createFactory(require '../../../../react/common/EditButtons')

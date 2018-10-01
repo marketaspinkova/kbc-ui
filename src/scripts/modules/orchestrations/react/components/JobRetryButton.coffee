@@ -1,7 +1,7 @@
 React = require 'react'
 {List, fromJS} = require 'immutable'
 createStoreMixin = require('../../../../react/mixins/createStoreMixin')
-JobsStore = require('../../stores/OrchestrationJobsStore')
+JobsStore = require('../../stores/OrchestrationJobsStore').default
 ActionCreators = require('../../ActionCreators')
 {dephaseTasks, rephaseTasks} = ActionCreators
 

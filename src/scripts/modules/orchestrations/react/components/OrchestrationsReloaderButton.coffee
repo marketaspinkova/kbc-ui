@@ -3,7 +3,7 @@ React = require 'react'
 createStoreMixin = require '../../../../react/mixins/createStoreMixin'
 
 OrchestrationsActionCreators = require '../../ActionCreators'
-OrchestrationsStore = require '../../stores/OrchestrationsStore'
+OrchestrationsStore = require('../../stores/OrchestrationsStore').default
 RefreshIcon = React.createFactory(require('@keboola/indigo-ui').RefreshIcon)
 
 OrchestrationsReloaderButton = React.createClass

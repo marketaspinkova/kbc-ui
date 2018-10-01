@@ -3,7 +3,7 @@ React = require 'react'
 
 createStoreMixin = require '../../../../react/mixins/createStoreMixin'
 immutableMixin = require 'react-immutable-render-mixin'
-OrchestrationsStore = require '../../stores/OrchestrationsStore'
+OrchestrationsStore = require('../../stores/OrchestrationsStore').default
 actionCreators = require '../../ActionCreators'
 
 InlineEditTextInput = require '../../../../react/common/InlineEditTextInput'
