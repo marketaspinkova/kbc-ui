@@ -17,7 +17,7 @@ JobsGraph = React.createFactory(require './JobsGraph')
 Link = React.createFactory(require('react-router').Link)
 TasksSummary = React.createFactory(require './TasksSummary')
 CronRecord = React.createFactory(require '../../components/CronRecord')
-ScheduleModal = React.createFactory(require('../../modals/Schedule'))
+ScheduleModal = React.createFactory(require('../../modals/Schedule').default)
 CreatedWithIcon = React.createFactory(require('../../../../../react/common/CreatedWithIcon').default)
 SearchBar = React.createFactory(require('@keboola/indigo-ui').SearchBar)
 

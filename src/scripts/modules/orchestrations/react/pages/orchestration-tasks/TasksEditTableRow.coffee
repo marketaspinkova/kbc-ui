@@ -4,7 +4,7 @@ _ = require 'underscore'
 
 ComponentConfigurationLink = require '../../../../components/react/components/ComponentConfigurationLink'
 
-TaskParametersEditModal = React.createFactory(require '../../modals/TaskParametersEdit')
+TaskParametersEditModal = React.createFactory(require('../../modals/TaskParametersEdit').default)
 ComponentIcon = React.createFactory(require('../../../../../react/common/ComponentIcon').default)
 ComponentName = React.createFactory(require('../../../../../react/common/ComponentName').default)
 Tree = React.createFactory(require('@keboola/indigo-ui').Tree)
