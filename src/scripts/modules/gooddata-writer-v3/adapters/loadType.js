@@ -11,9 +11,8 @@ const GRAIN_TYPES = [
 
 
 const createConfiguration = (localState) => {
-  const incremental = localState.get('incremental', false);
   const changedSince = localState.get('changedSince', '');
-  const storage =  createInputMapping(Map({changed_since: changedSince, incremental}));
+  const storage =  createInputMapping(Map({changed_since: changedSince}));
   const grain = localState.get('grain') || List();
   const parameters = createConfigParameters(fromJS({
     grain: grain.count() > 0 && !localState.get('hasConnectionPoint') ? grain : null,
@@ -36,7 +35,6 @@ export default {
       grainColumns,
       hasConnectionPoint,
       tableId: parametersTable.get('tableId'),
-      incremental: parseInputMapping(configuration).get('incremental', false),
       changedSince: parseInputMapping(configuration).get('changed_since', ''),
       grain: parametersTable.get('grain') || List()
     });
