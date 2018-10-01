@@ -1,6 +1,5 @@
 import React from 'react';
 import _ from 'underscore';
-import { fromJS } from 'immutable';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import ApplicationStore from '../../../../../stores/ApplicationStore';
 
@@ -16,7 +15,7 @@ import RoutesStore from '../../../../../stores/RoutesStore';
 import InstalledComponentsStore from '../../../../components/stores/InstalledComponentsStore';
 import MissingRedshiftModal from './MissingRedshiftModal';
 import CredentialsForm from './CredentialsForm';
-import { isProvisioningCredentials } from '../../../provisioningUtils';
+import provisioningUtils from '../../../provisioningUtils';
 
 // driver = 'mysql'
 // componentId = 'wr-db'
@@ -247,7 +246,7 @@ export default (componentId, driver, isProvisioning) => {
     },
 
     _isProvCredentials() {
-      return isProvisioningCredentials(driver, this.state.credentials);
+      return provisioningUtils.isProvisioningCredentials(driver, this.state.credentials);
     },
 
     _handleChange(propName, event) {
