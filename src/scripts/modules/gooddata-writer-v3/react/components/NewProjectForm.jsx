@@ -36,8 +36,8 @@ export default React.createClass({
           </Col>
         </FormGroup>
         {value.isCreateNewProject ?
-         this.renderNewProjectGroup() :
-         this.renderExistingProjectGroup()
+          this.renderNewProjectGroup() :
+          this.renderExistingProjectGroup()
         }
       </Form>
     );

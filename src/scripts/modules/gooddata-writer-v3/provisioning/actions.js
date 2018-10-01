@@ -24,13 +24,13 @@ export default {
         data,
         pid
       })).catch(err => {
-        dispatcher.handleViewAction({
-          type: ProvisioningActionTypes.GD_PROVISIONING_LOAD_ERROR,
-          error: err,
-          pid
-        });
-        handleError(err);
+      dispatcher.handleViewAction({
+        type: ProvisioningActionTypes.GD_PROVISIONING_LOAD_ERROR,
+        error: err,
+        pid
       });
+      handleError(err);
+    });
   },
 
   deleteProject(pid) {
@@ -43,13 +43,13 @@ export default {
         type: ProvisioningActionTypes.GD_PROVISIONING_DELETE_SUCCESS,
         pid
       })).catch(err => {
-        dispatcher.handleViewAction({
-          type: ProvisioningActionTypes.GD_PROVISIONING_DELETE_ERROR,
-          error: err,
-          pid
-        });
-        handleError(err);
+      dispatcher.handleViewAction({
+        type: ProvisioningActionTypes.GD_PROVISIONING_DELETE_ERROR,
+        error: err,
+        pid
       });
+      handleError(err);
+    });
   },
 
   createProject(name, tokenType, customToken) {
@@ -66,13 +66,13 @@ export default {
         });
         return data;
       }).catch(err => {
-        dispatcher.handleViewAction({
-          type: ProvisioningActionTypes.GD_PROVISIONING_CREATE_ERROR,
-          error: err
-        });
-        handleError(err);
-      }
-      );
+      dispatcher.handleViewAction({
+        type: ProvisioningActionTypes.GD_PROVISIONING_CREATE_ERROR,
+        error: err
+      });
+      handleError(err);
+    }
+    );
   },
 
   toggleProjectAccess(pid, enable) {
@@ -88,12 +88,12 @@ export default {
         enable,
         data
       })).catch(err => {
-        dispatcher.handleViewAction({
-          type: ProvisioningActionTypes.GD_PROVISIONING_TOGGLESSO_ERROR,
-          pid,
-          error: err
-        });
-        handleError(err);
+      dispatcher.handleViewAction({
+        type: ProvisioningActionTypes.GD_PROVISIONING_TOGGLESSO_ERROR,
+        pid,
+        error: err
       });
+      handleError(err);
+    });
   }
 };
