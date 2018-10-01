@@ -447,7 +447,8 @@ export default componentId => {
               disabled={!!this.state.editingColumns}
               onClick={this._showIncrementalSetupModal}
             >
-              <FiltersDescription value={tableMapping} /> <span className="kbc-icon-pencil" />
+              <FiltersDescription value={tableMapping} rootClassName="" />
+              <span className="kbc-icon-pencil" />
             </button>
           </div>
         </div>
