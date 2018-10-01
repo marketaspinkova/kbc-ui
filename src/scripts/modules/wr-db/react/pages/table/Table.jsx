@@ -418,8 +418,8 @@ export default componentId => {
               tableId={this.state.tableId}
               table={this.state.table}
               configId={this.state.configId}
-              tableExportedValue={this.state.exportInfo ? this.state.exportInfo.get('export') : false}
-              currentValue={this.state.exportInfo ? this.state.exportInfo.get('name') : this.state.tableId}
+              tableExportedValue={this.state.exportInfo && this.state.exportInfo.get('export') ? this.state.exportInfo.get('export') : false}
+              currentValue={this.state.exportInfo && this.state.exportInfo.get('name') ? this.state.exportInfo.get('name') : this.state.tableId}
               isSaving={this.state.isUpdatingTable}
               editingValue={this.state.editingData.getIn(['editingDbNames', this.state.tableId])}
               setEditValueFn={value => {
