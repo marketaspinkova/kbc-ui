@@ -6,7 +6,7 @@ React = require 'react'
 
 # pages and components
 OrchestrationsIndex = require('./react/pages/orchestrations-index/OrchestrationsIndex').default
-OrchestrationDetail = require './react/pages/orchestration-detail/OrchestrationDetail'
+OrchestrationDetail = require('./react/pages/orchestration-detail/OrchestrationDetail').default
 OrchestrationJobDetail = require './react/pages/orchestration-job-detail/OrchestrationJobDetail'
 OrchestrationTasks = require './react/pages/orchestration-tasks/OrchestrationTasks'
 OrchestrationNotifications = require('./react/pages/orchestration-notifications/OrchestrationNotifications').default
