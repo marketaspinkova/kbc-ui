@@ -4,7 +4,6 @@ import InstalledComponentsStore from '../components/stores/InstalledComponentsSt
 import storageActionCreators from '../components/StorageActionCreators';
 import JobsActionCreators from '../jobs/ActionCreators';
 import {createTablesRoute} from '../table-browser/routes';
-import ApplicationStore from '../../stores/ApplicationStore';
 
 // OLD WR DB MODULES and stuff
 import dbwrIndex from '../wr-db/react/pages/index/Index';
@@ -13,29 +12,6 @@ import dbWrCredentialsDetail from '../wr-db/react/pages/credentials/Credentials'
 import dbWrActionCreators from '../wr-db/actionCreators';
 import dbWrCredentialsHeader from '../wr-db/react/components/CredentialsHeaderButtons';
 import dbWrDockerProxyApi from '../wr-db/templates/dockerProxyApi';
-
-// NEW WR DB MODULES and stuff
-import React from 'react';
-import genericIndex from './react/Index/Index';
-import genericTable from './react/Table/Table';
-import genericCredentials from './react/Creadentials/Credentials';
-
-const GENERIC_WR_DB_FEATURE = 'ui-wr-db-generic';
-const hasWrDbGenericFeature = () => ApplicationStore.hasCurrentAdminFeature(GENERIC_WR_DB_FEATURE);
-
-const createProxyRouteHandler = (oldWrDbHandler, newWrDbHandler) => {
-  return (props) => {
-    let handler = oldWrDbHandler;
-    if (hasWrDbGenericFeature()) {
-      handler = newWrDbHandler;
-    }
-    if (handler) {
-      return React.createElement(handler, props);
-    } else {
-      return <span/>;
-    }
-  };
-};
 
 export default function(componentId, driver, isProvisioning) {
   const dbWrdockerProxyActions = dbWrDockerProxyApi(componentId);
@@ -52,7 +28,7 @@ export default function(componentId, driver, isProvisioning) {
       interval: 5,
       action: params => JobsActionCreators.loadComponentConfigurationLatestJobs(componentId, params.config)
     },
-    defaultRouteHandler: createProxyRouteHandler(dbwrIndex(componentId), genericIndex(componentId)),
+    defaultRouteHandler: dbwrIndex(componentId),
     requireData: [
       (params) => {
         const prepareWriterDataFn = () => dbWrActionCreators.loadConfiguration(componentId, params.config);
@@ -71,7 +47,7 @@ export default function(componentId, driver, isProvisioning) {
       {
         name: componentId + '-table',
         path: 'table/:tableId',
-        handler: createProxyRouteHandler(dbWrTableDetail(componentId), genericTable(componentId)),
+        handler: dbWrTableDetail(componentId),
         title: function(routerState) {
           var tableId;
           tableId = routerState.getIn(['params', 'tableId']);
@@ -86,8 +62,8 @@ export default function(componentId, driver, isProvisioning) {
       {
         name: componentId + '-credentials',
         path: 'credentials',
-        handler: createProxyRouteHandler(dbWrCredentialsDetail(componentId, driver, isProvisioning), genericCredentials(componentId)),
-        headerButtonsHandler: createProxyRouteHandler(dbWrCredentialsHeader(componentId, driver, isProvisioning), null),
+        handler: dbWrCredentialsDetail(componentId, driver, isProvisioning),
+        headerButtonsHandler: dbWrCredentialsHeader(componentId, driver, isProvisioning),
         title: () => 'Credentials'
       }
     ]
