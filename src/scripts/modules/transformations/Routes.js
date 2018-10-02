@@ -72,12 +72,10 @@ const routes = {
           },
           nameEdit(params) {
             if (parseInt(params.row, 10) > 0) {
-              return React.DOM.span(
-                null,
-                React.createElement(TransformationNameEdit, {
-                  configId: params.config,
-                  rowId: params.row
-                })
+              return (
+                <span>
+                  <TransformationNameEdit configId={params.config} rowId={params.row} />
+                </span>
               );
             } else {
               return TransformationsStore.getTransformation(params.config, params.row).get('name');
