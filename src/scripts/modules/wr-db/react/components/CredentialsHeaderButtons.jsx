@@ -105,7 +105,7 @@ export default (componentId, driver, isProvisioning) => {
       if ([States.CREATE_NEW_CREDS, States.SAVING_NEW_CREDS].includes(state)) {
         return (
           <div>
-            {this.state.isSaving && Loader()}
+            {this.state.isSaving && <Loader />}
             <button className="btn btn-link" disabled={this.state.isSaving} onClick={this._handleCancel}>
               Cancel
             </button>
