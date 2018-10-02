@@ -10,7 +10,7 @@ import InstalledComponentsActions from '../../../components/InstalledComponentsA
 import { Loader } from '@keboola/indigo-ui';
 import { States } from '../pages/credentials/StateConstants';
 import credentialsTemplates from '../../templates/credentialsFields';
-import { isProvisioningCredentials } from '../../provisioningUtils';
+import provisioningUtils from '../../provisioningUtils';
 
 export default (componentId, driver, isProvisioning) => {
   return React.createClass({
@@ -22,7 +22,7 @@ export default (componentId, driver, isProvisioning) => {
       const localState = InstalledComponentsStore.getLocalState(componentId, configId);
       const credsState = localState.get('credentialsState');
       const isEditing = !!WrDbStore.getEditingByPath(componentId, configId, 'creds');
-      const isProvisionedCreds = isProvisioningCredentials(driver, currentCredentials);
+      const isProvisionedCreds = provisioningUtils.isProvisioningCredentials(driver, currentCredentials);
       const editingCredentials = WrDbStore.getEditingByPath(componentId, configId, 'creds');
 
       // state
