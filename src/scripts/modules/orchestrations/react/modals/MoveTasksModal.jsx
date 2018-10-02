@@ -64,6 +64,7 @@ export default React.createClass({
         <Modal.Footer>
           <ConfirmButtons
             saveLabel="Move"
+            isSaving={false}
             isDisabled={!this.isValid()}
             onCancel={this.closeModal}
             onSave={this.handleSave}

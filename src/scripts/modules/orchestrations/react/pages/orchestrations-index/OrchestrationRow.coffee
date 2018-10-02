@@ -26,13 +26,13 @@ OrchestrationRow = React.createClass(
 
     buttons.push(OrchestrationDeleteButton(
       orchestration: @props.orchestration
-      isPending: @props.pendingActions.get 'delete'
+      isPending: @props.pendingActions.get 'delete', false
       key: 'delete'
     ))
 
     buttons.push(OrchestrationActiveButton(
       orchestration: @props.orchestration
-      isPending: @props.pendingActions.get 'active'
+      isPending: @props.pendingActions.get 'active', false
       key: 'activate'
     ))
 

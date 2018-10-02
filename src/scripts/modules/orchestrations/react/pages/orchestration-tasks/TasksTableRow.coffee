@@ -54,7 +54,6 @@ module.exports = React.createClass
       td null,
         div className: 'pull-right',
           TaskParametersEditModal
-            onSet: @_handleParametersChange
             isEditable: false
             parameters: @props.task.get('actionParameters').toJS()
 

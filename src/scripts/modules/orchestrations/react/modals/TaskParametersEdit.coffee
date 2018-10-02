@@ -18,7 +18,8 @@ TaskParametersEdit = React.createClass
   displayName: 'TaskParametersEdit'
   propTypes:
     parameters: React.PropTypes.object.isRequired
-    onSet: React.PropTypes.func.isRequired
+    onSet: React.PropTypes.func
+    isEditable: React.PropTypes.bool
 
   getInitialState: ->
     parameters: @props.parameters
