@@ -1,4 +1,3 @@
-// common wr-db-{generic} modules
 import VersionsActionCreators from '../components/VersionsActionCreators';
 import InstalledComponentsStore from '../components/stores/InstalledComponentsStore';
 import storageActionCreators from '../components/StorageActionCreators';
@@ -6,12 +5,12 @@ import JobsActionCreators from '../jobs/ActionCreators';
 import {createTablesRoute} from '../table-browser/routes';
 
 // OLD WR DB MODULES and stuff
-import dbwrIndex from '../wr-db/react/pages/index/Index';
-import dbWrTableDetail from '../wr-db/react/pages/table/Table';
-import dbWrCredentialsDetail from '../wr-db/react/pages/credentials/Credentials';
-import dbWrActionCreators from '../wr-db/actionCreators';
-import dbWrCredentialsHeader from '../wr-db/react/components/CredentialsHeaderButtons';
-import dbWrDockerProxyApi from '../wr-db/templates/dockerProxyApi';
+import dbwrIndex from './react/pages/index/Index';
+import dbWrTableDetail from './react/pages/table/Table';
+import dbWrCredentialsDetail from './react/pages/credentials/Credentials';
+import dbWrActionCreators from './actionCreators';
+import dbWrCredentialsHeader from './react/components/CredentialsHeaderButtons';
+import dbWrDockerProxyApi from './templates/dockerProxyApi';
 
 export default function(componentId, driver, isProvisioning) {
   const dbWrdockerProxyActions = dbWrDockerProxyApi(componentId);

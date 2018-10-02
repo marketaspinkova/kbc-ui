@@ -21,7 +21,7 @@ import dropoxExtractorRoutes from '../ex-dropbox/routes';
 import dropoxExtractorRoutesV2 from '../ex-dropbox-v2/routes';
 import emailAttachmentsExtractorRoutes from '../ex-email-attachments/routes';
 import wrPortalCreateRouteFn from '../wr-portal/Routes';
-import createDbWriterRoutes from '../wr-db-generic/routes';
+import createDbWriterRoutes from '../wr-db/routes';
 import createGenericDetailRoute from './createGenericDetailRoute';
 import createComponentRoute from './createComponentRoute';
 import googleDriveWriterRoutes from '../wr-google-drive-old/wrGdriveRoutes';
