@@ -19,7 +19,6 @@ import React from 'react';
 import genericIndex from './react/Index/Index';
 import genericTable from './react/Table/Table';
 import genericCredentials from './react/Creadentials/Credentials';
-import InstalledComponentsActions from '../components/InstalledComponentsActionCreators';
 
 const GENERIC_WR_DB_FEATURE = 'ui-wr-db-generic';
 const hasWrDbGenericFeature = () => ApplicationStore.hasCurrentAdminFeature(GENERIC_WR_DB_FEATURE);
@@ -56,10 +55,6 @@ export default function(componentId, driver, isProvisioning) {
     defaultRouteHandler: createProxyRouteHandler(dbwrIndex(componentId), genericIndex(componentId)),
     requireData: [
       (params) => {
-        if (hasWrDbGenericFeature()) {
-          return InstalledComponentsActions.loadComponentConfigData(componentId, params.config);
-        }
-        // old wr db stuff
         const prepareWriterDataFn = () => dbWrActionCreators.loadConfiguration(componentId, params.config);
         const dockerPromise = !!dbWrdockerProxyActions && dbWrdockerProxyActions.loadConfigData(params.config);
         if (dockerPromise) {
@@ -84,9 +79,7 @@ export default function(componentId, driver, isProvisioning) {
         },
         requireData: [
           function(params) {
-            if (!hasWrDbGenericFeature()) {
-              return dbWrActionCreators.loadTableConfig(componentId, params.config, params.tableId);
-            }
+            return dbWrActionCreators.loadTableConfig(componentId, params.config, params.tableId);
           }
         ]
       },
