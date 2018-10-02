@@ -21,7 +21,7 @@ module.exports = React.createClass({
         fieldName="name"
         editElement={InlineEditTextInput}
         placeholder="Choose a name..."
-        tooltipPlacememnt="bottom"
+        tooltipPlacement="bottom"
         fallbackValue={fallbackValue}
       />
     );
