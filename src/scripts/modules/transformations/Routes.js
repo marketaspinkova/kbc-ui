@@ -1,3 +1,5 @@
+/* eslint-disable react/no-multi-comp */
+// ^ due to false positive
 import React from 'react';
 
 import TransformationsIndex from './react/pages/transformations-index/TransformationsIndex';
