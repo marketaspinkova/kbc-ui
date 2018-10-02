@@ -146,12 +146,8 @@ export default componentId => {
     },
 
     _renderMainContent() {
-      const configuredTables = this.state.tables;
-      const configuredIds = configuredTables.map(table => {
-        let id = table.get('id');
-        return id ? id.toJS() : null;
-      });
-
+      const configuredIds = this.state.tables.map(table => table.get('id'));
+      const configuredTables = configuredIds ? configuredIds.toJS() : [];
       return (
         <div className="col-md-9 kbc-main-content">
           {!wontMigrateComponents.includes(componentId) && <MigrationRow componentId={componentId} />}
@@ -183,7 +179,7 @@ export default componentId => {
               isTableShownFn={this._isTableInConfig}
               onToggleBucketFn={this._handleToggleBucket}
               isBucketToggledFn={this._isBucketToggled}
-              configuredTables={configuredIds}
+              configuredTables={configuredTables}
               showAllTables={false}
             />
           ) : (
