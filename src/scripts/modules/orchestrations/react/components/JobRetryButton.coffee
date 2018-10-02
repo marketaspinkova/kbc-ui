@@ -8,8 +8,8 @@ ActionCreators = require('../../ActionCreators')
 RoutesStore = require('../../../../stores/RoutesStore')
 TaskSelectTable = React.createFactory(require './TaskSelectTable')
 Confirm = React.createFactory(require '../../../../react/common/Confirm')
-TasksTable = React.createFactory(require('../pages/orchestration-tasks/TasksTable'))
-TasksTableRow = React.createFactory(require('../pages/orchestration-tasks/TasksTableRow'))
+TasksTable = React.createFactory(require('../pages/orchestration-tasks/TasksTable').default)
+TasksTableRow = React.createFactory(require('../pages/orchestration-tasks/TasksTableRow').default)
 ComponentsStore = require '../../../components/stores/ComponentsStore'
 JobActionCreators = require '../../ActionCreators'
 
