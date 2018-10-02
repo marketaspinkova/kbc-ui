@@ -10,10 +10,11 @@ export function getQueryEditorPlaceholder(componentId) {
 
 const queryEditorHelp = {
   'keboola.ex-db-oracle': 'Please do not put semicolons at the end of the query.',
-  'keboola.ex-db-mssql': 'Please note that as of Oct 1, 2018, DATETIME fields will be exported with milliseconds.' +
+  'keboola.ex-db-mssql': 'From Oct 1, 2018, DATETIME fields will be exported with milliseconds.' +
   '  If you\'d like to export without milliseconds please cast your column as "CONVERT(DATETIME2(0), my_column)"' +
-  'Also if you are exporting strings that may contain quotes they should be escaped ' +
-  '"char(34) + REPLACE([my_varchar_column], char(34), char(34) + char(34)) + char(34)"'
+  ' <br/> See the ' +
+  '<a href="https://help.keboola.com/extractors/database/sqldb/#ms-sql-server-advanced-mode">documentation</a>' +
+  ' for further help.'
 };
 
 export function getQueryEditorHelpText(componentId) {

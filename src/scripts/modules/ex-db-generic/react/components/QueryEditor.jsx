@@ -495,9 +495,7 @@ export default React.createClass({
     const helpText = getQueryEditorHelpText(this.props.componentId);
     if (helpText) {
       return (
-        <div className="help-block">
-          {helpText}
-        </div>
+        <div className="help-block" dangerouslySetInnerHTML={{__html: helpText}}/>
       );
     } else if (this.props.componentId === 'keboola.ex-db-mysql' && !this.props.credentialsHasDatabase) {
       return (
