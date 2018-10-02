@@ -12,7 +12,7 @@ OrchestrationTasks = require('./react/pages/orchestration-tasks/OrchestrationTas
 OrchestrationNotifications = require('./react/pages/orchestration-notifications/OrchestrationNotifications').default
 
 OrchestrationsReloaderButton = require './react/components/OrchestrationsReloaderButton'
-NewOrchestrationHeaderButton = require './react/components/NewOrchestionHeaderButton'
+NewOrchestrationHeaderButton = require('./react/components/NewOrchestionHeaderButton').default
 OrchestrationReloaderButton = require './react/components/OrchestrationReloaderButton'
 JobReloaderButton = require('./react/components/JobReloaderButton').default
 JobDetailButtons = require('./react/components/JobDetailButtons').default
