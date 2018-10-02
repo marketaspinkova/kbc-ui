@@ -49,6 +49,8 @@ export default React.createClass({
                 <Select.Creatable
                   placeholder="Select phase..."
                   clearable={false}
+                  backspaceRemoves={false}
+                  deleteRemoves={false}
                   key="phases select"
                   name="phaseselector"
                   allowCreate={true}
