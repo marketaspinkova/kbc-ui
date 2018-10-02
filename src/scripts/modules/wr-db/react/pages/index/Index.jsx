@@ -247,7 +247,7 @@ export default componentId => {
                 runParams={() => {
                   const params = { writer: this.state.configId };
                   const api = dockerProxyApi(componentId);
-                  return api ? api.getRunParams(this.state.configId) : params;
+                  return api && api.getRunParams(this.state.configId) ? api.getRunParams(this.state.configId) : params;
                 }}
               >
                 You are about to run upload of all seleted tables
