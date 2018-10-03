@@ -47,13 +47,11 @@ export default React.createClass({
                 <Select.Creatable
                   placeholder="Select phase or type new..."
                   clearable={false}
-                  backspaceRemoves={false}
-                  deleteRemoves={false}
                   key="phases select"
                   name="phaseselector"
                   allowCreate={true}
                   value={this.state.value}
-                  onChange={({value: newValue}) => this.setState({value: newValue})}
+                  onChange={input => this.setState({ value: input ? input.value : '' })}
                   options= {this.getPhasesOptions()}
                 />
                 <span className="help-block">
@@ -77,7 +75,7 @@ export default React.createClass({
   },
 
   isValid() {
-    return true;
+    return !!this.state.value;
   },
 
   getPhasesOptions() {

@@ -23,8 +23,7 @@ export default React.createClass({
 
 
   isValid() {
-    const val = this.state.value;
-    return !!val;
+    return !!this.state.value;
   },
 
   render() {
@@ -49,13 +48,11 @@ export default React.createClass({
                 <Select.Creatable
                   placeholder="Select phase..."
                   clearable={false}
-                  backspaceRemoves={false}
-                  deleteRemoves={false}
                   key="phases select"
                   name="phaseselector"
                   allowCreate={true}
                   value={this.state.value}
-                  onChange={({value: newValue}) => this.setState({value: newValue})}
+                  onChange={input => this.setState({ value: input ? input.value : '' })}
                   options= {this.getPhasesOptions()}
                 />
                 <span className="help-block">
