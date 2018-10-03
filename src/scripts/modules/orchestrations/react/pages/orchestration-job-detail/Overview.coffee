@@ -36,10 +36,9 @@ JobDetailOverview = React.createClass
               span className: 'col-md-4', 'Created By '
               strong className: 'col-md-8', @props.job.getIn(['initiatorToken', 'description'])
       div className: 'kbc-orchestration-tasks-heading',
-        h2
+        h2 null,
           'Tasks',
-          ' ',
-          @_renderTotalDurationInHeader(),
+          @_renderTotalDurationInHeader()
       JobTasks(tasks: @props.job.getIn ['results', 'tasks'], List())
 
   _renderTotalDurationInHeader: ->
