@@ -11,15 +11,15 @@ OrchestrationJobDetail = require('./react/pages/orchestration-job-detail/Orchest
 OrchestrationTasks = require('./react/pages/orchestration-tasks/OrchestrationTasks').default
 OrchestrationNotifications = require('./react/pages/orchestration-notifications/OrchestrationNotifications').default
 
-OrchestrationsReloaderButton = require './react/components/OrchestrationsReloaderButton'
+OrchestrationsReloaderButton = require('./react/components/OrchestrationsReloaderButton').default
 NewOrchestrationHeaderButton = require('./react/components/NewOrchestionHeaderButton').default
-OrchestrationReloaderButton = require './react/components/OrchestrationReloaderButton'
+OrchestrationReloaderButton = require('./react/components/OrchestrationReloaderButton').default
 JobReloaderButton = require('./react/components/JobReloaderButton').default
 JobDetailButtons = require('./react/components/JobDetailButtons').default
 OrchestrationDetailButtons = require('./react/components/OrchestrationDetailButtons').default
-OrchestrationTasksButtons = require './react/components/OrchestrationTasksButtons'
+OrchestrationTasksButtons = require('./react/components/OrchestrationTasksButtons').default
 OrchestrationNotificationsButtons = require './react/components/OrchestrationNotificationsButtons'
-OrchestrationNameEdit = require './react/components/OrchestrationNameEdit'
+OrchestrationNameEdit = require('./react/components/OrchestrationNameEdit').default
 
 # stores
 OrchestrationsStore = require('./stores/OrchestrationsStore').default
