@@ -28,8 +28,9 @@ export default React.createClass({
           <Modal.Body>
             <form className="form-horizontal" onSubmit={this._handleSubmit}>
               <p className="help-block">
-                {'A transformation bucket is a container for related transformations.'}{' '}
-                {'Once the bucket is created, you can create transformations inside it.'}
+                A transformation bucket is a container for related transformations.
+                {' '}
+                Once the bucket is created, you can create transformations inside it.
               </p>
               <div className="form-group">
                 <label className="col-sm-4 control-label">Name</label>
