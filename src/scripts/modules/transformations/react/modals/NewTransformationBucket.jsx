@@ -82,13 +82,13 @@ export default React.createClass({
   },
 
   _close() {
-    return this.setState({
+    this.setState({
       showModal: false
     });
   },
 
   _open() {
-    return this.setState({
+    this.setState({
       showModal: true
     });
   },
