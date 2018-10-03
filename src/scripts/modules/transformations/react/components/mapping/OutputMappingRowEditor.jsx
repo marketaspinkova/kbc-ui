@@ -268,52 +268,51 @@ export default React.createClass({
                 />
               </div>
             </div>
-            {this.props.value.get('incremental') ||
-              (this.props.value.get('deleteWhereColumn', '') !== '' && (
-                <div className="form-group">
-                  <label className="col-xs-2 control-label">Delete rows</label>
-                  <div className="col-xs-4">
-                    <AutosuggestWrapper
-                      suggestions={this._getColumns()}
-                      placeholder="Select column"
-                      value={this.props.value.get('deleteWhereColumn', '')}
-                      onChange={this._handleChangeDeleteWhereColumn}
-                    />
-                  </div>
-                  <div className="col-xs-2">
-                    <FormGroup className="no-bottom-margin">
-                      <FormControl
-                        componentClass="select"
-                        name="deleteWhereOperator"
-                        value={this.props.value.get('deleteWhereOperator')}
-                        disabled={this.props.disabled}
-                        onChange={this._handleChangeDeleteWhereOperator}
-                      >
-                        <option value={whereOperatorConstants.EQ_VALUE}>{whereOperatorConstants.EQ_LABEL}</option>
-                        <option value={whereOperatorConstants.NOT_EQ_VALUE}>
-                          {whereOperatorConstants.NOT_EQ_LABEL}
-                        </option>
-                      </FormControl>
-                    </FormGroup>
-                  </div>
-                  <div className="col-xs-4">
-                    <Select
-                      name="deleteWhereValues"
-                      value={this.props.value.get('deleteWhereValues')}
-                      multi={true}
-                      disabled={this.props.disabled}
-                      allowCreate={true}
-                      delimiter=","
-                      placeholder="Add a value..."
-                      emptyStrings={true}
-                      onChange={this._handleChangeDeleteWhereValues}
-                    />
-                  </div>
-                  <div className="col-xs-10 col-xs-offset-2 help-block bottom-margin">
-                    Delete matching rows in the destination table before importing the result
-                  </div>
+            {(this.props.value.get('incremental') || this.props.value.get('deleteWhereColumn', '') !== '') && (
+              <div className="form-group">
+                <label className="col-xs-2 control-label">Delete rows</label>
+                <div className="col-xs-4">
+                  <AutosuggestWrapper
+                    suggestions={this._getColumns()}
+                    placeholder="Select column"
+                    value={this.props.value.get('deleteWhereColumn', '')}
+                    onChange={this._handleChangeDeleteWhereColumn}
+                  />
                 </div>
-              ))}
+                <div className="col-xs-2">
+                  <FormGroup className="no-bottom-margin">
+                    <FormControl
+                      componentClass="select"
+                      name="deleteWhereOperator"
+                      value={this.props.value.get('deleteWhereOperator')}
+                      disabled={this.props.disabled}
+                      onChange={this._handleChangeDeleteWhereOperator}
+                    >
+                      <option value={whereOperatorConstants.EQ_VALUE}>{whereOperatorConstants.EQ_LABEL}</option>
+                      <option value={whereOperatorConstants.NOT_EQ_VALUE}>
+                        {whereOperatorConstants.NOT_EQ_LABEL}
+                      </option>
+                    </FormControl>
+                  </FormGroup>
+                </div>
+                <div className="col-xs-4">
+                  <Select
+                    name="deleteWhereValues"
+                    value={this.props.value.get('deleteWhereValues')}
+                    multi={true}
+                    disabled={this.props.disabled}
+                    allowCreate={true}
+                    delimiter=","
+                    placeholder="Add a value..."
+                    emptyStrings={true}
+                    onChange={this._handleChangeDeleteWhereValues}
+                  />
+                </div>
+                <div className="col-xs-10 col-xs-offset-2 help-block bottom-margin">
+                    Delete matching rows in the destination table before importing the result
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
