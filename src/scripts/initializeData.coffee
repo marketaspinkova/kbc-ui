@@ -2,7 +2,7 @@ _ = require 'underscore'
 ComponentsActionCreators = require './modules/components/ComponentsActionCreators'
 ServicesActionCreators = require('./modules/services/ActionCreators').default
 InstalledComponentsActionCreators = require './modules/components/InstalledComponentsActionCreators'
-OrchestrationsActionCreators = require './modules/orchestrations/ActionCreators'
+OrchestrationsActionCreators = require('./modules/orchestrations/ActionCreators').default
 
 module.exports = (initialData) ->
   _.forEach(initialData, (data, name) ->
