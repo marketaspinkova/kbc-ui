@@ -108,7 +108,7 @@ export default React.createClass({
     return TransformationActionCreators.createTransformationBucket({
       name: this.state.name,
       description: this.state.description
-    }).then(this.close);
+    }).then(this._close);
   },
 
   _setName(e) {
