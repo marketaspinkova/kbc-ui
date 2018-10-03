@@ -13,7 +13,7 @@ export default React.createClass({
   },
   render() {
     return (
-      <div className="kbc-container">
+      <div>
         <div className="layout-master-detail-search">
           <SearchBar
             query={this.props.filter}
