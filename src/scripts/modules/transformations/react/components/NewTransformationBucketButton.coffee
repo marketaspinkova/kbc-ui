@@ -1,6 +1,6 @@
 React = require 'react'
 
-NewTransformationBucketModal = React.createFactory(require '../modals/NewTransformationBucket')
+NewTransformationBucketModal = React.createFactory(require('../modals/NewTransformationBucket').default)
 
 module.exports = React.createClass
   displayName: 'NewTransformationBucketButton'
