@@ -7,6 +7,7 @@ import RoutesStore from '../../../../../stores/RoutesStore';
 import LatestJobsStore from '../../../../jobs/stores/LatestJobsStore';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import VersionsStore from '../../../../components/stores/VersionsStore';
+import storeProvisioning from '../../../storeProvisioning';
 
 // components
 import RunComponentButton from '../../../../components/react/components/RunComponentButton';
@@ -20,18 +21,17 @@ import ConfiguredTables from './ConfiguredTables';
 
 const COMPONENT_ID = 'keboola.gooddata-writer';
 
-
 export default React.createClass({
 
   mixins: [createStoreMixin(InstalledComponentsStore, LatestJobsStore, VersionsStore)],
 
   getStateFromStores() {
     const configurationId = RoutesStore.getCurrentRouteParam('config');
-    const configuration = InstalledComponentsStore.getConfigData(COMPONENT_ID, configurationId) || Map();
-    const tables = configuration.get('tables', Map());
+    const {tables, isPending, saveTable} = storeProvisioning(configurationId);
     return {
+      saveTable,
+      isPending,
       configurationId,
-      configuration,
       tables,
       latestJobs: LatestJobsStore.getJobs(COMPONENT_ID, configurationId)
     };
@@ -100,6 +100,7 @@ export default React.createClass({
           tables={this.state.tables}
           isSaving={false}
           isTablePending={this.IsPendingTODO}
+          newTableButton={this.renderNewTableButton()}
         />
       );
     }
@@ -108,7 +109,7 @@ export default React.createClass({
   renderNewTableButton() {
     return (
       <NewTableButton
-        ononCreateTable={() => null}
+        onCreateTable={(tableId) => this.state.saveTable(tableId, Map({title: tableId}), 'create table')}
       />
     );
   },
