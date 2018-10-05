@@ -10,6 +10,7 @@ import configProvisioning from '../../../configProvisioning';
 
 // helpers
 import tablesProvisioning from '../../../tablesProvisioning';
+import dimensionsAdapter from '../../../dimensionsAdapter';
 
 // components
 import RunComponentButton from '../../../../components/react/components/RunComponentButton';
@@ -18,8 +19,10 @@ import ComponentMetadata from '../../../../components/react/components/Component
 import DeleteConfigurationButton from '../../../../components/react/components/DeleteConfigurationButton';
 import LatestVersions from '../../../../components/react/components/SidebarVersionsWrapper';
 import LatestJobs from '../../../../components/react/components/SidebarJobs';
+import {CollapsibleSection} from '../../../../configurations/utils/renderHelpers';
 import NewTableButton from './NewTableButton';
 import ConfiguredTables from './ConfiguredTables';
+import DimensionsSection from '../../components/DimensionsSection';
 
 const COMPONENT_ID = 'keboola.gooddata-writer';
 
@@ -32,9 +35,9 @@ export default React.createClass({
     const {tables, createNewTable} = tablesProvisioning(configurationId);
     const {isSaving, isPendingFn} = configProvisioning(configurationId);
     return {
+      configurationId,
       isPendingFn,
       isSaving,
-      configurationId,
       tables,
       createNewTable,
       latestJobs: LatestJobsStore.getJobs(COMPONENT_ID, configurationId)
@@ -51,6 +54,7 @@ export default React.createClass({
               configId={this.state.configurationId}
             />
           </div>
+          {this.renderDimensions()}
           {this.renderTables()}
         </div>
         <div className="col-md-3 kbc-main-sidebar">
@@ -85,6 +89,20 @@ export default React.createClass({
           />
         </div>
       </div>
+    );
+  },
+
+  renderDimensions() {
+    const DimensionsCollapsibleComponent = CollapsibleSection({
+      title: 'Date Dimensions',
+      contentComponent: DimensionsSection,
+      options: {stretchContentToBody: true}
+    });
+    const componentProps = dimensionsAdapter(this.state.configurationId);
+    return (
+      <DimensionsCollapsibleComponent
+        {...componentProps}
+      />
     );
   },
 

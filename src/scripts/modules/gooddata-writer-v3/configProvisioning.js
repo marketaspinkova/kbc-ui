@@ -9,6 +9,9 @@ export default function(configId) {
   function getLocalState() {
     return InstalledComponentStore.getLocalState(COMPONENT_ID, configId) || Map();
   }
+  function getLocalStateValue(path, defaultValue) {
+    return getLocalState().getIn([].concat(path), defaultValue);
+  }
   const configData =  InstalledComponentStore.getConfigData(COMPONENT_ID, configId) || Map();
 
   function updateLocalState(path, data) {
@@ -46,19 +49,19 @@ export default function(configId) {
 
   function saveParameters(newParameters, changeDescription = 'update parameters', waitingPath = 'parameters') {
     const newData = configData.set('parameters', newParameters);
-    return saveConfigData(newData, waitingPath, changeDescription);
+    return saveConfigData(newData, changeDescription, waitingPath);
   }
 
   function saveInputMapping(newInputMapping, changeDescription = 'update input mapping', waitingPath = 'inputmapping') {
     const newData = configData.setIn(INPUT_MAPPING_PATH, newInputMapping);
-    return saveConfigData(newData, waitingPath, changeDescription);
+    return saveConfigData(newData, changeDescription, waitingPath);
   }
 
   function saveInputMappingAndParameters(newInputMapping, newParameters, changeDescription = 'update input mapping and parameters', waitingPath = 'im&parameters') {
     const newData = configData
       .setIn(INPUT_MAPPING_PATH, newInputMapping)
       .set('parameters', newParameters);
-    return saveConfigData(newData, waitingPath, changeDescription);
+    return saveConfigData(newData, changeDescription, waitingPath);
   }
 
   return {
@@ -71,6 +74,8 @@ export default function(configId) {
     saveInputMappingAndParameters,
     togglePending,
     isPendingFn,
-    isSaving: getLocalState().getIn(pendingPath, Map()).count() > 0
+    isSaving: getLocalState().getIn(pendingPath, Map()).count() > 0,
+    getLocalStateValue,
+    updateLocalState
   };
 }
