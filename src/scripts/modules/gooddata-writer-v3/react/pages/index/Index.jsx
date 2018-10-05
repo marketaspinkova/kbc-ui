@@ -11,6 +11,7 @@ import configProvisioning from '../../../configProvisioning';
 // helpers
 import tablesProvisioning from '../../../tablesProvisioning';
 import dimensionsAdapter from '../../../dimensionsAdapter';
+import credentialsAdapter from '../../../credentialsAdapter';
 
 // components
 import RunComponentButton from '../../../../components/react/components/RunComponentButton';
@@ -23,6 +24,7 @@ import {CollapsibleSection} from '../../../../configurations/utils/renderHelpers
 import NewTableButton from './NewTableButton';
 import ConfiguredTables from './ConfiguredTables';
 import DimensionsSection from '../../components/DimensionsSection';
+import CredentialsContainer from '../../components/CredentialsContainer';
 
 const COMPONENT_ID = 'keboola.gooddata-writer';
 
@@ -54,6 +56,7 @@ export default React.createClass({
               configId={this.state.configurationId}
             />
           </div>
+          {this.renderCredentials()}
           {this.renderDimensions()}
           {this.renderTables()}
         </div>
@@ -101,6 +104,19 @@ export default React.createClass({
     const componentProps = dimensionsAdapter(this.state.configurationId);
     return (
       <DimensionsCollapsibleComponent
+        {...componentProps}
+      />
+    );
+  },
+
+  renderCredentials() {
+    const CredentialsComponent = CollapsibleSection({
+      title: 'Gooddata Project',
+      contentComponent: CredentialsContainer
+    });
+    const componentProps = credentialsAdapter(this.state.configurationId);
+    return (
+      <CredentialsComponent
         {...componentProps}
       />
     );
