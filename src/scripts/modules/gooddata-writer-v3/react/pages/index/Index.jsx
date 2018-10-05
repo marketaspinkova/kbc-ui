@@ -34,14 +34,17 @@ export default React.createClass({
 
   getStateFromStores() {
     const configurationId = RoutesStore.getCurrentRouteParam('config');
-    const {tables, createNewTable} = tablesProvisioning(configurationId);
+    const {tables, deleteTable, createNewTable, toggleTableExport, getSingleRunParams} = tablesProvisioning(configurationId);
     const {isSaving, isPendingFn} = configProvisioning(configurationId);
     return {
+      getSingleRunParams,
       configurationId,
       isPendingFn,
       isSaving,
       tables,
+      deleteTable,
       createNewTable,
+      toggleTableExport,
       latestJobs: LatestJobsStore.getJobs(COMPONENT_ID, configurationId)
     };
   },
@@ -137,8 +140,11 @@ export default React.createClass({
         <ConfiguredTables
           tables={this.state.tables}
           isSaving={this.state.isSaving}
-          isTablePending={this.state.IsPendingFn}
+          isTablePending={this.state.isPendingFn}
+          toggleTableExport={this.state.toggleTableExport}
           newTableButton={this.renderNewTableButton()}
+          deleteTable={this.state.deleteTable}
+          getSingleRunParams={this.state.getSingleRunParams}
         />
       );
     }
