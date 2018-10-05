@@ -6,8 +6,8 @@ export default function(configId) {
   const savedDimensions = parameters.get('dimensions', Map());
   const localDimensions = getLocalStateValue(PATH, savedDimensions);
 
-  function saveDimensions(newDimensions) {
-    const newParams = parameters.set('dimensions', fromJS(newDimensions.dimensions));
+  function saveDimensions(value) {
+    const newParams = parameters.set('dimensions', fromJS(value.dimensions));
     return saveParameters(newParams, 'update dimensions');
   }
 
