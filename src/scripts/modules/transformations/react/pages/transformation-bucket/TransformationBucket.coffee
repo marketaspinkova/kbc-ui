@@ -3,8 +3,8 @@ Immutable = require('immutable')
 Router = require 'react-router'
 
 createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
-TransformationsStore  = require('../../../stores/TransformationsStore')
-TransformationBucketsStore  = require('../../../stores/TransformationBucketsStore')
+TransformationsStore  = require('../../../stores/TransformationsStore').default
+TransformationBucketsStore  = require('../../../stores/TransformationBucketsStore').default
 RoutesStore = require '../../../../../stores/RoutesStore'
 TransformationRow = React.createFactory(require '../../components/TransformationRow')
 ComponentDescription = React.createFactory(require '../../../../components/react/components/ComponentDescription')

@@ -1,7 +1,7 @@
 React = require 'react'
 
 createStoreMixin = require '../../../../react/mixins/createStoreMixin'
-BucketsStore = require '../../stores/TransformationBucketsStore'
+BucketsStore = require('../../stores/TransformationBucketsStore').default
 
 {Link} = require('react-router')
 NewTransformationBucketButton = require './NewTransformationBucketButton'

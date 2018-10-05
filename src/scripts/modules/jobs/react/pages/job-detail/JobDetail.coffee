@@ -7,7 +7,7 @@ JobsStore = require('../../../stores/JobsStore')
 ComponentsStore  = require('../../../../components/stores/ComponentsStore')
 InstalledComponentsStore = require '../../../../components/stores/InstalledComponentsStore'
 ConfigurationRowsStore = require '../../../../configurations/ConfigurationRowsStore'
-TransformationsStore = require '../../../../transformations/stores/TransformationsStore'
+TransformationsStore = require('../../../../transformations/stores/TransformationsStore').default
 PureRendererMixin = require 'react-immutable-render-mixin'
 {fromJS} = require 'immutable'
 

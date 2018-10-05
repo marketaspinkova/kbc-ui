@@ -4,7 +4,7 @@ createStoreMixin = require '../../../../react/mixins/createStoreMixin'
 
 TransformationActionCreators = require '../../ActionCreators'
 InstalledComponentsActionCreators = require '../../../components/InstalledComponentsActionCreators'
-TransformationBucketsStore = require '../../stores/TransformationBucketsStore'
+TransformationBucketsStore = require('../../stores/TransformationBucketsStore').default
 RefreshIcon = React.createFactory(require('@keboola/indigo-ui').RefreshIcon)
 {Loader} = require '@keboola/indigo-ui'
 

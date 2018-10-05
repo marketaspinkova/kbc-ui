@@ -5,7 +5,7 @@ api = require '../../../TransformationsApiAdapter'
 
 {Loader} = require '@keboola/indigo-ui'
 Graph = React.createFactory (require './Graph')
-TransformationsStore  = require('../../../stores/TransformationsStore')
+TransformationsStore  = require('../../../stores/TransformationsStore').default
 createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
 TransformationsActionCreators = require '../../../ActionCreators'
 immutableMixin = require 'react-immutable-render-mixin'
