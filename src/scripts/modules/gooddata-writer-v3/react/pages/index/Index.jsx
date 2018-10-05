@@ -1,5 +1,4 @@
 import React from 'react';
-import {Map} from 'immutable';
 
 // stores
 import InstalledComponentsStore from '../../../../components/stores/InstalledComponentsStore';
@@ -7,7 +6,10 @@ import RoutesStore from '../../../../../stores/RoutesStore';
 import LatestJobsStore from '../../../../jobs/stores/LatestJobsStore';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import VersionsStore from '../../../../components/stores/VersionsStore';
-import storeProvisioning from '../../../stateProvisioning';
+import configProvisioning from '../../../configProvisioning';
+
+// helpers
+import tablesProvisioning from '../../../tablesProvisioning';
 
 // components
 import RunComponentButton from '../../../../components/react/components/RunComponentButton';
@@ -27,12 +29,14 @@ export default React.createClass({
 
   getStateFromStores() {
     const configurationId = RoutesStore.getCurrentRouteParam('config');
-    const {tables, isPending, saveTable} = storeProvisioning(configurationId);
+    const {tables, createNewTable} = tablesProvisioning(configurationId);
+    const {isSaving, isPendingFn} = configProvisioning(configurationId);
     return {
-      saveTable,
-      isPending,
+      isPendingFn,
+      isSaving,
       configurationId,
       tables,
+      createNewTable,
       latestJobs: LatestJobsStore.getJobs(COMPONENT_ID, configurationId)
     };
   },
@@ -98,8 +102,8 @@ export default React.createClass({
       return (
         <ConfiguredTables
           tables={this.state.tables}
-          isSaving={false}
-          isTablePending={this.IsPendingTODO}
+          isSaving={this.state.isSaving}
+          isTablePending={this.state.IsPendingFn}
           newTableButton={this.renderNewTableButton()}
         />
       );
@@ -109,7 +113,7 @@ export default React.createClass({
   renderNewTableButton() {
     return (
       <NewTableButton
-        onCreateTable={(tableId) => this.state.saveTable(tableId, Map({title: tableId}), 'create table')}
+        onCreateTable={this.state.createNewTable}
       />
     );
   },
