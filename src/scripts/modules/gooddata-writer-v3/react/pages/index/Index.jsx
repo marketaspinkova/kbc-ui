@@ -7,7 +7,7 @@ import RoutesStore from '../../../../../stores/RoutesStore';
 import LatestJobsStore from '../../../../jobs/stores/LatestJobsStore';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import VersionsStore from '../../../../components/stores/VersionsStore';
-import storeProvisioning from '../../../storeProvisioning';
+import storeProvisioning from '../../../stateProvisioning';
 
 // components
 import RunComponentButton from '../../../../components/react/components/RunComponentButton';
