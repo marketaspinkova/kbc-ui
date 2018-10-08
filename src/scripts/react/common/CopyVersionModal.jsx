@@ -4,6 +4,7 @@ import {Modal} from 'react-bootstrap';
 import moment from 'moment';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import ConfirmButtons from './ConfirmButtons';
+import defaultCopyVersionName from '../../utils/defaultCopyVersionName';
 
 export default React.createClass({
   mixins: [ImmutableRenderMixin],
@@ -37,6 +38,7 @@ export default React.createClass({
               label="New configuration name"
               labelClassName="col-xs-5"
               wrapperClassName="col-xs-7"
+              placeholder={defaultCopyVersionName(this.props.version)}
               value={this.props.newVersionName}
               onChange={this.onChange}
               autoFocus={true}
@@ -46,7 +48,6 @@ export default React.createClass({
         <Modal.Footer>
           <ConfirmButtons
             isSaving={false}
-            isDisabled={!this.isValid()}
             cancelLabel="Cancel"
             saveLabel="Copy"
             saveStyle="success"
@@ -60,14 +61,8 @@ export default React.createClass({
     );
   },
 
-  isValid() {
-    return !(this.props.newVersionName === '' || !this.props.newVersionName);
-  },
-
   handleSubmit(e) {
     e.preventDefault();
-    if (this.isValid()) {
-      this.props.onCopy();
-    }
+    this.props.onCopy();
   }
 });
