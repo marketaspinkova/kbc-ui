@@ -28,7 +28,7 @@ export default {
     createTablesRoute(componentId),
     {
       name: componentId + '-table',
-      path: 'table/:tableId',
+      path: 'table/:table',
       defaultRouteHandler: Table
     }
   ]

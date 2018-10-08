@@ -138,6 +138,7 @@ export default React.createClass({
     } else {
       return (
         <ConfiguredTables
+          configurationId={this.state.configurationId}
           tables={this.state.tables}
           isSaving={this.state.isSaving}
           isTablePending={this.state.isPendingFn}

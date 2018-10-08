@@ -37,7 +37,7 @@ export default function(configId) {
     if (value) {
       return updateLocalState(pendingPath.concat(path), true);
     } else {
-      return deleteLocalStatePath(pendingPath.concat(path));
+      return deleteLocalStatePath(pendingPath.concat(path)[0]);
     }
   }
 

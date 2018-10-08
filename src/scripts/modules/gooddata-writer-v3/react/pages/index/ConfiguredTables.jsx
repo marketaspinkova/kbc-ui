@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import {SearchBar} from '@keboola/indigo-ui';
+import RoutesStore from '../../../../../stores/RoutesStore';
 // import classnames from 'classnames';
 
 import ActivateDeactivateButton from '../../../../../react/common/ActivateDeactivateButton';
@@ -10,6 +11,7 @@ import {Loader} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
+    configurationId: PropTypes.string.isRequired,
     tables: PropTypes.object,
     isSaving: PropTypes.bool,
     isTablePending: PropTypes.func,
@@ -41,8 +43,12 @@ export default React.createClass({
   },
 
   renderTableRow(table, tableId) {
+    const router = RoutesStore.getRouter();
     return (
-      <div className="tr" key={tableId}>
+      <div className="tr" key={tableId}
+        onClick={() =>  router.transitionTo('keboola.gooddata-writer-table', {config: this.props.configurationId, table: tableId})
+        }
+      >
         <div className="td">
           {tableId}
         </div>
