@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import { ExternalLink } from '@keboola/indigo-ui';
 import Select from '../../../../../react/common/Select';
 
 export default React.createClass({
@@ -28,6 +29,7 @@ export default React.createClass({
           />
           <span className="help-block">
             The latest file with a given tag will be saved to <code>/data/in/user/&#123;tag&#125;</code>.
+            For writing files back to Storage, please read <ExternalLink href="https://developers.keboola.com/extend/common-interface/manifest-files/#dataoutfiles-manifests">documentation</ExternalLink>.
           </span>
         </div>
       </div>
