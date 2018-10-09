@@ -25,7 +25,7 @@ module.exports = React.createClass
       , @).toArray()
 
       div className: 'row',
-        div className: 'table table-striped table-hover',
+        div className: 'table table-striped table-hover table-no-margin',
           div className: 'tbody',
             childs
     else
