@@ -1,0 +1,55 @@
+.toggle {
+  float: right;
+  display: none;
+  width: 38px;
+  height: 30px;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+
+@media screen and (max-width: 768px) {
+  .toggle {
+    display: inline-block;
+
+    .toggle-bar:after,
+    .toggle-bar:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: -9px;
+    }
+
+    .toggle-bar:after {
+      top: 9px;
+    }
+
+    .toggle-bar {
+      position: relative;
+      display: block;
+    }
+
+    .toggle-bar,
+    .toggle-bar:after,
+    .toggle-bar:before {
+      width: 100%;
+      height: 3px;
+      background-color: white;
+      transition: all 0.125s ease-in-out;
+      backface-visibility: hidden;
+    }
+
+    &.open .toggle-bar {
+      background-color: transparent;
+    }
+
+    &.open .toggle-bar:before {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    &.open .toggle-bar:after {
+      transform: rotate(-45deg) translate(7px, -8px);
+    }
+  }
+}

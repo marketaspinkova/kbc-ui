@@ -4,6 +4,7 @@ import Link from 'react-router/lib/components/Link';
 
 import ApplicationStore from '../../stores/ApplicationStore';
 import RoutesStore from '../../stores/RoutesStore';
+import SidebarToggleAction from './sidebar-toggle/SidebarToggleActionCreators';
 
 const _pages = [
   {
@@ -58,7 +59,7 @@ const SidebarNavigation = React.createClass({
           return (
             <li className={this.isActive(page.id) ? 'active' : ''} key={page.id}>
               {RoutesStore.hasRoute(page.id) ? (
-                <Link to={page.id}>
+                <Link to={page.id} onClick={this.deactiveSidebarToggle}>
                   <span className={page.icon} />
                   <span>{page.title}</span>
                 </Link>
@@ -73,6 +74,10 @@ const SidebarNavigation = React.createClass({
         })}
       </ul>
     );
+  },
+
+  deactiveSidebarToggle() {
+    SidebarToggleAction.close();
   }
 });
 

@@ -1,6 +1,9 @@
 React = require 'react'
+classnames = require 'classnames'
 RouteHandler = React.createFactory(require('react-router').RouteHandler)
+createStoreMixin = require '../mixins/createStoreMixin'
 ApplicationStore = require '../../stores/ApplicationStore'
+SidebarToggleStore = require('./sidebar-toggle/SidebarToggleStore').default
 
 Header = React.createFactory(require '././Header')
 SidebarNavigation = React.createFactory(require('././SidebarNavigation').default)
@@ -23,9 +26,16 @@ require '../../../styles/app.less'
 
 App = React.createClass
   displayName: 'App'
+
+  mixins: [createStoreMixin(SidebarToggleStore)]
+
   propTypes:
     isError: React.PropTypes.bool
     isLoading: React.PropTypes.bool
+
+  getStateFromStores: ->
+    isSidebarToggleOpen: SidebarToggleStore.getIsOpen()
+
   getInitialState: ->
     organizations: ApplicationStore.getOrganizations()
     maintainers: ApplicationStore.getMaintainers()
@@ -42,6 +52,7 @@ App = React.createClass
     projectFeatures: ApplicationStore.getCurrentProjectFeatures()
     projectBaseUrl: ApplicationStore.getProjectBaseUrl()
     scriptsBasePath: ApplicationStore.getScriptsBasePath()
+
   render: ->
     div null,
       if @state.projectHasGuideModeOn == true
@@ -56,7 +67,7 @@ App = React.createClass
         notifications: @state.notifications
       React.createElement(FloatingNotifications)
       div className: 'container-fluid',
-        div className: 'row sidebar-offset-row',
+        div className: classnames('row sidebar-offset-row', { 'active': @state.isSidebarToggleOpen }),
           div className: 'col-sm-3 kbc-sidebar sidebar-offset',
             ProjectSelect
               organizations: @state.organizations
