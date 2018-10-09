@@ -34,7 +34,7 @@ App = React.createClass
     isLoading: React.PropTypes.bool
 
   getStateFromStores: ->
-    isSidebarToggleOpen: MenuToggleStore.getIsOpen()
+    isMenuToggleOpen: MenuToggleStore.getIsOpen()
 
   getInitialState: ->
     organizations: ApplicationStore.getOrganizations()
@@ -67,7 +67,7 @@ App = React.createClass
         notifications: @state.notifications
       React.createElement(FloatingNotifications)
       div className: 'container-fluid',
-        div className: classnames('row sidebar-offset-row', { 'sidebar-offset-row-open': @state.isSidebarToggleOpen }),
+        div className: classnames('row sidebar-offset-row', { 'sidebar-offset-row-open': @state.isMenuToggleOpen }),
           div className: 'col-sm-3 kbc-sidebar sidebar-offset',
             ProjectSelect
               organizations: @state.organizations
