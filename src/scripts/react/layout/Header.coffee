@@ -4,9 +4,9 @@ Immutable = require 'immutable'
 
 RoutesStore = require '../../stores/RoutesStore'
 ComponentsStore = require '../../modules/components/stores/ComponentsStore'
-SidebarToggleStore = require('./sidebar-toggle/SidebarToggleStore').default
+MenuToggleStore = require('./menu-toggle/MenuToggleStore').default
 immutableMixin = require 'react-immutable-render-mixin'
-SidebarToggleAction = require('./sidebar-toggle/SidebarToggleActionCreators').default
+MenuToggleActionCreators = require('./menu-toggle/MenuToggleActionCreators').default
 
 Link = React.createFactory(require('react-router').Link)
 RoutePendingIndicator = React.createFactory(require './RoutePendingIndicator')
@@ -16,14 +16,14 @@ ConfiguratinRowName = React.createFactory(
   require('../../modules/configurations/react/components/ConfigurationRowName').default
 )
 NotificationsAccess = require('../../react/common/NotificationsAccess').default
-SidebarToggleButton = React.createFactory(require('./SidebarToggleButton').default)
+MenuToggleButton = React.createFactory(require('./menu-toggle/MenuToggleButton').default)
 
 {div, nav, span, a, h1} = React.DOM
 
 
 Header = React.createClass
   displayName: 'Header'
-  mixins: [createStoreMixin(RoutesStore, SidebarToggleStore), immutableMixin]
+  mixins: [createStoreMixin(RoutesStore, MenuToggleStore), immutableMixin]
   propTypes:
     homeUrl: React.PropTypes.string.isRequired
     notifications: React.PropTypes.object.isRequired
@@ -39,7 +39,7 @@ Header = React.createClass
     component: component
     currentRouteParams: RoutesStore.getRouterState().get 'params'
     currentRouteQuery: RoutesStore.getRouterState().get 'query'
-    isSidebarToggleOpen: SidebarToggleStore.getIsOpen()
+    isMenuToggleOpen: MenuToggleStore.getIsOpen()
 
   render: ->
     nav {className: 'navbar navbar-fixed-top kbc-navbar', role: 'navigation'},
@@ -47,9 +47,9 @@ Header = React.createClass
         a href: @props.homeUrl,
           span className: "kbc-icon-keboola-logo", null
         @_renderNotifications()
-        SidebarToggleButton
-          isOpen: @state.isSidebarToggleOpen
-          onClick: @_handleSidebarToggleClick
+        MenuToggleButton
+          isOpen: @state.isMenuToggleOpen
+          onClick: @_handleMenuToggleClick
       div {className: 'col-xs-12 col-xs-offset-0 col-sm-9 col-sm-offset-3 kbc-main-header-container'},
         div {className: 'kbc-main-header kbc-header'},
           div {className: 'kbc-title'},
@@ -140,11 +140,11 @@ Header = React.createClass
     else
       React.createElement(@state.currentRouteConfig.get 'headerButtonsHandler')
 
-  _handleSidebarToggleClick: ->
-    if @state.isSidebarToggleOpen
-      SidebarToggleAction.close()
+  _handleMenuToggleClick: ->
+    if @state.isMenuToggleOpen
+      MenuToggleActionCreators.close()
     else
-      SidebarToggleAction.open()
+      MenuToggleActionCreators.open()
 
 
 module.exports = Header

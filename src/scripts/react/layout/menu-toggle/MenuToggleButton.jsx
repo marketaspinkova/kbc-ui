@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import { Button } from 'react-bootstrap';
 
 export default React.createClass({
   propTypes: {
@@ -9,12 +10,12 @@ export default React.createClass({
 
   render() {
     return (
-      <button
-        type="button"
-        className={classNames('toggle', {'open': this.props.isOpen})}
+      <Button
+        bsClass=""
+        className={classNames('menu-toggle', {'menu-toggle-open': this.props.isOpen})}
         onClick={this.props.onClick}>
-        <span className="toggle-bar" />
-      </button>
+        <span className="menu-toggle-icon" />
+      </Button>
     );
   }
 });

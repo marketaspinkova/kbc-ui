@@ -3,7 +3,7 @@ classnames = require 'classnames'
 RouteHandler = React.createFactory(require('react-router').RouteHandler)
 createStoreMixin = require '../mixins/createStoreMixin'
 ApplicationStore = require '../../stores/ApplicationStore'
-SidebarToggleStore = require('./sidebar-toggle/SidebarToggleStore').default
+MenuToggleStore = require('./menu-toggle/MenuToggleStore').default
 
 Header = React.createFactory(require '././Header')
 SidebarNavigation = React.createFactory(require('././SidebarNavigation').default)
@@ -27,14 +27,14 @@ require '../../../styles/app.less'
 App = React.createClass
   displayName: 'App'
 
-  mixins: [createStoreMixin(SidebarToggleStore)]
+  mixins: [createStoreMixin(MenuToggleStore)]
 
   propTypes:
     isError: React.PropTypes.bool
     isLoading: React.PropTypes.bool
 
   getStateFromStores: ->
-    isSidebarToggleOpen: SidebarToggleStore.getIsOpen()
+    isSidebarToggleOpen: MenuToggleStore.getIsOpen()
 
   getInitialState: ->
     organizations: ApplicationStore.getOrganizations()
@@ -67,7 +67,7 @@ App = React.createClass
         notifications: @state.notifications
       React.createElement(FloatingNotifications)
       div className: 'container-fluid',
-        div className: classnames('row sidebar-offset-row', { 'active': @state.isSidebarToggleOpen }),
+        div className: classnames('row sidebar-offset-row', { 'sidebar-offset-row-open': @state.isSidebarToggleOpen }),
           div className: 'col-sm-3 kbc-sidebar sidebar-offset',
             ProjectSelect
               organizations: @state.organizations
@@ -85,7 +85,7 @@ App = React.createClass
                 canManageApps: @state.canManageApps
                 dropup: true
               UserLinks()
-          div className: 'col-xs-12 col-xs-offset-0 col-sm-9 col-sm-offset-3 kbc-main',
+          div className: 'col-xs-12 col-sm-9 col-sm-offset-3 kbc-main',
             if @props.isError
               ErrorPage()
             else if @props.isLoading

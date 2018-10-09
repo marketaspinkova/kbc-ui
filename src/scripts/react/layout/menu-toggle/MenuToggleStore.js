@@ -1,7 +1,7 @@
 import StoreUtils from '../../../utils/StoreUtils';
 import { Map } from 'immutable';
 import dispatcher from '../../../Dispatcher';
-import { ActionTypes } from './SidebarToggleConstants';
+import { ActionTypes } from './MenuToggleConstants';
 
 let _store = Map({
   isOpen: false
@@ -15,11 +15,11 @@ dispatcher.register(payload => {
   const action = payload.action;
 
   switch (action.type) {
-    case ActionTypes.SIDEBAR_TOGGLE_OPEN:
+    case ActionTypes.MENU_TOGGLE_OPEN:
       _store = _store.set('isOpen', true);
       return SidebarToggleStore.emitChange();
 
-    case ActionTypes.SIDEBAR_TOGGLE_CLOSE:
+    case ActionTypes.MENU_TOGGLE_CLOSE:
       _store = _store.set('isOpen', false);
       return SidebarToggleStore.emitChange();
 

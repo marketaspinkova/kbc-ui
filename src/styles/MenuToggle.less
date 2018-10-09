@@ -1,4 +1,4 @@
-.toggle {
+.menu-toggle {
   float: right;
   display: none;
   width: 38px;
@@ -6,33 +6,30 @@
   background: transparent;
   border: none;
   outline: none;
-}
 
-
-@media screen and (max-width: 768px) {
-  .toggle {
+  @media (max-width: 768px) {
     display: inline-block;
 
-    .toggle-bar:after,
-    .toggle-bar:before {
+    &-icon:after,
+    &-icon:before {
       content: "";
       position: absolute;
       left: 0;
       top: -9px;
     }
 
-    .toggle-bar:after {
+    &-icon:after {
       top: 9px;
     }
 
-    .toggle-bar {
+    &-icon {
       position: relative;
       display: block;
     }
 
-    .toggle-bar,
-    .toggle-bar:after,
-    .toggle-bar:before {
+    &-icon,
+    &-icon:after,
+    &-icon:before {
       width: 100%;
       height: 3px;
       background-color: white;
@@ -40,15 +37,15 @@
       backface-visibility: hidden;
     }
 
-    &.open .toggle-bar {
+    &-open > &-icon {
       background-color: transparent;
     }
 
-    &.open .toggle-bar:before {
+    &-open > &-icon:before {
       transform: rotate(45deg) translate(5px, 5px);
     }
 
-    &.open .toggle-bar:after {
+    &-open > &-icon:after {
       transform: rotate(-45deg) translate(7px, -8px);
     }
   }
