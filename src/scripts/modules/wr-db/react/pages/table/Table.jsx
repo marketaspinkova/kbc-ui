@@ -21,6 +21,7 @@ import InstalledComponentsStore from '../../../../components/stores/InstalledCom
 import FiltersDescription from '../../../../components/react/components/generic/FiltersDescription';
 import IsDockerBasedFn from '../../../templates/dockerProxyApi';
 import IncrementalSetupModal from './IncrementalSetupModal';
+import {HelpBlock} from 'react-bootstrap';
 
 const defaultDataTypes = [
   'INT',
@@ -258,6 +259,9 @@ export default componentId => {
             >
               {primaryKey.join(', ') || 'N/A'} <span className="kbc-icon-pencil" />
             </button>
+            <HelpBlock style={{ paddingLeft: '12px'}}>
+              Primary Key can be different from the Primary Key in list which is send to DB
+            </HelpBlock>
           </div>
         </div>
       );
