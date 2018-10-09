@@ -2,6 +2,9 @@ import React from 'react';
 import ComponentsActionCreators from '../../ComponentsActionCreators';
 import {SearchBar} from '@keboola/indigo-ui';
 import ComponentBox from '../../../../react/common/ComponentBox';
+import contactSupport from '../../../../utils/contactSupport';
+import {Button} from 'react-bootstrap';
+
 
 export default React.createClass({
   propTypes: {
@@ -30,7 +33,7 @@ export default React.createClass({
         <div className="row">
           <div className="text-center">
             <h2>Haven't found what you're looking for?</h2>
-            <a className="btn btn-primary" href="mailto:support@keboola.com">Let us know</a>
+            <Button bsStyle="primary" onClick={contactSupport}>Let us know</Button>
           </div>
         </div>
       </div>
