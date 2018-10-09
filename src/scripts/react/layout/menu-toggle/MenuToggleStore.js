@@ -7,7 +7,7 @@ let _store = Map({
   isOpen: false
 });
 
-const SidebarToggleStore = StoreUtils.createStore({
+const MenuToggleStore = StoreUtils.createStore({
   getIsOpen: () => _store.get('isOpen')
 });
 
@@ -17,14 +17,14 @@ dispatcher.register(payload => {
   switch (action.type) {
     case ActionTypes.MENU_TOGGLE_OPEN:
       _store = _store.set('isOpen', true);
-      return SidebarToggleStore.emitChange();
+      return MenuToggleStore.emitChange();
 
     case ActionTypes.MENU_TOGGLE_CLOSE:
       _store = _store.set('isOpen', false);
-      return SidebarToggleStore.emitChange();
+      return MenuToggleStore.emitChange();
 
     default:
   }
 });
 
-export default SidebarToggleStore;
+export default MenuToggleStore;
