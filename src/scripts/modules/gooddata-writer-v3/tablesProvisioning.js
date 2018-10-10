@@ -1,9 +1,63 @@
 import configProvisioning from './configProvisioning';
+import localStateProvisioning from './localStateProvisioning';
 import {Map} from 'immutable';
+const EDITING_PATH = ['editing'];
 
 export default function(configId) {
   const {parameters, inputMapping, saveInputMappingAndParameters} = configProvisioning(configId);
+  const {getLocalStateValue, updateLocalState} = localStateProvisioning(configId);
   const tables = parameters.get('tables', Map());
+  const initialEditingTables = Map({
+    parameters: tables,
+    inputMapping
+  });
+
+  const editingTables = getLocalStateValue(EDITING_PATH, initialEditingTables);
+
+
+  function getEditingTable(tableId) {
+    return {
+      tableParameters: editingTables.getIn(['parameters', tableId]),
+      tableInputMapping: editingTables.get('inputMapping').find(table => table.get('source') === tableId)
+    };
+  }
+
+  function isEditingTableChanged(tableId) {
+    const {tableParameters, tableInputMapping} = getEditingTable(tableId);
+    const storedTableParameters = tables.get(tableId);
+    const storedInputMapping = inputMapping.find(table => table.get('source') === tableId);
+    return tableParameters !== storedTableParameters || tableInputMapping !== storedInputMapping;
+  }
+
+
+  function updateEditingTable(tableId, tableParams, tableInputMapping, strategy = 'merge') {
+    const editing = getEditingTable(tableId);
+    let newTableParams = tableParams;
+    let newInputMapping = tableInputMapping;
+    if (strategy === 'merge') {
+      newTableParams = editing.tableParameters.mergeDeep(tableParams);
+      newInputMapping = editing.tableInputMapping.mergeDeep(tableInputMapping);
+    }
+    let newEditingTables = editingTables.setIn(['parameters', tableId], newTableParams);
+    const tableMappingIndex = editingTables
+      .get('inputMapping')
+      .findIndex(tableIm => tableIm.get('source') === tableId);
+    newEditingTables = newEditingTables.setIn(['inputMapping', tableMappingIndex],  newInputMapping);
+    updateLocalState(EDITING_PATH, newEditingTables);
+  }
+
+  function resetEditingTable(tableId) {
+    updateEditingTable(tableId, tables.get(tableId), inputMapping.find(table => table.get('source') === tableId), 'set');
+  }
+
+  function saveEditingTable(tableId) {
+    const editing = getEditingTable(tableId);
+    const newParameters = parameters.setIn(['tables', tableId], editing.tableParameters);
+    const tableMappingIndex = inputMapping.findIndex(table => table.get('source') === tableId);
+    const newMapping = inputMapping.set(tableMappingIndex, editing.tableInputMapping);
+    const changeDescription = `update ${tableId} table`;
+    return saveInputMappingAndParameters(newMapping, newParameters, changeDescription).then(() => resetEditingTable(tableId));
+  }
 
   function updateTableMapping(ptableId, updateFn) {
     return inputMapping.map((table, tableId) => tableId === ptableId ? updateFn(table) : table);
@@ -48,6 +102,11 @@ export default function(configId) {
     createNewTable,
     deleteTable,
     tables,
-    toggleTableExport
+    toggleTableExport,
+    updateEditingTable,
+    getEditingTable,
+    isEditingTableChanged,
+    saveEditingTable,
+    resetEditingTable
   };
 }
