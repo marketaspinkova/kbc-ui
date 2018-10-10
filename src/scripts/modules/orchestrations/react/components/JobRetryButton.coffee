@@ -59,7 +59,6 @@ module.exports = React.createClass
     tasks = @state.job.get('tasks')
     if @_canBeRetried() && tasks
       editingTasks = OrchestrationJobStore.getEditingValue(@props.job.get('id'), 'tasks') or List()
-
       TaskSelectModal
         job: @props.job
         tasks: fromJS(rephaseTasks(editingTasks.toJS()))
@@ -71,14 +70,25 @@ module.exports = React.createClass
     else
       null
 
+  reactivateJobTasks: ->
+    enabledTaskStatuses = @props.job.getIn(['results', 'tasks'], List()).filter((task) -> task.get('active'))
+    jobSucceeded = @props.job.get('status') == 'success'
+    isFirstError = true
+    enabledTaskStatuses.forEach((task) =>
+      if (task.get('status') != 'success')
+        isFirstError = false
+      @_handleTaskChange(task.set('active', jobSucceeded or !isFirstError))
+    )
+
   _handleRetrySelectStart: ->
     JobActionCreators.startJobRetryTasksEdit(@state.job.get('id'))
+    @reactivateJobTasks()
 
   _handleTaskChange: (updatedTask) ->
-    tasks = OrchestrationJobStore.getEditingValue @props.job.get('id'), 'tasks'
-    index = tasks.findIndex((task) -> task.get('id') == updatedTask.get('id'))
-
-    JobActionCreators.updateJobRetryTasksEdit(
-      @props.job.get('id')
-      tasks.set(index, tasks.get(index).set('active', updatedTask.get('active')))
-    )
+    tasks = OrchestrationJobStore.getEditingValue(@props.job.get('id'), 'tasks')
+    if tasks
+      index = tasks.findIndex((task) -> task.get('id') == updatedTask.get('id'))
+      JobActionCreators.updateJobRetryTasksEdit(
+        @props.job.get('id')
+        tasks.set(index, tasks.get(index).set('active', updatedTask.get('active')))
+      )
