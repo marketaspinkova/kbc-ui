@@ -9,11 +9,14 @@ import RunComponentButton from '../../../../components/react/components/RunCompo
 import ActivateDeactivateButton from '../../../../../react/common/ActivateDeactivateButton';
 import Tooltip from '../../../../../react/common/Tooltip';
 import {Loader} from '@keboola/indigo-ui';
+import TitleSection from '../../components/TitleSection';
+import SaveButtons from '../../../../../react/common/SaveButtons';
 
 // helpers
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import tablesProvisioning from '../../../tablesProvisioning';
 import configProvisioning from '../../../configProvisioning';
+import titleAdapter from '../../../titleAdapter';
 
 export default React.createClass({
 
@@ -21,7 +24,7 @@ export default React.createClass({
   getStateFromStores() {
     const tableId = RoutesStore.getCurrentRouteParam('table');
     const configurationId = RoutesStore.getCurrentRouteParam('config');
-    const {tables, toggleTableExport, deleteTable} = tablesProvisioning(configurationId);
+    const {tables, toggleTableExport, deleteTable, isEditingTableChanged, saveEditingTable, resetEditingTable} = tablesProvisioning(configurationId);
     const table = tables.get(tableId);
     const {isSaving, isPendingFn} = configProvisioning(configurationId);
     return {
@@ -31,7 +34,10 @@ export default React.createClass({
       isPendingFn,
       tableId,
       configurationId,
-      table
+      table,
+      saveEditingTable,
+      resetEditingTable,
+      isChanged: isEditingTableChanged(tableId)
     };
   },
 
@@ -41,11 +47,42 @@ export default React.createClass({
       <div className="container-fluid">
         <div className="col-md-9 kbc-main-content">
           <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
-            inner content {this.state.tableId}
+            <div>
+              {this.renderButtons()}
+              {this.renderSections()}
+            </div>
           </div>
         </div>
         <div className="col-md-3 kbc-main-sidebar">
           {this.renderActionsSideBar()}
+        </div>
+      </div>
+    );
+  },
+
+  renderSections() {
+    const {configurationId, tableId} = this.state;
+    const titleProps = titleAdapter(configurationId, tableId);
+    return (
+      <div>
+        <TitleSection
+          {...titleProps}
+        />
+      </div>
+    );
+  },
+
+  renderButtons() {
+    const {isSaving, isChanged, saveEditingTable, tableId, resetEditingTable} = this.state;
+    return (
+      <div className="form-group">
+        <div className="text-right">
+          <SaveButtons
+            isSaving={isSaving}
+            isChanged={isChanged}
+            onSave={() => saveEditingTable(tableId)}
+            onReset={() => resetEditingTable(tableId)}
+          />
         </div>
       </div>
     );
