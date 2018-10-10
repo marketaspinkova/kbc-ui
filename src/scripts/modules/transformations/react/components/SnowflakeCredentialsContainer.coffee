@@ -3,7 +3,9 @@ Immutable = require('immutable')
 
 createStoreMixin = require '../../../../react/mixins/createStoreMixin'
 SnowflakeSandboxCredentialsStore = require('../../../provisioning/stores/SnowflakeSandboxCredentialsStore')
-SnowflakeCredentials = React.createFactory(require('../../../provisioning/react/components/SnowflakeCredentials'))
+SnowflakeCredentials = React.createFactory(
+  require('../../../provisioning/react/components/SnowflakeCredentials').default
+)
 CredentialsActionCreators = require('../../../provisioning/ActionCreators')
 
 {div, span, input, strong, form, button, h3, h4, i, button, small, ul, li, a} = React.DOM
