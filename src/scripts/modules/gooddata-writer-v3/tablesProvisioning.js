@@ -32,12 +32,21 @@ export default function(configId) {
 
   function updateEditingTable(tableId, tableParams, tableInputMapping, strategy = 'merge') {
     const editing = getEditingTable(tableId);
-    let newTableParams = tableParams;
-    let newInputMapping = tableInputMapping;
-    if (strategy === 'merge') {
-      newTableParams = editing.tableParameters.mergeDeep(tableParams);
-      newInputMapping = editing.tableInputMapping.mergeDeep(tableInputMapping);
+    let newTableParams = null;
+    let newInputMapping = null;
+    switch (strategy) {
+      case 'set':
+        newTableParams = tableParams;
+        newInputMapping = tableInputMapping;
+        break;
+      case 'merge':
+        newTableParams = editing.tableParameters.mergeDeep(tableParams);
+        newInputMapping = editing.tableInputMapping.mergeDeep(tableInputMapping);
+        break;
+      default:
+        throw new Error({message: `Unkwnown strategy: ${strategy}`});
     }
+
     let newEditingTables = editingTables.setIn(['parameters', tableId], newTableParams);
     const tableMappingIndex = editingTables
       .get('inputMapping')

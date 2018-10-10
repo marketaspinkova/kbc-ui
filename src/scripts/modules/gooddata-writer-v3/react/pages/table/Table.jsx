@@ -11,12 +11,16 @@ import Tooltip from '../../../../../react/common/Tooltip';
 import {Loader} from '@keboola/indigo-ui';
 import TitleSection from '../../components/TitleSection';
 import SaveButtons from '../../../../../react/common/SaveButtons';
+import LoadTypeSectionTitle from '../../components/LoadTypeSectionTitle';
+import LoadTypeSection from '../../components/LoadTypeSection';
 
 // helpers
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import tablesProvisioning from '../../../tablesProvisioning';
 import configProvisioning from '../../../configProvisioning';
 import titleAdapter from '../../../titleAdapter';
+import {CollapsibleSection} from '../../../../configurations/utils/renderHelpers';
+import loadTypeAdater from '../../../loadTypeAdapter';
 
 export default React.createClass({
 
@@ -68,7 +72,22 @@ export default React.createClass({
         <TitleSection
           {...titleProps}
         />
+        {this.renderLoadType()}
       </div>
+    );
+  },
+
+  renderLoadType() {
+    const LoadTypeCollapsibleComponent = CollapsibleSection({
+      title: LoadTypeSectionTitle,
+      contentComponent: LoadTypeSection,
+      options: {stretchContentToBody: true}
+    });
+    const loadTypeProps = loadTypeAdater(this.state.configurationId, this.state.tableId);
+    return (
+      <LoadTypeCollapsibleComponent
+        {...loadTypeProps}
+      />
     );
   },
 
