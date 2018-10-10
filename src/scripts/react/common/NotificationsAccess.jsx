@@ -7,7 +7,7 @@ export default React.createClass({
 
   render() {
     return (
-      <a href={this.props.notifications.get('url')}>
+      <a href={this.props.notifications.get('url')} className="kbc-notification-access">
         <span className="kbc-notification-icon fa fa-bell">
           {this.badge()}
         </span>
