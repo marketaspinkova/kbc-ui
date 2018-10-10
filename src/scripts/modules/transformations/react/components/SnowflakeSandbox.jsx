@@ -44,7 +44,8 @@ var SnowflakeSandbox = React.createClass({
   _renderControlButtons: function() {
     var state = this.state;
     var component = this;
-    const connectLink = 'https://' + this.state.credentials.get('hostname') + '/console/login#/?returnUrl=sql/worksheet';
+    const connectLink =
+      'https://' + this.state.credentials.get('hostname') + '/console/login#/?returnUrl=sql/worksheet';
     if (this.state.credentials.get('id')) {
       return (
         <div>
@@ -65,11 +66,12 @@ var SnowflakeSandbox = React.createClass({
                 backend="snowflake"
                 tables={this.state.tables}
                 buckets={this.state.buckets}
-                onChange={(params) => {
+                onChange={params => {
                   component.setState({
                     sandboxConfiguration: Immutable.fromJS(params)
                   });
-                }}/>
+                }}
+              />
             </RunComponentButton>
           </div>
           <div>
@@ -79,7 +81,7 @@ var SnowflakeSandbox = React.createClass({
               target="_blank"
               disabled={this.state.pendingActions.size > 0}
             >
-              <span className="fa fa-fw fa-database"/>
+              <span className="fa fa-fw fa-database" />
               &nbsp;Connect
             </a>
             <div>
@@ -102,11 +104,8 @@ var SnowflakeSandbox = React.createClass({
       );
     } else if (!this.state.pendingActions.get('create')) {
       return (
-        <button
-          className="btn btn-link"
-          onClick={this._createCredentials}
-        >
-          <i className="kbc-icon-plus"/>
+        <button className="btn btn-link" onClick={this._createCredentials}>
+          <i className="fa fa-fw fa-plus" />
           New Sandbox
         </button>
       );
@@ -115,13 +114,11 @@ var SnowflakeSandbox = React.createClass({
   render: function() {
     return (
       <div className="row">
-        <h4>Snowflake</h4>
-        <div className="col-md-9">
-          {this._renderCredentials()}
+        <div className="col-xs-12">
+          <h4>Snowflake</h4>
         </div>
-        <div className="col-md-3">
-          {this._renderControlButtons()}
-        </div>
+        <div className="col-md-9">{this._renderCredentials()}</div>
+        <div className="col-md-3">{this._renderControlButtons()}</div>
       </div>
     );
   },

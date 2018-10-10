@@ -105,11 +105,12 @@ RedshiftSandbox = React.createClass
       if !@state.pendingActions.get("create")
         button {className: 'btn btn-link', onClick: @_createCredentials},
           i className: 'fa fa-fw fa-plus'
-          ' Create sandbox'
+          'New Sandbox'
 
   render: ->
     div {className: 'row'},
-      h4 {}, 'Redshift'
+      div {className: 'col-xs-12'},
+        h4 {}, 'Redshift'
       div {className: 'col-md-9'},
         @_renderCredentials()
       div {className: 'col-md-3'},
