@@ -1,8 +1,10 @@
 import configProvisioning from './configProvisioning';
+import localStateProvisioning from './localStateProvisioning';
 import {Map, fromJS} from 'immutable';
 const PATH = 'dimensions';
 export default function(configId) {
-  const {parameters, isSaving, saveParameters, updateLocalState, getLocalStateValue} = configProvisioning(configId);
+  const {parameters, isSaving, saveParameters} = configProvisioning(configId);
+  const {updateLocalState, getLocalStateValue} = localStateProvisioning(configId);
   const savedDimensions = parameters.get('dimensions', Map());
   const localDimensions = getLocalStateValue(PATH, savedDimensions);
 

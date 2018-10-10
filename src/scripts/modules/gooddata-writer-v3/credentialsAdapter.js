@@ -1,9 +1,11 @@
 import configProvisioning from './configProvisioning';
+import localStateProvisioning from './localStateProvisioning';
 import {Map, fromJS} from 'immutable';
 const PATH = 'credentials';
 
 export default function(configId) {
-  const {parameters, isSaving, saveParameters, updateLocalState, getLocalStateValue} = configProvisioning(configId);
+  const {parameters, isSaving, saveParameters} = configProvisioning(configId);
+  const {updateLocalState, getLocalStateValue} = localStateProvisioning(configId);
 
   const savedCredentials = Map({
     pid: parameters.getIn(['project', 'pid'], ''),

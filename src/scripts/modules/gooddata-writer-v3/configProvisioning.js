@@ -1,31 +1,14 @@
 import {Map, List} from 'immutable';
 import InstalledComponentStore from '../components/stores/InstalledComponentsStore';
 import componentsActions from '../components/InstalledComponentsActionCreators';
+import localStateProvisioning from './localStateProvisioning';
 
 const COMPONENT_ID = 'keboola.gooddata-writer';
 const INPUT_MAPPING_PATH = ['storage', 'input', 'tables'];
 
 export default function(configId) {
-  function getLocalState() {
-    return InstalledComponentStore.getLocalState(COMPONENT_ID, configId) || Map();
-  }
-  function getLocalStateValue(path, defaultValue) {
-    return getLocalState().getIn([].concat(path), defaultValue);
-  }
   const configData =  InstalledComponentStore.getConfigData(COMPONENT_ID, configId) || Map();
-
-  function updateLocalState(path, data) {
-    const ls = getLocalState();
-    const newLocalState = ls.setIn([].concat(path), data);
-    componentsActions.updateLocalState(COMPONENT_ID, configId, newLocalState, path);
-  }
-
-  function deleteLocalStatePath(path) {
-    const ls = getLocalState();
-    const newLocalState = ls.deleteIn([].concat(path));
-    componentsActions.updateLocalState(COMPONENT_ID, configId, newLocalState, path);
-  }
-
+  const {getLocalState, updateLocalState, deleteLocalStatePath} = localStateProvisioning(configId);
   const parameters = configData.get('parameters', Map());
   const inputMapping = configData.getIn(INPUT_MAPPING_PATH, List());
   const pendingPath = ['pending'];
@@ -74,8 +57,6 @@ export default function(configId) {
     saveInputMappingAndParameters,
     togglePending,
     isPendingFn,
-    isSaving: getLocalState().getIn(pendingPath, Map()).count() > 0,
-    getLocalStateValue,
-    updateLocalState
+    isSaving: getLocalState().getIn(pendingPath, Map()).count() > 0
   };
 }
