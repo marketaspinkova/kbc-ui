@@ -1,5 +1,5 @@
 import React from 'react';
-import { Protected, Loader } from '@keboola/indigo-ui';
+import { Protected, Loader, ExternalLink } from '@keboola/indigo-ui';
 import Clipboard from '../../../../react/common/Clipboard';
 import ValidUntilWithIcon from '../../../../react/common/ValidUntilWithIcon';
 
@@ -41,9 +41,7 @@ export default React.createClass({
       <div>
         <p className="small">
           {'Use these credentials to connect to the sandbox with your favourite SQL client (we like '}
-          <a href="http://www.sequelpro.com/download" target="_blank">
-            Sequel Pro
-          </a>
+          <ExternalLink href="http://www.sequelpro.com/download">Sequel Pro</ExternalLink>
           ). You can also use the Adminer web application provided by Keboola (click on Connect).
         </p>
         <div className="row">
