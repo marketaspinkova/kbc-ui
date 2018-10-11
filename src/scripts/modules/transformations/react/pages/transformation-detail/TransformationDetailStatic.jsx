@@ -299,27 +299,23 @@ export default React.createClass({
                         collapsible={true}
                         eventKey={key}
                         expanded={this.props.openInputMappings.get(key, false)}
-                        header={React.createElement(
-                          'div',
-                          {
-                            onClick() {
-                              return this._toggleInputMapping(key);
-                            }
-                          },
-                          <InputMappingRow
-                            transformation={this.props.transformation}
-                            bucket={this.props.bucket}
-                            inputMapping={input}
-                            tables={this.props.tables}
-                            editingInputMapping={this.props.editingFields.get(`input-${key}`, input)}
-                            editingId={`input-${key}`}
-                            mappingIndex={key.toString()}
-                            pendingActions={this.props.pendingActions}
-                            otherDestinations={this._inputMappingDestinations(key)}
-                            definition={definition}
-                            disabled={this._isMySqlTransformation()}
-                          />
-                        )}
+                        header={
+                          <div onClick={() => this._toggleInputMapping(key)}>
+                            <InputMappingRow
+                              transformation={this.props.transformation}
+                              bucket={this.props.bucket}
+                              inputMapping={input}
+                              tables={this.props.tables}
+                              editingInputMapping={this.props.editingFields.get(`input-${key}`, input)}
+                              editingId={`input-${key}`}
+                              mappingIndex={key.toString()}
+                              pendingActions={this.props.pendingActions}
+                              otherDestinations={this._inputMappingDestinations(key)}
+                              definition={definition}
+                              disabled={this._isMySqlTransformation()}
+                            />
+                          </div>
+                        }
                       >
                         <InputMappingDetail
                           fill={true}
@@ -377,30 +373,26 @@ export default React.createClass({
                           collapsible={true}
                           eventKey={key}
                           expanded={this.props.openOutputMappings.get(key, false)}
-                          header={React.createElement(
-                            'div',
-                            {
-                              onClick() {
-                                return this._toggleOutputMapping(key);
-                              }
-                            },
-                            <OutputMappingRow
-                              transformation={this.props.transformation}
-                              bucket={this.props.bucket}
-                              outputMapping={output}
-                              editingOutputMapping={this.props.editingFields.get(`input-${key}`, output)}
-                              editingId={`input-${key}`}
-                              mappingIndex={key}
-                              tables={this.props.tables}
-                              pendingActions={this.props.pendingActions}
-                              buckets={this.props.buckets}
-                              definition={definition}
-                              otherOutputMappings={this.props.transformation
-                                .get('output')
-                                .filter((otherOutputMapping, otherOutputMappingKey) => otherOutputMappingKey !== key)}
-                              disabled={this._isMySqlTransformation()}
-                            />
-                          )}
+                          header={
+                            <div onClick={() => this._toggleOutputMapping(key)}>
+                              <OutputMappingRow
+                                transformation={this.props.transformation}
+                                bucket={this.props.bucket}
+                                outputMapping={output}
+                                editingOutputMapping={this.props.editingFields.get(`input-${key}`, output)}
+                                editingId={`input-${key}`}
+                                mappingIndex={key}
+                                tables={this.props.tables}
+                                pendingActions={this.props.pendingActions}
+                                buckets={this.props.buckets}
+                                definition={definition}
+                                otherOutputMappings={this.props.transformation
+                                  .get('output')
+                                  .filter((otherOutputMapping, otherOutputMappingKey) => otherOutputMappingKey !== key)}
+                                disabled={this._isMySqlTransformation()}
+                              />
+                            </div>
+                          }
                         >
                           <OutputMappingDetail outputMapping={output} />
                         </Panel>
