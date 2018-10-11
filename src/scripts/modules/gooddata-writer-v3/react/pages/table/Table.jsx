@@ -25,6 +25,13 @@ import {CollapsibleSection} from '../../../../configurations/utils/renderHelpers
 import loadTypeAdater from '../../../loadTypeAdapter';
 import columnsEditorAdapter from '../../../columnsEditorAdapter';
 
+const LoadTypeCollapsibleComponent = CollapsibleSection({
+  title: LoadTypeSectionTitle,
+  contentComponent: LoadTypeSection,
+  options: {stretchContentToBody: true}
+});
+
+
 export default React.createClass({
 
   mixins: [createStoreMixin(InstalledComponentsStore, TablesStore)],
@@ -94,11 +101,6 @@ export default React.createClass({
   },
 
   renderLoadType() {
-    const LoadTypeCollapsibleComponent = CollapsibleSection({
-      title: LoadTypeSectionTitle,
-      contentComponent: LoadTypeSection,
-      options: {stretchContentToBody: true}
-    });
     const loadTypeProps = loadTypeAdater(this.state.configurationId, this.state.tableId);
     return (
       <LoadTypeCollapsibleComponent
