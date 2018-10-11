@@ -352,7 +352,6 @@ export default React.createClass({
                     transformation={this.props.transformation}
                     bucket={this.props.bucket}
                     mapping={this.props.editingFields.get('new-output-mapping', Map())}
-                    transformation={this.props.transformation}
                   />
                 </span>
               )}
