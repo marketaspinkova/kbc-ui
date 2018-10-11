@@ -25,18 +25,12 @@ export default function(configId) {
   }
 
   function saveConfigData(data, changeDescription = 'update configuration', waitingPath = 'confing') {
-    // check default output bucket and save default if non set
     togglePending(waitingPath, true);
     return componentsActions.saveComponentConfigData(COMPONENT_ID, configId, data, changeDescription).then(() => togglePending(waitingPath, false));
   }
 
   function saveParameters(newParameters, changeDescription = 'update parameters', waitingPath = 'parameters') {
     const newData = configData.set('parameters', newParameters);
-    return saveConfigData(newData, changeDescription, waitingPath);
-  }
-
-  function saveInputMapping(newInputMapping, changeDescription = 'update input mapping', waitingPath = 'inputmapping') {
-    const newData = configData.setIn(INPUT_MAPPING_PATH, newInputMapping);
     return saveConfigData(newData, changeDescription, waitingPath);
   }
 
@@ -53,7 +47,6 @@ export default function(configId) {
     inputMapping,
     saveConfigData,
     saveParameters,
-    saveInputMapping,
     saveInputMappingAndParameters,
     togglePending,
     isPendingFn,
