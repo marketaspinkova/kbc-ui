@@ -3,6 +3,7 @@ import React from 'react';
 // stores
 import RoutesStore from '../../../../../stores/RoutesStore';
 import InstalledComponentsStore from '../../../../components/stores/InstalledComponentsStore';
+import TablesStore from '../../../../components/stores/StorageTablesStore';
 
 // components
 import RunComponentButton from '../../../../components/react/components/RunComponentButton';
@@ -13,6 +14,7 @@ import TitleSection from '../../components/TitleSection';
 import SaveButtons from '../../../../../react/common/SaveButtons';
 import LoadTypeSectionTitle from '../../components/LoadTypeSectionTitle';
 import LoadTypeSection from '../../components/LoadTypeSection';
+import StorageTableColumnsEditor from '../../../../configurations/react/components/StorageTableColumnsEditor';
 
 // helpers
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
@@ -21,17 +23,20 @@ import configProvisioning from '../../../configProvisioning';
 import titleAdapter from '../../../titleAdapter';
 import {CollapsibleSection} from '../../../../configurations/utils/renderHelpers';
 import loadTypeAdater from '../../../loadTypeAdapter';
+import columnsEditorAdapter from '../../../columnsEditorAdapter';
 
 export default React.createClass({
 
-  mixins: [createStoreMixin(InstalledComponentsStore)],
+  mixins: [createStoreMixin(InstalledComponentsStore, TablesStore)],
   getStateFromStores() {
     const tableId = RoutesStore.getCurrentRouteParam('table');
     const configurationId = RoutesStore.getCurrentRouteParam('config');
     const {tables, toggleTableExport, deleteTable, isEditingTableChanged, saveEditingTable, resetEditingTable} = tablesProvisioning(configurationId);
     const table = tables.get(tableId);
     const {isSaving, isPendingFn} = configProvisioning(configurationId);
+    const storageTable = TablesStore.getAll().get(tableId);
     return {
+      storageTable,
       deleteTable,
       toggleTableExport,
       isSaving,
@@ -73,7 +78,18 @@ export default React.createClass({
           {...titleProps}
         />
         {this.renderLoadType()}
+        {this.renderColumnsEditor()}
       </div>
+    );
+  },
+
+  renderColumnsEditor() {
+    const {configurationId, storageTable} = this.state;
+    const editorProps = columnsEditorAdapter(configurationId, storageTable);
+    return (
+      <StorageTableColumnsEditor
+        {...editorProps}
+      />
     );
   },
 

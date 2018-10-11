@@ -1,8 +1,12 @@
 import configProvisioning from './configProvisioning';
 import tablesProvisioning from './tablesProvisioning';
 import makeColumnDefinition from './helpers/makeColumnDefinition';
-import {Map} from 'immutable';
+import {Map, fromJS} from 'immutable';
 import getInitialShowAdvanced from './helpers/getInitialShowAdvanced';
+import PreferencesHeader from './react/components/PreferencesHeader';
+import PreferencesColumn from './react/components/PreferencesColumn';
+import prepareColumnContext from './helpers/prepareColumnContext';
+
 
 function initColumnFn(columnName) {
   return Map(makeColumnDefinition({id: columnName}).initColumn());
@@ -37,8 +41,8 @@ function prepareAllTableColumns(configuredColumns, storageTableColumns) {
 
 export default function(configId, storageTable) {
   const tableId = storageTable.get('id');
-  const {isSaving} = configProvisioning(configId);
-  const {getEditingTable, updateEditingTable} = tablesProvisioning(configId);
+  const {isSaving, parameters} = configProvisioning(configId);
+  const {getEditingTable, updateEditingTable, tables} = tablesProvisioning(configId);
   const editing = getEditingTable(tableId);
 
   const storageTableColumns = storageTable.get('columns');
@@ -46,7 +50,8 @@ export default function(configId, storageTable) {
   const allColumnsList = prepareAllTableColumns(configuredColumns, storageTableColumns);
 
   function onChangeColumns(newValue) {
-    const columnsToSave = newValue.columns.filter(column => !isColumnIgnored(column));
+    const columnsToSave = fromJS(newValue.columns)
+      .filter(column => !isColumnIgnored(column));
     const paramsColumns = columnsToSave.reduce((memo, column) =>
       memo.set(column.get('id'), column.delete('id')), Map());
     const mappingColumns = columnsToSave.map(column => column.get('id'));
@@ -55,11 +60,19 @@ export default function(configId, storageTable) {
     updateEditingTable(tableId, newTableParams, newTableMapping);
   }
 
+  const context = prepareColumnContext(parameters, tables, tableId, allColumnsList);
+
   const value = Map({
     columns: allColumnsList,
     tableId,
-    columnsMappings: 'todo',
-    context: 'todo',
+    columnsMappings: [
+      {
+        title: PreferencesHeader,
+        render: PreferencesColumn
+
+      }
+    ],
+    context,
     matchColumnKey: 'id',
     isColumnValidFn: isColumnValid,
     getInitialShowAdvanced
