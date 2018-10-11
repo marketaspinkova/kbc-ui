@@ -1,9 +1,9 @@
 import React from 'react';
-import { Protected, Loader } from '@keboola/indigo-ui';
+import { Protected, Loader, ExternalLink } from '@keboola/indigo-ui';
 import Clipboard from '../../../../react/common/Clipboard';
 import { Input } from './../../../../react/common/KbcBootstrap';
 
-const RedshiftCredentials = React.createClass({
+export default React.createClass({
   propTypes: {
     credentials: React.PropTypes.object,
     isCreating: React.PropTypes.bool
@@ -21,7 +21,8 @@ const RedshiftCredentials = React.createClass({
     if (this.props.isCreating) {
       return (
         <span>
-          <Loader /> Creating sandbox
+          <Loader />
+          &nbsp;Creating sandbox
         </span>
       );
     }
@@ -39,59 +40,53 @@ const RedshiftCredentials = React.createClass({
     const jdbcPgSql = `jdbc:postgresql://${credentials.get('hostname')}:5439/${credentials.get('db')}`;
 
     return (
-      <span>
-        <div className="row">
-          <div className="col-md-12">
-            <small className="help-text">
-              {'Use these credentials to connect to the sandbox with your favourite Redshift client (we like '}
-              <a href="http://dbeaver.jkiss.org/download/" target="_blank">
-                DBeaver
-              </a>
-              ).
-            </small>
-          </div>
-        </div>
+      <div>
+        <p className="small">
+          {'Use these credentials to connect to the sandbox with your favourite Redshift client (we like '}
+          <ExternalLink href="http://dbeaver.jkiss.org/download/">DBeaver</ExternalLink>
+          ).
+        </p>
         <div className="row">
           <span className="col-md-3">Host</span>
-          <strong className="col-md-9">
+          <span className="col-md-9">
             {this.props.credentials.get('hostname')}
             <Clipboard text={credentials.get('hostname')} />
-          </strong>
+          </span>
         </div>
         <div className="row">
           <span className="col-md-3">Port</span>
-          <strong className="col-md-9">
+          <span className="col-md-9">
             5439
             <Clipboard text="5439" />
-          </strong>
+          </span>
         </div>
         <div className="row">
           <span className="col-md-3">User</span>
-          <strong className="col-md-9">
+          <span className="col-md-9">
             {credentials.get('user')}
             <Clipboard text={credentials.get('user')} />
-          </strong>
+          </span>
         </div>
         <div className="row">
           <span className="col-md-3">Password</span>
-          <strong className="col-md-9">
+          <span className="col-md-9">
             <Protected>{credentials.get('password')}</Protected>
             <Clipboard text={credentials.get('password')} />
-          </strong>
+          </span>
         </div>
         <div className="row">
           <span className="col-md-3">Database</span>
-          <strong className="col-md-9">
+          <span className="col-md-9">
             {credentials.get('db')}
             <Clipboard text={credentials.get('db')} />
-          </strong>
+          </span>
         </div>
         <div className="row">
           <span className="col-md-3">Schema</span>
-          <strong className="col-md-9">
+          <span className="col-md-9">
             {credentials.get('schema')}
             <Clipboard text={credentials.get('schema')} />
-          </strong>
+          </span>
         </div>
         <div className="form-horizontal clearfix">
           <div className="row">
@@ -113,23 +108,23 @@ const RedshiftCredentials = React.createClass({
         {this.state.showDetails && (
           <div className="row">
             <span className="col-md-3">Redshift driver</span>
-            <strong className="col-md-9">
+            <span className="col-md-9">
               {jdbcRedshift}
               <Clipboard text={jdbcRedshift} />
-            </strong>
+            </span>
           </div>
         )}
 
         {this.state.showDetails && (
           <div className="row">
             <span className="col-md-3">PostgreSQL driver</span>
-            <strong className="col-md-9">
+            <span className="col-md-9">
               {jdbcPgSql}
               <Clipboard text={jdbcPgSql} />
-            </strong>
+            </span>
           </div>
         )}
-      </span>
+      </div>
     );
   },
 
@@ -139,5 +134,3 @@ const RedshiftCredentials = React.createClass({
     });
   }
 });
-
-export default RedshiftCredentials;
