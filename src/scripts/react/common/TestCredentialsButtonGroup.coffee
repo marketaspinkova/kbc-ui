@@ -48,28 +48,29 @@ module.exports = React.createClass
       result: result
 
   render: ->
-    div className: 'form-group',
-      div className: classnames('col-xs-8 col-xs-offset-4': @props.hasOffset),
-        div null,
-          Button
-            bsStyle: 'primary'
-            disabled: @state.isTesting || @props.disabled
-            onClick: @_startTesting
-            ,
-            'Test Credentials'
-          span className: null, ' '
+    div className: 'kbc-inner-padding',
+      div className: 'form-group',
+        div className: classnames('col-xs-8 col-xs-offset-4': @props.hasOffset),
+          div null,
+            Button
+              bsStyle: 'primary'
+              disabled: @state.isTesting || @props.disabled
+              onClick: @_startTesting
+              ,
+              'Test Credentials'
+            span className: null, ' '
 
-        div className: 'TestCredentialsButtonGroup-result',
-          if @state.isTesting
-            span null,
-              Loader()
-              ' Connecting ...'
+          div className: 'TestCredentialsButtonGroup-result',
+            if @state.isTesting
+              span null,
+                Loader()
+                ' Connecting ...'
 
-          if @state.result or @state.isError
-            if @state.result.status in ['success', 'ok'] and not @state.isError
-              @_testSuccess @state.result
-            else
-              @_testError @state.result
+            if @state.result or @state.isError
+              if @state.result.status in ['success', 'ok'] and not @state.isError
+                @_testSuccess @state.result
+              else
+                @_testError @state.result
 
   _testSuccess: (result) ->
     span className: 'text-success',
