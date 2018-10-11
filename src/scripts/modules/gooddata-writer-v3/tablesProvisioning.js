@@ -1,6 +1,6 @@
 import configProvisioning from './configProvisioning';
 import localStateProvisioning from './localStateProvisioning';
-import {Map} from 'immutable';
+import {Map, List} from 'immutable';
 const EDITING_PATH = ['editing'];
 
 export default function(configId) {
@@ -8,12 +8,23 @@ export default function(configId) {
   const {getLocalStateValue, updateLocalState} = localStateProvisioning(configId);
   const tables = parameters.get('tables', Map());
   const initialEditingTables = Map({
-    parameters: tables,
-    inputMapping
+    parameters: tables.map(() => null), // init all tables to tableId=>null key value pair
+    inputMapping: List()
   });
 
-  const editingTables = getLocalStateValue(EDITING_PATH, initialEditingTables);
-
+  // fill missing editing objects with objects from the stored configuration
+  const editingTables = getLocalStateValue(EDITING_PATH, initialEditingTables)
+    .update('parameters', editingTablesParameters => editingTablesParameters.map((editingTableParams, tableId) => editingTableParams ? editingTableParams : tables.get(tableId)))
+    .update('inputMapping', currentEditingMapping => {
+      return inputMapping.reduce((memo, storedMapping) => {
+        const isInitialized = currentEditingMapping.find(editingMapping => editingMapping.get('source') === storedMapping.get('source'));
+        if (!isInitialized) {
+          return currentEditingMapping.push(storedMapping);
+        } else {
+          return currentEditingMapping;
+        }
+      }, currentEditingMapping);
+    });
 
   function getEditingTable(tableId) {
     return {
@@ -31,32 +42,29 @@ export default function(configId) {
 
 
   function updateEditingTable(tableId, tableParams, tableInputMapping, strategy = 'merge') {
-    const editing = getEditingTable(tableId);
-    let newTableParams = null;
-    let newInputMapping = null;
+    let newEditingTables = null;
+    const tableMappingIndex = editingTables
+      .get('inputMapping')
+      .findIndex(tableIm => tableIm.get('source') === tableId);
+
     switch (strategy) {
       case 'set':
-        newTableParams = tableParams;
-        newInputMapping = tableInputMapping;
+        newEditingTables = editingTables.setIn(['parameters', tableId], tableParams);
+        newEditingTables = newEditingTables.setIn(['inputMapping', tableMappingIndex], tableInputMapping);
         break;
       case 'merge':
-        newTableParams = editing.tableParameters.mergeDeep(tableParams);
-        newInputMapping = editing.tableInputMapping.mergeDeep(tableInputMapping);
+        newEditingTables = editingTables.mergeDeepIn(['parameters', tableId], tableParams);
+        newEditingTables = newEditingTables.mergeDeepIn(['inputMapping', tableMappingIndex],  tableInputMapping);
         break;
       default:
         throw new Error({message: `Unkwnown strategy: ${strategy}`});
     }
 
-    let newEditingTables = editingTables.setIn(['parameters', tableId], newTableParams);
-    const tableMappingIndex = editingTables
-      .get('inputMapping')
-      .findIndex(tableIm => tableIm.get('source') === tableId);
-    newEditingTables = newEditingTables.setIn(['inputMapping', tableMappingIndex],  newInputMapping);
     updateLocalState(EDITING_PATH, newEditingTables);
   }
 
   function resetEditingTable(tableId) {
-    updateEditingTable(tableId, tables.get(tableId), inputMapping.find(table => table.get('source') === tableId), 'set');
+    updateEditingTable(tableId, null, List(), 'set');
   }
 
   function saveEditingTable(tableId) {
