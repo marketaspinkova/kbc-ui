@@ -97,7 +97,13 @@ export default function(configId) {
   function toggleTableExport(tableId, isEnabled) {
     const newMapping = updateTableMapping(tableId, (table) => isEnabled ? table.delete('limit') : table.set('limit', 1));
     const newParameters = updateTableParameters(tableId, (table) => table.set('disabled', !isEnabled));
-    return saveInputMappingAndParameters(newMapping, newParameters, `${isEnabled ? 'Enable' : 'Disabled'} ${tableId} export`, [tableId, 'activate']);
+    return saveInputMappingAndParameters(newMapping, newParameters, `${isEnabled ? 'Enable' : 'Disabled'} ${tableId} export`, [tableId, 'activate'])
+      .then( () => {
+        if (isEditingTableChanged(tableId)) {
+          const mappingObjectToMerge = isEnabled ? {source: tableId} : {source: tableId, limit: 1};
+          updateEditingTable(tableId, Map({disabled: !isEnabled}), Map(mappingObjectToMerge));
+        }
+      });
   }
 
   function deleteTable(tableId) {
