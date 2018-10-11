@@ -5,15 +5,14 @@ date = require '../../utils/date'
 {span, i} = React.DOM
 
 ValidUntilWithIcon = React.createClass
-  displayName: 'ValidUntilWithIcon'
   propTypes:
-    validUntil: React.PropTypes.string
+    validUntil: React.PropTypes.number
+
   render: ->
     span title: date.format(@props.validUntil),
       i {className: 'fa fa-calendar'}
       ' '
       ValidUntil
         validUntil: @props.validUntil
-
 
 module.exports = ValidUntilWithIcon

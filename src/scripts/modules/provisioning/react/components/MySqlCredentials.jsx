@@ -6,7 +6,7 @@ import ValidUntilWithIcon from '../../../../react/common/ValidUntilWithIcon';
 const MySqlCredentials = React.createClass({
   propTypes: {
     credentials: React.PropTypes.object,
-    validUntil: React.PropTypes.string,
+    validUntil: React.PropTypes.number,
     isCreating: React.PropTypes.bool,
     hideClipboard: React.PropTypes.bool
   },
