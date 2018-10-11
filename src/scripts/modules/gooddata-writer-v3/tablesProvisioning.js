@@ -64,7 +64,7 @@ export default function(configId) {
   }
 
   function resetEditingTable(tableId) {
-    updateEditingTable(tableId, null, List(), 'set');
+    updateEditingTable(tableId, null, Map(), 'set');
   }
 
   function saveEditingTable(tableId) {
@@ -107,7 +107,7 @@ export default function(configId) {
   }
 
   function deleteTable(tableId) {
-    const newMapping = inputMapping.filter((table, mtableId) => mtableId !== tableId );
+    const newMapping = inputMapping.filter( mapping => mapping.get('source') !== tableId );
     const newParameters = parameters.deleteIn(['tables', tableId]);
     return saveInputMappingAndParameters(newMapping, newParameters, `delete table ${tableId}`, [tableId, 'delete']);
   }

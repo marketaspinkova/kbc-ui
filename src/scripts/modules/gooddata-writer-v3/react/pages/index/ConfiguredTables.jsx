@@ -67,7 +67,7 @@ export default React.createClass({
     return (
       <Tooltip placement="top" tooltip="delete">
         <button disabled={this.props.isSaving}
-          className="btn btn-link" onClick={() => this.props.deleteTable(tableId)}>
+          className="btn btn-link" onClick={(e) => this.deleteTable(e, tableId)}>
           { isPending
             ? <Loader className="fa-fw"/>
             : <i className="kbc-icon-cup fa fa-fw"/>
@@ -77,10 +77,16 @@ export default React.createClass({
     );
   },
 
+  deleteTable(e, tableId) {
+    e.preventDefault();
+    e.stopPropagation();
+    this.props.deleteTable(tableId);
+  },
+
   renderRowActionButtons(tableId, table) {
     const isDisabled = table.get('disabled');
     return [
-      this.renderDeleteButton(),
+      this.renderDeleteButton(tableId),
       <ActivateDeactivateButton
         key="activate"
         activateTooltip="Enable"
