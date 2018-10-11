@@ -7,7 +7,7 @@ module.exports = React.createClass({
   displayName: 'JupyterCredentials',
   propTypes: {
     credentials: React.PropTypes.object,
-    validUntil: React.PropTypes.string,
+    validUntil: React.PropTypes.number,
     isCreating: React.PropTypes.bool
   },
   render: function() {
