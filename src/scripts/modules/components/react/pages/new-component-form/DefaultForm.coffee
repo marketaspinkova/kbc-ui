@@ -51,7 +51,7 @@ module.exports = React.createClass
               size: 64
           div className: 'col-xs-9',
             h2
-              className: 'modal-configuration-name'
+              className: 'modal-configuration-title'
               ComponentName
                 component: @props.component
             p null, @props.component.get 'description'
