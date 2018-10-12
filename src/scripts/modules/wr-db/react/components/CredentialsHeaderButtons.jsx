@@ -10,7 +10,6 @@ import InstalledComponentsStore from '../../../components/stores/InstalledCompon
 import InstalledComponentsActions from '../../../components/InstalledComponentsActionCreators';
 import { States } from '../pages/credentials/StateConstants';
 import SaveButtons from '../../../../react/common/SaveButtons';
-import provisioningUtils from '../../provisioningUtils';
 import utils from '../../utils';
 
 export default (componentId, driver, isProvisioning) => {
@@ -23,8 +22,7 @@ export default (componentId, driver, isProvisioning) => {
       const editingCredentials = WrDbStore.getEditingByPath(componentId, configId, 'creds');
       const localState = InstalledComponentsStore.getLocalState(componentId, configId);
       const credsState = localState.get('credentialsState');
-      const isProvisionedCreds = provisioningUtils.isProvisioningCredentials(driver, currentCredentials);
-      const isEditing = !currentCredentials.equals(editingCredentials);
+      const isEditing = !utils.defaultCredentials(componentId, driver, currentCredentials).equals(editingCredentials);
 
       // state
       return {
@@ -33,8 +31,7 @@ export default (componentId, driver, isProvisioning) => {
         configId,
         isEditing,
         isSaving: credsState === States.SAVING_NEW_CREDS,
-        localState,
-        isProvisionedCreds: !isEditing && isProvisionedCreds
+        localState
       };
     },
 
@@ -66,6 +63,12 @@ export default (componentId, driver, isProvisioning) => {
       });
     },
 
+    _updateLocalState(newPath, data) {
+      const path = _.isString(newPath) ? [newPath] : newPath;
+      const newLocalState = this.state.localState.setIn(path, data);
+      return InstalledComponentsActions.updateLocalState(componentId, this.state.configId, newLocalState, path);
+    },
+
     render() {
       const state = this.state.localState.get('credentialsState');
 
@@ -73,7 +76,7 @@ export default (componentId, driver, isProvisioning) => {
         return (
           <div>
             {isProvisioning && (
-              <button className="btn btn-link" disabled={this.state.isSaving} onClick={this._handleResetSelection}>
+              <button className="btn btn-link" onClick={this._handleResetSelection}>
                 <span className="fa fa-fw fa-times" />
                 {' Reset Credentials'}
               </button>
@@ -95,12 +98,6 @@ export default (componentId, driver, isProvisioning) => {
       }
 
       return null;
-    },
-
-    _updateLocalState(newPath, data) {
-      const path = _.isString(newPath) ? [newPath] : newPath;
-      const newLocalState = this.state.localState.setIn(path, data);
-      return InstalledComponentsActions.updateLocalState(componentId, this.state.configId, newLocalState, path);
     }
   });
 };
