@@ -30,7 +30,7 @@ export function loadProvisioningData(pid) {
     err => {
       let result = null;
       const status = (err.response || {}).status;
-      if (status !== 404) {
+      if (status !== 404 && status !== 400) {
         result = Promise.reject({ error: err.message || err });
       }
       return result;
