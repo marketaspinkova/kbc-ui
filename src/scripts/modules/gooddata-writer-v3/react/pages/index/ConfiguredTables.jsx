@@ -5,7 +5,8 @@ import StorageApiTableLinkEx from '../../../../components/react/components/Stora
 // import classnames from 'classnames';
 
 import ActivateDeactivateButton from '../../../../../react/common/ActivateDeactivateButton';
-import RunComponentButton from '../../../../components/react/components/RunComponentButton';
+import RunLoadButton from '../../components/RunLoadButton';
+
 import Tooltip from '../../../../../react/common/Tooltip';
 import {Loader} from '@keboola/indigo-ui';
 
@@ -96,29 +97,19 @@ export default React.createClass({
       this.renderDeleteButton(tableId),
       <ActivateDeactivateButton
         key="activate"
-        activateTooltip="Enable"
-        deactivateTooltip="Disable"
+        activateTooltip="Enable load to GoodData project"
+        deactivateTooltip="Disable load to GoodData project"
         isActive={!isDisabled}
         isPending={this.props.isTablePending([tableId, 'activate'])}
         onChange={val => this.props.toggleTableExport(tableId, val)}
       />,
-      <RunComponentButton
+      <RunLoadButton
+        tableId={tableId}
+        isTableDisabled={isDisabled}
         key="run"
-        title="Run"
-        component="keboola.gooddata-writer"
-        runParams={this.props.getSingleRunParams}
-      >
-        {this.renderRunModalContent(tableId, table)}
-      </RunComponentButton>
+        getRunParams={this.props.getSingleRunParams}
+      />
     ];
-  },
-
-  renderRunModalContent(tableId, table) {
-    if (table.get('disabled')) {
-      return 'You are about to run ' + tableId + '. Configuration ' + tableId + ' is disabled and will be forced to run ';
-    } else {
-      return 'You are about to run load of' + tableId + ' table.';
-    }
   },
 
   render() {
