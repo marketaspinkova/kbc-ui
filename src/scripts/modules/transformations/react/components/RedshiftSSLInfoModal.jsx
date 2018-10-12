@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal, ButtonToolbar, Button } from 'react-bootstrap';
+import { ExternalLink } from '@keboola/indigo-ui';
 
 const RedshiftSSLInfoModal = ({ show, onHide }) => {
   return (
@@ -10,9 +11,9 @@ const RedshiftSSLInfoModal = ({ show, onHide }) => {
       <Modal.Body>
         <p>
           {'To establish a secure connection to Redshift follow AWS '}
-          <a href="http://docs.aws.amazon.com/redshift/latest/mgmt/connecting-ssl-support.html">
+          <ExternalLink href="http://docs.aws.amazon.com/redshift/latest/mgmt/connecting-ssl-support.html">
             Configure Security Options for Connections
-          </a>
+          </ExternalLink>
           {' guide.'}
         </p>
       </Modal.Body>
