@@ -9,9 +9,9 @@ import { Navigation } from 'react-router';
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
 import InstalledComponentsActions from '../../../components/InstalledComponentsActionCreators';
 import { States } from '../pages/credentials/StateConstants';
-import credentialsTemplates from '../../templates/credentialsFields';
-import provisioningUtils from '../../provisioningUtils';
 import SaveButtons from '../../../../react/common/SaveButtons';
+import provisioningUtils from '../../provisioningUtils';
+import utils from '../../utils';
 
 export default (componentId, driver, isProvisioning) => {
   return createReactClass({
@@ -28,7 +28,7 @@ export default (componentId, driver, isProvisioning) => {
 
       // state
       return {
-        editingCredsValid: this._hasDbConnection(editingCredentials),
+        editingCredsValid: utils.hasDbConnection(componentId, editingCredentials),
         currentCredentials,
         configId,
         isEditing,
@@ -48,8 +48,8 @@ export default (componentId, driver, isProvisioning) => {
         return this._updateLocalState('credentialsState', States.INIT);
       }
 
-      const defaultCredentials = this._getDefaultValues();
-      ActionCreators.setEditingData(componentId, this.state.configId, 'creds', defaultCredentials);
+      const credentials = utils.defaultCredentials(componentId, driver, this.state.currentCredentials);
+      ActionCreators.setEditingData(componentId, this.state.configId, 'creds', credentials);
     },
 
     _handleSave() {
@@ -105,34 +105,6 @@ export default (componentId, driver, isProvisioning) => {
       const path = _.isString(newPath) ? [newPath] : newPath;
       const newLocalState = this.state.localState.setIn(path, data);
       return InstalledComponentsActions.updateLocalState(componentId, this.state.configId, newLocalState, path);
-    },
-
-    _hasDbConnection(credentials) {
-      const fields = credentialsTemplates(componentId);
-      const result = _.reduce(
-        fields,
-        (memo, field) => {
-          const propName = field[1];
-          const isHashed = propName[0] === '#';
-          const isRequired = field[6];
-          return memo && (!isRequired || !!credentials.get(propName) || isHashed);
-        },
-        !!credentials
-      );
-      return result;
-    },
-
-    _getDefaultValues() {
-      let credentials = this.state.currentCredentials;
-      credentials = credentials.set('driver', driver);
-
-      credentialsTemplates(componentId).forEach(input => {
-        if (input[4] !== null) {
-          credentials = credentials.set(input[1], input[4]);
-        }
-      });
-
-      return credentials;
     }
   });
 };

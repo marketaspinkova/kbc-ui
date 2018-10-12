@@ -10,7 +10,6 @@ import WrDbActions from '../../../actionCreators';
 import InstalledComponentsActions from '../../../../components/InstalledComponentsActionCreators';
 import V2Actions from '../../../v2-actions';
 import { Loader } from '@keboola/indigo-ui';
-import credentialsTemplate from '../../../templates/credentialsFields';
 import provisioningTemplates from '../../../templates/provisioning';
 import WrDbStore from '../../../store';
 import RoutesStore from '../../../../../stores/RoutesStore';
@@ -18,6 +17,7 @@ import InstalledComponentsStore from '../../../../components/stores/InstalledCom
 import MissingRedshiftModal from './MissingRedshiftModal';
 import CredentialsForm from './CredentialsForm';
 import provisioningUtils from '../../../provisioningUtils';
+import utils from '../../../utils';
 
 export default (componentId, driver, isProvisioning) => {
   return createReactClass({
@@ -58,7 +58,7 @@ export default (componentId, driver, isProvisioning) => {
         return this._startEdit();
       }
 
-      if (this._hasDbConnection(this.state.credentials)) {
+      if (utils.hasDbConnection(componentId, this.state.credentials)) {
         return this._updateLocalState('credentialsState', States.SHOW_STORED_CREDS);
       }
 
@@ -222,21 +222,6 @@ export default (componentId, driver, isProvisioning) => {
       return WrDbActions.setEditingData(componentId, this.state.configId, 'creds', creds);
     },
 
-    _hasDbConnection(credentials) {
-      const fields = credentialsTemplate(componentId);
-      const result = _.reduce(
-        fields,
-        (memo, field) => {
-          const propName = field[1];
-          const isHashed = propName[0] === '#';
-          const isRequired = field[6];
-          return memo && (!isRequired || !!credentials.get(propName) || isHashed);
-        },
-        !!credentials
-      );
-      return result;
-    },
-
     _updateLocalState(pathname, data) {
       const path = _.isString(pathname) ? [pathname] : pathname;
       const newLocalState = this.state.localState.setIn(path, data);
@@ -244,22 +229,9 @@ export default (componentId, driver, isProvisioning) => {
     },
 
     _startEdit() {
-      const credentials = this._getDefaultValues();
+      const credentials = utils.defaultCredentials(componentId, driver, this.state.credentials);
       WrDbActions.setEditingData(componentId, this.state.configId, 'creds', credentials);
       return this._updateLocalState('credentialsState', States.CREATE_NEW_CREDS);
-    },
-
-    _getDefaultValues() {
-      let credentials = this.state.credentials;
-      credentials = credentials.set('driver', driver);
-
-      credentialsTemplate(componentId).forEach(input => {
-        if (input[4] !== null) {
-          credentials = credentials.set(input[1], credentials.get(input[1], input[4]));
-        }
-      });
-
-      return credentials;
     }
   });
 };
