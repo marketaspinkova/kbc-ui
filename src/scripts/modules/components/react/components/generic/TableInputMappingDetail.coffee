@@ -1,7 +1,7 @@
 React = require 'react'
 Link = React.createFactory(require('react-router').Link)
 ImmutableRenderMixin = require 'react-immutable-render-mixin'
-TableSizeLabel = React.createFactory(require '../../../../transformations/react/components/TableSizeLabel')
+TableSizeLabel = React.createFactory(require('../../../../transformations/react/components/TableSizeLabel').default)
 FileSize = React.createFactory(require('../../../../../react/common/FileSize').default)
 Check = React.createFactory(require('@keboola/indigo-ui').Check)
 ListGroup = React.createFactory(require('react-bootstrap').ListGroup)
