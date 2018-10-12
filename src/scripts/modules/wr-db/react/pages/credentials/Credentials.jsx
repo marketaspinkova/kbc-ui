@@ -255,7 +255,7 @@ export default (componentId, driver, isProvisioning) => {
 
       credentialsTemplate(componentId).forEach(input => {
         if (input[4] !== null) {
-          credentials = credentials.set(input[1], input[4]);
+          credentials = credentials.set(input[1], credentials.get(input[1], input[4]));
         }
       });
 
