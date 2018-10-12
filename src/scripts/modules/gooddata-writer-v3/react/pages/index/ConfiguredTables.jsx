@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import {SearchBar} from '@keboola/indigo-ui';
 import RoutesStore from '../../../../../stores/RoutesStore';
+import StorageApiTableLinkEx from '../../../../components/react/components/StorageApiTableLinkEx';
 // import classnames from 'classnames';
 
 import ActivateDeactivateButton from '../../../../../react/common/ActivateDeactivateButton';
@@ -55,7 +56,8 @@ export default React.createClass({
         key={tableId}
         onClick={() => this.transitionToTableDetail(tableId)}>
         <div className="td">
-          {tableId}
+          <StorageApiTableLinkEx
+            tableId={tableId} />
         </div>
         <div className="td">
           {table.get('title')}
