@@ -43,7 +43,7 @@ export default (componentId, driver, isProvisioning) => {
       const state = this.state.localState.get('credentialsState');
 
       // ignore setting state in some cases
-      if ([States.SAVING_NEW_CREDS, States.PREPARING_PROV_WRITE, States.CREATE_NEW_CREDS].includes(state)) {
+      if ([States.SAVING_NEW_CREDS, States.PREPARING_PROV_WRITE].includes(state)) {
         return;
       }
 
