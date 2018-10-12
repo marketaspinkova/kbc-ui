@@ -684,8 +684,8 @@
     to-fast-properties "^2.0.0"
 
 "@keboola/indigo-ui@^6.1.0":
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/@keboola/indigo-ui/-/indigo-ui-6.1.0.tgz#b682351ec93a48a8ea41daa1f5c9b999bb4d6536"
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/@keboola/indigo-ui/-/indigo-ui-6.1.1.tgz#af967f76e47fe5cb3c93686f52cdf2d237ea91dd"
   dependencies:
     bootstrap "^3.3.7"
     classnames "^2.1.0"
@@ -1474,7 +1474,7 @@ boolbase@^1.0.0, boolbase@~1.0.0:
 
 bootstrap@^3.3.7:
   version "3.3.7"
-  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-3.3.7.tgz#5a389394549f23330875a3b150656574f8a9eb71"
+  resolved "http://registry.npmjs.org/bootstrap/-/bootstrap-3.3.7.tgz#5a389394549f23330875a3b150656574f8a9eb71"
 
 brace-expansion@^1.0.0:
   version "1.1.6"
