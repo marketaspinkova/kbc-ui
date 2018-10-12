@@ -38,16 +38,12 @@ export default (componentId, driver, isProvisioning) => {
       };
     },
 
-    _handleResetStart() {
+    _handleResetSelection() {
       ActionCreators.resetCredentials(componentId, this.state.configId);
       return this._updateLocalState('credentialsState', States.INIT);
     },
 
     _handleReset() {
-      if (this.state.isProvisionedCreds) {
-        return this._updateLocalState('credentialsState', States.INIT);
-      }
-
       const credentials = utils.defaultCredentials(componentId, driver, this.state.currentCredentials);
       ActionCreators.setEditingData(componentId, this.state.configId, 'creds', credentials);
     },
@@ -77,7 +73,7 @@ export default (componentId, driver, isProvisioning) => {
         return (
           <div>
             {isProvisioning && (
-              <button className="btn btn-link" disabled={this.state.isSaving} onClick={this._handleResetStart}>
+              <button className="btn btn-link" disabled={this.state.isSaving} onClick={this._handleResetSelection}>
                 <span className="fa fa-fw fa-times" />
                 {' Reset Credentials'}
               </button>
