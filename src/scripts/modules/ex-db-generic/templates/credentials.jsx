@@ -197,7 +197,7 @@ const teradataFields = [
   }, {
     'label': 'Port',
     'name': 'port',
-    'type': 'text',
+    'type': 'number',
     'protected': false,
     'required': true
   }, {
