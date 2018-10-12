@@ -1,6 +1,7 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
 import _ from 'underscore';
+import { Map } from 'immutable';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import ApplicationStore from '../../../../../stores/ApplicationStore';
 
@@ -18,10 +19,6 @@ import MissingRedshiftModal from './MissingRedshiftModal';
 import CredentialsForm from './CredentialsForm';
 import provisioningUtils from '../../../provisioningUtils';
 
-// driver = 'mysql'
-// componentId = 'wr-db'
-// isProvisioning = true
-
 export default (componentId, driver, isProvisioning) => {
   return createReactClass({
     mixins: [createStoreMixin(InstalledComponentsStore, WrDbStore)],
@@ -29,13 +26,8 @@ export default (componentId, driver, isProvisioning) => {
     getStateFromStores() {
       const configId = RoutesStore.getCurrentRouteParam('config');
       const credentials = WrDbStore.getCredentials(componentId, configId);
-      const isEditing = !!WrDbStore.getEditingByPath(componentId, configId, 'creds');
-      let editingCredentials = null;
-      if (isEditing) {
-        editingCredentials = WrDbStore.getEditingByPath(componentId, configId, 'creds');
-      }
+      const editingCredentials = WrDbStore.getEditingByPath(componentId, configId, 'creds') || Map();
       const isSaving = !!WrDbStore.getSavingCredentials(componentId, configId);
-
       const provisioningCredentials = WrDbStore.getProvisioningCredentials(componentId, configId);
       const isLoadingProvCredentials = WrDbStore.isLoadingProvCredentials(componentId, configId);
       const localState = InstalledComponentsStore.getLocalState(componentId, configId);
@@ -47,7 +39,7 @@ export default (componentId, driver, isProvisioning) => {
         credentials,
         configId,
         editingCredentials,
-        isEditing,
+        isEditing: !!editingCredentials.count(),
         isSaving,
         loadingProvisioning: isLoadingProvCredentials,
         v2Actions
@@ -56,27 +48,29 @@ export default (componentId, driver, isProvisioning) => {
 
     componentDidMount() {
       const state = this.state.localState.get('credentialsState');
+
       // ignore setting state in some cases
       if ([States.SAVING_NEW_CREDS, States.PREPARING_PROV_WRITE, States.CREATE_NEW_CREDS].includes(state)) {
         return;
       }
-      if (isProvisioning === false) {
-        this._updateLocalState('credentialsState', States.SHOW_STORED_CREDS);
-        return;
+
+      if (!isProvisioning) {
+        return this._startEdit();
       }
+
       if (this._hasDbConnection(this.state.credentials)) {
         return this._updateLocalState('credentialsState', States.SHOW_STORED_CREDS);
-      } else {
-        return this._updateLocalState('credentialsState', States.INIT);
       }
+
+      return this._updateLocalState('credentialsState', States.INIT);
     },
 
     render() {
       if (isProvisioning) {
         return this._renderWithProvisioning();
-      } else {
-        return this._renderNoProvisioning();
       }
+
+      return this._renderNoProvisioning();
     },
 
     _renderMissingRedshiftModal() {
@@ -91,18 +85,11 @@ export default (componentId, driver, isProvisioning) => {
     },
 
     _renderNoProvisioning() {
-      let { credentials } = this.state;
-      const state = this.state.localState.get('credentialsState');
-      let isEditing = false;
-      if ([States.SAVING_NEW_CREDS, States.CREATE_NEW_CREDS, States.INIT].includes(state)) {
-        isEditing = true;
-        credentials = this.state.editingCredentials;
-      }
       return (
         <div className="container-fluid">
           <div className="kbc-main-content">
             {this._renderMissingRedshiftModal()}
-            {this._renderCredentialsForm(credentials, isEditing)}
+            {this._renderCredentialsForm(this.state.editingCredentials, true)}
           </div>
         </div>
       );
@@ -121,6 +108,7 @@ export default (componentId, driver, isProvisioning) => {
 
     _renderInit() {
       const driverName = provisioningTemplates[driver].name;
+
       return (
         <div>
           <div className="kbc-header kbc-row">
@@ -135,7 +123,7 @@ export default (componentId, driver, isProvisioning) => {
             }}
           >
             <div className="tbody">
-              <a className="tr" onClick={this._toggleCreateOwnCredentials}>
+              <a className="tr" onClick={this._startEdit}>
                 <span className="td">
                   <h4 className="list-group-item-heading">{`Own ${driverName} database`}</h4>
                   <p className="list-group-item-text">
@@ -185,22 +173,6 @@ export default (componentId, driver, isProvisioning) => {
       }
     },
 
-    _toggleCreateOwnCredentials() {
-      let credentials = this.state.credentials.map((value, key) => {
-        if (['database', 'db', 'host', 'hostname', 'password', 'schema', 'user'].includes(key)) {
-          return '';
-        } else {
-          return value;
-        }
-      });
-      const defaultPort = this._getDefaultPort();
-      credentials = credentials.set('port', defaultPort);
-      credentials = credentials.set('driver', driver);
-      credentials = credentials.delete('password');
-      WrDbActions.setEditingData(componentId, this.state.configId, 'creds', credentials);
-      return this._updateLocalState('credentialsState', States.CREATE_NEW_CREDS);
-    },
-
     _toggleCreateProvWriteCredentials() {
       const hasRedshift = ApplicationStore.getSapiToken().getIn(['owner', 'hasRedshift']);
       if (!hasRedshift && driver === 'redshift') {
@@ -213,20 +185,11 @@ export default (componentId, driver, isProvisioning) => {
       });
     },
 
-    _getDefaultPort() {
-      const fields = credentialsTemplate(componentId);
-      for (let field of fields) {
-        if (field[1] === 'port') {
-          return field[4];
-        }
-      }
-      return '';
-    },
-
     _renderCredentialsForm(credentials, isEditing) {
       const state = this.state.localState.get('credentialsState');
       const isSaving = state === States.SAVING_NEW_CREDS;
       const isProvisioningProp = this._isProvCredentials();
+
       return (
         <CredentialsForm
           savedCredentials={this.state.credentials}
@@ -250,14 +213,7 @@ export default (componentId, driver, isProvisioning) => {
       return provisioningUtils.isProvisioningCredentials(driver, this.state.credentials);
     },
 
-    _handleChange(propName, event) {
-      let value;
-      if (['port', 'retries'].indexOf(propName) >= 0) {
-        value = parseInt(event.target.value, 10);
-      } else {
-        ({ value } = event.target);
-      }
-      value = value.toString();
+    _handleChange(propName, value) {
       const creds = this.state.editingCredentials.set(propName, value);
       return this.setCredentials(creds);
     },
@@ -266,25 +222,44 @@ export default (componentId, driver, isProvisioning) => {
       return WrDbActions.setEditingData(componentId, this.state.configId, 'creds', creds);
     },
 
-    _hasDbConnection(dbCredentials) {
-      let credentials = dbCredentials ? dbCredentials.toJS() : null;
-
-      if (!credentials) {
-        return false;
-      }
-
-      return !(
-        _.isEmpty(credentials.host) ||
-        _.isEmpty(credentials.database) ||
-        _.isEmpty(credentials.user) ||
-        credentials.port === 'NaN'
+    _hasDbConnection(credentials) {
+      const fields = credentialsTemplate(componentId);
+      const result = _.reduce(
+        fields,
+        (memo, field) => {
+          const propName = field[1];
+          const isHashed = propName[0] === '#';
+          const isRequired = field[6];
+          return memo && (!isRequired || !!credentials.get(propName) || isHashed);
+        },
+        !!credentials
       );
+      return result;
     },
 
     _updateLocalState(pathname, data) {
       const path = _.isString(pathname) ? [pathname] : pathname;
       const newLocalState = this.state.localState.setIn(path, data);
       return InstalledComponentsActions.updateLocalState(componentId, this.state.configId, newLocalState, path);
+    },
+
+    _startEdit() {
+      const credentials = this._getDefaultValues();
+      WrDbActions.setEditingData(componentId, this.state.configId, 'creds', credentials);
+      return this._updateLocalState('credentialsState', States.CREATE_NEW_CREDS);
+    },
+
+    _getDefaultValues() {
+      let credentials = this.state.credentials;
+      credentials = credentials.set('driver', driver);
+
+      credentialsTemplate(componentId).forEach(input => {
+        if (input[4] !== null) {
+          credentials = credentials.set(input[1], input[4]);
+        }
+      });
+
+      return credentials;
     }
   });
 };

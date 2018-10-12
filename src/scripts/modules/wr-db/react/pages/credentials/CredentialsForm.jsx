@@ -54,7 +54,7 @@ export default createReactClass({
                 </div>
               </h2>
             ) : (
-              <h2>User specified database credentials</h2>
+              <h2>Database credentials</h2>
             )}
           </div>
         </div>
@@ -105,6 +105,7 @@ export default createReactClass({
         componentId={this.props.componentId}
         configId={this.props.configId}
         isEditing={this.props.isEditing}
+        disabled={this.props.isSaving}
       />
     );
   },

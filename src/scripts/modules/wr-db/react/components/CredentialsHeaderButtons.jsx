@@ -8,10 +8,10 @@ import ActionCreators from '../../actionCreators';
 import { Navigation } from 'react-router';
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
 import InstalledComponentsActions from '../../../components/InstalledComponentsActionCreators';
-import { Loader } from '@keboola/indigo-ui';
 import { States } from '../pages/credentials/StateConstants';
 import credentialsTemplates from '../../templates/credentialsFields';
 import provisioningUtils from '../../provisioningUtils';
+import SaveButtons from '../../../../react/common/SaveButtons';
 
 export default (componentId, driver, isProvisioning) => {
   return createReactClass({
@@ -20,53 +20,41 @@ export default (componentId, driver, isProvisioning) => {
     getStateFromStores() {
       const configId = RoutesStore.getCurrentRouteParam('config');
       const currentCredentials = WrDbStore.getCredentials(componentId, configId);
+      const editingCredentials = WrDbStore.getEditingByPath(componentId, configId, 'creds');
       const localState = InstalledComponentsStore.getLocalState(componentId, configId);
       const credsState = localState.get('credentialsState');
-      const isEditing = !!WrDbStore.getEditingByPath(componentId, configId, 'creds');
       const isProvisionedCreds = provisioningUtils.isProvisioningCredentials(driver, currentCredentials);
-      const editingCredentials = WrDbStore.getEditingByPath(componentId, configId, 'creds');
+      const isEditing = !currentCredentials.equals(editingCredentials);
 
       // state
       return {
         editingCredsValid: this._hasDbConnection(editingCredentials),
         currentCredentials,
-        currentConfigId: configId,
-        isEditing: !!WrDbStore.getEditingByPath(componentId, configId, 'creds'),
+        configId,
+        isEditing,
         isSaving: credsState === States.SAVING_NEW_CREDS,
         localState,
         isProvisionedCreds: !isEditing && isProvisionedCreds
       };
     },
 
-    _handleEditStart() {
-      let creds = this.state.currentCredentials;
-      creds = creds ? creds.set('driver', driver) : null;
-      creds = this._getDefaultValues(creds);
-      creds = creds.map((value, key) => {
-        const isHashed = key[0] === '#';
-        return isHashed ? '' : value;
-      });
-      // ActionCreators.resetCredentials componentId, @state.currentConfigId
-      ActionCreators.setEditingData(componentId, this.state.currentConfigId, 'creds', creds);
-      return this._updateLocalState('credentialsState', States.CREATE_NEW_CREDS);
-    },
-
     _handleResetStart() {
+      ActionCreators.resetCredentials(componentId, this.state.configId);
       return this._updateLocalState('credentialsState', States.INIT);
     },
 
-    _handleCancel() {
+    _handleReset() {
       if (this.state.isProvisionedCreds) {
         return this._updateLocalState('credentialsState', States.INIT);
-      } else {
-        ActionCreators.setEditingData(componentId, this.state.currentConfigId, 'creds', null);
-        return this._updateLocalState('credentialsState', States.SHOW_STORED_CREDS);
       }
+
+      const defaultCredentials = this._getDefaultValues();
+      ActionCreators.setEditingData(componentId, this.state.configId, 'creds', defaultCredentials);
     },
 
-    _handleCreate() {
+    _handleSave() {
       this._updateLocalState('credentialsState', States.SAVING_NEW_CREDS);
-      let editingCredentials = WrDbStore.getEditingByPath(componentId, this.state.currentConfigId, 'creds');
+      let editingCredentials = WrDbStore.getEditingByPath(componentId, this.state.configId, 'creds');
       editingCredentials = editingCredentials.map((value, key) => {
         const isHashed = key[0] === '#';
         if (isHashed && _.isEmpty(value)) {
@@ -75,9 +63,10 @@ export default (componentId, driver, isProvisioning) => {
           return value;
         }
       });
-      return ActionCreators.saveCredentials(componentId, this.state.currentConfigId, editingCredentials).then(() => {
+
+      return ActionCreators.saveCredentials(componentId, this.state.configId, editingCredentials).then(() => {
         this._updateLocalState('credentialsState', States.SHOW_STORED_CREDS);
-        return RoutesStore.getRouter().transitionTo(componentId, { config: this.state.currentConfigId });
+        return RoutesStore.getRouter().transitionTo(componentId, { config: this.state.configId });
       });
     },
 
@@ -93,41 +82,29 @@ export default (componentId, driver, isProvisioning) => {
                 {' Reset Credentials'}
               </button>
             )}
-            {!this.state.isProvisionedCreds && (
-              <button className="btn btn-success" disabled={this.state.isSaving} onClick={this._handleEditStart}>
-                <span className="fa fa-edit" />
-                {' Edit Credentials'}
-              </button>
-            )}
           </div>
         );
       }
 
       if ([States.CREATE_NEW_CREDS, States.SAVING_NEW_CREDS].includes(state)) {
         return (
-          <div>
-            {this.state.isSaving && <Loader />}
-            <button className="btn btn-link" disabled={this.state.isSaving} onClick={this._handleCancel}>
-              Cancel
-            </button>
-            <button
-              className="btn btn-success"
-              disabled={this.state.isSaving || !this.state.editingCredsValid}
-              onClick={this._handleCreate}
-            >
-              Save
-            </button>
-          </div>
+          <SaveButtons
+            isSaving={this.state.isSaving}
+            isChanged={this.state.isEditing}
+            disabled={this.state.isSaving || !this.state.editingCredsValid}
+            onReset={this._handleReset}
+            onSave={this._handleSave}
+          />
         );
-      } else {
-        return null;
       }
+
+      return null;
     },
 
     _updateLocalState(newPath, data) {
       const path = _.isString(newPath) ? [newPath] : newPath;
       const newLocalState = this.state.localState.setIn(path, data);
-      return InstalledComponentsActions.updateLocalState(componentId, this.state.currentConfigId, newLocalState, path);
+      return InstalledComponentsActions.updateLocalState(componentId, this.state.configId, newLocalState, path);
     },
 
     _hasDbConnection(credentials) {
@@ -145,24 +122,15 @@ export default (componentId, driver, isProvisioning) => {
       return result;
     },
 
-    _getDefaultPort() {
-      const fields = credentialsTemplates(componentId);
-      for (let field of fields) {
-        if (field[1] === 'port') {
-          return field[4];
-        }
-      }
-      return '';
-    },
+    _getDefaultValues() {
+      let credentials = this.state.currentCredentials;
+      credentials = credentials.set('driver', driver);
 
-    _getDefaultValues(defaultCredentials) {
-      let credentials = defaultCredentials;
-      const fields = credentialsTemplates(componentId);
-      for (let field of fields) {
-        if (!!field[4]) {
-          credentials = credentials ? credentials.set(field[1], credentials.get(field[1], field[4])) : null;
+      credentialsTemplates(componentId).forEach(input => {
+        if (input[4] !== null) {
+          credentials = credentials.set(input[1], input[4]);
         }
-      }
+      });
 
       return credentials;
     }
