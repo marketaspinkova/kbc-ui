@@ -17,7 +17,7 @@ import InstalledComponentsStore from '../../../../components/stores/InstalledCom
 import MissingRedshiftModal from './MissingRedshiftModal';
 import CredentialsForm from './CredentialsForm';
 import provisioningUtils from '../../../provisioningUtils';
-import utils from '../../../utils';
+import credentialsUtils from '../../../credentialsUtils';
 
 export default (componentId, driver, isProvisioning) => {
   return createReactClass({
@@ -58,7 +58,7 @@ export default (componentId, driver, isProvisioning) => {
         return this._startEdit();
       }
 
-      if (utils.hasDbConnection(componentId, this.state.credentials)) {
+      if (credentialsUtils.hasDbConnection(componentId, this.state.credentials)) {
         return this._updateLocalState('credentialsState', States.SHOW_STORED_CREDS);
       }
 
@@ -229,7 +229,7 @@ export default (componentId, driver, isProvisioning) => {
     },
 
     _startEdit() {
-      const credentials = utils.defaultCredentials(componentId, driver, this.state.credentials);
+      const credentials = credentialsUtils.defaultCredentials(componentId, driver, this.state.credentials);
       WrDbActions.setEditingData(componentId, this.state.configId, 'creds', credentials);
       return this._updateLocalState('credentialsState', States.CREATE_NEW_CREDS);
     }

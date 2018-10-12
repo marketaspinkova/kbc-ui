@@ -10,7 +10,7 @@ import InstalledComponentsStore from '../../../components/stores/InstalledCompon
 import InstalledComponentsActions from '../../../components/InstalledComponentsActionCreators';
 import { States } from '../pages/credentials/StateConstants';
 import SaveButtons from '../../../../react/common/SaveButtons';
-import utils from '../../utils';
+import credentialsUtils from '../../credentialsUtils';
 
 export default (componentId, driver, isProvisioning) => {
   return createReactClass({
@@ -22,11 +22,13 @@ export default (componentId, driver, isProvisioning) => {
       const editingCredentials = WrDbStore.getEditingByPath(componentId, configId, 'creds');
       const localState = InstalledComponentsStore.getLocalState(componentId, configId);
       const credsState = localState.get('credentialsState');
-      const isEditing = !utils.defaultCredentials(componentId, driver, currentCredentials).equals(editingCredentials);
+      const isEditing = !credentialsUtils
+        .defaultCredentials(componentId, driver, currentCredentials)
+        .equals(editingCredentials);
 
       // state
       return {
-        editingCredsValid: utils.hasDbConnection(componentId, editingCredentials),
+        editingCredsValid: credentialsUtils.hasDbConnection(componentId, editingCredentials),
         currentCredentials,
         configId,
         isEditing,
@@ -41,7 +43,7 @@ export default (componentId, driver, isProvisioning) => {
     },
 
     _handleReset() {
-      const credentials = utils.defaultCredentials(componentId, driver, this.state.currentCredentials);
+      const credentials = credentialsUtils.defaultCredentials(componentId, driver, this.state.currentCredentials);
       ActionCreators.setEditingData(componentId, this.state.configId, 'creds', credentials);
     },
 
