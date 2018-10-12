@@ -196,7 +196,7 @@ export default (componentId, driver, isProvisioning) => {
           isEditing={isEditing}
           credentials={credentials}
           onChangeFn={this._handleChange}
-          changeCredentialsFn={this.setCredentials}
+          changeCredentialsFn={this._setCredentials}
           isSaving={isSaving}
           isProvisioning={!isEditing && isProvisioningProp}
           componentId={componentId}
@@ -215,10 +215,10 @@ export default (componentId, driver, isProvisioning) => {
 
     _handleChange(propName, value) {
       const creds = this.state.editingCredentials.set(propName, value);
-      return this.setCredentials(creds);
+      return this._setCredentials(creds);
     },
 
-    setCredentials(creds) {
+    _setCredentials(creds) {
       return WrDbActions.setEditingData(componentId, this.state.configId, 'creds', creds);
     },
 
