@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import { Modal } from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import NewDimensionForm from './NewDimensionForm';
-import Confirm from '../../../../react/common/Confirm';
+// import Confirm from '../../../../react/common/Confirm';
 import {Check} from '@keboola/indigo-ui';
 
 export default React.createClass({
@@ -123,16 +123,11 @@ export default React.createClass({
   renderDeleteButton(dimensionName) {
     return (
       <div className="kbc-no-wrap">
-        <Confirm
-          title="Delete dimension"
-          text={`Do you really want to delete dimension ${dimensionName}?`}
-          buttonLabel="Delete"
-          onConfirm={() => this.handleDelete(dimensionName)}
-        >
-          <button disabled={this.props.disabled} className="btn btn-link">
-            <i className="kbc-icon-cup fa fa-fw"/>
-          </button>
-        </Confirm>
+        <button
+          onClick={() => this.handleDelete(dimensionName)}
+          disabled={this.props.disabled} className="btn btn-link">
+          <i className="kbc-icon-cup fa fa-fw"/>
+        </button>
       </div>
     );
   },
