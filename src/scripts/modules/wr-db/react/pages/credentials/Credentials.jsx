@@ -40,13 +40,6 @@ export default (componentId, driver, isProvisioning) => {
     },
 
     componentDidMount() {
-      const state = this.state.localState.get('credentialsState');
-
-      // ignore setting state in some cases
-      if ([States.SAVING_NEW_CREDS, States.PREPARING_PROV_WRITE].includes(state)) {
-        return;
-      }
-
       if (!isProvisioning) {
         return this._startEdit();
       }
@@ -154,12 +147,6 @@ export default (componentId, driver, isProvisioning) => {
 
         case States.SHOW_STORED_CREDS:
           return this._renderCredentialsForm(this.state.credentials, false);
-
-        case States.CREATE_NEW_CREDS:
-          return this._renderCredentialsForm(this.state.editingCredentials, true);
-
-        case States.SAVING_NEW_CREDS:
-          return this._renderCredentialsForm(this.state.editingCredentials, true);
 
         default:
           return null;
