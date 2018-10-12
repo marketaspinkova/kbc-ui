@@ -22,11 +22,11 @@ module.exports = React.createClass
 
   _renderCheckboxLabel: ->
     licenseUrl = @props.component.getIn(['data', 'vendor', 'licenseUrl'], null)
-    msg = 'I agree with these terms and conditions'
+    msg = 'I agree with '
     if not licenseUrl
-      return "#{msg}."
+      return "#{msg}vendor license terms and conditions"
     else
       span null,
-        "#{msg} and with "
+        "#{msg}"
         a {href: licenseUrl, target: '_blank'}, "vendor license terms and conditions"
         "."
