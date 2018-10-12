@@ -48,7 +48,7 @@ module.exports = React.createClass
             ComponentIcon
               component: @props.component
               className: 'modal-configuration-icon',
-              size: 64
+              size: '64'
           div className: 'col-xs-9',
             h2
               className: 'modal-configuration-title'
