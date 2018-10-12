@@ -93,7 +93,7 @@ export default React.createClass({
                   return (
                     <tr key={dimName}>
                       <td> {dimName}</td>
-                      <td> <Check isChecked={dim.includeTime}/></td>
+                      <td> <Check isChecked={!!dim.includeTime}/></td>
                       <td> {dim.identifier}</td>
                       <td> {dim.template}</td>
                       <td> {this.renderDeleteButton(dimName)}</td>

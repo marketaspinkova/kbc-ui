@@ -42,13 +42,18 @@ export default React.createClass({
     );
   },
 
-  renderTableRow(table, tableId) {
+
+  transitionToTableDetail(tableId) {
     const router = RoutesStore.getRouter();
+    router.transitionTo('keboola.gooddata-writer-table', {config: this.props.configurationId, table: tableId});
+  },
+
+  renderTableRow(table, tableId) {
     return (
-      <div className="tr" key={tableId}
-        onClick={() =>  router.transitionTo('keboola.gooddata-writer-table', {config: this.props.configurationId, table: tableId})
-        }
-      >
+      <div
+        className="tr"
+        key={tableId}
+        onClick={() => this.transitionToTableDetail(tableId)}>
         <div className="td">
           {tableId}
         </div>
@@ -65,7 +70,7 @@ export default React.createClass({
   renderDeleteButton(tableId) {
     const isPending = this.props.isTablePending([tableId, 'delete']);
     return (
-      <Tooltip placement="top" tooltip="delete">
+      <Tooltip key="deletebutton" placement="top" tooltip="delete">
         <button disabled={this.props.isSaving}
           className="btn btn-link" onClick={(e) => this.deleteTable(e, tableId)}>
           { isPending
