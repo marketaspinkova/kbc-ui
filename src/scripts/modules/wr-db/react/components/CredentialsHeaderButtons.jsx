@@ -38,6 +38,7 @@ export default (componentId, driver, isProvisioning) => {
     },
 
     _handleResetSelection() {
+      ActionCreators.resetProvisioning(componentId, this.state.configId, driver);
       ActionCreators.resetCredentials(componentId, this.state.configId);
       return this._updateLocalState('credentialsState', States.INIT);
     },
