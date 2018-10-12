@@ -22,10 +22,13 @@ export default function(configId) {
     return saveParameters(newParams, 'update credentials');
   }
 
+  const isComplete = !!savedCredentials.get('pid');
+
   return {
     value: localCredentials.toJS(),
     onChange: (newValue) => updateLocalState(PATH, fromJS(newValue)),
     disabled: isSaving,
-    onSave: saveCredentials
+    onSave: saveCredentials,
+    isComplete
   };
 }

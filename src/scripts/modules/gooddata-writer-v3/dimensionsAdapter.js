@@ -13,10 +13,13 @@ export default function(configId) {
     return saveParameters(newParams, 'update dimensions');
   }
 
+  const isComplete = savedDimensions.count() > 0;
+
   return {
     value: {dimensions: localDimensions.toJS()},
     onChange: (newValue) => updateLocalState(PATH, fromJS(newValue.dimensions)),
     disabled: isSaving,
-    onSave: saveDimensions
+    onSave: saveDimensions,
+    isComplete
   };
 }
