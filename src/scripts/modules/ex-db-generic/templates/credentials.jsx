@@ -195,6 +195,12 @@ const teradataFields = [
     'protected': false,
     'required': true
   }, {
+    'label': 'Port',
+    'name': 'port',
+    'type': 'text',
+    'protected': false,
+    'required': true
+  }, {
     'label': 'Username',
     'name': 'user',
     'type': 'text',
