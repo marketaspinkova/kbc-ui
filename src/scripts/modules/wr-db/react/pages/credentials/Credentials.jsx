@@ -16,7 +16,6 @@ import RoutesStore from '../../../../../stores/RoutesStore';
 import InstalledComponentsStore from '../../../../components/stores/InstalledComponentsStore';
 import MissingRedshiftModal from './MissingRedshiftModal';
 import CredentialsForm from './CredentialsForm';
-import provisioningUtils from '../../../provisioningUtils';
 import credentialsUtils from '../../../credentialsUtils';
 
 export default (componentId, driver, isProvisioning) => {
@@ -148,6 +147,9 @@ export default (componentId, driver, isProvisioning) => {
         case States.SHOW_STORED_CREDS:
           return this._renderCredentialsForm(this.state.credentials, false);
 
+        case States.CREATE_NEW_CREDS:
+          return this._renderCredentialsForm(this.state.editingCredentials, true);
+
         default:
           return null;
       }
@@ -168,7 +170,6 @@ export default (componentId, driver, isProvisioning) => {
     _renderCredentialsForm(credentials, isEditing) {
       const state = this.state.localState.get('credentialsState');
       const isSaving = state === States.SAVING_NEW_CREDS;
-      const isProvisioningProp = this._isProvCredentials();
 
       return (
         <CredentialsForm
@@ -178,7 +179,7 @@ export default (componentId, driver, isProvisioning) => {
           onChangeFn={this._handleChange}
           changeCredentialsFn={this._setCredentials}
           isSaving={isSaving}
-          isProvisioning={!isEditing && isProvisioningProp}
+          isProvisioning={!isEditing}
           componentId={componentId}
           configId={this.state.configId}
           driver={driver}
@@ -187,10 +188,6 @@ export default (componentId, driver, isProvisioning) => {
           }}
         />
       );
-    },
-
-    _isProvCredentials() {
-      return provisioningUtils.isProvisioningCredentials(driver, this.state.credentials);
     },
 
     _handleChange(propName, value) {

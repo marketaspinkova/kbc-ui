@@ -3,7 +3,6 @@ import SapiStorage from '../tokens/StorageTokensStore';
 import Promise from 'bluebird';
 import wrDbProvStore from '../provisioning/stores/WrDbCredentialsStore';
 import provisioningActions from '../provisioning/ActionCreators';
-import underscoreString from 'underscore.string';
 
 const OLD_WR_REDSHIFT_COMPONENT_ID = 'wr-db-redshift';
 const NEW_WR_REDSHIFT_COMPONENT_ID = ['keboola.wr-redshift-v2', 'keboola.wr-qlik', 'keboola.wr-looker'];
@@ -108,27 +107,6 @@ const clearCredentials = (componentId, driver, token, configCredentials) => {
 };
 
 export default {
-  isProvisioningCredentials(driver, credentials) {
-    const hasPlainPassword = credentials.has('password');
-    const host = credentials !== null ? credentials.get('host') : null;
-    if (driver === 'redshift') {
-      return (
-        underscoreString.include(host, 'redshift.amazonaws.com') &&
-        underscoreString.include(host, 'sapi') &&
-        hasPlainPassword
-      );
-    }
-    if (driver === 'snowflake') {
-      return (
-        (underscoreString.include(host, 'keboola.ap-southeast-2.snowflakecomputing.com') ||
-          underscoreString.include(host, 'keboola.snowflakecomputing.com') ||
-          underscoreString.include(host, 'keboola.eu-central-1.snowflakecomputing.com')) &&
-        hasPlainPassword
-      );
-    }
-    return false;
-  },
-
   getCredentials(isReadOnly, driver, componentId, configId) {
     const desc = `wrdb${driver}_${configId}`;
     const legacyDesc = `wrdb${driver}`;
