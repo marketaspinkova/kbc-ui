@@ -28,6 +28,17 @@ import CredentialsContainer from '../../components/CredentialsContainer';
 
 const COMPONENT_ID = 'keboola.gooddata-writer';
 
+const DimensionsCollapsibleComponent = CollapsibleSection({
+  title: 'Date Dimensions',
+  contentComponent: DimensionsSection,
+  options: {stretchContentToBody: true}
+});
+
+const CredentialsCollapsibleComponent = CollapsibleSection({
+  title: 'Gooddata Project',
+  contentComponent: CredentialsContainer
+});
+
 export default React.createClass({
 
   mixins: [createStoreMixin(InstalledComponentsStore, LatestJobsStore, VersionsStore)],
@@ -99,11 +110,6 @@ export default React.createClass({
   },
 
   renderDimensions() {
-    const DimensionsCollapsibleComponent = CollapsibleSection({
-      title: 'Date Dimensions',
-      contentComponent: DimensionsSection,
-      options: {stretchContentToBody: true}
-    });
     const componentProps = dimensionsAdapter(this.state.configurationId);
     return (
       <DimensionsCollapsibleComponent
@@ -113,13 +119,9 @@ export default React.createClass({
   },
 
   renderCredentials() {
-    const CredentialsComponent = CollapsibleSection({
-      title: 'Gooddata Project',
-      contentComponent: CredentialsContainer
-    });
     const componentProps = credentialsAdapter(this.state.configurationId);
     return (
-      <CredentialsComponent
+      <CredentialsCollapsibleComponent
         {...componentProps}
       />
     );
@@ -154,8 +156,15 @@ export default React.createClass({
   renderNewTableButton() {
     return (
       <NewTableButton
-        onCreateTable={this.state.createNewTable}
+        onCreateTable={this.createNewTableAndRedirect}
       />
+    );
+  },
+
+  createNewTableAndRedirect(tableId) {
+    const router = RoutesStore.getRouter();
+    return this.state.createNewTable(tableId).then(() =>
+      router.transitionTo('keboola.gooddata-writer-table', {config: this.state.configurationId, table: tableId})
     );
   },
 
@@ -166,14 +175,6 @@ export default React.createClass({
           You are about to run upload.
         </p>
       </span>
-    );
-  },
-
-  renderRowsTable() {
-    return (
-      <div>
-        table
-      </div>
     );
   }
 });
