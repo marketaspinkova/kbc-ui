@@ -27,7 +27,6 @@ export default (componentId, driver, isProvisioning) => {
       const configId = RoutesStore.getCurrentRouteParam('config');
       const credentials = WrDbStore.getCredentials(componentId, configId);
       const editingCredentials = WrDbStore.getEditingByPath(componentId, configId, 'creds') || Map();
-      const isSaving = !!WrDbStore.getSavingCredentials(componentId, configId);
       const provisioningCredentials = WrDbStore.getProvisioningCredentials(componentId, configId);
       const isLoadingProvCredentials = WrDbStore.isLoadingProvCredentials(componentId, configId);
       const localState = InstalledComponentsStore.getLocalState(componentId, configId);
@@ -40,7 +39,6 @@ export default (componentId, driver, isProvisioning) => {
         configId,
         editingCredentials,
         isEditing: !!editingCredentials.count(),
-        isSaving,
         loadingProvisioning: isLoadingProvCredentials,
         v2Actions
       };
