@@ -27,19 +27,14 @@ export default (componentId, driver, isProvisioning) => {
       const configId = RoutesStore.getCurrentRouteParam('config');
       const credentials = WrDbStore.getCredentials(componentId, configId);
       const editingCredentials = WrDbStore.getEditingByPath(componentId, configId, 'creds') || Map();
-      const provisioningCredentials = WrDbStore.getProvisioningCredentials(componentId, configId);
-      const isLoadingProvCredentials = WrDbStore.isLoadingProvCredentials(componentId, configId);
       const localState = InstalledComponentsStore.getLocalState(componentId, configId);
       const v2Actions = V2Actions(configId, componentId);
 
       return {
         localState,
-        provisioningCredentials,
         credentials,
         configId,
         editingCredentials,
-        isEditing: !!editingCredentials.count(),
-        loadingProvisioning: isLoadingProvCredentials,
         v2Actions
       };
     },
