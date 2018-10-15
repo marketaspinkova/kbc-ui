@@ -121,7 +121,7 @@ export default function(configId) {
 
   function getSingleRunParams(tableId, loadDataOnly) {
     const newParameters = parameters
-      .update('tables', paramsTables => Map({[tableId]: paramsTables.get(tableId)}))
+      .update('tables', paramsTables => Map({[tableId]: paramsTables.get(tableId).set('disabled', false)}))
       .set('loadOnly', !!loadDataOnly);
     const tableInputMapping = inputMapping.find(table => table.get('source') === tableId);
     return {

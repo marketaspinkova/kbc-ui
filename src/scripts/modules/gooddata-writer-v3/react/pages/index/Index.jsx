@@ -12,6 +12,7 @@ import configProvisioning from '../../../configProvisioning';
 import tablesProvisioning from '../../../tablesProvisioning';
 import dimensionsAdapter from '../../../dimensionsAdapter';
 import credentialsAdapter from '../../../credentialsAdapter';
+import tablesLoadSettingsAdapter from '../../../tablesLoadSettingsAdapter';
 
 // components
 import RunComponentButton from '../../../../components/react/components/RunComponentButton';
@@ -25,6 +26,7 @@ import NewTableButton from './NewTableButton';
 import ConfiguredTables from './ConfiguredTables';
 import DimensionsSection from '../../components/DimensionsSection';
 import CredentialsContainer from '../../components/CredentialsContainer';
+import TablesLoadSettings from '../../components/TablesLoadSettings';
 
 const COMPONENT_ID = 'keboola.gooddata-writer';
 
@@ -37,6 +39,11 @@ const DimensionsCollapsibleComponent = CollapsibleSection({
 const CredentialsCollapsibleComponent = CollapsibleSection({
   title: 'Gooddata Project',
   contentComponent: CredentialsContainer
+});
+
+const LoadSettingsCollapsibleComponent = CollapsibleSection({
+  title: 'Tables load settings',
+  contentComponent: TablesLoadSettings
 });
 
 export default React.createClass({
@@ -72,6 +79,7 @@ export default React.createClass({
           </div>
           {this.renderCredentials()}
           {this.renderDimensions()}
+          {this.renderLoadSettings()}
           {this.renderTables()}
         </div>
         <div className="col-md-3 kbc-main-sidebar">
@@ -114,6 +122,16 @@ export default React.createClass({
     return (
       <DimensionsCollapsibleComponent
         {...componentProps}
+      />
+    );
+  },
+
+  renderLoadSettings() {
+    const loadSettingsProps = tablesLoadSettingsAdapter(this.state.configurationId);
+    return (
+      <LoadSettingsCollapsibleComponent
+        {...loadSettingsProps}
+        isComplete={true}
       />
     );
   },
