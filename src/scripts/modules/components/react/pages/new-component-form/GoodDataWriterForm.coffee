@@ -4,6 +4,8 @@ FormHeader = React.createFactory(require './FormHeader')
 Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Input)
 
 {GoodDataWriterModes, GoodDataWriterTokenTypes} = require '../../../Constants'
+ComponentIcon = React.createFactory(require('../../../../../react/common/ComponentIcon').default)
+ComponentName = React.createFactory(require('../../../../../react/common/ComponentName').default)
 
 ModalHeader = React.createFactory(require('react-bootstrap').ModalHeader)
 ModalBody = React.createFactory(require('react-bootstrap').ModalBody)
@@ -12,11 +14,13 @@ ModalTitle = React.createFactory(require('react-bootstrap').ModalTitle)
 ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('react-bootstrap').Button)
 Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
+AppVendorInfo = React.createFactory(require './AppVendorInfo')
+
 
 ApplicationStore = require '../../../../../stores/ApplicationStore'
 contactSupport = require('../../../../../utils/contactSupport').default
 
-{small, label, input, div, form, h3, p, span, a} = React.DOM
+{small, label, input, div, form, h2, h3, p, span, a} = React.DOM
 
 module.exports = React.createClass
   displayName: 'GoodDataWriterDefaultForm'
@@ -39,18 +43,25 @@ module.exports = React.createClass
   render: ->
     div null,
       ModalHeader
-        className: "add-configuration-form"
+        className: "modal-configuration-header"
         closeButton: true
         onHide: @props.onClose
       ,
-        FormHeader
-          component: @props.component
-          onCancel: @props.onCancel
-          onSave: @props.onSave
-          isValid: @props.isValid
-          isSaving: @props.isSaving
-          withButtons: false
-      ModalBody null,
+        div className: 'row',
+          div className: 'col-xs-3',
+            ComponentIcon
+              component: @props.component
+              className: 'modal-configuration-icon',
+              size: '64'
+          div className: 'col-xs-9',
+            h2
+              className: 'modal-configuration-title'
+              ComponentName
+                component: @props.component
+            p null, @props.component.get 'description'
+      ModalBody
+        className: 'modal-configuration-body'
+        ,
         form
           className: 'form-horizontal'
           onSubmit: @_handleSubmit
@@ -97,12 +108,7 @@ module.exports = React.createClass
 
           @_renderCustomDomainForm()
 
-          div null,
-            'By creating a config, you agree with the '
-            a
-              href: 'http://www.gooddata.com/terms-of-use'
-              target: '_blank'
-              'GoodData terms and conditions.'
+          @_renderAppVendorInfo()
 
       ModalFooter null,
         ButtonToolbar null,
@@ -118,10 +124,10 @@ module.exports = React.createClass
             'Cancel'
           Button
             bsStyle: 'success'
-            disabled: !(@props.isValid) || @props.isSaving
+            disabled: !(@props.isValid and @_isLicenseAgreed()) || @props.isSaving
             onClick: @props.onSave
           ,
-            'Create'
+            'Create Configuration'
 
   _renderCustomDomainForm: ->
     div null,
@@ -228,7 +234,7 @@ module.exports = React.createClass
         label: 'Username'
         value: @props.configuration.get 'username'
         labelClassName: 'col-xs-3'
-        wrapperClassName: 'col-xs-7'
+        wrapperClassName: 'col-xs-9'
         onChange: @_handleChange.bind @, 'username'
         disabled: @props.isSaving or @props.configuration.get('customDomain')
         placeholder: if @props.configuration.get('customDomain') then 'Will be copied from custom domain Login'
@@ -237,7 +243,7 @@ module.exports = React.createClass
         label: 'Password'
         value: @props.configuration.get 'password'
         labelClassName: 'col-xs-3'
-        wrapperClassName: 'col-xs-7'
+        wrapperClassName: 'col-xs-9'
         onChange: @_handleChange.bind @, 'password'
         disabled: @props.isSaving or @props.configuration.get('customDomain')
         placeholder: if @props.configuration.get('customDomain') then 'Will be copied from custom domain Password'
@@ -246,7 +252,7 @@ module.exports = React.createClass
         label: 'Project Id'
         value: @props.configuration.get 'pid'
         labelClassName: 'col-xs-3'
-        wrapperClassName: 'col-xs-7'
+        wrapperClassName: 'col-xs-9'
         onChange: @_handleChange.bind @, 'pid'
         disabled: @props.isSaving
       div className: 'form-group',
@@ -262,6 +268,19 @@ module.exports = React.createClass
             'If checked, data bucket '
             React.DOM.code null, 'out.c-wr-gooddata-{writer_name}'
             ' will be created  along with the configuration. The bucket cannot exist already.'
+
+  _renderAppVendorInfo: ->
+    AppVendorInfo
+      component: @props.component
+      licenseAgreed: @_isLicenseAgreed()
+      handleAgreedLicense: @_setAgreedLicense
+
+  _isLicenseAgreed: ->
+    agreed = @props.configuration.get('agreed')
+    return  agreed or false
+
+  _setAgreedLicense: (checked) ->
+    @props.onChange(@props.configuration.set 'agreed', checked)
 
   _handleSubmit: (e) ->
     e.preventDefault()
