@@ -1,6 +1,8 @@
 React = require 'react'
 FormHeader = React.createFactory(require './FormHeader')
 contactSupport = require('../../../../../utils/contactSupport').default
+ComponentIcon = React.createFactory(require('../../../../../react/common/ComponentIcon').default)
+ComponentName = React.createFactory(require('../../../../../react/common/ComponentName').default)
 
 ModalHeader = React.createFactory(require('react-bootstrap').ModalHeader)
 ModalBody = React.createFactory(require('react-bootstrap').ModalBody)
@@ -9,7 +11,7 @@ ModalTitle = React.createFactory(require('react-bootstrap').ModalTitle)
 ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('react-bootstrap').Button)
 
-{div, form, p} = React.DOM
+{div, form, p, h2} = React.DOM
 
 module.exports = React.createClass
   displayName: 'ManualConfigurationForm'
@@ -24,12 +26,22 @@ module.exports = React.createClass
       ModalHeader
         closeButton: true
         onHide: @props.onClose
-        className: "add-configuration-form"
+        className: "modal-configuration-header"
       ,
-        FormHeader
-          component: @props.component
-          withButtons: false
-      ModalBody null,
+        div className: 'row',
+          div className: 'col-xs-3',
+            ComponentIcon
+              component: @props.component
+              className: 'modal-configuration-icon',
+              size: '64'
+          div className: 'col-xs-9',
+            h2
+              className: 'modal-configuration-title'
+              ComponentName
+                component: @props.component
+            p null, @props.component.get 'description'
+      ModalBody
+        className: 'modal-configuration-body'
         div className: 'container col-md-12',
           div className: 'row',
             div className: 'col-xs-12',
