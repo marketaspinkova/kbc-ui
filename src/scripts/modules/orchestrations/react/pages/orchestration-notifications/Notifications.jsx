@@ -1,15 +1,13 @@
 import React from 'react';
 import { Map } from 'immutable';
-import ItemsListEditor from '../../../../../react/common/ItemsListEditor';
 import SubscribersList from './SubscribersList';
+import Select from 'react-select';
 
 export default React.createClass({
   propTypes: {
     notifications: React.PropTypes.object.isRequired, // notifications in structure from API
-    inputs: React.PropTypes.object.isRequired, // map of inputs for each channel
     isEditing: React.PropTypes.bool.isRequired,
-    onNotificationsChange: React.PropTypes.func.isRequired,
-    onInputChange: React.PropTypes.func.isRequired
+    onNotificationsChange: React.PropTypes.func.isRequired
   },
 
   render() {
@@ -82,27 +80,33 @@ export default React.createClass({
 
   _renderNotificationsEditor(channelName, emails) {
     return (
-      <ItemsListEditor
-        value={emails.map(email => email.get('email'))}
-        input={this.props.inputs.get(channelName)}
-        disabled={false}
-        inputPlaceholder="Enter email ..."
-        emptyText="No subscribers yet."
-        onChangeValue={this._onChannelChange.bind(this, channelName)}
-        onChangeInput={this._onInputChange.bind(this, channelName)}
+      <Select.Creatable
+        multi={true}
+        backspaceRemoves={false}
+        deleteRemoves={false}
+        value={this._enteredEmails(emails)}
+        noResultsText=""
+        placeholder="Enter email ..."
+        promptTextCreator={() => 'Add email'}
+        onChange={newEmails => this._onChannelChange(channelName, newEmails)}
       />
     );
   },
 
-  _onInputChange(channelName, newValue) {
-    return this.props.onInputChange(channelName, newValue);
+  _enteredEmails(emails) {
+    return emails
+      .map(email => ({
+        value: email.get('email'),
+        label: email.get('email')
+      }))
+      .toArray();
   },
 
   _onChannelChange(channelName, newEmails) {
     const tolerance = this._getTolerance();
     let newNotifications = newEmails.map(email =>
       Map({
-        email,
+        email: email.value,
         channel: channelName,
         parameters: Map(channelName === 'processing' ? { tolerance } : {})
       })

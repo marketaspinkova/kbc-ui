@@ -1,5 +1,4 @@
 import React from 'react';
-import { Map } from 'immutable';
 
 // actions and stores
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
@@ -15,17 +14,6 @@ import Notifications from './Notifications';
 export default React.createClass({
   mixins: [createStoreMixin(OrchestrationStore)],
 
-  getInitialState() {
-    return {
-      inputs: Map({
-        error: '',
-        warning: '',
-        processing: '',
-        waiting: ''
-      })
-    };
-  },
-
   getStateFromStores() {
     let notifications;
     const orchestrationId = RoutesStore.getCurrentRouteIntParam('orchestrationId');
@@ -37,6 +25,7 @@ export default React.createClass({
     } else {
       notifications = orchestration.get('notifications');
     }
+
     return {
       orchestration,
       notifications,
@@ -62,12 +51,6 @@ export default React.createClass({
     );
   },
 
-  _handleInputChange(channelName, newValue) {
-    return this.setState({
-      inputs: this.state.inputs.set(channelName, newValue)
-    });
-  },
-
   render() {
     return (
       <div className="container-fluid">
@@ -87,10 +70,8 @@ export default React.createClass({
             <div className="col-md-9 kb-orchestrations-main kbc-main-content-with-nav">
               <Notifications
                 notifications={this.state.notifications}
-                inputs={this.state.inputs}
                 isEditing={this.state.isEditing}
                 onNotificationsChange={this._handleNotificationsChange}
-                onInputChange={this._handleInputChange}
               />
             </div>
           </div>
