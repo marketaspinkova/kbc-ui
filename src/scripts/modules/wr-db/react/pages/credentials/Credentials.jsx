@@ -16,6 +16,7 @@ import RoutesStore from '../../../../../stores/RoutesStore';
 import InstalledComponentsStore from '../../../../components/stores/InstalledComponentsStore';
 import MissingRedshiftModal from './MissingRedshiftModal';
 import CredentialsForm from './CredentialsForm';
+import provisioningUtils from '../../../provisioningUtils';
 import credentialsUtils from '../../../credentialsUtils';
 
 export default (componentId, driver, isProvisioning) => {
@@ -39,15 +40,19 @@ export default (componentId, driver, isProvisioning) => {
     },
 
     componentDidMount() {
-      if (!isProvisioning) {
-        return this._startEdit();
+      if (isProvisioning) {
+        if (this._isProvCredentials()) {
+          return this._updateLocalState('credentialsState', States.SHOW_STORED_CREDS);
+        }
+
+        if (this._hasDbConnection()) {
+          return this._startEdit();
+        }
+
+        return this._updateLocalState('credentialsState', States.INIT);
       }
 
-      if (credentialsUtils.hasDbConnection(componentId, this.state.credentials)) {
-        return this._updateLocalState('credentialsState', States.SHOW_STORED_CREDS);
-      }
-
-      return this._updateLocalState('credentialsState', States.INIT);
+      return this._startEdit();
     },
 
     render() {
@@ -197,6 +202,14 @@ export default (componentId, driver, isProvisioning) => {
 
     _setCredentials(creds) {
       return WrDbActions.setEditingData(componentId, this.state.configId, 'creds', creds);
+    },
+
+    _isProvCredentials() {
+      return provisioningUtils.isProvisioningCredentials(driver, this.state.credentials);
+    },
+
+    _hasDbConnection() {
+      return credentialsUtils.hasDbConnection(componentId, this.state.credentials);
     },
 
     _updateLocalState(pathname, data) {
