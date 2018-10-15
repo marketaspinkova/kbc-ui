@@ -5,7 +5,7 @@ import InstalledComponentsStore from '../components/stores/InstalledComponentsSt
 
 import installedComponentsActions from '../components/InstalledComponentsActionCreators';
 import storageActions from '../components/StorageActionCreators';
-// import jobsActionCreators from '../jobs/ActionCreators';
+import jobsActionCreators from '../jobs/ActionCreators';
 import versionsActions from '../components/VersionsActionCreators';
 
 import {createTablesRoute} from '../table-browser/routes';
@@ -25,10 +25,10 @@ export default {
     () => storageActions.loadTables(),
     (params) => versionsActions.loadVersions(componentId, params.config)
   ],
-  /* poll: {
-   *   interval: 7,
-   *   action: (params) => jobsActionCreators.loadComponentConfigurationLatestJobs(componentId, params.config)
-   * }, */
+  poll: {
+    interval: 7,
+    action: (params) => jobsActionCreators.loadComponentConfigurationLatestJobs(componentId, params.config)
+  },
   childRoutes: [
     createTablesRoute(componentId),
     {
