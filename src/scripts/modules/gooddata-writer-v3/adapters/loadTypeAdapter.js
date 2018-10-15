@@ -1,7 +1,7 @@
-import configProvisioning from './configProvisioning';
-import tablesProvisioning from './tablesProvisioning';
+import configProvisioning from '../configProvisioning';
+import tablesProvisioning from '../tablesProvisioning';
 import {fromJS, Map, List} from 'immutable';
-import {Types} from './constants';
+import {Types} from '../constants';
 
 const GRAIN_TYPES = [
   Types.REFERENCE,

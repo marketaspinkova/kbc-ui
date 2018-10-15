@@ -20,10 +20,10 @@ import StorageTableColumnsEditor from '../../../../configurations/react/componen
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import tablesProvisioning from '../../../tablesProvisioning';
 import configProvisioning from '../../../configProvisioning';
-import titleAdapter from '../../../titleAdapter';
+import titleAdapter from '../../../adapters/titleAdapter';
 import {CollapsibleSection} from '../../../../configurations/utils/renderHelpers';
-import loadTypeAdater from '../../../loadTypeAdapter';
-import columnsEditorAdapter from '../../../columnsEditorAdapter';
+import loadTypeAdater from '../../../adapters/loadTypeAdapter';
+import columnsEditorAdapter from '../../../adapters/columnsEditorAdapter';
 
 const LoadTypeCollapsibleComponent = CollapsibleSection({
   title: LoadTypeSectionTitle,

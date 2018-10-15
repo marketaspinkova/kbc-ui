@@ -10,9 +10,9 @@ import configProvisioning from '../../../configProvisioning';
 
 // helpers
 import tablesProvisioning from '../../../tablesProvisioning';
-import dimensionsAdapter from '../../../dimensionsAdapter';
-import credentialsAdapter from '../../../credentialsAdapter';
-import tablesLoadSettingsAdapter from '../../../tablesLoadSettingsAdapter';
+import dimensionsAdapter from '../../../adapters/dimensionsAdapter';
+import credentialsAdapter from '../../../adapters/credentialsAdapter';
+import tablesLoadSettingsAdapter from '../../../adapters/tablesLoadSettingsAdapter';
 
 // components
 import RunComponentButton from '../../../../components/react/components/RunComponentButton';

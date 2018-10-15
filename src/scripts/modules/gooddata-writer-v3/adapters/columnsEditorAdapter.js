@@ -1,11 +1,11 @@
-import configProvisioning from './configProvisioning';
-import tablesProvisioning from './tablesProvisioning';
-import makeColumnDefinition from './helpers/makeColumnDefinition';
+import configProvisioning from '../configProvisioning';
+import tablesProvisioning from '../tablesProvisioning';
+import makeColumnDefinition from '../helpers/makeColumnDefinition';
 import {Map, fromJS} from 'immutable';
-import getInitialShowAdvanced from './helpers/getInitialShowAdvanced';
-import PreferencesHeader from './react/components/PreferencesHeader';
-import PreferencesColumn from './react/components/PreferencesColumn';
-import prepareColumnContext from './helpers/prepareColumnContext';
+import getInitialShowAdvanced from '../helpers/getInitialShowAdvanced';
+import PreferencesHeader from '../react/components/PreferencesHeader';
+import PreferencesColumn from '../react/components/PreferencesColumn';
+import prepareColumnContext from '../helpers/prepareColumnContext';
 
 
 function initColumnFn(columnName) {

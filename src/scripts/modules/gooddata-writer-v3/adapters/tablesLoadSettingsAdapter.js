@@ -1,4 +1,4 @@
-import configProvisioning from './configProvisioning';
+import configProvisioning from '../configProvisioning';
 import {fromJS} from 'immutable';
 
 

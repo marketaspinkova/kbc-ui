@@ -1,5 +1,5 @@
-import configProvisioning from './configProvisioning';
-import tablesProvisioning from './tablesProvisioning';
+import configProvisioning from '../configProvisioning';
+import tablesProvisioning from '../tablesProvisioning';
 import {fromJS, Map} from 'immutable';
 
 export default function(configId, tableId) {

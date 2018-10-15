@@ -1,5 +1,5 @@
-import configProvisioning from './configProvisioning';
-import localStateProvisioning from './localStateProvisioning';
+import configProvisioning from '../configProvisioning';
+import localStateProvisioning from '../localStateProvisioning';
 import {Map, fromJS} from 'immutable';
 const PATH = 'credentials';
 
