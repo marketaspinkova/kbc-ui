@@ -2,64 +2,48 @@ import assert from 'assert';
 import prepareColumnContext from './prepareColumnContext';
 import {fromJS, Map, List} from 'immutable';
 
-const sectionContext = fromJS({
-  table: {
-    id: 'in.some.table'
-  },
-  configuration: {
-    parameters: {
-      dimensions: {
-        dim1: {
-          identifier: 'foo'
-        },
-        dim2: {
-          identifier: 'foo'
-        },
-        dim3: {
-          identifier: 'foo'
+const tableId = 'in.some.table';
+const configuration = fromJS({
+  parameters: {
+    tables: {
+      'in.some.table': {
+        columns: {
+          id: {
+            type: 'CONNECTION_POINT',
+            title: 'id'
+          }
         }
-      }
-    }
-  },
-  rows: [
-    {
-      parameters: {
-        tables: {
-          'in.some.table': {
-            columns: {
-              id: {
-                type: 'CONNECTION_POINT',
-                title: 'id'
-              }
-            }
+      },
+      'in.OTHER.TABLE': {
+        columns: {
+          id: {
+            type: 'CONNECTION_POINT',
+            title: 'id'
+          },
+          name: {
+            type: 'ATTRIBUTE',
+            title: 'name'
+          },
+          refColumn: {
+            type: 'LABEL',
+            title: 'refColumn',
+            reference: 'name'
           }
         }
       }
     },
-    {
-      parameters: {
-        tables: {
-          'in.OTHER.TABLE': {
-            columns: {
-              id: {
-                type: 'CONNECTION_POINT',
-                title: 'id'
-              },
-              name: {
-                type: 'ATTRIBUTE',
-                title: 'name'
-              },
-              refColumn: {
-                type: 'LABEL',
-                title: 'refColumn',
-                reference: 'name'
-              }
-            }
-          }
-        }
+    dimensions: {
+      dim1: {
+        identifier: 'foo'
+      },
+      dim2: {
+        identifier: 'foo'
+      },
+      dim3: {
+        identifier: 'foo'
       }
     }
-  ]
+  }
 });
 
 const allColumns = fromJS([
@@ -84,7 +68,7 @@ const allColumns = fromJS([
 
 describe('prepareColumnContext tests', () => {
   it('should pass empty', () => {
-    const columnContext = prepareColumnContext(Map(), List());
+    const columnContext = prepareColumnContext(Map(), Map(), tableId, List());
     assert.deepEqual(
       columnContext.toJS(),
       {
@@ -97,7 +81,9 @@ describe('prepareColumnContext tests', () => {
   });
 
   it('should pass with some context and columns', () => {
-    const columnContext = prepareColumnContext(sectionContext, allColumns);
+    const configParameters = configuration.get('parameters');
+    const allTables = configuration.getIn(['parameters', 'tables']);
+    const columnContext = prepareColumnContext(configParameters, allTables, tableId, allColumns);
     assert.deepEqual(
       columnContext.toJS(),
       {
