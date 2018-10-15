@@ -172,7 +172,7 @@ export default React.createClass({
     return (
       <span>
         <p>
-          You are about to run upload.
+          You are about to run load of all tables.
         </p>
       </span>
     );

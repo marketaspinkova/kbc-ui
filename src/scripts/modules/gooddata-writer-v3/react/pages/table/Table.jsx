@@ -42,11 +42,13 @@ export default React.createClass({
     const table = tables.get(tableId);
     const {isSaving, isPendingFn} = configProvisioning(configurationId);
     const storageTable = TablesStore.getAll().get(tableId);
+    const isPendingToggleExport = isPendingFn([tableId, 'activate']);
     return {
+      isPendingToggleExport,
       storageTable,
       deleteTable,
       toggleTableExport,
-      isSaving,
+      isSaving: isSaving && !isPendingToggleExport,
       isPendingFn,
       tableId,
       configurationId,
@@ -84,6 +86,7 @@ export default React.createClass({
       <div>
         <TitleSection
           {...titleProps}
+          disabled={this.state.isSaving}
         />
         {this.renderLoadType()}
         {this.renderColumnsEditor()}
@@ -97,6 +100,7 @@ export default React.createClass({
     return (
       <StorageTableColumnsEditor
         {...editorProps}
+        disabled={this.state.isSaving}
       />
     );
   },
@@ -106,16 +110,19 @@ export default React.createClass({
     return (
       <LoadTypeCollapsibleComponent
         {...loadTypeProps}
+        disabled={this.state.isSaving}
       />
     );
   },
 
   renderButtons() {
-    const {isSaving, isChanged, saveEditingTable, tableId, resetEditingTable} = this.state;
+    const {isSaving, isPendingToggleExport, isChanged, saveEditingTable, tableId, resetEditingTable} = this.state;
+
     return (
       <div className="form-group">
         <div className="text-right">
           <SaveButtons
+            disabled={isPendingToggleExport}
             isSaving={isSaving}
             isChanged={isChanged}
             onSave={() => saveEditingTable(tableId)}
