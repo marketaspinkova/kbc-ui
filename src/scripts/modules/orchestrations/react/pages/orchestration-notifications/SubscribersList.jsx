@@ -16,7 +16,7 @@ export default React.createClass({
         </div>
       );
     } else {
-      return <span>No subsribers yet.</span>;
+      return <span>No subscribers yet.</span>;
     }
   }
 });
