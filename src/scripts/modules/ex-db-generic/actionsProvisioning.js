@@ -143,7 +143,7 @@ export function createActions(componentId) {
 
   function getIncrementalCandidates(sourceTables) {
     return sourceTables.reduce((memo, table) => {
-      const qualifyingColumns = table.get('columns').filter((column) => {
+      const qualifyingColumns = table.get('columns', List()).filter((column) => {
         if (column.has('autoIncrement') || column.get('type') === 'timestamp') {
           return column;
         }
