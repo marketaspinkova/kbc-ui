@@ -6,8 +6,8 @@ import InstalledComponentsStore from '../../../../components/stores/InstalledCom
 import TablesStore from '../../../../components/stores/StorageTablesStore';
 
 // components
-import RunComponentButton from '../../../../components/react/components/RunComponentButton';
 import ActivateDeactivateButton from '../../../../../react/common/ActivateDeactivateButton';
+import RunLoadButton from '../../components/RunLoadButton';
 import Tooltip from '../../../../../react/common/Tooltip';
 import {Loader} from '@keboola/indigo-ui';
 import TitleSection from '../../components/TitleSection';
@@ -38,7 +38,7 @@ export default React.createClass({
   getStateFromStores() {
     const tableId = RoutesStore.getCurrentRouteParam('table');
     const configurationId = RoutesStore.getCurrentRouteParam('config');
-    const {tables, toggleTableExport, deleteTable, isEditingTableChanged, saveEditingTable, resetEditingTable} = tablesProvisioning(configurationId);
+    const {tables, toggleTableExport, deleteTable, isEditingTableChanged, saveEditingTable, resetEditingTable, getSingleRunParams} = tablesProvisioning(configurationId);
     const table = tables.get(tableId);
     const {isSaving, isPendingFn} = configProvisioning(configurationId);
     const storageTable = TablesStore.getAll().get(tableId);
@@ -53,6 +53,7 @@ export default React.createClass({
       table,
       saveEditingTable,
       resetEditingTable,
+      getSingleRunParams,
       isChanged: isEditingTableChanged(tableId)
     };
   },
@@ -125,29 +126,18 @@ export default React.createClass({
     );
   },
 
-  renderRunModalContent() {
-    const {tableId, table} = this.state;
-    if (table.get('disabled')) {
-      return 'You are about to run ' + tableId + '. Configuration ' + tableId + ' is disabled and will be forced to run ';
-    } else {
-      return 'You are about to run load of' + tableId + ' table.';
-    }
-  },
-
   renderActionsSideBar() {
     const {table, tableId, isPendingFn, toggleTableExport, isSaving} = this.state;
     const isTableDisabled = table.get('disabled');
     return (
       <ul className="nav nav-stacked">
         <li>
-          <RunComponentButton
-            title="Run"
-            component={this.state.componentId}
-            mode="link"
-            runParams={() => ({})}
-          >
-            {this.renderRunModalContent()}
-          </RunComponentButton>
+          <RunLoadButton
+            tableId={tableId}
+            isTableDisabled={isTableDisabled}
+            buttonMode="link"
+            getRunParams={this.state.getSingleRunParams}
+          />
         </li>
         <li>
           <ActivateDeactivateButton

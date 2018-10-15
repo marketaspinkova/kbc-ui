@@ -87,9 +87,10 @@ export default function(configId) {
 
   function createNewTable(tableId) {
     const newTable = Map({
+      columns: {},
       title: tableId
     });
-    const newTableMapping = Map({ source: tableId });
+    const newTableMapping = Map({ source: tableId, columns: [] });
     const newParameters = parameters.setIn(['tables', tableId], newTable);
     const newMapping = inputMapping.push(newTableMapping);
     return saveInputMappingAndParameters(newMapping, newParameters, `Add table ${tableId}`);
@@ -118,10 +119,21 @@ export default function(configId) {
     return saveInputMappingAndParameters(newMapping, newParameters, `delete table ${tableId}`, [tableId, 'delete']);
   }
 
-  function getSingleRunParams(tableId) {
+  function getSingleRunParams(tableId, loadDataOnly) {
+    const newParameters = parameters
+      .update('tables', paramsTables => Map({[tableId]: paramsTables.get(tableId)}))
+      .set('loadOnly', !!loadDataOnly);
+    const tableInputMapping = inputMapping.find(table => table.get('source') === tableId);
     return {
       config: configId,
-      TODO: tableId
+      configData: {
+        parameters: newParameters.toJS(),
+        storage: {
+          input: {
+            tables: [tableInputMapping.toJS()]
+          }
+        }
+      }
     };
   }
 
