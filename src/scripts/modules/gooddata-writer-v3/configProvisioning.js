@@ -1,4 +1,4 @@
-import {Map, List} from 'immutable';
+import { Map, List } from 'immutable';
 import InstalledComponentStore from '../components/stores/InstalledComponentsStore';
 import componentsActions from '../components/InstalledComponentsActionCreators';
 import localStateProvisioning from './localStateProvisioning';
@@ -7,8 +7,8 @@ const COMPONENT_ID = 'keboola.gooddata-writer';
 const INPUT_MAPPING_PATH = ['storage', 'input', 'tables'];
 
 export default function(configId) {
-  const configData =  InstalledComponentStore.getConfigData(COMPONENT_ID, configId) || Map();
-  const {getLocalState, updateLocalState, deleteLocalStatePath} = localStateProvisioning(configId);
+  const configData = InstalledComponentStore.getConfigData(COMPONENT_ID, configId) || Map();
+  const { getLocalState, updateLocalState, deleteLocalStatePath } = localStateProvisioning(configId);
   const parameters = configData.get('parameters', Map());
   const inputMapping = configData.getIn(INPUT_MAPPING_PATH, List());
   const pendingPath = ['pending'];
@@ -26,7 +26,9 @@ export default function(configId) {
 
   function saveConfigData(data, changeDescription = 'update configuration', waitingPath = 'confing') {
     togglePending(waitingPath, true);
-    return componentsActions.saveComponentConfigData(COMPONENT_ID, configId, data, changeDescription).then(() => togglePending(waitingPath, false));
+    return componentsActions
+      .saveComponentConfigData(COMPONENT_ID, configId, data, changeDescription)
+      .then(() => togglePending(waitingPath, false));
   }
 
   function saveParameters(newParameters, changeDescription = 'update parameters', waitingPath = 'parameters') {
@@ -34,10 +36,13 @@ export default function(configId) {
     return saveConfigData(newData, changeDescription, waitingPath);
   }
 
-  function saveInputMappingAndParameters(newInputMapping, newParameters, changeDescription = 'update input mapping and parameters', waitingPath = 'im&parameters') {
-    const newData = configData
-      .setIn(INPUT_MAPPING_PATH, newInputMapping)
-      .set('parameters', newParameters);
+  function saveInputMappingAndParameters(
+    newInputMapping,
+    newParameters,
+    changeDescription = 'update input mapping and parameters',
+    waitingPath = 'im&parameters'
+  ) {
+    const newData = configData.setIn(INPUT_MAPPING_PATH, newInputMapping).set('parameters', newParameters);
     return saveConfigData(newData, changeDescription, waitingPath);
   }
 
@@ -50,6 +55,9 @@ export default function(configId) {
     saveInputMappingAndParameters,
     togglePending,
     isPendingFn,
-    isSaving: getLocalState().getIn(pendingPath, Map()).count() > 0
+    isSaving:
+      getLocalState()
+        .getIn(pendingPath, Map())
+        .count() > 0
   };
 }

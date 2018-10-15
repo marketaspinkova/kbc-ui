@@ -1,6 +1,6 @@
 import InstalledComponentStore from '../components/stores/InstalledComponentsStore';
 import componentsActions from '../components/InstalledComponentsActionCreators';
-import {Map} from 'immutable';
+import { Map } from 'immutable';
 const COMPONENT_ID = 'keboola.gooddata-writer';
 
 export default function(configId) {
