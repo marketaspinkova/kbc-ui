@@ -22,7 +22,7 @@ const addEmptyPhase = tasks => {
   let newId = 'New phase';
   let idx = 1;
   while (phaseIds.includes(newId)) {
-    newId = `New phase ${idx++}`;
+    newId = `New phase ${++idx}`;
   }
   const newPhase = Map({
     id: newId,
