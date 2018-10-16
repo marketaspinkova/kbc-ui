@@ -22,6 +22,7 @@ import InlineEditArea from '../../../../../react/common/InlineEditArea';
 import TransformationEmptyInputImage from '../../components/TransformationEmptyInputImage';
 import TransformationEmptyOutputImage from '../../components/TransformationEmptyOutputImage';
 import ConfigurationRowEditField from '../../../../components/react/components/ConfigurationRowEditField';
+import contactSupport from '../../../../../utils/contactSupport';
 
 import {
   getInputMappingValue,
@@ -226,8 +227,8 @@ export default React.createClass({
               <span>
                 {'OpenRefine transformations are now in public beta. '}
                 {'Please be aware, that things may change before it makes to production. '}
-                {'If you encounter any errors, please contact us at '}
-                <a href="mailto:support@keboola.com">support@keboola.com</a>
+                {'If you encounter any errors, please '}
+                <a href="" onClick={contactSupport}>contact us</a>
                 {' or read more in the '}
                 <a href="https://help.keboola.com/manipulation/transformations/openrefine/">documentation</a>.
               </span>
