@@ -14,8 +14,6 @@ ModalTitle = React.createFactory(require('react-bootstrap').ModalTitle)
 ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('react-bootstrap').Button)
 Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
-AppVendorInfo = React.createFactory(require './AppVendorInfo')
-
 
 ApplicationStore = require '../../../../../stores/ApplicationStore'
 contactSupport = require('../../../../../utils/contactSupport').default
@@ -108,7 +106,12 @@ module.exports = React.createClass
 
           @_renderCustomDomainForm()
 
-          @_renderAppVendorInfo()
+          div null,
+            'By creating a config, you agree with the '
+            a
+              href: 'http://www.gooddata.com/terms-of-use'
+              target: '_blank'
+              'GoodData terms and conditions.'
 
       ModalFooter null,
         ButtonToolbar null,
@@ -268,19 +271,6 @@ module.exports = React.createClass
             'If checked, data bucket '
             React.DOM.code null, 'out.c-wr-gooddata-{writer_name}'
             ' will be created  along with the configuration. The bucket cannot exist already.'
-
-  _renderAppVendorInfo: ->
-    AppVendorInfo
-      component: @props.component
-      licenseAgreed: @_isLicenseAgreed()
-      handleAgreedLicense: @_setAgreedLicense
-
-  _isLicenseAgreed: ->
-    agreed = @props.configuration.get('agreed')
-    return  agreed or false
-
-  _setAgreedLicense: (checked) ->
-    @props.onChange(@props.configuration.set 'agreed', checked)
 
   _handleSubmit: (e) ->
     e.preventDefault()
