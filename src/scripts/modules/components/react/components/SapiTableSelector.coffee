@@ -1,5 +1,5 @@
 React = require 'react'
-storageTablesStore = require '../../stores/StorageTablesStore'
+storageTablesStore = require('../../stores/StorageTablesStore').default
 storageActionCreators = require '../../StorageActionCreators'
 Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
 Select = React.createFactory(require('react-select').default)

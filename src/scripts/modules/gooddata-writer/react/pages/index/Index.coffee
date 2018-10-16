@@ -9,7 +9,7 @@ ComponentMetadata = require '../../../../components/react/components/ComponentMe
 ComponentEmptyState = require('../../../../components/react/components/ComponentEmptyState').default
 AddNewTableButton = require('../../components/AddNewTableButton').default
 ApplicationStore = require '../../../../../stores/ApplicationStore'
-StorageTablesStore = require '../../../../components/stores/StorageTablesStore'
+StorageTablesStore = require('../../../../components/stores/StorageTablesStore').default
 
 SearchBar = require('@keboola/indigo-ui').SearchBar
 TablesList = require './BucketTablesList'
