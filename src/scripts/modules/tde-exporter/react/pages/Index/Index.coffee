@@ -9,7 +9,7 @@ LatestJobs = require '../../../../components/react/components/SidebarJobs'
 
 Link = React.createFactory(require('react-router').Link)
 
-InstalledComponentsStore = require '../../../../components/stores/InstalledComponentsStore'
+InstalledComponentsStore = require('../../../../components/stores/InstalledComponentsStore').default
 StorageFilesStore = require('../../../../components/stores/StorageFilesStore').default
 RoutesStore = require '../../../../../stores/RoutesStore'
 createStoreMixin = require('../../../../../react/mixins/createStoreMixin').default

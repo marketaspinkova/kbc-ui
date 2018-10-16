@@ -8,7 +8,7 @@ PureRenderMixin = require('react-addons-pure-render-mixin')
 RoutesStore = require '../../../../stores/RoutesStore'
 storageTablesStore = require('../../../components/stores/StorageTablesStore').default
 InstalledComponentsActions = require '../../../components/InstalledComponentsActionCreators'
-InstalledComponentsStore = require '../../../components/stores/InstalledComponentsStore'
+InstalledComponentsStore = require('../../../components/stores/InstalledComponentsStore').default
 EditButtons = require('../../../../react/common/EditButtons').default
 
 componentId = 'tde-exporter'

@@ -2,7 +2,7 @@ React = require 'react'
 
 createStoreMixin = require('../../../../react/mixins/createStoreMixin').default
 InstalledComponentsActionCreators = require '../../InstalledComponentsActionCreators'
-InstalledComponetsStore = require '../../stores/InstalledComponentsStore'
+InstalledComponetsStore = require('../../stores/InstalledComponentsStore').default
 RefreshIcon = React.createFactory(require('@keboola/indigo-ui').RefreshIcon)
 
 module.exports = React.createClass

@@ -11,7 +11,7 @@ RowEditor = require './RowEditor'
 
 SearchBar = require('@keboola/indigo-ui').SearchBar
 GdriveStore = require '../../../wrGdriveStore'
-InstalledComponentsStore = require '../../../../components/stores/InstalledComponentsStore'
+InstalledComponentsStore = require('../../../../components/stores/InstalledComponentsStore').default
 InstalledComponentsActions = require '../../../../components/InstalledComponentsActionCreators'
 
 TablesByBucketsPanel = React.createFactory require('../../../../components/react/components/TablesByBucketsPanel')

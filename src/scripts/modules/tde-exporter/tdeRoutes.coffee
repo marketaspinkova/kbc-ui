@@ -15,7 +15,7 @@ oauth2Actions = require('../oauth-v2/ActionCreators').default
 oauth2Store = require('../oauth-v2/Store').default
 {OAUTH_V2_WRITERS} = require './tdeCommon'
 
-InstalledComponentsStore = require '../components/stores/InstalledComponentsStore'
+InstalledComponentsStore = require('../components/stores/InstalledComponentsStore').default
 ApplicationActionCreators = require('../../actions/ApplicationActionCreators')
 storageActionCreators = require '../components/StorageActionCreators'
 ComponentsStore = require '../components/stores/ComponentsStore'

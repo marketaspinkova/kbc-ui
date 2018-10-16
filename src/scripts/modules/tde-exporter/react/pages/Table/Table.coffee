@@ -6,7 +6,7 @@ createStoreMixin = require('../../../../../react/mixins/createStoreMixin').defau
 RoutesStore = require '../../../../../stores/RoutesStore'
 StorageStore = require('../../../../components/stores/StorageTablesStore').default
 InstalledComponentsActions = require '../../../../components/InstalledComponentsActionCreators'
-InstalledComponentsStore = require '../../../../components/stores/InstalledComponentsStore'
+InstalledComponentsStore = require('../../../../components/stores/InstalledComponentsStore').default
 FilterTableModal = require('../../../../components/react/components/generic/TableFiltersOnlyModal').default
 FiltersDescription = require '../../../../components/react/components/generic/FiltersDescription'
 

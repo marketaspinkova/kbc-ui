@@ -1,5 +1,5 @@
 actionCreators = require './actionCreators'
-InstalledComponentsStore = require '../components/stores/InstalledComponentsStore'
+InstalledComponentsStore = require('../components/stores/InstalledComponentsStore').default
 GoodDataWriterStore = require './store'
 
 IndexPage = require './react/pages/index/Index'
