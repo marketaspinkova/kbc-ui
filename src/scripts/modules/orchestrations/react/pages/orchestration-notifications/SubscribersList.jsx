@@ -11,7 +11,12 @@ export default React.createClass({
         <div>
           <strong>{'Subscribers: '}</strong>
           <span>
-            {this.props.emails.map(email => <span key={email.get('email')}>{email.get('email')} </span>).toArray()}
+            {this.props.emails
+              .map(email => {
+                return <span key={email.get('email')}>{email.get('email')}</span>;
+              })
+              .toArray()
+              .reduce((prev, curr) => [prev, ', ', curr])}
           </span>
         </div>
       );
