@@ -1,9 +1,7 @@
 React = require 'react'
 classnames = require 'classnames'
 RouteHandler = React.createFactory(require('react-router').RouteHandler)
-createStoreMixin = require '../mixins/createStoreMixin'
 ApplicationStore = require '../../stores/ApplicationStore'
-MenuToggleStore = require('./menu-toggle/MenuToggleStore').default
 
 Header = React.createFactory(require '././Header')
 SidebarNavigation = React.createFactory(require('././SidebarNavigation').default)
@@ -26,16 +24,9 @@ require '../../../styles/app.less'
 
 App = React.createClass
   displayName: 'App'
-
-  mixins: [createStoreMixin(MenuToggleStore)]
-
   propTypes:
     isError: React.PropTypes.bool
     isLoading: React.PropTypes.bool
-
-  getStateFromStores: ->
-    isMenuToggleOpen: MenuToggleStore.getIsOpen()
-
   getInitialState: ->
     organizations: ApplicationStore.getOrganizations()
     maintainers: ApplicationStore.getMaintainers()
@@ -52,6 +43,7 @@ App = React.createClass
     projectFeatures: ApplicationStore.getCurrentProjectFeatures()
     projectBaseUrl: ApplicationStore.getProjectBaseUrl()
     scriptsBasePath: ApplicationStore.getScriptsBasePath()
+    isMenuToggleOpen: false
 
   render: ->
     div null,
@@ -65,6 +57,9 @@ App = React.createClass
       Header
         homeUrl: @state.homeUrl
         notifications: @state.notifications
+        isMenuToggleOpen: @state.isMenuToggleOpen
+        handleMenuOpen: @handleMenuOpen
+        handleMenuClose: @handleMenuClose
       React.createElement(FloatingNotifications)
       div className: 'container-fluid',
         div className: classnames('row sidebar-offset-row', { 'sidebar-offset-row-open': @state.isMenuToggleOpen }),
@@ -76,7 +71,8 @@ App = React.createClass
               xsrf: @state.xsrf
               canCreateProject: @state.canCreateProject
               projectTemplates: @state.projectTemplates
-            SidebarNavigation()
+            SidebarNavigation
+              handleMenuClose: @handleMenuClose
             div className: 'kbc-sidebar-footer',
               CurrentUser
                 user: @state.currentAdmin
@@ -96,5 +92,11 @@ App = React.createClass
               Wizard
                 projectBaseUrl: @state.projectBaseUrl
                 scriptsBasePath: @state.scriptsBasePath
+
+  handleMenuOpen: ->
+    @setState isMenuToggleOpen: true
+
+  handleMenuClose: ->
+    @setState isMenuToggleOpen: false
 
 module.exports = App

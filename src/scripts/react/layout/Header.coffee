@@ -4,9 +4,7 @@ Immutable = require 'immutable'
 
 RoutesStore = require '../../stores/RoutesStore'
 ComponentsStore = require '../../modules/components/stores/ComponentsStore'
-MenuToggleStore = require('./menu-toggle/MenuToggleStore').default
 immutableMixin = require 'react-immutable-render-mixin'
-MenuToggleActionCreators = require('./menu-toggle/MenuToggleActionCreators').default
 
 Link = React.createFactory(require('react-router').Link)
 RoutePendingIndicator = React.createFactory(require './RoutePendingIndicator')
@@ -23,10 +21,13 @@ MenuToggleButton = React.createFactory(require('./menu-toggle/MenuToggleButton')
 
 Header = React.createClass
   displayName: 'Header'
-  mixins: [createStoreMixin(RoutesStore, MenuToggleStore), immutableMixin]
+  mixins: [createStoreMixin(RoutesStore), immutableMixin]
   propTypes:
     homeUrl: React.PropTypes.string.isRequired
     notifications: React.PropTypes.object.isRequired
+    isMenuToggleOpen: React.PropTypes.bool.isRequired
+    handleMenuOpen: React.PropTypes.func.isRequired
+    handleMenuClose: React.PropTypes.func.isRequired
 
   getStateFromStores: ->
     componentId = RoutesStore.getCurrentRouteComponentId()
@@ -39,7 +40,6 @@ Header = React.createClass
     component: component
     currentRouteParams: RoutesStore.getRouterState().get 'params'
     currentRouteQuery: RoutesStore.getRouterState().get 'query'
-    isMenuToggleOpen: MenuToggleStore.getIsOpen()
 
   render: ->
     nav {className: 'navbar navbar-fixed-top kbc-navbar', role: 'navigation'},
@@ -48,7 +48,7 @@ Header = React.createClass
           span className: "kbc-icon-keboola-logo", null
         @_renderNotifications()
         MenuToggleButton
-          isOpen: @state.isMenuToggleOpen
+          isOpen: @props.isMenuToggleOpen
           onClick: @_handleMenuToggleClick
       div {className: 'col-xs-12 col-sm-9 col-sm-offset-3 kbc-main-header-container'},
         div {className: 'kbc-main-header kbc-header'},
@@ -141,10 +141,10 @@ Header = React.createClass
       React.createElement(@state.currentRouteConfig.get 'headerButtonsHandler')
 
   _handleMenuToggleClick: ->
-    if @state.isMenuToggleOpen
-      MenuToggleActionCreators.close()
+    if @props.isMenuToggleOpen
+      @props.handleMenuClose()
     else
-      MenuToggleActionCreators.open()
+      @props.handleMenuOpen()
 
 
 module.exports = Header
