@@ -4,8 +4,8 @@ createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
 
 # actions and stores
 OrchestrationsActionCreators = require '../../../ActionCreators'
-OrchestrationStore = require '../../../stores/OrchestrationsStore'
-OrchestrationJobsStore = require '../../../stores/OrchestrationJobsStore'
+OrchestrationStore = require('../../../stores/OrchestrationsStore').default
+OrchestrationJobsStore = require('../../../stores/OrchestrationJobsStore').default
 RoutesStore = require '../../../../../stores/RoutesStore'
 VersionsStore = require '../../../../components/stores/VersionsStore'
 

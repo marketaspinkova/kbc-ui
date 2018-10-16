@@ -1,7 +1,7 @@
 React = require 'react'
 {List, fromJS} = require 'immutable'
 createStoreMixin = require('../../../../react/mixins/createStoreMixin')
-JobsStore = require('../../stores/OrchestrationJobsStore')
+JobsStore = require('../../stores/OrchestrationJobsStore').default
 ActionCreators = require('../../ActionCreators')
 {dephaseTasks, rephaseTasks} = ActionCreators
 
@@ -12,7 +12,6 @@ TasksTable = React.createFactory(require('../pages/orchestration-tasks/TasksTabl
 TasksTableRow = React.createFactory(require('../pages/orchestration-tasks/TasksTableRow'))
 ComponentsStore = require '../../../components/stores/ComponentsStore'
 JobActionCreators = require '../../ActionCreators'
-OrchestrationJobStore = require ('../../stores/OrchestrationJobsStore')
 
 TaskSelectModal = React.createFactory(require('../modals/TaskSelect'))
 
@@ -58,7 +57,7 @@ module.exports = React.createClass
   render: ->
     tasks = @state.job.get('tasks')
     if @_canBeRetried() && tasks
-      editingTasks = OrchestrationJobStore.getEditingValue(@props.job.get('id'), 'tasks') or List()
+      editingTasks = JobsStore.getEditingValue(@props.job.get('id'), 'tasks') or List()
       TaskSelectModal
         job: @props.job
         tasks: fromJS(rephaseTasks(editingTasks.toJS()))
@@ -85,7 +84,7 @@ module.exports = React.createClass
     @reactivateJobTasks()
 
   _handleTaskChange: (updatedTask) ->
-    tasks = OrchestrationJobStore.getEditingValue(@props.job.get('id'), 'tasks')
+    tasks = JobsStore.getEditingValue(@props.job.get('id'), 'tasks')
     if tasks
       index = tasks.findIndex((task) -> task.get('id') == updatedTask.get('id'))
       JobActionCreators.updateJobRetryTasksEdit(

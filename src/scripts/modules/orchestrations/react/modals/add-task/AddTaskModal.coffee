@@ -15,7 +15,7 @@ ComponentsReloaderButton = require '../../components/ComponentsReloaderButton'
 createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
 InstalledComponentsStore = require '../../../../components/stores/InstalledComponentsStore'
 RoutesStore = require '../../../../../stores/RoutesStore'
-OrchestrationStore = require '../../../stores/OrchestrationsStore'
+OrchestrationStore = require('../../../stores/OrchestrationsStore').default
 ApplicationStore = require '../../../../../stores/ApplicationStore'
 
 SearchBar = React.createFactory(require('@keboola/indigo-ui').SearchBar)

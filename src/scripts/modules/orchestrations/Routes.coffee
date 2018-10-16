@@ -22,7 +22,7 @@ OrchestrationNotificationsButtons = require './react/components/OrchestrationNot
 OrchestrationNameEdit = require './react/components/OrchestrationNameEdit'
 
 # stores
-OrchestrationsStore = require './stores/OrchestrationsStore'
+OrchestrationsStore = require('./stores/OrchestrationsStore').default
 
 OrchestrationsActionCreators = require './ActionCreators'
 InstalledComponentsActionsCreators = require '../components/InstalledComponentsActionCreators'

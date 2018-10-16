@@ -6,7 +6,7 @@ createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
 OrchestrationsActionCreators = require '../../../ActionCreators'
 installedComponentsActions = require '../../../../components/InstalledComponentsActionCreators'
 
-OrchestrationStore = require '../../../stores/OrchestrationsStore'
+OrchestrationStore = require('../../../stores/OrchestrationsStore').default
 ComponentsStore = require '../../../../components/stores/ComponentsStore'
 InstalledComponentsStore = require '../../../../components/stores/InstalledComponentsStore'
 RoutesStore = require '../../../../../stores/RoutesStore'

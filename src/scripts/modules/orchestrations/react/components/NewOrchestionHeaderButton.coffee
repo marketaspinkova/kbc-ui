@@ -3,7 +3,7 @@ React = require 'react'
 NewOrchestrationButton = require './NewOrchestionButton'
 
 createStoreMixin = require '../../../../react/mixins/createStoreMixin'
-OrchestrationsStore = require '../../stores/OrchestrationsStore'
+OrchestrationsStore = require('../../stores/OrchestrationsStore').default
 
 {button, span} = React.DOM
 
