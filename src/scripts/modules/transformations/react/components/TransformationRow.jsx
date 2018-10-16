@@ -123,7 +123,7 @@ export default React.createClass({
 
   _renderHideButtons() {
     return [
-      <span className="td col-xs-3" key="col1">
+      <span className="td col-xs-4" key="col1">
         <h4>
           <span className="label kbc-label-rounded-small label-default pull-left">
             {this.props.transformation.get('phase') || 1}
@@ -137,7 +137,7 @@ export default React.createClass({
           type={this.props.transformation.get('type')}
         />
       </span>,
-      <span className="td col-xs-8" key="col3">
+      <span className="td col-xs-7" key="col3">
         <small>
           {descriptionExcerpt(
             TransformationStore.getTransformationDescription(
@@ -152,7 +152,7 @@ export default React.createClass({
 
   _renderNormalButtons() {
     return [
-      <span className="td col-xs-3" key="col1">
+      <span className="td col-xs-4" key="col1">
         <h4>
           <span className="label kbc-label-rounded-small label-default pull-left">
             {this.props.transformation.get('phase') || 1}
