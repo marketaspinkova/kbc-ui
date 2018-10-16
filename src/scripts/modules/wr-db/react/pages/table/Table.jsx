@@ -245,6 +245,11 @@ export default componentId => {
     _renderPrimaryKey() {
       const exportInfo = this.state.v2ConfigTable;
       const primaryKey = exportInfo.get('primaryKey', List());
+      const dbColumns = this.state.columns.map(c => c.get('dbName'));
+      const pkMismatchList = primaryKey.reduce(
+        (memo, pkColumn) =>
+          !dbColumns.find(dbColumn => dbColumn === pkColumn) ? memo.push(pkColumn) : memo
+        , List());
       return (
         <div className="row">
           <div className="col-sm-3">
@@ -259,9 +264,11 @@ export default componentId => {
             >
               {primaryKey.join(', ') || 'N/A'} <span className="kbc-icon-pencil" />
             </button>
-            <HelpBlock style={{ paddingLeft: '12px'}}>
-              Primary Key can be different from the Primary Key in list which is send to DB
-            </HelpBlock>
+            {pkMismatchList.count() > 0 &&
+             <HelpBlock style={{ paddingLeft: '12px'}}>
+               Primary key mismatch: column(s) <code>{pkMismatchList.join(',')}</code> not found in database column names.
+             </HelpBlock>
+            }
           </div>
         </div>
       );
