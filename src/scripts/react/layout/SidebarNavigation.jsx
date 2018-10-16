@@ -51,10 +51,6 @@ const _pages = [
 const SidebarNavigation = React.createClass({
   mixins: [State],
 
-  propTypes: {
-    handleMenuClose: React.PropTypes.func.isRequired
-  },
-
   render() {
     return (
       <ul className="kbc-nav-sidebar nav nav-sidebar">
@@ -62,7 +58,7 @@ const SidebarNavigation = React.createClass({
           return (
             <li className={this.isActive(page.id) ? 'active' : ''} key={page.id}>
               {RoutesStore.hasRoute(page.id) ? (
-                <Link to={page.id} onClick={this.props.handleMenuClose}>
+                <Link to={page.id}>
                   <span className={page.icon} />
                   <span>{page.title}</span>
                 </Link>

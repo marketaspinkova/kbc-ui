@@ -1,5 +1,4 @@
 React = require 'react'
-classnames = require 'classnames'
 RouteHandler = React.createFactory(require('react-router').RouteHandler)
 ApplicationStore = require '../../stores/ApplicationStore'
 
@@ -43,8 +42,6 @@ App = React.createClass
     projectFeatures: ApplicationStore.getCurrentProjectFeatures()
     projectBaseUrl: ApplicationStore.getProjectBaseUrl()
     scriptsBasePath: ApplicationStore.getScriptsBasePath()
-    isMenuToggleOpen: false
-
   render: ->
     div null,
       if @state.projectHasGuideModeOn == true
@@ -57,13 +54,10 @@ App = React.createClass
       Header
         homeUrl: @state.homeUrl
         notifications: @state.notifications
-        isMenuToggleOpen: @state.isMenuToggleOpen
-        handleMenuOpen: @handleMenuOpen
-        handleMenuClose: @handleMenuClose
       React.createElement(FloatingNotifications)
       div className: 'container-fluid',
-        div className: classnames('row sidebar-offset-row', { 'sidebar-offset-row-open': @state.isMenuToggleOpen }),
-          div className: 'col-sm-3 kbc-sidebar sidebar-offset',
+        div className: 'row',
+          div className: 'col-xs-3 kbc-sidebar',
             ProjectSelect
               organizations: @state.organizations
               currentProject: @state.currentProject
@@ -71,8 +65,7 @@ App = React.createClass
               xsrf: @state.xsrf
               canCreateProject: @state.canCreateProject
               projectTemplates: @state.projectTemplates
-            SidebarNavigation
-              handleMenuClose: @handleMenuClose
+            SidebarNavigation()
             div className: 'kbc-sidebar-footer',
               CurrentUser
                 user: @state.currentAdmin
@@ -81,7 +74,7 @@ App = React.createClass
                 canManageApps: @state.canManageApps
                 dropup: true
               UserLinks()
-          div className: 'col-xs-12 col-sm-9 col-sm-offset-3 kbc-main',
+          div className: 'col-xs-9 col-xs-offset-3 kbc-main',
             if @props.isError
               ErrorPage()
             else if @props.isLoading
@@ -92,11 +85,5 @@ App = React.createClass
               Wizard
                 projectBaseUrl: @state.projectBaseUrl
                 scriptsBasePath: @state.scriptsBasePath
-
-  handleMenuOpen: ->
-    @setState isMenuToggleOpen: true
-
-  handleMenuClose: ->
-    @setState isMenuToggleOpen: false
 
 module.exports = App
