@@ -19,10 +19,10 @@ let _store = Map({
 
 const addEmptyPhase = tasks => {
   const phaseIds = tasks.map(phase => phase.get('id')).toJS();
-  let newId = 'new phase';
+  let newId = 'New phase';
   let idx = 1;
   while (phaseIds.includes(newId)) {
-    newId = `new phase ${idx++}`;
+    newId = `New phase ${idx++}`;
   }
   const newPhase = Map({
     id: newId,
