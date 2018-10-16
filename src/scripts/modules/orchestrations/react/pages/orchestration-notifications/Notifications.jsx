@@ -2,6 +2,7 @@ import React from 'react';
 import { Map } from 'immutable';
 import SubscribersList from './SubscribersList';
 import Select from 'react-select';
+import { FormControl } from 'react-bootstrap';
 
 export default React.createClass({
   propTypes: {
@@ -65,11 +66,10 @@ export default React.createClass({
 
   _renderToleranceInput() {
     return (
-      <input
+      <FormControl
         type="number"
         value={this._getTolerance()}
         onChange={this._onToleranceChange}
-        className="form-control"
         style={{
           width: '80px',
           display: 'inline-block'
