@@ -86,7 +86,7 @@ export default React.createClass({
         deleteRemoves={false}
         value={this._enteredEmails(emails)}
         noResultsText=""
-        placeholder="Enter email ..."
+        placeholder="Enter email"
         promptTextCreator={() => 'Add email'}
         onChange={newEmails => this._onChannelChange(channelName, newEmails)}
       />
