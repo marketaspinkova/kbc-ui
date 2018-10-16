@@ -14,6 +14,7 @@ ConfiguratinRowName = React.createFactory(
   require('../../modules/configurations/react/components/ConfigurationRowName').default
 )
 NotificationsAccess = require('../../react/common/NotificationsAccess').default
+MenuToggleButton = React.createFactory(require('./menu-toggle/MenuToggleButton').default)
 
 {div, nav, span, a, h1} = React.DOM
 
@@ -24,6 +25,9 @@ Header = React.createClass
   propTypes:
     homeUrl: React.PropTypes.string.isRequired
     notifications: React.PropTypes.object.isRequired
+    isMenuToggleOpen: React.PropTypes.bool.isRequired
+    handleMenuOpen: React.PropTypes.func.isRequired
+    handleMenuClose: React.PropTypes.func.isRequired
 
   getStateFromStores: ->
     componentId = RoutesStore.getCurrentRouteComponentId()
@@ -39,11 +43,14 @@ Header = React.createClass
 
   render: ->
     nav {className: 'navbar navbar-fixed-top kbc-navbar', role: 'navigation'},
-      div {className: 'col-xs-3 kbc-logo'},
+      div {className: 'col-xs-12 col-sm-3 kbc-logo'},
         a href: @props.homeUrl,
           span className: "kbc-icon-keboola-logo", null
         @_renderNotifications()
-      div {className: 'col-xs-9 col-xs-offset-3 kbc-main-header-container'},
+        MenuToggleButton
+          isOpen: @props.isMenuToggleOpen
+          onClick: @_handleMenuToggleClick
+      div {className: 'col-xs-12 col-sm-9 col-sm-offset-3 kbc-main-header-container'},
         div {className: 'kbc-main-header kbc-header'},
           div {className: 'kbc-title'},
             @_renderComponentIcon()
@@ -132,6 +139,12 @@ Header = React.createClass
       null
     else
       React.createElement(@state.currentRouteConfig.get 'headerButtonsHandler')
+
+  _handleMenuToggleClick: ->
+    if @props.isMenuToggleOpen
+      @props.handleMenuClose()
+    else
+      @props.handleMenuOpen()
 
 
 module.exports = Header

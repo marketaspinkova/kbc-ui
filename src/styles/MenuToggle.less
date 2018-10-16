@@ -1,0 +1,52 @@
+.menu-toggle {
+  float: right;
+  display: none;
+  width: 38px;
+  height: 30px;
+  background: transparent;
+  border: none;
+  outline: none;
+
+  @media (max-width: 768px) {
+    display: inline-block;
+
+    &-icon:after,
+    &-icon:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: -9px;
+    }
+
+    &-icon:after {
+      top: 9px;
+    }
+
+    &-icon {
+      position: relative;
+      display: block;
+    }
+
+    &-icon,
+    &-icon:after,
+    &-icon:before {
+      width: 100%;
+      height: 3px;
+      background-color: white;
+      transition: all 0.125s ease-in-out;
+      backface-visibility: hidden;
+    }
+
+    &-open > &-icon {
+      background-color: transparent;
+    }
+
+    &-open > &-icon:before {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    &-open > &-icon:after {
+      transform: rotate(-45deg) translate(7px, -8px);
+    }
+  }
+}
