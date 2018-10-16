@@ -163,8 +163,8 @@ Dispatcher.register(payload => {
 
     case ActionTypes.ORCHESTRATION_ACTIVE_CHANGE_SUCCESS:
       _store = _store.withMutations(store => {
-        const newStore = store.deleteIn(['orchestrationsPendingActions', action.orchestrationId, 'active']);
-        return updateOrchestration(newStore, action.orchestrationId, { active: action.active });
+        store.deleteIn(['orchestrationsPendingActions', action.orchestrationId, 'active']);
+        return updateOrchestration(store, action.orchestrationId, { active: action.active });
       });
       return OrchestrationStore.emitChange();
 
