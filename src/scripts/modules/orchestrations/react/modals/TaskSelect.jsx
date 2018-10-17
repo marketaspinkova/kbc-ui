@@ -39,10 +39,10 @@ export default React.createClass({
             <Modal.Title>Retry job</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p>
-              You are about to run orchestration again
+            <div>
+              <p>You are about to run orchestration again</p>
               <TaskSelectTable tasks={this.props.tasks} onTaskUpdate={this._handleTaskUpdate} />
-            </p>
+            </div>
           </Modal.Body>
           <Modal.Footer>
             <div>
