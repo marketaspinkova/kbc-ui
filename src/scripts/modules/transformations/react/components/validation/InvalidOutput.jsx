@@ -4,15 +4,14 @@ import TransformationsStore from '../../../stores/TransformationsStore';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 
 export default React.createClass({
-
   mixins: [createStoreMixin(TransformationsStore)],
 
   propTypes: {
     bucketId: React.PropTypes.string.isRequired,
     transformationId: React.PropTypes.string.isRequired,
     tableId: React.PropTypes.string.isRequired,
-    onClick: React.PropTypes.func.isRequired,
-    message: React.PropTypes.string.isRequired
+    message: React.PropTypes.string.isRequired,
+    onClick: React.PropTypes.func
   },
 
   getStateFromStores() {

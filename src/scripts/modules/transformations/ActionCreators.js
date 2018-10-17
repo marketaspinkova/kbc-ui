@@ -426,14 +426,6 @@ module.exports = {
     });
   },
 
-  queryValidationStart: function(bucketId, transformationId) {
-    dispatcher.handleViewAction({
-      type: constants.ActionTypes.TRANSFORMATION_QUERY_VALIDATION,
-      bucketId: bucketId,
-      transformationId: transformationId
-    });
-  },
-
   /*
     Create new or update existing output mapping
    */

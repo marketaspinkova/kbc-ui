@@ -8,7 +8,6 @@ import Clipboard from '../../../../../react/common/Clipboard';
 import SaveButtons from '../../../../../react/common/SaveButtons';
 import { AlertBlock } from '@keboola/indigo-ui';
 import { Col, Row } from 'react-bootstrap';
-import actionCreators from '../../../ActionCreators';
 
 /* global require */
 require('codemirror/mode/sql/sql');
@@ -25,7 +24,6 @@ export default React.createClass({
     onEditChange: PropTypes.func.isRequired,
     onEditSubmit: PropTypes.func.isRequired,
     isChanged: PropTypes.bool.isRequired,
-    validatableQueries: PropTypes.object,
     highlightQueryNumber: PropTypes.number,
     highlightingQueryDisabled: PropTypes.bool,
     disabled: PropTypes.bool
@@ -40,29 +38,37 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
+      validatableQueries: false,
       disabled: false
     };
+  },
+
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.transformation.get('backend') === 'snowflake' &&
+      !prevProps.transformation.equals(this.props.transformation)
+    ) {
+      this.validateQueries();
+    }
   },
 
   render() {
     return (
       <div>
-        {this.props.validatableQueries && <button onClick={this.validateQueries}>Validate</button>}
-
         <h2 style={{ lineHeight: '32px' }}>
           Queries
           <small>
             <Clipboard text={this.props.queries} />
           </small>
-          {this.renderButtons()}
+          {this._renderButtons()}
         </h2>
-        {this.validation()}
-        {this.queries()}
+        {this._renderValidation()}
+        {this._renderQueries()}
       </div>
     );
   },
 
-  renderButtons() {
+  _renderButtons() {
     return (
       <span className="pull-right">
         <SaveButtons
@@ -76,7 +82,7 @@ export default React.createClass({
     );
   },
 
-  queries() {
+  _renderQueries() {
     return (
       <Edit
         queries={this.props.queries}
@@ -90,7 +96,7 @@ export default React.createClass({
     );
   },
 
-  validation() {
+  _renderValidation() {
     if (!this.state.errors.count()) {
       return null;
     }
@@ -123,8 +129,6 @@ export default React.createClass({
   },
 
   validateQueries() {
-    actionCreators.queryValidationStart(this.props.bucketId, this.props.transformation.get('id'));
-
     this.setState({
       isValidation: true
     });

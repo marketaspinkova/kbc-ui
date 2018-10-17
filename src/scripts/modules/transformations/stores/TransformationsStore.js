@@ -1,6 +1,5 @@
 import Dispatcher from '../../../Dispatcher';
 import { Map, List, fromJS } from 'immutable';
-import { startsWith } from 'underscore.string';
 import { ActionTypes } from '../Constants';
 import { ActionTypes as InstalledComponentsActionTypes } from '../../components/Constants';
 import InstalledComponentsStore from '../../components/stores/InstalledComponentsStore';
@@ -17,8 +16,7 @@ let _store = Map({
   showDisabledOverviews: Map(),
   openInputMappings: Map(),
   openOutputMappings: Map(),
-  editingTransformationsFields: Map(),
-  validatableQueries: Map()
+  editingTransformationsFields: Map()
 });
 
 const enhanceTransformation = transformation => {
@@ -27,20 +25,6 @@ const enhanceTransformation = transformation => {
   } else {
     return transformation.set('queriesString', transformation.get('queries').join('\n\n'));
   }
-};
-
-const canBeValidated = (transformation, action) => {
-  if (transformation.get('backend') === 'snowflake') {
-    if (['requires', 'new-input-mapping', 'new-output-mapping', 'queries'].includes(action.editingId)) {
-      return true;
-    }
-
-    if (startsWith(action.pendingAction, 'delete-input') || startsWith(action.pendingAction, 'delete-output')) {
-      return true;
-    }
-  }
-
-  return false;
 };
 
 const TransformationsStore = StoreUtils.createStore({
@@ -127,10 +111,6 @@ const TransformationsStore = StoreUtils.createStore({
 
   getOpenOutputMappings(bucketId, transformationId) {
     return _store.getIn(['openOutputMappings', bucketId, transformationId], Map());
-  },
-
-  getValidableQueries(bucketId, transformationId) {
-    return _store.getIn(['validatableQueries', bucketId, transformationId]);
   },
 
   getTransformationEditingIsValid(bucketId, transformationId) {
@@ -235,10 +215,6 @@ Dispatcher.register(payload => {
       }
       return TransformationsStore.emitChange();
 
-    case ActionTypes.TRANSFORMATION_QUERY_VALIDATION:
-      _store = _store.removeIn(['validatableQueries', action.bucketId, action.transformationId]);
-      return TransformationsStore.emitChange();
-
     case ActionTypes.TRANSFORMATION_EDIT_SAVE_START:
       _store = _store.setIn(['pendingActions', action.bucketId, action.transformationId, action.pendingAction], true);
       return TransformationsStore.emitChange();
@@ -249,10 +225,6 @@ Dispatcher.register(payload => {
         store
           .setIn(['transformationsByBucketId', action.bucketId, action.transformationId], tObj)
           .deleteIn(['pendingActions', action.bucketId, action.transformationId, action.pendingAction]);
-
-        if (canBeValidated(tObj, action)) {
-          store.setIn(['validatableQueries', action.bucketId, action.transformationId], tObj);
-        }
 
         if (action.editingId) {
           store.deleteIn(['editingTransformationsFields', action.bucketId, action.transformationId, action.editingId]);

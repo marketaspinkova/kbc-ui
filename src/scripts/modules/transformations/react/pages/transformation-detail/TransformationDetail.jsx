@@ -51,7 +51,6 @@ export default React.createClass({
       transformation: TransformationsStore.getTransformation(bucketId, transformationId),
       editingFields: TransformationsStore.getTransformationEditingFields(bucketId, transformationId),
       pendingActions: TransformationsStore.getTransformationPendingActions(bucketId, transformationId),
-      validatableQueries: TransformationsStore.getValidableQueries(bucketId, transformationId),
       tables: StorageTablesStore.getAll(),
       buckets: StorageBucketsStore.getAll(),
       bucketId,
@@ -139,7 +138,6 @@ export default React.createClass({
             showDetails={this._showDetails()}
             isEditingValid={this.state.isTransformationEditingValid}
             isQueriesProcessing={this.state.pendingActions.has('queries-processing')}
-            validatableQueries={this.state.validatableQueries}
             highlightQueryNumber={this.state.highlightQueryNumber}
             highlightingQueryDisabled={this.state.validateModalOpen}
           />
