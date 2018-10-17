@@ -1,17 +1,19 @@
-import React, {PropTypes} from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+import React, { PropTypes } from 'react';
+import { fromJS, Map } from 'immutable';
+import SqlDepAnalyzerApi from '../../../../sqldep-analyzer/Api';
+import ApplicationActionCreators from '../../../../../actions/ApplicationActionCreators';
 import Edit from './QueriesEdit';
+import ValidationError from '../../components/validation/Result';
 import Clipboard from '../../../../../react/common/Clipboard';
 import SaveButtons from '../../../../../react/common/SaveButtons';
-import {AlertBlock} from '@keboola/indigo-ui';
-import {Col, Row} from 'react-bootstrap';
-
+import { AlertBlock } from '@keboola/indigo-ui';
+import { Col, Row } from 'react-bootstrap';
+import actionCreators from '../../../ActionCreators';
 
 /* global require */
 require('codemirror/mode/sql/sql');
 
 export default React.createClass({
-  mixins: [PureRenderMixin],
   propTypes: {
     bucketId: PropTypes.string.isRequired,
     transformation: PropTypes.object.isRequired,
@@ -23,32 +25,16 @@ export default React.createClass({
     onEditChange: PropTypes.func.isRequired,
     onEditSubmit: PropTypes.func.isRequired,
     isChanged: PropTypes.bool.isRequired,
+    validatableQueries: PropTypes.object,
     highlightQueryNumber: PropTypes.number,
     highlightingQueryDisabled: PropTypes.bool,
     disabled: PropTypes.bool
   },
 
-  getInitialState: function() {
-    // DUMMY STATE
+  getInitialState() {
     return {
-      errorLineNumber: 1,
-      errors: [
-        {
-          message: 'Unable to proceed with syntax parsing at line 5 column 1. CRETE TABLE "out_table" AS ' +
-          'SELEC * FOM "in_table";',
-          lineNumber: 2
-        },
-        {
-          message: 'Unable to proceed with syntax parsing at line 5 column 1. CRETE TABLE "out_table" AS ' +
-          'SELEC * FOM "in_table";',
-          lineNumber: 4
-        },
-        {
-          message: 'Unable to proceed with syntax parsing at line 5 column 1. CRETE TABLE "out_table" AS ' +
-          'SELEC * FOM "in_table";',
-          lineNumber: 6
-        }
-      ]
+      isValidation: false,
+      errors: Map()
     };
   },
 
@@ -61,16 +47,16 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h2 style={{lineHeight: '32px'}}>
+        {this.props.validatableQueries && <button onClick={this.validateQueries}>Validate</button>}
+
+        <h2 style={{ lineHeight: '32px' }}>
           Queries
           <small>
-            <Clipboard text={this.props.queries}/>
+            <Clipboard text={this.props.queries} />
           </small>
           {this.renderButtons()}
         </h2>
-        {this.state.errors.length > 0 &&
-          this.renderValidationAlert()
-        }
+        {this.validation()}
         {this.queries()}
       </div>
     );
@@ -80,7 +66,7 @@ export default React.createClass({
     return (
       <span className="pull-right">
         <SaveButtons
-          isSaving={this.props.isSaving}
+          isSaving={this.props.isSaving || this.state.isValidation}
           disabled={this.props.isQueriesProcessing || this.props.disabled}
           isChanged={this.props.isChanged}
           onSave={this.props.onEditSubmit}
@@ -104,48 +90,70 @@ export default React.createClass({
     );
   },
 
-  scrollToError(lineNumber) {
-    this.state.errorLineNumber = lineNumber;
-    // todo: napojit na highlightQueryNumber
-  },
+  validation() {
+    if (!this.state.errors.count()) {
+      return null;
+    }
 
-  renderValidationAlert() {
     return (
-      <AlertBlock
-        type="danger"
-        title={'SQL Validation found ' + this.state.errors.length + ' error' + (this.state.errors.length > 1 ? 's' : '')}>
+      <AlertBlock type="danger" title={this.validationErrorMessage(this.state.errors)}>
         <Row>
           <Col md={9}>
             <p>
-              Your query has been saved, however the script didn't pass validation.
-              Ignoring errors will result in failed job, when running transformation.
+              Your query has been saved, however the script didn't pass validation. Ignoring errors will result in
+              failed job, when running transformation.
             </p>
-            <p>
-              Tables defined in Output Mapping that does not yet exist in Storage are not validated.
-            </p>
-            <h4>
-              Please resolve folowing errors:
-            </h4>
+            <p>Tables defined in Output Mapping that does not yet exist in Storage are not validated.</p>
+            <h4>Please resolve folowing errors:</h4>
           </Col>
         </Row>
         <Row>
           <Col md={12}>
             <ul className="list-unstyled">
-              {this.state.errors.map(
-                (error) => (
-                  <li>
-                    <a onClick={this.scrollToError(error.lineNumber)}>
-                      Transformatin ABC at line #{error.lineNumber}
-                    </a>
-                    <p>{error.message}</p>
-                  </li>
-                )
-              )
-              }
+              {this.state.errors.map((error, index) => (
+                <li key={index}>
+                  <ValidationError error={error} bucketId={this.props.bucketId} />
+                </li>
+              ))}
             </ul>
           </Col>
         </Row>
       </AlertBlock>
     );
+  },
+
+  validateQueries() {
+    actionCreators.queryValidationStart(this.props.bucketId, this.props.transformation.get('id'));
+
+    this.setState({
+      isValidation: true
+    });
+
+    return SqlDepAnalyzerApi.validate(this.props.bucketId, this.props.transformation.get('id'))
+      .then(response => {
+        const errors = fromJS(response);
+
+        if (errors.count()) {
+          ApplicationActionCreators.sendNotification({
+            message: this.validationErrorMessage(errors),
+            type: 'error'
+          });
+        }
+
+        return this.setState({
+          isValidation: false,
+          errors: errors
+        });
+      })
+      .catch(error => {
+        this.setState({
+          isValidation: false
+        });
+        throw error;
+      });
+  },
+
+  validationErrorMessage(errors) {
+    return 'SQL Validation found ' + errors.count() + ' error' + (errors.count() > 1 ? 's.' : '.');
   }
 });

@@ -49,6 +49,7 @@ export default React.createClass({
     openInputMappings: React.PropTypes.object.isRequired,
     openOutputMappings: React.PropTypes.object.isRequired,
     showDetails: React.PropTypes.bool.isRequired,
+    validatableQueries: React.PropTypes.object,
     highlightQueryNumber: React.PropTypes.number,
     highlightingQueryDisabled: React.PropTypes.bool
   },
@@ -518,6 +519,7 @@ export default React.createClass({
           highlightQueryNumber={this.props.highlightQueryNumber}
           highlightingQueryDisabled={this.props.highlightingQueryDisabled}
           disabled={this._isMySqlTransformation()}
+          validatableQueries={this.props.validatableQueries}
           onEditCancel={() => {
             TransformationsActionCreators.cancelTransformationEditingField(
               this.props.bucketId,

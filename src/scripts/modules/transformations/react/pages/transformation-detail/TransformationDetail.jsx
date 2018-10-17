@@ -16,7 +16,6 @@ import Confirm from '../../../../../react/common/Confirm';
 import CreateSandboxButton from '../../components/CreateSandboxButton';
 
 import SqlDepButton from '../../components/SqlDepButton';
-import ValidateQueriesButton from '../../components/ValidateQueriesButton';
 import * as sandboxUtils from '../../../utils/sandboxUtils';
 
 export default React.createClass({
@@ -52,6 +51,7 @@ export default React.createClass({
       transformation: TransformationsStore.getTransformation(bucketId, transformationId),
       editingFields: TransformationsStore.getTransformationEditingFields(bucketId, transformationId),
       pendingActions: TransformationsStore.getTransformationPendingActions(bucketId, transformationId),
+      validatableQueries: TransformationsStore.getValidableQueries(bucketId, transformationId),
       tables: StorageTablesStore.getAll(),
       buckets: StorageBucketsStore.getAll(),
       bucketId,
@@ -139,6 +139,7 @@ export default React.createClass({
             showDetails={this._showDetails()}
             isEditingValid={this.state.isTransformationEditingValid}
             isQueriesProcessing={this.state.pendingActions.has('queries-processing')}
+            validatableQueries={this.state.validatableQueries}
             highlightQueryNumber={this.state.highlightQueryNumber}
             highlightingQueryDisabled={this.state.validateModalOpen}
           />
@@ -196,23 +197,6 @@ export default React.createClass({
                   backend={backend}
                   bucketId={this.state.bucketId}
                   transformationId={this.state.transformationId}
-                />
-              </li>
-            )}
-            {backend === 'snowflake' && (
-              <li>
-                <ValidateQueriesButton
-                  backend={backend}
-                  bucketId={this.state.bucketId}
-                  transformationId={this.state.transformationId}
-                  modalOpen={this.state.validateModalOpen}
-                  onModalOpen={() => {
-                    return this.setState({ validateModalOpen: true });
-                  }}
-                  onModalClose={() => {
-                    return this.setState({ validateModalOpen: false });
-                  }}
-                  isSaved={!this.state.editingFields.get('queriesChanged', false)}
                 />
               </li>
             )}
