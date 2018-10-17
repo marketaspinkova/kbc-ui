@@ -116,7 +116,7 @@ export default React.createClass({
                 <li key={index}>
                   <Result
                     error={error}
-                    transformation={this.props.transformation}
+                    bucketId={this.props.bucketId}
                     onQueryNumberClick={this._handleQueryNumberChange}
                   />
                 </li>
