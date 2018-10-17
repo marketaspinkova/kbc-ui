@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { fromJS, Map } from 'immutable';
 import SqlDepAnalyzerApi from '../../../../sqldep-analyzer/Api';
 import ApplicationActionCreators from '../../../../../actions/ApplicationActionCreators';
@@ -14,6 +15,8 @@ import contactSupport from '../../../../../utils/contactSupport';
 require('codemirror/mode/sql/sql');
 
 export default React.createClass({
+  mixins: [PureRenderMixin],
+
   propTypes: {
     bucketId: PropTypes.string.isRequired,
     transformation: PropTypes.object.isRequired,
