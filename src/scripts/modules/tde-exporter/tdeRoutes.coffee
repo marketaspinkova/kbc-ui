@@ -46,7 +46,7 @@ registerOAuthV2Route = (writerComponentId) ->
               message: notification
             router.transitionTo('tde-exporter-destination', config: params.config)
         .error (err) ->
-          notification = 'Failed to verify authorized account, please contact us by clicking on Support button in Menu'
+          notification = 'Failed to verify authorized account, please contact us using a Support button in Menu'
           ApplicationActionCreators.sendNotification
             message: notification
             type: 'error'
@@ -191,7 +191,7 @@ module.exports =
               router.transitionTo('tde-exporter-destination', config: params.config)
             .error (err) ->
               notification = 'Failed to authorize the Google Drive account, please contact us ' +
-                'by clicking on Support button in Menu'
+                'using a Support button in Menu'
               ApplicationActionCreators.sendNotification
                 message: notification
                 type: 'error'
