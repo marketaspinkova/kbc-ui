@@ -106,7 +106,7 @@ module.exports = React.createClass
 
           @_renderCustomDomainForm()
 
-          div null,
+          p null,
             'By creating a config, you agree with the '
             a
               href: 'http://www.gooddata.com/terms-of-use'
