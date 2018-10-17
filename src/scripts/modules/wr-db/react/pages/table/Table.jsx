@@ -21,7 +21,8 @@ import InstalledComponentsStore from '../../../../components/stores/InstalledCom
 import FiltersDescription from '../../../../components/react/components/generic/FiltersDescription';
 import IsDockerBasedFn from '../../../templates/dockerProxyApi';
 import IncrementalSetupModal from './IncrementalSetupModal';
-import {HelpBlock} from 'react-bootstrap';
+import {AlertBlock} from '@keboola/indigo-ui';
+
 
 const defaultDataTypes = [
   'INT',
@@ -116,9 +117,21 @@ export default componentId => {
 
     render() {
       const isRenderIncremental = IsDockerBasedFn(componentId) && componentId !== 'wr-db-mssql';
+      const exportInfo = this.state.v2ConfigTable;
+      const primaryKey = exportInfo.get('primaryKey', List());
+      const dbColumns = this.state.columns.map(c => c.get('dbName'));
+      const pkMismatchList = primaryKey.reduce(
+        (memo, pkColumn) =>
+          !dbColumns.find(dbColumn => dbColumn === pkColumn) ? memo.push(pkColumn) : memo
+        , List());
 
       return (
         <div className="container-fluid">
+          {pkMismatchList.count() > 0  &&
+            <div className="kbc-overview-component-container">
+              {this._renderMismatchAlertBlock(pkMismatchList)}
+            </div>
+          }
           <div className="kbc-main-content">
             <div className="kbc-header">
               <ul className="list-group list-group-no-border">
@@ -242,14 +255,32 @@ export default componentId => {
       );
     },
 
+    _renderMismatchAlertBlock(pkMismatchList) {
+      if (pkMismatchList.count() > 0) {
+        return (
+          <AlertBlock type="danger" title="Primary key mismatch">
+            <p>Following column(s) not found in 	Database Column Names.</p>
+            <ul>
+              {pkMismatchList.map((pkName) =>
+                <li>{pkName}</li>
+              )}
+            </ul>
+            <p>Please fix settings of Destination Table.</p>
+            <button
+              className="btn btn-default"
+              disabled={!!this.state.editingColumns}
+              onClick={this._showIncrementalSetupModal}
+            >
+              Change Settings
+            </button>
+          </AlertBlock>
+        );
+      }
+    },
+
     _renderPrimaryKey() {
       const exportInfo = this.state.v2ConfigTable;
       const primaryKey = exportInfo.get('primaryKey', List());
-      const dbColumns = this.state.columns.map(c => c.get('dbName'));
-      const pkMismatchList = primaryKey.reduce(
-        (memo, pkColumn) =>
-          !dbColumns.find(dbColumn => dbColumn === pkColumn) ? memo.push(pkColumn) : memo
-        , List());
       return (
         <div className="row">
           <div className="col-sm-3">
@@ -264,11 +295,6 @@ export default componentId => {
             >
               {primaryKey.join(', ') || 'N/A'} <span className="kbc-icon-pencil" />
             </button>
-            {pkMismatchList.count() > 0 &&
-             <HelpBlock style={{ paddingLeft: '12px'}}>
-               Primary key mismatch: column(s) <code>{pkMismatchList.join(',')}</code> not found in database column names.
-             </HelpBlock>
-            }
           </div>
         </div>
       );
