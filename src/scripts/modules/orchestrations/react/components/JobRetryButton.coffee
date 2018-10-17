@@ -72,11 +72,13 @@ module.exports = React.createClass
   reactivateJobTasks: ->
     enabledTaskStatuses = @props.job.getIn(['results', 'tasks'], List()).filter((task) -> task.get('active'))
     jobSucceeded = @props.job.get('status') == 'success'
-    isFirstError = true
+    failedPhaseId = null
     enabledTaskStatuses.forEach((task) =>
-      if (task.get('status') != 'success')
-        isFirstError = false
-      @_handleTaskChange(task.set('active', jobSucceeded or !isFirstError))
+      isTaskFailed = task.get('status') != 'success'
+      if (isTaskFailed and !failedPhaseId)
+        failedPhaseId = task.get('phase')
+      previouslyFailed = failedPhaseId and failedPhaseId != task.get('phase')
+      @_handleTaskChange(task.set('active', jobSucceeded or isTaskFailed or previouslyFailed))
     )
 
   _handleRetrySelectStart: ->
