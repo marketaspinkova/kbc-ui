@@ -11,7 +11,6 @@ export default React.createClass({
     disabled: PropTypes.bool.isRequired,
     onChange: PropTypes.func.isRequired,
     highlightQueryNumber: PropTypes.number,
-    highlightingQueryDisabled: PropTypes.bool,
     onHighlightingFinished: PropTypes.func
   },
 
@@ -37,11 +36,7 @@ export default React.createClass({
   },
 
   componentDidUpdate(previousProps) {
-    if (
-      previousProps.highlightQueryNumber !== this.props.highlightQueryNumber ||
-      (previousProps.highlightingQueryDisabled !== this.props.highlightingQueryDisabled &&
-        !this.props.highlightingQueryDisabled)
-    ) {
+    if (previousProps.highlightQueryNumber !== this.props.highlightQueryNumber) {
       this.highlightQuery();
     }
   },

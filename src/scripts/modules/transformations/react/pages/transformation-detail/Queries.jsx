@@ -25,7 +25,6 @@ export default React.createClass({
     onEditChange: PropTypes.func.isRequired,
     onEditSubmit: PropTypes.func.isRequired,
     isChanged: PropTypes.bool.isRequired,
-    highlightingQueryDisabled: PropTypes.bool,
     disabled: PropTypes.bool
   },
 
@@ -88,7 +87,6 @@ export default React.createClass({
         disabled={this.props.isSaving || this.props.disabled}
         onChange={this.props.onEditChange}
         highlightQueryNumber={this.state.highlightQueryNumber}
-        highlightingQueryDisabled={this.props.highlightingQueryDisabled}
       />
     );
   },

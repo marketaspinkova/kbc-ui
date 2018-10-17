@@ -58,10 +58,6 @@ export default React.createClass({
     };
   },
 
-  getInitialState() {
-    return { validateModalOpen: false };
-  },
-
   resolveLinkDocumentationLink() {
     let subpageName;
     const documentationLink = 'https://help.keboola.com/manipulation/transformations/';
@@ -132,7 +128,6 @@ export default React.createClass({
             showDetails={this._showDetails()}
             isEditingValid={this.state.isTransformationEditingValid}
             isQueriesProcessing={this.state.pendingActions.has('queries-processing')}
-            highlightingQueryDisabled={this.state.validateModalOpen}
           />
         </div>
         <div className="col-md-3 kbc-main-sidebar">
