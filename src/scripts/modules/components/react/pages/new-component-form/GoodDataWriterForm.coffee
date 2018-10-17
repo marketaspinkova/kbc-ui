@@ -127,7 +127,7 @@ module.exports = React.createClass
             'Cancel'
           Button
             bsStyle: 'success'
-            disabled: !(@props.isValid and @_isLicenseAgreed()) || @props.isSaving
+            disabled: !(@props.isValid) || @props.isSaving
             onClick: @props.onSave
           ,
             'Create Configuration'
