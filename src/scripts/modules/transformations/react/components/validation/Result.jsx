@@ -7,21 +7,21 @@ export default React.createClass({
   propTypes: {
     error: React.PropTypes.object.isRequired,
     bucketId: React.PropTypes.string.isRequired,
+    transformation: React.PropTypes.object.isRequired,
     onRedirect: React.PropTypes.func
   },
 
   render() {
-    const { error, bucketId, onRedirect } = this.props;
-    const errorType = error.getIn(['object', 'type']);
+    const errorType = this.props.error.getIn(['object', 'type']);
 
     if (errorType === 'query') {
       return (
         <InvalidQuery
-          bucketId={bucketId}
-          transformationId={error.get('transformation')}
-          queryNumber={parseInt(error.getIn(['object', 'id']), 10)}
-          message={error.get('message')}
-          onClick={onRedirect}
+          bucketId={this.props.bucketId}
+          transformation={this.props.transformation}
+          queryNumber={parseInt(this.props.error.getIn(['object', 'id']), 10)}
+          message={this.props.error.get('message')}
+          onClick={this.props.onRedirect}
         />
       );
     }
@@ -29,11 +29,11 @@ export default React.createClass({
     if (errorType === 'input') {
       return (
         <InvalidInput
-          bucketId={bucketId}
-          transformationId={error.get('transformation')}
-          tableId={error.getIn(['object', 'id'])}
-          message={error.get('message')}
-          onClick={onRedirect}
+          bucketId={this.props.bucketId}
+          transformation={this.props.transformation}
+          tableId={this.props.error.getIn(['object', 'id'])}
+          message={this.props.error.get('message')}
+          onClick={this.props.onRedirect}
         />
       );
     }
@@ -41,15 +41,15 @@ export default React.createClass({
     if (['output', 'output_consistency'].includes(errorType)) {
       return (
         <InvalidOutput
-          bucketId={bucketId}
-          transformationId={error.get('transformation')}
-          tableId={error.getIn(['object', 'id'])}
-          message={error.get('message')}
-          onClick={onRedirect}
+          bucketId={this.props.bucketId}
+          transformation={this.props.transformation}
+          tableId={this.props.error.getIn(['object', 'id'])}
+          message={this.props.error.get('message')}
+          onClick={this.props.onRedirect}
         />
       );
     }
 
-    return <p>{error.get('message')}</p>;
+    return <p>{this.props.error.get('message')}</p>;
   }
 });

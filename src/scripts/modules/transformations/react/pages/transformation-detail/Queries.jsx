@@ -3,7 +3,7 @@ import { fromJS, Map } from 'immutable';
 import SqlDepAnalyzerApi from '../../../../sqldep-analyzer/Api';
 import ApplicationActionCreators from '../../../../../actions/ApplicationActionCreators';
 import Edit from './QueriesEdit';
-import ValidationError from '../../components/validation/Result';
+import Result from '../../components/validation/Result';
 import Clipboard from '../../../../../react/common/Clipboard';
 import SaveButtons from '../../../../../react/common/SaveButtons';
 import { AlertBlock } from '@keboola/indigo-ui';
@@ -43,7 +43,7 @@ export default React.createClass({
   },
 
   componentDidUpdate(prevProps) {
-    if (this._canBeValidated(prevProps)) {
+    if (this._canBeValidated(prevProps.transformation)) {
       this._validateQueries();
     }
   },
@@ -114,7 +114,7 @@ export default React.createClass({
             <ul className="list-unstyled">
               {this.state.errors.map((error, index) => (
                 <li key={index}>
-                  <ValidationError error={error} bucketId={this.props.bucketId} />
+                  <Result error={error} bucketId={this.props.bucketId} transformation={this.props.transformation} />
                 </li>
               ))}
             </ul>
@@ -157,10 +157,9 @@ export default React.createClass({
     return 'SQL Validation found ' + errors.count() + ' error' + (errors.count() > 1 ? 's.' : '.');
   },
 
-  _canBeValidated(prevProps) {
+  _canBeValidated(transformation) {
     return (
-      this.props.transformation.get('backend') === 'snowflake' &&
-      !prevProps.transformation.equals(this.props.transformation)
+      this.props.transformation.get('backend') === 'snowflake' && !this.props.transformation.equals(transformation)
     );
   }
 });
