@@ -119,7 +119,7 @@ export default React.createClass({
                   <Result
                     error={error}
                     bucketId={this.props.bucketId}
-                    onQueryNumberClick={this._handleQueryNumberChange}
+                    onErrorMessageClick={this._handleErrorMessageClick}
                   />
                 </li>
               ))}
@@ -135,14 +135,14 @@ export default React.createClass({
     );
   },
 
-  _handleQueryNumberChange(number) {
+  _handleErrorMessageClick(lineNumber) {
     this.setState(
       {
         highlightQueryNumber: null
       },
       () => {
         this.setState({
-          highlightQueryNumber: number
+          highlightQueryNumber: lineNumber
         });
       }
     );

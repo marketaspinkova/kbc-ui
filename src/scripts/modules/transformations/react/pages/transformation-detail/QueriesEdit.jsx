@@ -10,39 +10,23 @@ export default React.createClass({
     backend: PropTypes.string.isRequired,
     disabled: PropTypes.bool.isRequired,
     onChange: PropTypes.func.isRequired,
-    highlightQueryNumber: PropTypes.number,
-    onHighlightingFinished: PropTypes.func
+    highlightQueryNumber: PropTypes.number
   },
 
-  highlightQuery() {
-    const splitQueries = this.props.splitQueries;
-    const query = splitQueries.get(this.props.highlightQueryNumber - 1);
-    const positionStart = this.props.queries.indexOf(query);
-    if (positionStart === -1) {
-      return;
-    }
-    const lineStart = (this.props.queries.substring(0, positionStart).match(/\n/g) || []).length;
-    const positionEnd = positionStart + query.length;
-    const lineEnd = (this.props.queries.substring(0, positionEnd).match(/\n/g) || []).length + 1;
-    this.refs.CodeMirror.editor.setSelection({ line: lineStart, ch: 0 }, { line: lineEnd, ch: 0 });
-    const scrollTop = this.refs.CodeMirror.editor.cursorCoords({ line: lineStart, ch: 0 }).top - 100;
-    /* global window */
-    setTimeout(() => {
-      window.scrollTo(0, scrollTop);
-      if (this.props.onHighlightingFinished) {
-        this.props.onHighlightingFinished();
-      }
-    });
-  },
-
-  componentDidUpdate(previousProps) {
-    if (previousProps.highlightQueryNumber !== this.props.highlightQueryNumber) {
-      this.highlightQuery();
-    }
+  getInitialState() {
+    return {
+      highlightedLine: null
+    };
   },
 
   componentDidMount() {
     if (this.props.highlightQueryNumber) {
+      this.highlightQuery();
+    }
+  },
+
+  componentDidUpdate(previousProps) {
+    if (this.props.highlightQueryNumber && previousProps.highlightQueryNumber !== this.props.highlightQueryNumber) {
       this.highlightQuery();
     }
   },
@@ -85,5 +69,19 @@ export default React.createClass({
 
   handleChange(e) {
     this.props.onChange(e.target.value);
+  },
+
+  highlightQuery() {
+    const editor = this.refs.CodeMirror.editor;
+
+    if (this.state.highlightedLine) {
+      editor.removeLineClass(this.state.highlightedLine - 1, 'background', 'bg-danger');
+    }
+
+    editor.addLineClass(this.props.highlightQueryNumber - 1, 'background', 'bg-danger');
+
+    this.setState({
+      highlightedLine: this.props.highlightQueryNumber
+    });
   }
 });

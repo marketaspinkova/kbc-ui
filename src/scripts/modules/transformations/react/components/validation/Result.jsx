@@ -9,7 +9,7 @@ export default React.createClass({
   propTypes: {
     error: React.PropTypes.object.isRequired,
     bucketId: React.PropTypes.string.isRequired,
-    onQueryNumberClick: React.PropTypes.func.isRequired
+    onErrorMessageClick: React.PropTypes.func.isRequired
   },
 
   getStateFromStores() {
@@ -43,14 +43,14 @@ export default React.createClass({
     const errorType = this.props.error.getIn(['object', 'type']);
 
     if (errorType === 'query') {
-      const queryNumber = parseInt(object, 10);
+      const lineNumber = this._parsedLineNumber();
 
       return (
         <ComponentConfigurationRowLink
           componentId="transformation"
           configId={this.props.bucketId}
           rowId={this.state.transformation.get('id')}
-          onClick={() => this.props.onQueryNumberClick(queryNumber)}
+          onClick={() => this.props.onErrorMessageClick(lineNumber)}
         >
           <b>
             Transformation {name}, query #{object}
@@ -88,5 +88,9 @@ export default React.createClass({
     }
 
     return null;
+  },
+
+  _parsedLineNumber() {
+    return parseInt(this.props.error.get('message').match(/line (\d+)/)[1], 10);
   }
 });
