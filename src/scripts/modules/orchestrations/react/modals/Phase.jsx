@@ -18,26 +18,29 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      value: null,
-      isSaving: false
+      value: null
     };
   },
 
+  componentWillReceiveProps(newProps) {
+    if (!this.state.value && newProps.phaseId) {
+      this.setState({
+        value: newProps.phaseId
+      });
+    }
+  },
+
   alreadyExist() {
-    const val = this.state.value;
-    return this.props.existingIds.find(eid => eid === val);
+    return this.props.existingIds.find(eid => eid === this.state.value);
   },
 
   isValid() {
-    const val = this.state.value;
-    return val && val !== this.props.phaseId && !this.alreadyExist();
+    return this.state.value && this.state.value !== this.props.phaseId && !this.alreadyExist();
   },
 
   render() {
-    const value = this.state.value === null ? this.props.phaseId : this.state.value;
-
     return (
-      <Modal show={this.props.show} onHide={this.props.onHide}>
+      <Modal show={this.props.show} onHide={this.closeModal}>
         <form onSubmit={this.handleSubmit}>
           <Modal.Header closeButton>
             <Modal.Title>Rename Phase</Modal.Title>
@@ -46,10 +49,10 @@ export default React.createClass({
             <div className="form form-horizontal">
               <div className={classnames('form-group', { 'has-error': this.alreadyExist() })}>
                 <div className="col-sm-12">
-                  <FormControl id="title" type="text" value={value} onChange={this.handlePhaseChange} />
+                  <FormControl autoFocus type="text" value={this.state.value} onChange={this.handlePhaseChange} />
                   <HelpBlock>
                     {this.alreadyExist()
-                      ? `Phase with name ${value} already exists.`
+                      ? `Phase with name ${this.state.value} already exists.`
                       : 'Phase name is a unique string and helps to describe the phase. Typical name could be extract, transform, load etc.'}
                   </HelpBlock>
                 </div>
@@ -63,7 +66,7 @@ export default React.createClass({
               isDisabled={!this.isValid()}
               onCancel={this.closeModal}
               onSave={this.handleSubmit}
-              isSaving={this.state.isSaving}
+              isSaving={false}
             />
           </Modal.Footer>
         </form>
@@ -71,23 +74,19 @@ export default React.createClass({
     );
   },
 
+  handleSubmit(e) {
+    this.props.onPhaseUpdate(this.state.value);
+    this.setState({
+      value: null
+    });
+    e.preventDefault();
+  },
+
   closeModal() {
     this.setState({
       value: null
     });
     this.props.onHide();
-  },
-
-  handleSubmit(e) {
-    this.setState({
-      isSaving: true
-    });
-    this.props.onPhaseUpdate(this.state.value);
-    this.setState({
-      value: null,
-      isSaving: false
-    });
-    e.preventDefault();
   },
 
   handlePhaseChange(e) {
