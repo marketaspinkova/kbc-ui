@@ -13,7 +13,7 @@ TasksTableRow = React.createFactory(require('../pages/orchestration-tasks/TasksT
 ComponentsStore = require '../../../components/stores/ComponentsStore'
 JobActionCreators = require '../../ActionCreators'
 
-TaskSelectModal = React.createFactory(require('../modals/TaskSelect'))
+TaskSelectModal = React.createFactory(require('../modals/TaskSelect').default)
 
 module.exports = React.createClass
   displayName: 'JobRetryButton'
@@ -59,7 +59,6 @@ module.exports = React.createClass
     if @_canBeRetried() && tasks
       editingTasks = JobsStore.getEditingValue(@props.job.get('id'), 'tasks') or List()
       TaskSelectModal
-        job: @props.job
         tasks: fromJS(rephaseTasks(editingTasks.toJS()))
         onChange: @_handleTaskChange
         onRun: @_handleRun

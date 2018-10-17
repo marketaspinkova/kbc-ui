@@ -2,7 +2,7 @@ React = require 'react'
 ComponentIcon = require('../../../../../react/common/ComponentIcon').default
 ComponentName = require('../../../../../react/common/ComponentName').default
 ComponentConfigurationLink = require '../../../../components/react/components/ComponentConfigurationLink'
-TaskParametersEditModal = React.createFactory(require '../../modals/TaskParametersEdit')
+TaskParametersEditModal = React.createFactory(require('../../modals/TaskParametersEdit').default)
 OrchestrationTaskRunButton = React.createFactory(require('../../components/OrchestrationTaskRunButton').default)
 
 {Tree, Check} = require '@keboola/indigo-ui'
