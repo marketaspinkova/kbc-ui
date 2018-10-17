@@ -38,7 +38,6 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      validatableQueries: false,
       disabled: false
     };
   },
