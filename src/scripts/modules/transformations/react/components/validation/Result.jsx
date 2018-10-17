@@ -12,9 +12,9 @@ export default React.createClass({
 
   render() {
     const { error, bucketId, onRedirect } = this.props;
-    const type = this.props.error.getIn(['object', 'type']);
+    const errorType = error.getIn(['object', 'type']);
 
-    if (type === 'query') {
+    if (errorType === 'query') {
       return (
         <InvalidQuery
           bucketId={bucketId}
@@ -26,7 +26,7 @@ export default React.createClass({
       );
     }
 
-    if (type === 'input') {
+    if (errorType === 'input') {
       return (
         <InvalidInput
           bucketId={bucketId}
@@ -38,7 +38,7 @@ export default React.createClass({
       );
     }
 
-    if (['output', 'output_consistency'].includes(type)) {
+    if (['output', 'output_consistency'].includes(errorType)) {
       return (
         <InvalidOutput
           bucketId={bucketId}
