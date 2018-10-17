@@ -25,7 +25,7 @@ export default React.createClass({
     }
     const tableId = this.props.tableId;
     return (
-      <div style={{'max-height': '80vh', overflow: 'auto'}}>
+      <div style={{maxHeight: '80vh', overflow: 'auto'}}>
         <TableDescriptionEditor tableId={tableId}/>
       </div>
     );
