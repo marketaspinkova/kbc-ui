@@ -42,7 +42,7 @@ export default {
             return router.transitionTo('ex-dropbox', {config: params.config});
           }, (error) => {
             let router = RouterStore.getRouter();
-            let notification = `Failed to authorize the Dropbox account, error: ${error}, please contact us on support@keboola.com`;
+            let notification = `Failed to authorize the Dropbox account, error: ${error}, please contact us using a Support button in Menu`;
             ApplicationActionCreators.sendNotification({
               message: notification,
               type: 'error'
