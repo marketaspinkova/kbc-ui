@@ -8,6 +8,7 @@ import Clipboard from '../../../../../react/common/Clipboard';
 import SaveButtons from '../../../../../react/common/SaveButtons';
 import { AlertBlock } from '@keboola/indigo-ui';
 import { Col, Row } from 'react-bootstrap';
+import contactSupport from '../../../../../utils/contactSupport';
 
 /* global require */
 require('codemirror/mode/sql/sql');
@@ -106,7 +107,10 @@ export default React.createClass({
               failed job, when running transformation.
             </p>
             <p>Tables defined in Output Mapping that does not yet exist in Storage are not validated.</p>
-            <h4>Please resolve folowing errors:</h4>
+            <h4>
+              Please resolve folowing error
+              {this.state.errors.count() > 1 ? 's' : ''}:
+            </h4>
           </Col>
         </Row>
         <Row>
@@ -121,6 +125,11 @@ export default React.createClass({
                   />
                 </li>
               ))}
+              <li key={this.state.errors.count() + 1}>
+                <p>
+                  <b>Not an error?</b> Please <a onClick={() => contactSupport({ type: 'project' })}>contact us</a>.
+                </p>
+              </li>
             </ul>
           </Col>
         </Row>

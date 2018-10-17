@@ -52,7 +52,9 @@ export default React.createClass({
           rowId={this.state.transformation.get('id')}
           onClick={() => this.props.onQueryNumberClick(queryNumber)}
         >
-          Transformation {name}, query #{object}
+          <b>
+            Transformation {name}, query #{object}
+          </b>
         </ComponentConfigurationRowLink>
       );
     }
@@ -64,7 +66,9 @@ export default React.createClass({
           configId={this.props.bucketId}
           rowId={this.state.transformation.get('id')}
         >
-          Transformation {name}, input mapping of {object}
+          <b>
+            Transformation {name}, input mapping of {object}
+          </b>
         </ComponentConfigurationRowLink>
       );
     }
@@ -76,7 +80,9 @@ export default React.createClass({
           configId={this.props.bucketId}
           rowId={this.state.transformation.get('id')}
         >
-          Transformation {name}, output mapping of {object}
+          <b>
+            Transformation {name}, output mapping of {object}
+          </b>
         </ComponentConfigurationRowLink>
       );
     }
