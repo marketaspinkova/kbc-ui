@@ -258,7 +258,7 @@ export default componentId => {
     _renderMismatchAlertBlock(pkMismatchList) {
       if (pkMismatchList.count() > 0) {
         return (
-          <AlertBlock type="danger" title="Primary key mismatch">
+          <AlertBlock type="danger" title="Primary Key mismatch">
             <p>Following column(s) not found in 	Database Column Names.</p>
             <ul>
               {pkMismatchList.map((pkName) =>
