@@ -76,7 +76,7 @@ export default React.createClass({
       <div>
         <h2>{title}</h2>
         <table className="table table-striped table-hover kbc-tasks-list">
-          <tbody>{this.props.orchestrations.count() && components}</tbody>
+          <tbody>{this.props.orchestrations.count() !== 0 && components}</tbody>
         </table>
       </div>
     );
