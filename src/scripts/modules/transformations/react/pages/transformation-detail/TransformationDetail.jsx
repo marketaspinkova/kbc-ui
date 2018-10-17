@@ -36,15 +36,10 @@ export default React.createClass({
   },
 
   getStateFromStores() {
-    let highlightQueryNumber;
     const bucketId = RoutesStore.getCurrentRouteParam('config');
     const transformationId = RoutesStore.getCurrentRouteParam('row');
     const versions = VersionsStore.getVersions('transformation', bucketId);
     const latestVersionId = versions.map(v => v.get('version')).max();
-
-    if (RoutesStore.getRouter().getCurrentQuery().highlightQueryNumber) {
-      highlightQueryNumber = parseInt(RoutesStore.getRouter().getCurrentQuery().highlightQueryNumber, 10);
-    }
 
     return {
       bucket: TransformationBucketsStore.get(bucketId),
@@ -59,7 +54,6 @@ export default React.createClass({
       openOutputMappings: TransformationsStore.getOpenOutputMappings(bucketId, transformationId),
       transformations: TransformationsStore.getTransformations(bucketId),
       isTransformationEditingValid: TransformationsStore.getTransformationEditingIsValid(bucketId, transformationId),
-      highlightQueryNumber,
       latestVersionId
     };
   },
@@ -138,7 +132,6 @@ export default React.createClass({
             showDetails={this._showDetails()}
             isEditingValid={this.state.isTransformationEditingValid}
             isQueriesProcessing={this.state.pendingActions.has('queries-processing')}
-            highlightQueryNumber={this.state.highlightQueryNumber}
             highlightingQueryDisabled={this.state.validateModalOpen}
           />
         </div>

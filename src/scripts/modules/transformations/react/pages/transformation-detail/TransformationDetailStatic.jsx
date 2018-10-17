@@ -49,7 +49,6 @@ export default React.createClass({
     openInputMappings: React.PropTypes.object.isRequired,
     openOutputMappings: React.PropTypes.object.isRequired,
     showDetails: React.PropTypes.bool.isRequired,
-    highlightQueryNumber: React.PropTypes.number,
     highlightingQueryDisabled: React.PropTypes.bool
   },
 
@@ -515,7 +514,6 @@ export default React.createClass({
           splitQueries={this.props.editingFields.get('splitQueries', this.props.transformation.get('queries'))}
           isQueriesProcessing={this.props.isQueriesProcessing}
           isChanged={this.props.editingFields.get('queriesChanged', false)}
-          highlightQueryNumber={this.props.highlightQueryNumber}
           highlightingQueryDisabled={this.props.highlightingQueryDisabled}
           disabled={this._isMySqlTransformation()}
           onEditCancel={() => {

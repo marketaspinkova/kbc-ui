@@ -24,13 +24,13 @@ export default React.createClass({
     onEditChange: PropTypes.func.isRequired,
     onEditSubmit: PropTypes.func.isRequired,
     isChanged: PropTypes.bool.isRequired,
-    highlightQueryNumber: PropTypes.number,
     highlightingQueryDisabled: PropTypes.bool,
     disabled: PropTypes.bool
   },
 
   getInitialState() {
     return {
+      highlightQueryNumber: null,
       isValidation: false,
       errors: Map()
     };
@@ -86,7 +86,7 @@ export default React.createClass({
         backend={this.props.transformation.get('backend')}
         disabled={this.props.isSaving || this.props.disabled}
         onChange={this.props.onEditChange}
-        highlightQueryNumber={this.props.highlightQueryNumber}
+        highlightQueryNumber={this.state.highlightQueryNumber}
         highlightingQueryDisabled={this.props.highlightingQueryDisabled}
       />
     );
@@ -114,13 +114,30 @@ export default React.createClass({
             <ul className="list-unstyled">
               {this.state.errors.map((error, index) => (
                 <li key={index}>
-                  <Result error={error} bucketId={this.props.bucketId} transformation={this.props.transformation} />
+                  <Result
+                    error={error}
+                    transformation={this.props.transformation}
+                    onQueryNumberClick={this._handleQueryNumberChange}
+                  />
                 </li>
               ))}
             </ul>
           </Col>
         </Row>
       </AlertBlock>
+    );
+  },
+
+  _handleQueryNumberChange(number) {
+    this.setState(
+      {
+        highlightQueryNumber: null
+      },
+      () => {
+        this.setState({
+          highlightQueryNumber: number
+        });
+      }
     );
   },
 
