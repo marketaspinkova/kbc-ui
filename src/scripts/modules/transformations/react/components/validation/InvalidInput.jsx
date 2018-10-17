@@ -6,8 +6,7 @@ export default React.createClass({
     bucketId: React.PropTypes.string.isRequired,
     transformation: React.PropTypes.object.isRequired,
     tableId: React.PropTypes.string.isRequired,
-    message: React.PropTypes.string.isRequired,
-    onClick: React.PropTypes.func
+    message: React.PropTypes.string.isRequired
   },
 
   render() {
@@ -17,7 +16,6 @@ export default React.createClass({
           componentId="transformation"
           configId={this.props.bucketId}
           rowId={this.props.transformation.get('id')}
-          onClick={this.props.onClick}
         >
           Transformation {this.props.transformation.get('name')}, input mapping of {this.props.tableId}
         </ComponentConfigurationRowLink>

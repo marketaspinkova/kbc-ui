@@ -6,8 +6,7 @@ export default React.createClass({
     bucketId: React.PropTypes.string.isRequired,
     transformation: React.PropTypes.object.isRequired,
     queryNumber: React.PropTypes.number.isRequired,
-    message: React.PropTypes.string.isRequired,
-    onClick: React.PropTypes.func
+    message: React.PropTypes.string.isRequired
   },
 
   render() {
@@ -18,7 +17,6 @@ export default React.createClass({
           configId={this.props.bucketId}
           rowId={this.props.transformation.get('id')}
           query={{ highlightQueryNumber: this.props.queryNumber }}
-          onClick={this.props.onClick}
         >
           Transformation {this.props.transformation.get('name')}, query #{this.props.queryNumber}
         </ComponentConfigurationRowLink>

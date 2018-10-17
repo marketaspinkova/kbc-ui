@@ -7,8 +7,7 @@ export default React.createClass({
   propTypes: {
     error: React.PropTypes.object.isRequired,
     bucketId: React.PropTypes.string.isRequired,
-    transformation: React.PropTypes.object.isRequired,
-    onRedirect: React.PropTypes.func
+    transformation: React.PropTypes.object.isRequired
   },
 
   render() {
@@ -21,7 +20,6 @@ export default React.createClass({
           transformation={this.props.transformation}
           queryNumber={parseInt(this.props.error.getIn(['object', 'id']), 10)}
           message={this.props.error.get('message')}
-          onClick={this.props.onRedirect}
         />
       );
     }
@@ -33,7 +31,6 @@ export default React.createClass({
           transformation={this.props.transformation}
           tableId={this.props.error.getIn(['object', 'id'])}
           message={this.props.error.get('message')}
-          onClick={this.props.onRedirect}
         />
       );
     }
@@ -45,7 +42,6 @@ export default React.createClass({
           transformation={this.props.transformation}
           tableId={this.props.error.getIn(['object', 'id'])}
           message={this.props.error.get('message')}
-          onClick={this.props.onRedirect}
         />
       );
     }

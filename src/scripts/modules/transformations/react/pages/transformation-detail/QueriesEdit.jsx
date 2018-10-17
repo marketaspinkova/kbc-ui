@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import CodeMirror from 'react-code-mirror';
 import resolveHighlightMode from './resolveHighlightMode';
 import {ExternalLink} from '@keboola/indigo-ui';
@@ -11,7 +11,8 @@ export default React.createClass({
     disabled: PropTypes.bool.isRequired,
     onChange: PropTypes.func.isRequired,
     highlightQueryNumber: PropTypes.number,
-    highlightingQueryDisabled: PropTypes.bool
+    highlightingQueryDisabled: PropTypes.bool,
+    onHighlightingFinished: PropTypes.func
   },
 
   highlightQuery() {
@@ -24,21 +25,23 @@ export default React.createClass({
     const lineStart = (this.props.queries.substring(0, positionStart).match(/\n/g) || []).length;
     const positionEnd = positionStart + query.length;
     const lineEnd = (this.props.queries.substring(0, positionEnd).match(/\n/g) || []).length + 1;
-    this.refs.CodeMirror.editor.setSelection({line: lineStart, ch: 0}, {line: lineEnd, ch: 0});
-    const scrollTop = this.refs.CodeMirror.editor.cursorCoords({line: lineStart, ch: 0}).top - 100;
-    const component = this;
+    this.refs.CodeMirror.editor.setSelection({ line: lineStart, ch: 0 }, { line: lineEnd, ch: 0 });
+    const scrollTop = this.refs.CodeMirror.editor.cursorCoords({ line: lineStart, ch: 0 }).top - 100;
     /* global window */
-    setTimeout(function() {
+    setTimeout(() => {
       window.scrollTo(0, scrollTop);
-      if (component.props.onHighlightingFinished) {
-        component.props.onHighlightingFinished();
+      if (this.props.onHighlightingFinished) {
+        this.props.onHighlightingFinished();
       }
     });
   },
 
   componentDidUpdate(previousProps) {
-    if (previousProps.highlightQueryNumber !== this.props.highlightQueryNumber
-      || previousProps.highlightingQueryDisabled !== this.props.highlightingQueryDisabled && !this.props.highlightingQueryDisabled) {
+    if (
+      previousProps.highlightQueryNumber !== this.props.highlightQueryNumber ||
+      (previousProps.highlightingQueryDisabled !== this.props.highlightingQueryDisabled &&
+        !this.props.highlightingQueryDisabled)
+    ) {
       this.highlightQuery();
     }
   },
@@ -67,9 +70,7 @@ export default React.createClass({
               placeholder="-- Your SQL goes here..."
             />
           </div>
-          <div className="small help-block">
-            {this.help()}
-          </div>
+          <div className="small help-block">{this.help()}</div>
         </div>
       </div>
     );
@@ -90,5 +91,4 @@ export default React.createClass({
   handleChange(e) {
     this.props.onChange(e.target.value);
   }
-
 });
