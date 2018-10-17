@@ -43,11 +43,8 @@ export default React.createClass({
   },
 
   componentDidUpdate(prevProps) {
-    if (
-      this.props.transformation.get('backend') === 'snowflake' &&
-      !prevProps.transformation.equals(this.props.transformation)
-    ) {
-      this.validateQueries();
+    if (this._canBeValidated(prevProps)) {
+      this._validateQueries();
     }
   },
 
@@ -101,7 +98,7 @@ export default React.createClass({
     }
 
     return (
-      <AlertBlock type="danger" title={this.validationErrorMessage(this.state.errors)}>
+      <AlertBlock type="danger" title={this._validationErrorMessage(this.state.errors)}>
         <Row>
           <Col md={9}>
             <p>
@@ -127,7 +124,7 @@ export default React.createClass({
     );
   },
 
-  validateQueries() {
+  _validateQueries() {
     this.setState({
       isValidation: true
     });
@@ -138,7 +135,7 @@ export default React.createClass({
 
         if (errors.count()) {
           ApplicationActionCreators.sendNotification({
-            message: this.validationErrorMessage(errors),
+            message: this._validationErrorMessage(errors),
             type: 'error'
           });
         }
@@ -156,7 +153,14 @@ export default React.createClass({
       });
   },
 
-  validationErrorMessage(errors) {
+  _validationErrorMessage(errors) {
     return 'SQL Validation found ' + errors.count() + ' error' + (errors.count() > 1 ? 's.' : '.');
+  },
+
+  _canBeValidated(prevProps) {
+    return (
+      this.props.transformation.get('backend') === 'snowflake' &&
+      !prevProps.transformation.equals(this.props.transformation)
+    );
   }
 });
