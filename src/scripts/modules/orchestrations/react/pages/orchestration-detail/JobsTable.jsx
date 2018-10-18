@@ -12,14 +12,11 @@ export default React.createClass({
     onJobsReload: React.PropTypes.func.isRequired
   },
 
-  cancelJob() {},
-  // TODO
-
   render() {
     let rows;
     if (this.props.jobs.count()) {
       rows = this.props.jobs
-        .map(job => <JobsTableRow job={job} key={job.get('id')} onJobCancel={this.cancelJob} />)
+        .map(job => <JobsTableRow job={job} key={job.get('id')} />)
         .toArray();
     } else {
       rows = [
