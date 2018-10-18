@@ -44,14 +44,14 @@ export default React.createClass({
     const errorType = this.props.error.getIn(['object', 'type']);
 
     if (errorType === 'query') {
-      const lineNumber = this._parsedLineNumber();
+      const lineNumber = parseInt(object, 10);
 
       return (
         <ComponentConfigurationRowLink
           componentId="transformation"
           configId={this.props.bucketId}
           rowId={this.state.transformation.get('id')}
-          onClick={() => (lineNumber ? this.props.onErrorMessageClick(lineNumber) : null)}
+          onClick={() => this.props.onErrorMessageClick(lineNumber)}
         >
           <b>
             Transformation {name}, query #{object}
@@ -89,10 +89,5 @@ export default React.createClass({
     }
 
     return null;
-  },
-
-  _parsedLineNumber() {
-    const line = this.props.error.get('message').match(/line (\d+)/);
-    return line && line.length > 1 ? parseInt(line[1], 10) : null;
   }
 });

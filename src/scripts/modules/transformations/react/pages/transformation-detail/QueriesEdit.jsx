@@ -13,12 +13,6 @@ export default React.createClass({
     highlightQueryNumber: PropTypes.number
   },
 
-  getInitialState() {
-    return {
-      highlightedLine: null
-    };
-  },
-
   componentDidMount() {
     if (this.props.highlightQueryNumber) {
       this.highlightQuery();
@@ -28,8 +22,6 @@ export default React.createClass({
   componentDidUpdate(previousProps) {
     if (this.props.highlightQueryNumber && previousProps.highlightQueryNumber !== this.props.highlightQueryNumber) {
       this.highlightQuery();
-    } else if (!this.props.highlightQueryNumber && this.state.highlightedLine) {
-      this.checkPreviouslyHighlightedLine();
     }
   },
 
@@ -74,18 +66,20 @@ export default React.createClass({
   },
 
   highlightQuery() {
-    this.checkPreviouslyHighlightedLine();
-
-    this.refs.CodeMirror.editor.addLineClass(this.props.highlightQueryNumber - 1, 'background', 'bg-danger');
-
-    this.setState({
-      highlightedLine: this.props.highlightQueryNumber
-    });
-  },
-
-  checkPreviouslyHighlightedLine() {
-    if (this.state.highlightedLine) {
-      this.refs.CodeMirror.editor.removeLineClass(this.state.highlightedLine - 1, 'background', 'bg-danger');
+    const splitQueries = this.props.splitQueries;
+    const query = splitQueries.get(this.props.highlightQueryNumber - 1);
+    const positionStart = this.props.queries.indexOf(query);
+    if (positionStart === -1) {
+      return;
     }
+    const lineStart = (this.props.queries.substring(0, positionStart).match(/\n/g) || []).length;
+    const positionEnd = positionStart + query.length;
+    const lineEnd = (this.props.queries.substring(0, positionEnd).match(/\n/g) || []).length + 1;
+    this.refs.CodeMirror.editor.setSelection({ line: lineStart, ch: 0 }, { line: lineEnd, ch: 0 });
+    const scrollTop = this.refs.CodeMirror.editor.cursorCoords({ line: lineStart, ch: 0 }).top - 100;
+    /* global window */
+    setTimeout(() => {
+      window.scrollTo(0, scrollTop);
+    });
   }
 });
