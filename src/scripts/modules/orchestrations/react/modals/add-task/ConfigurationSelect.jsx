@@ -1,6 +1,7 @@
 import React from 'react';
 import ComponentIcon from '../../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../../react/common/ComponentName';
+import descriptionExcerpt from '../../../../../utils/descriptionExcerpt';
 
 export default React.createClass({
   propTypes: {
@@ -34,12 +35,16 @@ export default React.createClass({
             .map(configuration => {
               return (
                 <a
-                  className="list-group-item"
+                  className="list-group-item configuration-select-list-item"
                   key={configuration.get('id')}
                   onClick={this._handleSelect.bind(this, configuration)}
                 >
-                  {configuration.get('name')}
-                  <i className="fa fa-plus-circle pull-right" />
+                  <span className="pull-left">
+                    <strong>{configuration.get('name')}</strong>
+                    <br/>
+                    <small>{descriptionExcerpt(configuration.get('description'))}</small>
+                  </span>
+                  <i className="fa fa-plus-circle pull-right"/>
                 </a>
               );
             }, this)
