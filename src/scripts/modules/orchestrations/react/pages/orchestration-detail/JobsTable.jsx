@@ -19,13 +19,13 @@ export default React.createClass({
         .map(job => <JobsTableRow job={job} key={job.get('id')} />)
         .toArray();
     } else {
-      rows = [
+      rows = (
         <tr>
           <td className="text-muted" colSpan={7}>
             The orchestration has not been executed yet.
           </td>
         </tr>
-      ];
+      );
     }
 
     return (
