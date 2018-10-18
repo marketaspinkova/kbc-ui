@@ -139,16 +139,9 @@ export default React.createClass({
   },
 
   _handleErrorMessageClick(lineNumber) {
-    this.setState(
-      {
-        highlightQueryNumber: null
-      },
-      () => {
-        this.setState({
-          highlightQueryNumber: lineNumber
-        });
-      }
-    );
+    this.setState({
+      highlightQueryNumber: lineNumber
+    });
   },
 
   _validateQueries() {
