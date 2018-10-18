@@ -15,12 +15,13 @@ export default React.createClass({
 
   render() {
     let tasks = List();
-    this.props.tasks.forEach(phase => {
-      tasks = tasks.push(this.renderPhaseRow(phase.get('id')));
+    this.props.tasks.forEach((phase) => {
+      const phaseId = phase.get('id');
+      tasks = tasks.push(this.renderPhaseRow(phaseId));
       const tasksRows = phase.get('tasks').map((task, index) => {
         return (
           <TaskSelectTableRow
-            key={index}
+            key={`phase-${phaseId}-task-${index}`}
             task={task}
             component={this.state.components.get(task.get('component'))}
             onTaskUpdate={this.props.onTaskUpdate}
