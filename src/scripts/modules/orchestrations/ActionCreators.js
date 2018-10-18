@@ -168,12 +168,7 @@ export default {
               return (
                 <span>
                   {`Orchestration ${orchestration.get('name')} was moved to `}
-                  <Link
-                    to="settings-trash"
-                    params={{
-                      onClick: this.props.onClick
-                    }}
-                  >
+                  <Link to="settings-trash" onClick={this.props.onClick}>
                     Trash
                   </Link>
                 </span>
@@ -547,9 +542,9 @@ export default {
                     to="orchestrationJob"
                     params={{
                       jobId: newJob.id,
-                      orchestrationId: newJob.orchestrationId,
-                      onClick: this.props.onClick
+                      orchestrationId: id
                     }}
+                    onClick={this.props.onClick}
                   >
                     Orchestrator job
                   </Link>
@@ -618,10 +613,10 @@ export default {
                     <Link
                       to="orchestrationJob"
                       params={{
-                        jobId,
-                        orchestrationId,
-                        onClick: this.props.onClick
+                        jobId: newJob.id,
+                        orchestrationId
                       }}
+                      onClick={this.props.onClick}
                     >
                       here
                     </Link>
