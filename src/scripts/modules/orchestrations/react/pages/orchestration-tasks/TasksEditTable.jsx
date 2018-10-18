@@ -107,7 +107,7 @@ export default React.createClass({
     this.props.tasks.map(p =>
       p.get('tasks').map(task => {
         const component = ComponentsStore.getComponent(task.get('component'));
-        const taskType = component && component.type ? component.type : 'other';
+        const taskType = component && component.get('type') ? component.get('type') : 'other';
         groupedPhases = groupedPhases.map(gp => {
           if (gp.get('type') === taskType) {
             return gp.set('tasks', gp.get('tasks').push(task));
