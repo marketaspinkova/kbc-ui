@@ -34,7 +34,7 @@ export default React.createClass({
   getInitialState() {
     return {
       highlightQueryNumber: null,
-      isValidation: false,
+      validationRunning: false,
       errors: Map()
     };
   },
@@ -71,7 +71,7 @@ export default React.createClass({
     return (
       <span className="pull-right">
         <SaveButtons
-          isSaving={this.props.isSaving || this.state.isValidation}
+          isSaving={this.props.isSaving || this.state.validationRunning}
           disabled={this.props.isQueriesProcessing || this.props.disabled}
           isChanged={this.props.isChanged}
           onSave={this.props.onEditSubmit}
@@ -146,7 +146,7 @@ export default React.createClass({
 
   _validateQueries() {
     this.setState({
-      isValidation: true
+      validationRunning: true
     });
 
     return SqlDepAnalyzerApi.validate(this.props.bucketId, this.props.transformation.get('id'))
@@ -161,13 +161,13 @@ export default React.createClass({
         }
 
         return this.setState({
-          isValidation: false,
+          validationRunning: false,
           errors: errors
         });
       })
       .catch(error => {
         this.setState({
-          isValidation: false
+          validationRunning: false
         });
         throw error;
       });
