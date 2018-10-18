@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import underscoreString from 'underscore.string';
 import classnames from 'classnames';
-import { Modal, FormControl, HelpBlock } from 'react-bootstrap';
+import { Col, Modal, Form, FormGroup, FormControl, HelpBlock } from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
 export default React.createClass({
@@ -41,23 +41,21 @@ export default React.createClass({
   render() {
     return (
       <Modal show={this.props.show} onHide={this.closeModal}>
-        <form onSubmit={this.handleSubmit}>
+        <Form onSubmit={this.handleSubmit} horizontal>
           <Modal.Header closeButton>
             <Modal.Title>Rename Phase</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <div className="form form-horizontal">
-              <div className={classnames('form-group', { 'has-error': this.alreadyExist() })}>
-                <div className="col-sm-12">
-                  <FormControl autoFocus type="text" value={this.state.value} onChange={this.handlePhaseChange} />
-                  <HelpBlock>
-                    {this.alreadyExist()
-                      ? `Phase with name ${this.state.value} already exists.`
-                      : 'Phase name is a unique string and helps to describe the phase. Typical name could be extract, transform, load etc.'}
-                  </HelpBlock>
-                </div>
-              </div>
-            </div>
+            <FormGroup bsClass={classnames('form-group', { 'has-error': this.alreadyExist() })}>
+              <Col sm={12}>
+                <FormControl autoFocus type="text" value={this.state.value} onChange={this.handlePhaseChange} />
+                <HelpBlock>
+                  {this.alreadyExist()
+                    ? `Phase with name ${this.state.value} already exists.`
+                    : 'Phase name is a unique string and helps to describe the phase. Typical name could be extract, transform, load etc.'}
+                </HelpBlock>
+              </Col>
+            </FormGroup>
           </Modal.Body>
           <Modal.Footer>
             <ConfirmButtons
@@ -69,7 +67,7 @@ export default React.createClass({
               isSaving={false}
             />
           </Modal.Footer>
-        </form>
+        </Form>
       </Modal>
     );
   },
