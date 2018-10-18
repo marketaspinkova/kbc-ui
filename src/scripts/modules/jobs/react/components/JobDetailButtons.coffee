@@ -2,7 +2,7 @@ React = require 'react'
 createStoreMixin = require('../../../../react/mixins/createStoreMixin')
 JobsStore = require('../../stores/JobsStore')
 RoutesStore = require('../../../../stores/RoutesStore')
-JobTerminateButton = React.createFactory(require('./JobTerminateButton').default)
+JobTerminateButton = React.createFactory(require('./JobTerminateButton'))
 
 {span} = React.DOM
 
