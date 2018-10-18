@@ -28,23 +28,23 @@ export default React.createClass({
       ];
     }
 
-    const jobsTable = (
-      <table className="table table-striped table-hover kb-table-jobs kbc-cursor-pointer">
-        <thead>
-          <tr>
-            <th>Created By</th>
-            <th>Created At</th>
-            <th>Status</th>
-            <th>Duration</th>
-            <th className="text-right kbc-last-column-header">
-              <RefreshIcon isLoading={this.props.jobsLoading} onClick={this.props.onJobsReload} />
-            </th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
-      </table>
+    return (
+      <div>
+        <table className="table table-striped table-hover kb-table-jobs kbc-cursor-pointer">
+          <thead>
+            <tr>
+              <th>Created By</th>
+              <th>Created At</th>
+              <th>Status</th>
+              <th>Duration</th>
+              <th className="text-right kbc-last-column-header">
+                <RefreshIcon isLoading={this.props.jobsLoading} onClick={this.props.onJobsReload} />
+              </th>
+            </tr>
+          </thead>
+          <tbody>{rows}</tbody>
+        </table>
+      </div>
     );
-
-    return <div>{jobsTable}</div>;
   }
 });
