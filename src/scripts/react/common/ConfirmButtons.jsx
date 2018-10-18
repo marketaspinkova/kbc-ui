@@ -82,12 +82,7 @@ export default React.createClass({
   _cancelButton() {
     if (this.props.showCancel) {
       return (
-        <Button
-          type={this.props.formButtons ? 'reset' : 'button'}
-          bsStyle="link"
-          disabled={this.props.isSaving}
-          onClick={this.props.onCancel}
-        >
+        <Button bsStyle="link" disabled={this.props.isSaving} onClick={this.props.onCancel}>
           {this.props.cancelLabel}
         </Button>
       );
