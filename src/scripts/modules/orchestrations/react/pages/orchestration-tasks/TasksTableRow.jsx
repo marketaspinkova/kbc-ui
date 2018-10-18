@@ -55,7 +55,6 @@ export default React.createClass({
         <td>
           <div className="pull-right">
             <TaskParametersEditModal
-              onSet={this._handleParametersChange}
               isEditable={false}
               parameters={this.props.task.get('actionParameters').toJS()}
             />
