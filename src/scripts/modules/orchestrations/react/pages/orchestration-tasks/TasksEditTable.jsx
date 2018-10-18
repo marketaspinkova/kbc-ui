@@ -67,7 +67,7 @@ export default React.createClass({
         <DropdownButton
           bsStyle="link"
           style={{ paddingLeft: 0 }}
-          title={React.createElement('span', null, 'Actions')}
+          title={<span>Actions</span>}
           id="modules-orchestrations-react-pages-orchestration-tasks-tasks-edit-table-dropdown"
         >
           <li className={this.canMergePhases() ? '' : 'disabled'}>
