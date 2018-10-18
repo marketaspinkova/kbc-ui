@@ -18,7 +18,7 @@ JobReloaderButton = require('./react/components/JobReloaderButton').default
 JobDetailButtons = require('./react/components/JobDetailButtons').default
 OrchestrationDetailButtons = require('./react/components/OrchestrationDetailButtons').default
 OrchestrationTasksButtons = require('./react/components/OrchestrationTasksButtons').default
-OrchestrationNotificationsButtons = require './react/components/OrchestrationNotificationsButtons'
+OrchestrationNotificationsButtons = require('./react/components/OrchestrationNotificationsButtons').default
 OrchestrationNameEdit = require('./react/components/OrchestrationNameEdit').default
 
 # stores
