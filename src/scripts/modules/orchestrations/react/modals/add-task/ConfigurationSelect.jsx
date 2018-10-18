@@ -39,12 +39,12 @@ export default React.createClass({
                   key={configuration.get('id')}
                   onClick={this._handleSelect.bind(this, configuration)}
                 >
-                  <span className="pull-left">
+                  <span>
                     <strong>{configuration.get('name')}</strong>
                     <br/>
                     <small>{descriptionExcerpt(configuration.get('description'))}</small>
                   </span>
-                  <i className="fa fa-plus-circle pull-right"/>
+                  <i className="fa fa-plus-circle"/>
                 </a>
               );
             }, this)
