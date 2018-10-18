@@ -36,7 +36,7 @@ export default React.createClass({
                       <span>{task.get('componentUrl') ? task.get('componentUrl') : task.get('component')}</span>
                     )}
                     {index === tasks.size - 2 && !hasMoreTasks && ' and '}
-                    {index < tasks.size - 2 || (index === tasks.size - 2 && hasMoreTasks && ', ')}
+                    {(index < tasks.size - 2 || (index === tasks.size - 2 && hasMoreTasks)) && ', '}
                   </span>
                 );
               })
