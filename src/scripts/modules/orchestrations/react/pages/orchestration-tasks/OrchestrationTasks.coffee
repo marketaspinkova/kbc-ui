@@ -15,7 +15,7 @@ ApplicationStore = require '../../../../../stores/ApplicationStore'
 mergeTasksWithConfigurations = require('../../../mergeTasksWithConfigruations').default
 
 # React components
-OrchestrationsNav = React.createFactory(require './../orchestration-detail/OrchestrationsNav')
+OrchestrationsNav = React.createFactory(require('./../orchestration-detail/OrchestrationsNav').default)
 SearchBar = React.createFactory(require('@keboola/indigo-ui').SearchBar)
 TasksTable = React.createFactory(require './TasksTable')
 TasksEditor = React.createFactory(require './TasksEditor')
