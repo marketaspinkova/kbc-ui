@@ -1,6 +1,6 @@
 import installedComponentsActions from '../components/InstalledComponentsActionCreators';
 import InstalledComponentStore from '../components/stores/InstalledComponentsStore';
-import {List, Map, fromJS} from 'immutable';
+import {List, Map, fromJS, Iterable} from 'immutable';
 import _ from 'underscore';
 
 const componentId = 'geneea.nlp-analysis-v2';
@@ -102,7 +102,7 @@ export function isValid(configId) {
     if (editingValue && param === ANALYSIS) {
       editingValue = editingValue.toJS();
     }
-    const isEmpty = List.isList(editingValue) ? editingValue.count() === 0 : _.isEmpty(editingValue);
+    const isEmpty = Iterable.isIterable(editingValue) ? editingValue.count() === 0 : _.isEmpty(editingValue);
     return memo || isEmpty;
   }, false);
   let isAdvancedValid = true;
