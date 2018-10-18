@@ -9,7 +9,7 @@ import '../../../../utils/codemirror/json-lint';
 export default React.createClass({
   propTypes: {
     parameters: React.PropTypes.object.isRequired,
-    onSet: React.PropTypes.func.isRequired,
+    onSet: React.PropTypes.func,
     isEditable: React.PropTypes.bool
   },
 

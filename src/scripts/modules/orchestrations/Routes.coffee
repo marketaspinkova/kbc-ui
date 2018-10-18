@@ -8,7 +8,7 @@ React = require 'react'
 OrchestrationsIndex = require('./react/pages/orchestrations-index/OrchestrationsIndex').default
 OrchestrationDetail = require('./react/pages/orchestration-detail/OrchestrationDetail').default
 OrchestrationJobDetail = require('./react/pages/orchestration-job-detail/OrchestrationJobDetail').default
-OrchestrationTasks = require './react/pages/orchestration-tasks/OrchestrationTasks'
+OrchestrationTasks = require('./react/pages/orchestration-tasks/OrchestrationTasks').default
 OrchestrationNotifications = require('./react/pages/orchestration-notifications/OrchestrationNotifications').default
 
 OrchestrationsReloaderButton = require './react/components/OrchestrationsReloaderButton'
