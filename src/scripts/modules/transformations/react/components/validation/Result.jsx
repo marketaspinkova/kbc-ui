@@ -23,18 +23,19 @@ export default React.createClass({
 
   render() {
     const messageTitle = this._renderTitle();
+    const message = <pre>{this.props.error.get('message')}</pre>;
 
     if (messageTitle) {
       return (
         <p>
           {messageTitle}
           <br />
-          {this.props.error.get('message')}
+          {message}
         </p>
       );
     }
 
-    return <p>{this.props.error.get('message')}</p>;
+    return <p>{message}</p>;
   },
 
   _renderTitle() {
