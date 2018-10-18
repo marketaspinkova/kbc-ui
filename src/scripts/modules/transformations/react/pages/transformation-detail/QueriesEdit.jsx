@@ -28,6 +28,8 @@ export default React.createClass({
   componentDidUpdate(previousProps) {
     if (this.props.highlightQueryNumber && previousProps.highlightQueryNumber !== this.props.highlightQueryNumber) {
       this.highlightQuery();
+    } else if (!this.props.highlightQueryNumber && this.state.highlightedLine) {
+      this.checkPreviouslyHighlightedLine();
     }
   },
 
@@ -72,16 +74,18 @@ export default React.createClass({
   },
 
   highlightQuery() {
-    const editor = this.refs.CodeMirror.editor;
+    this.checkPreviouslyHighlightedLine();
 
-    if (this.state.highlightedLine) {
-      editor.removeLineClass(this.state.highlightedLine - 1, 'background', 'bg-danger');
-    }
-
-    editor.addLineClass(this.props.highlightQueryNumber - 1, 'background', 'bg-danger');
+    this.refs.CodeMirror.editor.addLineClass(this.props.highlightQueryNumber - 1, 'background', 'bg-danger');
 
     this.setState({
       highlightedLine: this.props.highlightQueryNumber
     });
+  },
+
+  checkPreviouslyHighlightedLine() {
+    if (this.state.highlightedLine) {
+      this.refs.CodeMirror.editor.removeLineClass(this.state.highlightedLine - 1, 'background', 'bg-danger');
+    }
   }
 });

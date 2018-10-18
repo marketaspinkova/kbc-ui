@@ -158,6 +158,10 @@ export default React.createClass({
             message: this._validationErrorMessage(errors),
             type: 'error'
           });
+        } else {
+          this.setState({
+            highlightQueryNumber: null
+          });
         }
 
         return this.setState({

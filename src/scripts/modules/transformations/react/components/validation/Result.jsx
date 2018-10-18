@@ -50,7 +50,7 @@ export default React.createClass({
           componentId="transformation"
           configId={this.props.bucketId}
           rowId={this.state.transformation.get('id')}
-          onClick={() => this.props.onErrorMessageClick(lineNumber)}
+          onClick={() => (lineNumber ? this.props.onErrorMessageClick(lineNumber) : null)}
         >
           <b>
             Transformation {name}, query #{object}
@@ -91,6 +91,7 @@ export default React.createClass({
   },
 
   _parsedLineNumber() {
-    return parseInt(this.props.error.get('message').match(/line (\d+)/)[1], 10);
+    const line = this.props.error.get('message').match(/line (\d+)/);
+    return line && line.length > 1 ? parseInt(line[1], 10) : null;
   }
 });
