@@ -5,11 +5,10 @@
  */
 import React from 'react';
 
-import {Loader} from '@keboola/indigo-ui';
-import {Button} from 'react-bootstrap';
+import { Loader } from '@keboola/indigo-ui';
+import { Button } from 'react-bootstrap';
 
 export default React.createClass({
-
   propTypes: {
     isSaving: React.PropTypes.bool.isRequired,
     isDisabled: React.PropTypes.bool,
@@ -21,6 +20,7 @@ export default React.createClass({
     placement: React.PropTypes.oneOf(['left', 'right']),
     showCancel: React.PropTypes.bool,
     showSave: React.PropTypes.bool,
+    formButtons: React.PropTypes.bool,
     className: React.PropTypes.string
   },
 
@@ -32,7 +32,8 @@ export default React.createClass({
       placement: 'right',
       isDisabled: false,
       showSave: true,
-      showCancel: true
+      showCancel: true,
+      formButtons: false
     };
   },
 
@@ -59,7 +60,7 @@ export default React.createClass({
   },
 
   _loader() {
-    if (this.props.isSaving) return (<Loader />);
+    if (this.props.isSaving) return <Loader />;
     return null;
   },
 
@@ -67,9 +68,11 @@ export default React.createClass({
     if (this.props.showSave) {
       return (
         <Button
+          type={this.props.formButtons ? 'submit' : 'button'}
           bsStyle={this.props.saveStyle}
           disabled={this.props.isSaving || this.props.isDisabled}
-          onClick={this.props.onSave}>
+          onClick={this.props.onSave}
+        >
           {this.props.saveLabel}
         </Button>
       );
@@ -80,9 +83,11 @@ export default React.createClass({
     if (this.props.showCancel) {
       return (
         <Button
+          type={this.props.formButtons ? 'reset' : 'button'}
           bsStyle="link"
           disabled={this.props.isSaving}
-          onClick={this.props.onCancel}>
+          onClick={this.props.onCancel}
+        >
           {this.props.cancelLabel}
         </Button>
       );
