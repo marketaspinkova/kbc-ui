@@ -63,7 +63,7 @@ export default React.createClass({
   },
 
   _handlePhaseMove(id, afterId) {
-    const phase = this.props.tasks.find(itam => itam.get('id') === id);
+    const phase = this.props.tasks.find(item => item.get('id') === id);
     const currentIndex = this.props.tasks.findIndex(item => item.get('id') === id);
     const afterIndex = this.props.tasks.findIndex(item => item.get('id') === afterId);
     return this.props.onChange(this.props.tasks.splice(currentIndex, 1).splice(afterIndex, 0, phase));
