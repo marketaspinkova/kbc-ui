@@ -65,12 +65,15 @@ module.exports = function(options) {
     mode: isDevelopment ? 'development' : 'production',
     devtool: isDevelopment ? 'eval' : 'source-map',
     entry: entry,
-    output: {
-      path: path.resolve(__dirname, isDevelopment ? '../dist' : '../dist/' + process.env.KBC_REVISION),
-      filename: isDevelopment ? '[name].js' : '[name].min.js',
-      publicPath: isDevelopment ? '/scripts/' : '',
-      library: 'kbcApp'
-    },
+    output: Object.assign(
+      {
+        path: path.resolve(__dirname, isDevelopment ? '../dist' : '../dist/' + process.env.KBC_REVISION),
+        filename: isDevelopment ? '[name].js' : '[name].min.js',
+        publicPath: isDevelopment ? '/scripts/' : '',
+        library: 'kbcApp'
+      },
+      isDevelopment ? { globalObject: 'this' } : {}
+    ),
     plugins: plugins,
     resolve: {
       extensions: ['*', '.js', '.jsx', '.coffee']
