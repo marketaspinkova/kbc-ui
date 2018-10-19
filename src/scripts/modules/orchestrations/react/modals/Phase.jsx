@@ -22,14 +22,6 @@ export default React.createClass({
     };
   },
 
-  componentWillReceiveProps(newProps) {
-    if (!this.state.value && newProps.phaseId) {
-      this.setState({
-        value: newProps.phaseId
-      });
-    }
-  },
-
   alreadyExist() {
     return this.props.existingIds.find(eid => eid === this.state.value);
   },
@@ -48,7 +40,12 @@ export default React.createClass({
           <Modal.Body>
             <FormGroup bsClass={classnames('form-group', { 'has-error': this.alreadyExist() })}>
               <Col sm={12}>
-                <FormControl autoFocus type="text" value={this.state.value} onChange={this.handlePhaseChange} />
+                <FormControl
+                  autoFocus
+                  type="text"
+                  value={this.state.value === null ? this.props.phaseId : this.state.value}
+                  onChange={this.handlePhaseChange}
+                />
                 <HelpBlock>
                   {this.alreadyExist()
                     ? `Phase with name ${this.state.value} already exists.`
