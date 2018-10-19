@@ -15,7 +15,7 @@ export default React.createClass({
 
     return (
       <span>
-        {this.props.tasks.count() === 0 ? (
+        {this.props.tasks.size === 0 ? (
           'Orchestration has no assigned tasks'
         ) : (
           <span>
