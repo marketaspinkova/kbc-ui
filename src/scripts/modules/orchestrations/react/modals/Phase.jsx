@@ -1,10 +1,13 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import {Modal} from 'react-bootstrap';
+import underscoreString from 'underscore.string';
+import classnames from 'classnames';
+import { Col, Modal, Form, FormGroup, FormControl, HelpBlock } from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
 export default React.createClass({
   mixins: [PureRenderMixin],
+
   propTypes: {
     phaseId: PropTypes.string,
     existingIds: PropTypes.object.isRequired,
@@ -15,69 +18,63 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      value: null,
-      isSaving: false
+      value: null
     };
   },
 
   alreadyExist() {
-    const val = this.state.value;
-    return this.props.existingIds.find((eid) => eid === val);
+    return this.props.existingIds.find(eid => eid === this.state.value);
   },
 
   isValid() {
-    const val = this.state.value;
-    return val && val !== this.props.phaseId && !this.alreadyExist();
+    return this.state.value && this.state.value !== this.props.phaseId && !this.alreadyExist();
   },
 
   render() {
-    const value = this.state.value === null ? this.props.phaseId : this.state.value;
-
-    let formDivClass = 'form-group';
-    let helpText = 'Phase name is a unique string and helps to describe the phase. Typical name could be extract, transform, load etc.';
-    if (this.alreadyExist()) {
-      formDivClass = 'form-group has-error';
-      helpText = `Phase with name ${value} already exists.`;
-    }
-    const helpBlock = (<span className="help-block">{helpText}</span>);
-
     return (
-      <Modal
-        show={this.props.show}
-        onHide={this.props.onHide}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>
-            Rename Phase
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="form form-horizontal">
-            <div className={formDivClass}>
-              <div className="col-sm-12">
-                <input
-                  id="title"
+      <Modal show={this.props.show} onHide={this.closeModal}>
+        <Form onSubmit={this.handleSubmit} horizontal>
+          <Modal.Header closeButton>
+            <Modal.Title>Rename Phase</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <FormGroup bsClass={classnames('form-group', { 'has-error': this.alreadyExist() })}>
+              <Col sm={12}>
+                <FormControl
+                  autoFocus
                   type="text"
-                  className="form-control"
-                  value={value}
+                  value={this.state.value === null ? this.props.phaseId : this.state.value}
                   onChange={this.handlePhaseChange}
                 />
-                {helpBlock}
-              </div>
-            </div>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <ConfirmButtons
-            saveLabel="Rename"
-            isDisabled={!this.isValid()}
-            onCancel={this.closeModal}
-            onSave={this.handleSave}
-            isSaving={this.state.isSaving}
-          />
-        </Modal.Footer>
+                <HelpBlock>
+                  {this.alreadyExist()
+                    ? `Phase with name ${this.state.value} already exists.`
+                    : 'Phase name is a unique string and helps to describe the phase. Typical name could be extract, transform, load etc.'}
+                </HelpBlock>
+              </Col>
+            </FormGroup>
+          </Modal.Body>
+          <Modal.Footer>
+            <ConfirmButtons
+              saveButtonType={'submit'}
+              saveLabel="Rename"
+              isDisabled={!this.isValid()}
+              onCancel={this.closeModal}
+              onSave={this.handleSubmit}
+              isSaving={false}
+            />
+          </Modal.Footer>
+        </Form>
       </Modal>
     );
+  },
+
+  handleSubmit(e) {
+    this.props.onPhaseUpdate(this.state.value);
+    this.setState({
+      value: null
+    });
+    e.preventDefault();
   },
 
   closeModal() {
@@ -87,22 +84,9 @@ export default React.createClass({
     this.props.onHide();
   },
 
-  handleSave() {
-    this.setState({
-      isSaving: true
-    });
-    this.props.onPhaseUpdate(this.state.value);
-    this.setState({
-      value: null,
-      isSaving: false
-    });
-  },
-
   handlePhaseChange(e) {
     this.setState({
-      value: e.target.value
+      value: underscoreString.capitalize(e.target.value)
     });
   }
-
-
 });
