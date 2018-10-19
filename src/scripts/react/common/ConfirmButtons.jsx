@@ -18,9 +18,9 @@ export default React.createClass({
     onCancel: React.PropTypes.func.isRequired,
     onSave: React.PropTypes.func.isRequired,
     placement: React.PropTypes.oneOf(['left', 'right']),
+    saveButtonType: React.PropTypes.oneOf(['button', 'submit']),
     showCancel: React.PropTypes.bool,
     showSave: React.PropTypes.bool,
-    formButtons: React.PropTypes.bool,
     className: React.PropTypes.string
   },
 
@@ -30,10 +30,10 @@ export default React.createClass({
       saveStyle: 'success',
       cancelLabel: 'Cancel',
       placement: 'right',
+      saveButtonType: 'button',
       isDisabled: false,
       showSave: true,
-      showCancel: true,
-      formButtons: false
+      showCancel: true
     };
   },
 
@@ -68,7 +68,7 @@ export default React.createClass({
     if (this.props.showSave) {
       return (
         <Button
-          type={this.props.formButtons ? 'submit' : 'button'}
+          type={this.props.saveButtonType}
           bsStyle={this.props.saveStyle}
           disabled={this.props.isSaving || this.props.isDisabled}
           onClick={this.props.onSave}
