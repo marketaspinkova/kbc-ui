@@ -43,7 +43,7 @@ export default React.createClass({
       <CodeMirror
         theme="solarized"
         lineNumbers={true}
-        defaultValue={this.state.parametersString}
+        value={this.state.parametersString}
         readOnly={!this.props.isEditable}
         cursorHeight={!this.props.isEditable ? 0 : 1}
         height="auto"
