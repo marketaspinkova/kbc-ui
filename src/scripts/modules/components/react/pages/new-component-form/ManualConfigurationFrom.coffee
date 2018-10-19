@@ -41,11 +41,8 @@ module.exports = React.createClass
                 component: @props.component
             p null, @props.component.get 'description'
       ModalBody
-        className: 'modal-configuration-body'
-        div className: 'container col-md-12',
-          div className: 'row',
-            div className: 'col-xs-12',
-              p null, @_text()
+        className: 'modal-configuration-body',
+          p null, @_text()
       ModalFooter null,
 
         ButtonToolbar null,
