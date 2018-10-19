@@ -54,7 +54,7 @@ export default React.createClass({
     });
 
     return (
-      <div style={{'max-height': '80vh', overflow: 'auto'}}>
+      <div style={{maxHeight: '80vh', overflow: 'auto'}}>
         <Table responsive className="table table-striped">
           {headerRow}
           <tbody>
