@@ -1,6 +1,4 @@
 import React from 'react';
-import ComponentsStore from '../../../../components/stores/ComponentsStore';
-import ComponentName from '../../../../../react/common/ComponentName';
 
 export default React.createClass({
   propTypes: {
@@ -12,16 +10,12 @@ export default React.createClass({
     return { tasksCount: 3 };
   },
 
-  getInitialState() {
-    return { components: ComponentsStore.getAll() };
-  },
-
   render() {
     const hasMoreTasks = this.props.tasks.size > this.props.tasksCount;
 
     return (
       <span>
-        {this.props.tasks.size === 0 ? (
+        {this.props.tasks.count() === 0 ? (
           'Orchestration has no assigned tasks'
         ) : (
           <span>
@@ -30,11 +24,7 @@ export default React.createClass({
               .map((task, index, tasks) => {
                 return (
                   <span key={task.get('id')}>
-                    {this.state.components.get(task.get('component')) ? (
-                      <ComponentName component={this.state.components.get(task.get('component'))} />
-                    ) : (
-                      <span>{task.get('componentUrl') ? task.get('componentUrl') : task.get('component')}</span>
-                    )}
+                    {task.getIn(['config', 'name'], 'N/A')}
                     {index === tasks.size - 2 && !hasMoreTasks && ' and '}
                     {(index < tasks.size - 2 || (index === tasks.size - 2 && hasMoreTasks)) && ', '}
                   </span>
