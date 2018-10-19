@@ -20,11 +20,12 @@ export default React.createClass({
         ) : (
           <span>
             {this.props.tasks
+              .filter(task => task.getIn(['config', 'name'], false))
               .take(this.props.tasksCount)
               .map((task, index, tasks) => {
                 return (
                   <span key={task.get('id')}>
-                    {task.getIn(['config', 'name'], 'N/A')}
+                    {task.getIn(['config', 'name'])}
                     {index === tasks.size - 2 && !hasMoreTasks && ' and '}
                     {(index < tasks.size - 2 || (index === tasks.size - 2 && hasMoreTasks)) && ', '}
                   </span>
