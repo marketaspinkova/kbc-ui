@@ -3,7 +3,8 @@ import { fromJS, List } from 'immutable';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 
 // actions and stores
-import { dephaseTasks, rephaseTasks, loadOrchestrationJobs } from '../../../ActionCreators';
+import ActionCreators from '../../../ActionCreators';
+const { dephaseTasks, rephaseTasks, loadOrchestrationJobs } = ActionCreators;
 import OrchestrationStore from '../../../stores/OrchestrationsStore';
 import OrchestrationJobsStore from '../../../stores/OrchestrationJobsStore';
 import RoutesStore from '../../../../../stores/RoutesStore';

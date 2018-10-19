@@ -1,6 +1,6 @@
 _ = require 'underscore'
 OrchestrationsStore = require('../orchestrations/stores/OrchestrationsStore').default
-OrchestrationsActions = require '../orchestrations/ActionCreators'
+OrchestrationsActions = require('../orchestrations/ActionCreators').default
 {fromJS} = require 'immutable'
 
 storageInputFileTemplate = (fileId) ->

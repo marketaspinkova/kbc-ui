@@ -1,8 +1,6 @@
 import React from 'react';
 import RunOrchestrationModal from '../modals/RunOrchestration';
-import {runOrchestration} from '../../ActionCreators';
-import {startOrchestrationRunTasksEdit} from '../../ActionCreators';
-import {cancelOrchestrationRunTasksEdit} from '../../ActionCreators';
+import ActionCreators from '../../ActionCreators';
 
 export default React.createClass({
   propTypes: {
@@ -41,11 +39,11 @@ export default React.createClass({
   },
 
   handleOnOpen() {
-    startOrchestrationRunTasksEdit(this.props.orchestration.get('id'));
+    ActionCreators.startOrchestrationRunTasksEdit(this.props.orchestration.get('id'));
   },
 
   handleRunCancel() {
-    cancelOrchestrationRunTasksEdit(this.props.orchestration.get('id'));
+    ActionCreators.cancelOrchestrationRunTasksEdit(this.props.orchestration.get('id'));
   },
 
   handleRunStart() {
@@ -53,14 +51,16 @@ export default React.createClass({
       isLoading: true
     });
 
-    runOrchestration(this.props.orchestration.get('id'), (this.props.tasks) ? this.props.tasks : null, this.props.notify)
-      .finally(() => {
-        if (this.isMounted()) {
-          this.setState({
-            isLoading: false
-          });
-        }
-      });
+    ActionCreators.runOrchestration(
+      this.props.orchestration.get('id'),
+      this.props.tasks ? this.props.tasks : null,
+      this.props.notify
+    ).finally(() => {
+      if (this.isMounted()) {
+        this.setState({
+          isLoading: false
+        });
+      }
+    });
   }
-
 });
