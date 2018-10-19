@@ -62,6 +62,7 @@ export default React.createClass({
                     <FormControl
                       type="number"
                       min={1}
+                      autoFocus
                       value={parseInt(this.state.phase, 10)}
                       onChange={this.handlePhaseChange}
                       disabled={this.state.isSaving}
@@ -73,6 +74,7 @@ export default React.createClass({
             </Modal.Body>
             <Modal.Footer>
               <ConfirmButtons
+                saveButtonType="submit"
                 isSaving={this.state.isSaving}
                 onCancel={this.close}
                 onSave={this.handleSubmit}
