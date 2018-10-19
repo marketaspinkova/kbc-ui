@@ -13,6 +13,7 @@ import OrchestrationJobsStore from './stores/OrchestrationJobsStore';
 import Promise from 'bluebird';
 import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
 import VersionsActionCreators from '../components/VersionsActionCreators';
+import InstalledComponentsActionCreators from '../components/InstalledComponentsActionCreators';
 
 const rephaseTasks = tasks => {
   const isNullPhase = phase => phase === null || phase === 0 || typeof phase === 'undefined';
@@ -187,13 +188,20 @@ export default {
   },
 
   createOrchestration(data) {
-    return orchestrationsApi.createOrchestration(data).then(newOrchestration => {
-      dispatcher.handleViewAction({
-        type: constants.ActionTypes.ORCHESTRATION_CREATE_SUCCESS,
-        orchestration: newOrchestration
+    let newOrchestration = {};
+    return orchestrationsApi
+      .createOrchestration(data)
+      .then(orchestration => {
+        newOrchestration = orchestration;
+        return InstalledComponentsActionCreators.loadInstalledComponentsForce();
+      })
+      .then(() => {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.ORCHESTRATION_CREATE_SUCCESS,
+          orchestration: newOrchestration
+        });
+        return RoutesStore.getRouter().transitionTo('orchestration', { orchestrationId: newOrchestration.id });
       });
-      return RoutesStore.getRouter().transitionTo('orchestration', { orchestrationId: newOrchestration.id });
-    });
   },
 
   /*
