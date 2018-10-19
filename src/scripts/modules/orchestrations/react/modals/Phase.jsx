@@ -59,7 +59,7 @@ export default React.createClass({
           </Modal.Body>
           <Modal.Footer>
             <ConfirmButtons
-              formButtons={true}
+              saveButtonType={'submit'}
               saveLabel="Rename"
               isDisabled={!this.isValid()}
               onCancel={this.closeModal}
