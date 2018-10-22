@@ -103,11 +103,11 @@ export default React.createClass({
           placeholder="myfolder/myfile.csv"
           disabled={this.props.disabled}
           help={(<span>Filename including folders or a prefix. Do not type <code>*</code> or <code>%</code> wildcards, use <strong>Wildcard</strong> checkbox instead.</span>)}
-          />
+        />
         <PanelWithDetails
           defaultExpanded={this.props.value.newFilesOnly || this.props.value.wildcard || this.props.value.subfolders}
           placement="bottom"
-          >
+        >
           <Input
             type="checkbox"
             label="New Files Only"
@@ -118,7 +118,7 @@ export default React.createClass({
             }}
             disabled={this.props.disabled}
             help={(<span>Every job stores the timestamp of the last downloaded file and a subsequent job can pick up from there.</span>)}
-            />
+          />
           <Input
             type="checkbox"
             label="Wildcard"
@@ -133,7 +133,7 @@ export default React.createClass({
             }}
             disabled={this.props.disabled}
             help={(<span>Match all files beginning with the specified key.</span>)}
-            />
+          />
           <Input
             type="checkbox"
             label="Subfolders"
@@ -144,7 +144,7 @@ export default React.createClass({
             }}
             disabled={this.props.disabled || !this.props.value.wildcard}
             help={(<span>Download subfolders recursively.</span>)}
-            />
+          />
         </PanelWithDetails>
         <h3>CSV Settings</h3>
         <CsvDelimiterInput
@@ -169,7 +169,7 @@ export default React.createClass({
           placeholder={'"'}
           disabled={this.props.disabled}
           help={(<span>Field enclosure used in CSV file. Default value is <code>"</code>.</span>)}
-          />
+        />
         <div className="form-group">
           <div className="col-xs-4 control-label">Header</div>
           <div className="col-xs-8">
@@ -203,7 +203,7 @@ export default React.createClass({
           placeholder="mytable"
           disabled={this.props.disabled}
           help={(<span>Name of the table stored in Storage.</span>)}
-          />
+        />
         <Input
           type="checkbox"
           label="Incremental Load"
@@ -214,7 +214,7 @@ export default React.createClass({
           }}
           help={(<span>If incremental load is turned on, table will be updated instead of rewritten. Tables with primary key will update rows, tables without primary key will append rows.</span>)}
           disabled={this.props.disabled}
-          />
+        />
         <div className="form-group">
           <div className="col-xs-4 control-label">Primary Key</div>
           <div className="col-xs-8">
@@ -245,11 +245,11 @@ export default React.createClass({
           }}
           disabled={this.props.disabled}
           help={(<span>Decompress downloaded file(s). All files in all archives will be imported into a single Storage table.</span>)}
-          />
+        />
         <PanelWithDetails
           defaultExpanded={this.props.value.addFilenameColumn || this.props.value.addRowNumberColumn}
           placement="bottom"
-          >
+        >
           <Input
             type="checkbox"
             label="Add Filename Column"
@@ -260,7 +260,7 @@ export default React.createClass({
             }}
             help={(<span>Add an <code>s3_filename</code> column that will store the processed file name.</span>)}
             disabled={this.props.disabled}
-            />
+          />
           <Input
             type="checkbox"
             label="Add Row Number Column"
@@ -271,7 +271,7 @@ export default React.createClass({
             }}
             help={(<span>Add an <code>s3_row_number</code> column that will store the row number from the processed file.</span>)}
             disabled={this.props.disabled}
-            />
+          />
         </PanelWithDetails>
       </div>
     );
