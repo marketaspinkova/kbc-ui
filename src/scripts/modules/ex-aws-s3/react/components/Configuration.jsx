@@ -35,8 +35,8 @@ export default React.createClass({
       incremental: PropTypes.bool.isRequired,
       delimiter: PropTypes.string.isRequired,
       enclosure: PropTypes.string.isRequired,
-      columns: PropTypes.array.isRequired,
       columnsFrom: PropTypes.oneOf(['manual', 'header', 'auto']),
+      columns: PropTypes.array.isRequired,
       primaryKey: PropTypes.array.isRequired,
       addRowNumberColumn: PropTypes.bool.isRequired,
       addFilenameColumn: PropTypes.bool.isRequired
