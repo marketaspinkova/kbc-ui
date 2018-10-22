@@ -71,17 +71,17 @@ export default React.createClass({
       <Panel header={header} key={task.get('id')} eventKey={task.get('id')}>
         {task.get('startTime') && <div className="pull-right">{date.format(task.get('startTime'))}</div>}
         {task.has('config') && (
-          <div>
+          <p>
             <strong>{'Configuration '}</strong>
             <ComponentConfigurationLink componentId={task.get('component')} configId={task.getIn(['config', 'id'])}>
               {task.getIn(['config', 'name'])}
             </ComponentConfigurationLink>
-          </div>
+          </p>
         )}
         {task.get('runUrl') && (
-          <div>
+          <p>
             <strong>POST</strong> {task.get('runUrl')}
-          </div>
+          </p>
         )}
         {task.get('runParameters') &&
           task.get('runParameters').size && (
@@ -90,11 +90,11 @@ export default React.createClass({
             <Tree data={task.get('runParameters')} />
           </div>
         )}
-        {task.get('response') &&
-          task.get('response').size && (
+        {task.getIn(['response', 'params']) &&
+          task.getIn(['response', 'params']).size && (
           <div>
-            <h5>Response</h5>
-            <Tree data={task.get('response')} />
+            <h5>Response parameters</h5>
+            <Tree data={task.getIn(['response', 'params'])} />
           </div>
         )}
       </Panel>
