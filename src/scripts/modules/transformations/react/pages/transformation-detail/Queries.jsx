@@ -45,6 +45,10 @@ export default React.createClass({
     };
   },
 
+  componentDidMount() {
+    this._validateQueries();
+  },
+
   componentDidUpdate(prevProps) {
     if (this._canBeValidated(prevProps.transformation)) {
       this._validateQueries();
@@ -151,7 +155,7 @@ export default React.createClass({
 
     return SqlDepAnalyzerApi.validate(this.props.bucketId, this.props.transformation.get('id'))
       .then(response => {
-        const errors = fromJS(response);
+        const errors = fromJS(response).filter(error => error.get('transformation') !== 'undefined');
 
         if (errors.count()) {
           ApplicationActionCreators.sendNotification({
@@ -164,7 +168,7 @@ export default React.createClass({
           });
         }
 
-        return this.setState({
+        this.setState({
           validationRunning: false,
           errors: errors
         });
