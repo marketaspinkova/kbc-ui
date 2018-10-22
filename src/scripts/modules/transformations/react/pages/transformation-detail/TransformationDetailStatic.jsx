@@ -228,7 +228,7 @@ export default React.createClass({
                 {'OpenRefine transformations are now in public beta. '}
                 {'Please be aware, that things may change before it makes to production. '}
                 {'If you encounter any errors, please '}
-                <a href="" onClick={contactSupport}>contact us</a>
+                <button className="btn btn-link btn-link-inline" onClick={contactSupport}>contact us</button>
                 {' or read more in the '}
                 <a href="https://help.keboola.com/manipulation/transformations/openrefine/">documentation</a>.
               </span>
