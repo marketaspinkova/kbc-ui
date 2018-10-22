@@ -651,6 +651,59 @@ export const cases = {
       }
     }
   },
+  autoColumns: {
+    localState: {
+      bucket: 'mybucket',
+      key: 'mykey',
+      name: 'mytable',
+      wildcard: false,
+      subfolders: false,
+      incremental: false,
+      newFilesOnly: false,
+      primaryKey: [],
+      delimiter: ',',
+      enclosure: '\'',
+      columns: [],
+      columnsFrom: 'auto',
+      decompress: false,
+      addRowNumberColumn: false,
+      addFilenameColumn: false
+    },
+    configuration: {
+      parameters: {
+        bucket: 'mybucket',
+        key: 'mykey',
+        includeSubfolders: false,
+        newFilesOnly: false
+      },
+      processors: {
+        after: [
+          {
+            definition: {
+              component: 'keboola.processor-move-files'
+            },
+            parameters: {
+              direction: 'tables',
+              addCsvSuffix: true,
+              folder: 'mytable'
+            }
+          },
+          {
+            definition: {
+              component: 'keboola.processor-create-manifest'
+            },
+            parameters: {
+              delimiter: ',',
+              enclosure: '\'',
+              incremental: false,
+              primary_key: [],
+              columns_from: 'auto'
+            }
+          }
+        ]
+      }
+    }
+  },
   decompress: {
     localState: {
       bucket: 'mybucket',

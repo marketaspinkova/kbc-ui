@@ -26,6 +26,8 @@ export function createConfiguration(localState) {
         lines: 1
       }
     });
+  } else if (localState.get('columnsFrom') === 'auto') {
+    createManifestProcessor = createManifestProcessor.setIn(['parameters', 'columns_from'], 'auto');
   } else if (localState.get('columnsFrom', 'manual') === 'manual') {
     createManifestProcessor = createManifestProcessor.setIn(['parameters', 'columns'], localState.get('columns', Immutable.List()));
   }

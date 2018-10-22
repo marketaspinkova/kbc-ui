@@ -7,12 +7,16 @@ import {PanelWithDetails} from '@keboola/indigo-ui';
 
 const columnsFromOptions = [
   {
-    label: 'CSV files contain a header row',
+    label: 'CSV file(s) contain(s) a header row',
     value: 'header'
   },
   {
-    label: 'Headerless CSV files',
+    label: 'Set column names manually',
     value: 'manual'
+  },
+  {
+    label: 'Generate column names as col_1, col_2, ...',
+    value: 'auto'
   }
 ];
 
@@ -28,11 +32,11 @@ export default React.createClass({
       newFilesOnly: PropTypes.bool.isRequired,
       decompress: PropTypes.bool.isRequired,
       name: PropTypes.string.isRequired,
-      incremental: PropTypes.string.isRequired,
+      incremental: PropTypes.bool.isRequired,
       delimiter: PropTypes.string.isRequired,
       enclosure: PropTypes.string.isRequired,
       columns: PropTypes.array.isRequired,
-      columnsFrom: PropTypes.oneOf(['manual', 'header']),
+      columnsFrom: PropTypes.oneOf(['manual', 'header', 'auto']),
       primaryKey: PropTypes.array.isRequired,
       addRowNumberColumn: PropTypes.bool.isRequired,
       addFilenameColumn: PropTypes.bool.isRequired
@@ -46,7 +50,7 @@ export default React.createClass({
       const props = this.props;
       return (
         <div className="form-group">
-          <div className="col-xs-4 control-label">CSV Header</div>
+          <div className="col-xs-4 control-label">Column Names</div>
           <div className="col-xs-8">
             <Select
               name="columns"
