@@ -5,7 +5,7 @@ _ = require 'underscore'
 Button = React.createFactory(require('react-bootstrap').Button)
 {Loader} = require('@keboola/indigo-ui')
 Markdown = React.createFactory(require('./Markdown').default)
-Textarea = require 'react-textarea-autosize'
+Textarea = React.createFactory(require('react-textarea-autosize').default)
 
 {div, span, textarea, button, a} = React.DOM
 
@@ -67,19 +67,16 @@ EditArea = React.createFactory React.createClass
   _onChange: (e) ->
     @props.onChange e.target.value
 
-  componentDidMount: ->
-    @refs.textArea.focus()
-
   render: ->
     div className: 'form-inline kbc-inline-edit kbc-inline-textarea',
-      React.createElement Textarea,
-        ref: 'textArea'
+      Textarea
+        autoFocus: true
         value: @props.text
         disabled: @props.isSaving
         placeholder: @props.placeholder
         onChange: @_onChange
         className: 'form-control'
-        rows: 2
+        minRows: 2
       span className: 'kbc-inline-edit-buttons',
         if @props.isSaving
           span null,
