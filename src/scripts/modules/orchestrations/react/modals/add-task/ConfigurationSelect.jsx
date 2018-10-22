@@ -35,7 +35,7 @@ export default React.createClass({
             .map(configuration => {
               return (
                 <a
-                  className="list-group-item configuration-select-list-item"
+                  className="list-group-item configuration-select-list-group-item"
                   key={configuration.get('id')}
                   onClick={this._handleSelect.bind(this, configuration)}
                 >
