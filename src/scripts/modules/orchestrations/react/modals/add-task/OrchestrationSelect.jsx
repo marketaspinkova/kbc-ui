@@ -1,7 +1,12 @@
 import React from 'react';
 import ComponentIcon from '../../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../../react/common/ComponentName';
+import InstalledComponentsStore from  '../../../../components/stores/InstalledComponentsStore';
+
+
 import descriptionExcerpt from '../../../../../utils/descriptionExcerpt';
+
+/* eslint-disable no-console */
 
 export default React.createClass({
   propTypes: {
@@ -42,7 +47,7 @@ export default React.createClass({
                   <span>
                     <strong>{configuration.get('name')}</strong>
                     <br/>
-                    <small>{descriptionExcerpt(configuration.get('description'))}</small>
+                    <small>{descriptionExcerpt(InstalledComponentsStore.getConfig('orchestrator', configuration.get('id').toString()).get('description'))}</small>
                   </span>
                   <i className="fa fa-plus-circle pull-right" />
                 </a>
