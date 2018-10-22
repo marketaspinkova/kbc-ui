@@ -7,6 +7,7 @@ import Edit from './QueriesEdit';
 import Result from '../../components/validation/Result';
 import Clipboard from '../../../../../react/common/Clipboard';
 import SaveButtons from '../../../../../react/common/SaveButtons';
+import sqlValidationErrors from '../../../../components/react/components/notifications/sqlValidationErrors';
 import { AlertBlock } from '@keboola/indigo-ui';
 import { Col, Row } from 'react-bootstrap';
 import contactSupport from '../../../../../utils/contactSupport';
@@ -46,12 +47,12 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    this._validateQueries();
+    this.validateQueries();
   },
 
   componentDidUpdate(prevProps) {
-    if (this._canBeValidated(prevProps.transformation)) {
-      this._validateQueries();
+    if (this.canBeValidated(prevProps.transformation)) {
+      this.validateQueries();
     }
   },
 
@@ -63,15 +64,15 @@ export default React.createClass({
           <small>
             <Clipboard text={this.props.queries} />
           </small>
-          {this._renderButtons()}
+          {this.renderButtons()}
         </h2>
-        {this._renderValidation()}
-        {this._renderQueries()}
+        {this.renderValidation()}
+        {this.renderQueries()}
       </div>
     );
   },
 
-  _renderButtons() {
+  renderButtons() {
     return (
       <span className="pull-right">
         <SaveButtons
@@ -85,7 +86,7 @@ export default React.createClass({
     );
   },
 
-  _renderQueries() {
+  renderQueries() {
     return (
       <Edit
         queries={this.props.queries}
@@ -98,59 +99,57 @@ export default React.createClass({
     );
   },
 
-  _renderValidation() {
+  renderValidation() {
     if (!this.state.errors.count()) {
       return null;
     }
 
     return (
-      <AlertBlock type="danger" title={this._validationErrorMessage(this.state.errors)}>
-        <Row>
-          <Col md={9}>
-            <p>
-              Your query has been saved, however the script didn't pass validation. Ignoring errors will result in
-              failed job, when running transformation.
-            </p>
-            <p>Tables defined in Output Mapping that does not yet exist in Storage are not validated.</p>
-            <h4>
-              Please resolve folowing error
-              {this.state.errors.count() > 1 ? 's' : ''}:
-            </h4>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={12}>
-            <ul className="list-unstyled">
-              {this.state.errors.map((error, index) => (
-                <li key={index}>
-                  <Result
-                    error={error}
-                    bucketId={this.props.bucketId}
-                    onErrorMessageClick={this._handleErrorMessageClick}
-                  />
+      <div id="sql-queries-block">
+        <AlertBlock type="danger" title={this.validationErrorMessage(this.state.errors)}>
+          <Row>
+            <Col md={9}>
+              <p>Queries haven't passed the validation. Ignoring errors may result in a failed job.</p>
+              <h4>
+                Please resolve folowing error
+                {this.state.errors.count() > 1 ? 's' : ''}:
+              </h4>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={12}>
+              <ul className="list-unstyled">
+                {this.state.errors.map((error, index) => (
+                  <li key={index}>
+                    <Result
+                      error={error}
+                      bucketId={this.props.bucketId}
+                      onErrorMessageClick={this.handleErrorMessageClick}
+                    />
+                  </li>
+                ))}
+                <li key={this.state.errors.count() + 1}>
+                  Not an error? Please <a onClick={() => contactSupport({ type: 'project' })}>contact us</a>.
                 </li>
-              ))}
-              <li key={this.state.errors.count() + 1}>
-                <p>
-                  <b>Not an error?</b> Please <a onClick={() => contactSupport({ type: 'project' })}>contact us</a>.
-                </p>
-              </li>
-            </ul>
-          </Col>
-        </Row>
-      </AlertBlock>
+              </ul>
+            </Col>
+          </Row>
+        </AlertBlock>
+      </div>
     );
   },
 
-  _handleErrorMessageClick(lineNumber) {
+  handleErrorMessageClick(lineNumber) {
     this.setState({
       highlightQueryNumber: lineNumber
     });
   },
 
-  _validateQueries() {
+  validateQueries() {
     this.setState({
-      validationRunning: true
+      highlightQueryNumber: null,
+      validationRunning: true,
+      errors: Map()
     });
 
     return SqlDepAnalyzerApi.validate(this.props.bucketId, this.props.transformation.get('id'))
@@ -159,12 +158,10 @@ export default React.createClass({
 
         if (errors.count()) {
           ApplicationActionCreators.sendNotification({
-            message: this._validationErrorMessage(errors),
+            message: sqlValidationErrors(errors.count(), () => {
+              document.getElementById('sql-queries-block').scrollIntoView();
+            }),
             type: 'error'
-          });
-        } else {
-          this.setState({
-            highlightQueryNumber: null
           });
         }
 
@@ -181,11 +178,11 @@ export default React.createClass({
       });
   },
 
-  _validationErrorMessage(errors) {
+  validationErrorMessage(errors) {
     return 'SQL Validation found ' + errors.count() + ' error' + (errors.count() > 1 ? 's.' : '.');
   },
 
-  _canBeValidated(transformation) {
+  canBeValidated(transformation) {
     return (
       this.props.transformation.get('backend') === 'snowflake' && !this.props.transformation.equals(transformation)
     );

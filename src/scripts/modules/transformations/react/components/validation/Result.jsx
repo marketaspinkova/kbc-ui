@@ -1,4 +1,5 @@
 import React from 'react';
+import { endsWith } from 'underscore.string';
 import ComponentConfigurationRowLink from '../../../../components/react/components/ComponentConfigurationRowLink';
 import TransformationsStore from '../../../stores/TransformationsStore';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
@@ -22,23 +23,27 @@ export default React.createClass({
   },
 
   render() {
-    const messageTitle = this._renderTitle();
-    const message = <pre>{this.props.error.get('message')}</pre>;
+    const messageTitle = this.renderTitle();
+    const message = endsWith(this.props.error.get('message'), '^') ? (
+      <pre>{this.props.error.get('message')}</pre>
+    ) : (
+      this.props.error.get('message')
+    );
 
     if (messageTitle) {
       return (
-        <p>
+        <div>
           {messageTitle}
           <br />
           {message}
-        </p>
+        </div>
       );
     }
 
-    return <p>{message}</p>;
+    return <div>{message}</div>;
   },
 
-  _renderTitle() {
+  renderTitle() {
     const name = this.state.transformation.get('name');
     const object = this.props.error.getIn(['object', 'id']);
     const errorType = this.props.error.getIn(['object', 'type']);
