@@ -9,7 +9,7 @@ import CurrentUser from './react/layout/CurrentUser';
 import ProjectsList from './react/layout/project-select/List';
 import NewProjectModal from './react/layout/NewProjectModal';
 
-export default {
+module.exports = {
   helpers,
   parts: {
     ProjectSelect,

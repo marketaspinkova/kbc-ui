@@ -140,7 +140,7 @@ const startApp = appOptions => {
   });
 };
 
-export default {
+module.exports = {
   start: startApp,
   helpers
 };
