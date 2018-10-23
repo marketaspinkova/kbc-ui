@@ -11,7 +11,7 @@ export default (errors, onClick) => {
       return (
         <span onClick={this.props.onClick}>
           SQL Validation found{' '}
-          <Button className="btn btn-link" onClick={onClick} style={{ padding: 0 }}>
+          <Button className="btn btn-link-inline" onClick={onClick}>
             <b>
               {errors} error
               {errors > 1 ? 's' : ''}.
