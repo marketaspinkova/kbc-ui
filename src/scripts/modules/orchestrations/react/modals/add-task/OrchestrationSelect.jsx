@@ -1,13 +1,13 @@
 import React from 'react';
 import ComponentIcon from '../../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../../react/common/ComponentName';
-import InstalledComponentsStore from  '../../../../components/stores/InstalledComponentsStore';
 import descriptionExcerpt from '../../../../../utils/descriptionExcerpt';
 
 export default React.createClass({
   propTypes: {
     component: React.PropTypes.object.isRequired,
     orchestrations: React.PropTypes.object.isRequired,
+    orchestratorConfigurations: React.PropTypes.object.isRequired,
     onReset: React.PropTypes.func.isRequired,
     onConfigurationSelect: React.PropTypes.func.isRequired
   },
@@ -43,7 +43,11 @@ export default React.createClass({
                   <span>
                     <strong>{configuration.get('name')}</strong>
                     <br/>
-                    <small>{descriptionExcerpt(InstalledComponentsStore.getConfig('orchestrator', configuration.get('id').toString()).get('description'))}</small>
+                    <small>
+                      {descriptionExcerpt(
+                        this.props.orchestratorConfigurations.getIn([configuration.get('id').toString(), 'description'])
+                      )}
+                    </small>
                   </span>
                   <i className="fa fa-plus-circle pull-right" />
                 </a>

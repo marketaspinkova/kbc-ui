@@ -121,6 +121,7 @@ export default React.createClass({
               orchestrations={this.state.orchestrations}
               onReset={this._handleComponentReset}
               onConfigurationSelect={this._handleConfigurationSelect}
+              orchestratorConfigurations={this._getFilteredComponents().getIn(['orchestrator', 'configurations'])}
             />
           </div>
         );
