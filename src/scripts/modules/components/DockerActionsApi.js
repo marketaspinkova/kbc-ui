@@ -19,13 +19,6 @@ export default function(componentId, action, body) {
     .send(body)
     .promise()
     .then(
-      (response) => response.body,
-      (err) => {
-        if (err.response) {
-          return err.response.body;
-        } else {
-          return err;
-        }
-      }
+      (response) => response.body
     );
 }
