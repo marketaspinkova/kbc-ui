@@ -1,6 +1,6 @@
 React = require 'react'
 
-createStoreMixin = require '../../../../react/mixins/createStoreMixin'
+createStoreMixin = require('../../../../react/mixins/createStoreMixin').default
 
 {Link} = require('react-router')
 NewComponentButton = require './NewComponentButton'
@@ -20,4 +20,3 @@ module.exports = React.createClass
         to: @props.addRoute
         text: 'New ' + @props.type[0].toUpperCase() + @props.type.substr(1)
         type: @props.type
-

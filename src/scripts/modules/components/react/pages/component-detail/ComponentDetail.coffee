@@ -1,14 +1,14 @@
 React = require 'react'
 fuzzy = require('fuzzy')
 
-createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
+createStoreMixin = require('../../../../../react/mixins/createStoreMixin').default
 RoutesStore = require '../../../../../stores/RoutesStore'
 ComponentsStore = require '../../../stores/ComponentsStore'
-InstalledComponentsStore = require '../../../stores/InstalledComponentsStore.coffee'
+InstalledComponentsStore = require '../../../stores/InstalledComponentsStore'
 InstalledComponentsActionCreators = require '../../../InstalledComponentsActionCreators'
 ApplicationStore = require '../../../../../stores/ApplicationStore'
 
-VendorInfo = React.createFactory(require './VendorInfo.coffee')
+VendorInfo = React.createFactory(require './VendorInfo')
 ConfigurationRow = require('../ConfigurationRow').default
 Immutable = require 'immutable'
 ComponentEmptyState = require('../../components/ComponentEmptyState').default

@@ -12,7 +12,7 @@ NewDimensionForm = React.createFactory(require('./../../components/NewDimensionF
 {Tabs, Tab} = require 'react-bootstrap'
 actionCreators = require '../../../actionCreators'
 dateDimensionStore = require '../../../dateDimensionsStore'
-createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
+createStoreMixin = require('../../../../../react/mixins/createStoreMixin').default
 
 {div, p, span, table, tbody, thead, tr, th, td, div, a} = React.DOM
 

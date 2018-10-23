@@ -3,9 +3,9 @@ React = require 'react'
 {button, i, div} = React.DOM
 
 Link = React.createFactory(require('react-router').Link)
-RoutesStore = require('../../../../stores/RoutesStore.coffee')
-ComponentsStore = require('../../stores/ComponentsStore.coffee')
-createStoreMixin = require('../../../../react/mixins/createStoreMixin.coffee')
+RoutesStore = require('../../../../stores/RoutesStore')
+ComponentsStore = require('../../stores/ComponentsStore')
+createStoreMixin = require('../../../../react/mixins/createStoreMixin').default
 
 Modal = React.createFactory(require('react-bootstrap').Modal)
 Button = React.createFactory(require('react-bootstrap').Button)

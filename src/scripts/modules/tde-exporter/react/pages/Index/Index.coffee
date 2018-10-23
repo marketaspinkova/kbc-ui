@@ -12,7 +12,7 @@ Link = React.createFactory(require('react-router').Link)
 InstalledComponentsStore = require '../../../../components/stores/InstalledComponentsStore'
 StorageFilesStore = require '../../../../components/stores/StorageFilesStore'
 RoutesStore = require '../../../../../stores/RoutesStore'
-createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
+createStoreMixin = require('../../../../../react/mixins/createStoreMixin').default
 TableRow = require './TableRow'
 
 Tooltip = require('../../../../../react/common/Tooltip').default

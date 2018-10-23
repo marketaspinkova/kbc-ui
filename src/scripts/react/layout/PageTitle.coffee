@@ -1,7 +1,7 @@
 React = require 'react'
 DocumentTitle = React.createFactory(require 'react-document-title')
 
-createStoreMixin = require '../mixins/createStoreMixin'
+createStoreMixin = require('../mixins/createStoreMixin').default
 RoutesStore = require '../../stores/RoutesStore'
 ApplicationStore = require '../../stores/ApplicationStore'
 
