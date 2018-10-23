@@ -67,7 +67,9 @@ export default React.createClass({
       componentId: componentId,
       settings: settings,
       configurationId: configurationId,
+      configurationVersion: ConfigurationsStore.get(componentId, configurationId).get('version'),
       rowId: rowId,
+      rowVersion: row.get('version'),
       row: row,
 
       rawConfiguration: ConfigurationsStore.get(componentId, configurationId),
@@ -273,10 +275,20 @@ export default React.createClass({
             onChange={diff => this.onUpdateSection(key, diff)}
             value={this.state.configurationBySections.get(key).toJS()}
             onAction={actionName => {
-              const componentId = state.settings.get('componentId');
-              const actionDataFn = state.settings.getIn(['row', 'actions', actionName]);
-              const actionData = actionDataFn(state.rawConfiguration.get('configuration'), state.rawRowConfiguration.get('configuration'));
-              return dockerActions.callAction(componentId, actionName, actionData);
+              const action = state.settings.getIn(['row', 'actions']).find(actionItem => {
+                return actionItem.get('name') === actionName;
+              });
+              const actionData = action.get('body')(state.rawConfiguration.get('configuration'), state.rawRowConfiguration.get('configuration'));
+              return dockerActions.get(
+                state.settings.get('componentId'),
+                state.configurationId,
+                state.configurationVersion,
+                state.rowId,
+                state.rowVersion,
+                action.get('name'),
+                action.get('validity'),
+                actionData
+              );
             }}
             pendingActions={DockerActionsStore.getPendingActions(state.settings.get('componentId'))}
           />

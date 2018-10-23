@@ -13,6 +13,7 @@ export default React.createClass({
     }),
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired,
+    // actionsData: PropTypes.object.isRequired,
     onAction: PropTypes.func.isRequired,
     pendingActions: PropTypes.object.isRequired
   },
@@ -25,11 +26,12 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    this.props.onAction('info').then(
-      (response) =>
+    const infoAction = this.props.onAction('info');
+    infoAction.then(
+      (data) =>
         this.setState({
-          project: response.projectName,
-          bucket: response.bucket
+          project: data.get('projectName'),
+          bucket: data.get('bucket')
         })
     );
   },

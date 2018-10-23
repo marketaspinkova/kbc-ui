@@ -14,6 +14,8 @@ import targetProjectAdapter from './adapters/targetProject';
 import DestinationSection from './react/components/Destination';
 import destinationAdapter from './adapters/destination';
 
+import ValidityConstants from '../components/DockerActionsValidityConstants';
+
 const routeSettings = {
   componentId: 'keboola.wr-storage',
   componentType: 'writer',
@@ -32,18 +34,22 @@ const routeSettings = {
     ]
   },
   row: {
-    actions: {
-      info: function(configuration) {
-        return fromJS({
-          configData: {
-            parameters: {
-              '#token': configuration.getIn(['parameters', '#token']),
-              url: configuration.getIn(['parameters', 'url'])
+    actions: [
+      {
+        name: 'info',
+        validity: ValidityConstants.CONFIGURATION,
+        body: function(configuration) {
+          return fromJS({
+            configData: {
+              parameters: {
+                '#token': configuration.getIn(['parameters', '#token']),
+                url: configuration.getIn(['parameters', 'url'])
+              }
             }
-          }
-        });
+          });
+        }
       }
-    },
+    ],
     onConform: (configuration) => {
       const configDraft = fromJS({
         storage: {
