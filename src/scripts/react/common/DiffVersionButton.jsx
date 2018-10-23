@@ -80,20 +80,16 @@ export default React.createClass({
   renderLoading() {
     const Wrapper = this.props.buttonAsSpan ? 'span' : 'button';
 
-    if (this.props.isSmall) {
-      return (
-        <Wrapper className={this.props.buttonClassName}>
+    return (
+      <Wrapper className={this.props.buttonClassName}>
+        {this.props.isSmall ? (
           <small>
             <Loader />
             {this.props.buttonText}
           </small>
-        </Wrapper>
-      );
-    }
-
-    return (
-      <Wrapper className={this.props.buttonClassName}>
-        <Loader />
+        ) : (
+          <Loader />
+        )}
       </Wrapper>
     );
   },
