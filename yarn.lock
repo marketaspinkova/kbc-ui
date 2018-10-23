@@ -684,8 +684,8 @@
     to-fast-properties "^2.0.0"
 
 "@keboola/indigo-ui@^6.1.0":
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/@keboola/indigo-ui/-/indigo-ui-6.2.0.tgz#762d2bc73e7e92e6ce9179db384929f5a31f37c9"
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/@keboola/indigo-ui/-/indigo-ui-6.2.1.tgz#a5d83aeb42953d1417b250463bd31142b52fe1cf"
   dependencies:
     bootstrap "^3.3.7"
     classnames "^2.1.0"

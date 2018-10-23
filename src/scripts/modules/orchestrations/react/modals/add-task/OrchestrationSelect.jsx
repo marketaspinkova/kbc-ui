@@ -1,11 +1,13 @@
 import React from 'react';
 import ComponentIcon from '../../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../../react/common/ComponentName';
+import descriptionExcerpt from '../../../../../utils/descriptionExcerpt';
 
 export default React.createClass({
   propTypes: {
     component: React.PropTypes.object.isRequired,
     orchestrations: React.PropTypes.object.isRequired,
+    orchestratorConfigurations: React.PropTypes.object.isRequired,
     onReset: React.PropTypes.func.isRequired,
     onConfigurationSelect: React.PropTypes.func.isRequired
   },
@@ -34,11 +36,19 @@ export default React.createClass({
             .map(configuration => {
               return (
                 <a
-                  className="list-group-item"
+                  className="list-group-item  configuration-select-list-group-item"
                   key={configuration.get('id')}
                   onClick={this._handleSelect.bind(this, configuration)}
                 >
-                  {configuration.get('name')}
+                  <span>
+                    <strong>{configuration.get('name')}</strong>
+                    <br/>
+                    <small>
+                      {descriptionExcerpt(
+                        this.props.orchestratorConfigurations.getIn([configuration.get('id').toString(), 'description'])
+                      )}
+                    </small>
+                  </span>
                   <i className="fa fa-plus-circle pull-right" />
                 </a>
               );
