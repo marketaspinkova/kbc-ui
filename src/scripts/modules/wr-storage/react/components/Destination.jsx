@@ -13,7 +13,6 @@ export default React.createClass({
     }),
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired,
-    // actionsData: PropTypes.object.isRequired,
     onAction: PropTypes.func.isRequired,
     pendingActions: PropTypes.object.isRequired
   },
