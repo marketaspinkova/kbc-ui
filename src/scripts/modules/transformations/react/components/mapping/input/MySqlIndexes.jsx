@@ -26,7 +26,7 @@ export default React.createClass({
       return <div>No indexes set.</div>;
     }
 
-    const indexes = this.props.indexes
+    return this.props.indexes
       .map((index, key) => (
         <span key={key}>
           <span className="label label-default">
@@ -41,8 +41,6 @@ export default React.createClass({
         </span>
       ))
       .toArray();
-
-    return indexes;
   },
 
   render() {
