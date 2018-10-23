@@ -241,7 +241,7 @@ export default React.createClass({
                 <span>
                   {'MySQL transformations are deprecated. '}
                   {'Please migrate this transformation to Snowflake. '}
-                  {'If you encounter any issues, please contact us using the support button. '}
+                  {'If you encounter any issues, please contact us using the Support button in the menu on the left. '}
                   {'Learn more about the MySQL transformation deprecation '}
                   <a href="http://status.keboola.com/deprecating-mysql-storage-and-transformations">
                     timeline and reasons
