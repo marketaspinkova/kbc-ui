@@ -2,11 +2,7 @@ import React from 'react';
 import ComponentIcon from '../../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../../react/common/ComponentName';
 import InstalledComponentsStore from  '../../../../components/stores/InstalledComponentsStore';
-
-
 import descriptionExcerpt from '../../../../../utils/descriptionExcerpt';
-
-/* eslint-disable no-console */
 
 export default React.createClass({
   propTypes: {
