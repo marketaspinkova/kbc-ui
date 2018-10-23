@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
-import {Form, FormControl, FormGroup, ControlLabel, HelpBlock, Col, Checkbox} from 'react-bootstrap';
+import { Form, FormControl, FormGroup, ControlLabel, HelpBlock, Col, Checkbox } from 'react-bootstrap';
+import { Loader } from '@keboola/indigo-ui';
 
 export default React.createClass({
   mixins: [immutableMixin],
@@ -12,7 +13,8 @@ export default React.createClass({
     }),
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired,
-    onAction: PropTypes.func.isRequired
+    onAction: PropTypes.func.isRequired,
+    pendingActions: PropTypes.object.isRequired
   },
 
   getInitialState() {
@@ -32,6 +34,12 @@ export default React.createClass({
     );
   },
 
+  renderInfoActionLoader() {
+    if (this.props.pendingActions.has('info')) {
+      return (<Loader />);
+    }
+  },
+
   render() {
     const props = this.props;
     return (
@@ -43,6 +51,7 @@ export default React.createClass({
           </Col>
           <Col sm={8}>
             <FormControl.Static>
+              {this.renderInfoActionLoader()}
               {this.state.project}
             </FormControl.Static>
           </Col>
@@ -53,6 +62,7 @@ export default React.createClass({
           </Col>
           <Col sm={8}>
             <FormControl.Static>
+              {this.renderInfoActionLoader()}
               {this.state.bucket}
             </FormControl.Static>
           </Col>

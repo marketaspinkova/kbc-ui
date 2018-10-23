@@ -7,6 +7,7 @@ import RoutesStore from '../../../../stores/RoutesStore';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import ConfigurationsStore from '../../ConfigurationsStore';
 import TablesStore from '../../../components/stores/StorageTablesStore';
+import DockerActionsStore from '../../../components/stores/DockerActionsStore';
 import LatestJobsStore from '../../../jobs/stores/LatestJobsStore';
 
 // actions
@@ -29,10 +30,10 @@ import isParsableConfiguration from '../../utils/isParsableConfiguration';
 import sections from '../../utils/sections';
 
 // sync api
-import callAction from '../../../components/DockerActionsApi';
+import dockerActions from '../../../components/DockerActionsActionCreators';
 
 export default React.createClass({
-  mixins: [createStoreMixin(Store, TablesStore, LatestJobsStore)],
+  mixins: [createStoreMixin(Store, TablesStore, DockerActionsStore, LatestJobsStore)],
 
   getStateFromStores() {
     const settings = RoutesStore.getRouteSettings();
@@ -275,8 +276,9 @@ export default React.createClass({
               const componentId = state.settings.get('componentId');
               const actionDataFn = state.settings.getIn(['row', 'actions', actionName]);
               const actionData = actionDataFn(state.rawConfiguration.get('configuration'), state.rawRowConfiguration.get('configuration'));
-              return callAction(componentId, actionName, actionData);
+              return dockerActions.callAction(componentId, actionName, actionData);
             }}
+            pendingActions={DockerActionsStore.getPendingActions(state.settings.get('componentId'))}
           />
         </div>
       );
