@@ -1,10 +1,9 @@
 import React from 'react';
-import Tooltip from '../../react/common/Tooltip';
+import Tooltip from './Tooltip';
 import VersionsDiffModal from './VersionsDiffModal';
-import {Loader} from '@keboola/indigo-ui';
+import { Loader } from '@keboola/indigo-ui';
 
 export default React.createClass({
-
   propTypes: {
     version: React.PropTypes.object.isRequired,
     versionConfig: React.PropTypes.object.isRequired,
@@ -33,49 +32,69 @@ export default React.createClass({
   },
 
   closeModal() {
-    this.setState({'showModal': false});
+    this.setState({ showModal: false });
   },
 
   openModal() {
     if (this.props.isDisabled || this.props.isPending) return;
-    this.props.onLoadVersionConfig().then( () =>
-      this.setState({'showModal': true})
-    );
+    this.props.onLoadVersionConfig().then(() => this.setState({ showModal: true }));
   },
 
   render() {
-    const tooltipMsg = `Compare with previous (#${this.props.previousVersion.get('version')} to #${this.props.version.get('version')})`;
-    const content = [
-      this.props.isSmall ?
-        (<small key="diff-button-icon-and-text">
-          {this.renderIcon()}
-          {this.props.buttonText}
-        </small>)
-        :
-        (<span className="text-muted" key="diff-button-icon-and-text">
-          {this.renderIcon()}
-          {this.props.buttonText}
-        </span>),
-      this.renderDiffModal()
-    ];
+    if (this.props.isPending) {
+      return this.renderLoading();
+    }
 
-    const elemProps = {
-      className: this.props.buttonClassName,
-      style: {cursor: 'pointer'},
-      disabled: this.props.isDisabled,
-      onClick: this.openModal
-    };
-
-    const element =
-      this.props.buttonAsSpan ?
-        <span {...elemProps}> {content}</span>
-        :
-        <button {...elemProps}> {content} </button>;
+    const Wrapper = this.props.buttonAsSpan ? 'span' : 'button';
 
     return (
-      <Tooltip tooltip={this.props.tooltipMsg || tooltipMsg} placement="top">
-        {element}
+      <Tooltip tooltip={this.props.tooltipMsg || this.tooltipMsg()} placement="top" trigger={['hover']}>
+        <Wrapper
+          className={this.props.buttonClassName}
+          style={{ cursor: 'pointer' }}
+          disabled={this.props.isDisabled}
+          onClick={this.openModal}
+        >
+          {this.props.isSmall ? (
+            <small>
+              <em className="fa fa-fw fa-files-o" />
+              {this.props.buttonText}
+            </small>
+          ) : (
+            <span className="text-muted">
+              <em className="fa fa-fw fa-files-o" />
+              {this.props.buttonText}
+            </span>
+          )}
+          {this.renderDiffModal()}
+        </Wrapper>
       </Tooltip>
+    );
+  },
+
+  tooltipMsg() {
+    const { previousVersion, version } = this.props;
+    return `Compare with previous (#${previousVersion.get('version')} to #${version.get('version')})`;
+  },
+
+  renderLoading() {
+    const Wrapper = this.props.buttonAsSpan ? 'span' : 'button';
+
+    if (this.props.isSmall) {
+      return (
+        <Wrapper className={this.props.buttonClassName}>
+          <small>
+            <Loader />
+            {this.props.buttonText}
+          </small>
+        </Wrapper>
+      );
+    }
+
+    return (
+      <Wrapper className={this.props.buttonClassName}>
+        <Loader />
+      </Wrapper>
     );
   },
 
@@ -89,13 +108,5 @@ export default React.createClass({
         compareVersion={this.props.previousVersionConfig}
       />
     );
-  },
-
-  renderIcon() {
-    if (this.props.isPending) {
-      return <Loader className="fa-fw"/>;
-    }
-
-    return <em className="fa fa-fw fa-files-o" />;
   }
 });
