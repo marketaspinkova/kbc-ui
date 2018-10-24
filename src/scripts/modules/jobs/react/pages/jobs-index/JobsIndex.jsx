@@ -1,6 +1,7 @@
 import React from 'react';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import JobsStore from '../../../stores/JobsStore';
+import ApplicationStore from '../../../../../stores/ApplicationStore';
 import ActionCreators from '../../../ActionCreators';
 import QueryRow from './QueryRow';
 import JobRow from './JobRow';
@@ -26,9 +27,10 @@ export default React.createClass({
   },
 
   render() {
+    const currentUserEmail = ApplicationStore.getCurrentAdmin().get('email');
     const links = [
-      <Link to="jobs" query={{q: 'token.description%3Ajan%40keboola.com'}}>My jobs</Link>,
-      <Link to="jobs" query={{q: 'status%3Aerror%20AND%20token.description%3Ajan%40keboola.com'}}>My failed jobs</Link>,
+      <Link to="jobs" query={{q: 'token.description%3A' + currentUserEmail}}>My jobs</Link>,
+      <Link to="jobs" query={{q: 'status%3Aerror%20AND%20token.description%3A' + currentUserEmail}}>My failed jobs</Link>,
       <Link to="jobs" query={{q: 'durationSeconds%3A>7200'}}>All long running jobs</Link>,
       <Link to="jobs" query={{q: '%2Bparams.component%3Akeboola.ex-aws-s3%20%2Bparams.config%3A408135336'}}>Show all
         jobs</Link>
