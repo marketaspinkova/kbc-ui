@@ -22,10 +22,10 @@ export default React.createClass({
     chart.addTimeAxis('x', 'date', null, '%b %d');
     const yAxis = chart.addMeasureAxis('y', 'duration');
     yAxis.title = `Duration (${data.get('unit')})`;
-    const s = chart.addSeries('status', dimple.plot.bar);
+    const s = chart.addSeries(['unit', 'status'], dimple.plot.bar);
     s.getTooltipText = e => [
       `Created: ${date.format(e.xField[0])}`,
-      `Duration:  ${numeral(e.yValueList[0]).format('0.0')} ${data.get('unit')}`
+      `Duration:  ${numeral(e.yValueList[0]).format('0.0')} ${e.aggField[0]}`
     ];
     chart.assignColor('error', 'red');
     chart.assignColor('success', '#96d130');
@@ -80,7 +80,12 @@ export default React.createClass({
     return Map({
       scale,
       unit,
-      jobs: jobs.map(job => job.set('duration', job.get('duration') / scale))
+      jobs: jobs.map(job =>
+        job.withMutations(item => {
+          item.set('duration', item.get('duration') / scale);
+          item.set('unit', unit);
+        })
+      )
     });
   },
 
