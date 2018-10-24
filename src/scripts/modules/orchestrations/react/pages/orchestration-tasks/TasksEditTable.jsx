@@ -1,5 +1,6 @@
 import React from 'react';
 import { Map, List, fromJS } from 'immutable';
+import underscoreString from 'underscore.string';
 import TasksEditTableRow from './TasksEditTableRow';
 import PhaseEditRow from './PhaseEditRow';
 import PhaseModal from '../../modals/Phase';
@@ -103,7 +104,10 @@ export default React.createClass({
         tasksTypes.push(type);
       }
     }
-    let groupedPhases = fromJS(tasksTypes).map(type => Map({ id: `${type} phase`, tasks: List(), type }));
+    let groupedPhases = fromJS(tasksTypes).map(type => {
+      const capitalizedName = underscoreString.capitalize(type);
+      return Map({ id: `${capitalizedName} phase`, tasks: List(), type });
+    });
     this.props.tasks.map(p =>
       p.get('tasks').map(task => {
         const component = ComponentsStore.getComponent(task.get('component'));
