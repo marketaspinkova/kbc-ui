@@ -18,6 +18,11 @@ export default React.createClass({
     };
   },
 
+  componentDidUpdate() {
+    /* eslint-disable no-did-update-set-state */
+    // this.setState({query: this.props.query});
+  },
+
   render() {
     return (
       <div className="row-searchbar">
