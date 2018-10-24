@@ -1,13 +1,11 @@
-
 import React from 'react';
 import TableRow from './EventsTableRow';
-import {Loader} from '@keboola/indigo-ui';
+import { Loader } from '@keboola/indigo-ui';
 import PureRendererMixin from 'react-immutable-render-mixin';
-
-const {div} = React.DOM;
 
 export default React.createClass({
   mixins: [PureRendererMixin],
+
   propTypes: {
     events: React.PropTypes.object.isRequired,
     link: React.PropTypes.object.isRequired,
@@ -20,34 +18,32 @@ export default React.createClass({
       <div className="table table-striped table-hover">
         <div className="thead">
           <div className="tr">
-            <div className="th">
-              Created
-            </div>
-            <div className="th">
-              Event {this.props.isLoading ? React.createElement(Loader) : null}
-            </div>
+            <div className="th">Created</div>
+            <div className="th">Component</div>
+            <div className="th">Event {this.props.isLoading ? React.createElement(Loader) : null}</div>
           </div>
         </div>
-        <div className="tbody">
-          {this._body()}
-        </div>
+        <div className="tbody">{this._body()}</div>
       </div>
     );
   },
 
   _body() {
-    return this.props.events.map( function(event) {
-      return React.createElement(TableRow, {
-        onClick: this._handleEventSelect.bind(this, event),
-        event,
-        link: this.props.link,
-        key: event.get('id')
-      });
-    }, this).toArray();
+    return this.props.events
+      .map(event => {
+        return (
+          <TableRow
+            key={event.get('id')}
+            onClick={this._handleEventSelect.bind(this, event)}
+            event={event}
+            link={this.props.link}
+          />
+        );
+      })
+      .toArray();
   },
 
   _handleEventSelect(selectedEvent) {
     return this.props.onEventSelect(selectedEvent);
   }
 });
-
