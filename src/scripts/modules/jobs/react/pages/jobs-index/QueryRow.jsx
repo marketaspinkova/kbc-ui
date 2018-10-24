@@ -8,7 +8,8 @@ export default React.createClass({
 
   propTypes: {
     onSearch: PropTypes.func.isRequired,
-    query: PropTypes.string.isRequired
+    query: PropTypes.string.isRequired,
+    recommendedSearches: PropTypes.oneOfType([PropTypes.array, PropTypes.element])
   },
 
   getInitialState() {
@@ -32,6 +33,7 @@ export default React.createClass({
           }}
           placeholder="Search by name or attributes"
           additionalActions={this.renderAdditionalActions()}
+          recommendedSearches={this.props.recommendedSearches}
         />
       </div>
     );

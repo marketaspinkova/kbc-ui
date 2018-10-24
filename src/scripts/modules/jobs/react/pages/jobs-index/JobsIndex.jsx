@@ -4,6 +4,7 @@ import JobsStore from '../../../stores/JobsStore';
 import ActionCreators from '../../../ActionCreators';
 import QueryRow from './QueryRow';
 import JobRow from './JobRow';
+import Link from 'react-router/lib/components/Link';
 
 export default React.createClass({
   mixins: [createStoreMixin(JobsStore)],
@@ -25,10 +26,20 @@ export default React.createClass({
   },
 
   render() {
+    const links = [
+      <Link to="jobs" query={{q: 'token.description%3Ajan%40keboola.com'}}>My jobs</Link>,
+      <Link to="jobs" query={{q: 'status%3Aerror%20AND%20token.description%3Ajan%40keboola.com'}}>My failed jobs</Link>,
+      <Link to="jobs" query={{q: 'durationSeconds%3A>7200'}}>All long running jobs</Link>,
+      <Link to="jobs" query={{q: '%2Bparams.component%3Akeboola.ex-aws-s3%20%2Bparams.config%3A408135336'}}>Show all
+        jobs</Link>
+    ];
     return (
       <div className="container-fluid">
         <div className="kbc-main-content">
-          <QueryRow onSearch={this._search} query={this.state.query} />
+          <QueryRow
+            onSearch={this._search}
+            query={this.state.query}
+            recommendedSearches={links}/>
           {this._renderTable()}
           {this.state.isLoadMore && (
             <div className="kbc-block-with-padding">
