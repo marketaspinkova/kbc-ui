@@ -1,7 +1,7 @@
 /* eslint-disable */
 import Dispatcher from '../Dispatcher';
 
-let proxyStore, devTools, action, lastStore;
+let monitoredStore, devTools, action, previousStore;
 
 try {
   devTools = window.__REDUX_DEVTOOLS_EXTENSION__.connect();
@@ -39,15 +39,15 @@ const monitor = store => {
     return store;
   }
 
-  proxyStore = new Proxy(store, {
+  monitoredStore = new Proxy(store, {
     get: (target, method) => {
       if (persistentMethods.includes(method)) {
         return function(...args) {
           const newStore = target[method].apply(this, args);
-          if (!proxyStore) {
+          if (!monitoredStore) {
             devTools.init(newStore);
-          } else if (!newStore.equals(lastStore)) {
-            lastStore = newStore;
+          } else if (!newStore.equals(previousStore)) {
+            previousStore = newStore;
             devTools.send(action.type, newStore);
           }
           return monitor(newStore);
@@ -56,7 +56,7 @@ const monitor = store => {
       return target[method];
     }
   });
-  return proxyStore;
+  return monitoredStore;
 };
 
 export default monitor;
