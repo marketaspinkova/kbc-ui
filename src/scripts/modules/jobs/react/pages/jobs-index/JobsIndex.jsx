@@ -28,10 +28,7 @@ export default React.createClass({
     return (
       <div className="container-fluid">
         <div className="kbc-main-content">
-          <QueryRow
-            onSearch={this._search}
-            query={this.state.query}
-          />
+          <QueryRow onSearch={this._search} query={this.state.query}/>
           {this._renderTable()}
           {this.state.isLoadMore && (
             <div className="kbc-block-with-padding">
