@@ -8,8 +8,6 @@ import OrchestrationStore from '../../../stores/OrchestrationsStore';
 import OrchestrationJobsStore from '../../../stores/OrchestrationJobsStore';
 import RoutesStore from '../../../../../stores/RoutesStore';
 import VersionsStore from '../../../../components/stores/VersionsStore';
-import InstalledComponentsStore from '../../../../components/stores/InstalledComponentsStore';
-import mergeTasksWithConfigurations from '../../../mergeTasksWithConfigruations';
 
 // React components
 import ComponentDescription from '../../../../components/react/components/ComponentDescription';
@@ -33,11 +31,10 @@ export default React.createClass({
     const versions = VersionsStore.getVersions('orchestrator', orchestrationId.toString());
     let tasks = List();
     phases.forEach(phase => (tasks = tasks.concat(phase.get('tasks'))));
-    const tasksWithConfig = mergeTasksWithConfigurations(tasks, InstalledComponentsStore.getAll(), true);
 
     return {
       orchestration: OrchestrationStore.get(orchestrationId),
-      tasks: tasksWithConfig,
+      tasks,
       isLoading: OrchestrationStore.getIsOrchestrationLoading(orchestrationId),
       filteredOrchestrations: OrchestrationStore.getFiltered(),
       filter: OrchestrationStore.getFilter(),
