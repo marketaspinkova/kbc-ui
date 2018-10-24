@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import { Form, FormControl, FormGroup, Modal, Col } from 'react-bootstrap';
+import { Form, FormControl, FormGroup, Modal, ControlLabel } from 'react-bootstrap';
 import Tooltip from './../../../../react/common/Tooltip';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import actionCreators from '../../ActionCreators';
@@ -42,34 +42,30 @@ export default React.createClass({
         {this.renderOpenButton()}
 
         <Modal onHide={this.close} show={this.state.showModal}>
-          <Form onSubmit={this.handleSubmit} horizontal>
+          <Form onSubmit={this.handleSubmit} inline>
             <Modal.Header closeButton={true}>
               <Modal.Title>Transformation Phase</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <FormGroup>
-                <Col smOffset={1} sm={9}>
-                  <p>
-                    <a href="https://help.keboola.com/manipulation/transformations/#phases">Phase</a> is a set of
-                    transformations.
-                  </p>
-                  <p className="help-block">
-                    Phases may be used to divide transformations into logical blocks, transfer data between
-                    transformations, transformation engines and remote transformations.
-                  </p>
-                  <p>
-                    Phase #{' '}
-                    <FormControl
-                      type="number"
-                      min={1}
-                      autoFocus
-                      value={parseInt(this.state.phase, 10)}
-                      onChange={this.handlePhaseChange}
-                      disabled={this.state.isSaving}
-                      style={{ width: '50px', display: 'inline-block' }}
-                    />
-                  </p>
-                </Col>
+              <p>
+                <a href="https://help.keboola.com/manipulation/transformations/#phases">Phase</a> is a set of
+                transformations.
+              </p>
+              <p>
+                Phases may be used to divide transformations into logical blocks, transfer data between
+                transformations, transformation engines and remote transformations.
+              </p>
+              <FormGroup controlId="phaseNumber">
+                <ControlLabel>Phase #</ControlLabel>{' '}
+                <FormControl
+                  type="number"
+                  min={1}
+                  autoFocus
+                  value={parseInt(this.state.phase, 10)}
+                  onChange={this.handlePhaseChange}
+                  disabled={this.state.isSaving}
+                  style={{ width: '5em' }}
+                />
               </FormGroup>
             </Modal.Body>
             <Modal.Footer>
