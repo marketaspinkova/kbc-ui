@@ -1,6 +1,6 @@
 React = require 'react'
 
-createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
+createStoreMixin = require('../../../../../react/mixins/createStoreMixin').default
 RoutesStore = require '../../../../../stores/RoutesStore'
 ComponentsStore = require '../../../stores/ComponentsStore'
 NewConfigurationsStore = require '../../../stores/NewConfigurationsStore'
@@ -67,5 +67,3 @@ module.exports = React.createClass
     switch @props.component.get('id')
       when 'gooddata-writer' then GoodDataWriterForm
       else DefaultForm
-
-

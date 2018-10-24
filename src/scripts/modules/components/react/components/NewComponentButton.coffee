@@ -4,7 +4,7 @@ React = require 'react'
 
 InstalledComponentsStore = require '../../stores/InstalledComponentsStore'
 InstalledComponentsActionCreators = require '../../InstalledComponentsActionCreators'
-createStoreMixin = require '../../../../react/mixins/createStoreMixin'
+createStoreMixin = require('../../../../react/mixins/createStoreMixin').default
 
 Link = React.createFactory(require('react-router').Link)
 
@@ -30,4 +30,3 @@ module.exports = React.createClass
         @props.text
     else
       span null
-

@@ -1,6 +1,6 @@
 React = require('react')
 SoundNotifications = require '../../../../../utils/SoundNotifications'
-createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
+createStoreMixin = require('../../../../../react/mixins/createStoreMixin').default
 RoutesStore = require '../../../../../stores/RoutesStore'
 ApplicationStore = require '../../../../../stores/ApplicationStore'
 JobsStore = require('../../../stores/JobsStore')

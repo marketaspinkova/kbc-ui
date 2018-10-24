@@ -1,7 +1,7 @@
 React = require 'react'
 _ = require 'underscore'
 tdeCommon = require '../../tdeCommon'
-createStoreMixin = require '../../../../react/mixins/createStoreMixin'
+createStoreMixin = require('../../../../react/mixins/createStoreMixin').default
 PureRenderMixin = require('react-addons-pure-render-mixin')
 {fromJS, List, Map} = require 'immutable'
 

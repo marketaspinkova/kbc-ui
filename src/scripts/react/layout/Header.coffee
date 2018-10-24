@@ -1,5 +1,5 @@
 React = require 'react'
-createStoreMixin = require '../mixins/createStoreMixin'
+createStoreMixin = require('../mixins/createStoreMixin').default
 Immutable = require 'immutable'
 
 RoutesStore = require '../../stores/RoutesStore'

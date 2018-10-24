@@ -1,6 +1,6 @@
 React = require 'react'
 {Map} = require 'immutable'
-createStoreMixin = require '../../../../react/mixins/createStoreMixin'
+createStoreMixin = require('../../../../react/mixins/createStoreMixin').default
 goodDataWriterStore = require '../../store'
 actionCreators = require '../../actionCreators'
 RoutesStore = require '../../../../stores/RoutesStore'

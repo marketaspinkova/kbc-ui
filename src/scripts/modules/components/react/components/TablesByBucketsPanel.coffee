@@ -1,7 +1,7 @@
 React = require 'react'
 fuzzy = require 'fuzzy'
 {fromJS, List} = require 'immutable'
-createStoreMixin = require '../../../../react/mixins/createStoreMixin'
+createStoreMixin = require('../../../../react/mixins/createStoreMixin').default
 ActiveCountBadge = require './ActiveCountBadge'
 storageTablesStore = require '../../stores/StorageTablesStore'
 storageActionCreators = require '../../StorageActionCreators'
