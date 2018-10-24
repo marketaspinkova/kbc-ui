@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { Form, FormControl, FormGroup, Modal, ControlLabel } from 'react-bootstrap';
+import { ExternalLink } from '@keboola/indigo-ui';
 import Tooltip from './../../../../react/common/Tooltip';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import actionCreators from '../../ActionCreators';
@@ -48,8 +49,10 @@ export default React.createClass({
             </Modal.Header>
             <Modal.Body>
               <p>
-                <a href="https://help.keboola.com/manipulation/transformations/#phases">Phase</a> is a set of
-                transformations.
+                <ExternalLink href="https://help.keboola.com/manipulation/transformations/#phases">
+                  Phase
+                </ExternalLink>
+                {' '}is a set of transformations.
               </p>
               <p>
                 Phases may be used to divide transformations into logical blocks, transfer data between
