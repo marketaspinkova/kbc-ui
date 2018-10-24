@@ -2,6 +2,8 @@ import React, {PropTypes} from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {OverlayTrigger, Popover, Button} from 'react-bootstrap';
 import { Icon, ExternalLink, SearchBar } from '@keboola/indigo-ui';
+import ApplicationStore from '../../../../../stores/ApplicationStore';
+import Link from 'react-router/lib/components/Link';
 
 export default React.createClass({
   mixins: [PureRenderMixin],
@@ -24,6 +26,13 @@ export default React.createClass({
   },
 
   render() {
+    const currentUserEmail = ApplicationStore.getCurrentAdmin().get('email');
+    const recommendedSearchLinks = [
+      <Link to="jobs" query={{q: 'token.description%3A' + currentUserEmail}}>My jobs</Link>,
+      <Link to="jobs" query={{q: 'status%3Aerror%20AND%20token.description%3A' + currentUserEmail}}>My failed jobs</Link>,
+      <Link to="jobs" query={{q: 'status%3Aerror%20AND%20startTime%3A>now-7d%20AND%20' + currentUserEmail}}>My failed jobs in last 7 days</Link>,
+      <Link to="jobs" query={{q: 'durationSeconds%3A>7200'}}>All long running jobs (more than 2 hours)</Link>
+    ];
     return (
       <div className="row-searchbar">
         <SearchBar
@@ -38,7 +47,7 @@ export default React.createClass({
           }}
           placeholder="Search by name or attributes"
           additionalActions={this.renderAdditionalActions()}
-          recommendedSearches={this.props.recommendedSearches}
+          recommendedSearches={recommendedSearchLinks}
         />
       </div>
     );

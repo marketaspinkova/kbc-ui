@@ -1,11 +1,9 @@
 import React from 'react';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import JobsStore from '../../../stores/JobsStore';
-import ApplicationStore from '../../../../../stores/ApplicationStore';
 import ActionCreators from '../../../ActionCreators';
 import QueryRow from './QueryRow';
 import JobRow from './JobRow';
-import Link from 'react-router/lib/components/Link';
 
 export default React.createClass({
   mixins: [createStoreMixin(JobsStore)],
@@ -27,20 +25,13 @@ export default React.createClass({
   },
 
   render() {
-    const currentUserEmail = ApplicationStore.getCurrentAdmin().get('email');
-    const links = [
-      <Link to="jobs" query={{q: 'token.description%3A' + currentUserEmail}}>My jobs</Link>,
-      <Link to="jobs" query={{q: 'status%3Aerror%20AND%20token.description%3A' + currentUserEmail}}>My failed jobs</Link>,
-      <Link to="jobs" query={{q: 'status%3Aerror%20AND%20startTime%3A>now-7d%20AND%20' + currentUserEmail}}>My failed jobs in last 7 days</Link>,
-      <Link to="jobs" query={{q: 'durationSeconds%3A>7200'}}>All long running jobs (more than 2 hours)</Link>
-    ];
     return (
       <div className="container-fluid">
         <div className="kbc-main-content">
           <QueryRow
             onSearch={this._search}
             query={this.state.query}
-            recommendedSearches={links}/>
+          />
           {this._renderTable()}
           {this.state.isLoadMore && (
             <div className="kbc-block-with-padding">
