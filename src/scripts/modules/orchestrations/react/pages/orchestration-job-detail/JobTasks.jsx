@@ -86,7 +86,9 @@ export default React.createClass({
         {task.get('runParameters') &&
           task.get('runParameters').size && (
           <div>
-            <h5>Parameters</h5>
+            <p>
+              <strong>Parameters</strong>
+            </p>
             <Tree data={task.get('runParameters')} />
           </div>
         )}
