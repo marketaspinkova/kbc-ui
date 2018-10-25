@@ -69,16 +69,16 @@ export default React.createClass({
 
     return (
       <Panel header={header} key={task.get('id')} eventKey={task.get('id')}>
-        {task.getIn(['response', 'startTime']) && (
+        {task.get('startTime') && (
           <p>
             <strong>{'Start time '}</strong>
-            {date.format(task.getIn(['startTime']))}
+            {date.format(task.get(['startTime']))}
           </p>
         )}
-        {task.getIn(['response', 'endTime']) && (
+        {task.get('endTime') && (
           <p>
             <strong>{'End time '}</strong>
-            {date.format(task.getIn(['endTime']))}
+            {date.format(task.get('endTime'))}
           </p>
         )}
         {task.has('config') && (
