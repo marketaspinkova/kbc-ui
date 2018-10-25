@@ -69,18 +69,24 @@ export default React.createClass({
 
     return (
       <Panel header={header} key={task.get('id')} eventKey={task.get('id')}>
-        {task.get('startTime') && <div className="pull-right">{date.format(task.get('startTime'))}</div>}
+        {task.getIn(['response', 'startTime']) && (
+          <p>
+            <strong>{'Start time '}</strong>
+            {date.format(task.getIn(['response', 'startTime']))}
+          </p>
+        )}
+        {task.getIn(['response', 'endTime']) && (
+          <p>
+            <strong>{'End time '}</strong>
+            {date.format(task.getIn(['response', 'endTime']))}
+          </p>
+        )}
         {task.has('config') && (
           <p>
             <strong>{'Configuration '}</strong>
             <ComponentConfigurationLink componentId={task.get('component')} configId={task.getIn(['config', 'id'])}>
               {task.getIn(['config', 'name'])}
             </ComponentConfigurationLink>
-          </p>
-        )}
-        {task.get('runUrl') && (
-          <p>
-            <strong>POST</strong> {task.get('runUrl')}
           </p>
         )}
         {task.get('runParameters') &&
