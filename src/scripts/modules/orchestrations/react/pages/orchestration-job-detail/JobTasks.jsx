@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from 'react-router';
 import ComponentsStore from '../../../../components/stores/ComponentsStore';
 import { Panel, PanelGroup } from 'react-bootstrap';
 import ComponentConfigurationLink from '../../../../components/react/components/ComponentConfigurationLink';
@@ -69,33 +69,39 @@ export default React.createClass({
 
     return (
       <Panel header={header} key={task.get('id')} eventKey={task.get('id')}>
-        {task.get('startTime') && <div className="pull-right">{date.format(task.get('startTime'))}</div>}
+        {task.getIn(['response', 'startTime']) && (
+          <p>
+            <strong>{'Start time '}</strong>
+            {date.format(task.getIn(['startTime']))}
+          </p>
+        )}
+        {task.getIn(['response', 'endTime']) && (
+          <p>
+            <strong>{'End time '}</strong>
+            {date.format(task.getIn(['endTime']))}
+          </p>
+        )}
         {task.has('config') && (
-          <div>
+          <p>
             <strong>{'Configuration '}</strong>
             <ComponentConfigurationLink componentId={task.get('component')} configId={task.getIn(['config', 'id'])}>
               {task.getIn(['config', 'name'])}
             </ComponentConfigurationLink>
-          </div>
-        )}
-        {task.get('runUrl') && (
-          <div>
-            <strong>POST</strong> {task.get('runUrl')}
-          </div>
+          </p>
         )}
         {task.get('runParameters') &&
           task.get('runParameters').size && (
           <div>
-            <h5>Parameters</h5>
+            <p>
+              <strong>Parameters</strong>
+            </p>
             <Tree data={task.get('runParameters')} />
           </div>
         )}
-        {task.get('response') &&
-          task.get('response').size && (
-          <div>
-            <h5>Response</h5>
-            <Tree data={task.get('response')} />
-          </div>
+        {task.getIn(['response', 'id']) && (
+          <Link to="jobDetail" params={{ jobId: task.getIn(['response', 'id']) }}>
+            Go to job detail
+          </Link>
         )}
       </Panel>
     );

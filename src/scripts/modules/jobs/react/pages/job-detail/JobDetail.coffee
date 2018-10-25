@@ -343,7 +343,7 @@ module.exports = React.createClass
     message =  job.getIn ['result', 'message'] if result
     div null,
       div {className: 'col-md-6', style: {'wordWrap': 'break-word'}},
-        h4 null, 'Params '
+        h4 null, 'Parameters '
         React.createElement Tree, {data: job.get('params')}
       div {className: 'col-md-6'},
         h4 null,'Results '
