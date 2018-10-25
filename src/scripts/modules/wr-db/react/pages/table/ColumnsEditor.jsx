@@ -28,7 +28,7 @@ export default React.createClass({
       }
       return this.props.filterColumnFn(fn);
     });
-    const rows = columns.map(column => {
+    const rows = columns.map((column, index) => {
       const cname = column.get('name');
       let editingColumn = null;
       let isValid = true;
@@ -38,6 +38,7 @@ export default React.createClass({
       }
 
       return this.props.renderRowFn({
+        key: index,
         isValid,
         isSaving: this.props.isSaving,
         column,

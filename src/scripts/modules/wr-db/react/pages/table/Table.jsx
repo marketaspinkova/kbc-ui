@@ -121,15 +121,13 @@ export default componentId => {
           <div className="kbc-main-content">
             <div className="kbc-header">
               <ul className="list-group list-group-no-border">
-                <li className="list-group-item">
-                  {this._renderTableEdit()}
-                  {componentId === 'keboola.wr-thoughtspot' && (
-                    <li className="list-group-item">{this._renderThoughSpotTypeInput()}</li>
-                  )}
-                  {isRenderIncremental && <li className="list-group-item">{this._renderIncrementalSetup()}</li>}
-                  {isRenderIncremental && <li className="list-group-item">{this._renderTableFiltersRow()}</li>}
-                  {isRenderIncremental && <li className="list-group-item">{this._renderPrimaryKey()}</li>}
-                </li>
+                <li className="list-group-item">{this._renderTableEdit()}</li>
+                {componentId === 'keboola.wr-thoughtspot' && (
+                  <li className="list-group-item">{this._renderThoughSpotTypeInput()}</li>
+                )}
+                {isRenderIncremental && <li className="list-group-item">{this._renderIncrementalSetup()}</li>}
+                {isRenderIncremental && <li className="list-group-item">{this._renderTableFiltersRow()}</li>}
+                {isRenderIncremental && <li className="list-group-item">{this._renderPrimaryKey()}</li>}
               </ul>
             </div>
             <ColumnsEditor
@@ -469,7 +467,7 @@ export default componentId => {
       return (
         <div className="kbc-buttons pull-right">
           <EditButtons
-            isEditing={this.state.editingColumns}
+            isEditing={!!this.state.editingColumns}
             isSaving={this.state.isSavingColumns}
             isDisabled={!(isValid && hasColumns)}
             onCancel={this._handleEditColumnsCancel}
