@@ -57,12 +57,12 @@ export default React.createClass({
         >
           {this.props.isSmall ? (
             <small>
-              <em className="fa fa-fw fa-files-o" />
+              <em className="fa fa-fw fa-exchange" />
               {this.props.buttonText}
             </small>
           ) : (
             <span className="text-muted">
-              <em className="fa fa-fw fa-files-o" />
+              <em className="fa fa-fw fa-exchange" />
               {this.props.buttonText}
             </span>
           )}
