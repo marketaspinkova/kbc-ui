@@ -172,7 +172,7 @@ export default componentId => {
       let valid = true;
 
       if (['binary', 'char', 'character', 'string', 'text', 'varchar'].includes(type)) {
-        if (_.isEmpty(size)) {
+        if (!/^[0-9]+$/.test(size)) {
           valid = false;
         }
       } else if (['decimal', 'number', 'numeric'].includes(type)) {
