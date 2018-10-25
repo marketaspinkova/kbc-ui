@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
+import { trim } from 'underscore.string';
 import { Input } from './../../../../react/common/KbcBootstrap';
 
 export default React.createClass({
@@ -15,7 +16,6 @@ export default React.createClass({
   },
 
   render() {
-    const props = this.props;
     return (
       <div className="form-horizontal">
         <Input
@@ -24,33 +24,29 @@ export default React.createClass({
           labelClassName="col-xs-4"
           wrapperClassName="col-xs-8"
           value={this.props.value.baseUrl}
-          onChange={function(e) {
-            props.onChange({baseUrl: e.target.value});
+          onChange={e => {
+            this.props.onChange({ baseUrl: trim(e.target.value) });
           }}
           placeholder="https://example.com"
           disabled={this.props.disabled}
-          help={(
-            <span>
-              Base URL is common for all files downloaded from a certain site/domain.
-            </span>
-          )}
+          help={<span>Base URL is common for all files downloaded from a certain site/domain.</span>}
         />
         <Input
-          type="text"
+          type="number"
+          min="0"
           label="Maximum Redirects"
           labelClassName="col-xs-4"
           wrapperClassName="col-xs-8"
           value={this.props.value.maxRedirects}
-          onChange={function(e) {
-            props.onChange({maxRedirects: e.target.value});
+          onChange={e => {
+            this.props.onChange({ maxRedirects: e.target.value });
           }}
           disabled={this.props.disabled}
-          help={(
+          help={
             <span>
-              The maximum number of redirects to follow when downloading files.
-              Leave empty to use default value (5).
+              The maximum number of redirects to follow when downloading files. Leave empty to use default value (5).
             </span>
-          )}
+          }
         />
       </div>
     );
