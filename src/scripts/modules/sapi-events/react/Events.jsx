@@ -46,7 +46,7 @@ export default React.createClass({
       searchQuery: '',
       searchQueryLocal: '',
       currentEvent: null,
-      currentEventId: null,
+      currentEventId: RoutesStore.getRouterState().getIn(['query', 'eventId'], null),
       isLoadingCurrentEvent: false
     };
   },
