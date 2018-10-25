@@ -176,7 +176,7 @@ export default componentId => {
           valid = false;
         }
       } else if (['decimal', 'number', 'numeric'].includes(type)) {
-        if (!/^[0-9]+,?[0-9]+$/.test(size)) {
+        if (!/^[0-9]+(?:,?[0-9]+)?$/.test(size)) {
           valid = false;
         }
       } if (type === 'time') {
