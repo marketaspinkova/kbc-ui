@@ -72,13 +72,13 @@ export default React.createClass({
         {task.getIn(['response', 'startTime']) && (
           <p>
             <strong>{'Start time '}</strong>
-            {date.format(task.getIn(['response', 'startTime']))}
+            {date.format(task.getIn(['startTime']))}
           </p>
         )}
         {task.getIn(['response', 'endTime']) && (
           <p>
             <strong>{'End time '}</strong>
-            {date.format(task.getIn(['response', 'endTime']))}
+            {date.format(task.getIn(['endTime']))}
           </p>
         )}
         {task.has('config') && (
