@@ -179,7 +179,7 @@ export default componentId => {
         if (!/^(?!0)[0-9]+(?:,?[0-9]+)?$/.test(size)) {
           valid = false;
         }
-      } if (type === 'time') {
+      } else if (type === 'time') {
         if (!/^[0-9]$/.test(size)) {
           valid = false;
         }
