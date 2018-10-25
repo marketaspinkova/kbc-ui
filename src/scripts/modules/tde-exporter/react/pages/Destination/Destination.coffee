@@ -17,7 +17,7 @@ InstalledComponentsStore = require('../../../../components/stores/InstalledCompo
 OAuthStore = require('../../../../oauth-v2/Store').default
 
 InstalledComponentsActions = require '../../../../components/InstalledComponentsActionCreators'
-ApplicationActionCreators = require '../../../../../actions/ApplicationActionCreators'
+ApplicationActionCreators = require('../../../../../actions/ApplicationActionCreators').default
 {OAUTH_V2_WRITERS} = require '../../../tdeCommon'
 
 RoutesStore = require '../../../../../stores/RoutesStore'
