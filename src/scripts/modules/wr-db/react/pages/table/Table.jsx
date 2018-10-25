@@ -169,14 +169,22 @@ export default componentId => {
     _validateColumn(column) {
       const type = column.get('type');
       const size = column.get('size');
-      const dbName = column.get('dbName');
       let valid = true;
-      if (_.isString(this._getSizeParam(type)) && _.isEmpty(size)) {
-        valid = false;
+
+      if (['binary', 'char', 'character', 'string', 'text', 'varchar'].includes(type)) {
+        if (_.isEmpty(size)) {
+          valid = false;
+        }
+      } else if (['decimal', 'number', 'numeric'].includes(type)) {
+        if (!/^[0-9]+,?[0-9]+$/.test(size)) {
+          valid = false;
+        }
+      } if (type === 'time') {
+        if (!/^[0-9]$/.test(size)) {
+          valid = false;
+        }
       }
-      if (_.isEmpty(dbName)) {
-        valid = false;
-      }
+
       return this._setValidateColumn(column.get('name'), valid);
     },
 
