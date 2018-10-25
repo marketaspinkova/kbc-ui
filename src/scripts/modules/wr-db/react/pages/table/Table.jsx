@@ -7,6 +7,7 @@ import TableNameEdit from './TableNameEdit';
 import ColumnsEditor from './ColumnsEditor';
 import ColumnRow from './ColumnRow';
 import DataTypes from '../../../templates/dataTypes';
+import columnTypeValidation from '../../../columnTypeValidation';
 
 import storageApi from '../../../../components/StorageApi';
 import WrDbStore from '../../../store';
@@ -169,21 +170,7 @@ export default componentId => {
     _validateColumn(column) {
       const type = column.get('type');
       const size = column.get('size');
-      let valid = true;
-
-      if (['binary', 'char', 'character', 'string', 'text', 'varchar'].includes(type)) {
-        if (!/^(?!0)[0-9]+$/.test(size)) {
-          valid = false;
-        }
-      } else if (['decimal', 'number', 'numeric'].includes(type)) {
-        if (!/^(?!0)[0-9]+(?:,?[0-9]+)?$/.test(size)) {
-          valid = false;
-        }
-      } else if (type === 'time') {
-        if (!/^[0-9]$/.test(size)) {
-          valid = false;
-        }
-      }
+      const valid = columnTypeValidation.validate(type, size);
 
       return this._setValidateColumn(column.get('name'), valid);
     },
@@ -424,8 +411,16 @@ export default componentId => {
               tableId={this.state.tableId}
               table={this.state.table}
               configId={this.state.configId}
-              tableExportedValue={this.state.exportInfo && this.state.exportInfo.get('export') ? this.state.exportInfo.get('export') : false}
-              currentValue={this.state.exportInfo && this.state.exportInfo.get('name') ? this.state.exportInfo.get('name') : this.state.tableId}
+              tableExportedValue={
+                this.state.exportInfo && this.state.exportInfo.get('export')
+                  ? this.state.exportInfo.get('export')
+                  : false
+              }
+              currentValue={
+                this.state.exportInfo && this.state.exportInfo.get('name')
+                  ? this.state.exportInfo.get('name')
+                  : this.state.tableId
+              }
               isSaving={this.state.isUpdatingTable}
               editingValue={this.state.editingData.getIn(['editingDbNames', this.state.tableId])}
               setEditValueFn={value => {
