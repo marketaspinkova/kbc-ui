@@ -172,11 +172,11 @@ export default componentId => {
       let valid = true;
 
       if (['binary', 'char', 'character', 'string', 'text', 'varchar'].includes(type)) {
-        if (!/^[0-9]+$/.test(size)) {
+        if (!/^(?!0)[0-9]+$/.test(size)) {
           valid = false;
         }
       } else if (['decimal', 'number', 'numeric'].includes(type)) {
-        if (!/^[0-9]+(?:,?[0-9]+)?$/.test(size)) {
+        if (!/^(?!0)[0-9]+(?:,?[0-9]+)?$/.test(size)) {
           valid = false;
         }
       } if (type === 'time') {
