@@ -121,7 +121,7 @@ export default componentId => {
           <div className="kbc-main-content">
             <div className="kbc-header">
               <ul className="list-group list-group-no-border">
-                {this._renderTableEdit()}
+                <li className="list-group-item">{this._renderTableEdit()}</li>
                 {componentId === 'keboola.wr-thoughtspot' && (
                   <li className="list-group-item">{this._renderThoughSpotTypeInput()}</li>
                 )}
@@ -407,29 +407,27 @@ export default componentId => {
 
     _renderTableEdit() {
       return (
-        <li className="list-group-item">
-          <div className="row">
-            <div className="col-sm-3">
-              <strong>Database table name</strong>
-            </div>
-            <div className="col-sm-9">
-              <TableNameEdit
-                tableId={this.state.tableId}
-                table={this.state.table}
-                configId={this.state.configId}
-                tableExportedValue={this.state.exportInfo && this.state.exportInfo.get('export') ? this.state.exportInfo.get('export') : false}
-                currentValue={this.state.exportInfo && this.state.exportInfo.get('name') ? this.state.exportInfo.get('name') : this.state.tableId}
-                isSaving={this.state.isUpdatingTable}
-                editingValue={this.state.editingData.getIn(['editingDbNames', this.state.tableId])}
-                setEditValueFn={value => {
-                  const path = ['editingDbNames', this.state.tableId];
-                  return WrDbActions.setEditingData(componentId, this.state.configId, path, value);
-                }}
-                componentId={componentId}
-              />
-            </div>
+        <div className="row">
+          <div className="col-sm-3">
+            <strong>Database table name</strong>
           </div>
-        </li>
+          <div className="col-sm-9">
+            <TableNameEdit
+              tableId={this.state.tableId}
+              table={this.state.table}
+              configId={this.state.configId}
+              tableExportedValue={this.state.exportInfo && this.state.exportInfo.get('export') ? this.state.exportInfo.get('export') : false}
+              currentValue={this.state.exportInfo && this.state.exportInfo.get('name') ? this.state.exportInfo.get('name') : this.state.tableId}
+              isSaving={this.state.isUpdatingTable}
+              editingValue={this.state.editingData.getIn(['editingDbNames', this.state.tableId])}
+              setEditValueFn={value => {
+                const path = ['editingDbNames', this.state.tableId];
+                return WrDbActions.setEditingData(componentId, this.state.configId, path, value);
+              }}
+              componentId={componentId}
+            />
+          </div>
+        </div>
       );
     },
 
