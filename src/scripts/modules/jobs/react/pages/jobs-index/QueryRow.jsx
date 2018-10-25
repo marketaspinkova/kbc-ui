@@ -27,10 +27,10 @@ export default React.createClass({
   render() {
     const currentUserEmail = ApplicationStore.getCurrentAdmin().get('email');
     const recommendedSearchLinks = [
-      <Link to="jobs" query={{q: 'token.description%3A' + currentUserEmail}}>My jobs</Link>,
-      <Link to="jobs" query={{q: 'status%3Aerror%20AND%20token.description%3A' + currentUserEmail}}>My failed jobs</Link>,
-      <Link to="jobs" query={{q: 'status%3Aerror%20AND%20startTime%3A>now-7d%20AND%20' + currentUserEmail}}>My failed jobs in last 7 days</Link>,
-      <Link to="jobs" query={{q: 'durationSeconds%3A>7200'}}>All long running jobs (more than 2 hours)</Link>
+      <Link to="jobs" className="predefined-search-link" query={{q: 'token.description%3A' + currentUserEmail}}>My jobs</Link>,
+      <Link to="jobs" className="predefined-search-link" query={{q: 'status%3Aerror%20AND%20token.description%3A' + currentUserEmail}}>My failed jobs</Link>,
+      <Link to="jobs" className="predefined-search-link" query={{q: 'status%3Aerror%20AND%20startTime%3A>now-7d%20AND%20' + currentUserEmail}}>My failed jobs in last 7 days</Link>,
+      <Link to="jobs" className="predefined-search-link" query={{q: 'durationSeconds%3A>7200'}}>All long running jobs</Link>
     ];
     return (
       <div className="row-searchbar">
@@ -48,6 +48,12 @@ export default React.createClass({
           additionalActions={this.renderAdditionalActions()}
           recommendedSearches={recommendedSearchLinks}
         />
+        <div className="predefined-search-list">
+          Predefined searches:
+          {recommendedSearchLinks.map((link) =>
+            <span> {link}</span>
+          )}
+        </div>
       </div>
     );
   },
