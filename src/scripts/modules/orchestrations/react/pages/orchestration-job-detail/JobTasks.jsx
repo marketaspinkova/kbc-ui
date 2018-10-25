@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from 'react-router';
 import ComponentsStore from '../../../../components/stores/ComponentsStore';
 import { Panel, PanelGroup } from 'react-bootstrap';
 import ComponentConfigurationLink from '../../../../components/react/components/ComponentConfigurationLink';
@@ -90,12 +90,10 @@ export default React.createClass({
             <Tree data={task.get('runParameters')} />
           </div>
         )}
-        {task.getIn(['response', 'params']) &&
-          task.getIn(['response', 'params']).size && (
-          <div>
-            <h5>Response parameters</h5>
-            <Tree data={task.getIn(['response', 'params'])} />
-          </div>
+        {task.getIn(['response', 'id']) && (
+          <Link to="jobDetail" params={{ jobId: task.getIn(['response', 'id']) }}>
+            Go to job detail
+          </Link>
         )}
       </Panel>
     );
