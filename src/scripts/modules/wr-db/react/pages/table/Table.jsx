@@ -121,15 +121,13 @@ export default componentId => {
           <div className="kbc-main-content">
             <div className="kbc-header">
               <ul className="list-group list-group-no-border">
-                <li className="list-group-item">
-                  {this._renderTableEdit()}
-                  {componentId === 'keboola.wr-thoughtspot' && (
-                    <li className="list-group-item">{this._renderThoughSpotTypeInput()}</li>
-                  )}
-                  {isRenderIncremental && <li className="list-group-item">{this._renderIncrementalSetup()}</li>}
-                  {isRenderIncremental && <li className="list-group-item">{this._renderTableFiltersRow()}</li>}
-                  {isRenderIncremental && <li className="list-group-item">{this._renderPrimaryKey()}</li>}
-                </li>
+                {this._renderTableEdit()}
+                {componentId === 'keboola.wr-thoughtspot' && (
+                  <li className="list-group-item">{this._renderThoughSpotTypeInput()}</li>
+                )}
+                {isRenderIncremental && <li className="list-group-item">{this._renderIncrementalSetup()}</li>}
+                {isRenderIncremental && <li className="list-group-item">{this._renderTableFiltersRow()}</li>}
+                {isRenderIncremental && <li className="list-group-item">{this._renderPrimaryKey()}</li>}
               </ul>
             </div>
             <ColumnsEditor
@@ -409,27 +407,29 @@ export default componentId => {
 
     _renderTableEdit() {
       return (
-        <div className="row">
-          <div className="col-sm-3">
-            <strong>Database table name</strong>
+        <li className="list-group-item">
+          <div className="row">
+            <div className="col-sm-3">
+              <strong>Database table name</strong>
+            </div>
+            <div className="col-sm-9">
+              <TableNameEdit
+                tableId={this.state.tableId}
+                table={this.state.table}
+                configId={this.state.configId}
+                tableExportedValue={this.state.exportInfo && this.state.exportInfo.get('export') ? this.state.exportInfo.get('export') : false}
+                currentValue={this.state.exportInfo && this.state.exportInfo.get('name') ? this.state.exportInfo.get('name') : this.state.tableId}
+                isSaving={this.state.isUpdatingTable}
+                editingValue={this.state.editingData.getIn(['editingDbNames', this.state.tableId])}
+                setEditValueFn={value => {
+                  const path = ['editingDbNames', this.state.tableId];
+                  return WrDbActions.setEditingData(componentId, this.state.configId, path, value);
+                }}
+                componentId={componentId}
+              />
+            </div>
           </div>
-          <div className="col-sm-9">
-            <TableNameEdit
-              tableId={this.state.tableId}
-              table={this.state.table}
-              configId={this.state.configId}
-              tableExportedValue={this.state.exportInfo && this.state.exportInfo.get('export') ? this.state.exportInfo.get('export') : false}
-              currentValue={this.state.exportInfo && this.state.exportInfo.get('name') ? this.state.exportInfo.get('name') : this.state.tableId}
-              isSaving={this.state.isUpdatingTable}
-              editingValue={this.state.editingData.getIn(['editingDbNames', this.state.tableId])}
-              setEditValueFn={value => {
-                const path = ['editingDbNames', this.state.tableId];
-                return WrDbActions.setEditingData(componentId, this.state.configId, path, value);
-              }}
-              componentId={componentId}
-            />
-          </div>
-        </div>
+        </li>
       );
     },
 
@@ -469,7 +469,7 @@ export default componentId => {
       return (
         <div className="kbc-buttons pull-right">
           <EditButtons
-            isEditing={this.state.editingColumns}
+            isEditing={!!this.state.editingColumns}
             isSaving={this.state.isSavingColumns}
             isDisabled={!(isValid && hasColumns)}
             onCancel={this._handleEditColumnsCancel}
