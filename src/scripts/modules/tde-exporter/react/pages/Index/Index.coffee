@@ -4,7 +4,7 @@ _ = require 'underscore'
 moment = require 'moment'
 classnames = require 'classnames'
 tdeCommon = require '../../../tdeCommon'
-LatestJobsStore = require '../../../../jobs/stores/LatestJobsStore'
+LatestJobsStore = require('../../../../jobs/stores/LatestJobsStore').default
 LatestJobs = require '../../../../components/react/components/SidebarJobs'
 
 Link = React.createFactory(require('react-router').Link)
