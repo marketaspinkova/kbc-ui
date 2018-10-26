@@ -52,6 +52,9 @@ export default React.createClass({
               this.props.onSearch(this.state.query);
             }, 100);
           }}
+          inputRef={(input) => {
+            this.searchInput = input;
+          }}
           placeholder="Search by name or attributes"
           additionalActions={this.renderAdditionalActions()}
         />
@@ -67,6 +70,7 @@ export default React.createClass({
                   query: link.query
                 });
                 this.props.onSearch(link.query);
+                this.searchInput.focus();
               }}
             >
               {link.name}
