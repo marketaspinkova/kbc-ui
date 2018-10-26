@@ -6,7 +6,7 @@ import ComponentConfigurationLink from '../../../../components/react/components/
 import ComponentIcon from '../../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../../react/common/ComponentName';
 import Duration from '../../../../../react/common/Duration';
-import { Tree } from '@keboola/indigo-ui';
+import { Tree, AlertBlock } from '@keboola/indigo-ui';
 import JobStatusLabel from '../../../../../react/common/JobStatusLabel';
 import date from '../../../../../utils/date';
 
@@ -103,7 +103,23 @@ export default React.createClass({
             Go to job detail
           </Link>
         )}
+        {this.renderSpecificErrorMesssage(task)}
       </Panel>
+    );
+  },
+
+  renderSpecificErrorMesssage(task) {
+    const specificErrorMessages = ['Orchestrations can be started only 2 times for current id.'];
+    const message = task.getIn(['response', 'message'], '');
+
+    if (!specificErrorMessages.includes(message)) {
+      return null;
+    }
+
+    return (
+      <AlertBlock type="danger" title="Validation error">
+        <p>{message}</p>
+      </AlertBlock>
     );
   }
 });
