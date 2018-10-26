@@ -3,7 +3,6 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {OverlayTrigger, Popover, Button} from 'react-bootstrap';
 import { Icon, ExternalLink, SearchBar } from '@keboola/indigo-ui';
 import ApplicationStore from '../../../../../stores/ApplicationStore';
-import Link from 'react-router/lib/components/Link';
 
 export default React.createClass({
   mixins: [PureRenderMixin],
@@ -19,18 +18,25 @@ export default React.createClass({
     };
   },
 
-  componentDidUpdate() {
-    /* eslint-disable no-did-update-set-state */
-    // this.setState({query: this.props.query});
-  },
-
   render() {
     const currentUserEmail = ApplicationStore.getCurrentAdmin().get('email');
-    const recommendedSearchLinks = [
-      <Link to="jobs" className="predefined-search-link" query={{q: 'token.description%3A' + currentUserEmail}}>My jobs</Link>,
-      <Link to="jobs" className="predefined-search-link" query={{q: 'status%3Aerror%20AND%20token.description%3A' + currentUserEmail}}>My failed jobs</Link>,
-      <Link to="jobs" className="predefined-search-link" query={{q: 'status%3Aerror%20AND%20startTime%3A>now-7d%20AND%20' + currentUserEmail}}>My failed jobs in last 7 days</Link>,
-      <Link to="jobs" className="predefined-search-link" query={{q: 'durationSeconds%3A>7200'}}>All long running jobs</Link>
+    const predefinedSearches = [
+      {
+        name: 'My jobs',
+        query: 'token.description:' + currentUserEmail
+      },
+      {
+        name: 'My failed jobs',
+        query: 'status:error AND token.description:' + currentUserEmail
+      },
+      {
+        name: 'My failed jobs in last 7 days',
+        query: 'status:error AND startTime:>now-7d AND token.description:' + currentUserEmail
+      },
+      {
+        name: 'All long running jobs',
+        query: 'durationSeconds:>7200'
+      }
     ];
     return (
       <div className="row-searchbar">
@@ -38,7 +44,7 @@ export default React.createClass({
           query={this.state.query}
           onChange={(query) => {
             this.setState({
-              query
+              query: query
             });
           }}
           onSubmit={() => {
@@ -46,13 +52,24 @@ export default React.createClass({
           }}
           placeholder="Search by name or attributes"
           additionalActions={this.renderAdditionalActions()}
-          recommendedSearches={recommendedSearchLinks}
         />
         <div className="predefined-search-list">
-          Predefined searches:
-          {recommendedSearchLinks.map((link) =>
-            <span> {link}</span>
-          )}
+          Predefined searches:{' '}
+          {predefinedSearches.map((link, index) => (
+            <button
+              key={index}
+              type="button"
+              className="btn btn-link btn-link-inline predefined-search-link"
+              onClick={() => {
+                this.setState({
+                  query: link.query
+                });
+                this.props.onSearch(link.query);
+              }}
+            >
+              {link.name}
+            </button>
+          ))}
         </div>
       </div>
     );
