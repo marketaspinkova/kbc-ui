@@ -6,7 +6,7 @@ import ComponentConfigurationLink from '../../../../components/react/components/
 import ComponentIcon from '../../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../../react/common/ComponentName';
 import Duration from '../../../../../react/common/Duration';
-import { Tree, AlertBlock } from '@keboola/indigo-ui';
+import { Tree } from '@keboola/indigo-ui';
 import JobStatusLabel from '../../../../../react/common/JobStatusLabel';
 import date from '../../../../../utils/date';
 
@@ -117,9 +117,12 @@ export default React.createClass({
     }
 
     return (
-      <AlertBlock type="danger" title="Validation error">
+      <div className="alert alert-danger">
+        <p>
+          <strong>Validation error</strong>
+        </p>
         <p>{message}</p>
-      </AlertBlock>
+      </div>
     );
   }
 });
