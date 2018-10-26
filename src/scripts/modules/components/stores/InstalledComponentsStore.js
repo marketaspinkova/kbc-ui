@@ -11,24 +11,24 @@ import ComponentsStore from './ComponentsStore';
 import fromJSOrdered from '../../../utils/fromJSOrdered';
 
 let _store = Map({
-  configData: Map(), // omponentId #configId
-  configRowsData: Map(), // omponentId #configId #rowId
-  configRows: Map(), // omponentId #configId #rowId
-  configDataLoading: Map(), // omponentId #configId - configuration detail JSON
-  configsDataLoading: Map(), // omponentId - configurations JSON
-  configsDataLoaded: Map(), // omponentId - configurations JSON
-  configDataEditing: Map(), // omponentId #configId - configuration
-  configDataEditingObject: Map(), // omponentId #configId - configuration
-  configDataParametersEditing: Map(), // omponentId #configId - configuration
-  rawConfigDataEditing: Map(), // omponentId #configId - configuration stringified JSON
-  rawConfigDataParametersEditing: Map(), // omponentId #configId - configuration stringified JSON
+  configData: Map(), // componentId #configId
+  configRowsData: Map(), // componentId #configId #rowId
+  configRows: Map(), // componentId #configId #rowId
+  configDataLoading: Map(), // componentId #configId - configuration detail JSON
+  configsDataLoading: Map(), // componentId - configurations JSON
+  configsDataLoaded: Map(), // componentId - configurations JSON
+  configDataEditing: Map(), // componentId #configId - configuration
+  configDataEditingObject: Map(), // componentId #configId - configuration
+  configDataParametersEditing: Map(), // componentId #configId - configuration
+  rawConfigDataEditing: Map(), // componentId #configId - configuration stringified JSON
+  rawConfigDataParametersEditing: Map(), // componentId #configId - configuration stringified JSON
   templatedConfigEditing: Map(), // componentId #configId
   templatedConfigValuesEditingValues: Map(), // componentId #configId
   // group (params:Map|templates:Map)
-  templatedConfigValuesEditingString: Map(), // omponentId #configId
-  templatedConfigEditingString: Map(), // omponentId #configId
+  templatedConfigValuesEditingString: Map(), // componentId #configId
+  templatedConfigEditingString: Map(), // componentId #configId
 
-  // etail JSON
+  // detail JSON
   configDataSaving: Map(),
   configDataParametersSaving: Map(),
   localState: Map(),
