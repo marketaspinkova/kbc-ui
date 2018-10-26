@@ -9,7 +9,7 @@ RoutesStore = require '../../../../stores/RoutesStore'
 storageTablesStore = require('../../../components/stores/StorageTablesStore').default
 InstalledComponentsActions = require '../../../components/InstalledComponentsActionCreators'
 InstalledComponentsStore = require '../../../components/stores/InstalledComponentsStore'
-EditButtons = require '../../../../react/common/EditButtons'
+EditButtons = require('../../../../react/common/EditButtons').default
 
 componentId = 'tde-exporter'
 module.exports = React.createClass

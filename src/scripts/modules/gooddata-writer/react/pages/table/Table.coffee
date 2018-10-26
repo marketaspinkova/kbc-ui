@@ -10,7 +10,7 @@ storageApi = require '../../../../components/StorageApi'
 {strong, br, ul, li, div, span, i, p} = React.DOM
 
 ColumnsEditor = React.createFactory(require './DatasetColumnsEditor')
-EditButtons = React.createFactory(require('../../../../../react/common/EditButtons'))
+EditButtons = React.createFactory(require('../../../../../react/common/EditButtons').default)
 TableGdName = React.createFactory(require './TableGdNameEdit')
 ActivateTableExportButton = React.createFactory(require('../../components/ActivateTableExportButton').default)
 
