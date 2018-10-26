@@ -2,7 +2,7 @@ React = require('react')
 createStoreMixin = require('../../../../react/mixins/createStoreMixin').default
 JobsStore = require('../../stores/JobsStore')
 Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
-ActionCreators = require('../../ActionCreators')
+ActionCreators = require('../../ActionCreators').default
 RoutesStore = require('../../../../stores/RoutesStore')
 
 JobDetailReloaderButton = React.createClass
