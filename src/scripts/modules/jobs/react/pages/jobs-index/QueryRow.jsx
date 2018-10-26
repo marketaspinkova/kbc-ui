@@ -48,7 +48,9 @@ export default React.createClass({
             });
           }}
           onSubmit={() => {
-            this.props.onSearch(this.state.query);
+            setTimeout(() => {
+              this.props.onSearch(this.state.query);
+            }, 100);
           }}
           placeholder="Search by name or attributes"
           additionalActions={this.renderAdditionalActions()}
