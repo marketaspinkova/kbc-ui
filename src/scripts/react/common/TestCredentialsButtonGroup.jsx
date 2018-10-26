@@ -74,12 +74,11 @@ export default React.createClass({
                   <Loader /> Connecting ...
                 </span>
               )}
-              {!this.state.isError &&
-                this.state.result &&
-                ['success', 'ok'].includes(this.state.result.status) &&
-                this._testSuccess()}
-              {(this.state.isError || (this.state.result && !['success', 'ok'].includes(this.state.result.status))) &&
-                this._testError(this.state.result)}
+              {(this.state.result || this.state.isError) && (
+                ['success', 'ok'].includes(this.state.result.status) && !this.state.isError
+                  ? this._testSuccess()
+                  : this._testError(this.state.result)
+              )}
             </div>
           </div>
         </div>
