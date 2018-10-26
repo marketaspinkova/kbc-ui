@@ -14,24 +14,24 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      query: this.props.query
+      query: this.props.query,
+      currentUserEmail: ApplicationStore.getCurrentAdmin().get('email')
     };
   },
 
   render() {
-    const currentUserEmail = ApplicationStore.getCurrentAdmin().get('email');
     const predefinedSearches = [
       {
         name: 'My jobs',
-        query: 'token.description:' + currentUserEmail
+        query: 'token.description:' + this.state.currentUserEmail
       },
       {
         name: 'My failed jobs',
-        query: 'status:error AND token.description:' + currentUserEmail
+        query: 'status:error AND token.description:' +  this.state.currentUserEmail
       },
       {
         name: 'My failed jobs in last 7 days',
-        query: 'status:error AND startTime:>now-7d AND token.description:' + currentUserEmail
+        query: 'status:error AND startTime:>now-7d AND token.description:' +  this.state.currentUserEmail
       },
       {
         name: 'All long running jobs',
