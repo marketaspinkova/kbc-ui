@@ -6,7 +6,7 @@ PureRenderMixin = require('react-addons-pure-render-mixin')
 {fromJS, List, Map} = require 'immutable'
 
 RoutesStore = require '../../../../stores/RoutesStore'
-storageTablesStore = require '../../../components/stores/StorageTablesStore'
+storageTablesStore = require('../../../components/stores/StorageTablesStore').default
 InstalledComponentsActions = require '../../../components/InstalledComponentsActionCreators'
 InstalledComponentsStore = require '../../../components/stores/InstalledComponentsStore'
 EditButtons = require '../../../../react/common/EditButtons'

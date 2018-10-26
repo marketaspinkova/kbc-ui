@@ -10,7 +10,7 @@ LatestJobs = require '../../../../components/react/components/SidebarJobs'
 Link = React.createFactory(require('react-router').Link)
 
 InstalledComponentsStore = require '../../../../components/stores/InstalledComponentsStore'
-StorageFilesStore = require '../../../../components/stores/StorageFilesStore'
+StorageFilesStore = require('../../../../components/stores/StorageFilesStore').default
 RoutesStore = require '../../../../../stores/RoutesStore'
 createStoreMixin = require('../../../../../react/mixins/createStoreMixin').default
 TableRow = require './TableRow'
