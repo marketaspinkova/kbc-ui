@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import ComponentsStore from '../../../../components/stores/ComponentsStore';
-import { Panel, PanelGroup } from 'react-bootstrap';
+import { Panel, PanelGroup, Alert } from 'react-bootstrap';
 import ComponentConfigurationLink from '../../../../components/react/components/ComponentConfigurationLink';
 import ComponentIcon from '../../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../../react/common/ComponentName';
@@ -117,12 +117,9 @@ export default React.createClass({
     }
 
     return (
-      <div className="alert alert-danger">
-        <p>
-          <strong>Validation error</strong>
-        </p>
-        <p>{message}</p>
-      </div>
+      <Alert bsStyle="danger">
+        <strong>Validation error: </strong> {message}
+      </Alert>
     );
   }
 });
