@@ -2,7 +2,6 @@ var path = require('path');
 var webpack = require('webpack');
 var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-var CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = function(options) {
   var isDevelopment = options.isDevelopment;
@@ -28,11 +27,7 @@ module.exports = function(options) {
   if (!isDevelopment) {
     plugins.push(
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-      new OptimizeCssAssetsPlugin(),
-      new CompressionPlugin({
-        test: /\.(js|css)$/,
-        asset: '[file]'
-      })
+      new OptimizeCssAssetsPlugin()
     );
   }
 
