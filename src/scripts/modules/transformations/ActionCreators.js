@@ -112,7 +112,7 @@ module.exports = {
         bucketId: bucketId
       });
       dispatcher.handleViewAction({
-        type: constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ERROR,
+        type: installedComponentsConstants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ERROR,
         componentId: 'transformation',
         configurationId: bucketId,
         transition: false,
