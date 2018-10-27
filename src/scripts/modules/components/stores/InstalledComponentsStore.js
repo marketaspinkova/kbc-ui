@@ -493,7 +493,7 @@ Dispatcher.register(function(payload) {
         let result = store.deleteIn(['configDataLoading', action.componentId, action.configId]);
         let storePath = ['configData', action.componentId, action.configId];
         result = result.setIn(storePath, fromJSOrdered(action.data.configuration));
-        storePath = ['components', action.componentId, action.configId];
+        storePath = ['components', action.componentId, 'configurations', action.configId];
         result = result.setIn(storePath, fromJSOrdered(action.data));
         let j = 0;
         while (j < action.data.rows.length) {
