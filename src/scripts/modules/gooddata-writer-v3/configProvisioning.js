@@ -24,26 +24,26 @@ export default function(configId) {
     }
   }
 
-  function saveConfigData(data, changeDescription = 'update configuration', waitingPath = 'confing') {
-    togglePending(waitingPath, true);
+  function saveConfigData(data, changeDescription = 'update configuration', pendingAction = 'config') {
+    togglePending(pendingAction, true);
     return componentsActions
       .saveComponentConfigData(COMPONENT_ID, configId, data, changeDescription)
-      .then(() => togglePending(waitingPath, false));
+      .then(() => togglePending(pendingAction, false));
   }
 
-  function saveParameters(newParameters, changeDescription = 'update parameters', waitingPath = 'parameters') {
+  function saveParameters(newParameters, changeDescription = 'update parameters', pendingAction = 'parameters') {
     const newData = configData.set('parameters', newParameters);
-    return saveConfigData(newData, changeDescription, waitingPath);
+    return saveConfigData(newData, changeDescription, pendingAction);
   }
 
   function saveInputMappingAndParameters(
     newInputMapping,
     newParameters,
     changeDescription = 'update input mapping and parameters',
-    waitingPath = 'im&parameters'
+    pendingAction = 'im&parameters'
   ) {
     const newData = configData.setIn(INPUT_MAPPING_PATH, newInputMapping).set('parameters', newParameters);
-    return saveConfigData(newData, changeDescription, waitingPath);
+    return saveConfigData(newData, changeDescription, pendingAction);
   }
 
   return {
