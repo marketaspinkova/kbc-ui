@@ -4,6 +4,7 @@
    Edit butotn is shown when editing mode is disabled.
  */
 import React from 'react';
+import classnames from 'classnames';
 
 import { Loader } from '@keboola/indigo-ui';
 import { Button } from 'react-bootstrap';
@@ -40,7 +41,7 @@ export default React.createClass({
   render() {
     if (this.props.placement === 'left') {
       return (
-        <div className={'kbc-buttons ' + this.props.className}>
+        <div className={classnames('kbc-buttons', this.props.className)}>
           {this._saveButton()}
           {this._cancelButton()}
           {!this.props.showCancel && ' '}
@@ -49,7 +50,7 @@ export default React.createClass({
       );
     } else {
       return (
-        <div className={'kbc-buttons ' + this.props.className}>
+        <div className={classnames('kbc-buttons', this.props.className)}>
           {this._loader()}
           {!this.props.showCancel && ' '}
           {this._cancelButton()}
