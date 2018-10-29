@@ -29,7 +29,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Table className="table table-striped" style={{'word-break': 'break-word'}}>
+      <Table className="table table-striped" style={{wordBreak: 'break-word'}}>
         <thead className="thead">
           <tr className="tr">
             <th className="th">

@@ -214,7 +214,7 @@ export default React.createClass({
             title="Reset Authorization"
             buttonLabel="Reset Google configuration"
             onConfirm={this.handleProjectReset}>
-            <span className="btn btn-link btn-sm" style={{'padding-top': 0, 'padding-bottom': 0, 'paddingLeft': 0}}>
+            <span className="btn btn-link btn-sm" style={{paddingTop: 0, paddingBottom: 0, paddingLeft: 0}}>
 
               { this.state.store.isPending(['projectId'])
                 ?
