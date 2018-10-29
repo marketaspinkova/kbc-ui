@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import {capitalize} from 'underscore.string';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Modal} from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
@@ -52,6 +53,7 @@ export default React.createClass({
                   allowCreate={true}
                   value={this.state.value}
                   onChange={input => this.setState({ value: input ? input.value : '' })}
+                  onInputChange={inputValue => capitalize(inputValue)}
                   options= {this.getPhasesOptions()}
                 />
                 <span className="help-block">
