@@ -11,7 +11,7 @@ const GRAIN_TYPES = [
 
 export default function(configId, tableId) {
   const {isSaving} = configProvisioning(configId);
-  const {getEditingTable, updateEditingTable} = tablesProvisioning(configId);
+  const {getEditingTable, setEditingTable} = tablesProvisioning(configId);
   const editing = getEditingTable(tableId);
 
 
@@ -32,14 +32,15 @@ export default function(configId, tableId) {
 
   function onChange(newValue) {
     let newParameters = editing.tableParameters;
-    if (newValue.grain) {
-      newParameters = fromJS({grain: newValue.grain});
+    const newValueKeys = Object.keys(newValue);
+    if (newValueKeys.includes('grain')) {
+      newParameters = newParameters.set('grain', newValue.grain);
     }
     let newMapping = editing.tableInputMapping;
-    if (newValue.changedSince) {
-      newMapping = fromJS({'changed_since': newValue.changedSince});
+    if (newValueKeys.includes('changedSince')) {
+      newMapping = newMapping.set('changed_since', newValue.changedSince);
     }
-    updateEditingTable(tableId, newParameters, newMapping);
+    setEditingTable(tableId, newParameters, newMapping);
   }
 
   return {
