@@ -40,7 +40,7 @@ function prepareAllTableColumns(configuredColumns, storageTableColumns) {
 export default function(configId, storageTable) {
   const tableId = storageTable.get('id');
   const { isSaving, parameters } = configProvisioning(configId);
-  const { getEditingTable, updateEditingTable, tables } = tablesProvisioning(configId);
+  const { getEditingTable, setEditingTable, tables } = tablesProvisioning(configId);
   const editing = getEditingTable(tableId);
 
   const storageTableColumns = storageTable.get('columns');
@@ -56,7 +56,7 @@ export default function(configId, storageTable) {
     const mappingColumns = columnsToSave.map(column => column.get('id'));
     const newTableParams = editing.tableParameters.set('columns', paramsColumns);
     const newTableMapping = editing.tableInputMapping.set('columns', mappingColumns);
-    updateEditingTable(tableId, newTableParams, newTableMapping);
+    setEditingTable(tableId, newTableParams, newTableMapping);
   }
 
   const context = prepareColumnContext(parameters, tables, tableId, allColumnsList);
