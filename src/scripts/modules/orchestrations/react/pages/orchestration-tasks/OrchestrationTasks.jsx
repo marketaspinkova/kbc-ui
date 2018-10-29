@@ -145,7 +145,8 @@ const OrchestrationTasks = React.createClass({
   },
 
   updateLocalState(path, data) {
-    const newState = this.state.localState.setIn([].concat(path), data);
+    const method = data === null ? 'deleteIn' : 'setIn';
+    const newState = this.state.localState[method]([].concat(path), data);
     return installedComponentsActions.updateLocalState(componentId, this.state.orchestrationId, newState, path);
   }
 });
