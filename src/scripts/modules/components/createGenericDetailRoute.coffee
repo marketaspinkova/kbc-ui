@@ -1,7 +1,7 @@
 React = require 'react'
 VersionsActionCreators = require './VersionsActionCreators'
 createVersionsPageRoute = require('./utils/createVersionsPageRoute').default
-IntalledComponentsStore = require './stores/InstalledComponentsStore'
+IntalledComponentsStore = require('./stores/InstalledComponentsStore').default
 SchemasActionsCreators = require './TemplatesActionCreators'
 InstalledComponentsActions = require './InstalledComponentsActionCreators'
 StorageActions = require './StorageActionCreators'

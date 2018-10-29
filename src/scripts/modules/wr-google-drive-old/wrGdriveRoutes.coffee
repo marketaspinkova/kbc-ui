@@ -1,7 +1,7 @@
 Index = require './react/pages/index/Index'
 actions = require './wrGdriveActionCreators'
 authorizePage = require './react/pages/authorize/Authorize'
-InstalledComponentsStore = require '../components/stores/InstalledComponentsStore'
+InstalledComponentsStore = require('../components/stores/InstalledComponentsStore').default
 JobsActionCreators = require '../jobs/ActionCreators'
 storageActionCreators = require '../components/StorageActionCreators'
 {createTablesRoute} = require '../table-browser/routes'

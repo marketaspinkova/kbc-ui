@@ -13,7 +13,7 @@ SelectWriterModal = require('./WritersModal').default
 
 ActivateDeactivateButton = React.createFactory(require('../../../../../react/common/ActivateDeactivateButton').default)
 
-InstalledComponentsStore = require '../../../../components/stores/InstalledComponentsStore'
+InstalledComponentsStore = require('../../../../components/stores/InstalledComponentsStore').default
 OAuthStore = require('../../../../oauth-v2/Store').default
 
 InstalledComponentsActions = require '../../../../components/InstalledComponentsActionCreators'

@@ -4,7 +4,7 @@ fuzzy = require('fuzzy')
 createStoreMixin = require('../../../../../react/mixins/createStoreMixin').default
 RoutesStore = require '../../../../../stores/RoutesStore'
 ComponentsStore = require '../../../stores/ComponentsStore'
-InstalledComponentsStore = require '../../../stores/InstalledComponentsStore'
+InstalledComponentsStore = require('../../../stores/InstalledComponentsStore').default
 InstalledComponentsActionCreators = require '../../../InstalledComponentsActionCreators'
 ApplicationStore = require '../../../../../stores/ApplicationStore'
 

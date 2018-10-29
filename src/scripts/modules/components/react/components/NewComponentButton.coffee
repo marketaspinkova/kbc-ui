@@ -2,7 +2,7 @@ React = require 'react'
 
 {button, span, i} = React.DOM
 
-InstalledComponentsStore = require '../../stores/InstalledComponentsStore'
+InstalledComponentsStore = require('../../stores/InstalledComponentsStore').default
 InstalledComponentsActionCreators = require '../../InstalledComponentsActionCreators'
 createStoreMixin = require('../../../../react/mixins/createStoreMixin').default
 
