@@ -46,28 +46,21 @@ export default function(configId) {
     return tableParameters !== storedTableParameters || tableInputMapping !== storedInputMapping;
   }
 
-  function updateEditingTable(tableId, tableParams, tableInputMapping, strategy = 'merge') {
-    let newEditingTables = null;
+  function updateEditingTable(tableId, tableParams, tableInputMapping) {
     const tableMappingIndex = editingTables.get('inputMapping').findIndex(tableIm => tableIm.get('source') === tableId);
-
-    switch (strategy) {
-      case 'set':
-        newEditingTables = editingTables.setIn(['parameters', tableId], tableParams);
-        newEditingTables = newEditingTables.setIn(['inputMapping', tableMappingIndex], tableInputMapping);
-        break;
-      case 'merge':
-        newEditingTables = editingTables.mergeDeepIn(['parameters', tableId], tableParams);
-        newEditingTables = newEditingTables.mergeDeepIn(['inputMapping', tableMappingIndex], tableInputMapping);
-        break;
-      default:
-        throw new Error({ message: `Unkwnown strategy: ${strategy}` });
-    }
+    const newEditingTables = editingTables
+      .mergeDeepIn(['parameters', tableId], tableParams)
+      .mergeDeepIn(['inputMapping', tableMappingIndex], tableInputMapping);
 
     updateLocalState(EDITING_PATH, newEditingTables);
   }
 
   function resetEditingTable(tableId) {
-    updateEditingTable(tableId, null, Map(), 'set');
+    const tableMappingIndex = editingTables.get('inputMapping').findIndex(tableIm => tableIm.get('source') === tableId);
+    const newEditingTables = editingTables
+      .setIn(['parameters', tableId], null)
+      .setIn(['inputMapping', tableMappingIndex], Map());
+    updateLocalState(EDITING_PATH, newEditingTables);
   }
 
   function saveEditingTable(tableId) {
