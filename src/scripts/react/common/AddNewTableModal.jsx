@@ -38,6 +38,7 @@ export default React.createClass({
             onSelectTableFn={this.props.onSetTableIdFn}
             excludeTableFn={ (tableId) => !!this.props.configuredTables.get(tableId)}
             value={this.props.selectedTableId}
+            placeholder="Select table"
             autoFocus
           />
         </Modal.Body>

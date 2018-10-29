@@ -102,8 +102,8 @@ module.exports = React.createClass
       @_renderTablesList(tables, renderRowFn)
 
   _renderTablesList: (tables, renderRowFn) ->
-    childs = tables.map((table) ->
-      renderRowFn(table)
+    childs = tables.map((table, index) ->
+      renderRowFn(table, index)
     , @).toArray()
 
     header = @_renderDefaultHeaderRow()
@@ -111,7 +111,7 @@ module.exports = React.createClass
       header = @props.renderHeaderRowFn(tables)
 
     div className: 'row',
-      div {className: 'table table-striped table-hover'},
+      div {className: 'table table-striped table-hover table-no-margin'},
         if header
           div className: 'thead', key: 'table-header',
             header

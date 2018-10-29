@@ -13,7 +13,7 @@ module.exports = React.createClass
   propTypes:
     onSelectTableFn: React.PropTypes.func.isRequired
     placeholder: React.PropTypes.string.isRequired
-    value: React.PropTypes.string.isRequired
+    value: React.PropTypes.string
     excludeTableFn: React.PropTypes.func
     allowedBuckets: React.PropTypes.array
     disabled: React.PropTypes.bool
