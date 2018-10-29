@@ -55,12 +55,16 @@ export default function(configId) {
     updateLocalState(EDITING_PATH, newEditingTables);
   }
 
-  function resetEditingTable(tableId) {
+  function setEditingTable(tableId, tableParams, tableInputMapping) {
     const tableMappingIndex = editingTables.get('inputMapping').findIndex(tableIm => tableIm.get('source') === tableId);
     const newEditingTables = editingTables
-      .setIn(['parameters', tableId], null)
-      .setIn(['inputMapping', tableMappingIndex], Map());
+      .setIn(['parameters', tableId], tableParams)
+      .setIn(['inputMapping', tableMappingIndex], tableInputMapping);
     updateLocalState(EDITING_PATH, newEditingTables);
+  }
+
+  function resetEditingTable(tableId) {
+    setEditingTable(tableId, null, Map());
   }
 
   function saveEditingTable(tableId) {
@@ -137,6 +141,7 @@ export default function(configId) {
     tables,
     toggleTableExport,
     updateEditingTable,
+    setEditingTable,
     getEditingTable,
     isEditingTableChanged,
     saveEditingTable,
