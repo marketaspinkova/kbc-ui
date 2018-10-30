@@ -6,7 +6,8 @@ import RoutesStore from '../../../../../stores/RoutesStore';
 import LatestJobsStore from '../../../../jobs/stores/LatestJobsStore';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import VersionsStore from '../../../../components/stores/VersionsStore';
-import configProvisioning from '../../../configProvisioning';
+import makeConfigProvisioning from '../../../configProvisioning';
+import makeLocalStateProvisioning from '../../../localStateProvisioning';
 
 // helpers
 import tablesProvisioning from '../../../tablesProvisioning';
@@ -53,8 +54,20 @@ export default React.createClass({
   getStateFromStores() {
     const configurationId = RoutesStore.getCurrentRouteParam('config');
     const {tables, deleteTable, createNewTable, toggleTableExport, getSingleRunParams} = tablesProvisioning(configurationId);
-    const {isSaving, isPendingFn} = configProvisioning(configurationId);
+    const configProvisioning = makeConfigProvisioning(configurationId);
+    const {isSaving, isPendingFn} = configProvisioning;
+    const localStateProvisioning = makeLocalStateProvisioning(configurationId);
+
+    // section props
+    const dimensionsSectionProps = dimensionsAdapter(configProvisioning, localStateProvisioning);
+
+    const tableLoadSettingsSectionProps = tablesLoadSettingsAdapter(configProvisioning);
+    const credentialsSectionProps = credentialsAdapter(configProvisioning, localStateProvisioning);
+
     return {
+      dimensionsSectionProps,
+      tableLoadSettingsSectionProps,
+      credentialsSectionProps,
       getSingleRunParams,
       configurationId,
       isPendingFn,
@@ -118,29 +131,26 @@ export default React.createClass({
   },
 
   renderDimensions() {
-    const componentProps = dimensionsAdapter(this.state.configurationId);
     return (
       <DimensionsCollapsibleComponent
-        {...componentProps}
+        {...this.state.dimensionsSectionProps}
       />
     );
   },
 
   renderLoadSettings() {
-    const loadSettingsProps = tablesLoadSettingsAdapter(this.state.configurationId);
     return (
       <LoadSettingsCollapsibleComponent
-        {...loadSettingsProps}
+        {...this.state.tableLoadSettingsSectionProps}
         isComplete={true}
       />
     );
   },
 
   renderCredentials() {
-    const componentProps = credentialsAdapter(this.state.configurationId);
     return (
       <CredentialsCollapsibleComponent
-        {...componentProps}
+        {...this.state.credentialsSectionProps}
       />
     );
   },

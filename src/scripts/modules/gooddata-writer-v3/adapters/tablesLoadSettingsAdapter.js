@@ -1,9 +1,7 @@
-import configProvisioning from '../configProvisioning';
 import {fromJS} from 'immutable';
 
-
-export default function(configId) {
-  const {saveParameters, isSaving, parameters} = configProvisioning(configId);
+export default function(configProvisioning) {
+  const {saveParameters, isSaving, parameters} = configProvisioning;
   const value = {
     loadOnly: parameters.get('loadOnly', false),
     multiLoad: parameters.get('multiLoad', false)
