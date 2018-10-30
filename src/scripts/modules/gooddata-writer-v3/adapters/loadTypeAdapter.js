@@ -1,5 +1,3 @@
-import configProvisioning from '../configProvisioning';
-import tablesProvisioning from '../tablesProvisioning';
 import {fromJS, Map, List} from 'immutable';
 import {Types} from '../constants';
 
@@ -9,9 +7,9 @@ const GRAIN_TYPES = [
   Types.DATE
 ];
 
-export default function(configId, tableId) {
-  const {isSaving} = configProvisioning(configId);
-  const {getEditingTable, setEditingTable} = tablesProvisioning(configId);
+export default function(configProvisioning, tablesProvisioning, tableId) {
+  const {isSaving} = configProvisioning;
+  const {getEditingTable, setEditingTable} = tablesProvisioning;
   const editing = getEditingTable(tableId);
 
 

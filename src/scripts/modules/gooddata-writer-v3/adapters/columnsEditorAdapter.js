@@ -1,5 +1,3 @@
-import configProvisioning from '../configProvisioning';
-import tablesProvisioning from '../tablesProvisioning';
 import makeColumnDefinition from '../helpers/makeColumnDefinition';
 import { Map, fromJS } from 'immutable';
 import getInitialShowAdvanced from '../helpers/getInitialShowAdvanced';
@@ -37,10 +35,10 @@ function prepareAllTableColumns(configuredColumns, storageTableColumns) {
   return allColumnsList;
 }
 
-export default function(configId, storageTable) {
+export default function(configProvisioning, tablesProvisioning, storageTable) {
   const tableId = storageTable.get('id');
-  const { isSaving, parameters } = configProvisioning(configId);
-  const { getEditingTable, setEditingTable, tables } = tablesProvisioning(configId);
+  const { isSaving, parameters } = configProvisioning;
+  const { getEditingTable, setEditingTable, tables } = tablesProvisioning;
   const editing = getEditingTable(tableId);
 
   const storageTableColumns = storageTable.get('columns');

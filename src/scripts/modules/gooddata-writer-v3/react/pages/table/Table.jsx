@@ -18,8 +18,8 @@ import StorageTableColumnsEditor from '../../../../configurations/react/componen
 
 // helpers
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
-import tablesProvisioning from '../../../tablesProvisioning';
-import configProvisioning from '../../../configProvisioning';
+import makeTablesProvisioning from '../../../tablesProvisioning';
+import makeConfigProvisioning from '../../../configProvisioning';
 import titleAdapter from '../../../adapters/titleAdapter';
 import {CollapsibleSection} from '../../../../configurations/utils/renderHelpers';
 import loadTypeAdater from '../../../adapters/loadTypeAdapter';
@@ -38,12 +38,24 @@ export default React.createClass({
   getStateFromStores() {
     const tableId = RoutesStore.getCurrentRouteParam('table');
     const configurationId = RoutesStore.getCurrentRouteParam('config');
-    const {tables, toggleTableExport, deleteTable, isEditingTableChanged, saveEditingTable, resetEditingTable, getSingleRunParams} = tablesProvisioning(configurationId);
+    const tablesProvisioning = makeTablesProvisioning(configurationId);
+    const {tables, toggleTableExport, deleteTable, isEditingTableChanged, saveEditingTable, resetEditingTable, getSingleRunParams} = tablesProvisioning;
     const table = tables.get(tableId);
-    const {isSaving, isPendingFn} = configProvisioning(configurationId);
+    const configProvisioning = makeConfigProvisioning(configurationId);
+    const {isSaving, isPendingFn} = configProvisioning;
     const storageTable = TablesStore.getAll().get(tableId);
     const isPendingToggleExport = isPendingFn([tableId, 'activate']);
+
+    // section props adapters
+    const titleSectionProps = titleAdapter(configProvisioning, tablesProvisioning, tableId);
+    const columnsEditorSectionProps = columnsEditorAdapter(configProvisioning, tablesProvisioning, storageTable);
+
+    const loadTypeSectionProps = loadTypeAdater(configProvisioning, tablesProvisioning, tableId);
+
     return {
+      titleSectionProps,
+      columnsEditorSectionProps,
+      loadTypeSectionProps,
       isPendingToggleExport,
       storageTable,
       deleteTable,
@@ -80,38 +92,21 @@ export default React.createClass({
   },
 
   renderSections() {
-    const {configurationId, tableId} = this.state;
-    const titleProps = titleAdapter(configurationId, tableId);
     return (
       <div>
         <TitleSection
-          {...titleProps}
+          {...this.state.titleSectionProps}
           disabled={this.state.isSaving}
         />
-        {this.renderLoadType()}
-        {this.renderColumnsEditor()}
+        <LoadTypeCollapsibleComponent
+          {...this.state.loadTypeSectionProps}
+          disabled={this.state.isSaving}
+        />
+        <StorageTableColumnsEditor
+          {...this.state.columnsEditorSectionProps}
+          disabled={this.state.isSaving}
+        />
       </div>
-    );
-  },
-
-  renderColumnsEditor() {
-    const {configurationId, storageTable} = this.state;
-    const editorProps = columnsEditorAdapter(configurationId, storageTable);
-    return (
-      <StorageTableColumnsEditor
-        {...editorProps}
-        disabled={this.state.isSaving}
-      />
-    );
-  },
-
-  renderLoadType() {
-    const loadTypeProps = loadTypeAdater(this.state.configurationId, this.state.tableId);
-    return (
-      <LoadTypeCollapsibleComponent
-        {...loadTypeProps}
-        disabled={this.state.isSaving}
-      />
     );
   },
 
