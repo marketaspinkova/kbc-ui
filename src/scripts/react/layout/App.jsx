@@ -44,7 +44,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        {this.state.projectHasGuideModeOn && (
+        {this.state.projectHasGuideModeOn === true && (
           <div className="guide-status-bar">
             <p>{'Guide Mode '}</p>
             <p>{'\xa0- learn everything you need to know about Keboola Connection'}</p>
@@ -78,7 +78,7 @@ export default React.createClass({
             </div>
             <div className="col-xs-9 col-xs-offset-3 kbc-main">
               {this.renderMain()}
-              {this.state.projectHasGuideModeOn && (
+              {this.state.projectHasGuideModeOn === true && (
                 <Wizard projectBaseUrl={this.state.projectBaseUrl} scriptsBasePath={this.state.scriptsBasePath} />
               )}
             </div>
