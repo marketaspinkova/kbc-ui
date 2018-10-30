@@ -247,9 +247,9 @@ export default React.createClass({
 
   _goToSelectedProjectOrOrganization() {
     if (this.state.selectedProjectId) {
-      return (window.location.href = this._projectUrl(this.state.selectedProjectId));
+      window.location.href = this._projectUrl(this.state.selectedProjectId);
     } else if (this.state.selectedOrganizationId) {
-      return (window.location.href = this._organizationUrl(this.state.selectedOrganizationId));
+      window.location.href = this._organizationUrl(this.state.selectedOrganizationId);
     }
   },
 
