@@ -50,7 +50,7 @@ export default React.createClass({
         <div>
           <SearchBar
             inputRef={element => {
-              return (this.searchInput = element);
+              this.searchInput = element;
             }}
             onChange={this._handleQueryChange}
             query={this.state.query}
