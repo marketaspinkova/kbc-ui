@@ -84,10 +84,11 @@ export default React.createClass({
     const { currentRouteQuery } = this.state;
 
     const queryParams = persistQueryParams.reduce((result, item) => {
+      let res = result;
       if (currentRouteQuery.has(item) && currentRouteQuery.get(item, '') !== '') {
-        result.set(item, currentRouteQuery.get(item));
+        res = res.set(item, currentRouteQuery.get(item));
       }
-      return result;
+      return res;
     }, Map());
 
     return queryParams.toJS();
