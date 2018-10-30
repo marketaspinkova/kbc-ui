@@ -21,13 +21,13 @@ export default function(configId) {
     )
     .update('inputMapping', currentEditingMapping => {
       return inputMapping.reduce((memo, storedMapping) => {
-        const isInitialized = currentEditingMapping.find(
-          editingMapping => editingMapping.get('source') === storedMapping.get('source')
+        const isInitialized = memo.find(
+          memoMapping => memoMapping.get('source') === storedMapping.get('source')
         );
         if (!isInitialized) {
-          return currentEditingMapping.push(storedMapping);
+          return memo.push(storedMapping);
         } else {
-          return currentEditingMapping;
+          return memo;
         }
       }, currentEditingMapping);
     });
