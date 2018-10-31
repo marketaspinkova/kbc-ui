@@ -326,8 +326,7 @@ module.exports = React.createClass
         @_renderParamsRow(job)
 
       React.createElement Panel,
-        header: accordionHeader((if isTransformation then 'Mapping' else 'Storage Stats'),
-          @state.activeAccordion == 'stats')
+        header: accordionHeader('Mapping', @state.activeAccordion == 'stats')
         eventKey: 'stats'
       ,
         React.createElement JobStatsContainer,
