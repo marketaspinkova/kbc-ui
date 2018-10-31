@@ -59,6 +59,7 @@ export function componentSupportsSimpleSetup(componentId) {
 export function componentSupportsConfigRows(componentId) {
   const supoortedComponents = [
     'keboola.ex-db-mysql',
+    'keboola.ex-db-mssql',
     'keboola.ex-teradata'
   ];
   return supoortedComponents.indexOf(componentId) > -1;
