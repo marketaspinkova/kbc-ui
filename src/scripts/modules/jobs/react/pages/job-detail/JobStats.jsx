@@ -27,7 +27,7 @@ export default React.createClass({
           <TablesList allTablesIds={allTablesIds} tables={this.props.stats.getIn(['tables', 'export'])} />
         </div>
         <div className="col-md-4">
-          <h4>Output</h4>
+          <h4>Output {this.props.isLoading && <Loader/>}</h4>
           <TablesList allTablesIds={allTablesIds} tables={this.props.stats.getIn(['tables', 'import'])} />
         </div>
         <div className="col-md-4">
