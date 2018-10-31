@@ -332,7 +332,6 @@ module.exports = React.createClass
         React.createElement JobStatsContainer,
           runId: job.get 'runId'
           autoRefresh: !job.get('endTime')
-          mode: if isTransformation then 'transformation' else 'default'
           jobMetrics: (if job.get('metrics') then job.get('metrics') else fromJS({}))
 
   _renderParamsRow: (job) ->
