@@ -57,7 +57,7 @@ export default React.createClass({
       let details = 'N/A';
 
       if (task.event) {
-        duration = task.event.performance;
+        duration = task.event.performance.duration;
         const finished = moment(task.event.created);
         started = finished.subtract(duration, 'seconds'); // TODO
         status = <StatusLabel status={task.event && task.event.type} />;
