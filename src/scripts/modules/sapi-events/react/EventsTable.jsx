@@ -20,7 +20,7 @@ export default React.createClass({
           <div className="tr">
             <div className="th">Created</div>
             <div className="th">Component</div>
-            <div className="th">Event {this.props.isLoading ? React.createElement(Loader) : null}</div>
+            <div className="th">Event {this.props.isLoading && <Loader />}</div>
           </div>
         </div>
         <div className="tbody">{this._body()}</div>
