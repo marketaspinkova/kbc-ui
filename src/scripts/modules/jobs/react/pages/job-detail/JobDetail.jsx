@@ -355,7 +355,6 @@ export default React.createClass({
   },
 
   _renderAccordion(job) {
-    const isTransformation = job.get('component') === 'transformation';
     return (
       <PanelGroup
         accordion={true}
@@ -377,17 +376,10 @@ export default React.createClass({
         >
           {this._renderParamsRow(job)}
         </Panel>
-        <Panel
-          header={this._renderAccordionHeader(
-            isTransformation ? 'Mapping' : 'Storage Stats',
-            this.state.activeAccordion === 'stats'
-          )}
-          eventKey="stats"
-        >
+        <Panel header={this._renderAccordionHeader('Mapping', this.state.activeAccordion === 'stats')} eventKey="stats">
           <JobStatsContainer
             runId={job.get('runId')}
             autoRefresh={!job.get('endTime')}
-            mode={isTransformation ? 'transformation' : 'default'}
             jobMetrics={job.get('metrics') ? job.get('metrics') : fromJS({})}
           />
         </Panel>
