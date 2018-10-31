@@ -40,23 +40,21 @@ export default React.createClass({
   },
 
   render() {
-    const isTransformation = this.props.mode === MODE_TRANSFORMATION;
     const importedIds = this.extractTableIds('import');
     const exportedIds = this.extractTableIds('export');
     const allTablesIds = importedIds.concat(exportedIds);
+
     return (
       <div className="clearfix">
         <div className="col-md-4">
           <h4>
-            {isTransformation ? 'Input' : 'Imported Tables'} {this.importsTotal()} {this.loader()}
+            Input {this.exportsTotal()} {this.loader()}
           </h4>
-          <TablesList allTablesIds={allTablesIds} tables={this.props.stats.getIn(['tables', isTransformation ? 'export' : 'import'])}/>
+          <TablesList allTablesIds={allTablesIds} tables={this.props.stats.getIn(['tables', 'export'])} />
         </div>
         <div className="col-md-4">
-          <h4>
-            {isTransformation ? 'Output' : 'Exported Tables'} {this.exportsTotal()}
-          </h4>
-          <TablesList allTablesIds={allTablesIds} tables={this.props.stats.getIn(['tables', isTransformation ? 'import' : 'export'])}/>
+          <h4>Output {this.importsTotal()}</h4>
+          <TablesList allTablesIds={allTablesIds} tables={this.props.stats.getIn(['tables', 'import'])} />
         </div>
         <div className="col-md-4">
           <JobMetrics metrics={this.props.jobMetrics} />
