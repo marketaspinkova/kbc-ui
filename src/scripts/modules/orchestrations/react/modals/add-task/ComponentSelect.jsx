@@ -25,9 +25,10 @@ export default React.createClass({
   },
 
   _renderSection(title, section) {
-    if (!section || section.size === 0) {
+    if (!section || section.count() === 0) {
       return <span />;
     }
+
     const components = section
       .map((component, index) => {
         return (
@@ -54,9 +55,10 @@ export default React.createClass({
   },
 
   _renderOrchestratorSection(title, section) {
-    if (!section || section.size === 0) {
+    if (this.props.orchestrations.count() === 0) {
       return <span />;
     }
+
     const components = section
       .map((component, index) => {
         return (
@@ -76,7 +78,7 @@ export default React.createClass({
       <div>
         <h2>{title}</h2>
         <table className="table table-striped table-hover kbc-tasks-list">
-          <tbody>{this.props.orchestrations.count() !== 0 && components}</tbody>
+          <tbody>{components}</tbody>
         </table>
       </div>
     );
