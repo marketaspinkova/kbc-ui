@@ -327,7 +327,7 @@ export function createActions(componentId) {
       const newQueries = store.getQueries().filter((q) => q.get('id') !== qid);
       const newData = store.configData.setIn(['parameters', 'tables'], newQueries);
       const diffMsg = 'Delete query ' + store.getQueryName(qid);
-      if (store.isRowConfiguration()) {
+      if (store.isRowConfiguration() && !store.getNewQuery(qid)) {
         return deleteConfigRow(configId, qid.toString(), ['pending', qid, 'deleteQuery'], diffMsg);
       }
       return saveConfigData(configId, newData, ['pending', qid, 'deleteQuery'], diffMsg);
