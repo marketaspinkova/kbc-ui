@@ -11,7 +11,6 @@ export default React.createClass({
   propTypes: {
     runId: React.PropTypes.string.isRequired,
     autoRefresh: React.PropTypes.bool.isRequired,
-    mode: React.PropTypes.string.isRequired,
     jobMetrics: React.PropTypes.object.isRequired
   },
 
@@ -85,7 +84,6 @@ export default React.createClass({
         <JobStats
           stats={this.state.stats}
           isLoading={this.state.isLoading}
-          mode={this.props.mode}
           jobMetrics={this.props.jobMetrics}
         />
       );
