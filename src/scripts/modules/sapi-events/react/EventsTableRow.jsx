@@ -6,6 +6,12 @@ import classnames from 'classnames';
 import { format } from '../../../utils/date';
 import { NewLineToBr } from '@keboola/indigo-ui';
 
+const classmap = {
+  error: 'bg-danger',
+  warn: 'bg-warning',
+  success: 'bg-success'
+};
+
 export default React.createClass({
   mixin: [PureRenderMixin],
 
@@ -15,18 +21,13 @@ export default React.createClass({
   },
 
   render() {
-    const classmap = {
-      error: 'bg-danger',
-      warn: 'bg-warning',
-      success: 'bg-success'
-    };
-    const rowClass = classnames('td', classmap[this.props.event.get('type')]);
+    const status = classmap[this.props.event.get('type')];
 
     return (
       <Link {...this.linkProps()}>
-        <div className={rowClass}>{format(this.props.event.get('created'))}</div>
-        <div className={rowClass}>{this.props.event.get('component')}</div>
-        <div className={rowClass}>
+        <div className={classnames('td', 'text-nowrap', status)}>{format(this.props.event.get('created'))}</div>
+        <div className={classnames('td', 'text-nowrap', status)}>{this.props.event.get('component')}</div>
+        <div className={classnames('td', status)}>
           <NewLineToBr text={this.props.event.get('message')} />
         </div>
       </Link>
