@@ -11,7 +11,8 @@ const App = React.createClass({
     projectTemplates: PropTypes.object.isRequired,
     organizations: PropTypes.object.isRequired,
     maintainers: PropTypes.object.isRequired,
-    canCreateProject: PropTypes.bool.isRequired
+    canCreateProject: PropTypes.bool.isRequired,
+    invitationsCount: PropTypes.number.isRequired
   },
   render() {
     return (
@@ -42,6 +43,7 @@ const App = React.createClass({
             projectTemplates={this.props.projectTemplates}
             focus={true}
             canCreateProject={this.props.canCreateProject}
+            invitationsCount={this.props.invitationsCount}
           />
         </div>
       </div>
@@ -59,6 +61,7 @@ module.exports = {
         projectTemplates: Immutable.fromJS(appOptions.data.projectTemplates),
         maintainers: Immutable.fromJS(appOptions.data.maintainers),
         organizations: Immutable.fromJS(appOptions.data.organizations),
+        invitationsCount: typeof appOptions.data.invitations !== 'undefined' && typeof appOptions.data.invitations.totalCount !== 'undefined' ? appOptions.data.invitations.totalCount : 0,
         canCreateProject: appOptions.data.kbc.canCreateProject
       }),
       document.body
