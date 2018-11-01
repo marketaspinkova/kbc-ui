@@ -188,7 +188,8 @@ export default React.createClass({
     VARCHAR: {
       name: 'VARCHAR',
       basetype: 'STRING',
-      size: true
+      size: true,
+      maxLength: 16777216
     },
     DATE: {
       name: 'DATE',
@@ -249,11 +250,15 @@ export default React.createClass({
           return mappedDatatype;
         }
       });
-
+      const mapType = datatype.get(datatypeName);
+      let length = mapType.get('size') ? datatypeLength.get('value') : null;
+      if (mapType.has('maxLength') && length > mapType.get('maxLength')) {
+        length = mapType.get('maxLength');
+      }
       return Immutable.fromJS({
         column: colname,
         type: datatypeName,
-        length: datatype.get(datatypeName).get('size') ? datatypeLength.get('value') : null,
+        length: length,
         convertEmptyValuesToNull: isNaN(datatypeNullable.get('value'))
           ? datatypeNullable.get('value')
           : !!parseInt(datatypeNullable.get('value'), 10)
