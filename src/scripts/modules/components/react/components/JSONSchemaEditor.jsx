@@ -13,8 +13,10 @@ export default createReactClass({
     schema: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,
     readOnly: PropTypes.bool.isRequired,
+    onValidation: PropTypes.func,
     isChanged: PropTypes.bool,
     disableProperties: PropTypes.bool,
+    showErrors: PropTypes.oneOf(['interaction', 'change', 'always', 'never']),
     disableCollapse: PropTypes.bool
   },
 
@@ -29,7 +31,8 @@ export default createReactClass({
       readOnly: false,
       schema: Map(),
       disableProperties: false,
-      disableCollapse: false
+      disableCollapse: false,
+      showErrors: 'interaction'
     };
   },
 
@@ -65,7 +68,7 @@ export default createReactClass({
       disable_edit_json: true,
       disable_properties: this.props.disableProperties,
       object_layout: 'normal',
-      show_errors: 'always',
+      show_errors: this.props.showErrors,
       prompt_before_delete: false
     };
 
@@ -100,6 +103,10 @@ export default createReactClass({
       } else {
         const json = this.jsoneditor.getValue();
         this.props.onChange(fromJS(json));
+      }
+
+      if (this.props.onValidation) {
+        this.props.onValidation(this.jsoneditor.validate());
       }
     });
 

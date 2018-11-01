@@ -37,7 +37,8 @@ export default createReactClass({
 
   getInitialState() {
     return {
-      showJsonEditor: this.props.isEditingString || !this.props.isTemplate
+      showJsonEditor: this.props.isEditingString || !this.props.isTemplate,
+      hasEditorErrors: false
     };
   },
 
@@ -53,9 +54,11 @@ export default createReactClass({
         schema={this.props.paramsSchema}
         value={this.props.editingParams}
         onChange={this.handleParamsChange}
+        onValidation={this.handleEditorValidation}
         readOnly={this.props.isSaving}
         disableCollapse={true}
         disableProperties={true}
+        showErrors="always"
       />
     );
   },
@@ -69,7 +72,7 @@ export default createReactClass({
               isSaving={this.props.isSaving}
               isChanged={this.props.isChanged}
               onSave={this.handleSave}
-              disabled={!this.props.isValid}
+              disabled={!this.props.isValid || this.state.hasEditorErrors}
               onReset={this.props.onCancel} />
           </div>
           {
@@ -134,6 +137,12 @@ export default createReactClass({
     if (!value.equals(this.props.editingParams.toMap())) {
       this.props.onChangeParams(value);
     }
+  },
+
+  handleEditorValidation(errors) {
+    this.setState({
+      hasEditorErrors: errors.length > 0
+    });
   },
 
   switchToJsonEditor() {
