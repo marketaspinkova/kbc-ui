@@ -127,6 +127,7 @@ export default React.createClass({
     }
 
     if (
+      job.hasIn(['result', 'context', 'configurationId']) &&
       job.hasIn(['result', 'context', 'rowId']) &&
       job.hasIn(['result', 'context', 'queryNumber']) &&
       job.hasIn(['result', 'context', 'query'])
@@ -141,7 +142,7 @@ export default React.createClass({
           {'Transformation '}
           <ComponentConfigurationRowLink
             componentId={componentId}
-            configId={this.state.configuration.get('id')}
+            configId={job.getIn(['result', 'context', 'configurationId'])}
             rowId={job.getIn(['result', 'context', 'rowId']).toString()}
           >
             {job.getIn(['result', 'context', 'rowName'])}
@@ -150,21 +151,21 @@ export default React.createClass({
         </p>
       );
       parts.push(
-        <p key="transformationerror" style={{ marginTop: '10px' }}>
+        <div key="transformationerror" style={{ marginTop: '10px' }}>
           <strong>Error</strong>
           <div style={{ marginTop: '5px' }}>
             <NewLineToBr text={message} />
           </div>
-        </p>
+        </div>
       );
       parts.push(
-        <p key="transformationqueryheadline" style={{ marginTop: '10px' }}>
+        <div key="transformationqueryheadline" style={{ marginTop: '10px' }}>
           <strong>
             {'Query '}
             <small>
               <ComponentConfigurationRowLink
                 componentId={componentId}
-                configId={this.state.configuration.get('id')}
+                configId={job.getIn(['result', 'context', 'configurationId'])}
                 rowId={job.getIn(['result', 'context', 'rowId']).toString()}
                 query={{ highlightQueryNumber: job.getIn(['result', 'context', 'queryNumber']) }}
               >
@@ -179,7 +180,7 @@ export default React.createClass({
               </code>
             </pre>
           </div>
-        </p>
+        </div>
       );
     } else {
       parts.push(
