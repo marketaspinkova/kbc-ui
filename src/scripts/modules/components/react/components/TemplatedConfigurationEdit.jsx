@@ -58,7 +58,6 @@ export default createReactClass({
         readOnly={this.props.isSaving}
         disableCollapse={true}
         disableProperties={true}
-        showErrors="always"
       />
     );
   },

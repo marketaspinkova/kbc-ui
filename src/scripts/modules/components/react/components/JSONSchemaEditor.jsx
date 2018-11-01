@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { Map, fromJS } from 'immutable';
@@ -16,7 +16,6 @@ export default createReactClass({
     onValidation: PropTypes.func,
     isChanged: PropTypes.bool,
     disableProperties: PropTypes.bool,
-    showErrors: PropTypes.oneOf(['interaction', 'change', 'always', 'never']),
     disableCollapse: PropTypes.bool
   },
 
@@ -31,8 +30,7 @@ export default createReactClass({
       readOnly: false,
       schema: Map(),
       disableProperties: false,
-      disableCollapse: false,
-      showErrors: 'interaction'
+      disableCollapse: false
     };
   },
 
@@ -56,46 +54,35 @@ export default createReactClass({
       this.jsoneditor.destroy();
     }
 
-    let options = {
+    const options = {
       schema: this.props.schema.toJS(),
       startval: nextValue.toJS(),
       theme: 'bootstrap3',
       iconlib: 'fontawesome4',
-      custom_validators: [],
+      ajax: false,
+      disable_array_add: false,
+      disable_array_delete: false,
       disable_array_delete_last_row: true,
       disable_array_reorder: true,
       disable_collapse: this.props.disableCollapse,
       disable_edit_json: true,
       disable_properties: this.props.disableProperties,
       object_layout: 'normal',
-      show_errors: this.props.showErrors,
-      prompt_before_delete: false
+      required_by_default: false,
+      show_errors: 'interaction'
     };
-
-    options.custom_validators.push((schema, value, path) => {
-      let errors = [];
-      if (schema.type === 'string' && schema.template) {
-        if (schema.template !== value) {
-          errors.push({
-            path: path,
-            property: 'value',
-            message: 'Value does not match schema template'
-          });
-        }
-      }
-      return errors;
-    });
 
     if (nextReadOnly) {
       options.disable_array_add = true;
-      options.disable_array_delete = true;
       options.disable_collapse = true;
+      options.disable_edit_json = true;
       options.disable_properties = true;
+      options.disable_array_delete = true;
     }
 
     this.jsoneditor = new JSONEditor(this.refs.jsoneditor, options);
 
-    // When the value of the editor changes, update the JSON output and TODO validation message
+    // When the value of the editor changes, update the JSON output and validation message
     this.jsoneditor.on('change', () => {
       // editor calls onChange after its init causing isChanged = true without any user input. This will prevent calling onChange after editors init
       if (this.state.blockOnChangeOnce) {
