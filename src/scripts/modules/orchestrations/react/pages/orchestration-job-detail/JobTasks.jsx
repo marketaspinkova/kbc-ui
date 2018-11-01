@@ -72,7 +72,7 @@ export default React.createClass({
         {task.get('startTime') && (
           <p>
             <strong>{'Start time '}</strong>
-            {date.format(task.get(['startTime']))}
+            {date.format(task.get('startTime'))}
           </p>
         )}
         {task.get('endTime') && (
