@@ -77,15 +77,26 @@ export default React.createClass({
   _handleChangeColumns(newValue) {
     const mutatedValue = this.props.value.withMutations((mapping) => {
       let mutation = mapping.set('columns', newValue);
+      const initialDatatypes = this.getInitialDatatypes(mapping.get('source'));
       if (newValue.count()) {
-        let columns = mutation.get('columns').toJS();
-        if (!_.contains(columns, mutation.get('whereColumn'))) {
+        const columns = mutation.get('columns');
+        if (!_.contains(columns.toJS(), mutation.get('whereColumn'))) {
           mutation = mutation.set('whereColumn', '');
           mutation = mutation.set('whereValues', Immutable.List());
           mutation = mutation.set('whereOperator', 'eq');
         }
-        let datatypes = _.pick(mutation.get('datatypes').toJS(), columns);
-        mutation = mutation.set('datatypes', Immutable.fromJS(datatypes || Immutable.Map()));
+        const currentDatatypes = this.getDatatypes();
+        let newDatatypes = Immutable.Map();
+        columns.forEach((column) => {
+          if (currentDatatypes.has(column)) {
+            newDatatypes = newDatatypes.set(column, currentDatatypes.get(column));
+          } else {
+            newDatatypes = newDatatypes.set(column, initialDatatypes.get(column));
+          }
+        });
+        mutation = mutation.set('datatypes', Immutable.fromJS(newDatatypes || Immutable.Map()));
+      } else {
+        mutation = mutation.set('datatypes', Immutable.fromJS(initialDatatypes || Immutable.Map()));
       }
       return mutation;
     });
