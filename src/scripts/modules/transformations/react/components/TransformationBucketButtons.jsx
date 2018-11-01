@@ -10,7 +10,7 @@ export default React.createClass({
   mixins: [createStoreMixin(BucketsStore)],
 
   getStateFromStores() {
-    return { hasBuckets: BucketsStore.getAll().count() };
+    return { hasBuckets: BucketsStore.getAll().count() > 0 };
   },
 
   render() {
