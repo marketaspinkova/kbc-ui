@@ -143,7 +143,7 @@ module.exports = React.createClass
       ' Setup Upload'
 
 
-  _renderTableRow: (table, isDeleted = false) ->
+  _renderTableRow: (table) ->
     tableId = table.get 'id'
     tdeFileName = tdeCommon.getTdeFileName(@state.configData, tableId)
     React.createElement TableRow,
