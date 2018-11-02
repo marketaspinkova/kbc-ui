@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import moment from 'moment';
 import { Map } from 'immutable';
 import SoundNotifications from '../../../../../utils/SoundNotifications';
@@ -241,23 +242,32 @@ export default React.createClass({
   },
 
   _renderConfigurationLink(job) {
-    let configurationLink;
-    const componentId = getComponentId(job);
-    if (this.state.configuration.size !== 0) {
+    if (job.get('component') === 'provisioning') {
+      return (
+        <span>
+          <Link to="sandbox">Sandbox</Link>
+        </span>
+      );
+    }
+
+    if (this.state.configuration.count()) {
+      const componentId = getComponentId(job);
       const configId = this.state.configuration.get('id');
-      configurationLink = (
+
+      return (
         <span>
           <ComponentConfigurationLink componentId={componentId} configId={configId}>
             {this.state.configuration.get('name', configId)}
           </ComponentConfigurationLink>
         </span>
       );
-    } else if (job.hasIn(['params', 'config'])) {
-      configurationLink = <span>{job.getIn(['params', 'config'])}</span>;
-    } else {
-      configurationLink = <em>N/A</em>;
     }
-    return configurationLink;
+
+    if (job.hasIn(['params', 'config'])) {
+      return <span>{job.getIn(['params', 'config'])}</span>;
+    }
+
+    return <em>N/A</em>;
   },
 
   _renderConfigurationRowLink(job) {
