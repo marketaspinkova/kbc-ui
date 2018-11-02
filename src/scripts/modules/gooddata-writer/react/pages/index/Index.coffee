@@ -358,10 +358,11 @@ module.exports = React.createClass
   Tomas
   ###
 
-  _renderTableRow: (table, isDeleted = false) ->
+  _renderTableRow: (table, index, isDeleted = false) ->
     #bucketId = table.getIn ['bucket', 'id']
     writerTable = @state.tablesByBucket.get table.get('id')
     React.createElement TableRow,
+      key: index
       table: writerTable
       configId: @state.configId
       sapiTable: table
@@ -390,8 +391,8 @@ module.exports = React.createClass
       showAllTables: false
       isTableShownFn: @_isTableShown
       configuredTables: @state.tablesByBucket.keySeq().toJS()
-      renderDeletedTableRowFn: (table) =>
-        @_renderTableRow(table, true)
+      renderDeletedTableRowFn: (table, index) =>
+        @_renderTableRow(table, index, true)
 
 
   _filterBuckets: (buckets) ->
