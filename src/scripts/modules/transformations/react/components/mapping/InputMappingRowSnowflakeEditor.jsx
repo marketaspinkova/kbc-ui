@@ -317,7 +317,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <div className="form-horizontal">
+        <div className="form-horizontal clearfix">
           <div className="row col-md-12">
             <div className="form-group">
               <label className="col-xs-2 control-label">Source</label>
