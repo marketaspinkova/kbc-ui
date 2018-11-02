@@ -335,15 +335,17 @@ export default function(COMPONENT_ID) {
     },
 
     renderEmptyQueries() {
+      if (!this.isAuthorized()) {
+        return null;
+      }
+
       return (
-        this.isAuthorized() ?
-          <div className="row">
-            <EmptyState>
-              <p>No Queries Configured</p>
-              {this.renderAddQueryLink()}
-            </EmptyState>
-          </div>
-          : null
+        <div className="col-xs-12">
+          <EmptyState>
+            <p>No Queries Configured</p>
+            {this.renderAddQueryLink()}
+          </EmptyState>
+        </div>
       );
     },
 
