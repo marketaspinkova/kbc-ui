@@ -1,5 +1,5 @@
 import React from 'react';
-import {Table} from 'react-bootstrap';
+import {Table, HelpBlock} from 'react-bootstrap';
 import {Input} from './../../../../../../react/common/KbcBootstrap';
 import DatatypeFormRow from './DatatypeFormRow';
 
@@ -47,9 +47,9 @@ export default React.createClass({
   render() {
     if (this.props.disabled) {
       return (
-        <div className="help-block">
+        <HelpBlock>
           A source table must be selected to define data types.
-        </div>
+        </HelpBlock>
       );
     }
     return (
