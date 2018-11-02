@@ -54,6 +54,12 @@ export default React.createClass({
       );
     }
 
+    if (componentId === 'provisioning' && this.props.job.hasIn(['params', 'transformation', 'config_id'])) {
+      return (
+        <span>{this.props.job.getIn(['params', 'transformation', 'config_id'])}</span>
+      );
+    }
+
     const configId = this.props.job.getIn(['params', 'config']);
     if (!configId) {
       return (
