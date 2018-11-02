@@ -54,10 +54,14 @@ export default React.createClass({
       );
     }
 
-    if (componentId === 'provisioning' && this.props.job.hasIn(['params', 'transformation', 'config_id'])) {
-      return (
-        <span>{this.props.job.getIn(['params', 'transformation', 'config_id'])}</span>
-      );
+    if (componentId === 'provisioning') {
+      if (this.props.job.hasIn(['params', 'transformation', 'config_id'])) {
+        return (
+          <span>{this.props.job.getIn(['params', 'transformation', 'config_id'])}</span>
+        );
+      }
+
+      return <span>Plain Sandbox</span>;
     }
 
     const configId = this.props.job.getIn(['params', 'config']);

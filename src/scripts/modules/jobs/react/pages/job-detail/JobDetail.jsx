@@ -255,14 +255,22 @@ export default React.createClass({
       );
     }
 
-    if (job.hasIn(['params', 'transformation', 'config_id'])) {
-      configId = job.getIn(['params', 'transformation', 'config_id']);
+    if (job.get('component') === 'provisioning') {
+      if (job.hasIn(['params', 'transformation', 'config_id'])) {
+        configId = job.getIn(['params', 'transformation', 'config_id']);
+
+        return (
+          <span>
+            <ComponentConfigurationLink componentId="transformation" configId={configId}>
+              {configId}
+            </ComponentConfigurationLink>
+          </span>
+        );
+      }
 
       return (
         <span>
-          <ComponentConfigurationLink componentId="transformation" configId={configId}>
-            {configId}
-          </ComponentConfigurationLink>
+          <Link to="sandbox">Plain Sandbox</Link>
         </span>
       );
     }
