@@ -195,7 +195,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Form horizontalS>
+      <Form horizontal>
         <FormGroup>
           <Col sm={2} componentClass={ControlLabel}>Source</Col>
           <Col sm={10}>
