@@ -262,7 +262,7 @@ export default React.createClass({
         return (
           <span>
             <ComponentConfigurationLink componentId="transformation" configId={configId}>
-              {configId}
+              {InstalledComponentsStore.getConfig('transformation', configId).get('name', configId)}
             </ComponentConfigurationLink>
           </span>
         );
@@ -312,7 +312,7 @@ export default React.createClass({
         <span>
           {' / '}
           <ComponentConfigurationRowLink componentId="transformation" configId={configId} rowId={rowId}>
-            {rowId}
+            {ConfigurationRowsStore.get('transformation', configId, rowId).get('name', rowId)}
           </ComponentConfigurationRowLink>
         </span>
       );
