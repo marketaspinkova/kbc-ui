@@ -683,9 +683,9 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@keboola/indigo-ui@^6.1.0":
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/@keboola/indigo-ui/-/indigo-ui-6.2.1.tgz#a5d83aeb42953d1417b250463bd31142b52fe1cf"
+"@keboola/indigo-ui@^7.0.0":
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/@keboola/indigo-ui/-/indigo-ui-7.1.0.tgz#1f71d852fe03e501a9497f7de14621684834d535"
   dependencies:
     bootstrap "^3.3.7"
     classnames "^2.1.0"
