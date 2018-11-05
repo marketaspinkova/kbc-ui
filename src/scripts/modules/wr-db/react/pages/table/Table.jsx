@@ -23,7 +23,6 @@ import IsDockerBasedFn from '../../../templates/dockerProxyApi';
 import IncrementalSetupModal from './IncrementalSetupModal';
 import {Alert} from 'react-bootstrap';
 
-
 const defaultDataTypes = [
   'INT',
   'BIGINT',
