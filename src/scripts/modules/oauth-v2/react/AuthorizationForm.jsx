@@ -1,9 +1,16 @@
 import React, {PropTypes} from 'react';
-import ComponentsStore from '../../components/stores/ComponentsStore';
 import ApplicationStore from '../../../stores/ApplicationStore';
+import ServicesStore from '../../services/Store';
+import ComponentsStore from '../../components/stores/ComponentsStore';
+
+function getOauthUrl() {
+  if (ApplicationStore.hasCurrentProjectFeature('oauth-v3')) {
+    return ServicesStore.getService('oauth').get('url');
+  }
+  return ComponentsStore.getComponent('keboola.oauth-v2').get('uri');
+}
 
 export default React.createClass({
-
   propTypes: {
     componentId: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
@@ -12,7 +19,7 @@ export default React.createClass({
   },
 
   render() {
-    const oauthUrl = ComponentsStore.getComponent('keboola.oauth-v2').get('uri');
+    const oauthUrl = getOauthUrl();
     const actionUrl = `${oauthUrl}/authorize/${this.props.componentId}`;
     const token = ApplicationStore.getSapiTokenString();
     const returnUrl = `${window.location.href}/${this.props.returnUrlSuffix}`;

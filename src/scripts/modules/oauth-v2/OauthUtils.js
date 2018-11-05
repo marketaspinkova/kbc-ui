@@ -8,18 +8,29 @@ import RoutesStore from '../../stores/RoutesStore';
 import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
 import StorageApi from '../components/StorageApi';
 const configOauthPath = ['authorization', 'oauth_api', 'id'];
+const configOauthPathVersion = ['authorization', 'oauth_api', 'version'];
 
-function processRedirectData(componentId, configId, id) {
+function createConfiguration(componentId, configId) {
+  const configuration = installedComponentsStore.getConfigData(componentId, configId) || Map();
+
+  if (ApplicationStore.hasCurrentProjectFeature('oauth-v3')) {
+    return configuration
+      .setIn(configOauthPath, configId)
+      .setIn(configOauthPathVersion, 3);
+  }
+
+  return configuration.setIn(configOauthPath, configId);
+}
+
+function processRedirectData(componentId, configId) {
   // config component configuration
   return installedComponentsActions.loadComponentConfigData(componentId, configId)
     .then( () => {
-      const configuration = installedComponentsStore.getConfigData(componentId, configId) || Map();
-
       // load credentials for componentId and id
-      return OauthActions.loadCredentials(componentId, id)
+      return OauthActions.loadCredentials(componentId, configId)
         .then(() => {
-          const credentials = OauthStore.getCredentials(componentId, id);
-          const newConfiguration = configuration.setIn(configOauthPath, id);
+          const credentials = OauthStore.getCredentials(componentId, configId);
+          const newConfiguration = createConfiguration(componentId, configId);
 
           // save configuration with authorization id
           const saveFn = installedComponentsActions.saveComponentConfigData;
@@ -59,7 +70,7 @@ export function createRedirectRoute(routeName, redirectPathName, redirectParamsF
       (params) => {
         const configId = params.config;
         const cid = componentId || params.component;
-        processRedirectData(cid, configId, configId)
+        processRedirectData(cid, configId)
           .then((authorizedFor) => {
             const msg = `Account succesfully authorized for ${authorizedFor}`;
             sendNotification(msg);
@@ -89,9 +100,10 @@ export function createRedirectRouteSimple(componentId) {
 export function loadCredentialsFromConfig(componentId, configId) {
   const configuration = installedComponentsStore.getConfigData(componentId, configId);
   const id = configuration.getIn(configOauthPath);
+  const version = configuration.getIn(configOauthPathVersion, 2);
 
   if (id) {
-    return OauthActions.loadCredentials(componentId, id);
+    return OauthActions.loadCredentials(componentId, id, version);
   }
 }
 
@@ -99,9 +111,10 @@ export function loadCredentialsFromConfig(componentId, configId) {
 export function deleteCredentialsAndConfigAuth(componentId, configId) {
   const configData = installedComponentsStore.getConfigData(componentId, configId);
   const credentialsId = configData.getIn(configOauthPath);
-  const credentials = OauthStore.getCredentials(componentId, credentialsId);
+  const version = configData.getIn(configOauthPathVersion, 2);
+  const credentials = OauthStore.getCredentials(componentId, credentialsId, version);
   const authorizedFor = credentials.get('authorizedFor');
-  return OauthActions.deleteCredentials(componentId, credentialsId)
+  return OauthActions.deleteCredentials(componentId, credentialsId, version)
     .then(() => {
       // delete the whole authorization object part of the configuration
       const newConfigData = configData.deleteIn([].concat(configOauthPath[0]));
@@ -137,9 +150,7 @@ export function generateLink(componentId, configId) {
 export function saveDirectData(componentId, configId, authorizedFor, data) {
   return OauthActions.postCredentials(componentId, configId, authorizedFor, data)
     .then(() => {
-      const configuration = installedComponentsStore.getConfigData(componentId, configId) || Map();
-      const id = configId;
-      const newConfiguration = configuration.setIn(configOauthPath, id);
+      const newConfiguration = createConfiguration(componentId, configId);
 
       // save configuration with authorization id
       const saveFn = installedComponentsActions.saveComponentConfigData;
