@@ -10,10 +10,12 @@ export default React.createClass({
 
   invitationsButton() {
     if (!this.props.invitationsCount) {
-      return (null);
+      return null;
     }
 
-    return (<InvitationsButton invitationsCount={this.props.invitationsCount} />);
+    return (
+      <InvitationsButton invitationsCount={this.props.invitationsCount} />
+    );
   },
 
   render() {

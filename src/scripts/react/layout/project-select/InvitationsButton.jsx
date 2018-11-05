@@ -12,7 +12,7 @@ export default React.createClass({
 
   render() {
     if (!this.props.invitationsCount) {
-      return (null);
+      return null;
     }
 
     return (

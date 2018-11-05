@@ -70,7 +70,7 @@ export default React.createClass({
 
   _invitationsButton() {
     if (!this.props.invitationsCount) {
-      return (null);
+      return null;
     }
 
     return (
