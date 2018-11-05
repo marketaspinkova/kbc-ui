@@ -138,7 +138,7 @@ export default componentId => {
                 {isRenderIncremental && <li className="list-group-item">{this._renderTableFiltersRow()}</li>}
                 {isRenderIncremental && <li className="list-group-item">{this._renderPrimaryKey()}</li>}
               </ul>
-              {pkMismatchList.length > 0 &&
+              {pkMismatchList.size > 0 &&
               <Alert bsStyle="warning">
                 Primary Key is set to non-existing column(s). please update Primary Key settings.
               </Alert>
