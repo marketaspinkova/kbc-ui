@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import Edit from './ScriptsEdit';
 import Clipboard from '../../../../../react/common/Clipboard';
 import SaveButtons from '../../../../../react/common/SaveButtons';
@@ -16,6 +17,8 @@ export default React.createClass({
     isSaving: PropTypes.bool.isRequired,
     onEditCancel: PropTypes.func.isRequired,
     onEditChange: PropTypes.func.isRequired,
+    onDescriptionChange: PropTypes.func.isRequired,
+    changeDescription: PropTypes.string.isRequired,
     onEditSubmit: PropTypes.func.isRequired,
     isChanged: PropTypes.bool.isRequired
   },
@@ -44,6 +47,21 @@ export default React.createClass({
           isChanged={this.props.isChanged}
           onSave={this.props.onEditSubmit}
           onReset={this.props.onEditCancel}
+          showModal={true}
+          modalTitle="Save new scripts"
+          modalBody={
+            <FormGroup>
+              <ControlLabel>Update description</ControlLabel>
+              <FormControl
+                componentClass="textarea"
+                rows={3}
+                autoFocus
+                value={this.props.changeDescription}
+                onChange={e => this.props.onDescriptionChange(e.target.value)}
+                disabled={this.props.isSaving}
+              />
+            </FormGroup>
+          }
         />
       </span>
     );

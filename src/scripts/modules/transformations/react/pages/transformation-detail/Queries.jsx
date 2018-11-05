@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import Edit from './QueriesEdit';
 import Clipboard from '../../../../../react/common/Clipboard';
 import SaveButtons from '../../../../../react/common/SaveButtons';
@@ -18,6 +19,8 @@ export default React.createClass({
     isQueriesProcessing: PropTypes.bool.isRequired,
     onEditCancel: PropTypes.func.isRequired,
     onEditChange: PropTypes.func.isRequired,
+    onDescriptionChange: PropTypes.func.isRequired,
+    changeDescription: PropTypes.string.isRequired,
     onEditSubmit: PropTypes.func.isRequired,
     isChanged: PropTypes.bool.isRequired,
     highlightQueryNumber: PropTypes.number,
@@ -55,6 +58,21 @@ export default React.createClass({
           isChanged={this.props.isChanged}
           onSave={this.props.onEditSubmit}
           onReset={this.props.onEditCancel}
+          showModal={true}
+          modalTitle="Save new queries"
+          modalBody={
+            <FormGroup>
+              <ControlLabel>Update description</ControlLabel>
+              <FormControl
+                componentClass="textarea"
+                rows={4}
+                autoFocus
+                value={this.props.changeDescription}
+                onChange={e => this.props.onDescriptionChange(e.target.value)}
+                disabled={this.props.isSaving}
+              />
+            </FormGroup>
+          }
         />
       </span>
     );
@@ -72,5 +90,5 @@ export default React.createClass({
         highlightingQueryDisabled={this.props.highlightingQueryDisabled}
       />
     );
-  }
+}
 });

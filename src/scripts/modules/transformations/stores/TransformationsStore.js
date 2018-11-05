@@ -236,6 +236,12 @@ Dispatcher.register(payload => {
               action.transformationId,
               'queriesChanged'
             ]);
+            store.deleteIn([
+              'editingTransformationsFields',
+              action.bucketId,
+              action.transformationId,
+              'description'
+            ]);
           } else if (action.editingId === 'packages') {
             store.deleteIn([
               'editingTransformationsFields',

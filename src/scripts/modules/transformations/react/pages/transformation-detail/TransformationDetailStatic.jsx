@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { Map, List, fromJS } from 'immutable';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import TransformationsActionCreators from '../../../ActionCreators';
+import TransformationsStore from '../../../stores/TransformationsStore';
 import ApplicationStore from '../../../../../stores/ApplicationStore';
 import InputMappingRow from './InputMappingRow';
 import InputMappingDetail from './InputMappingDetail';
@@ -458,59 +459,76 @@ export default React.createClass({
   },
 
   _renderCodeEditor() {
+    const commonProps = {
+      bucketId: this.props.bucket.get('id'),
+      transformation: this.props.transformation,
+      isEditing: this.props.editingFields.has('queriesString'),
+      isSaving: this.props.pendingActions.has('save-queries'),
+      isChanged: this.props.editingFields.get('queriesChanged', false),
+      onEditCancel: () => {
+        TransformationsActionCreators.cancelTransformationEditingField(
+          this.props.bucketId,
+          this.props.transformationId,
+          'queriesString'
+        );
+        return TransformationsActionCreators.cancelTransformationEditingField(
+          this.props.bucketId,
+          this.props.transformationId,
+          'queriesChanged'
+        );
+      },
+      onEditChange: newValue => {
+        TransformationsActionCreators.updateTransformationEditingField(
+          this.props.bucketId,
+          this.props.transformationId,
+          'queriesString',
+          newValue
+        );
+        if (!this.props.editingFields.get('queriesChanged', false)) {
+          return TransformationsActionCreators.updateTransformationEditingField(
+            this.props.bucketId,
+            this.props.transformationId,
+            'queriesChanged',
+            true
+          );
+        }
+      },
+      onDescriptionChange: descrtiption => {
+        return TransformationsActionCreators.updateTransformationEditingField(
+          this.props.bucketId,
+          this.props.transformationId,
+          'description',
+          descrtiption
+        );
+      }
+    };
+
+    const editingFields = TransformationsStore.getTransformationEditingFields(
+      this.props.bucketId,
+      this.props.transformationId
+    );
+
     if (this.props.transformation.get('backend') === 'docker') {
       return (
         <Scripts
-          bucketId={this.props.bucket.get('id')}
-          transformation={this.props.transformation}
-          isEditing={this.props.editingFields.has('queriesString')}
-          isSaving={this.props.pendingActions.has('save-queries')}
           scripts={this.props.editingFields.get('queriesString', this.props.transformation.get('queriesString'))}
           isEditingValid={this.props.isEditingValid}
-          isChanged={this.props.editingFields.get('queriesChanged', false)}
-          onEditCancel={() => {
-            TransformationsActionCreators.cancelTransformationEditingField(
-              this.props.bucketId,
-              this.props.transformationId,
-              'queriesString'
-            );
-            return TransformationsActionCreators.cancelTransformationEditingField(
-              this.props.bucketId,
-              this.props.transformationId,
-              'queriesChanged'
-            );
-          }}
-          onEditChange={newValue => {
-            TransformationsActionCreators.updateTransformationEditingField(
-              this.props.bucketId,
-              this.props.transformationId,
-              'queriesString',
-              newValue
-            );
-            if (!this.props.editingFields.get('queriesChanged', false)) {
-              return TransformationsActionCreators.updateTransformationEditingField(
-                this.props.bucketId,
-                this.props.transformationId,
-                'queriesChanged',
-                true
-              );
-            }
-          }}
+          changeDescription={editingFields.get(
+            'description',
+            'Change Scripts in ' + this.props.transformation.get('name')
+          )}
           onEditSubmit={() => {
             return TransformationsActionCreators.saveTransformationScript(
               this.props.bucketId,
               this.props.transformationId
             );
           }}
+          {...commonProps}
         />
       );
     } else {
       return (
         <Queries
-          bucketId={this.props.bucket.get('id')}
-          transformation={this.props.transformation}
-          isEditing={this.props.editingFields.has('queriesString')}
-          isSaving={this.props.pendingActions.has('save-queries')}
           queries={this.props.editingFields.get('queriesString', this.props.transformation.get('queriesString'))}
           splitQueries={this.props.editingFields.get('splitQueries', this.props.transformation.get('queries'))}
           isQueriesProcessing={this.props.isQueriesProcessing}
@@ -518,45 +536,17 @@ export default React.createClass({
           highlightQueryNumber={this.props.highlightQueryNumber}
           highlightingQueryDisabled={this.props.highlightingQueryDisabled}
           disabled={this._isMySqlTransformation()}
-          onEditCancel={() => {
-            TransformationsActionCreators.cancelTransformationEditingField(
-              this.props.bucketId,
-              this.props.transformationId,
-              'queriesString'
-            );
-            return TransformationsActionCreators.cancelTransformationEditingField(
-              this.props.bucketId,
-              this.props.transformationId,
-              'queriesChanged'
-            );
-          }}
-          onEditChange={newValue => {
-            TransformationsActionCreators.updateTransformationEditingField(
-              this.props.bucketId,
-              this.props.transformationId,
-              'queriesString',
-              newValue
-            );
-            TransformationsActionCreators.updateTransformationEditingFieldQueriesString(
-              this.props.bucketId,
-              this.props.transformationId,
-              newValue
-            );
-            if (!this.props.editingFields.get('queriesChanged', false)) {
-              return TransformationsActionCreators.updateTransformationEditingField(
-                this.props.bucketId,
-                this.props.transformationId,
-                'queriesChanged',
-                true
-              );
-            }
-          }}
+          changeDescription={editingFields.get(
+            'description',
+            'Change Queries in ' + this.props.transformation.get('name')
+          )}
           onEditSubmit={() => {
             return TransformationsActionCreators.saveTransformationQueries(
               this.props.bucketId,
               this.props.transformationId
             );
           }}
+          {...commonProps}
         />
       );
     }
