@@ -21,7 +21,7 @@ import InstalledComponentsStore from '../../../../components/stores/InstalledCom
 import FiltersDescription from '../../../../components/react/components/generic/FiltersDescription';
 import IsDockerBasedFn from '../../../templates/dockerProxyApi';
 import IncrementalSetupModal from './IncrementalSetupModal';
-import {AlertBlock} from '@keboola/indigo-ui';
+import {Alert} from 'react-bootstrap';
 
 
 const defaultDataTypes = [
@@ -127,11 +127,6 @@ export default componentId => {
 
       return (
         <div className="container-fluid">
-          {pkMismatchList.count() > 0  &&
-            <div className="kbc-overview-component-container">
-              {this._renderMismatchAlertBlock(pkMismatchList)}
-            </div>
-          }
           <div className="kbc-main-content">
             <div className="kbc-header">
               <ul className="list-group list-group-no-border">
@@ -143,6 +138,11 @@ export default componentId => {
                   {isRenderIncremental && <li className="list-group-item">{this._renderIncrementalSetup()}</li>}
                   {isRenderIncremental && <li className="list-group-item">{this._renderTableFiltersRow()}</li>}
                   {isRenderIncremental && <li className="list-group-item">{this._renderPrimaryKey()}</li>}
+                  {pkMismatchList.length > 0 &&
+                  <Alert bsStyle="warning">
+                    Primary Key is set to non-existing column(s). please update Primary Key settings.
+                  </Alert>
+                  }
                 </li>
               </ul>
             </div>
@@ -253,29 +253,6 @@ export default componentId => {
           </div>
         </div>
       );
-    },
-
-    _renderMismatchAlertBlock(pkMismatchList) {
-      if (pkMismatchList.count() > 0) {
-        return (
-          <AlertBlock type="danger" title="Primary Key mismatch">
-            <p>Following column(s) not found in 	Database Column Names.</p>
-            <ul>
-              {pkMismatchList.map((pkName) =>
-                <li>{pkName}</li>
-              )}
-            </ul>
-            <p>Please fix settings of Destination Table.</p>
-            <button
-              className="btn btn-default"
-              disabled={!!this.state.editingColumns}
-              onClick={this._showIncrementalSetupModal}
-            >
-              Change Settings
-            </button>
-          </AlertBlock>
-        );
-      }
     },
 
     _renderPrimaryKey() {
