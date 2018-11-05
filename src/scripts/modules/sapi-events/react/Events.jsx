@@ -94,7 +94,7 @@ export default React.createClass({
       <div className="form-group">
         <div className="col-xs-12 col-searchbar-padded">
           <SearchBar
-            query={this.state.searchQuery}
+            query={this.state.searchQueryLocal}
             onChange={(query) => {
               this.setState({
                 searchQueryLocal: query
