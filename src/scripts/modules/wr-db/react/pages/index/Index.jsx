@@ -329,7 +329,7 @@ export default componentId => {
     },
 
     _isUpdating() {
-      return this.state.updatingTables.count() || this.state.deletingTables.count();
+      return !!(this.state.updatingTables.count() || this.state.deletingTables.count());
     },
 
     _prepareTableUploadData() {
