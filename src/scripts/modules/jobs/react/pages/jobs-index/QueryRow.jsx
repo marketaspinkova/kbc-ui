@@ -48,9 +48,7 @@ export default React.createClass({
             });
           }}
           onSubmit={() => {
-            setTimeout(() => {
-              this.props.onSearch(this.state.query);
-            }, 100);
+            this.props.onSearch(this.state.query);
           }}
           inputRef={(input) => {
             this.searchInput = input;
