@@ -61,7 +61,9 @@ module.exports = {
         projectTemplates: Immutable.fromJS(appOptions.data.projectTemplates),
         maintainers: Immutable.fromJS(appOptions.data.maintainers),
         organizations: Immutable.fromJS(appOptions.data.organizations),
-        invitationsCount: typeof appOptions.data.invitations !== 'undefined' && typeof appOptions.data.invitations.totalCount !== 'undefined' ? appOptions.data.invitations.totalCount : 0,
+        invitationsCount: appOptions.data.invitations && appOptions.data.invitations.totalCount
+          ? appOptions.data.invitations.totalCount
+          : 0,
         canCreateProject: appOptions.data.kbc.canCreateProject
       }),
       document.body

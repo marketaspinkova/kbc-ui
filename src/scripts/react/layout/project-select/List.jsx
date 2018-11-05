@@ -69,20 +69,20 @@ export default React.createClass({
   },
 
   _invitationsButton() {
-    if (this.props.invitationsCount > 0) {
-      return (
-        <div>
-          <div className="kbc-no-projects">
-            <InvitationsButton
-              invitationsCount={this.props.invitationsCount}
-            />
-          </div>
-          <hr/>
-        </div>
-      );
-    } else {
+    if (!this.props.invitationsCount) {
       return (null);
     }
+
+    return (
+      <div>
+        <div className="kbc-no-projects">
+          <InvitationsButton
+            invitationsCount={this.props.invitationsCount}
+          />
+        </div>
+        <hr/>
+      </div>
+    );
   },
 
   _projectsList() {

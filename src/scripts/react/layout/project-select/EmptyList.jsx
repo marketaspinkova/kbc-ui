@@ -9,11 +9,11 @@ export default React.createClass({
   },
 
   invitationsButton() {
-    if (this.props.invitationsCount > 0) {
-      return (<InvitationsButton invitationsCount={this.props.invitationsCount} />);
-    } else {
+    if (!this.props.invitationsCount) {
       return (null);
     }
+
+    return (<InvitationsButton invitationsCount={this.props.invitationsCount} />);
   },
 
   render() {
