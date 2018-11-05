@@ -21,7 +21,8 @@ export default React.createClass({
     const selectedType = this.props.datatypesMap.filter((datatype) => {
       return datatype.get('name') === this.props.datatype.get('type');
     });
-    return selectedType.get(this.props.datatype.get('type')).get('size');
+    return selectedType.get(this.props.datatype.get('type'))
+      && selectedType.get(this.props.datatype.get('type')).get('size');
   },
 
   handleTypeChange(newType) {
