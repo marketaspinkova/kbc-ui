@@ -1,7 +1,23 @@
 import React from 'react';
 import contactSupport from '../../../utils/contactSupport';
+import InvitationsButton from './InvitationsButton';
+import PromoCodeButton from './PromoCodeButton';
 
 export default React.createClass({
+  propTypes: {
+    invitationsCount: React.PropTypes.number.isRequired
+  },
+
+  invitationsButton() {
+    if (!this.props.invitationsCount) {
+      return null;
+    }
+
+    return (
+      <InvitationsButton invitationsCount={this.props.invitationsCount} />
+    );
+  },
+
   render() {
     return (
       <div>
@@ -10,14 +26,8 @@ export default React.createClass({
           You are not member of any project yet.
         </p>
         <div className="kbc-no-projects">
-          <a href="/admin/account/promo-codes" className="btn btn-lg btn-block btn-success text-left action-button">
-            <span className="raquo">&raquo;</span>
-            <strong className="h2">Enter promo code</strong><br/>
-            <span className="small">
-              Select this option if you have a promo code.<br/>
-              A new project will be created automatically.<br/>
-            </span>
-          </a>
+          {this.invitationsButton()}
+          <PromoCodeButton/>
         </div>
         <hr />
         <p className="text-center">

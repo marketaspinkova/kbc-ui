@@ -6,6 +6,7 @@ import Tooltip from '../../common/Tooltip';
 import { SearchBar } from '@keboola/indigo-ui';
 import NewProjectModal from '../NewProjectModal';
 import Emptylist from './EmptyList';
+import InvitationsButton from './InvitationsButton';
 
 export default React.createClass({
   propTypes: {
@@ -15,6 +16,7 @@ export default React.createClass({
     projectTemplates: React.PropTypes.object.isRequired,
     focus: React.PropTypes.bool.isRequired,
     canCreateProject: React.PropTypes.bool.isRequired,
+    invitationsCount: React.PropTypes.number.isRequired,
     xsrf: React.PropTypes.string.isRequired,
     theme: React.PropTypes.string
   },
@@ -42,12 +44,13 @@ export default React.createClass({
 
   render() {
     if (!this.props.organizations.count() && !this.props.canCreateProject) {
-      return <Emptylist />;
+      return <Emptylist invitationsCount={this.props.invitationsCount} />;
     }
 
     return (
       <div>
         <div>
+          {this._invitationsButton()}
           <SearchBar
             inputRef={element => {
               this.searchInput = element;
@@ -61,6 +64,23 @@ export default React.createClass({
         </div>
         {this._projectsList()}
         {this.props.canCreateProject && this._newProject()}
+      </div>
+    );
+  },
+
+  _invitationsButton() {
+    if (!this.props.invitationsCount) {
+      return null;
+    }
+
+    return (
+      <div>
+        <div className="kbc-no-projects">
+          <InvitationsButton
+            invitationsCount={this.props.invitationsCount}
+          />
+        </div>
+        <hr/>
       </div>
     );
   },
