@@ -36,7 +36,7 @@ export default React.createClass({
     }
     const rows = this.renderTableRows();
     return (
-      <div style={{'max-height': '80vh', 'overflowY': 'auto', 'overflowX': 'hidden'}}>
+      <div style={{maxHeight: '80vh', overflowY: 'auto', overflowX: 'hidden'}}>
         <div>
           <div className="row">
             <div className="col-xs-3">
@@ -121,7 +121,7 @@ export default React.createClass({
       info.message = underscoreString.replaceAll(info.message, this.props.tableId, '');
       const incremental = e.getIn(['params', 'incremental']) ? incElement : <span />;
       return (
-        <tr className={cl} onClick={() => this.setDetailEventId(e.get('id'))}>
+        <tr key={e.get('id')} className={cl} onClick={() => this.setDetailEventId(e.get('id'))}>
           <td className="td">
             {date.format(e.get('created'))}
             <small> {agoTime} </small>
@@ -136,7 +136,7 @@ export default React.createClass({
         </tr>
       );
     }
-    );
+    ).toArray();
   },
 
   setDetailEventId(eventId) {

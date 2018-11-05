@@ -77,10 +77,10 @@ export default React.createClass({
     );
   },
 
-  renderRow(table) {
+  renderRow(table, index) {
     const item = this.props.items.filter((i) => i.get('tableId') === table.get('id')).first();
     return (
-      <div className="tr">
+      <div key={index} className="tr">
         <div className="td">
           {this.renderFieldTable(item.get('tableId'))}
         </div>
@@ -100,10 +100,10 @@ export default React.createClass({
     );
   },
 
-  renderRowDeleted(table) {
+  renderRowDeleted(table, index) {
     const item = this.props.items.filter((i) => i.get('tableId') === table.get('id')).first();
     return (
-      <div className="tr">
+      <div key={index} className="tr">
         <div className="td">
           {this.renderFieldTable(item.get('tableId'))}
         </div>

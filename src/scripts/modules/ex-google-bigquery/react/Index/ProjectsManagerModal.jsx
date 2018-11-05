@@ -149,7 +149,7 @@ export default React.createClass({
         <Modal.Body>
           { this.renderForm() }
           <div className="row">
-            <div className="table kbc-table-border-vertical kbc-detail-table" style={{'border-bottom': 0}}>
+            <div className="table kbc-table-border-vertical kbc-detail-table" style={{borderBottom: 0}}>
               <div className="tr">
                 <div className="td" />
               </div>

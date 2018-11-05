@@ -87,7 +87,7 @@ export default function(COMPONENT_ID) {
             }
             {
               (this.isAuthorized() && this.state.store.hasAccounts) || this.state.store.hasQueries ?
-                <div className="row" style={{'padding-left': 0, 'padding-right': 0}}>
+                <div className="row" style={{paddingLeft: 0, paddingRight: 0}}>
                   {this.state.store.hasQueries ?
                     <QueriesTable
                       componentId={COMPONENT_ID}
@@ -211,7 +211,7 @@ export default function(COMPONENT_ID) {
           <div className={clName}>
             <span>Selected {getAccountDesc('Facebook Pages')}</span>
             <a
-              style={{'padding-bottom': 0, 'padding-top': 0}}
+              style={{paddingBottom: 0, paddingTop: 0}}
               className="btn btn-link btn-sm"
               onClick={this.showAccountsManagerModal}>
               Modify
@@ -335,15 +335,17 @@ export default function(COMPONENT_ID) {
     },
 
     renderEmptyQueries() {
+      if (!this.isAuthorized()) {
+        return null;
+      }
+
       return (
-        this.isAuthorized() ?
-          <div className="row">
-            <EmptyState>
-              <p>No Queries Configured</p>
-              {this.renderAddQueryLink()}
-            </EmptyState>
-          </div>
-          : null
+        <div className="col-xs-12">
+          <EmptyState>
+            <p>No Queries Configured</p>
+            {this.renderAddQueryLink()}
+          </EmptyState>
+        </div>
       );
     },
 

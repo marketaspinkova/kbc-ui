@@ -1,10 +1,11 @@
 import VersionsActionCreators from '../modules/components/VersionsActionCreators';
 import InstalledComponentsActionCreators from '../modules/components/InstalledComponentsActionCreators';
 
-export default function(componentId, configId, versionId) {
-  return function() {
-    var reloadCallback = function(component, config) {
-      var promises = [];
+export default (componentId, configId, version) => {
+  return () => {
+    const versionId = version.get('version');
+    const reloadCallback = (component, config) => {
+      const promises = [];
       if (componentId === 'transformation') {
         promises.push(InstalledComponentsActionCreators.loadComponentConfigsData(component));
       }
@@ -13,4 +14,4 @@ export default function(componentId, configId, versionId) {
     };
     VersionsActionCreators.rollbackVersion(componentId, configId, versionId, reloadCallback);
   };
-}
+};

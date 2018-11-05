@@ -94,8 +94,8 @@ export default function(componentIdValue, configIdParam = 'config', readOnlyMode
             onPrepareVersionsDiffData={() => this.prepareVersionsDiffData(version, previousVersion)}
             isLast={allVersions.first().get('version') === version.get('version')}
             onChangeName={(name) => VersionsActionCreators.changeNewVersionName(this.state.componentId, this.state.configId, version.get('version'), name)}
-            onCopy={createVersionOnCopy(this.state.componentId, this.state.configId, version.get('version'), this.state.newVersionNames.get(version.get('version')))}
-            onRollback={createVersionOnRollback(this.state.componentId, this.state.configId, version.get('version'))}
+            onCopy={createVersionOnCopy(this.state.componentId, this.state.configId, version, this.state.newVersionNames.get(version.get('version')))}
+            onRollback={createVersionOnRollback(this.state.componentId, this.state.configId, version)}
           />
         );
       }, this).toArray();

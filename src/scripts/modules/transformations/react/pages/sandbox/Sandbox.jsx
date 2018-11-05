@@ -1,4 +1,3 @@
-
 import React from 'react';
 import MySqlSandbox from '../../components/MySqlSandbox';
 import RedshiftSandbox from '../../components/RedshiftSandbox';
@@ -13,9 +12,9 @@ export default React.createClass({
     return (
       <div className="container-fluid">
         <div className="col-md-12 kbc-main-content">
-          {ApplicationStore.hasCurrentProjectFeature('transformation-mysql') ? (<MySqlSandbox />) : null}
-          {ApplicationStore.getSapiToken().getIn(['owner', 'hasRedshift'], false) ? (<RedshiftSandbox />) : null}
-          {ApplicationStore.getSapiToken().getIn(['owner', 'hasSnowflake'], false) ? (<SnowflakeSandbox />) : null}
+          {ApplicationStore.hasCurrentProjectFeature('transformation-mysql') && <MySqlSandbox />}
+          {ApplicationStore.getSapiToken().getIn(['owner', 'hasRedshift'], false) && <RedshiftSandbox />}
+          {ApplicationStore.getSapiToken().getIn(['owner', 'hasSnowflake'], false) && <SnowflakeSandbox />}
           <RStudioSandbox />
           <JupyterSandbox />
         </div>

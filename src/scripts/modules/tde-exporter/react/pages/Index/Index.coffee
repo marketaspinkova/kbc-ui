@@ -9,10 +9,10 @@ LatestJobs = require '../../../../components/react/components/SidebarJobs'
 
 Link = React.createFactory(require('react-router').Link)
 
-InstalledComponentsStore = require '../../../../components/stores/InstalledComponentsStore'
-StorageFilesStore = require '../../../../components/stores/StorageFilesStore'
+InstalledComponentsStore = require('../../../../components/stores/InstalledComponentsStore').default
+StorageFilesStore = require('../../../../components/stores/StorageFilesStore').default
 RoutesStore = require '../../../../../stores/RoutesStore'
-createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
+createStoreMixin = require('../../../../../react/mixins/createStoreMixin').default
 TableRow = require './TableRow'
 
 Tooltip = require('../../../../../react/common/Tooltip').default
@@ -143,11 +143,11 @@ module.exports = React.createClass
       ' Setup Upload'
 
 
-  _renderTableRow: (table, isDeleted = false) ->
+  _renderTableRow: (table, index) ->
     tableId = table.get 'id'
     tdeFileName = tdeCommon.getTdeFileName(@state.configData, tableId)
     React.createElement TableRow,
-      key: tableId
+      key: index
       table: table
       configId: @state.configId
       tdeFile: @_getLastTdeFile(tdeFileName)

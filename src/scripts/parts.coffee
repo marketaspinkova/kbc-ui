@@ -11,5 +11,5 @@ module.exports =
     GuideMode:
       Wizard: require('./modules/guide-mode/react/Wizard').default
     CurrentUser: require('./react/layout/CurrentUser').default
-    ProjectsList: require './react/layout/project-select/List'
+    ProjectsList: require('./react/layout/project-select/List').default
     NewProjectModal: require './react/layout/NewProjectModal'

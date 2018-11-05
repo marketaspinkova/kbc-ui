@@ -40,14 +40,12 @@ export default React.createClass({
       isLoading: true
     });
 
-    return this.props.onRun(this.props.task)
-      .finally(() => {
-        if (this.isMounted()) {
-          this.setState({
-            isLoading: false
-          });
-        }
-      });
+    return this.props.onRun(this.props.task).finally(() => {
+      if (this.isMounted()) {
+        this.setState({
+          isLoading: false
+        });
+      }
+    });
   }
-
 });

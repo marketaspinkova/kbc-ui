@@ -1,8 +1,8 @@
 import React, {PropTypes} from 'react';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import Credentials from './Credentials';
-import ProvisioningActions from '../../provisioning/actions';
-import ProvisioningStore from '../../provisioning/store';
+import ProvisioningActions from '../../gooddataProvisioning/actions';
+import ProvisioningStore from '../../gooddataProvisioning/store';
 
 // import ProvisioningUtils, {TokenTypes} from '../../provisioning/utils';
 import ApplicationStore from '../../../../stores/ApplicationStore';

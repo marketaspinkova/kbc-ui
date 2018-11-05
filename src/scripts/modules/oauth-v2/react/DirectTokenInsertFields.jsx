@@ -17,7 +17,7 @@ export default React.createClass({
 
   render() {
     return (
-      <div style={{'padding-top': '20px'}} className="form-group">
+      <div style={{paddingTop: '20px'}} className="form-group">
         <div className="col-xs-12">
           <label className="control-label col-xs-2">
             Token

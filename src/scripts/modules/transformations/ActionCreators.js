@@ -1,5 +1,6 @@
 import dispatcher from '../../Dispatcher';
 import * as constants from './Constants';
+import * as installedComponentsConstants from '../components/Constants';
 import transformationsApi from './TransformationsApiAdapter';
 import installedComponentsApi from '../components/InstalledComponentsApi';
 import TransformationBucketsStore from './stores/TransformationBucketsStore';
@@ -85,7 +86,7 @@ module.exports = {
       bucketId: bucketId
     });
     dispatcher.handleViewAction({
-      type: constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_START,
+      type: installedComponentsConstants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_START,
       componentId: 'transformation',
       configurationId: bucketId,
       transition: false
@@ -96,7 +97,7 @@ module.exports = {
         bucketId: bucketId
       });
       dispatcher.handleViewAction({
-        type: constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_SUCCESS,
+        type: installedComponentsConstants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_SUCCESS,
         componentId: 'transformation',
         configurationId: bucketId,
         transition: false
@@ -111,7 +112,7 @@ module.exports = {
         bucketId: bucketId
       });
       dispatcher.handleViewAction({
-        type: constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ERROR,
+        type: installedComponentsConstants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ERROR,
         componentId: 'transformation',
         configurationId: bucketId,
         transition: false,

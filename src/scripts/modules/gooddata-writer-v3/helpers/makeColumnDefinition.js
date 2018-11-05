@@ -1,4 +1,4 @@
-import {Types, DataTypes} from './Constants';
+import {Types, DataTypes} from '../constants';
 
 const BASE_TYPES = [
   Types.CONNECTION_POINT,

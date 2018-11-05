@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {FormControl, Form, FormGroup, Col, ControlLabel} from 'react-bootstrap';
 import makeColumnDefinition from '../../helpers/makeColumnDefinition';
-import {DataTypes, Types} from '../../helpers/Constants';
+import {DataTypes, Types} from '../../constants';
 
 // import ReactSelect from 'react-select';
 
@@ -20,7 +20,7 @@ export default React.createClass({
 
     return (
       <Form horizontal>
-        {fields.type.show && this.renderSelectGroup(
+        {fields.type.show && this.renderStrictSelectGroup(
           'Type',
           'type',
           Object.keys(Types)
@@ -103,6 +103,14 @@ export default React.createClass({
     return this.renderControlGroup(
       label,
       this.renderSelectInput(fieldName, options),
+      extraControl
+    );
+  },
+
+  renderStrictSelectGroup(label, fieldName, options, extraControl) {
+    return this.renderControlGroup(
+      label,
+      this.renderSelectInput(fieldName, options, {strict: true}),
       extraControl
     );
   },

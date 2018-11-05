@@ -1,92 +1,41 @@
-import createRoute  from '../configurations/utils/createRoute';
-import columnTypes  from '../configurations/utils/columnTypeConstants';
-import createColumnsEditorSection from '../configurations/utils/createColumnsEditorSection';
-import TitleSection from './react/components/TitleSection';
-import LoadTypeSection from './react/components/LoadTypeSection';
-import LoadTypeSectionTitle from './react/components/LoadTypeSectionTitle';
-import Credentials from './react/components/CredentialsContainer';
-import title from './adapters/title';
-import loadType from './adapters/loadType';
-import credentials from './adapters/credentials';
+import Index from './react/pages/index/Index';
+import Table from './react/pages/table/Table';
 
-import DimensionsSection from './react/components/DimensionsSection';
-import dimensionsAdapter from './adapters/dimensions';
-import columnsEditorDefinition from './helpers/columnsEditorDefinition';
-import {CollapsibleSection} from '../configurations/utils/renderHelpers';
-import {parseParameters} from './helpers/rowTableParameters';
+import InstalledComponentsStore from '../components/stores/InstalledComponentsStore';
 
-import {Map} from 'immutable';
+import installedComponentsActions from '../components/InstalledComponentsActionCreators';
+import storageActions from '../components/StorageActionCreators';
+import jobsActionCreators from '../jobs/ActionCreators';
+import versionsActions from '../components/VersionsActionCreators';
 
-const routeSettings = {
-  componentId: 'keboola.gooddata-writer',
-  componentType: 'writer',
-  index: {
-    show: true,
-    sections: [
-      {
-        render: CollapsibleSection({
-          title: 'Gooddata Project',
-          contentComponent: Credentials
-        }),
-        onSave: credentials.createConfiguration,
-        onLoad: credentials.parseConfiguration,
-        isComplete: () => false
-      },
-      {
-        render: CollapsibleSection({
-          title: 'Date Dimensions',
-          contentComponent: DimensionsSection,
-          options: {stretchContentToBody: true}
-        }),
-        onSave: dimensionsAdapter.createConfiguration,
-        onLoad: dimensionsAdapter.parseConfiguration
-      }
-    ]
+import {createTablesRoute} from '../table-browser/routes';
+
+const componentId = 'keboola.gooddata-writer';
+export default {
+  name: componentId,
+  path: ':config',
+  isComponent: true,
+  defaultRouteHandler: Index,
+  title: (routerState) => {
+    const configId = routerState.getIn(['params', 'config']);
+    return InstalledComponentsStore.getConfig(componentId, configId).get('name');
   },
-  row: {
-    parseTableId: (row) => parseParameters(row).get('tableId'),
-    hasState: false,
-    sections: [
-      {
-        render: TitleSection,
-        onSave: title.createConfiguration,
-        onLoad: title.parseConfiguration,
-        onCreate: title.createEmptyConfiguration,
-        isComplete: () => true
-      },
-      {
-        render: CollapsibleSection({
-          title: LoadTypeSectionTitle,
-          contentComponent: LoadTypeSection
-        }),
-        onSave: loadType.createConfiguration,
-        onLoad: loadType.parseConfiguration,
-        onCreate: loadType.createEmptyConfiguration,
-        isComplete: () => true
-      },
-      createColumnsEditorSection(columnsEditorDefinition)
-    ],
-    columns: [
-      {
-        name: 'Table Name',
-        type: columnTypes.VALUE,
-        value: function(row) {
-          return row.get('name') !== '' ? row.get('name') : 'Untitled';
-        }
-      },
-      {
-        name: 'GoodData Title',
-        type: columnTypes.VALUE,
-        value: function(row) {
-          const params = row.getIn(['configuration', 'parameters', 'tables'], Map());
-          const tableId = params.keySeq().first();
-          return params.getIn([tableId, 'title']);
-        }
-      }
-    ]
-  }
+  requireData: [
+    (params) => installedComponentsActions.loadComponentConfigData(componentId, params.config),
+    () => storageActions.loadTables(),
+    (params) => versionsActions.loadVersions(componentId, params.config)
+  ],
+  poll: {
+    interval: 7,
+    action: (params) => jobsActionCreators.loadComponentConfigurationLatestJobs(componentId, params.config)
+  },
+  childRoutes: [
+    createTablesRoute(componentId),
+    {
+      name: componentId + '-table',
+      path: 'table/:table',
+      defaultRouteHandler: Table,
+      title: (routerState) => routerState.getIn(['params', 'table'])
+    }
+  ]
 };
-
-const result = createRoute(routeSettings);
-
-export default result;

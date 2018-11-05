@@ -2,11 +2,11 @@ React = require 'react'
 {fromJS, Map} = require 'immutable'
 _ = require 'underscore'
 tdeCommon = require '../../../tdeCommon'
-createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
+createStoreMixin = require('../../../../../react/mixins/createStoreMixin').default
 RoutesStore = require '../../../../../stores/RoutesStore'
-StorageStore = require '../../../../components/stores/StorageTablesStore'
+StorageStore = require('../../../../components/stores/StorageTablesStore').default
 InstalledComponentsActions = require '../../../../components/InstalledComponentsActionCreators'
-InstalledComponentsStore = require '../../../../components/stores/InstalledComponentsStore'
+InstalledComponentsStore = require('../../../../components/stores/InstalledComponentsStore').default
 FilterTableModal = require('../../../../components/react/components/generic/TableFiltersOnlyModal').default
 FiltersDescription = require '../../../../components/react/components/generic/FiltersDescription'
 

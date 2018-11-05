@@ -1,0 +1,95 @@
+import React from 'react';
+import { List } from 'immutable';
+import TasksTableRow from './TasksTableRow';
+import PhaseRow from './PhaseRow';
+
+export default React.createClass({
+  propTypes: {
+    tasks: React.PropTypes.object.isRequired,
+    orchestration: React.PropTypes.object.isRequired,
+    components: React.PropTypes.object.isRequired,
+    onRun: React.PropTypes.func.isRequired,
+    updateLocalState: React.PropTypes.func.isRequired,
+    localState: React.PropTypes.object.isRequired
+  },
+
+  _handleTaskRun(task) {
+    return this.props.onRun(task);
+  },
+
+  render() {
+    return (
+      <table className="table table-stripped kbc-table-layout-fixed">
+        <thead>
+          <tr>
+            <th>Component</th>
+            <th>Configuration</th>
+            <th style={{ width: '12%' }}>Action</th>
+            <th style={{ width: '8%' }}>Active</th>
+            <th style={{ width: '8%' }}>Continue on Failure</th>
+            <th style={{ width: '10%' }} />
+          </tr>
+        </thead>
+        <tbody>
+          {this.props.tasks.count() ? (
+            this.renderPhasedTasksRows()
+          ) : (
+            <tr>
+              <td colSpan="6" className="text-muted">
+                There are no tasks assigned yet.
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    );
+  },
+
+  renderPhasedTasksRows() {
+    let result = List();
+    let idx = 0;
+    this.props.tasks.map(phase => {
+      const isPhaseHidden = this.isPhaseHidden(phase);
+      idx++;
+      const color = idx % 2 > 0 ? '#fff' : '#f9f9f9'; // 'rgb(227, 248, 255)'
+      const tasksRows = phase.get('tasks').map(task => {
+        return (
+          <TasksTableRow
+            color={color}
+            task={task}
+            orchestration={this.props.orchestration}
+            component={this.props.components.get(task.get('component'))}
+            key={task.get('id')}
+            onRun={this._handleTaskRun}
+          />
+        );
+      });
+      const phaseRow = this.renderPhaseRow(phase, isPhaseHidden, color);
+      result = result.push(phaseRow);
+      if (!isPhaseHidden) {
+        return (result = result.concat(tasksRows));
+      }
+    });
+    return result.toArray();
+  },
+
+  renderPhaseRow(phase, isPhaseHidden, color) {
+    const phaseId = phase.get('id');
+    const isHidden = this.isPhaseHidden(phase);
+    return (
+      <PhaseRow
+        isPhaseHidden={isPhaseHidden}
+        color={color}
+        key={phaseId}
+        phase={phase}
+        toggleHide={() => {
+          return this.props.updateLocalState(['phases', phaseId, 'isHidden'], !isHidden);
+        }}
+      />
+    );
+  },
+
+  isPhaseHidden(phase) {
+    return this.props.localState.getIn(['phases', phase.get('id'), 'isHidden'], false);
+  }
+});

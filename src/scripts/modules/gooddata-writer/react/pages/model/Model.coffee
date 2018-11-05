@@ -1,6 +1,6 @@
 React = require 'react'
 
-createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
+createStoreMixin = require('../../../../../react/mixins/createStoreMixin').default
 RoutesStore = require '../../../../../stores/RoutesStore'
 
 goodDataWriterStore = require '../../../store'

@@ -6,8 +6,8 @@ export default function(description) {
     return '';
   }
   var plainText = removeMarkdown(description);
-  if (plainText.length > 100) {
-    plainText = plainText.substring(0, 100) + '...';
+  if (plainText.length > 75) {
+    plainText = plainText.substring(0, 75) + '...';
   }
   return plainText;
 }

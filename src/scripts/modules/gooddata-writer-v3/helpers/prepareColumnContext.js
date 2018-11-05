@@ -1,35 +1,29 @@
-import {Types} from './Constants';
+import {Types} from '../constants';
 import {Map, List, fromJS} from 'immutable';
 
 const REFERENCABLE_COLUMN_TYPES = [Types.CONNECTION_POINT, Types.ATTRIBUTE];
 
-export default function prepareColumnContext(sectionContext, allColumns) {
-  const configRows = sectionContext.get('rows', List());
-  const tableId = sectionContext.getIn(['table', 'id']);
-  const dimensionsPath = ['configuration', 'parameters', 'dimensions'];
-
-  const referencableTables = configRows.reduce((result, configRow) => {
-    const configRowTables =  configRow.getIn(['parameters', 'tables']);
+export default function prepareColumnContext(configParameters, allTables, currentTableId, allTableColumns) {
+  const referencableTables = allTables.reduce((result, table, tableId) => {
     // ignore current table config row
-    if (configRowTables.has(tableId)) {
+    if (tableId === currentTableId) {
       return result;
     }
-    const rowColumns = configRowTables.first().get('columns', Map());
-    const matchColumn = rowColumns.find(column => column.get('type') === Types.CONNECTION_POINT);
-    const rowTableId = configRowTables.keySeq().first();
-    if (matchColumn) {
-      return result.push(rowTableId);
+    const tableColumns = table.get('columns', Map());
+    const connectionPointColumn = tableColumns.find(column => column.get('type') === Types.CONNECTION_POINT);
+    if (connectionPointColumn) {
+      return result.push(tableId);
     }
     return result;
   }, List());
-  const referencableColumns = allColumns
+  const referencableColumns = allTableColumns
     .filter(column => REFERENCABLE_COLUMN_TYPES.includes(column.get('type')))
     .map(column => column.get('id'));
-  const sortLabelsColumns = allColumns.reduce((memo, column) => {
+  const sortLabelsColumns = allTableColumns.reduce((memo, column) => {
     if (!column.get('reference')) return memo;
     return memo.update(column.get('reference'), List(), labels => labels.push(column.get('id')));
   }, Map());
 
-  const dimensions = sectionContext.getIn(dimensionsPath, Map()).keySeq().toList();
+  const dimensions = configParameters.get('dimensions', Map()).keySeq().toList();
   return fromJS({referencableTables, referencableColumns, sortLabelsColumns, dimensions});
 }

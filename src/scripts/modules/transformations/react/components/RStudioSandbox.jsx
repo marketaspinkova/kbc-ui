@@ -52,7 +52,7 @@ var RStudioSandbox = React.createClass({
               target="_blank"
               disabled={this.state.pendingActions.size > 0}
             >
-              <span className="fa fa-fw fa-database"/>
+              <span className="fa fa-fw fa-database" />
               &nbsp;Connect
             </a>
             <div>
@@ -71,7 +71,7 @@ var RStudioSandbox = React.createClass({
               />
             </div>
             <div>
-              <ExtendRStudioCredentials/>
+              <ExtendRStudioCredentials />
             </div>
           </div>
         </div>
@@ -88,11 +88,8 @@ var RStudioSandbox = React.createClass({
             onConfigurationChange={this.onConfigurationChange}
             disabled={this.state.sandboxConfiguration.getIn(['input', 'tables'], Immutable.List()).size === 0}
           />
-          <button
-            className="btn btn-link"
-            onClick={this.openModal}
-          >
-            <i className="kbc-icon-plus"/>
+          <button className="btn btn-link" onClick={this.openModal}>
+            <i className="fa fa-fw fa-plus" />
             New Sandbox
           </button>
         </span>
@@ -101,25 +98,32 @@ var RStudioSandbox = React.createClass({
   },
 
   _connectLink(credentials) {
-    return (credentials.get('hasHttps') ? 'https://' : 'http://') + credentials.get('hostname') + ':' + credentials.get('port');
+    return (
+      (credentials.get('hasHttps') ? 'https://' : 'http://') +
+      credentials.get('hostname') +
+      ':' +
+      credentials.get('port')
+    );
   },
 
   render: function() {
     return (
       <div className="row">
-        <h4>
-          RStudio
-          {' '}
-          <span className="label label-info">
-            <a style={{color: '#fff'}} href="http://status.keboola.com/call-for-testers-rstudio-and-jupyter-sandboxes">BETA</a>
-          </span>
-        </h4>
-        <div className="col-md-9">
-          {this._renderCredentials()}
+        <div className="col-xs-12">
+          <h4>
+            RStudio{' '}
+            <span className="label label-info">
+              <a
+                style={{ color: '#fff' }}
+                href="http://status.keboola.com/call-for-testers-rstudio-and-jupyter-sandboxes"
+              >
+                BETA
+              </a>
+            </span>
+          </h4>
         </div>
-        <div className="col-md-3">
-          {this._renderControlButtons()}
-        </div>
+        <div className="col-md-9">{this._renderCredentials()}</div>
+        <div className="col-md-3">{this._renderControlButtons()}</div>
       </div>
     );
   },
@@ -136,12 +140,14 @@ var RStudioSandbox = React.createClass({
     this.setState({ showModal: true });
   },
   onConfigurationChange(configuration) {
-    this.setState({sandboxConfiguration: Immutable.fromJS(configuration)});
+    this.setState({ sandboxConfiguration: Immutable.fromJS(configuration) });
   },
   tablesList() {
-    return this.state.tables.map(function(table) {
-      return table.get('id');
-    }).toList();
+    return this.state.tables
+      .map(function(table) {
+        return table.get('id');
+      })
+      .toList();
   }
 });
 

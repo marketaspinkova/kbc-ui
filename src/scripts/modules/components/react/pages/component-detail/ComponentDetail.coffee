@@ -1,15 +1,15 @@
 React = require 'react'
 fuzzy = require('fuzzy')
 
-createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
+createStoreMixin = require('../../../../../react/mixins/createStoreMixin').default
 RoutesStore = require '../../../../../stores/RoutesStore'
 ComponentsStore = require '../../../stores/ComponentsStore'
-InstalledComponentsStore = require '../../../stores/InstalledComponentsStore.coffee'
+InstalledComponentsStore = require('../../../stores/InstalledComponentsStore').default
 InstalledComponentsActionCreators = require '../../../InstalledComponentsActionCreators'
 ApplicationStore = require '../../../../../stores/ApplicationStore'
 
-VendorInfo = React.createFactory(require './VendorInfo.coffee')
-ConfigurationRow = require('../ConfigurationRow.jsx').default
+VendorInfo = React.createFactory(require './VendorInfo')
+ConfigurationRow = require('../ConfigurationRow').default
 Immutable = require 'immutable'
 ComponentEmptyState = require('../../components/ComponentEmptyState').default
 AddComponentConfigurationButton = React.createFactory(require '../../components/AddComponentConfigurationButton')
@@ -136,6 +136,7 @@ module.exports = React.createClass
                   key: configuration.get('id')
                 )
               )
+              .toArray()
       else
         div className: 'kbc-header',
           div className: 'kbc-title',

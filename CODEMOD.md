@@ -60,14 +60,33 @@ jscodeshift -t react-codemod/transforms/React-DOM-to-react-dom-factories.js \
   src/scripts/react/layout/project-select/List.js
 ```
 
-### 5. Replace React.createElement with JSX syntax
+### 5. Make sure there are no React.createFactory
+
+All components which were created using `React.createFactory` should be used using
+`React.createElement`.
+
+Convert from:
+
+```js
+Text = React.createFactory(require('./Text'));
+Text();
+```
+
+To:
+
+```js
+Text = require('./Text');
+React.createElement(Text)
+```
+
+### 6. Replace React.createElement with JSX syntax
 
 ```
 jscodeshift -t react-codemod/transforms/create-element-to-jsx.js \
 src/scripts/react/layout/project-select/List.js
 ```
 
-### 6. Manually optimize
+### 7. Manually optimize
 
 E.g.:
 

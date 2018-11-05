@@ -2,14 +2,14 @@ React = require 'react'
 {Map, List} = require 'immutable'
 Promise = require('bluebird')
 {GoodDataWriterTokenTypes} = require '../../../../components/Constants'
-createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
+createStoreMixin = require('../../../../../react/mixins/createStoreMixin').default
 RoutesStore = require '../../../../../stores/RoutesStore'
 ComponentDescription = require '../../../../components/react/components/ComponentDescription'
 ComponentMetadata = require '../../../../components/react/components/ComponentMetadata'
 ComponentEmptyState = require('../../../../components/react/components/ComponentEmptyState').default
 AddNewTableButton = require('../../components/AddNewTableButton').default
 ApplicationStore = require '../../../../../stores/ApplicationStore'
-StorageTablesStore = require '../../../../components/stores/StorageTablesStore'
+StorageTablesStore = require('../../../../components/stores/StorageTablesStore').default
 
 SearchBar = require('@keboola/indigo-ui').SearchBar
 TablesList = require './BucketTablesList'
@@ -25,7 +25,7 @@ Confirm = require('../../../../../react/common/Confirm').default
 LatestJobs = require '../../../../components/react/components/SidebarJobs'
 LatestJobsStore = require '../../../../jobs/stores/LatestJobsStore'
 LatestVersions = React.createFactory(require('../../../../components/react/components/SidebarVersionsWrapper').default)
-InstalledComponentStore = require '../../../../components/stores/InstalledComponentsStore'
+InstalledComponentStore = require('../../../../components/stores/InstalledComponentsStore').default
 goodDataWriterStore = require '../../../store'
 actionCreators = require '../../../actionCreators'
 installedComponentsActions = require '../../../../components/InstalledComponentsActionCreators'
@@ -358,10 +358,11 @@ module.exports = React.createClass
   Tomas
   ###
 
-  _renderTableRow: (table, isDeleted = false) ->
+  _renderTableRow: (table, index, isDeleted = false) ->
     #bucketId = table.getIn ['bucket', 'id']
     writerTable = @state.tablesByBucket.get table.get('id')
     React.createElement TableRow,
+      key: index
       table: writerTable
       configId: @state.configId
       sapiTable: table
@@ -390,8 +391,8 @@ module.exports = React.createClass
       showAllTables: false
       isTableShownFn: @_isTableShown
       configuredTables: @state.tablesByBucket.keySeq().toJS()
-      renderDeletedTableRowFn: (table) =>
-        @_renderTableRow(table, true)
+      renderDeletedTableRowFn: (table, index) =>
+        @_renderTableRow(table, index, true)
 
 
   _filterBuckets: (buckets) ->

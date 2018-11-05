@@ -1,9 +1,9 @@
 React = require 'react'
 fuzzy = require 'fuzzy'
 {fromJS, List} = require 'immutable'
-createStoreMixin = require '../../../../react/mixins/createStoreMixin'
+createStoreMixin = require('../../../../react/mixins/createStoreMixin').default
 ActiveCountBadge = require './ActiveCountBadge'
-storageTablesStore = require '../../stores/StorageTablesStore'
+storageTablesStore = require('../../stores/StorageTablesStore').default
 storageActionCreators = require '../../StorageActionCreators'
 {strong, br, ul, li, div, span, i, a, button, p} = React.DOM
 {Panel} = require('react-bootstrap')
@@ -102,8 +102,8 @@ module.exports = React.createClass
       @_renderTablesList(tables, renderRowFn)
 
   _renderTablesList: (tables, renderRowFn) ->
-    childs = tables.map((table) ->
-      renderRowFn(table)
+    childs = tables.map((table, index) ->
+      renderRowFn(table, index)
     , @).toArray()
 
     header = @_renderDefaultHeaderRow()
@@ -111,7 +111,7 @@ module.exports = React.createClass
       header = @props.renderHeaderRowFn(tables)
 
     div className: 'row',
-      div {className: 'table table-striped table-hover'},
+      div {className: 'table table-striped table-hover table-no-margin'},
         if header
           div className: 'thead', key: 'table-header',
             header

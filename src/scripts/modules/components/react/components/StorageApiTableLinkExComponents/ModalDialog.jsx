@@ -120,7 +120,7 @@ export default React.createClass({
 
   renderModalBody() {
     return (
-      <div style={{'max-height': '75vh'}} className="pre-scrollable">
+      <div style={{maxHeight: '75vh'}} className="pre-scrollable">
         <Tabs defaultActiveKey="general" animation={false} id={'modal' + this.props.tableId}>
           <Tab eventKey="general" title="General Info">
             {this.renderGeneralInfo()}

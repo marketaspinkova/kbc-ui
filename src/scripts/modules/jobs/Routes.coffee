@@ -1,6 +1,6 @@
 React = require 'react'
-JobDetail = require('./react/pages/job-detail/JobDetail')
-JobsIndex = require('./react/pages/jobs-index/JobsIndex')
+JobDetail = require('./react/pages/job-detail/JobDetail').default
+JobsIndex = require('./react/pages/jobs-index/JobsIndex').default
 JobsActionCreators = require('./ActionCreators')
 JobsReloaderButton = require('./react/components/JobsReloaderButton')
 JobDetailReloaderButton = require('./react/components/JobDetailReloaderButton')

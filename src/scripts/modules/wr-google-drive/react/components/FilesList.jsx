@@ -38,7 +38,7 @@ export default React.createClass({
         isBucketToggledFn={this.isBucketToggled}
         showAllTables={false}
         configuredTables={this.props.items.map((item) => item.get('tableId')).toArray()}
-        renderDeletedTableRowFn={(table) => this.renderRowDeleted(table)}
+        renderDeletedTableRowFn={(table, index) => this.renderRowDeleted(table, index)}
       />
     );
   },
@@ -84,10 +84,10 @@ export default React.createClass({
     );
   },
 
-  renderRow(table) {
+  renderRow(table, index) {
     const item = this.props.items.filter((i) => i.get('tableId') === table.get('id')).first();
     return (
-      <div className="tr">
+      <div key={index} className="tr">
         <div className="td">
           {this.renderFieldTable(item.get('tableId'))}
         </div>
@@ -113,10 +113,10 @@ export default React.createClass({
     );
   },
 
-  renderRowDeleted(table) {
+  renderRowDeleted(table, index) {
     const item = this.props.items.filter((i) => i.get('tableId') === table.get('id')).first();
     return (
-      <div className="tr">
+      <div key={index} className="tr">
         <div className="td">
           {this.renderFieldTable(item.get('tableId'))}
         </div>

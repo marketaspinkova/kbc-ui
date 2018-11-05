@@ -46,7 +46,7 @@ export default React.createClass({
         <span className="td">{this.props.tableDbName}</span>
         {this.props.isV2 && (
           <span className="td">
-            <Check isChecked={this.props.v2ConfigTable && this.props.v2ConfigTable.get('incremental')} />
+            <Check isChecked={!!(this.props.v2ConfigTable && this.props.v2ConfigTable.get('incremental'))} />
           </span>
         )}
         <span className="td text-right">

@@ -36,7 +36,7 @@ export default React.createClass({
     const primaryKey = table.get('primaryKey').toJS();
     const backend = table.getIn(['bucket', 'backend']);
     return (
-      <div style={{'max-height': '80vh', overflow: 'auto'}}>
+      <div style={{maxHeight: '80vh', overflow: 'auto'}}>
         <Table responsive className="table">
           <thead>
             <tr>

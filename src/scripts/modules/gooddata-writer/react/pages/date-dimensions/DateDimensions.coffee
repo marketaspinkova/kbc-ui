@@ -1,6 +1,6 @@
 React = require 'react'
 
-createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
+createStoreMixin = require('../../../../../react/mixins/createStoreMixin').default
 RoutesStore = require '../../../../../stores/RoutesStore'
 goodDataWriterStore = require '../../../store'
 
@@ -49,4 +49,3 @@ module.exports = React.createClass
             dimension: @state.newDimension
             onChange: @_handleNewDimensionUpdate
             onSubmit: @_handleNewDimensionSave
-  

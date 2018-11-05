@@ -62,7 +62,7 @@ export default React.createClass({
             >
               {this.renderRadio('GoodData', 'gooddata', 'Default date dimension provided by GoodData')}
               {this.renderRadio('Keboola', 'keboola', 'Default date dimension provided by Keboola. Added all week setups: Mon-Sun, Tue-Mon, Wed-Tue, Thu-Wed, Fri-Thu, Sat0Fri, Sun-Sat + Boolean value whether its weekend or working day')}
-              {this.renderRadio('Custom', 'custom', 'Provide your own template. You can generate the csv file containing all necessary details and provide it ti Goog Data. More info: TODO')}
+              {this.renderRadio('Custom', 'custom', 'Provide your own template. You can generate the csv file containing all necessary details and provide it ti Goog Data.')}
             </RadioGroup>
           </Col>
         </FormGroup>

@@ -16,8 +16,7 @@ var RStudioSandboxCredentialsStore = StoreUtils.createStore({
     return _store.get('credentials');
   },
   getValidUntil: function() {
-    const validUntil = (_store.get('touch') + 3600 * 120) * 1000;
-    return validUntil;
+    return (_store.get('touch') + 3600 * 120) * 1000;
   },
   hasCredentials: function() {
     return !!_store.getIn(['credentials', 'id']);

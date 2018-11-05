@@ -19,7 +19,7 @@ var _store = Map({
 var MetadataStore = StoreUtils.createStore({
 
   getColumnMetadata: function(tableId, column, provider, metadataKey) {
-    var columnId = tableId + '.' + column;
+    const columnId = tableId + '.' + column;
     return this.getMetadata('column', columnId, provider, metadataKey);
   },
 
@@ -33,6 +33,10 @@ var MetadataStore = StoreUtils.createStore({
 
   getTableMetadata: function(tableId, provider, metadataKey) {
     return this.getMetadata('table', tableId, provider, metadataKey);
+  },
+
+  getTableColumnsMetadata: function(tableId) {
+    return _store.getIn(['metadata', 'tableColumns', tableId]);
   },
 
   getTableMetadataValue: function(tableId, provider, metadataKey) {
@@ -88,6 +92,41 @@ var MetadataStore = StoreUtils.createStore({
 
   isSavingMetadata: function(objectType, objectId, metadataKey) {
     return _store.hasIn(['savingMetadata', objectType, objectId, metadataKey]);
+  },
+
+  getTableLastUpdatedInfo: function(tableId) {
+    let componentFound = this.getTableMetadata(tableId, 'system', 'KBC.lastUpdatedBy.component.id');
+    let configFound = this.getTableMetadata(tableId, 'system', 'KBC.lastUpdatedBy.configuration.id');
+    if (!componentFound || !configFound) {
+      componentFound = this.getTableMetadata(tableId, 'system', 'KBC.createdBy.component.id');
+      configFound = this.getTableMetadata(tableId, 'system', 'KBC.createdBy.configuration.id');
+    }
+    const componentId = componentFound && componentFound.get('value');
+    const configId = configFound && configFound.get('value');
+    const timestamp = configFound && configFound.get('timestamp');
+    if (!componentFound || !configFound) {
+      return null;
+    }
+    return {
+      'component': componentId,
+      'config': configId,
+      'timestamp': timestamp
+    };
+  },
+
+  tableHasMetadataDatatypes: function(tableId) {
+    const lastUpdateInfo = this.getTableLastUpdatedInfo(tableId);
+    const tableColumnsMetadata = this.getTableColumnsMetadata(tableId);
+    if (!tableColumnsMetadata || !lastUpdateInfo) {
+      return false;
+    }
+    const columnsWithBaseTypes = tableColumnsMetadata.filter((metadataList) => {
+      const columnHasDatatype = metadataList.filter((metadata) => {
+        return metadata.get('provider') === lastUpdateInfo.component && metadata.get('key') === 'KBC.datatype.basetype';
+      });
+      return columnHasDatatype.count() > 0;
+    });
+    return columnsWithBaseTypes.count() > 0;
   }
 
 });
@@ -137,9 +176,13 @@ dispatcher.register(function(payload) {
           ['metadata', 'table', table.id], tableMetadata
         );
         _.each(table.columnMetadata, function(metadata, columnName) {
-          _store = _store.setIn(
-            ['metadata', 'column', table.id + '.' + columnName], Immutable.fromJS(metadata)
-          );
+          _store = _store
+            .setIn(
+              ['metadata', 'column', table.id + '.' + columnName], Immutable.fromJS(metadata)
+            )
+            .setIn(
+              ['metadata', 'tableColumns', table.id, columnName], Immutable.fromJS(metadata)
+            );
         });
       });
       return MetadataStore.emitChange();

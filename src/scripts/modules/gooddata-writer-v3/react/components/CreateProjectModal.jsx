@@ -2,7 +2,7 @@ import React from 'react';
 import {Modal} from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import NewProjectForm from './NewProjectForm';
-import {isNewProjectValid, TokenTypes} from '../../provisioning/utils';
+import {isNewProjectValid, TokenTypes} from '../../gooddataProvisioning/utils';
 
 export default React.createClass({
   propTypes: {

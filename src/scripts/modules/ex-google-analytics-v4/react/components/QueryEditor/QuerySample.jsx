@@ -50,7 +50,7 @@ export default React.createClass({
         <th>
           {c}
           {c === 'id' ?
-            <button style={{'padding-left': '2px', 'padding-bottom': 0, 'padding-top': 0}}
+            <button style={{paddingLeft: '2px', paddingBottom: 0, paddingTop: 0}}
               onClick={() => this.setState({showIds: !this.state.showIds})}
               className="btn btn-link btn-sm">
               {this.state.showIds ? 'Hide' : 'Show'}

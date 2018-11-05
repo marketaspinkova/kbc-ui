@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {Form, Col, FormControl, ControlLabel, FormGroup, Radio, HelpBlock} from 'react-bootstrap';
 import ReactSelect from 'react-select';
-import {TokenTypes} from '../../provisioning/utils';
+import {TokenTypes} from '../../gooddataProvisioning/utils';
 
 export default React.createClass({
   propTypes: {

@@ -186,6 +186,9 @@ class EventsService {
   _setEvents(events) {
     this._isLoading = false;
     this._events = this._convertEvents(events);
+    if (events.length < this._limit) {
+      this._hasMore = false;
+    }
     return this._emitChange();
   }
 

@@ -1,8 +1,8 @@
 React = require 'react'
 
-InstalledComponentsStore = require '../../stores/InstalledComponentsStore'
+InstalledComponentsStore = require('../../stores/InstalledComponentsStore').default
 InstalledComponentsActionCreators = require '../../InstalledComponentsActionCreators'
-createStoreMixin = require '../../../../react/mixins/createStoreMixin'
+createStoreMixin = require('../../../../react/mixins/createStoreMixin').default
 
 Confirm = require('../../../../react/common/Confirm').default
 {Loader} = require '@keboola/indigo-ui'

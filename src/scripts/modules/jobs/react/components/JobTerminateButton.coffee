@@ -1,5 +1,5 @@
 React = require 'react'
-createStoreMixin = require('../../../../react/mixins/createStoreMixin')
+createStoreMixin = require('../../../../react/mixins/createStoreMixin').default
 JobsStore = require('../../stores/JobsStore')
 ActionCreators = require('../../ActionCreators')
 RoutesStore = require('../../../../stores/RoutesStore')

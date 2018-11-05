@@ -1,15 +1,15 @@
 React = require 'react'
 _ = require 'underscore'
 tdeCommon = require '../../tdeCommon'
-createStoreMixin = require '../../../../react/mixins/createStoreMixin'
+createStoreMixin = require('../../../../react/mixins/createStoreMixin').default
 PureRenderMixin = require('react-addons-pure-render-mixin')
 {fromJS, List, Map} = require 'immutable'
 
 RoutesStore = require '../../../../stores/RoutesStore'
-storageTablesStore = require '../../../components/stores/StorageTablesStore'
+storageTablesStore = require('../../../components/stores/StorageTablesStore').default
 InstalledComponentsActions = require '../../../components/InstalledComponentsActionCreators'
-InstalledComponentsStore = require '../../../components/stores/InstalledComponentsStore'
-EditButtons = require '../../../../react/common/EditButtons'
+InstalledComponentsStore = require('../../../components/stores/InstalledComponentsStore').default
+EditButtons = require('../../../../react/common/EditButtons').default
 
 componentId = 'tde-exporter'
 module.exports = React.createClass

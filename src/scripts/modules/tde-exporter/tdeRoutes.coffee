@@ -15,7 +15,7 @@ oauth2Actions = require('../oauth-v2/ActionCreators').default
 oauth2Store = require('../oauth-v2/Store').default
 {OAUTH_V2_WRITERS} = require './tdeCommon'
 
-InstalledComponentsStore = require '../components/stores/InstalledComponentsStore'
+InstalledComponentsStore = require('../components/stores/InstalledComponentsStore').default
 ApplicationActionCreators = require('../../actions/ApplicationActionCreators')
 storageActionCreators = require '../components/StorageActionCreators'
 ComponentsStore = require '../components/stores/ComponentsStore'
@@ -46,7 +46,8 @@ registerOAuthV2Route = (writerComponentId) ->
               message: notification
             router.transitionTo('tde-exporter-destination', config: params.config)
         .error (err) ->
-          notification = 'Failed to verify authorized account, please contact us on support@keboola.com'
+          notification = 'Failed to verify authorized account, please contact us using the Support button ' +
+            'in the menu on the left.'
           ApplicationActionCreators.sendNotification
             message: notification
             type: 'error'
@@ -190,7 +191,8 @@ module.exports =
                 message: notification
               router.transitionTo('tde-exporter-destination', config: params.config)
             .error (err) ->
-              notification = 'Failed to authorize the Google Drive account, please contact us on support@keboola.com'
+              notification = 'Failed to authorize the Google Drive account, please contact us ' +
+                'using the Support button in the menu on the left.'
               ApplicationActionCreators.sendNotification
                 message: notification
                 type: 'error'

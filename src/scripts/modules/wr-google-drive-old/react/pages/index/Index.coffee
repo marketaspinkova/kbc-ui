@@ -2,7 +2,7 @@ React = require 'react'
 {Map, fromJS} = require 'immutable'
 _ = require 'underscore'
 classnames = require 'classnames'
-createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
+createStoreMixin = require('../../../../../react/mixins/createStoreMixin').default
 LatestJobsStore = require '../../../../jobs/stores/LatestJobsStore'
 LatestJobs = require '../../../../components/react/components/SidebarJobs'
 RoutesStore = require '../../../../../stores/RoutesStore'
@@ -11,7 +11,7 @@ RowEditor = require './RowEditor'
 
 SearchBar = require('@keboola/indigo-ui').SearchBar
 GdriveStore = require '../../../wrGdriveStore'
-InstalledComponentsStore = require '../../../../components/stores/InstalledComponentsStore'
+InstalledComponentsStore = require('../../../../components/stores/InstalledComponentsStore').default
 InstalledComponentsActions = require '../../../../components/InstalledComponentsActionCreators'
 
 TablesByBucketsPanel = React.createFactory require('../../../../components/react/components/TablesByBucketsPanel')
@@ -102,8 +102,8 @@ module.exports = React.createClass
           isBucketToggledFn: @_isBucketToggled
           showAllTables: false
           configuredTables: tablesIds.toJS()
-          renderDeletedTableRowFn: (table) =>
-            @_renderTableRow(table, true)
+          renderDeletedTableRowFn: (table, index) =>
+            @_renderTableRow(table, index, true)
 
       else
         div className: 'row component-empty-state text-center',
@@ -224,13 +224,13 @@ module.exports = React.createClass
         renderToModal: true
         configuredTableIds: tablesIds
 
-  _renderTableRow: (table, isDeleted = false) ->
+  _renderTableRow: (table, index, isDeleted = false) ->
     tableId = table.get 'id'
     isSaving = (@state.savingFiles.get(tableId) or @state.deletingFiles.get(tableId))
 
     TableRow
+      key: index
       email: @state.account?.get 'email'
-      key: tableId
       configId: @state.configId
       editFn: (data) =>
         @_setEditingFile tableId, data

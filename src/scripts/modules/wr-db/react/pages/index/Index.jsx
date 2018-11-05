@@ -166,11 +166,11 @@ export default componentId => {
           {this._hasConfigTables() && <div className="kbc-inner-padding text-right">{this._renderAddNewTable()}</div>}
           {this._hasValidCredentials() && this._hasConfigTables() ? (
             <TablesByBucketsPanel
-              renderTableRowFn={table => {
-                return this._renderTableRow(table, true);
+              renderTableRowFn={(table, index) => {
+                return this._renderTableRow(table, index, true);
               }}
-              renderDeletedTableRowFn={table => {
-                return this._renderTableRow(table, false);
+              renderDeletedTableRowFn={(table, index) => {
+                return this._renderTableRow(table, index, false);
               }}
               renderHeaderRowFn={this._renderHeaderRow}
               filterFn={this._filterBuckets}
@@ -263,11 +263,12 @@ export default componentId => {
       );
     },
 
-    _renderTableRow(table, tableExists = true) {
+    _renderTableRow(table, index, tableExists = true) {
       const v2ConfigTable = this.state.v2ConfigTables.find(t => t.get('tableId') === table.get('id'));
 
       return (
         <TableRow
+          key={index}
           tableExists={tableExists}
           configId={this.state.configId}
           isV2={this.isV2()}
@@ -284,7 +285,7 @@ export default componentId => {
           deleteTableFn={tableId => {
             return WrDbActions.deleteTable(componentId, this.state.configId, tableId);
           }}
-          isDeleting={this.state.deletingTables.get(table.get('id'))}
+          isDeleting={!!this.state.deletingTables.get(table.get('id'))}
         />
       );
     },

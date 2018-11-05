@@ -1,9 +1,9 @@
 React = require 'react'
-storageTablesStore = require '../../stores/StorageTablesStore'
+storageTablesStore = require('../../stores/StorageTablesStore').default
 storageActionCreators = require '../../StorageActionCreators'
 Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
 Select = React.createFactory(require('react-select').default)
-createStoreMixin = require '../../../../react/mixins/createStoreMixin'
+createStoreMixin = require('../../../../react/mixins/createStoreMixin').default
 validateStorageTableId = require '../../../../utils/validateStorageTableId'
 
 module.exports = React.createClass
@@ -13,7 +13,7 @@ module.exports = React.createClass
   propTypes:
     onSelectTableFn: React.PropTypes.func.isRequired
     placeholder: React.PropTypes.string.isRequired
-    value: React.PropTypes.string.isRequired
+    value: React.PropTypes.string
     excludeTableFn: React.PropTypes.func
     allowedBuckets: React.PropTypes.array
     disabled: React.PropTypes.bool

@@ -26,7 +26,7 @@ export default React.createClass({
         className="tr"
       >
         <span className="td">
-          <strong className="kbc-config-name">
+          <strong>
             {this.props.config.get('name', '---')}
           </strong>
           {this.description()}
