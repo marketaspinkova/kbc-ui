@@ -96,24 +96,32 @@ export default React.createClass({
           <Loader />
         </span>
       );
-    } else {
+    }
+
+    if (this.props.isUpdating) {
       return (
-        <Confirm
-          key={this.props.table.get('id')}
-          title={`Remove ${this.props.table.get('id')}`}
-          text="You are about to remove the table from the configuration."
-          buttonLabel="Remove"
-          onConfirm={() => {
-            return this.props.deleteTableFn(this.props.table.get('id'));
-          }}
-        >
-          <Tooltip tooltip="Remove table from configuration" placement="top">
-            <button disabled={this.props.isUpdating} className="btn btn-link">
-              <i className="kbc-icon-cup" />
-            </button>
-          </Tooltip>
-        </Confirm>
+        <button disabled className="btn btn-link">
+          <i className="kbc-icon-cup" />
+        </button>
       );
     }
+
+    return (
+      <Confirm
+        key={this.props.table.get('id')}
+        title={`Remove ${this.props.table.get('id')}`}
+        text="You are about to remove the table from the configuration."
+        buttonLabel="Remove"
+        onConfirm={() => {
+          return this.props.deleteTableFn(this.props.table.get('id'));
+        }}
+      >
+        <Tooltip tooltip="Remove table from configuration" placement="top">
+          <button className="btn btn-link">
+            <i className="kbc-icon-cup" />
+          </button>
+        </Tooltip>
+      </Confirm>
+    );
   }
 });
