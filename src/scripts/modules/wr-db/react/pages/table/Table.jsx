@@ -137,11 +137,11 @@ export default componentId => {
                 {isRenderIncremental && <li className="list-group-item">{this._renderIncrementalSetup()}</li>}
                 {isRenderIncremental && <li className="list-group-item">{this._renderTableFiltersRow()}</li>}
                 {isRenderIncremental && <li className="list-group-item">{this._renderPrimaryKey()}</li>}
-                {pkMismatchList.length > 0 &&
+                {pkMismatchList.length === 0 &&
                   <Alert bsStyle="warning">
                     Primary Key is set to non-existing column(s). please update Primary Key settings.
                   </Alert>
-                  }
+                }
               </ul>
             </div>
             <ColumnsEditor
