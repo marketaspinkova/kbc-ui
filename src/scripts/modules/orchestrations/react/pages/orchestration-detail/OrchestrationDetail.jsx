@@ -99,100 +99,96 @@ export default React.createClass({
     return (
       <div className="container-fluid">
         <div className="col-md-9 kbc-main-content">
-          <div className="row kbc-row-orchestration-detail">
-            <div className="kb-orchestrations-main">
-              <div className="row kbc-header">
-                <ComponentDescription
-                  componentId="orchestrator"
-                  configId={this.state.orchestration.get('id').toString()}
+          <div className="row">
+            <ComponentDescription
+              componentId="orchestrator"
+              configId={this.state.orchestration.get('id').toString()}
+            />
+          </div>
+          <div className="row">
+            <h2>Jobs Graph</h2>
+            {this.state.graphJobs.size >= 2 && <JobsGraph jobs={this.state.graphJobs}/>}
+          </div>
+          <div className="kbc-row">
+            <Row>
+              <Col xs={9}>
+                <h2>Tasks</h2>
+              </Col>
+              <Col xs={3}>
+                <Link
+                  className="pull-right btn btn-primary"
+                  to="orchestrationTasks"
+                  params={{
+                    orchestrationId: this.state.orchestration.get('id')
+                  }}
+                >
+                  <span className="fa fa-edit"/> Configure Tasks
+                </Link>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={12}>
+                <TasksSummary tasks={this.state.tasks}/>
+              </Col>
+            </Row>
+          </div>
+          <div className="kbc-row">
+            <Row>
+              <Col xs={9}>
+                <h2>Schedule</h2>
+              </Col>
+              <Col xs={3}>
+                <ScheduleModal
+                  crontabRecord={this.state.orchestration.get('crontabRecord')}
+                  orchestrationId={this.state.orchestration.get('id')}
                 />
-              </div>
-              <div className="kbc-row">
-                <h2>Jobs Graph</h2>
-                {this.state.graphJobs.size >= 2 && <JobsGraph jobs={this.state.graphJobs}/>}
-              </div>
-              <div className="kbc-row">
-                <Row>
-                  <Col xs={9}>
-                    <h2>Tasks</h2>
-                  </Col>
-                  <Col xs={3}>
-                    <Link
-                      className="pull-right btn btn-primary"
-                      to="orchestrationTasks"
-                      params={{
-                        orchestrationId: this.state.orchestration.get('id')
-                      }}
-                    >
-                      <span className="fa fa-edit"/> Configure Tasks
-                    </Link>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col xs={12}>
-                    <TasksSummary tasks={this.state.tasks}/>
-                  </Col>
-                </Row>
-              </div>
-              <div className="kbc-row">
-                <Row>
-                  <Col xs={9}>
-                    <h2>Schedule</h2>
-                  </Col>
-                  <Col xs={3}>
-                    <ScheduleModal
-                      crontabRecord={this.state.orchestration.get('crontabRecord')}
-                      orchestrationId={this.state.orchestration.get('id')}
-                    />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col xs={12}>
-                    <CronRecord crontabRecord={this.state.orchestration.get('crontabRecord')}/>
-                  </Col>
-                </Row>
-              </div>
-              <div className="kbc-row">
-                <Row>
-                  <Col xs={9}>
-                    <h2>Notifications</h2>
-                  </Col>
-                  <Col xs={3}>
-                    <Link
-                      className="pull-right btn btn-primary"
-                      to="orchestrationNotifications"
-                      params={{
-                        orchestrationId: this.state.orchestration.get('id')
-                      }}
-                    >
-                      <span className="fa fa-edit"/> Configure Notifications
-                    </Link>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col xs={12}>
-                    {this.state.orchestration.get('notifications').count() ? (
-                      <span>{this.state.orchestration.get('notifications').count()} notifications set</span>
-                    ) : (
-                      <span>No notifications set yet.</span>
-                    )}
-                  </Col>
-                </Row>
-              </div>
-              <JobsTable
-                jobs={this.state.jobs}
-                jobsLoading={this.state.jobsLoading}
-                onJobsReload={this._handleJobsReload}
-              />
-              <div className="kbc-row">
-                <div className="table kbc-table-border-vertical kbc-detail-table">
-                  <div className="tr">
-                    <div className="td">
-                      <div className="row">
-                        <div className="col-lg-3 kbc-orchestration-detail-label">Updates</div>
-                        <div className="col-lg-9">{this._renderLastUpdate()}</div>
-                      </div>
-                    </div>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={12}>
+                <CronRecord crontabRecord={this.state.orchestration.get('crontabRecord')}/>
+              </Col>
+            </Row>
+          </div>
+          <div className="kbc-row">
+            <Row>
+              <Col xs={9}>
+                <h2>Notifications</h2>
+              </Col>
+              <Col xs={3}>
+                <Link
+                  className="pull-right btn btn-primary"
+                  to="orchestrationNotifications"
+                  params={{
+                    orchestrationId: this.state.orchestration.get('id')
+                  }}
+                >
+                  <span className="fa fa-edit"/> Configure Notifications
+                </Link>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={12}>
+                {this.state.orchestration.get('notifications').count() ? (
+                  <span>{this.state.orchestration.get('notifications').count()} notifications set</span>
+                ) : (
+                  <span>No notifications set yet.</span>
+                )}
+              </Col>
+            </Row>
+          </div>
+          <JobsTable
+            jobs={this.state.jobs}
+            jobsLoading={this.state.jobsLoading}
+            onJobsReload={this._handleJobsReload}
+          />
+          <div className="kbc-row">
+            <div className="table kbc-table-border-vertical kbc-detail-table">
+              <div className="tr">
+                <div className="td">
+                  <div className="row">
+                    <div className="col-lg-3 kbc-orchestration-detail-label">Updates</div>
+                    <div className="col-lg-9">{this._renderLastUpdate()}</div>
                   </div>
                 </div>
               </div>
