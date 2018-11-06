@@ -103,12 +103,12 @@ export default React.createClass({
             Go to job detail
           </Link>
         )}
-        {this.renderSpecificErrorMesssage(task)}
+        {this.renderSpecificErrorMessage(task)}
       </Panel>
     );
   },
 
-  renderSpecificErrorMesssage(task) {
+  renderSpecificErrorMessage(task) {
     const specificErrorMessages = ['Orchestrations can be started only 2 times for current id.'];
     const message = task.getIn(['response', 'message'], '');
 
