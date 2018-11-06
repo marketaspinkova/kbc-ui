@@ -67,17 +67,13 @@ export default React.createClass({
     return (
       <span>
         { this.renderOpenButton() }
-        <Modal onHide={this.close} show={this.state.showModal} bsSize="large" onChange={() => null}>
+        <Modal onHide={this.handleCancel} show={this.state.showModal} bsSize="large">
           <Modal.Header closeButton={true}>
-            <Modal.Title>
-              {title}
-            </Modal.Title>
+            <Modal.Title>{title}</Modal.Title>
           </Modal.Header>
-
           <Modal.Body>
             {this.editor()}
           </Modal.Body>
-
           <Modal.Footer>
             <ConfirmButtons
               saveLabel={this.props.mode === MODE_CREATE ? 'Create Input' : 'Save'}
