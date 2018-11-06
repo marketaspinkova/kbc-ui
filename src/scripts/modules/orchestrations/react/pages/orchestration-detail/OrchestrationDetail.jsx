@@ -11,7 +11,6 @@ import VersionsStore from '../../../../components/stores/VersionsStore';
 
 // React components
 import ComponentDescription from '../../../../components/react/components/ComponentDescription';
-import OrchestrationsNav from './OrchestrationsNav';
 import JobsTable from './JobsTable';
 import JobsGraph from './JobsGraph';
 import { Link } from 'react-router';
@@ -19,7 +18,6 @@ import TasksSummary from './TasksSummary';
 import CronRecord from '../../components/CronRecord';
 import ScheduleModal from '../../modals/Schedule';
 import CreatedWithIcon from '../../../../../react/common/CreatedWithIcon';
-import { SearchBar } from '@keboola/indigo-ui';
 
 export default React.createClass({
   mixins: [createStoreMixin(OrchestrationStore, OrchestrationJobsStore, VersionsStore)],
@@ -89,20 +87,9 @@ export default React.createClass({
   render() {
     return (
       <div className="container-fluid">
-        <div className="kbc-main-content">
+        <div className="col-md-9 kbc-main-content">
           <div className="row kbc-row-orchestration-detail">
-            <div className="col-md-3 kb-orchestrations-sidebar kbc-main-nav">
-              <div className="kbc-container">
-                <div className="layout-master-detail-search">
-                  <SearchBar onChange={this._handleFilterChange} query={this.state.filter} />
-                </div>
-                <OrchestrationsNav
-                  orchestrations={this.state.filteredOrchestrations}
-                  activeOrchestrationId={this.state.orchestration.get('id')}
-                />
-              </div>
-            </div>
-            <div className="col-md-9 kb-orchestrations-main kbc-main-content-with-nav">
+            <div className="kb-orchestrations-main">
               <div className="row kbc-header">
                 <ComponentDescription
                   componentId="orchestrator"
@@ -182,6 +169,11 @@ export default React.createClass({
               />
             </div>
           </div>
+        </div>
+        <div className="col-md-3 kbc-main-sidebar">
+          <ul className="nav nav-stacked">
+            <li>dummy</li>
+          </ul>
         </div>
       </div>
     );
