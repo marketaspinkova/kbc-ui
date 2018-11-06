@@ -221,7 +221,12 @@ export default React.createClass({
           </div>
           <ul className="nav nav-stacked">
             <li>
-              <OrchestrationRunButton orchestration={this.state.orchestration} notify={true} key="run" />
+              <OrchestrationRunButton
+                orchestration={this.state.orchestration}
+                notify={true}
+                key="run"
+                label="Run Orchestration"
+              />
             </li>
             <li>
               <OrchestrationDeleteButton

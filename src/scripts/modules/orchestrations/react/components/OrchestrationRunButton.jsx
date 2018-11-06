@@ -7,7 +7,8 @@ export default React.createClass({
     orchestration: React.PropTypes.object.isRequired,
     tasks: React.PropTypes.object,
     notify: React.PropTypes.bool,
-    tooltipPlacement: React.PropTypes.string
+    tooltipPlacement: React.PropTypes.string,
+    label: React.PropTypes.string
   },
 
   getDefaultProps() {
@@ -34,6 +35,7 @@ export default React.createClass({
         isLoading={this.state.isLoading}
         tooltipPlacement={this.props.tooltipPlacement}
         onOpen={this.handleOnOpen}
+        label={this.props.label}
       />
     );
   },
