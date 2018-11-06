@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import moment from 'moment';
 import { Map } from 'immutable';
 import SoundNotifications from '../../../../../utils/SoundNotifications';
@@ -241,34 +242,57 @@ export default React.createClass({
   },
 
   _renderConfigurationLink(job) {
-    let configurationLink;
-    const componentId = getComponentId(job);
-    if (this.state.configuration.size !== 0) {
-      const configId = this.state.configuration.get('id');
-      configurationLink = (
+    let componentId = getComponentId(job);
+    let configId = this.state.configuration.get('id');
+
+    if (this.state.configuration.count()) {
+      return (
         <span>
           <ComponentConfigurationLink componentId={componentId} configId={configId}>
             {this.state.configuration.get('name', configId)}
           </ComponentConfigurationLink>
         </span>
       );
-    } else if (job.hasIn(['params', 'config'])) {
-      configurationLink = <span>{job.getIn(['params', 'config'])}</span>;
-    } else {
-      configurationLink = <em>N/A</em>;
     }
-    return configurationLink;
+
+    if (job.get('component') === 'provisioning') {
+      if (job.hasIn(['params', 'transformation', 'config_id'])) {
+        configId = job.getIn(['params', 'transformation', 'config_id']);
+
+        return (
+          <span>
+            <ComponentConfigurationLink componentId="transformation" configId={configId}>
+              {InstalledComponentsStore.getConfig('transformation', configId).get('name', configId)}
+            </ComponentConfigurationLink>
+          </span>
+        );
+      }
+
+      return (
+        <span>
+          <Link to="sandbox">Plain Sandbox</Link>
+        </span>
+      );
+    }
+
+    if (job.hasIn(['params', 'config'])) {
+      return <span>{job.getIn(['params', 'config'])}</span>;
+    }
+
+    return <em>N/A</em>;
   },
 
   _renderConfigurationRowLink(job) {
-    const componentId = getComponentId(job);
-    const configId = this.state.configuration.get('id');
+    let componentId = getComponentId(job);
+    let configId = this.state.configuration.get('id');
     let rowId = job.getIn(['params', 'transformations', 0], null);
     let rowName = TransformationsStore.getTransformationName(configId, rowId);
+
     if (!rowId) {
       rowId = job.getIn(['params', 'row'], null);
       rowName = ConfigurationRowsStore.get(componentId, configId, rowId).get('name');
     }
+
     if (rowId && rowName) {
       return (
         <span>
@@ -279,9 +303,25 @@ export default React.createClass({
         </span>
       );
     }
+
+    if (job.hasIn(['params', 'transformation', 'config_id']) && job.hasIn(['params', 'transformation', 'row_id'])) {
+      configId = job.getIn(['params', 'transformation', 'config_id']);
+      rowId = job.getIn(['params', 'transformation', 'row_id']);
+
+      return (
+        <span>
+          {' / '}
+          <ComponentConfigurationRowLink componentId="transformation" configId={configId} rowId={rowId}>
+            {InstalledComponentsStore.getConfigRow('transformation', configId, rowId).get('name', rowId)}
+          </ComponentConfigurationRowLink>
+        </span>
+      );
+    }
+
     if (rowId) {
       return <span>{` / ${rowId}`}</span>;
     }
+
     return null;
   },
 
@@ -350,10 +390,15 @@ export default React.createClass({
   },
 
   _renderConfigVersion(job) {
-    const configVersion = job.getIn(['result', 'configVersion'], null);
-    if (configVersion !== null) {
-      return ` / Version #${configVersion}`;
+    if (job.hasIn(['result', 'configVersion'])) {
+      return ` / Version #${job.getIn(['result', 'configVersion'])}`;
     }
+
+    if (job.hasIn(['params', 'transformation', 'config_version'])) {
+      return ` / Version #${job.getIn(['params', 'transformation', 'config_version'])}`;
+    }
+
+    return null;
   },
 
   _renderAccordion(job) {

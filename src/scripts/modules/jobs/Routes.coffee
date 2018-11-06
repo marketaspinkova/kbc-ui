@@ -63,8 +63,10 @@ routes =
           (params) ->
             JobsActionCreators.loadJobDetail(parseInt(params.jobId)).then( ->
               job = JobsStore.get(parseInt(params.jobId))
-              if (job.get('component') == 'transformation' &&
-                  job.hasIn(['params', 'transformations', 0]))
+              if (
+                (job.get('component') == 'transformation' && job.hasIn(['params', 'transformations', 0])) ||
+                (job.get('component') == 'provisioning' && job.hasIn(['params', 'transformation']))
+              )
                 return InstalledComponentsActionCreators.loadComponentConfigsData('transformation')
               if (job.get('component') != 'transformation' &&
                   job.hasIn(['params', 'config']) &&

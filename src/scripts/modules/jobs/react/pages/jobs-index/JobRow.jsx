@@ -48,28 +48,35 @@ export default React.createClass({
   jobConfiguration() {
     const componentId = getComponentId(this.props.job);
 
-    if (componentId === 'orchestrator') {
+    if (componentId === 'provisioning') {
+      if (this.props.job.hasIn(['params', 'transformation', 'config_id'])) {
+        const componentConfigId = this.props.job.getIn(['params', 'transformation', 'config_id']);
+        const componentName = InstalledComponentsStore.getConfig('transformation', componentConfigId);
+
+        return (
+          <span>{componentName.get('name', componentConfigId)}</span>
+        );
+      }
+
+      return <span>Plain Sandbox</span>;
+    }
+
+    if (this.props.job.hasIn(['params', 'orchestration', 'name'])) {
       return (
         <span>{this.props.job.getIn(['params', 'orchestration', 'name'])}</span>
       );
     }
 
-    const configId = this.props.job.getIn(['params', 'config']);
-    if (!configId) {
-      return (
-        <span><em>N/A</em></span>
-      );
-    }
+    if (this.props.job.hasIn(['params', 'config'])) {
+      const configId = this.props.job.getIn(['params', 'config']);
 
-    const config = InstalledComponentsStore.getConfig(componentId, configId);
-    if (!config || !config.get('name')) {
       return (
-        <span>{configId}</span>
+        <span>{InstalledComponentsStore.getConfig(componentId, configId).get('name', configId)}</span>
       );
     }
 
     return (
-      <span>{config.get('name')}</span>
+      <span><em>N/A</em></span>
     );
   },
 
