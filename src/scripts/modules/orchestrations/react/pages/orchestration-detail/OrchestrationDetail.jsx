@@ -22,6 +22,7 @@ import OrchestrationRunButton from '../../components/OrchestrationRunButton';
 import OrchestrationDeleteButton from '../../components/OrchestrationDeleteButton';
 import OrchestrationActiveButton from '../../components/OrchestrationActiveButton';
 import {ExternalLink} from '@keboola/indigo-ui';
+import Finished from '../../../../../react/common/Finished';
 
 export default React.createClass({
   mixins: [createStoreMixin(OrchestrationStore, OrchestrationJobsStore, VersionsStore)],
@@ -172,6 +173,19 @@ export default React.createClass({
           </div>
         </div>
         <div className="col-md-3 kbc-main-sidebar">
+          <div style={{marginBottom: '12px'}}>
+            <div>
+              <span>Created by </span>
+              <strong>DUMMY</strong>
+            </div>
+            <div>
+              <small>
+                <strong>
+                  <Finished endTime={this.state.orchestration.get('createdTime')}/>
+                </strong>
+              </small>
+            </div>
+          </div>
           <div>
             <div>Assigned Token</div>
             <div>
