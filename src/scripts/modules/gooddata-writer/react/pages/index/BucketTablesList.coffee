@@ -6,7 +6,7 @@ TableRow = React.createFactory(require './TableRow')
 
 module.exports = React.createClass
   displayName: 'BucketTablesList'
-  mixin: [pureRendererMixin]
+  mixins: [pureRendererMixin]
   propTypes:
     tables: React.PropTypes.object.isRequired
     configId: React.PropTypes.string.isRequired
