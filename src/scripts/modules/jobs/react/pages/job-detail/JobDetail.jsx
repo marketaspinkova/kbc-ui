@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { Map } from 'immutable';
 import SoundNotifications from '../../../../../utils/SoundNotifications';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
@@ -457,7 +458,7 @@ export default React.createClass({
           params={{
             runId: job.get('runId')
           }}
-          autoReload={true}
+          autoReload={this._shouldAutoReload(job)}
         />
       </div>
     );
@@ -495,5 +496,17 @@ export default React.createClass({
         </span>
       </span>
     );
+  },
+
+  _shouldAutoReload(job) {
+    if (['canceled', 'cancelled'].includes(job.get('status'))) {
+      return false;
+    }
+
+    if (job.get('isFinished') === false) {
+      return true;
+    }
+
+    return moment().diff(job.get('endTime'), 'minutes') < 5;
   }
 });
