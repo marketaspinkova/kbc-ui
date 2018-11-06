@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import { slugify } from 'underscore.string';
+import _ from 'underscore';
 import {OverlayTrigger, Popover} from 'react-bootstrap';
 
 export default React.createClass({
@@ -20,7 +20,7 @@ export default React.createClass({
 
   popover() {
     return (
-      <Popover id={`hint-${slugify(this.props.title)}`} title={this.props.title}>
+      <Popover id={_.uniqueId('hint_')} title={this.props.title}>
         {this.props.children}
       </Popover>
     );
