@@ -30,6 +30,9 @@ export default React.createClass({
 
     return (
       <div>
+        <div className="kbc-inner-padding">
+          <h2 style={{margin: '0px'}}>Last Runs</h2>
+        </div>
         <table className="table table-striped table-hover kb-table-jobs kbc-cursor-pointer">
           <thead>
             <tr>
