@@ -127,7 +127,7 @@ export default React.createClass({
                   </Col>
                   <Col xs={3}>
                     <Link
-                      className="pull-right"
+                      className="pull-right btn btn-primary"
                       to="orchestrationTasks"
                       params={{
                         orchestrationId: this.state.orchestration.get('id')
@@ -168,7 +168,7 @@ export default React.createClass({
                   </Col>
                   <Col xs={3}>
                     <Link
-                      className="pull-right"
+                      className="pull-right btn btn-primary"
                       to="orchestrationNotifications"
                       params={{
                         orchestrationId: this.state.orchestration.get('id')
