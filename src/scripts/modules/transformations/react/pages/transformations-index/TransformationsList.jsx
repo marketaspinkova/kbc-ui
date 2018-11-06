@@ -4,7 +4,7 @@ import { Map } from 'immutable';
 import TransformationRow from '../../components/TransformationRow';
 
 export default React.createClass({
-  mixin: [pureRendererMixin],
+  mixins: [pureRendererMixin],
 
   propTypes: {
     bucket: React.PropTypes.object.isRequired,
