@@ -109,17 +109,14 @@ export default React.createClass({
   },
 
   renderSpecificErrorMessage(task) {
-    const specificErrorMessages = ['Orchestrations can be started only 2 times for current id.'];
     const message = task.getIn(['response', 'message'], '');
-
-    if (!specificErrorMessages.includes(message)) {
-      return null;
+    if (message === 'Orchestrations can be started only 2 times for current id.') {
+      return (
+        <Alert bsStyle="danger">
+          Maximum orchestration nesting level (2) was exceeded.
+        </Alert>
+      );
     }
-
-    return (
-      <Alert bsStyle="danger">
-        <strong>Validation error: </strong> {message}
-      </Alert>
-    );
+    return null;
   }
 });
