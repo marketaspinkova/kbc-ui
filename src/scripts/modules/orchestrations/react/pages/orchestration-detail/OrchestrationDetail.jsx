@@ -233,6 +233,7 @@ export default React.createClass({
                 orchestration={this.state.orchestration}
                 isPending={this.state.pendingActions.get('delete', false)}
                 key="delete"
+                label="Delete Orchestration"
               />
             </li>
             <li>

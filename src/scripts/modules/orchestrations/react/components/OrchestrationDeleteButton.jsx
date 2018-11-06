@@ -11,11 +11,15 @@ export default React.createClass({
   propTypes: {
     orchestration: React.PropTypes.object.isRequired,
     isPending: React.PropTypes.bool.isRequired,
-    tooltipPlacement: React.PropTypes.string
+    tooltipPlacement: React.PropTypes.string,
+    label: React.PropTypes.string
   },
 
   getDefaultProps() {
-    return { tooltipPlacement: 'top' };
+    return {
+      tooltipPlacement: 'top',
+      label: ''
+    };
   },
 
   render() {
@@ -44,7 +48,7 @@ export default React.createClass({
       >
         <Tooltip tooltip="Move to Trash" id="delete" placement={this.props.tooltipPlacement}>
           <button className="btn btn-link">
-            <i className="kbc-icon-cup" />
+            <i className="kbc-icon-cup" /> {this.props.label}
           </button>
         </Tooltip>
       </Confirm>
