@@ -199,15 +199,8 @@ export default React.createClass({
         <div className="col-md-3 kbc-main-sidebar">
           <div style={{marginBottom: '12px'}}>
             <div>
-              <span>Created by </span>
-              <strong>DUMMY</strong>
-            </div>
-            <div>
-              <small>
-                <strong>
-                  <Finished endTime={this.state.orchestration.get('createdTime')}/>
-                </strong>
-              </small>
+              <div>Created</div>
+              <div><strong><Finished endTime={this.state.orchestration.get('createdTime')}/></strong></div>
             </div>
           </div>
           <div>
