@@ -26,6 +26,7 @@ import Finished from '../../../../../react/common/Finished';
 import {Row, Col} from 'react-bootstrap';
 import SidebarJobs from '../../../../components/react/components/SidebarJobs';
 import LatestJobsStore from '../../../../jobs/stores/LatestJobsStore';
+import SidebarVersions from '../../../../components/react/components/SidebarVersionsWrapper';
 
 export default React.createClass({
   mixins: [createStoreMixin(OrchestrationStore, OrchestrationJobsStore, VersionsStore, LatestJobsStore)],
@@ -106,16 +107,6 @@ export default React.createClass({
                   configId={this.state.orchestration.get('id').toString()}
                 />
               </div>
-              <div className="table kbc-table-border-vertical kbc-detail-table">
-                <div className="tr">
-                  <div className="td">
-                    <div className="row">
-                      <div className="col-lg-3 kbc-orchestration-detail-label">Updates</div>
-                      <div className="col-lg-9">{this._renderLastUpdate()}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
               <div className="kbc-row">
                 <h2>Jobs Graph</h2>
                 {this.state.graphJobs.size >= 2 && <JobsGraph jobs={this.state.graphJobs}/>}
@@ -193,6 +184,18 @@ export default React.createClass({
                 jobsLoading={this.state.jobsLoading}
                 onJobsReload={this._handleJobsReload}
               />
+              <div className="kbc-row">
+                <div className="table kbc-table-border-vertical kbc-detail-table">
+                  <div className="tr">
+                    <div className="td">
+                      <div className="row">
+                        <div className="col-lg-3 kbc-orchestration-detail-label">Updates</div>
+                        <div className="col-lg-9">{this._renderLastUpdate()}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -243,6 +246,7 @@ export default React.createClass({
             </li>
           </ul>
           <SidebarJobs jobs={this.state.latestJobs} limit={10}/>
+          <SidebarVersions componentId="orchestration" limit={3} />
         </div>
       </div>
     );
