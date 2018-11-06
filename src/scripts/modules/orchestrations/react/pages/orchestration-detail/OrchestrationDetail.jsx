@@ -133,9 +133,7 @@ export default React.createClass({
                         orchestrationId: this.state.orchestration.get('id')
                       }}
                     >
-                      {' '}
-                      <span className="fa fa-edit"/>
-                      {' Configure Tasks'}
+                      <span className="fa fa-edit"/> Configure Tasks
                     </Link>
                   </Col>
                 </Row>
@@ -176,9 +174,7 @@ export default React.createClass({
                         orchestrationId: this.state.orchestration.get('id')
                       }}
                     >
-                      {' '}
-                      <span className="fa fa-edit"/>
-                      {' Configure Notifications'}
+                      <span className="fa fa-edit"/> Configure Notifications
                     </Link>
                   </Col>
                 </Row>
