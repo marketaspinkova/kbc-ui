@@ -151,7 +151,7 @@ export function createActions(componentId) {
     const timestampTypes = incrementalFetchingTimestampTypes.get(componentId);
     return sourceTables.reduce((memo, table) => {
       const qualifyingColumns = table.get('columns', List()).filter((column) => {
-        if (column.has(autoincProperty) || timestampTypes.has(column.get('type'))) {
+        if (column.has(autoincProperty) || timestampTypes.includes(column.get('type'))) {
           return column;
         }
       });
