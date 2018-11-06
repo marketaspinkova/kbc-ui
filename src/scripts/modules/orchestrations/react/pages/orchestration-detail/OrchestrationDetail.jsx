@@ -183,18 +183,6 @@ export default React.createClass({
             jobsLoading={this.state.jobsLoading}
             onJobsReload={this._handleJobsReload}
           />
-          <div className="kbc-row">
-            <div className="table kbc-table-border-vertical kbc-detail-table">
-              <div className="tr">
-                <div className="td">
-                  <div className="row">
-                    <div className="col-lg-3 kbc-orchestration-detail-label">Updates</div>
-                    <div className="col-lg-9">{this._renderLastUpdate()}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
         <div className="col-md-3 kbc-main-sidebar">
           <div style={{marginBottom: '12px'}}>
@@ -242,7 +230,10 @@ export default React.createClass({
               </ExternalLink>.
             </li>
           </ul>
-          <SidebarVersions componentId="orchestration" limit={3} />
+          <SidebarVersions
+            componentId="orchestrator"
+            limit={3}
+          />
         </div>
       </div>
     );
