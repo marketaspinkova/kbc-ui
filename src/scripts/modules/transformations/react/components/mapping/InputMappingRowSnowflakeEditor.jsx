@@ -242,7 +242,7 @@ export default React.createClass({
       } else {
         basetype = basetype.get(0);
       }
-      let datatypeName, length = null;
+      let datatypeName = null;
 
       let datatype = this.snowflakeDatatypesMap.map((mappedDatatype) => {
         if (mappedDatatype.get('basetype') === basetype.get('value')) {
@@ -251,11 +251,9 @@ export default React.createClass({
         }
       });
       const mapType = datatype.get(datatypeName);
-      if (mapType) {
-        length = mapType.get('size') ? datatypeLength.get('value') : null;
-        if (mapType.has('maxLength') && length > mapType.get('maxLength')) {
-          length = mapType.get('maxLength');
-        }
+      let length = mapType.get('size') ? datatypeLength.get('value') : null;
+      if (mapType.has('maxLength') && length > mapType.get('maxLength')) {
+        length = mapType.get('maxLength');
       }
       return Immutable.fromJS({
         column: colname,
