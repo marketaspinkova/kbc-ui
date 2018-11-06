@@ -28,7 +28,7 @@ export default React.createClass({
             <th style={{ width: '12%' }}>Action</th>
             <th style={{ width: '8%' }}>Active</th>
             <th style={{ width: '8%' }}>Continue on Failure</th>
-            <th style={{ width: '10%' }} />
+            <th style={{ width: '16%' }} />
           </tr>
         </thead>
         <tbody>
