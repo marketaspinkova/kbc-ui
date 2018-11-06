@@ -181,9 +181,9 @@ export default React.createClass({
                 <Row>
                   <Col xs={12}>
                     {this.state.orchestration.get('notifications').count() ? (
-                      <span className="badge">{this.state.orchestration.get('notifications').count()}</span>
+                      <span>{this.state.orchestration.get('notifications').count()} notifications set</span>
                     ) : (
-                      <span>No notifications set yet</span>
+                      <span>No notifications set yet.</span>
                     )}
                   </Col>
                 </Row>
