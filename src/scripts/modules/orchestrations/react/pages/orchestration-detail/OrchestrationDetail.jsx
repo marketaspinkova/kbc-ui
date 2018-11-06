@@ -110,30 +110,11 @@ export default React.createClass({
                       <div className="col-lg-9">{this._renderLastUpdate()}</div>
                     </div>
                   </div>
-                  <div className="td">
-                    <div className="row">
-                      <div className="col-lg-3 kbc-orchestration-detail-label">{'Notifications '}</div>
-                      <div className="col-lg-9">
-                        {this.state.orchestration.get('notifications').count() ? (
-                          <span className="badge">{this.state.orchestration.get('notifications').count()}</span>
-                        ) : (
-                          <span>No notifications set yet</span>
-                        )}
-                        <br />
-                        <Link
-                          to="orchestrationNotifications"
-                          params={{
-                            orchestrationId: this.state.orchestration.get('id')
-                          }}
-                        >
-                          {' '}
-                          <span className="fa fa-edit" />
-                          {' Configure Notifications'}
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
                 </div>
+              </div>
+              <div className="kbc-row">
+                <h2>Jobs Graph</h2>
+                {this.state.graphJobs.size >= 2 && <JobsGraph jobs={this.state.graphJobs}/>}
               </div>
               <div className="kbc-row">
                 <h2>Tasks</h2>
@@ -157,8 +138,24 @@ export default React.createClass({
                   orchestrationId={this.state.orchestration.get('id')}
                 />
               </div>
-              <h2>Jobs Graph</h2>
-              {this.state.graphJobs.size >= 2 && <JobsGraph jobs={this.state.graphJobs} />}
+              <div className="kbc-row">
+                <h2>Notifications</h2>
+                {this.state.orchestration.get('notifications').count() ? (
+                  <span className="badge">{this.state.orchestration.get('notifications').count()}</span>
+                ) : (
+                  <span>No notifications set yet</span>
+                )}
+                <Link
+                  to="orchestrationNotifications"
+                  params={{
+                    orchestrationId: this.state.orchestration.get('id')
+                  }}
+                >
+                  {' '}
+                  <span className="fa fa-edit"/>
+                  {' Configure Notifications'}
+                </Link>
+              </div>
               <JobsTable
                 jobs={this.state.jobs}
                 jobsLoading={this.state.jobsLoading}
