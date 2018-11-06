@@ -143,26 +143,24 @@ export default React.createClass({
                         </Link>
                       </div>
                     </div>
-                    <div className="row">
-                      <div className="col-lg-3 kbc-orchestration-detail-label">{'Tasks '}</div>
-                      <div className="col-lg-9">
-                        <TasksSummary tasks={this.state.tasks} />
-                        <br />
-                        <Link
-                          to="orchestrationTasks"
-                          params={{
-                            orchestrationId: this.state.orchestration.get('id')
-                          }}
-                        >
-                          {' '}
-                          <span className="fa fa-edit" />
-                          {' Configure Tasks'}
-                        </Link>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
+              <div className="kbc-row">
+                <h2>Tasks</h2>
+                <TasksSummary tasks={this.state.tasks}/>
+                <Link
+                  to="orchestrationTasks"
+                  params={{
+                    orchestrationId: this.state.orchestration.get('id')
+                  }}
+                >
+                  {' '}
+                  <span className="fa fa-edit"/>
+                  {' Configure Tasks'}
+                </Link>
+              </div>
+              <h2>Jobs Graph</h2>
               {this.state.graphJobs.size >= 2 && <JobsGraph jobs={this.state.graphJobs} />}
               <JobsTable
                 jobs={this.state.jobs}
