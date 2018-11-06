@@ -312,7 +312,7 @@ export default React.createClass({
         <span>
           {' / '}
           <ComponentConfigurationRowLink componentId="transformation" configId={configId} rowId={rowId}>
-            {ConfigurationRowsStore.get('transformation', configId, rowId).get('name', rowId)}
+            {InstalledComponentsStore.getConfigRow('transformation', configId, rowId).get('name', rowId)}
           </ComponentConfigurationRowLink>
         </span>
       );
