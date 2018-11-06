@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import _ from 'underscore';
 import {OverlayTrigger, Popover} from 'react-bootstrap';
 
 export default React.createClass({
@@ -19,7 +20,7 @@ export default React.createClass({
 
   popover() {
     return (
-      <Popover title={this.props.title}>
+      <Popover id={_.uniqueId('hint_')} title={this.props.title}>
         {this.props.children}
       </Popover>
     );
