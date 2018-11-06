@@ -64,7 +64,9 @@ const startApp = appOptions => {
 
     const notification = React.createClass({
       render() {
-        return React.createElement(ErrorNotification, { error });
+        return (
+          <ErrorNotification error={error} />
+        );
       }
     });
 
