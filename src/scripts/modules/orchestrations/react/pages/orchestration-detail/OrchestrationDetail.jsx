@@ -24,7 +24,6 @@ import OrchestrationActiveButton from '../../components/OrchestrationActiveButto
 import {ExternalLink} from '@keboola/indigo-ui';
 import Finished from '../../../../../react/common/Finished';
 import {Row, Col} from 'react-bootstrap';
-import SidebarJobs from '../../../../components/react/components/SidebarJobs';
 import LatestJobsStore from '../../../../jobs/stores/LatestJobsStore';
 import SidebarVersions from '../../../../components/react/components/SidebarVersionsWrapper';
 
@@ -249,7 +248,6 @@ export default React.createClass({
               </ExternalLink>.
             </li>
           </ul>
-          <SidebarJobs jobs={this.state.latestJobs} limit={10}/>
           <SidebarVersions componentId="orchestration" limit={3} />
         </div>
       </div>
