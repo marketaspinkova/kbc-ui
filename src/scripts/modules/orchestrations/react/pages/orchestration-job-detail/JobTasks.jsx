@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import ComponentsStore from '../../../../components/stores/ComponentsStore';
-import { Panel, PanelGroup } from 'react-bootstrap';
+import { Panel, PanelGroup, Alert } from 'react-bootstrap';
 import ComponentConfigurationLink from '../../../../components/react/components/ComponentConfigurationLink';
 import ComponentIcon from '../../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../../react/common/ComponentName';
@@ -103,7 +103,20 @@ export default React.createClass({
             Go to job detail
           </Link>
         )}
+        {this.renderSpecificErrorMessage(task)}
       </Panel>
     );
+  },
+
+  renderSpecificErrorMessage(task) {
+    const message = task.getIn(['response', 'message'], '');
+    if (message === 'Orchestrations can be started only 2 times for current id.') {
+      return (
+        <Alert bsStyle="danger">
+          Maximum orchestration nesting level (2) was exceeded.
+        </Alert>
+      );
+    }
+    return null;
   }
 });
