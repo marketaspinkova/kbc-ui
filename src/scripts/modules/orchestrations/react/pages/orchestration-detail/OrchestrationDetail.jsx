@@ -236,7 +236,7 @@ export default React.createClass({
               />
             </li>
             <li>
-              <ExternalLink hree="https://help.keboola.com/orchestrator/running/">
+              <ExternalLink href="https://help.keboola.com/orchestrator/running/">
                 <i className="fa fa-question-circle fa-fw" /> Documentation
               </ExternalLink>.
             </li>
