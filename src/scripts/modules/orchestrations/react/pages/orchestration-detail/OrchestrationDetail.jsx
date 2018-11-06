@@ -18,6 +18,10 @@ import TasksSummary from './TasksSummary';
 import CronRecord from '../../components/CronRecord';
 import ScheduleModal from '../../modals/Schedule';
 import CreatedWithIcon from '../../../../../react/common/CreatedWithIcon';
+import OrchestrationRunButton from '../../components/OrchestrationRunButton';
+import OrchestrationDeleteButton from '../../components/OrchestrationDeleteButton';
+import OrchestrationActiveButton from '../../components/OrchestrationActiveButton';
+import {ExternalLink} from '@keboola/indigo-ui';
 
 export default React.createClass({
   mixins: [createStoreMixin(OrchestrationStore, OrchestrationJobsStore, VersionsStore)],
@@ -39,7 +43,8 @@ export default React.createClass({
       jobs,
       versions,
       graphJobs: jobs.filter(job => job.get('startTime') && job.get('endTime')),
-      jobsLoading: OrchestrationJobsStore.isLoading(orchestrationId)
+      jobsLoading: OrchestrationJobsStore.isLoading(orchestrationId),
+      pendingActions: OrchestrationStore.getPendingActions()
     };
   },
 
@@ -172,7 +177,28 @@ export default React.createClass({
         </div>
         <div className="col-md-3 kbc-main-sidebar">
           <ul className="nav nav-stacked">
-            <li>dummy</li>
+            <li>
+              <OrchestrationRunButton orchestration={this.state.orchestration} notify={true} key="run" />
+            </li>
+            <li>
+              <OrchestrationDeleteButton
+                orchestration={this.state.orchestration}
+                isPending={this.state.pendingActions.get('delete', false)}
+                key="delete"
+              />
+            </li>
+            <li>
+              <OrchestrationActiveButton
+                orchestration={this.state.orchestration}
+                isPending={this.state.pendingActions.get('active', false)}
+                key="activate"
+              />
+            </li>
+            <li>
+              <ExternalLink hree="https://help.keboola.com/orchestrator/running/">
+                <i className="fa fa-question-circle fa-fw" /> Documentation
+              </ExternalLink>.
+            </li>
           </ul>
         </div>
       </div>
