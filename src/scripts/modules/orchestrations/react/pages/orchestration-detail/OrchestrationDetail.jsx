@@ -106,17 +106,6 @@ export default React.createClass({
                 <div className="tr">
                   <div className="td">
                     <div className="row">
-                      <div className="col-lg-3 kbc-orchestration-detail-label">{'Schedule '}</div>
-                      <div className="col-lg-9">
-                        <CronRecord crontabRecord={this.state.orchestration.get('crontabRecord')} />
-                        <br />
-                        <ScheduleModal
-                          crontabRecord={this.state.orchestration.get('crontabRecord')}
-                          orchestrationId={this.state.orchestration.get('id')}
-                        />
-                      </div>
-                    </div>
-                    <div className="row">
                       <div className="col-lg-3 kbc-orchestration-detail-label">Updates</div>
                       <div className="col-lg-9">{this._renderLastUpdate()}</div>
                     </div>
@@ -159,6 +148,14 @@ export default React.createClass({
                   <span className="fa fa-edit"/>
                   {' Configure Tasks'}
                 </Link>
+              </div>
+              <div className="kbc-row">
+                <h2>Schedule</h2>
+                <CronRecord crontabRecord={this.state.orchestration.get('crontabRecord')}/>
+                <ScheduleModal
+                  crontabRecord={this.state.orchestration.get('crontabRecord')}
+                  orchestrationId={this.state.orchestration.get('id')}
+                />
               </div>
               <h2>Jobs Graph</h2>
               {this.state.graphJobs.size >= 2 && <JobsGraph jobs={this.state.graphJobs} />}
