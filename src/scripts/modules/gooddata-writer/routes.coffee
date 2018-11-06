@@ -10,7 +10,7 @@ TablePageHeaderExportStatus = require './react/components/TableHeaderExportStatu
 DateDimensionsPage = require './react/pages/date-dimensions/DateDimensions'
 ModelPage = require './react/pages/model/Model'
 storageActionCreators = require '../components/StorageActionCreators'
-JobsActionCreators = require '../jobs/ActionCreators'
+JobsActionCreators = require('../jobs/ActionCreators').default
 VersionsActionCreators = require '../components/VersionsActionCreators'
 {createTablesRoute} = require '../table-browser/routes'
 
