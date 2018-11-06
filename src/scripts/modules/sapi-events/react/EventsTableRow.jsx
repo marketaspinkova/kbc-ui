@@ -1,10 +1,13 @@
 import React, { PropTypes } from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import ComponentsStore from '../../components/stores/ComponentsStore';
 import { Link } from 'react-router';
 import _ from 'underscore';
 import classnames from 'classnames';
 import { format } from '../../../utils/date';
 import { NewLineToBr } from '@keboola/indigo-ui';
+import ComponentName from '../../../react/common/ComponentName';
+import ComponentIcon from '../../../react/common/ComponentIcon';
 
 const classmap = {
   error: 'bg-danger',
@@ -13,7 +16,7 @@ const classmap = {
 };
 
 export default React.createClass({
-  mixin: [PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     event: PropTypes.object.isRequired,
@@ -22,11 +25,14 @@ export default React.createClass({
 
   render() {
     const status = classmap[this.props.event.get('type')];
+    const component = this.getComponent();
 
     return (
       <Link {...this.linkProps()}>
         <div className={classnames('td', 'text-nowrap', status)}>{format(this.props.event.get('created'))}</div>
-        <div className={classnames('td', 'text-nowrap', status)}>{this.props.event.get('component')}</div>
+        <div className={classnames('td', 'text-nowrap', status)}>
+          <ComponentIcon component={component} size="32" /> <ComponentName component={component} showType={true} />
+        </div>
         <div className={classnames('td', status)}>
           <NewLineToBr text={this.props.event.get('message')} />
         </div>
@@ -45,5 +51,16 @@ export default React.createClass({
       }),
       className: 'tr'
     };
+  },
+
+  getComponent() {
+    const componentId = this.props.event.get('component');
+    const component = ComponentsStore.getComponent(componentId);
+
+    if (!component) {
+      return ComponentsStore.unknownComponent(componentId);
+    }
+
+    return component;
   }
 });
