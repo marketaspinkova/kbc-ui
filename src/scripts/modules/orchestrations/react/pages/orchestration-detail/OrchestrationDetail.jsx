@@ -232,6 +232,7 @@ export default React.createClass({
               <OrchestrationActiveButton
                 orchestration={this.state.orchestration}
                 isPending={this.state.pendingActions.get('active', false)}
+                mode="link"
                 key="activate"
               />
             </li>
