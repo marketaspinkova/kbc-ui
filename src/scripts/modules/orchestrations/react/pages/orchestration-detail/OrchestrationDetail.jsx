@@ -23,6 +23,7 @@ import OrchestrationDeleteButton from '../../components/OrchestrationDeleteButto
 import OrchestrationActiveButton from '../../components/OrchestrationActiveButton';
 import {ExternalLink} from '@keboola/indigo-ui';
 import Finished from '../../../../../react/common/Finished';
+import {Row, Col} from 'react-bootstrap';
 
 export default React.createClass({
   mixins: [createStoreMixin(OrchestrationStore, OrchestrationJobsStore, VersionsStore)],
@@ -117,44 +118,76 @@ export default React.createClass({
                 {this.state.graphJobs.size >= 2 && <JobsGraph jobs={this.state.graphJobs}/>}
               </div>
               <div className="kbc-row">
-                <h2>Tasks</h2>
-                <TasksSummary tasks={this.state.tasks}/>
-                <Link
-                  to="orchestrationTasks"
-                  params={{
-                    orchestrationId: this.state.orchestration.get('id')
-                  }}
-                >
-                  {' '}
-                  <span className="fa fa-edit"/>
-                  {' Configure Tasks'}
-                </Link>
+                <Row>
+                  <Col xs={9}>
+                    <h2>Tasks</h2>
+                  </Col>
+                  <Col xs={3}>
+                    <Link
+                      className="pull-right"
+                      to="orchestrationTasks"
+                      params={{
+                        orchestrationId: this.state.orchestration.get('id')
+                      }}
+                    >
+                      {' '}
+                      <span className="fa fa-edit"/>
+                      {' Configure Tasks'}
+                    </Link>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={12}>
+                    <TasksSummary tasks={this.state.tasks}/>
+                  </Col>
+                </Row>
               </div>
               <div className="kbc-row">
-                <h2>Schedule</h2>
-                <CronRecord crontabRecord={this.state.orchestration.get('crontabRecord')}/>
-                <ScheduleModal
-                  crontabRecord={this.state.orchestration.get('crontabRecord')}
-                  orchestrationId={this.state.orchestration.get('id')}
-                />
+                <Row>
+                  <Col xs={9}>
+                    <h2>Schedule</h2>
+                  </Col>
+                  <Col xs={3}>
+                    <ScheduleModal
+                      crontabRecord={this.state.orchestration.get('crontabRecord')}
+                      orchestrationId={this.state.orchestration.get('id')}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={12}>
+                    <CronRecord crontabRecord={this.state.orchestration.get('crontabRecord')}/>
+                  </Col>
+                </Row>
               </div>
               <div className="kbc-row">
-                <h2>Notifications</h2>
-                {this.state.orchestration.get('notifications').count() ? (
-                  <span className="badge">{this.state.orchestration.get('notifications').count()}</span>
-                ) : (
-                  <span>No notifications set yet</span>
-                )}
-                <Link
-                  to="orchestrationNotifications"
-                  params={{
-                    orchestrationId: this.state.orchestration.get('id')
-                  }}
-                >
-                  {' '}
-                  <span className="fa fa-edit"/>
-                  {' Configure Notifications'}
-                </Link>
+                <Row>
+                  <Col xs={9}>
+                    <h2>Notifications</h2>
+                  </Col>
+                  <Col xs={3}>
+                    <Link
+                      className="pull-right"
+                      to="orchestrationNotifications"
+                      params={{
+                        orchestrationId: this.state.orchestration.get('id')
+                      }}
+                    >
+                      {' '}
+                      <span className="fa fa-edit"/>
+                      {' Configure Notifications'}
+                    </Link>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={12}>
+                    {this.state.orchestration.get('notifications').count() ? (
+                      <span className="badge">{this.state.orchestration.get('notifications').count()}</span>
+                    ) : (
+                      <span>No notifications set yet</span>
+                    )}
+                  </Col>
+                </Row>
               </div>
               <JobsTable
                 jobs={this.state.jobs}
