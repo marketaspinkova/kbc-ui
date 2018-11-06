@@ -24,9 +24,11 @@ import OrchestrationActiveButton from '../../components/OrchestrationActiveButto
 import {ExternalLink} from '@keboola/indigo-ui';
 import Finished from '../../../../../react/common/Finished';
 import {Row, Col} from 'react-bootstrap';
+import SidebarJobs from '../../../../components/react/components/SidebarJobs';
+import LatestJobsStore from '../../../../jobs/stores/LatestJobsStore';
 
 export default React.createClass({
-  mixins: [createStoreMixin(OrchestrationStore, OrchestrationJobsStore, VersionsStore)],
+  mixins: [createStoreMixin(OrchestrationStore, OrchestrationJobsStore, VersionsStore, LatestJobsStore)],
 
   getStateFromStores() {
     const orchestrationId = RoutesStore.getCurrentRouteIntParam('orchestrationId');
@@ -46,7 +48,8 @@ export default React.createClass({
       versions,
       graphJobs: jobs.filter(job => job.get('startTime') && job.get('endTime')),
       jobsLoading: OrchestrationJobsStore.isLoading(orchestrationId),
-      pendingActions: OrchestrationStore.getPendingActions()
+      pendingActions: OrchestrationStore.getPendingActions(),
+      latestJobs: LatestJobsStore.getJobs('orchestration', orchestrationId)
     };
   },
 
@@ -243,6 +246,7 @@ export default React.createClass({
               </ExternalLink>.
             </li>
           </ul>
+          <SidebarJobs jobs={this.state.latestJobs} limit={10}/>
         </div>
       </div>
     );
