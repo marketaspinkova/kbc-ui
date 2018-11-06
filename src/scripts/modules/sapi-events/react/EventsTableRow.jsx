@@ -31,7 +31,8 @@ export default React.createClass({
       <Link {...this.linkProps()}>
         <div className={classnames('td', 'text-nowrap', status)}>{format(this.props.event.get('created'))}</div>
         <div className={classnames('td', 'text-nowrap', status)}>
-          <ComponentIcon component={component} size="32" /> <ComponentName component={component} showType={true} />
+          <ComponentIcon component={component} size="32" resizeToSize="16" />{' '}
+          <ComponentName component={component} showType={true} />
         </div>
         <div className={classnames('td', status)}>
           <NewLineToBr text={this.props.event.get('message')} />
