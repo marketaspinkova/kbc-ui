@@ -116,10 +116,6 @@ export default React.createClass({
                       </div>
                     </div>
                     <div className="row">
-                      <div className="col-lg-3 kbc-orchestration-detail-label">Assigned Token</div>
-                      <div className="col-lg-9">{this.state.orchestration.getIn(['token', 'description'])}</div>
-                    </div>
-                    <div className="row">
                       <div className="col-lg-3 kbc-orchestration-detail-label">Updates</div>
                       <div className="col-lg-9">{this._renderLastUpdate()}</div>
                     </div>
@@ -176,6 +172,14 @@ export default React.createClass({
           </div>
         </div>
         <div className="col-md-3 kbc-main-sidebar">
+          <div>
+            <div>Assigned Token</div>
+            <div>
+              <strong>
+                {this.state.orchestration.getIn(['token', 'description'])}
+              </strong>
+            </div>
+          </div>
           <ul className="nav nav-stacked">
             <li>
               <OrchestrationRunButton orchestration={this.state.orchestration} notify={true} key="run" />
