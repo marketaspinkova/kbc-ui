@@ -51,7 +51,7 @@ export default React.createClass({
     this.chart.axes[1].title = `Duration (${data.get('unit')})`;
     this.chart.data = data.get('jobs').toJS();
     this.chart.svg.style('width', width);
-    this.chart.setMargins('80px', '20px', '40px', '60px');
+    this.chart.setMargins('50px', '10px', '10px', '40px');
     this.chart.draw(200);
   },
 
