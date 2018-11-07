@@ -1,15 +1,16 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import DeleteButton from '../../../../react/common/DeleteButton';
 import Finished from '../../../../react/common/Finished';
 import Tooltip from '../../../../react/common/Tooltip';
 import RestoreConfigurationButton from '../../../../react/common/RestoreConfigurationButton';
 import InstalledComponentsActionCreators from '../../../components/InstalledComponentsActionCreators';
 import descriptionExcerpt from '../../../../utils/descriptionExcerpt';
-import {isObsoleteComponent} from '../../utils';
+import { isObsoleteComponent } from '../../utils';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 export default React.createClass({
   mixins: [PureRenderMixin],
+
   propTypes: {
     config: PropTypes.object.isRequired,
     component: PropTypes.object.isRequired,
@@ -22,16 +23,13 @@ export default React.createClass({
     return (
       <span className="tr">
         <span className="td">
-          <strong>
-            {this.props.config.get('name', '---')}
-          </strong>
+          <strong>{this.props.config.get('name', '---')}</strong>
           {this.description()}
         </span>
         <span className="td text-right kbc-component-buttons">
           <span className="kbc-component-author">
-            Removed by <strong>
-              {this.props.config.getIn(['currentVersion', 'creatorToken', 'description'])}
-            </strong> <Finished endTime={this.props.config.getIn(['currentVersion', 'created'])}/>
+            Removed by <strong>{this.props.config.getIn(['currentVersion', 'creatorToken', 'description'])}</strong>{' '}
+            <Finished endTime={this.props.config.getIn(['currentVersion', 'created'])} />
           </span>
           {this.buttons()}
         </span>
@@ -46,23 +44,11 @@ export default React.createClass({
           <Tooltip
             placement="top"
             tooltip="Configuration restore is not supported by component"
-            children={<span className="btn btn-link"><i className="fa fa-exclamation-triangle"/></span>}
-          />
-          <DeleteButton
-            tooltip="Delete Forever"
-            icon="fa-times"
-            isPending={this.props.isDeleting}
-            confirm={this.deleteConfirmProps()}
-          />
-        </span>
-      );
-    } else {
-      return (
-        <span>
-          <RestoreConfigurationButton
-            tooltip="Restore"
-            isPending={this.props.isRestoring}
-            confirm={this.restoreConfirmProps()}
+            children={
+              <span className="btn btn-link">
+                <i className="fa fa-exclamation-triangle" />
+              </span>
+            }
           />
           <DeleteButton
             tooltip="Delete Forever"
@@ -73,6 +59,22 @@ export default React.createClass({
         </span>
       );
     }
+
+    return (
+      <span>
+        <RestoreConfigurationButton
+          tooltip="Restore"
+          isPending={this.props.isRestoring}
+          confirm={this.restoreConfirmProps()}
+        />
+        <DeleteButton
+          tooltip="Delete Forever"
+          icon="fa-times"
+          isPending={this.props.isDeleting}
+          confirm={this.deleteConfirmProps()}
+        />
+      </span>
+    );
   },
 
   description() {
@@ -80,20 +82,18 @@ export default React.createClass({
       return null;
     }
     return (
-      <div><small>{descriptionExcerpt(this.props.config.get('description'))}</small></div>
+      <div>
+        <small>{descriptionExcerpt(this.props.config.get('description'))}</small>
+      </div>
     );
   },
 
   deleteConfirmMessage() {
-    return (
-      <span>Are you sure you want to permanently delete the configuration {this.props.config.get('name')}?</span>
-    );
+    return <span>Are you sure you want to permanently delete the configuration {this.props.config.get('name')}?</span>;
   },
 
   restoreConfirmMessage() {
-    return (
-      <span>Are you sure you want to restore the configuration {this.props.config.get('name')}?</span>
-    );
+    return <span>Are you sure you want to restore the configuration {this.props.config.get('name')}?</span>;
   },
 
   deleteConfirmProps() {
@@ -113,12 +113,12 @@ export default React.createClass({
     };
   },
 
-  runParams() {
-    return () => ({config: this.props.config.get('id')});
-  },
-
   handleDelete() {
-    InstalledComponentsActionCreators.deleteConfigurationPermanently(this.props.componentId, this.props.config.get('id'), false);
+    InstalledComponentsActionCreators.deleteConfigurationPermanently(
+      this.props.componentId,
+      this.props.config.get('id'),
+      false
+    );
   },
 
   handleRestore() {

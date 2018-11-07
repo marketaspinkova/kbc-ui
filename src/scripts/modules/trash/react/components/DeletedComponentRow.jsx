@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import DeletedConfigurationRow from './DeletedConfigurationRow';
 import ComponentIcon from '../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../react/common/ComponentName';
@@ -6,6 +6,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 export default React.createClass({
   mixins: [PureRenderMixin],
+
   propTypes: {
     component: PropTypes.object.isRequired,
     configurations: PropTypes.object.isRequired,
@@ -25,24 +26,26 @@ export default React.createClass({
           </div>
         </div>
         <div className="table table-hover">
-          <span className="tbody">
-            {this.configurations()}
-          </span>
+          <span className="tbody">{this.configurations()}</span>
         </div>
       </div>
     );
   },
 
   configurations() {
-    return this.props.configurations.map((configuration) => {
-      return React.createElement(DeletedConfigurationRow, {
-        component: this.props.component,
-        config: configuration,
-        componentId: this.props.component.get('id'),
-        isDeleting: this.props.deletingConfigurations.has(configuration.get('id')),
-        isRestoring: this.props.restoringConfigurations.has(configuration.get('id')),
-        key: configuration.get('id')
-      });
-    }, this);
+    return this.props.configurations
+      .map(configuration => {
+        return (
+          <DeletedConfigurationRow
+            component={this.props.component}
+            config={configuration}
+            componentId={this.props.component.get('id')}
+            isDeleting={this.props.deletingConfigurations.has(configuration.get('id'))}
+            isRestoring={this.props.restoringConfigurations.has(configuration.get('id'))}
+            key={configuration.get('id')}
+          />
+        );
+      })
+      .toArray();
   }
 });

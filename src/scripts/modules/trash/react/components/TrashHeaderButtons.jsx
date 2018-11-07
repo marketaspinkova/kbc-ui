@@ -14,7 +14,6 @@ export default React.createClass({
     };
   },
 
-
   render() {
     return (
       <Confirm
@@ -34,13 +33,10 @@ export default React.createClass({
   },
 
   deleteConfirmMessage() {
-    return (
-      <span>Are you sure you want to permanently delete all configurations in Trash?</span>
-    );
+    return <span>Are you sure you want to permanently delete all configurations in Trash?</span>;
   },
 
   handleDelete() {
     InstaledComponentsActions.deleteAllConfigurationsPermanently();
   }
-
 });
