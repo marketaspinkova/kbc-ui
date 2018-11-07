@@ -1,12 +1,12 @@
 import Promise from 'bluebird';
 import ComponentsStore from './stores/ComponentsStore';
 import dispatcher from '../../Dispatcher';
-import constants from './Constants';
+import { ActionTypes } from './Constants';
 
 export default {
   setComponentsFilter(query, componentType) {
     return dispatcher.handleViewAction({
-      type: constants.ActionTypes.COMPONENTS_SET_FILTER,
+      type: ActionTypes.COMPONENTS_SET_FILTER,
       query,
       componentType
     });
@@ -14,7 +14,7 @@ export default {
 
   receiveAllComponents(componentsRaw) {
     return dispatcher.handleViewAction({
-      type: constants.ActionTypes.COMPONENTS_LOAD_SUCCESS,
+      type: ActionTypes.COMPONENTS_LOAD_SUCCESS,
       components: componentsRaw
     });
   },

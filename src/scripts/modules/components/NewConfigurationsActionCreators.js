@@ -1,5 +1,5 @@
 import dispatcher from '../../Dispatcher';
-import constants from './Constants';
+import { ActionTypes } from './Constants';
 import NewConfigurationsStore from './stores/NewConfigurationsStore';
 import createComponentConfiguration from './utils/createComponentConfiguration';
 import transitionToComponentConfiguration from './utils/componentConfigurationTransition';
@@ -8,7 +8,7 @@ import ComponentsStore from './stores/ComponentsStore';
 export default {
   updateConfiguration(componentId, configuration) {
     return dispatcher.handleViewAction({
-      type: constants.ActionTypes.COMPONENTS_NEW_CONFIGURATION_UPDATE,
+      type: ActionTypes.COMPONENTS_NEW_CONFIGURATION_UPDATE,
       componentId,
       configuration
     });
@@ -16,7 +16,7 @@ export default {
 
   resetConfiguration(componentId) {
     return dispatcher.handleViewAction({
-      type: constants.ActionTypes.COMPONENTS_NEW_CONFIGURATION_CANCEL,
+      type: ActionTypes.COMPONENTS_NEW_CONFIGURATION_CANCEL,
       componentId
     });
   },
@@ -25,7 +25,7 @@ export default {
     const configuration = NewConfigurationsStore.getConfiguration(componentId);
 
     dispatcher.handleViewAction({
-      type: constants.ActionTypes.COMPONENTS_NEW_CONFIGURATION_SAVE_START,
+      type: ActionTypes.COMPONENTS_NEW_CONFIGURATION_SAVE_START,
       componentId
     });
 
@@ -33,7 +33,7 @@ export default {
       .then(response => {
         const component = ComponentsStore.getComponent(componentId);
         dispatcher.handleViewAction({
-          type: constants.ActionTypes.COMPONENTS_NEW_CONFIGURATION_SAVE_SUCCESS,
+          type: ActionTypes.COMPONENTS_NEW_CONFIGURATION_SAVE_SUCCESS,
           componentId,
           component,
           configuration: response
@@ -43,7 +43,7 @@ export default {
       })
       .catch(e => {
         dispatcher.handleViewAction({
-          type: constants.ActionTypes.COMPONENTS_NEW_CONFIGURATION_SAVE_ERROR,
+          type: ActionTypes.COMPONENTS_NEW_CONFIGURATION_SAVE_ERROR,
           componentId,
           error: e
         });

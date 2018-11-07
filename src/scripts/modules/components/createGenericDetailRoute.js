@@ -12,7 +12,7 @@ import ComponentDetail from '../components/react/pages/component-detail/Componen
 import ComponentsStore from './stores/ComponentsStore';
 import JobsActionCreators from '../jobs/ActionCreators';
 import ComponentsActionCreators from './ComponentsActionCreators';
-import OauthUtils from '../oauth-v2/OauthUtils';
+import * as OauthUtils from '../oauth-v2/OauthUtils';
 import { createTablesRoute } from '../table-browser/routes';
 
 export default componentType => {
