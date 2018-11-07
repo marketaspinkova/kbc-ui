@@ -18,7 +18,7 @@ Error = require './utils/Error'
 ApplicationActionCreators = require('./actions/ApplicationActionCreators').default
 RouterActionCreators = require('./actions/RouterActionCreators').default
 
-HiddenComponents = require './modules/components/utils/hiddenComponents'
+HiddenComponents = require('./modules/components/utils/hiddenComponents').default
 
 RoutesStore = require './stores/RoutesStore'
 initializeData = require './initializeData'

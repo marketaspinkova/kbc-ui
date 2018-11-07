@@ -11,7 +11,7 @@ DefaultForm = require './DefaultForm'
 GoodDataWriterForm = require './GoodDataWriterForm'
 ManualConfigurationForm = require './ManualConfigurationFrom'
 
-hiddenComponents = require '../../../../components/utils/hiddenComponents'
+hiddenComponents = require('../../../../components/utils/hiddenComponents').default
 
 {div} = React.DOM
 
