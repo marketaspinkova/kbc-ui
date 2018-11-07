@@ -1,6 +1,6 @@
 React = require('react')
 createStoreMixin = require('../../../../react/mixins/createStoreMixin').default
-JobsStore = require('../../stores/JobsStore')
+JobsStore = require('../../stores/JobsStore').default
 Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
 ActionCreators = require('../../ActionCreators').default
 RoutesStore = require('../../../../stores/RoutesStore')

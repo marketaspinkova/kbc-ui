@@ -1,6 +1,6 @@
 React = require 'react'
 createStoreMixin = require('../../../../react/mixins/createStoreMixin').default
-JobsStore = require('../../stores/JobsStore')
+JobsStore = require('../../stores/JobsStore').default
 ActionCreators = require('../../ActionCreators').default
 RoutesStore = require('../../../../stores/RoutesStore')
 TerminateButton = require('../../../../react/common/JobTerminateButton').default

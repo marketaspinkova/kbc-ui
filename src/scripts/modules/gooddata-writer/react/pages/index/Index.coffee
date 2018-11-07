@@ -21,7 +21,7 @@ Confirm = require('../../../../../react/common/Confirm').default
 {Loader} = require '@keboola/indigo-ui'
 
 LatestJobs = require '../../../../components/react/components/SidebarJobs'
-LatestJobsStore = require '../../../../jobs/stores/LatestJobsStore'
+LatestJobsStore = require('../../../../jobs/stores/LatestJobsStore').default
 LatestVersions = React.createFactory(require('../../../../components/react/components/SidebarVersionsWrapper').default)
 InstalledComponentStore = require('../../../../components/stores/InstalledComponentsStore').default
 goodDataWriterStore = require '../../../store'

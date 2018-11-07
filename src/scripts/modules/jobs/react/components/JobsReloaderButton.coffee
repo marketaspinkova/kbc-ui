@@ -1,6 +1,6 @@
 React = require('react')
 createStoreMixin = require('../../../../react/mixins/createStoreMixin').default
-JobsStore = require('../../stores/JobsStore')
+JobsStore = require('../../stores/JobsStore').default
 RefreshIcon = React.createFactory(require('@keboola/indigo-ui').RefreshIcon)
 ActionCreators = require('../../ActionCreators').default
 
