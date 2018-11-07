@@ -181,14 +181,6 @@ export default React.createClass({
               />
             </li>
             <li>
-              <OrchestrationDeleteButton
-                orchestration={this.state.orchestration}
-                isPending={this.state.pendingActions.get('delete', false)}
-                key="delete"
-                label="Move to Trash"
-              />
-            </li>
-            <li>
               <OrchestrationActiveButton
                 orchestration={this.state.orchestration}
                 isPending={this.state.pendingActions.get('active', false)}
@@ -197,8 +189,16 @@ export default React.createClass({
               />
             </li>
             <li>
+              <OrchestrationDeleteButton
+                orchestration={this.state.orchestration}
+                isPending={this.state.pendingActions.get('delete', false)}
+                key="delete"
+                label="Move to Trash"
+              />
+            </li>
+            <li>
               <ExternalLink href="https://help.keboola.com/orchestrator/running/">
-                <i className="fa fa-question-circle fa-fw" /> Documentation
+                <i className="fa fa-question-circle fa-fw"/> Documentation
               </ExternalLink>.
             </li>
           </ul>
