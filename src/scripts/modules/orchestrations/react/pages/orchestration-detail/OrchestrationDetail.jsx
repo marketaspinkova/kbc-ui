@@ -1,6 +1,7 @@
 import React from 'react';
 import { List } from 'immutable';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
+/* eslint-disable no-console */
 
 // actions and stores
 import OrchestrationsActionCreators from '../../../ActionCreators';
@@ -39,6 +40,7 @@ export default React.createClass({
 
     return {
       orchestration: OrchestrationStore.get(orchestrationId),
+      tasksToRun: OrchestrationStore.getTasksToRun(orchestrationId),
       tasks,
       isLoading: OrchestrationStore.getIsOrchestrationLoading(orchestrationId),
       filteredOrchestrations: OrchestrationStore.getFiltered(),
@@ -174,6 +176,7 @@ export default React.createClass({
               <OrchestrationRunButton
                 orchestration={this.state.orchestration}
                 notify={true}
+                tasks={this.state.tasksToRun}
                 key="run"
                 label="Run Orchestration"
               />
