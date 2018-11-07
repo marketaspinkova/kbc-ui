@@ -2,13 +2,15 @@ import request from '../../utils/request';
 import ApplicationStore from '../../stores/ApplicationStore';
 import ComponentsStore from '../components/stores/ComponentsStore';
 import ServicesStore from '../services/Store';
+import {Constants} from './Constants';
 
 function createUrl(path, version) {
   return getBaseUrl(version) + '/' + path;
 }
 
 function getBaseUrl(version) {
-  if (version !== 2 && ApplicationStore.hasCurrentProjectFeature('oauth-v3')) {
+  if (version !== Constants.OAUTH_VERSION_DEFAULT
+    && ApplicationStore.hasCurrentProjectFeature(Constants.OAUTH_V3_FEATURE)) {
     return ServicesStore.getService('oauth').get('url');
   }
   return ComponentsStore.getComponent('keboola.oauth-v2').get('uri');

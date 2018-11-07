@@ -9,3 +9,9 @@ export const ActionTypes = keyMirror({
   OAUTHV2_POST_CREDENTIALS_SUCCESS: null,
   OAUTHV2_POST_CREDENTIALS_START: null
 });
+
+export const Constants = {
+  OAUTH_VERSION_3: 3,
+  OAUTH_VERSION_DEFAULT: 2,
+  OAUTH_V3_FEATURE: 'oauth-v3'
+};

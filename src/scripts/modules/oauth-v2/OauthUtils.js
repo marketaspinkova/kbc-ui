@@ -7,35 +7,37 @@ import installedComponentsStore from '../components/stores/InstalledComponentsSt
 import RoutesStore from '../../stores/RoutesStore';
 import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
 import StorageApi from '../components/StorageApi';
+import {Constants} from './Constants';
+
 const configOauthPath = ['authorization', 'oauth_api', 'id'];
 const configOauthPathVersion = ['authorization', 'oauth_api', 'version'];
 
 function createConfiguration(componentId, configId) {
   const configuration = installedComponentsStore.getConfigData(componentId, configId) || Map();
 
-  if (ApplicationStore.hasCurrentProjectFeature('oauth-v3')) {
+  if (ApplicationStore.hasCurrentProjectFeature(Constants.OAUTH_V3_FEATURE)) {
     return configuration
       .setIn(configOauthPath, configId)
-      .setIn(configOauthPathVersion, 3);
+      .setIn(configOauthPathVersion, Constants.OAUTH_VERSION_3);
   }
 
   return configuration.setIn(configOauthPath, configId);
 }
 
-function processRedirectData(componentId, configId) {
+function processRedirectData(componentId, credentialsId) {
   // config component configuration
-  return installedComponentsActions.loadComponentConfigData(componentId, configId)
+  return installedComponentsActions.loadComponentConfigData(componentId, credentialsId)
     .then( () => {
       // load credentials for componentId and id
-      return OauthActions.loadCredentials(componentId, configId)
+      return OauthActions.loadCredentials(componentId, credentialsId)
         .then(() => {
-          const credentials = OauthStore.getCredentials(componentId, configId);
-          const newConfiguration = createConfiguration(componentId, configId);
+          const credentials = OauthStore.getCredentials(componentId, credentialsId);
+          const newConfiguration = createConfiguration(componentId, credentialsId);
 
           // save configuration with authorization id
           const saveFn = installedComponentsActions.saveComponentConfigData;
           const authorizedFor = credentials.get('authorizedFor');
-          return saveFn(componentId, configId, fromJS(newConfiguration), `Save authorization for ${authorizedFor}`).then(() => authorizedFor);
+          return saveFn(componentId, credentialsId, fromJS(newConfiguration), `Save authorization for ${authorizedFor}`).then(() => authorizedFor);
         });
     });
 }
@@ -100,7 +102,7 @@ export function createRedirectRouteSimple(componentId) {
 export function loadCredentialsFromConfig(componentId, configId) {
   const configuration = installedComponentsStore.getConfigData(componentId, configId);
   const id = configuration.getIn(configOauthPath);
-  const version = configuration.getIn(configOauthPathVersion, 2);
+  const version = configuration.getIn(configOauthPathVersion, Constants.OAUTH_VERSION_DEFAULT);
 
   if (id) {
     return OauthActions.loadCredentials(componentId, id, version);
@@ -111,7 +113,7 @@ export function loadCredentialsFromConfig(componentId, configId) {
 export function deleteCredentialsAndConfigAuth(componentId, configId) {
   const configData = installedComponentsStore.getConfigData(componentId, configId);
   const credentialsId = configData.getIn(configOauthPath);
-  const version = configData.getIn(configOauthPathVersion, 2);
+  const version = configData.getIn(configOauthPathVersion, Constants.OAUTH_VERSION_DEFAULT);
   const credentials = OauthStore.getCredentials(componentId, credentialsId, version);
   const authorizedFor = credentials.get('authorizedFor');
   return OauthActions.deleteCredentials(componentId, credentialsId, version)
