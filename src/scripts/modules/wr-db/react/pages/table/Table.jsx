@@ -22,6 +22,7 @@ import InstalledComponentsStore from '../../../../components/stores/InstalledCom
 import FiltersDescription from '../../../../components/react/components/generic/FiltersDescription';
 import IsDockerBasedFn from '../../../templates/dockerProxyApi';
 import IncrementalSetupModal from './IncrementalSetupModal';
+import {Alert} from 'react-bootstrap';
 
 const defaultDataTypes = [
   'INT',
@@ -116,6 +117,13 @@ export default componentId => {
 
     render() {
       const isRenderIncremental = IsDockerBasedFn(componentId) && componentId !== 'wr-db-mssql';
+      const exportInfo = this.state.v2ConfigTable;
+      const primaryKey = exportInfo.get('primaryKey', List());
+      const dbColumns = this.state.columns.map(c => c.get('dbName'));
+      const pkMismatchList = primaryKey.reduce(
+        (memo, pkColumn) =>
+          !dbColumns.find(dbColumn => dbColumn === pkColumn) ? memo.push(pkColumn) : memo
+        , List());
 
       return (
         <div className="container-fluid">
@@ -130,6 +138,11 @@ export default componentId => {
                 {isRenderIncremental && <li className="list-group-item">{this._renderTableFiltersRow()}</li>}
                 {isRenderIncremental && <li className="list-group-item">{this._renderPrimaryKey()}</li>}
               </ul>
+              {pkMismatchList.size > 0 &&
+              <Alert bsStyle="warning">
+                Primary Key is set to non-existing column(s). Please update Primary Key settings.
+              </Alert>
+              }
             </div>
             <ColumnsEditor
               onToggleHideIgnored={e => {
