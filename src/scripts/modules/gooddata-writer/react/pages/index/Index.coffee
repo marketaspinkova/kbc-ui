@@ -16,7 +16,6 @@ TableRow = require './TableRow'
 TablesByBucketsPanel = require '../../../../components/react/components/TablesByBucketsPanel'
 {Protected} = require '@keboola/indigo-ui'
 
-ActiveCountBadge = require './ActiveCountBadge'
 {Link} = require('react-router')
 Confirm = require('../../../../../react/common/Confirm').default
 {Loader} = require '@keboola/indigo-ui'
