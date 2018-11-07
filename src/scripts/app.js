@@ -27,6 +27,13 @@ import initializeData from './initializeData';
 
 import ErrorNotification from './react/common/ErrorNotification';
 
+// Promise global config
+Promise.config({
+  warnings: false,
+  cancellation: true,
+  longStackTraces: true
+})
+
 /*
   Bootstrap and start whole application
   appOptions:
@@ -57,7 +64,6 @@ const startApp = appOptions => {
     location: appOptions.locationMode === 'history' ? Router.HistoryLocation : Router.HashLocation
   });
 
-  Promise.longStackTraces();
   // error thrown during application live not on route chage
   Promise.onPossiblyUnhandledRejection(e => {
     const error = Error.create(e);
@@ -120,7 +126,6 @@ const startApp = appOptions => {
 
     // wait for data and trigger render
     return (pendingPromise = Promise.all(promises)
-      .cancellable()
       .then(() => {
         RouterActionCreators.routeChangeSuccess(state);
         ReactDOM.render(<Handler />, appOptions.rootNode);

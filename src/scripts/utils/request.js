@@ -10,7 +10,7 @@ request.serialize['application/x-www-form-urlencoded'] = function(data) {
 
 Request.prototype.promise = function() {
   const req = this;
-  const promise = new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, reject) {
     return req
       .then(
         responseOk => {
@@ -28,7 +28,6 @@ Request.prototype.promise = function() {
         return reject(error);
       });
   });
-  return promise.cancellable();
 };
 
 module.exports = function(method, url) {
