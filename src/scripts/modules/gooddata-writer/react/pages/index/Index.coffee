@@ -27,7 +27,7 @@ InstalledComponentStore = require('../../../../components/stores/InstalledCompon
 goodDataWriterStore = require '../../../store'
 actionCreators = require '../../../actionCreators'
 installedComponentsActions = require '../../../../components/InstalledComponentsActionCreators'
-ComponentsStore = require '../../../../components/stores/ComponentsStore'
+ComponentsStore = require('../../../../components/stores/ComponentsStore').default
 
 {label, small, strong, br, ul, li, div, span, i, a, button, p, form, input} = React.DOM
 { Panel, Alert, DropdownButton } = require('react-bootstrap')

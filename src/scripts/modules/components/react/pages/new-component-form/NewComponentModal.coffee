@@ -2,8 +2,8 @@ React = require 'react'
 
 createStoreMixin = require('../../../../../react/mixins/createStoreMixin').default
 RoutesStore = require '../../../../../stores/RoutesStore'
-ComponentsStore = require '../../../stores/ComponentsStore'
-NewConfigurationsStore = require '../../../stores/NewConfigurationsStore'
+ComponentsStore = require('../../../stores/ComponentsStore').default
+NewConfigurationsStore = require('../../../stores/NewConfigurationsStore').default
 
 NewConfigurationsActionCreators = require('../../../NewConfigurationsActionCreators').default
 

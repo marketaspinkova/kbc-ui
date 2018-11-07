@@ -1,7 +1,7 @@
 React = require('react')
 createStoreMixin = require('../../../../../react/mixins/createStoreMixin').default
 WrGdriveStore = require '../../../wrGdriveStore'
-ComponentsStore = require '../../../../components/stores/ComponentsStore'
+ComponentsStore = require('../../../../components/stores/ComponentsStore').default
 RoutesStore = require '../../../../../stores/RoutesStore'
 ApplicationStore = require '../../../../../stores/ApplicationStore'
 ActionCreators = require '../../../wrGdriveActionCreators'
