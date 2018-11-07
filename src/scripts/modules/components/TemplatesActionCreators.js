@@ -2,7 +2,7 @@ import dispatcher from '../../Dispatcher';
 import Promise from 'bluebird';
 import templatesStore from './stores/TemplatesStore';
 import templatesApi from './TemplatesApi';
-import Constants from './TemplatesConstants';
+import { ActionTypes } from './TemplatesConstants';
 
 export default {
   loadSchema(componentId) {
@@ -16,14 +16,14 @@ export default {
     const loadTemplateComponentId = componentId;
     dispatcher.handleViewAction({
       componentId,
-      type: Constants.ActionTypes.TEMPLATES_LOAD_START
+      type: ActionTypes.TEMPLATES_LOAD_START
     });
     return templatesApi
       .getTemplate(loadTemplateComponentId)
       .then(result => {
         dispatcher.handleViewAction({
           componentId,
-          type: Constants.ActionTypes.TEMPLATES_LOAD_SUCCESS,
+          type: ActionTypes.TEMPLATES_LOAD_SUCCESS,
           templates: result
         });
         return result;
@@ -31,7 +31,7 @@ export default {
       .catch(() =>
         dispatcher.handleViewAction({
           componentId,
-          type: Constants.ActionTypes.TEMPLATES_LOAD_ERROR
+          type: ActionTypes.TEMPLATES_LOAD_ERROR
         })
       );
   }
