@@ -1,5 +1,5 @@
-SyrupApi = require '../components/SyrupComponentApi'
 Immutable = require 'immutable'
+SyrupApi = require('../components/SyrupComponentApi').default
 ApplicationStore = require '../../stores/ApplicationStore'
 
 createRequest = (method, path) ->

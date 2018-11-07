@@ -1,5 +1,5 @@
 _ = require 'underscore'
-ComponentsActionCreators = require './modules/components/ComponentsActionCreators'
+ComponentsActionCreators = require('./modules/components/ComponentsActionCreators').default
 ServicesActionCreators = require('./modules/services/ActionCreators').default
 InstalledComponentsActionCreators = require './modules/components/InstalledComponentsActionCreators'
 OrchestrationsActionCreators = require('./modules/orchestrations/ActionCreators').default

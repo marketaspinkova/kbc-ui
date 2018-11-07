@@ -1,5 +1,5 @@
-SyrupApi = require '../components/SyrupComponentApi'
 Immutable = require 'immutable'
+SyrupApi = require('../components/SyrupComponentApi').default
 
 createRequest = (method, path) ->
   SyrupApi.createRequest('wr-google-drive', method, path)
