@@ -15,8 +15,8 @@ createReactRouterRoutes = require './utils/createReactRouterRoutes'
 Timer = require './utils/Timer'
 Error = require './utils/Error'
 
-ApplicationActionCreators = require './actions/ApplicationActionCreators'
-RouterActionCreators = require './actions/RouterActionCreators'
+ApplicationActionCreators = require('./actions/ApplicationActionCreators').default
+RouterActionCreators = require('./actions/RouterActionCreators').default
 
 HiddenComponents = require './modules/components/utils/hiddenComponents'
 

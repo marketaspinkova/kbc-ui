@@ -9,7 +9,7 @@ goodDataWriterConstants = require './constants'
 jobPoller = require '../../utils/jobPoller'
 installedComponentsApi = require '../components/InstalledComponentsApi'
 applicationStore = require '../../stores/ApplicationStore'
-applicationActionCreators = require '../../actions/ApplicationActionCreators'
+applicationActionCreators = require('../../actions/ApplicationActionCreators').default
 Link = require('react-router').Link
 
 dimensionsStore = require './dateDimensionsStore'
