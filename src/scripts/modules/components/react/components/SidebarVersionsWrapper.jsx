@@ -8,6 +8,7 @@ import ComponentStore from '../../stores/ComponentsStore';
 import VersionsStore from '../../stores/VersionsStore';
 import VersionsActionCreators from '../../VersionsActionCreators';
 import OrchestrationStore from '../../../orchestrations/stores/OrchestrationsStore';
+/* eslint-disable no-console */
 
 export default React.createClass({
   displayName: 'LatestVersionsWrapper',
@@ -23,16 +24,18 @@ export default React.createClass({
     var versionsLinkParams = null;
 
     if (component) {
-      versionsLinkTo = 'orchestrator-versions';
-      versionsLinkParams = {
-        orchestrationId: configId
-      };
-    } else {
-      versionsLinkTo = component.get('type') + '-versions';
-      versionsLinkParams = {
-        component: componentId,
-        config: configId
-      };
+      if (componentId !== 'orchestrator') {
+        versionsLinkTo = component.get('type') + '-versions';
+        versionsLinkParams = {
+          component: componentId,
+          config: configId
+        };
+      } else {
+        versionsLinkTo = 'orchestrator-versions';
+        versionsLinkParams = {
+          orchestrationId: configId
+        };
+      }
     }
 
     return {
