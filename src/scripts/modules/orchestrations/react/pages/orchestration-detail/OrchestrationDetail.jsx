@@ -1,7 +1,6 @@
 import React from 'react';
 import { List } from 'immutable';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
-/* eslint-disable no-console */
 
 // actions and stores
 import OrchestrationsActionCreators from '../../../ActionCreators';
