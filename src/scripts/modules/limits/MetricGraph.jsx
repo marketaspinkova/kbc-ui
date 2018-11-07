@@ -1,6 +1,6 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import Keen from 'keen-js';
-import {fromJS} from 'immutable';
+import { fromJS } from 'immutable';
 
 function format(unit) {
   switch (unit) {
@@ -16,17 +16,11 @@ function format(unit) {
 function getConversion(unit) {
   switch (unit) {
     case 'millions':
-      return function(val) {
-        return Number((val / (1000 * 1000)).toFixed(2));
-      };
+      return val => Number((val / (1000 * 1000)).toFixed(2));
     case 'bytes':
-      return function(val) {
-        return Number((val / (1000 * 1000 * 1000)).toFixed(2));
-      };
+      return val => Number((val / (1000 * 1000 * 1000)).toFixed(2));
     default:
-      return function(val) {
-        return val;
-      };
+      return val => val;
   }
 }
 
@@ -34,9 +28,33 @@ function createChartOptions(options) {
   return fromJS({
     colors: [
       /* teal      red        yellow     purple     orange     mint       blue       green      lavender */
-      '#0bbcfa', '#fb4f61', '#eeb058', '#8a8ad6', '#ff855c', '#00cfbb', '#5a9eed', '#73d483', '#c879bb',
-      '#0099b6', '#d74d58', '#cb9141', '#6b6bb6', '#d86945', '#00aa99', '#4281c9', '#57b566', '#ac5c9e',
-      '#27cceb', '#ff818b', '#f6bf71', '#9b9be1', '#ff9b79', '#26dfcd', '#73aff4', '#87e096', '#d88bcb'
+      '#0bbcfa',
+      '#fb4f61',
+      '#eeb058',
+      '#8a8ad6',
+      '#ff855c',
+      '#00cfbb',
+      '#5a9eed',
+      '#73d483',
+      '#c879bb',
+      '#0099b6',
+      '#d74d58',
+      '#cb9141',
+      '#6b6bb6',
+      '#d86945',
+      '#00aa99',
+      '#4281c9',
+      '#57b566',
+      '#ac5c9e',
+      '#27cceb',
+      '#ff818b',
+      '#f6bf71',
+      '#9b9be1',
+      '#ff9b79',
+      '#26dfcd',
+      '#73aff4',
+      '#87e096',
+      '#d88bcb'
     ],
     legend: {
       position: 'none'
@@ -71,7 +89,7 @@ function createChartOptions(options) {
       left: 10,
       top: 10,
       width: options.elementWidth - 20,
-      height: (0.5 * options.elementWidth - 20) - 10
+      height: 0.5 * options.elementWidth - 20 - 10
     },
     lineWidth: 3,
     areaOpacity: 0.1,
@@ -90,101 +108,73 @@ export default React.createClass({
     query: PropTypes.object.isRequired,
     limitValue: PropTypes.number,
     unit: PropTypes.string,
-    client: PropTypes.object.isRequired,
-    isAlarm: PropTypes.bool.isRequired
+    client: PropTypes.object.isRequired
   },
 
   componentDidMount() {
-    var el = this.refs.metric;
-    var query = new Keen.Query('average', this.props.query);
+    const el = this.refs.metric;
+    const query = new Keen.Query('average', this.props.query);
 
-
-    var chart = new Keen.Dataviz()
+    const chart = new Keen.Dataviz()
       .chartType('areachart')
       .width(el.offsetWidth)
       .height(0.5 * el.offsetWidth)
       .el(el)
       .prepare();
 
-    var limitValue = this.props.limitValue,
-      unit = this.props.unit,
-      conversion = getConversion(this.props.unit);
+    const limitValue = this.props.limitValue;
+    let unit = this.props.unit;
+    let conversion = getConversion(this.props.unit);
 
     this.props.client.run([query], function() {
-      chart
-        .parseRequest(this)
-        .call(function() {
-          // in case thand maximum number is less than 1M don't conver to millions
-          if (unit === 'millions' && !limitValue) {
-            var greater = this.data().filter((row) => {
-              return row[1] > 1000000;
-            });
-            if (greater.length === 0) {
-              conversion = getConversion('number');
-              unit = 'number';
-            }
+      chart.parseRequest(this).call(function() {
+        // in case thand maximum number is less than 1M don't conver to millions
+        if (unit === 'millions' && !limitValue) {
+          const greater = this.data().filter(row => {
+            return row[1] > 1000000;
+          });
+          if (greater.length === 0) {
+            conversion = getConversion('number');
+            unit = 'number';
           }
+        }
 
-          // graph throws error if all values are null - switch all nulls to zeros
-          const nonNullValues = this.data().filter( (row, i) => row[1] !== null && i !== 0);
+        // graph throws error if all values are null - switch all nulls to zeros
+        const nonNullValues = this.data().filter((row, i) => row[1] !== null && i !== 0);
 
-          var converted = this
-            .data()
-            .map(row => {
-              return [
-                row[0],
-                row[1] === null && nonNullValues.length === 0 ? 0 : row[1]
-              ];
-            })
-            .map(function(row, i, data) {
-              const style =  (i === data.length - 1) ? 'point {visible: true; size: 5;}' : null;
-              if (i === 0) {
-                if (limitValue) {
-                  return [
-                    'Date',
-                    'Value',
-                    {'type': 'string', 'role': 'style'},
-                    'Limit'
-                  ];
-                } else {
-                  return [
-                    'Date',
-                    'Value',
-                    {'type': 'string', 'role': 'style'}
-                  ];
-                }
-              } else if (limitValue) {
-                return [
-                  row[0],
-                  row[1] === null ? null : conversion(row[1]),
-                  style,
-                  conversion(limitValue)
-                ];
-              } else {
-                return [
-                  row[0],
-                  row[1] === null ? null : conversion(row[1]),
-                  style
-                ];
+        const converted = this.data()
+          .map(row => [row[0], row[1] === null && nonNullValues.length === 0 ? 0 : row[1]])
+          .map((row, i, data) => {
+            const style = i === data.length - 1 ? 'point {visible: true; size: 5;}' : null;
+            if (i === 0) {
+              if (limitValue) {
+                return ['Date', 'Value', { type: 'string', role: 'style' }, 'Limit'];
               }
-            });
-          var chartOptions = createChartOptions({
-            elementWidth: el.offsetWidth,
-            vAxisFormat: format(unit)
+
+              return ['Date', 'Value', { type: 'string', role: 'style' }];
+            }
+
+            if (limitValue) {
+              return [row[0], row[1] === null ? null : conversion(row[1]), style, conversion(limitValue)];
+            }
+
+            return [row[0], row[1] === null ? null : conversion(row[1]), style];
           });
 
-          /* global google */
-          var ds = new google.visualization.arrayToDataTable(converted);
-          var combo = new google.visualization.ComboChart(this.el());
-          combo.draw(ds, chartOptions.toJS());
+        const chartOptions = createChartOptions({
+          elementWidth: el.offsetWidth,
+          vAxisFormat: format(unit)
         });
+
+        /* global google */
+        const ds = new google.visualization.arrayToDataTable(converted);
+        const combo = new google.visualization.ComboChart(this.el());
+        combo.draw(ds, chartOptions.toJS());
+      });
     });
   },
 
   render() {
-    return (
-      <div ref="metric"/>
-    );
+    return <div ref="metric" />;
   }
-
 });

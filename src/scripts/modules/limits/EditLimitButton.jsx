@@ -1,6 +1,6 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import EditLimitModal from './EditLimitModal';
-import {Button} from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 export default React.createClass({
   propTypes: {
@@ -17,7 +17,7 @@ export default React.createClass({
   render() {
     return (
       <Button bsStyle="success" onClick={this.openModal}>
-        <span className="kbc-icon-pencil"/> Edit limit
+        <span className="kbc-icon-pencil" /> Edit limit
         <EditLimitModal
           limit={this.props.limit}
           onHide={this.closeModal}

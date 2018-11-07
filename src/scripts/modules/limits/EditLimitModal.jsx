@@ -1,8 +1,7 @@
-import React, {PropTypes} from 'react';
-import {Input} from './../../react/common/KbcBootstrap';
+import React, { PropTypes } from 'react';
+import { Input } from './../../react/common/KbcBootstrap';
 import ApplicationStore from '../../stores/ApplicationStore';
 import { Button, ButtonToolbar, Modal } from 'react-bootstrap';
-
 
 export default React.createClass({
   propTypes: {
@@ -23,16 +22,10 @@ export default React.createClass({
   },
 
   render() {
-    const {limit, isOpen, onHide} = this.props;
+    const { limit, isOpen, onHide } = this.props;
     let redirectToInput = null;
     if (this.props.redirectTo) {
-      redirectToInput = (
-        <input
-          type="hidden"
-          name="redirectTo"
-          value={this.props.redirectTo}
-        />
-      );
+      redirectToInput = <input type="hidden" name="redirectTo" value={this.props.redirectTo} />;
     }
     return (
       <Modal show={isOpen} onHide={onHide}>
@@ -40,15 +33,8 @@ export default React.createClass({
           <Modal.Title>Limit change</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form
-            className="form-horizontal"
-            ref="limitEditForm"
-            method="post"
-            action={this.state.actionUrl}
-          >
-            <p>
-              You can change the limit because you are superadmin. This feature is hidden for all other users.
-            </p>
+          <form className="form-horizontal" ref="limitEditForm" method="post" action={this.state.actionUrl}>
+            <p>You can change the limit because you are superadmin. This feature is hidden for all other users.</p>
             <Input
               label={limit.get('name')}
               name="limitValue"
@@ -61,21 +47,9 @@ export default React.createClass({
               labelClassName="col-sm-6"
               wrapperClassName="col-sm-4"
             />
-            <input
-              type="hidden"
-              name="limitName"
-              value={limit.get('id')}
-            />
-            <input
-              type="hidden"
-              name="projectId"
-              value={this.state.projectId}
-            />
-            <input
-              type="hidden"
-              name="xsrf"
-              value={this.state.xsrf}
-            />
+            <input type="hidden" name="limitName" value={limit.get('id')} />
+            <input type="hidden" name="projectId" value={this.state.projectId} />
+            <input type="hidden" name="xsrf" value={this.state.xsrf} />
             {redirectToInput}
           </form>
         </Modal.Body>
@@ -105,5 +79,4 @@ export default React.createClass({
     });
     this.refs.limitEditForm.submit();
   }
-
 });

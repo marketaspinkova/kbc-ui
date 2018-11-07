@@ -17,18 +17,16 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    StorageApi
-      .getKeenCredentials()
-      .then((response) => {
-        const client = new Keen({
-          readKey: response.keenToken,
-          projectId: response.projectId
-        });
-        this.setState({
-          client: client
-        });
-        Keen.ready(this.keenReady);
+    StorageApi.getKeenCredentials().then(response => {
+      const client = new Keen({
+        readKey: response.keenToken,
+        projectId: response.projectId
       });
+      this.setState({
+        client: client
+      });
+      Keen.ready(this.keenReady);
+    });
   },
 
   getStateFromStores() {
@@ -44,20 +42,29 @@ export default React.createClass({
         <div className="kbc-main-content">
           <SettingsTabs active="settings-limits" />
           <div className="tab-content">
-            <div className="tab-pane tab-pane-no-padding active">
-              {this.state.sections.map((section) => {
-                return React.createElement(LimitsSection, {
-                  section: section,
-                  keenClient: this.state.client,
-                  isKeenReady: this.state.isKeenReady,
-                  canEdit: this.state.canEdit
-                });
-              }, this)}
-            </div>
+            <div className="tab-pane tab-pane-no-padding active">{this.renderSections()}</div>
           </div>
         </div>
       </div>
     );
+  },
+
+  renderSections() {
+    if (!this.state.client) {
+      return null;
+    }
+
+    return this.state.sections
+      .map((section, index) => (
+        <LimitsSection
+          key={index}
+          section={section}
+          keenClient={this.state.client}
+          isKeenReady={this.state.isKeenReady}
+          canEdit={this.state.canEdit}
+        />
+      ))
+      .toArray();
   },
 
   keenReady() {
@@ -65,5 +72,4 @@ export default React.createClass({
       isKeenReady: true
     });
   }
-
 });
