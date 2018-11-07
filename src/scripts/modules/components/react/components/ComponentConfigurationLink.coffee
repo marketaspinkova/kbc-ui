@@ -1,6 +1,6 @@
 React = require 'react'
 RoutesStore = require '../../../../stores/RoutesStore'
-ComponentsStore = require '../../stores/ComponentsStore'
+ComponentsStore = require('../../stores/ComponentsStore').default
 {GENERIC_DETAIL_PREFIX} = require('../../Constants').Routes
 
 Link = React.createFactory require('react-router').Link
@@ -68,4 +68,3 @@ module.exports = React.createClass
     component = ComponentsStore.getComponent(@props.componentId)
     return 'extractor' if !component
     component.get 'type'
-

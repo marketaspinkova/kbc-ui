@@ -4,7 +4,7 @@ React = require 'react'
 
 Link = React.createFactory(require('react-router').Link)
 RoutesStore = require('../../../../stores/RoutesStore')
-ComponentsStore = require('../../stores/ComponentsStore')
+ComponentsStore = require('../../stores/ComponentsStore').default
 createStoreMixin = require('../../../../react/mixins/createStoreMixin').default
 
 Modal = React.createFactory(require('react-bootstrap').Modal)
