@@ -47,7 +47,7 @@ export default React.createClass({
       versions,
       graphJobs: jobs.filter(job => job.get('startTime') && job.get('endTime')),
       jobsLoading: OrchestrationJobsStore.isLoading(orchestrationId),
-      pendingActions: OrchestrationStore.getPendingActions(),
+      pendingActions: OrchestrationStore.getPendingActionsForOrchestration(orchestrationId),
       latestJobs: LatestJobsStore.getJobs('orchestration', orchestrationId)
     };
   },
