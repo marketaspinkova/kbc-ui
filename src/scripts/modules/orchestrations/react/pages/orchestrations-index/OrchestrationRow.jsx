@@ -21,18 +21,18 @@ export default React.createClass({
     const buttons = [];
 
     buttons.push(
-      <OrchestrationActiveButton
-        orchestration={this.props.orchestration}
-        isPending={this.props.pendingActions.get('active', false)}
-        key="activate"
-      />
-    );
-
-    buttons.push(
       <OrchestrationDeleteButton
         orchestration={this.props.orchestration}
         isPending={this.props.pendingActions.get('delete', false)}
         key="delete"
+      />
+    );
+
+    buttons.push(
+      <OrchestrationActiveButton
+        orchestration={this.props.orchestration}
+        isPending={this.props.pendingActions.get('active', false)}
+        key="activate"
       />
     );
 
