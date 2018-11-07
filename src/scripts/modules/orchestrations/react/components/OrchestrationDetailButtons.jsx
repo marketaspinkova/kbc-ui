@@ -27,14 +27,14 @@ export default React.createClass({
   render() {
     return (
       <span>
-        <OrchestrationActiveButton
-          orchestration={this.state.orchestration}
-          isPending={this.state.pendingActions.get('active', false)}
-          tooltipPlacement="bottom"
-        />
         <OrchestrationDeleteButton
           orchestration={this.state.orchestration}
           isPending={this.state.pendingActions.get('delete', false)}
+          tooltipPlacement="bottom"
+        />
+        <OrchestrationActiveButton
+          orchestration={this.state.orchestration}
+          isPending={this.state.pendingActions.get('active', false)}
           tooltipPlacement="bottom"
         />
         <OrchestrationRunButton
