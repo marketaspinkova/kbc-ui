@@ -390,11 +390,11 @@ export default React.createClass({
   },
 
   _renderConfigVersion(job) {
-    if (job.hasIn(['result', 'configVersion'])) {
+    if (job.getIn(['result', 'configVersion'])) {
       return ` / Version #${job.getIn(['result', 'configVersion'])}`;
     }
 
-    if (job.hasIn(['params', 'transformation', 'config_version'])) {
+    if (job.getIn(['params', 'transformation', 'config_version'])) {
       return ` / Version #${job.getIn(['params', 'transformation', 'config_version'])}`;
     }
 
