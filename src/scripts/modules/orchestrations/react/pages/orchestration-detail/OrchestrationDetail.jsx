@@ -65,35 +65,6 @@ export default React.createClass({
     return OrchestrationsActionCreators.loadOrchestrationJobsForce(this.state.orchestration.get('id'));
   },
 
-  _renderLastUpdate() {
-    const lastVersion = this.state.versions.first();
-
-    if (!lastVersion.get('version')) {
-      return 'unknown';
-    } else {
-      return (
-        <span>
-          {lastVersion.getIn(['changeDescription'], '')}
-          <small className="text-muted">
-            {' '}
-            {`#${lastVersion.get('version')}`} <CreatedWithIcon createdTime={lastVersion.get('created')} />
-          </small>
-          <br />
-          {lastVersion.getIn(['creatorToken', 'description'], 'unknown')}
-          <br />
-          <Link
-            to="orchestrator-versions"
-            params={{
-              orchestrationId: this.state.orchestration.get('id')
-            }}
-          >
-            Show all versions
-          </Link>
-        </span>
-      );
-    }
-  },
-
   render() {
     return (
       <div className="container-fluid">
