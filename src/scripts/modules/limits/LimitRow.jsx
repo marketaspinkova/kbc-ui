@@ -89,12 +89,7 @@ export default React.createClass({
     }
 
     if (limit.get('limitValue') && limit.get('metricValue')) {
-      return (
-        <LimitProgress
-          valueMax={this.props.limit.get('limitValue')}
-          valueCurrent={this.props.limit.get('metricValue')}
-        />
-      );
+      return <LimitProgress valueMax={limit.get('limitValue')} valueCurrent={limit.get('metricValue')} />;
     }
 
     if (limit.get('unit') === 'flag') {
