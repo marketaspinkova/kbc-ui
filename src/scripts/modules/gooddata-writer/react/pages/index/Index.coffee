@@ -12,12 +12,10 @@ ApplicationStore = require '../../../../../stores/ApplicationStore'
 StorageTablesStore = require('../../../../components/stores/StorageTablesStore').default
 
 SearchBar = require('@keboola/indigo-ui').SearchBar
-TablesList = require './BucketTablesList'
 TableRow = require './TableRow'
 TablesByBucketsPanel = require '../../../../components/react/components/TablesByBucketsPanel'
 {Protected} = require '@keboola/indigo-ui'
 
-ActiveCountBadge = require './ActiveCountBadge'
 {Link} = require('react-router')
 Confirm = require('../../../../../react/common/Confirm').default
 {Loader} = require '@keboola/indigo-ui'
@@ -327,33 +325,6 @@ module.exports = React.createClass
       p null, 'No tables configured.'
       @_renderAddNewTable()
 
-
-
-  _renderBucketPanel: (bucketId, tables) ->
-    activeCount = tables.filter((table) -> table.getIn(['data', 'export'])).count()
-    header = span null,
-      span className: 'table',
-        span className: 'tbody',
-          span className: 'tr',
-            span className: 'td',
-              bucketId
-            span className: 'td text-right',
-              React.createElement ActiveCountBadge,
-                totalCount: tables.size
-                activeCount: activeCount
-
-    React.createElement Panel,
-      header: header
-      key: bucketId
-      eventKey: bucketId
-      expanded: !!@state.filter.length || @state.writer.getIn(['bucketToggles', bucketId])
-      collapsible: true
-      onSelect: @_handleBucketSelect.bind(@, bucketId)
-    ,
-      React.createElement TablesList,
-        configId: @state.writer.getIn ['config', 'id']
-        tables: tables
-
   ###
   Tomas
   ###
@@ -415,13 +386,3 @@ module.exports = React.createClass
   _updateLocalState: (path, data) ->
     newState = @state.localState.setIn(path, data)
     installedComponentsActions.updateLocalState('gooddata-writer', @state.configId, newState, path)
-
-
-  _oldTablesList: ->
-    div
-      className: 'kbc-accordion kbc-panel-heading-with-table el-heading-with-table'
-    ,
-      @state.tablesByBucket.map (tables, bucketId) ->
-        @_renderBucketPanel bucketId, tables
-      , @
-      .toArray()
