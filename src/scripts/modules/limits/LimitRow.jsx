@@ -134,7 +134,7 @@ export default React.createClass({
     }
 
     if (this.props.canEdit) {
-      return <EditLimitButton limit={this.props.limit} />;
+      return <EditLimitButton limit={limit} />;
     }
 
     return (
