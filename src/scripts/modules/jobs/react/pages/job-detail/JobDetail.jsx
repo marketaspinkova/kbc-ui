@@ -390,12 +390,16 @@ export default React.createClass({
   },
 
   _renderConfigVersion(job) {
-    if (job.getIn(['result', 'configVersion'])) {
-      return ` / Version #${job.getIn(['result', 'configVersion'])}`;
+    const configVersion = job.getIn(['result', 'configVersion']);
+
+    if (configVersion) {
+      return ` / Version #${configVersion}`;
     }
 
-    if (job.getIn(['params', 'transformation', 'config_version'])) {
-      return ` / Version #${job.getIn(['params', 'transformation', 'config_version'])}`;
+    const transformationConfigVersion = job.getIn(['params', 'transformation', 'config_version']);
+
+    if (transformationConfigVersion) {
+      return ` / Version #${transformationConfigVersion}`;
     }
 
     return null;
