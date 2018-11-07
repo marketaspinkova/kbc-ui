@@ -17,7 +17,7 @@ export default function(configProvisioning, localStateProvisioning) {
       .setIn(['project', 'pid'], value.pid)
       .setIn(['user', 'login'], value.login)
       .setIn(['user', '#password'], value.password);
-    return saveParameters(newParams, 'update credentials');
+    return saveParameters(newParams, 'update credentials').then(() => updateLocalState(PATH, fromJS(value)));
   }
 
   const isComplete = !!savedCredentials.get('pid');
