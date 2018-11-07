@@ -3,8 +3,8 @@ constants = require './Constants'
 
 NewConfigurationsStore = require './stores/NewConfigurationsStore'
 
-createComponentConfiguration = require './utils/createComponentConfiguration'
-transitionToComponentConfiguration = require './utils/componentConfigurationTransition'
+createComponentConfiguration = require('./utils/createComponentConfiguration').default
+transitionToComponentConfiguration = require('./utils/componentConfigurationTransition').default
 
 RoutesStore = require '../../stores/RoutesStore'
 ComponentsStore = require './stores/ComponentsStore'
