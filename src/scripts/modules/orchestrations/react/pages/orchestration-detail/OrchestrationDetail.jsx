@@ -22,7 +22,6 @@ import OrchestrationRunButton from '../../components/OrchestrationRunButton';
 import OrchestrationDeleteButton from '../../components/OrchestrationDeleteButton';
 import OrchestrationActiveButton from '../../components/OrchestrationActiveButton';
 import {ExternalLink} from '@keboola/indigo-ui';
-import Finished from '../../../../../react/common/Finished';
 import {Row, Col} from 'react-bootstrap';
 import LatestJobsStore from '../../../../jobs/stores/LatestJobsStore';
 import SidebarVersions from '../../../../components/react/components/SidebarVersionsWrapper';
@@ -68,13 +67,13 @@ export default React.createClass({
   render() {
     return (
       <div className="container-fluid">
-        <div className="col-md-9 kbc-main-content">
-          <div className="row">
+        <Col md={9} className="kbc-main-content">
+          <Row>
             <ComponentDescription
               componentId="orchestrator"
               configId={this.state.orchestration.get('id').toString()}
             />
-          </div>
+          </Row>
           {this.state.graphJobs.size >= 2 &&
           <div className="kbc-row">
             <h2>Jobs Graph</h2>
@@ -154,12 +153,12 @@ export default React.createClass({
             jobsLoading={this.state.jobsLoading}
             onJobsReload={this._handleJobsReload}
           />
-        </div>
-        <div className="col-md-3 kbc-main-sidebar">
+        </Col>
+        <Col md={3} className="kbc-main-sidebar">
           <div style={{marginBottom: '12px'}}>
             <div>
               <div>Created</div>
-              <div><strong><Finished endTime={this.state.orchestration.get('createdTime')}/></strong></div>
+              <div><strong><CreatedWithIcon createdTime={this.state.orchestration.get('createdTime')} /></strong></div>
             </div>
           </div>
           <div>
@@ -205,7 +204,7 @@ export default React.createClass({
             componentId="orchestrator"
             limit={3}
           />
-        </div>
+        </Col>
       </div>
     );
   }
