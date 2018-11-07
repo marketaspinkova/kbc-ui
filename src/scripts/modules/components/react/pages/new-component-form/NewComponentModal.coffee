@@ -5,7 +5,7 @@ RoutesStore = require '../../../../../stores/RoutesStore'
 ComponentsStore = require '../../../stores/ComponentsStore'
 NewConfigurationsStore = require '../../../stores/NewConfigurationsStore'
 
-NewConfigurationsActionCreators = require '../../../NewConfigurationsActionCreators'
+NewConfigurationsActionCreators = require('../../../NewConfigurationsActionCreators').default
 
 DefaultForm = require './DefaultForm'
 GoodDataWriterForm = require './GoodDataWriterForm'
