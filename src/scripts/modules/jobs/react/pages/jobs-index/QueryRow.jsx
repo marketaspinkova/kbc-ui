@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {OverlayTrigger, Popover, Button} from 'react-bootstrap';
 import { Icon, ExternalLink, SearchBar } from '@keboola/indigo-ui';
+import ApplicationStore from '../../../../../stores/ApplicationStore';
 
 export default React.createClass({
   mixins: [PureRenderMixin],
@@ -13,26 +14,67 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      query: this.props.query
+      query: this.props.query,
+      currentUserEmail: ApplicationStore.getCurrentAdmin().get('email')
     };
   },
 
   render() {
+    const predefinedSearches = [
+      {
+        name: 'My jobs',
+        query: 'token.description:' + this.state.currentUserEmail
+      },
+      {
+        name: 'My failed jobs',
+        query: 'status:error AND token.description:' +  this.state.currentUserEmail
+      },
+      {
+        name: 'My failed jobs in last 7 days',
+        query: 'status:error AND startTime:>now-7d AND token.description:' +  this.state.currentUserEmail
+      },
+      {
+        name: 'All long running jobs',
+        query: 'durationSeconds:>7200'
+      }
+    ];
     return (
       <div className="row-searchbar">
         <SearchBar
           query={this.state.query}
           onChange={(query) => {
             this.setState({
-              query
+              query: query
             });
           }}
           onSubmit={() => {
             this.props.onSearch(this.state.query);
           }}
+          inputRef={(input) => {
+            this.searchInput = input;
+          }}
           placeholder="Search by name or attributes"
           additionalActions={this.renderAdditionalActions()}
         />
+        <div className="predefined-search-list">
+          Predefined searches:{' '}
+          {predefinedSearches.map((link, index) => (
+            <button
+              key={index}
+              type="button"
+              className="btn btn-link btn-link-inline predefined-search-link"
+              onClick={() => {
+                this.setState({
+                  query: link.query
+                });
+                this.props.onSearch(link.query);
+                this.searchInput.focus();
+              }}
+            >
+              {link.name}
+            </button>
+          ))}
+        </div>
       </div>
     );
   },
