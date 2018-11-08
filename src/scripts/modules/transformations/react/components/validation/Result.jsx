@@ -24,23 +24,38 @@ export default React.createClass({
 
   render() {
     const messageTitle = this.renderTitle();
-    const message = endsWith(this.props.error.get('message'), '^') ? (
-      <pre>{this.props.error.get('message')}</pre>
-    ) : (
-      this.props.error.get('message')
-    );
 
     if (messageTitle) {
       return (
-        <div>
+        <div style={{ marginBottom: '15px' }}>
           {messageTitle}
           <br />
-          {message}
+          {this.renderMessage()}
         </div>
       );
     }
 
-    return <div>{message}</div>;
+    return <div>{this.renderMessage()}</div>;
+  },
+
+  renderMessage() {
+    const message = this.props.error.get('message', '');
+
+    if (!endsWith(message, '^')) {
+      return message;
+    }
+
+    const [errorMessage, codeBlock] = message
+      .replace(/\n\r/g, '\n')
+      .replace(/\r/g, '\n')
+      .split(/\n{2,}/g);
+
+    return (
+      <span>
+        <span>{errorMessage}</span>
+        {codeBlock && <pre>{codeBlock}</pre>}
+      </span>
+    );
   },
 
   renderTitle() {
