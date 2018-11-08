@@ -83,10 +83,10 @@ export default React.createClass({
           )}
           <div className="kbc-row">
             <Row>
-              <Col xs={9}>
+              <Col sm={9}>
                 <h2>Tasks</h2>
               </Col>
-              <Col xs={3}>
+              <Col sm={3}>
                 <Link
                   className="pull-right btn btn-primary"
                   to="orchestrationTasks"
@@ -102,10 +102,10 @@ export default React.createClass({
           </div>
           <div className="kbc-row">
             <Row>
-              <Col xs={9}>
+              <Col sm={9}>
                 <h2>Schedule</h2>
               </Col>
-              <Col xs={3}>
+              <Col sm={3}>
                 <ScheduleModal
                   crontabRecord={this.state.orchestration.get('crontabRecord')}
                   orchestrationId={this.state.orchestration.get('id')}
@@ -116,10 +116,10 @@ export default React.createClass({
           </div>
           <div className="kbc-row">
             <Row>
-              <Col xs={9}>
+              <Col sm={9}>
                 <h2>Notifications</h2>
               </Col>
-              <Col xs={3}>
+              <Col sm={3}>
                 <Link
                   className="pull-right btn btn-primary"
                   to="orchestrationNotifications"
