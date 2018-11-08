@@ -8,7 +8,6 @@ import ComponentStore from '../../stores/ComponentsStore';
 import VersionsStore from '../../stores/VersionsStore';
 import VersionsActionCreators from '../../VersionsActionCreators';
 import OrchestrationStore from '../../../orchestrations/stores/OrchestrationsStore';
-/* eslint-disable no-console */
 
 export default React.createClass({
   displayName: 'LatestVersionsWrapper',
