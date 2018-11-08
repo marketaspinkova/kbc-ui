@@ -94,7 +94,7 @@ const OrchestrationTasks = React.createClass({
   render() {
     return (
       <div className="container-fluid">
-        <div className="col-md-12 kbc-main-content">
+        <div className="kbc-main-content">
           {this.state.isEditing ? (
             <div>
               <TasksEditor
