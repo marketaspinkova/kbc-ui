@@ -23,16 +23,16 @@ export default React.createClass({
     var versionsLinkParams = null;
 
     if (component) {
-      if (componentId !== 'orchestrator') {
+      if (componentId === 'orchestrator') {
+        versionsLinkTo = 'orchestrator-versions';
+        versionsLinkParams = {
+          orchestrationId: configId
+        };
+      } else {
         versionsLinkTo = component.get('type') + '-versions';
         versionsLinkParams = {
           component: componentId,
           config: configId
-        };
-      } else {
-        versionsLinkTo = 'orchestrator-versions';
-        versionsLinkParams = {
-          orchestrationId: configId
         };
       }
     }
