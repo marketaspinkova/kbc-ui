@@ -1,20 +1,29 @@
 import request from '../../utils/request';
 import ApplicationStore from '../../stores/ApplicationStore';
 import ComponentsStore from '../components/stores/ComponentsStore';
+import ServicesStore from '../services/Store';
+import {Constants} from './Constants';
 
-function createUrl(path) {
-  const baseUrl = ComponentsStore.getComponent('keboola.oauth-v2').get('uri');
-  return baseUrl + '/' + path;
+function createUrl(path, version) {
+  return getBaseUrl(version) + '/' + path;
 }
 
-function createRequest(method, path) {
-  return request(method, createUrl(path))
+function getBaseUrl(version) {
+  if (version !== Constants.OAUTH_VERSION_FALLBACK
+    && ApplicationStore.hasCurrentProjectFeature(Constants.OAUTH_V3_FEATURE)) {
+    return ServicesStore.getService('oauth').get('url');
+  }
+  return ComponentsStore.getComponent('keboola.oauth-v2').get('uri');
+}
+
+function createRequest(method, path, version) {
+  return request(method, createUrl(path, version))
     .set('X-StorageApi-Token', ApplicationStore.getSapiTokenString());
 }
 
 module.exports = {
-  getCredentials: function(componentId, id) {
-    return createRequest('GET', 'credentials/' + componentId + '/' + id)
+  getCredentials: function(componentId, id, version) {
+    return createRequest('GET', 'credentials/' + componentId + '/' + id, version)
       .promise().then(function(response) {
         return response.body;
       });
@@ -33,8 +42,8 @@ module.exports = {
       });
   },
 
-  deleteCredentials: function(componentId, id) {
-    return createRequest('DELETE', 'credentials/' + componentId + '/' + id)
+  deleteCredentials: function(componentId, id, version) {
+    return createRequest('DELETE', 'credentials/' + componentId + '/' + id, version)
       .promise().then(function(response) {
         return response.body;
       });

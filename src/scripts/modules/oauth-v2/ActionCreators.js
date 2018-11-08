@@ -6,16 +6,16 @@ import * as Constants from './Constants';
 import Immutable from 'immutable';
 
 export default {
-  loadCredentials(componentId, id) {
+  loadCredentials(componentId, id, version) {
     if (oauthStore.hasCredentials(componentId, id)) {
       return Promise.resolve();
     }
-    return this.loadCredentialsForce(componentId, id);
+    return this.loadCredentialsForce(componentId, id, version);
   },
 
-  loadCredentialsForce(componentId, id) {
+  loadCredentialsForce(componentId, id, version) {
     return oauthApi
-      .getCredentials(componentId, id)
+      .getCredentials(componentId, id, version)
       .then(function(result) {
         dispatcher.handleViewAction({
           type: Constants.ActionTypes.OAUTHV2_LOAD_CREDENTIALS_SUCCESS,
@@ -60,7 +60,7 @@ export default {
       });
   },
 
-  deleteCredentials(componentId, id) {
+  deleteCredentials(componentId, id, version) {
     dispatcher.handleViewAction({
       type: Constants.ActionTypes.OAUTHV2_DELETE_CREDENTIALS_START,
       componentId,
@@ -68,7 +68,7 @@ export default {
     });
 
     return oauthApi
-      .deleteCredentials(componentId, id)
+      .deleteCredentials(componentId, id, version)
       .then(result =>
         dispatcher.handleViewAction({
           type: Constants.ActionTypes.OAUTHV2_DELETE_CREDENTIALS_SUCCESS,
