@@ -45,6 +45,11 @@ const _pages = [
     id: 'applications',
     title: 'Applications',
     icon: 'kbc-icon-applications'
+  },
+  {
+    id: 'recipes',
+    title: 'Recipes',
+    icon: 'kbc-icon-transformations'
   }
 ];
 

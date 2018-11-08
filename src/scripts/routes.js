@@ -3,6 +3,7 @@ import ErrorPage from './react/pages/ErrorPage';
 import Home from './modules/home/react/Index';
 import DataTakeout from './modules/data-takeout/Index';
 import tokensRoutes from './modules/tokens/routes';
+import recipesRoutes from './modules/recipes/routes';
 import Limits from './modules/limits/Index';
 import billingRoutes from './modules/billing/routes';
 
@@ -33,6 +34,7 @@ export default {
     tables,
     trashRoutes,
     tokensRoutes,
+    recipesRoutes,
     {
       name: 'data-takeout',
       title: 'Data Takeout',
