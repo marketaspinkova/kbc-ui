@@ -16,7 +16,7 @@ export default React.createClass({
     projectTemplates: React.PropTypes.object.isRequired,
     focus: React.PropTypes.bool.isRequired,
     canCreateProject: React.PropTypes.bool.isRequired,
-    invitationsCount: React.PropTypes.number.isRequired,
+    invitationsCount: React.PropTypes.number,
     xsrf: React.PropTypes.string.isRequired,
     theme: React.PropTypes.string
   },

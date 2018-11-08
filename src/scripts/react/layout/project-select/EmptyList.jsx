@@ -5,7 +5,7 @@ import PromoCodeButton from './PromoCodeButton';
 
 export default React.createClass({
   propTypes: {
-    invitationsCount: React.PropTypes.number.isRequired
+    invitationsCount: React.PropTypes.number
   },
 
   invitationsButton() {
