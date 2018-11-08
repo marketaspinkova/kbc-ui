@@ -98,11 +98,7 @@ export default React.createClass({
                 </Link>
               </Col>
             </Row>
-            <Row>
-              <Col xs={12}>
-                <TasksSummary tasks={this.state.tasks}/>
-              </Col>
-            </Row>
+            <TasksSummary tasks={this.state.tasks}/>
           </div>
           <div className="kbc-row">
             <Row>
@@ -116,11 +112,7 @@ export default React.createClass({
                 />
               </Col>
             </Row>
-            <Row>
-              <Col xs={12}>
-                <CronRecord crontabRecord={this.state.orchestration.get('crontabRecord')}/>
-              </Col>
-            </Row>
+            <CronRecord crontabRecord={this.state.orchestration.get('crontabRecord')}/>
           </div>
           <div className="kbc-row">
             <Row>
@@ -139,15 +131,11 @@ export default React.createClass({
                 </Link>
               </Col>
             </Row>
-            <Row>
-              <Col xs={12}>
-                {this.state.orchestration.get('notifications').count() ? (
-                  <span>{this.state.orchestration.get('notifications').count()} notifications set</span>
-                ) : (
-                  <span>No notifications set yet.</span>
-                )}
-              </Col>
-            </Row>
+            {this.state.orchestration.get('notifications').count() ? (
+              <span>{this.state.orchestration.get('notifications').count()} notifications set</span>
+            ) : (
+              <span>No notifications set yet.</span>
+            )}
           </div>
           <JobsTable
             jobs={this.state.jobs}
