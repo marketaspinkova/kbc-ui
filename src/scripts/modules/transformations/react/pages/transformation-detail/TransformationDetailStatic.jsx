@@ -493,12 +493,12 @@ export default React.createClass({
           );
         }
       },
-      onDescriptionChange: descrtiption => {
+      onDescriptionChange: description => {
         return TransformationsActionCreators.updateTransformationEditingField(
           this.props.bucketId,
           this.props.transformationId,
           'description',
-          descrtiption
+          description
         );
       }
     };
