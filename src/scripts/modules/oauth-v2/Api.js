@@ -9,7 +9,7 @@ function createUrl(path, version) {
 }
 
 function getBaseUrl(version) {
-  if (version !== Constants.OAUTH_VERSION_DEFAULT
+  if (version !== Constants.OAUTH_VERSION_FALLBACK
     && ApplicationStore.hasCurrentProjectFeature(Constants.OAUTH_V3_FEATURE)) {
     return ServicesStore.getService('oauth').get('url');
   }

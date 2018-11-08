@@ -102,7 +102,7 @@ export function createRedirectRouteSimple(componentId) {
 export function loadCredentialsFromConfig(componentId, configId) {
   const configuration = installedComponentsStore.getConfigData(componentId, configId);
   const id = configuration.getIn(configOauthPath);
-  const version = configuration.getIn(configOauthPathVersion, Constants.OAUTH_VERSION_DEFAULT);
+  const version = configuration.getIn(configOauthPathVersion, Constants.OAUTH_VERSION_FALLBACK);
 
   if (id) {
     return OauthActions.loadCredentials(componentId, id, version);
@@ -113,7 +113,7 @@ export function loadCredentialsFromConfig(componentId, configId) {
 export function deleteCredentialsAndConfigAuth(componentId, configId) {
   const configData = installedComponentsStore.getConfigData(componentId, configId);
   const credentialsId = configData.getIn(configOauthPath);
-  const version = configData.getIn(configOauthPathVersion, Constants.OAUTH_VERSION_DEFAULT);
+  const version = configData.getIn(configOauthPathVersion, Constants.OAUTH_VERSION_FALLBACK);
   const credentials = OauthStore.getCredentials(componentId, credentialsId, version);
   const authorizedFor = credentials.get('authorizedFor');
   return OauthActions.deleteCredentials(componentId, credentialsId, version)
