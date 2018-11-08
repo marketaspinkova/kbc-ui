@@ -1,0 +1,121 @@
+{
+  "id": 1,
+  "name": "Analyze emails from Travis using Geneea",
+  "description": "Fetches messages from Gmail, processes message headers and bodies using transformation and sends result to Geneea application",
+  "configurations": [
+    {
+      "id": 1,
+      "component": "keboola.ex-gmail",
+      "config": {
+        "description": "",
+        "configuration": {
+          "parameters": {
+            "queries": [
+              {
+                "query": "from: builds@travis-ci.com",
+                "headers": []
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 2,
+      "component": "transformation",
+      "config": {
+        "configuration": {},
+        "rows": [
+          {
+            "name": "Joins message, header and thread",
+            "configuration": {
+              "output": [
+                {
+                  "destination": "out.c-transf.message-header-thread",
+                  "source": "message-header-thread"
+                }
+              ],
+              "queries": [
+                "CREATE TABLE \"message-header-thread\" AS SELECT \"headers\".\"messageId\", \"name\", \"value\", \"threadId\"\nFROM \"headers\"\nLEFT JOIN \"messages\" ON \"messages\".\"id\" = \"headers\".\"messageId\"\nWHERE \"name\" = 'To';"
+              ],
+              "input": [
+                {
+                  "source": "in.c-keboola-ex-gmail-{{RECIPE-1-CONFIG-1}}.headers",
+                  "destination": "headers",
+                  "datatypes": {},
+                  "whereColumn": "",
+                  "whereValues": [],
+                  "whereOperator": "eq",
+                  "columns": []
+                },
+                {
+                  "source": "in.c-keboola-ex-gmail-{{RECIPE-1-CONFIG-1}}.messages",
+                  "destination": "messages",
+                  "datatypes": {},
+                  "whereColumn": "",
+                  "whereValues": [],
+                  "whereOperator": "eq",
+                  "columns": []
+                },
+                {
+                  "source": "in.c-keboola-ex-gmail-{{RECIPE-1-CONFIG-1}}.parts",
+                  "destination": "parts",
+                  "datatypes": {},
+                  "whereColumn": "",
+                  "whereValues": [],
+                  "whereOperator": "eq",
+                  "columns": []
+                }
+              ],
+              "backend": "snowflake",
+              "type": "simple",
+              "phase": 1
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "component": "geneea.nlp-analysis-v2",
+      "config": {
+        "configuration": {
+          "storage": {
+            "input": {
+              "tables": [
+                {
+                  "source": "out.c-transf.message-header-thread",
+                  "destination": "out.c-transf.message-header-thread",
+                  "days": 2,
+                  "columns": [
+                    "messageId",
+                    "value"
+                  ]
+                }
+              ]
+            }
+          },
+          "parameters": {
+            "language": "en",
+            "columns": {
+              "id": [
+                "messageId"
+              ],
+              "text": [
+                "value"
+              ]
+            },
+            "analysis_types": [
+              "sentiment"
+            ],
+            "domain": "news",
+            "use_beta": false,
+            "correction": "none",
+            "diacritization": "none",
+            "advanced": {}
+          }
+        }
+      }
+    }
+  ]
+}
