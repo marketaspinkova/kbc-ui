@@ -8,9 +8,11 @@ import OrchestrationStore from '../../../stores/OrchestrationsStore';
 import OrchestrationJobsStore from '../../../stores/OrchestrationJobsStore';
 import RoutesStore from '../../../../../stores/RoutesStore';
 import VersionsStore from '../../../../components/stores/VersionsStore';
+import LatestJobsStore from '../../../../jobs/stores/LatestJobsStore';
 
 // React components
 import ComponentDescription from '../../../../components/react/components/ComponentDescription';
+import SidebarVersions from '../../../../components/react/components/SidebarVersionsWrapper';
 import JobsTable from './JobsTable';
 import JobsGraph from './JobsGraph';
 import { Link } from 'react-router';
@@ -23,8 +25,6 @@ import OrchestrationDeleteButton from '../../components/OrchestrationDeleteButto
 import OrchestrationActiveButton from '../../components/OrchestrationActiveButton';
 import {ExternalLink} from '@keboola/indigo-ui';
 import {Row, Col} from 'react-bootstrap';
-import LatestJobsStore from '../../../../jobs/stores/LatestJobsStore';
-import SidebarVersions from '../../../../components/react/components/SidebarVersionsWrapper';
 
 export default React.createClass({
   mixins: [createStoreMixin(OrchestrationStore, OrchestrationJobsStore, VersionsStore, LatestJobsStore)],
