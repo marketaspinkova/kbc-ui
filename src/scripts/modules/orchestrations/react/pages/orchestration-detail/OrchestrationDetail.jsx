@@ -75,12 +75,12 @@ export default React.createClass({
               configId={this.state.orchestration.get('id').toString()}
             />
           </Row>
-          {this.state.graphJobs.size >= 2 &&
-          <div className="kbc-row">
-            <h2>Jobs Graph</h2>
-            <JobsGraph jobs={this.state.graphJobs}/>
-          </div>
-          }
+          {this.state.graphJobs.size >= 2 && (
+            <div className="kbc-row">
+              <h2>Jobs Graph</h2>
+              <JobsGraph jobs={this.state.graphJobs}/>
+            </div>
+          )}
           <div className="kbc-row">
             <Row>
               <Col xs={9}>
