@@ -118,20 +118,16 @@ export default React.createClass({
           </Row>
           <Row>
             <Col md={12}>
-              <ul className="list-unstyled">
-                {this.state.errors.map((error, index) => (
-                  <li key={index}>
-                    <Result
-                      error={error}
-                      bucketId={this.props.bucketId}
-                      onErrorMessageClick={this.handleErrorMessageClick}
-                    />
-                  </li>
-                ))}
-                <li key={this.state.errors.count() + 1}>
-                  Not an error? Please <a onClick={() => contactSupport({ type: 'project' })}>contact us</a>.
-                </li>
-              </ul>
+              {this.state.errors.map(error => (
+                <Result
+                  error={error}
+                  bucketId={this.props.bucketId}
+                  onErrorMessageClick={this.handleErrorMessageClick}
+                />
+              ))}
+              <span>
+                Not an error? Please <a onClick={() => contactSupport({ type: 'project' })}>contact us</a>.
+              </span>
             </Col>
           </Row>
         </AlertBlock>
