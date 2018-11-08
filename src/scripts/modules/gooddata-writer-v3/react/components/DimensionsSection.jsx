@@ -39,7 +39,7 @@ export default React.createClass({
       <Modal onHide={this.closeModal} show={this.state.showModal}>
         <Modal.Header closeButton={true}>
           <Modal.Title>
-            Add Date Dimension
+            New Date Dimension
           </Modal.Title>
         </Modal.Header>
 
@@ -55,7 +55,7 @@ export default React.createClass({
           <ConfirmButtons
             isSaving={this.props.disabled}
             isDisabled={!this.isValid()}
-            saveLabel="Create"
+            saveLabel="Create Date Dimension"
             onCancel={this.closeModal}
             onSave={this.handleCreate}/>
         </Modal.Footer>
