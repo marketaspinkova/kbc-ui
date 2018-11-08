@@ -76,8 +76,7 @@ export default React.createClass({
   renderOpenButton() {
     return (
       <Button bsStyle="primary" className="pull-right" onClick={this.open}>
-        <i className="fa fa-edit" />
-        {' Edit schedule'}
+        <i className="fa fa-edit" /> Edit Schedule
       </Button>
     );
   },
