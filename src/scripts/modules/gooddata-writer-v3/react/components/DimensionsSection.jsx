@@ -76,33 +76,40 @@ export default React.createClass({
       <div className="table-config-rows">
         {this.renderModal()}
         {hasDimensions ?
-          <table className="table table-striped">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Include Time</th>
-                <th>Identifier</th>
-                <th>Template</th>
-                <th>{this.renderAddButton()}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                dimensionKeys.map(dimName => {
-                  const dim = dimensions[dimName];
-                  return (
-                    <tr key={dimName}>
-                      <td> {dimName}</td>
-                      <td> <Check isChecked={!!dim.includeTime}/></td>
-                      <td> {dim.identifier}</td>
-                      <td> {dim.template}</td>
-                      <td> {this.renderDeleteButton(dimName)}</td>
-                    </tr>
-                  );
-                })
-              }
-            </tbody>
-          </table>
+          <span>
+            <div className="kbc-inner-padding">
+              <div className="pull-right">
+                {this.renderAddButton()}
+              </div>
+            </div>
+            <table className="table table-striped">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Include Time</th>
+                  <th>Identifier</th>
+                  <th>Template</th>
+                  <th/>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  dimensionKeys.map(dimName => {
+                    const dim = dimensions[dimName];
+                    return (
+                      <tr key={dimName}>
+                        <td> {dimName}</td>
+                        <td> <Check isChecked={!!dim.includeTime}/></td>
+                        <td> {dim.identifier}</td>
+                        <td> {dim.template}</td>
+                        <td> {this.renderDeleteButton(dimName)}</td>
+                      </tr>
+                    );
+                  })
+                }
+              </tbody>
+            </table>
+          </span>
           : this.renderEmptyDimensions()
         }
       </div>
