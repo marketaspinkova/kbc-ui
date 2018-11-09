@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
-import {Form, FormGroup, Checkbox, HelpBlock} from 'react-bootstrap';
-import {Loader, ExternalLink} from '@keboola/indigo-ui';
+import {Col, ControlLabel, Radio, Form, FormGroup} from 'react-bootstrap';
+import {Loader} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -18,39 +18,52 @@ export default React.createClass({
     };
   },
 
+
   render() {
-    const {saving} = this.state;
     return (
       <Form>
         <FormGroup>
-          <Checkbox
-            disabled={this.props.disabled}
-            checked={this.props.value.loadOnly}
-            onChange={() => this.onSave('loadOnly')}>
-            Load Data Only {saving === 'loadOnly' && <Loader />}
-          </Checkbox>
-          <HelpBlock>
-            Skips model update and load tables data only
-          </HelpBlock>
-
+          <Col componentClass={ControlLabel} sm={2}>Update Type</Col>
+          <Col sm={10}>
+            <Radio
+              disabled={this.props.disabled}
+              checked={!this.props.value.loadOnly}
+              onChange={() => this.onSave('loadOnly')}
+              name="updatetype" > Update model and load data {this.renderLoader('loadOnly', true)}
+            </Radio>
+            <Radio
+              disabled={this.props.disabled}
+              checked={this.props.value.loadOnly}
+              onChange={() => this.onSave('loadOnly')}
+              name="updatetype" > Load data only {this.renderLoader('loadOnly', false)}
+            </Radio>
+          </Col>
         </FormGroup>
         <FormGroup>
-          <Checkbox
-            disabled={this.props.disabled}
-            checked={this.props.value.multiLoad}
-            onChange={() => this.onSave('multiLoad')}>
-            Multi Load {saving === 'multiLoad' && <Loader />}
-          </Checkbox>
-          <HelpBlock>
-            if checked, tables will be integrated all at once otherwise one by one. For more info see {' '}
-            <ExternalLink href="https://help.gooddata.com/display/doc/Multiload+of+CSV+Data">
-              https://help.gooddata.com/display/doc/Multiload+of+CSV+Data
-            </ExternalLink>
-          </HelpBlock>
-
+          <Col componentClass={ControlLabel} sm={2}>Load Type</Col>
+          <Col sm={10}>
+            <Radio
+              disabled={this.props.disabled}
+              checked={this.props.value.multiLoad}
+              onChange={() => this.onSave('multiLoad')}
+              name="multiload" > Multiload - all tables at once{this.renderLoader('multiLoad', false)}
+            </Radio>
+            <Radio
+              disabled={this.props.disabled}
+              checked={!this.props.value.multiLoad}
+              onChange={() => this.onSave('multiLoad')}
+              name="multiload" > Separate - one table at a time  {this.renderLoader('multiLoad', true)}
+            </Radio>
+          </Col>
         </FormGroup>
       </Form>
     );
+  },
+
+  renderLoader(property, nextValue) {
+    const {saving} = this.state;
+    const {value} = this.props;
+    return saving === property && value[property] === nextValue && <Loader />;
   },
 
   onSave(property) {
