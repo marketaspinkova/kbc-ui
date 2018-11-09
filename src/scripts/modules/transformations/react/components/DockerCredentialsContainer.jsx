@@ -8,7 +8,6 @@ import RStudioSandboxCredentialsStore from '../../../provisioning/stores/RStudio
 import JupyterCredentials from '../../../provisioning/react/components/JupyterCredentials';
 import RStudioCredentials from '../../../provisioning/react/components/RStudioCredentials';
 import CredentialsActionCreators from '../../../provisioning/ActionCreators';
-import {ExternalLink} from '@keboola/indigo-ui';
 
 export default React.createClass({
 
@@ -95,14 +94,15 @@ export default React.createClass({
   renderDockerConnect() {
     return (
       <div>
-        <ExternalLink
-          href={this._connectLink(this.state.credentials)}
-          className="btn btn-link"
-          disabled={this.state.pendingActions.get('drop')}
-        >
-          <span className="fa fa-fw fa-database"/>
-      &nbsp;Connect
-        </ExternalLink>
+        <form action={this._connectLink(this.state.credentials)} target="_blank">
+          <button
+            type="submit"
+            className="btn btn-link"
+            disabled={this.state.pendingActions.get('drop')}
+          >
+            <span className="fa fa-fw fa-database"/>&nbsp;Connect
+          </button>
+        </form>
         <div>
           <DeleteButton
             tooltip="Delete Sandbox"
