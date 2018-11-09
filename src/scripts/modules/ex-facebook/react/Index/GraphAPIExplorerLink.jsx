@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import Tooltip from '../../../../react/common/Tooltip';
+import {ExternalLink} from '@keboola/indigo-ui';
 
 const API_URL = 'https://developers.facebook.com/tools/explorer';
 
@@ -52,10 +53,9 @@ export default React.createClass({
     const url = `${API_URL}?method=GET&${params}`;
     return (
       <Tooltip placement="top" tooltip={this.tooltip}>
-        <a href={url}
-          target="_blank" className="btn btn-link">
+        <ExternalLink href={url} className="btn btn-link">
           {this.linkText}
-        </a>
+        </ExternalLink>
       </Tooltip>
     );
   },

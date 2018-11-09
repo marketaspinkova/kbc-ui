@@ -3,8 +3,7 @@ import {fromJS} from 'immutable';
 import callDockerAction from '../../modules/components/DockerActionsApi';
 import {Input} from './KbcBootstrap';
 import Clipboard from './Clipboard';
-import {Loader} from '@keboola/indigo-ui';
-
+import {Loader, ExternalLink} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -58,9 +57,9 @@ export default React.createClass({
   renderHelp() {
     return (
       <span>
-        <a href="https://help.keboola.com/extractors/database/#connecting-to-database" target="_blank">
+        <ExternalLink href="https://help.keboola.com/extractors/database/#connecting-to-database">
           Help
-        </a>
+        </ExternalLink>
       </span>
     );
   },

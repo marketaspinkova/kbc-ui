@@ -7,6 +7,7 @@ import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivat
 import RunButton from '../../../components/react/components/RunComponentButton';
 import StorageTableLink from '../../../components/react/components/StorageApiTableLinkEx';
 import TablesByBucketsPanel from '../../../components/react/components/TablesByBucketsPanel';
+import {ExternalLink} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -205,9 +206,9 @@ export default React.createClass({
   renderGoogleLink(sheet) {
     const url = `https://docs.google.com/spreadsheets/d/${sheet.get('fileId')}/edit#gid=${sheet.get('sheetId')}`;
     return (
-      <a href={url} target="_blank">
+      <ExternalLink href={url}>
         {sheet.get('title')} / {sheet.get('sheetTitle')}
-      </a>
+      </ExternalLink>
     );
   }
 });

@@ -1,5 +1,6 @@
 import React from 'react';
 import {Modal, Button} from 'react-bootstrap';
+import {ExternalLink} from '@keboola/indigo-ui';
 import ConfirmButtons from '../../../react/common/ConfirmButtons';
 import filesize from 'filesize';
 
@@ -36,9 +37,9 @@ export default React.createClass({
                 onClick={this.props.onModalHide}>
                 Close
               </Button>
-              <a href={this.props.createdFile.get('url')} target="_blank" className="btn btn-success">
+              <ExternalLink href={this.props.createdFile.get('url')} className="btn btn-success">
                 Download
-              </a>
+              </ExternalLink>
             </div>
             :
             <ConfirmButtons

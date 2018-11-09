@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import {ExternalLink} from '@keboola/indigo-ui';
 
 export default React.createClass({
 
@@ -22,9 +23,10 @@ export default React.createClass({
 
     if (pageId) {
       return (
-        <a target="_blank" href={`https://www.facebook.com/${pageId}`}>
+        <ExternalLink href={`https://www.facebook.com/${pageId}`}>
           {pageName || pageId}
-        </a>);
+        </ExternalLink>
+      );
     }
     if (pageName) return pageName;
     return 'Unknown page';
@@ -39,10 +41,10 @@ export default React.createClass({
 
     if (accountId) {
       return (
-        <a target="_blank"
-          href={`https://www.facebook.com/ads/manager/account/campaigns/?act=${accountId}`}>
+        <ExternalLink href={`https://www.facebook.com/ads/manager/account/campaigns/?act=${accountId}`}>
           {accountName || businessName || accountId}
-        </a>);
+        </ExternalLink>
+      );
     }
     if (accountName || businessName || id) return accountName || businessName || id;
     return 'Unknown Ad Account';

@@ -21,7 +21,7 @@ import ComponentMetadata from '../../../components/react/components/ComponentMet
 import RunComponentButton from '../../../components/react/components/RunComponentButton';
 import DeleteConfigurationButton from '../../../components/react/components/DeleteConfigurationButton';
 import EmptyState from '../../../components/react/components/ComponentEmptyState';
-import {SearchBar} from '@keboola/indigo-ui';
+import {SearchBar, ExternalLink} from '@keboola/indigo-ui';
 import Confirm from '../../../../react/common/Confirm';
 import Tooltip from '../../../../react/common/Tooltip';
 import {Link} from 'react-router';
@@ -112,9 +112,9 @@ export default React.createClass({
               </RunComponentButton>
             </li>
             <li>
-              <a href={this.state.component.get('documentationUrl')} target="_blank">
+              <ExternalLink href={this.state.component.get('documentationUrl')}>
                 <i className="fa fa-question-circle fa-fw" /> Documentation
-              </a>
+              </ExternalLink>
             </li>
             <li>
               <DeleteConfigurationButton

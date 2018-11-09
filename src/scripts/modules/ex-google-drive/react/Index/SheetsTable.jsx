@@ -7,7 +7,7 @@ import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivat
 import RunExtractionButton from '../../../components/react/components/RunComponentButton';
 
 import Tooltip from '../../../../react/common/Tooltip';
-import {Loader} from '@keboola/indigo-ui';
+import {Loader, ExternalLink} from '@keboola/indigo-ui';
 import Confirm from '../../../../react/common/Confirm';
 
 // import {Link} from 'react-router';
@@ -62,9 +62,9 @@ export default React.createClass({
     const url = `https://docs.google.com/spreadsheets/d/${sheet.get('fileId')}/edit#gid=${sheet.get('sheetId')}`;
     const documentTitle = getDocumentTitle(sheet);
     return (
-      <a href={url} target="_blank">
+      <ExternalLink href={url}>
         {documentTitle}
-      </a>
+      </ExternalLink>
     );
   },
 

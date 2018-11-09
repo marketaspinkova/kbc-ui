@@ -31,6 +31,7 @@ import {saveCredentials,
 
 import templates from '../jobsTemplates';
 import {Button} from 'react-bootstrap';
+import {ExternalLink} from '@keboola/indigo-ui';
 import Wizard from './Wizard';
 import {Steps} from '../constants';
 
@@ -188,11 +189,11 @@ export default React.createClass({
     return (
       <p className="help-block">
         The resource configuration below expects a <strong>jobs</strong> array configured according to the
-        <a href="https://github.com/keboola/generic-extractor#jobs" target="_blank"> Generic Extractor documentation</a>.
+        <ExternalLink href="https://github.com/keboola/generic-extractor#jobs"> Generic Extractor documentation</ExternalLink>.
 
-        Details about Adform API are available in the <a href="https://api.adform.com/Services/Documentation/Index.htm" target="_blank">
+        Details about Adform API are available in the <ExternalLink href="https://api.adform.com/Services/Documentation/Index.htm">
           Adform API documentation
-        </a>.
+        </ExternalLink>.
       </p>
     );
   },

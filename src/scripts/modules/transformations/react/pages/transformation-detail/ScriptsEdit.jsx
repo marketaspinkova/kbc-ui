@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import CodeMirror from 'react-code-mirror';
 import resolveHighlightMode from './resolveHighlightMode';
+import {ExternalLink} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -48,13 +49,13 @@ export default React.createClass({
 
   help() {
     if (this.props.backend === 'python') {
-      return (<span>Learn more about <a href="https://help.keboola.com/manipulation/transformations/python/" target="_blank">using Python</a>.</span>);
+      return (<span>Learn more about <ExternalLink href="https://help.keboola.com/manipulation/transformations/python/">using Python</ExternalLink>.</span>);
     }
     if (this.props.backend === 'r') {
-      return (<span>Learn more about <a href="https://help.keboola.com/manipulation/transformations/r/" target="_blank">using R</a>.</span>);
+      return (<span>Learn more about <ExternalLink href="https://help.keboola.com/manipulation/transformations/r/">using R</ExternalLink>.</span>);
     }
     if (this.props.backend === 'openrefine') {
-      return (<span>Learn more about <a href="https://help.keboola.com/manipulation/transformations/openrefine/" target="_blank">using OpenRefine</a>.</span>);
+      return (<span>Learn more about <ExternalLink href="https://help.keboola.com/manipulation/transformations/openrefine/">using OpenRefine</ExternalLink>.</span>);
     }
   },
 

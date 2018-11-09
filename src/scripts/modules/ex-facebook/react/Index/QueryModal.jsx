@@ -5,6 +5,7 @@ import TemplateSelector from './TemplateSelector';
 import GraphAPIExplorerLink from './GraphAPIExplorerLink';
 import DateRangeSelector from './DateRangeSelector';
 import {Modal, Tabs, Tab} from 'react-bootstrap';
+import {ExternalLink} from '@keboola/indigo-ui';
 import Select from 'react-select';
 
 const NAME_HELP = 'Helps describing the query and also used to prefix output tables name resulting from the query if they differ.';
@@ -93,11 +94,9 @@ export default React.createClass({
     return (
       <span>
         {text}
-        <a
-          href={url}
-          target="_blank">
+        <ExternalLink href={url}>
           {' '}more info
-        </a>
+        </ExternalLink>
       </span>
     );
   },

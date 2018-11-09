@@ -3,8 +3,7 @@ import Immutable from 'immutable';
 import TransformationBucketsStore from '../../transformations/stores/TransformationBucketsStore';
 import TransformationsStore from '../../transformations/stores/TransformationsStore';
 import ComponentConfigurationRowLink from '../../components/react/components/ComponentConfigurationRowLink';
-import { AlertBlock } from '@keboola/indigo-ui';
-
+import {AlertBlock, ExternalLink} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -31,7 +30,7 @@ export default React.createClass({
     return (
       <AlertBlock type="warning" title="Please migrate these MySQL transformations to Snowflake">
         <p>
-          Learn more about the MySQL transformation deprecation <a href="http://status.keboola.com/deprecating-mysql-storage-and-transformations" target="_blank">timeline and reasons</a>.
+          Learn more about the MySQL transformation deprecation <ExternalLink href="http://status.keboola.com/deprecating-mysql-storage-and-transformations">timeline and reasons</ExternalLink>.
         </p>
         <div className="row">
           {deprecatedTransformationsInBuckets.map(function(bucket, indexBucket) {

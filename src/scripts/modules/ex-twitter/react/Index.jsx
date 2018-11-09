@@ -22,6 +22,7 @@ import RunComponentButton from '../../components/react/components/RunComponentBu
 import DeleteConfigurationButton from '../../components/react/components/DeleteConfigurationButton';
 import LatestJobs from '../../components/react/components/SidebarJobs';
 import LatestVersions from '../../components/react/components/SidebarVersionsWrapper';
+import {ExternalLink} from '@keboola/indigo-ui';
 
 import {
   changeWizardStep,
@@ -92,9 +93,9 @@ export default React.createClass({
           />
           <ul className="nav nav-stacked">
             <li>
-              <a href={this.state.component.get('documentationUrl')} target="_blank">
+              <ExternalLink href={this.state.component.get('documentationUrl')}>
                 <i className="fa fa-question-circle fa-fw" /> Documentation
-              </a>
+              </ExternalLink>
             </li>
           </ul>
         </div>
@@ -158,9 +159,9 @@ export default React.createClass({
               </RunComponentButton>
             </li>
             <li>
-              <a href={this.state.component.get('documentationUrl')} target="_blank">
+              <ExternalLink href={this.state.component.get('documentationUrl')}>
                 <i className="fa fa-question-circle fa-fw" /> Documentation
-              </a>
+              </ExternalLink>
             </li>
             <li>
               <DeleteConfigurationButton

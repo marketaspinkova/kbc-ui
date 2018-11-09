@@ -7,6 +7,7 @@ import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivat
 import RunButton from '../../../components/react/components/RunComponentButton';
 import StorageTableLink from '../../../components/react/components/StorageApiTableLinkEx';
 import TablesByBucketsPanel from '../../../components/react/components/TablesByBucketsPanel';
+import {ExternalLink} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -242,9 +243,9 @@ export default React.createClass({
     }
     const url = `https://drive.google.com/open?id=${googleId}`;
     return (
-      <a href={url} target="_blank">
+      <ExternalLink href={url}>
         {title}
-      </a>
+      </ExternalLink>
     );
   }
 });

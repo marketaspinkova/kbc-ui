@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import {fromJS} from 'immutable';
 import {Button, Modal} from 'react-bootstrap';
+import {ExternalLink} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -20,7 +21,7 @@ export default React.createClass({
             Parse Url and Set Query
             <div>
               <small>
-                Create a query via <a href="https://ga-dev-tools.appspot.com/query-explorer/" target="_blank">Google Analytics Query Explorer</a> and paste the result url to reconstruct the query.
+                Create a query via <ExternalLink href="https://ga-dev-tools.appspot.com/query-explorer/">Google Analytics Query Explorer</ExternalLink> and paste the result url to reconstruct the query.
               </small>
             </div>
           </Modal.Title>

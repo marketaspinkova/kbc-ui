@@ -6,7 +6,7 @@ import { fromJS } from 'immutable';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { timeInWords } from '../../../../../utils/duration';
 import date from '../../../../../utils/date';
-import { Tree } from '@keboola/indigo-ui';
+import { Tree, ExternalLink } from '@keboola/indigo-ui';
 
 export default React.createClass({
   mixins: [ImmutableRenderMixin],
@@ -98,9 +98,9 @@ export default React.createClass({
     }
     if (value.trim().startsWith('http')) {
       return (
-        <a target="_blank" href={value}>
+        <ExternalLink href={value}>
           Raw log
-        </a>
+        </ExternalLink>
       );
     }
     return value;

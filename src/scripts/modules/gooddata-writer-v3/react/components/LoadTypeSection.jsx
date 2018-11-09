@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import {Form, Radio, HelpBlock, FormGroup, ControlLabel, Col} from 'react-bootstrap';
+import {ExternalLink} from '@keboola/indigo-ui';
 import Select from 'react-select';
 import ChangedSinceInput from '../../../../react/common/ChangedSinceInput';
 
@@ -75,9 +76,9 @@ export default React.createClass({
               onChange={newColumns => onChange({grain: newColumns.map(column => column.value)})}
             />
             <HelpBlock>
-              <a target="_blank" rel="noopener noreferrer" href="https://developer.gooddata.com/article/set-fact-table-grain">
+              <ExternalLink href="https://developer.gooddata.com/article/set-fact-table-grain">
                 Fact grain
-              </a>
+              </ExternalLink>
               {' '} columns help to avoid of duplicates records in GoodData dataset without connection point. Specify at least two attribute, reference or date type columns.
             </HelpBlock>
           </Col>

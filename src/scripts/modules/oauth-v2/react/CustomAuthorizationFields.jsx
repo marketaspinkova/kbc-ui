@@ -1,4 +1,5 @@
 import React from 'react';
+import {ExternalLink} from '@keboola/indigo-ui';
 
 export default React.createClass({
 
@@ -15,9 +16,9 @@ export default React.createClass({
     return (
       <div>
         <p>
-          Provide your own OAuth 2.0 credentials from <a href="https://console.developers.google.com" target="_blank">Google API Console</a>.
+          Provide your own OAuth 2.0 credentials from <ExternalLink href="https://console.developers.google.com">Google API Console</ExternalLink>.
           <br />
-          Follow these <a href="https://help.keboola.com/extractors/marketing-sales/google-analytics/#custom-oauth-credentials" target="_blank">instructions</a> to set up an application and obtain a pair of credentials.
+          Follow these <ExternalLink href="https://help.keboola.com/extractors/marketing-sales/google-analytics/#custom-oauth-credentials">instructions</ExternalLink> to set up an application and obtain a pair of credentials.
         </p>
         <div className="form-group">
           <label className="control-label col-sm-3">

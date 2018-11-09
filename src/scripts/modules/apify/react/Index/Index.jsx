@@ -21,6 +21,7 @@ import DeleteConfigurationButton from '../../../components/react/components/Dele
 import LatestJobs from '../../../components/react/components/SidebarJobs';
 import LatestVersions from '../../../components/react/components/SidebarVersionsWrapper';
 import SetupModal from './SetupModal';
+import { ExternalLink } from '@keboola/indigo-ui';
 
 import CodeMirror from 'react-code-mirror';
 /* global require */
@@ -240,10 +241,8 @@ export default React.createClass({
     const cname = parameters.get('customId', parameters.get('crawlerId'));
     return (
       <p className="form-control-static">
-        {parameters.get('settingsLink') ?
-          <a target="_blank" rel="noopener noreferrer" href={parameters.get('settingsLink')}>
-            {cname}
-          </a>
+        {parameters.get('settingsLink')
+          ? <ExternalLink href={parameters.get('settingsLink')}>{cname}</ExternalLink>
           : <span> {cname} </span>
         }
       </p>
@@ -255,9 +254,7 @@ export default React.createClass({
     const url = `https://my.apify.com/acts/${actId}`;
     return (
       <p className="form-control-static">
-        <a target="_blank" rel="noopener noreferrer" href={url}>
-          {actId}
-        </a>
+        <ExternalLink href={url}>{actId}</ExternalLink>
       </p>
     );
   },

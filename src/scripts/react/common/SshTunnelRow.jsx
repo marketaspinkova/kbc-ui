@@ -5,7 +5,7 @@ import {Check} from '@keboola/indigo-ui';
 import {Input, FormControls} from './KbcBootstrap';
 import {Protected} from '@keboola/indigo-ui';
 import Clipboard from './Clipboard';
-import {Loader} from '@keboola/indigo-ui';
+import {Loader, ExternalLink} from '@keboola/indigo-ui';
 const StaticText = FormControls.Static;
 
 
@@ -72,9 +72,9 @@ export default React.createClass({
   renderHelp() {
     return (
       <span>
-        <a href="https://help.keboola.com/extractors/database/#connecting-to-database" target="_blank">
+        <ExternalLink href="https://help.keboola.com/extractors/database/#connecting-to-database">
           Help
-        </a>
+        </ExternalLink>
       </span>
     );
   },

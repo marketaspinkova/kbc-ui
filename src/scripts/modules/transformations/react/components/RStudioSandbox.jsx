@@ -9,6 +9,7 @@ import StorageBucketsStore from '../../../components/stores/StorageBucketsStore'
 import StorageTablesStore from '../../../components/stores/StorageTablesStore';
 import CreateDockerSandboxModal from '../modals/CreateDockerSandboxModal';
 import ExtendRStudioCredentials from '../../../provisioning/react/components/ExtendRStudioCredentials';
+import {ExternalLink} from '@keboola/indigo-ui';
 
 var RStudioSandbox = React.createClass({
   mixins: [createStoreMixin(RStudioSandboxCredentialsStore, StorageBucketsStore, StorageTablesStore)],
@@ -46,15 +47,14 @@ var RStudioSandbox = React.createClass({
       return (
         <div>
           <div>
-            <a
+            <ExternalLink
               href={this._connectLink(this.state.credentials)}
               className="btn btn-link"
-              target="_blank"
               disabled={this.state.pendingActions.size > 0}
             >
               <span className="fa fa-fw fa-database" />
               &nbsp;Connect
-            </a>
+            </ExternalLink>
             <div>
               <DeleteButton
                 tooltip="Delete RStudio Sandbox"

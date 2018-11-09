@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import {ExternalLink} from '@keboola/indigo-ui';
 
 export default React.createClass({
 
@@ -10,7 +11,7 @@ export default React.createClass({
     return (
       <p className="small">
         {'For more information about configuring MongoDB Extractor follow guide at '}
-        <a href={this.props.documentationUrl} target="_blank">https://help.keboola.com</a>.
+        <ExternalLink href={this.props.documentationUrl}>https://help.keboola.com</ExternalLink>.
       </p>
     );
   }

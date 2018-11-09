@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import CodeMirror from 'react-code-mirror';
 import resolveHighlightMode from './resolveHighlightMode';
+import {ExternalLink} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -76,13 +77,13 @@ export default React.createClass({
 
   help() {
     if (this.props.backend === 'snowflake') {
-      return (<span>Learn more about <a href="https://help.keboola.com/manipulation/transformations/snowflake/" target="_blank">using Snowflake</a>.</span>);
+      return (<span>Learn more about <ExternalLink href="https://help.keboola.com/manipulation/transformations/snowflake/">using Snowflake</ExternalLink>.</span>);
     }
     if (this.props.backend === 'redshift') {
-      return (<span>Learn more about <a href="https://help.keboola.com/manipulation/transformations/redshift/" target="_blank">using Redshift</a>.</span>);
+      return (<span>Learn more about <ExternalLink href="https://help.keboola.com/manipulation/transformations/redshift/">using Redshift</ExternalLink>.</span>);
     }
     if (this.props.backend === 'mysql') {
-      return (<span>Learn more about <a href="https://help.keboola.com/manipulation/transformations/mysql/" target="_blank">using MySQL</a>.</span>);
+      return (<span>Learn more about <ExternalLink href="https://help.keboola.com/manipulation/transformations/mysql/">using MySQL</ExternalLink>.</span>);
     }
   },
 

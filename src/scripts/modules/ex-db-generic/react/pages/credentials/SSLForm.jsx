@@ -2,8 +2,8 @@ import React from 'react';
 
 import Textarea from 'react-textarea-autosize';
 import {Input} from './../../../../../react/common/KbcBootstrap';
-
 import {HelpBlock} from 'react-bootstrap';
+import {ExternalLink} from '@keboola/indigo-ui';
 
 const helpUrl = 'https://help.keboola.com/extractors/database/sqldb/#mysql-encryption';
 
@@ -94,9 +94,9 @@ export default React.createClass({
   renderHelp() {
     return (
       <span>
-        <a href={helpUrl} target="_blank">
+        <ExternalLink href={helpUrl}>
           Help
-        </a>
+        </ExternalLink>
       </span>
     );
   }

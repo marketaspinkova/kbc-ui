@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {ExternalLink} from '@keboola/indigo-ui';
 
 const App = React.createClass({
   render() {
@@ -127,9 +128,9 @@ const App = React.createClass({
                       </a>
                     </li>
                     <li>
-                      <a href="#" target="_blank">
+                      <ExternalLink href="#">
                         <span className="fa fa-question-circle" /> Help
-                      </a>
+                      </ExternalLink>
                     </li>
                     <li>
                       <a href="#">
