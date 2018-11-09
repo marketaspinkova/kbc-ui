@@ -80,8 +80,8 @@ export default React.createClass({
       configurations = component.get('configurations');
     }
 
-    return configurations.sort((a, b) => {
-      return moment(b.getIn(['currentVersion', 'created'])).diff(a.getIn(['currentVersion', 'created']));
+    return configurations.sortBy((configuration) => {
+      return -moment(configuration.getIn(['currentVersion', 'created'])).unix();
     });
   },
 
