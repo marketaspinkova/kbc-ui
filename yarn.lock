@@ -2818,19 +2818,19 @@ envify@^3.0.0:
     jstransform "^11.0.3"
     through "~2.3.4"
 
-enzyme-adapter-react-14@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/enzyme-adapter-react-14/-/enzyme-adapter-react-14-1.1.0.tgz#4504b6e64fb927aa89f06b0d69172d2ca28a30f2"
+enzyme-adapter-react-14@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/enzyme-adapter-react-14/-/enzyme-adapter-react-14-1.1.1.tgz#1be8ec84ecdc01ab880b789a55e8274d8c4e694b"
   dependencies:
-    enzyme-adapter-utils "^1.6.0"
+    enzyme-adapter-utils "^1.8.0"
     object.assign "^4.1.0"
     object.values "^1.0.4"
     prop-types "^15.6.2"
-    react-is "^16.4.2"
+    react-is "^16.5.2"
 
-enzyme-adapter-utils@^1.6.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/enzyme-adapter-utils/-/enzyme-adapter-utils-1.7.0.tgz#83faceaf6d4dc9d3ce123c1b5200feefca04a59a"
+enzyme-adapter-utils@^1.8.0:
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/enzyme-adapter-utils/-/enzyme-adapter-utils-1.8.1.tgz#a927d840ce2c14b42892a533aec836809d4e022b"
   dependencies:
     function.prototype.name "^1.1.0"
     object.assign "^4.1.0"
@@ -2842,9 +2842,9 @@ enzyme-to-json@^3.3.4:
   dependencies:
     lodash "^4.17.4"
 
-enzyme@^3.6.0:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/enzyme/-/enzyme-3.6.0.tgz#d213f280a258f61e901bc663d4cc2d6fd9a9dec8"
+enzyme@^3.7.0:
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/enzyme/-/enzyme-3.7.0.tgz#9b499e8ca155df44fef64d9f1558961ba1385a46"
   dependencies:
     array.prototype.flat "^1.2.1"
     cheerio "^1.0.0-rc.2"
@@ -6844,9 +6844,9 @@ react-input-autosize@^2.1.2:
   dependencies:
     prop-types "^15.5.8"
 
-react-is@^16.4.2:
-  version "16.4.2"
-  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.4.2.tgz#84891b56c2b6d9efdee577cc83501dfc5ecead88"
+react-is@^16.5.2:
+  version "16.6.1"
+  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.6.1.tgz#f77b1c3d901be300abe8d58645b7a59e794e5982"
 
 react-markdown@^1.1.0:
   version "1.2.4"
