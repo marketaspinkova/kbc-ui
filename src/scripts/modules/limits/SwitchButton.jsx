@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import EditLimitModal from './EditLimitModal';
 import Switch from 'rc-switch';
 import contactSupport from '../../utils/contactSupport';
@@ -16,21 +16,16 @@ export default React.createClass({
   },
 
   render() {
-    const {limit} = this.props;
     return (
       <span>
         <Switch
           className="kbc-switch"
           checkedChildren={'✓'}
           unCheckedChildren={'x'}
-          checked={limit.get('limitValue')}
+          checked={this.props.limit.get('limitValue')}
           onChange={this.handleChange}
         />
-        <EditLimitModal
-          limit={limit}
-          onHide={this.closeModal}
-          isOpen={this.state.isOpen}
-        />
+        <EditLimitModal limit={this.props.limit} onHide={this.closeModal} isOpen={this.state.isOpen} />
       </span>
     );
   },
