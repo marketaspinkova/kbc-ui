@@ -17,6 +17,7 @@ export default React.createClass({
     tableExists: React.PropTypes.bool.isRequired,
     isTableExported: React.PropTypes.bool.isRequired,
     isPending: React.PropTypes.bool.isRequired,
+    isUpdating: React.PropTypes.bool.isRequired,
     isV2: React.PropTypes.bool.isRequired,
     onExportChangeFn: React.PropTypes.func.isRequired,
     table: React.PropTypes.object.isRequired,
@@ -57,6 +58,7 @@ export default React.createClass({
             isActive={this.props.isTableExported}
             isPending={this.props.isPending}
             onChange={this.props.onExportChangeFn}
+            buttonDisabled={this.props.isUpdating}
           />
           {this.props.tableExists && (
             <Tooltip tooltip="Upload table to Dropbox">
@@ -66,6 +68,7 @@ export default React.createClass({
                 mode="button"
                 icon="fa fa-play fa-fw"
                 component={this.props.componentId}
+                disabled={this.props.isUpdating}
                 runParams={() => {
                   const tableId = this.props.table.get('id');
                   const { configId } = this.props;
@@ -93,24 +96,32 @@ export default React.createClass({
           <Loader />
         </span>
       );
-    } else {
+    }
+
+    if (this.props.isUpdating) {
       return (
-        <Confirm
-          key={this.props.table.get('id')}
-          title={`Remove ${this.props.table.get('id')}`}
-          text="You are about to remove the table from the configuration."
-          buttonLabel="Remove"
-          onConfirm={() => {
-            return this.props.deleteTableFn(this.props.table.get('id'));
-          }}
-        >
-          <Tooltip tooltip="Remove table from configuration" placement="top">
-            <button className="btn btn-link">
-              <i className="kbc-icon-cup" />
-            </button>
-          </Tooltip>
-        </Confirm>
+        <button disabled className="btn btn-link">
+          <i className="kbc-icon-cup" />
+        </button>
       );
     }
+
+    return (
+      <Confirm
+        key={this.props.table.get('id')}
+        title={`Remove ${this.props.table.get('id')}`}
+        text="You are about to remove the table from the configuration."
+        buttonLabel="Remove"
+        onConfirm={() => {
+          return this.props.deleteTableFn(this.props.table.get('id'));
+        }}
+      >
+        <Tooltip tooltip="Remove table from configuration" placement="top">
+          <button className="btn btn-link">
+            <i className="kbc-icon-cup" />
+          </button>
+        </Tooltip>
+      </Confirm>
+    );
   }
 });

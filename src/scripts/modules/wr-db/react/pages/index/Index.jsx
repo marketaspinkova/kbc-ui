@@ -276,6 +276,7 @@ export default componentId => {
           tableDbName={this._getConfigTable(table.get('id')).get('name')}
           isTableExported={this._isTableExported(table.get('id'))}
           isPending={this._isPendingTable(table.get('id'))}
+          isUpdating={this._isUpdating()}
           componentId={componentId}
           onExportChangeFn={() => {
             return this._handleExportChange(table.get('id'));
@@ -325,6 +326,10 @@ export default componentId => {
 
     _isPendingTable(tableId) {
       return this.state.updatingTables.has(tableId);
+    },
+
+    _isUpdating() {
+      return !!(this.state.updatingTables.count() || this.state.deletingTables.count());
     },
 
     _prepareTableUploadData() {
