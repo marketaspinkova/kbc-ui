@@ -4,7 +4,7 @@ GraphCanvas = require('../../../../../react/common/GraphCanvas').default
 Button = React.createFactory(require('react-bootstrap').Button)
 ImmutableRenderMixin = require 'react-immutable-render-mixin'
 
-graphUtils = require '../../../../../utils/graphUtils'
+graphUtils = require('../../../../../utils/graphUtils').default
 
 module.exports = React.createClass
   displayName: 'Graph'

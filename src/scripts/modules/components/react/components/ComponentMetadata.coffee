@@ -4,7 +4,7 @@ createStoreMixin = require('../../../../react/mixins/createStoreMixin').default
 immutableMixin = require 'react-immutable-render-mixin'
 InstalledComponentsStore = require('../../stores/InstalledComponentsStore').default
 InstalledComponentsActionCreators = require '../../InstalledComponentsActionCreators'
-date = require '../../../../utils/date'
+date = require('../../../../utils/date').default
 
 {button, span} = React.DOM
 

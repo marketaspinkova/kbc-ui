@@ -5,7 +5,7 @@ Link = React.createFactory(require('react-router').Link)
 {OverlayTrigger, Tooltip} = require 'react-bootstrap'
 {option, select, button, i,a, strong, span, div, p, ul, li} = React.DOM
 Confirm = require('../../../../../react/common/Confirm').default
-date = require '../../../../../utils/date'
+date = require('../../../../../utils/date').default
 RunButtonModal = React.createFactory(require('../../../../components/react/components/RunComponentButton'))
 SapiTableLinkEx = require('../../../../components/react/components/StorageApiTableLinkEx').default
 

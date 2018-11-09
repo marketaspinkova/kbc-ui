@@ -11,9 +11,9 @@ _ = require 'underscore'
 Immutable = require 'immutable'
 
 routes = require('./routes').default
-createReactRouterRoutes = require './utils/createReactRouterRoutes'
-Timer = require './utils/Timer'
-Error = require './utils/Error'
+createReactRouterRoutes = require('./utils/createReactRouterRoutes').default
+Timer = require('./utils/Timer').default
+Error = require('./utils/Error').default
 
 ApplicationActionCreators = require('./actions/ApplicationActionCreators').default
 RouterActionCreators = require('./actions/RouterActionCreators').default
