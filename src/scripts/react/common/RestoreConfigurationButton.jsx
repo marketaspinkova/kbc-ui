@@ -12,7 +12,6 @@ export default React.createClass({
   propTypes: {
     tooltip: React.PropTypes.string,
     confirm: React.PropTypes.object, // Confirm props
-    onRestore: React.PropTypes.func.isRequired,
     isPending: React.PropTypes.bool,
     isEnabled: React.PropTypes.bool,
     label: React.PropTypes.string,
