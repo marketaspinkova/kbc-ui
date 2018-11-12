@@ -2,11 +2,11 @@ React = require 'react'
 fuzzy = require('fuzzy')
 
 createStoreMixin = require('../../../../../react/mixins/createStoreMixin').default
-RoutesStore = require '../../../../../stores/RoutesStore'
+RoutesStore = require('../../../../../stores/RoutesStore').default
 ComponentsStore = require('../../../stores/ComponentsStore').default
 InstalledComponentsStore = require('../../../stores/InstalledComponentsStore').default
 InstalledComponentsActionCreators = require '../../../InstalledComponentsActionCreators'
-ApplicationStore = require '../../../../../stores/ApplicationStore'
+ApplicationStore = require('../../../../../stores/ApplicationStore').default
 
 VendorInfo = React.createFactory(require './VendorInfo')
 ConfigurationRow = require('../ConfigurationRow').default

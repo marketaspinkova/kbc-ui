@@ -2,7 +2,7 @@ React = require 'react'
 _ = require 'underscore'
 {Modal} = require('react-bootstrap')
 {button, strong, div, h2, span, h4, section, p} = React.DOM
-ApplicationStore = require '../../../../../stores/ApplicationStore'
+ApplicationStore = require('../../../../../stores/ApplicationStore').default
 {Map} = require 'immutable'
 {Loader} = require '@keboola/indigo-ui'
 ModalHeader = React.createFactory(require('react-bootstrap').Modal.Header)
@@ -12,7 +12,7 @@ ModalFooter = React.createFactory(require('react-bootstrap').Modal.Footer)
 
 Button = React.createFactory(require('react-bootstrap').Button)
 ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
-RouterStore = require('../../../../../stores/RoutesStore')
+RouterStore = require('../../../../../stores/RoutesStore').default
 {i, span, div, p, strong, form, input, label, div} = React.DOM
 Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Input)
 

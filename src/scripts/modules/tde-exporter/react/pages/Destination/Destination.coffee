@@ -20,7 +20,7 @@ InstalledComponentsActions = require '../../../../components/InstalledComponents
 ApplicationActionCreators = require('../../../../../actions/ApplicationActionCreators').default
 {OAUTH_V2_WRITERS} = require '../../../tdeCommon'
 
-RoutesStore = require '../../../../../stores/RoutesStore'
+RoutesStore = require('../../../../../stores/RoutesStore').default
 {List, Map, fromJS} = require 'immutable'
 
 GdriveRow = React.createFactory require './GdriveRow'

@@ -3,7 +3,7 @@ React = require 'react'
 {button, i, div} = React.DOM
 
 Link = React.createFactory(require('react-router').Link)
-RoutesStore = require('../../../../stores/RoutesStore')
+RoutesStore = require('../../../../stores/RoutesStore').default
 ComponentsStore = require('../../stores/ComponentsStore').default
 createStoreMixin = require('../../../../react/mixins/createStoreMixin').default
 

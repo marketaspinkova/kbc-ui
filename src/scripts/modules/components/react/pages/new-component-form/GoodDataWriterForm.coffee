@@ -15,7 +15,7 @@ ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('react-bootstrap').Button)
 Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
 
-ApplicationStore = require '../../../../../stores/ApplicationStore'
+ApplicationStore = require('../../../../../stores/ApplicationStore').default
 contactSupport = require('../../../../../utils/contactSupport').default
 
 {small, label, input, div, form, h2, h3, p, span, a} = React.DOM

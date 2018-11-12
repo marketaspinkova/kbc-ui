@@ -5,7 +5,7 @@ classnames = require 'classnames'
 createStoreMixin = require('../../../../../react/mixins/createStoreMixin').default
 LatestJobsStore = require('../../../../jobs/stores/LatestJobsStore').default
 LatestJobs = require '../../../../components/react/components/SidebarJobs'
-RoutesStore = require '../../../../../stores/RoutesStore'
+RoutesStore = require('../../../../../stores/RoutesStore').default
 Link = React.createFactory(require('react-router').Link)
 RowEditor = require './RowEditor'
 
