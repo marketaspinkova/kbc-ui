@@ -10,7 +10,7 @@ InstalledComponentsStore = require('../../../../components/stores/InstalledCompo
 FilterTableModal = require('../../../../components/react/components/generic/TableFiltersOnlyModal').default
 FiltersDescription = require '../../../../components/react/components/generic/FiltersDescription'
 
-InlineEditText = React.createFactory(require '../../../../../react/common/InlineEditTextInput')
+InlineEditText = React.createFactory(require '../../../../../react/common/InlineEditTextInput').default
 ColumnsTable = require './ColumnsTable'
 storageApi = require '../../../../components/StorageApi'
 {Input, FormControls} = require './../../../../../react/common/KbcBootstrap'

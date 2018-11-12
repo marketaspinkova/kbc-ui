@@ -1,6 +1,6 @@
 React = require 'react'
 createComponentEditClass = require './ComponentEditField'
-InlineEditTextInput = require '../../../../react/common/InlineEditTextInput'
+InlineEditTextInput = require('../../../../react/common/InlineEditTextInput').default
 ComponentEditField = require './ComponentEditField'
 
 module.exports = React.createClass
@@ -16,5 +16,3 @@ module.exports = React.createClass
       editElement: InlineEditTextInput
       placeholder: 'My Configuration'
       tooltipPlacement: 'bottom'
-
-
