@@ -146,8 +146,6 @@ export default React.createClass({
             key="activate"
             activateTooltip="Enable"
             deactivateTooltip="Disable"
-            activateLabel="Enable"
-            deactivateLabel="Disable"
             mode="link"
             isActive={!isTableDisabled}
             isPending={isPendingFn([tableId, 'activate'])}
