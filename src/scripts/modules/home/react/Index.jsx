@@ -15,6 +15,7 @@ import WizardStore from '../../guide-mode/stores/WizardStore';
 import Desk from '../../guide-mode/react/Desk';
 import lessons from '../../guide-mode/WizardLessons';
 import { List } from 'immutable';
+import ProjectDescription from './ProjectDescription';
 
 export default React.createClass({
   mixins: [
@@ -36,6 +37,7 @@ export default React.createClass({
     return {
       tokens: tokenStats,
       projectId: currentProject.get('id'),
+      projectDescription: currentProject.get('description'),
       data: {
         sizeBytes: sizeBytes,
         rowsCount: rowsCount
@@ -105,6 +107,10 @@ export default React.createClass({
         </div>
         }
         <div className="kbc-main-content">
+
+          <ProjectDescription
+            description={this.state.projectDescription}
+          />
 
           <div className="table kbc-table-border-vertical kbc-layout-table kbc-overview">
             <div className="tbody">
