@@ -81,6 +81,7 @@ const TableRow = createReactClass({
   },
 
   renderRowActionButtons() {
+    const props = this.props;
     return [
       (<DeleteConfigurationRowButton
         key="delete"
@@ -99,10 +100,10 @@ const TableRow = createReactClass({
         key="run"
         title="Run"
         component={this.props.componentId}
-        runParams={() => {
+        runParams={function() {
           return {
-            config: this.props.configurationId,
-            row: this.props.row.get('id')
+            config: props.configurationId,
+            row: props.row.get('id')
           };
         }}
       >
