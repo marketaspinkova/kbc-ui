@@ -155,7 +155,10 @@ export default React.createClass({
         if (errors.count()) {
           ApplicationActionCreators.sendNotification({
             message: sqlValidationErrors(errors.count(), () => {
-              document.getElementById('sql-queries-block').scrollIntoView();
+              document.getElementById('sql-queries-block').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+              });
             }),
             type: 'error'
           });
