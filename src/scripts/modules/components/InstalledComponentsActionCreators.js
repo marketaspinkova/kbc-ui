@@ -390,7 +390,10 @@ module.exports = {
         configurationId: configurationId,
         transition: transition
       });
-      return actions.loadInstalledComponentsForce().then(function() {
+      return Promise.all([
+        actions.loadInstalledComponentsForce(),
+        actions.loadComponentConfigsDataForce(componentId)
+      ]).then(function() {
         return ApplicationActionCreators.sendNotification({
           message: configurationRestoredNotification(componentId, configurationId, configuration)
         });
