@@ -15,6 +15,7 @@ const ActionTypes = keyMirror({
 
   // Project
   PROJECT_CHANGE_DESCRIPTION_SUCCESS: null,
+  PROJECT_CHANGE_DESCRIPTION_ERROR: null,
 
   // Router state
   ROUTER_ROUTE_CHANGE_START: null,
