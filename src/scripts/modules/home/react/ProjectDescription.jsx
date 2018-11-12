@@ -11,6 +11,7 @@ export default React.createClass({
   getInitialState() {
     return {
       isEditing: false,
+      isSaving: false,
       description: this.props.description
     };
   },
@@ -42,7 +43,15 @@ export default React.createClass({
     editProjectDescription(this.state.description)
       .then(() => {
         this.setState({
-          isEditing: false,
+          isEditing: false
+        });
+      }, () => {
+        this.setState({
+          isEditing: true
+        });
+      })
+      .finally(() => {
+        this.setState({
           isSaving: false
         });
       });
@@ -54,6 +63,7 @@ export default React.createClass({
         <InlineEditArea
           placeholder="Describe project"
           isEditing={this.state.isEditing}
+          isSaving={this.state.isSaving}
           onEditStart={this.handleEditStart}
           onEditCancel={this.handleEditCancel}
           onEditChange={this.handleChange}
