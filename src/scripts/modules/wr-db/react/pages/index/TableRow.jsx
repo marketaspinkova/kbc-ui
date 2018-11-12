@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
-import ActivateDeactivateButton from '../../../../../react/common/ActivateDeactivateButton';
+import classnames from 'classnames';
+import ActivateDeactivateSwitch from '../../../../../react/common/ActivateDeactivateSwitch';
 import Tooltip from '../../../../../react/common/Tooltip';
 import { Check, Loader } from '@keboola/indigo-ui';
 import { Link } from 'react-router';
@@ -36,7 +37,10 @@ export default createReactClass({
   render() {
     if (!this.props.tableExists) {
       return (
-        <div className="tr text-muted">
+        <div className={classnames('tr', {
+          'text-muted': !this.props.tableExists,
+          'row-disabled': !this.props.isTableExported
+        })}>
           {this._renderBody()}
         </div>
       );
@@ -44,7 +48,10 @@ export default createReactClass({
 
     return (
       <Link
-        className="tr"
+        className={classnames('tr', {
+          'text-muted': !this.props.tableExists,
+          'row-disabled': !this.props.isTableExported
+        })}
         to={`${this.props.componentId}-table`}
         params={{
           config: this.props.configId,
@@ -69,14 +76,6 @@ export default createReactClass({
       ),
       <span className="td text-right" key="action">
         {this._renderDeleteButton()}
-        <ActivateDeactivateButton
-          activateTooltip="Select table to upload"
-          deactivateTooltip="Deselect table from upload"
-          isActive={this.props.isTableExported}
-          isPending={this.props.isPending}
-          onChange={this.props.onExportChangeFn}
-          buttonDisabled={this.props.isUpdating}
-        />
         {this.props.tableExists && (
           <Tooltip tooltip="Upload table to Dropbox">
             <RunButtonModal
@@ -105,6 +104,14 @@ export default createReactClass({
             </RunButtonModal>
           </Tooltip>
         )}
+        <ActivateDeactivateSwitch
+          activateTooltip="Select table to upload"
+          deactivateTooltip="Deselect table from upload"
+          isActive={this.props.isTableExported}
+          isPending={this.props.isPending}
+          onChange={this.props.onExportChangeFn}
+          buttonDisabled={this.props.isUpdating}
+        />
       </span>
     ];
   },

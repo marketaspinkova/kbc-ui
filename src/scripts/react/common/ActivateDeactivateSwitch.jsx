@@ -1,5 +1,6 @@
 import React from 'react';
 import Switch from 'rc-switch';
+import { Loader } from '@keboola/indigo-ui';
 import Tooltip from './Tooltip';
 
 export default React.createClass({
@@ -26,18 +27,21 @@ export default React.createClass({
 
     return (
       <Tooltip placement="top" tooltip={tooltip}>
-        <Switch
-          defaultChecked={this.props.isActive}
-          checked={this.props.isActive}
-          disabled={this.props.buttonDisabled || this.props.isPending}
-          onChange={() => this.props.onChange(!this.props.isActive)}
-          onMouseUp={e => {
-            e.stopPropagation();
-            e.preventDefault();
-            console.log(e); // eslint-disable-line
-          }}
-        />
+        <div className="rc-switch-wrapper" onClick={this.handleOnClick}>
+          <Switch
+            defaultChecked={this.props.isActive}
+            checked={this.props.isActive}
+            disabled={this.props.buttonDisabled || this.props.isPending}
+            onChange={() => this.props.onChange(!this.props.isActive)}
+            loadingIcon={this.props.isPending && <Loader />}
+          />
+        </div>
       </Tooltip>
     );
+  },
+
+  handleOnClick(e) {
+    e.preventDefault();
+    e.stopPropagation();
   }
 });

@@ -7,7 +7,6 @@ import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import RunComponentButton from '../../../components/react/components/RunComponentButton';
 import TransformationTypeAndVersionLabel from './TransformationTypeAndVersionLabel';
 import DeleteButton from '../../../../react/common/DeleteButton';
-import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
 import ActivateDeactivateSwitch from '../../../../react/common/ActivateDeactivateSwitch';
 import CreateSandboxButton from './CreateSandboxButton';
 import TransformationsActionCreators from '../../ActionCreators';
@@ -65,6 +64,7 @@ export default createReactClass({
           key="run"
           title={`Run ${this.props.transformation.get('name', this.props.transformation.get('id'))}`}
           component="transformation"
+          disabled={this.props.transformation.get('disabled')}
           mode="button"
           runParams={() => ({
             configBucketId: this.props.bucket.get('id'),
@@ -77,7 +77,7 @@ export default createReactClass({
       );
 
       buttons.push(
-        <ActivateDeactivateButton
+        <ActivateDeactivateSwitch
           key="active"
           activateTooltip="Enable Transformation"
           deactivateTooltip="Disable Transformation"
@@ -87,17 +87,6 @@ export default createReactClass({
         />
       );
     }
-
-    buttons.push(
-      <ActivateDeactivateSwitch
-        key="active2"
-        activateTooltip="Enable Transformation"
-        deactivateTooltip="Disable Transformation"
-        isActive={!this.props.transformation.get('disabled')}
-        isPending={this.props.pendingActions.has('save-disabled')}
-        onChange={this._handleActiveChange}
-      />
-    );
 
     return buttons;
   },

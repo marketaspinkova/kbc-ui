@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
 import OrchestrationActionCreators from '../../ActionCreators';
-import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
+import ActivateDeactivateSwitch from '../../../../react/common/ActivateDeactivateSwitch';
 
 export default createReactClass({
   propTypes: {
@@ -18,7 +18,7 @@ export default createReactClass({
 
   render() {
     return (
-      <ActivateDeactivateButton
+      <ActivateDeactivateSwitch
         activateTooltip="Enable Orchestration"
         deactivateTooltip="Disable Orchestration"
         isActive={this.props.orchestration.get('active')}

@@ -1,6 +1,7 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
+import classnames from 'classnames';
 import DurationWithIcon from '../../../../../react/common/DurationWithIcon';
 import { Finished, JobStatusCircle } from '@keboola/indigo-ui';
 import { Link } from 'react-router';
@@ -31,7 +32,11 @@ export default createReactClass({
     }
 
     return (
-      <Link className="tr" to="orchestration" params={{ orchestrationId: this.props.orchestration.get('id') }}>
+      <Link
+        className={classnames('tr', { 'row-disabled': !this.props.orchestration.get('active') })}
+        to="orchestration"
+        params={{ orchestrationId: this.props.orchestration.get('id') }}
+      >
         <span className="td">
           <JobStatusCircle status={lastExecutedJob && lastExecutedJob.get('status')} />
         </span>
@@ -39,8 +44,7 @@ export default createReactClass({
           {this.props.orchestration.get('name')}
         </span>
         <span className="td">
-          {lastExecutedJob &&
-            lastExecutedJob.get('startTime') && (
+          {lastExecutedJob && lastExecutedJob.get('startTime') && (
             <Finished showIcon endTime={lastExecutedJob && lastExecutedJob.get('startTime')} />
           )}
         </span>

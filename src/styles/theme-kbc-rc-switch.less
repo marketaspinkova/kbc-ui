@@ -1,31 +1,43 @@
+.rc-switch-wrapper {
+  display: inline;
+  padding: 7px 12px;
+}
+
 .rc-switch {
   position: relative;
   display: inline-block;
   box-sizing: border-box;
-  width: 80px;
-  height: 40px;
-  line-height: 36px;
+  width: 38px;
+  height: 18px;
+  line-height: 16px;
+  padding: 0;
   vertical-align: middle;
-  border-radius: 20px 20px;
-  border: 1px solid #F84025;
-  background-color: #F84025;
+  border-radius: 18px 18px;
+  border: 1px solid #bdc0c9;
+  background-color: #bdc0c9;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.35, 0, 0.25, 1);
 
-  &-inner {
-    color:#9B210F;
-    font-size: 24px;
-    position: absolute;
-    left: 50px;
-    top: 0px;
+  & > .fa-spinner {
+    position: relative;
+    right: auto;
+    left: 8px;
   }
 
-  &:after{
+  &-inner {
+    color: #4a6921;
+    font-size: 10px;
     position: absolute;
-    width: 30px;
-    height: 30px;
-    left: 4px;
-    top: 4px;
+    left: 24px;
+    top: 0;
+  }
+
+  &:after {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    left: 2px;
+    top: 1px;
     border-radius: 50% 50%;
     background-color: #fff;
     content: " ";
@@ -49,30 +61,36 @@
   }
 
   &-checked {
-    border: 1px solid #96d130;
-    background-color: #96d130;
+    border: 1px solid #a0c66f;
+    background-color: #a0c66f;
 
     .rc-switch-inner {
-      left: 12px;
+      left: 6px;
     }
 
-    &:after{
-      left: 44px;
+    &:after {
+      left: 20px;
+    }
+
+    & > .fa-spinner {
+      position: relative;
+      right: 8px;
+      left: auto;
     }
   }
 
-  &-disabled{
+  &-disabled {
     cursor: no-drop;
     background: #ccc;
     border-color: #ccc;
 
-    &:after{
+    &:after {
       background: #9e9e9e;
       animation-name: none;
       cursor: no-drop;
     }
 
-    &:hover:after{
+    &:hover:after {
       transform: scale(1);
       animation-name: none;
     }
@@ -87,6 +105,34 @@
     white-space: normal;
     pointer-events: none;
     user-select: text;
+  }
+
+  &-big {
+    width: 80px;
+    height: 40px;
+    line-height: 36px;
+
+    &:after {
+      width: 30px;
+      height: 30px;
+      left: 4px;
+      top: 3px;
+    }
+
+    .rc-switch-inner {
+      font-size: 19px;
+      left: 49px;
+    }
+
+    &.rc-switch-checked {
+      .rc-switch-inner {
+        left: 16px;
+      }
+
+      &:after {
+        left: 42px;
+      }
+    }
   }
 }
 
