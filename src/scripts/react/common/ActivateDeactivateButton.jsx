@@ -70,7 +70,7 @@ export default createReactClass({
   renderLink() {
     return (
       <a onClick={this.handleClick} disabled={this.props.isPending || this.props.buttonDisabled}>
-        {this.props.isPending ? <Loader className="fa-fw"/> : this.renderIcon(!this.props.isActive)} {this.tooltip()}
+        {this.props.isPending ? <Loader className="fa-fw" /> : this.renderIcon(!this.props.isActive)} {this.tooltip()}
       </a>
     );
   },
