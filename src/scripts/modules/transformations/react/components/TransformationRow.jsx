@@ -2,11 +2,13 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
+import classnames from 'classnames';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import RunComponentButton from '../../../components/react/components/RunComponentButton';
 import TransformationTypeAndVersionLabel from './TransformationTypeAndVersionLabel';
 import DeleteButton from '../../../../react/common/DeleteButton';
 import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
+import ActivateDeactivateSwitch from '../../../../react/common/ActivateDeactivateSwitch';
 import CreateSandboxButton from './CreateSandboxButton';
 import TransformationsActionCreators from '../../ActionCreators';
 import descriptionExcerpt from '../../../../utils/descriptionExcerpt';
@@ -86,6 +88,17 @@ export default createReactClass({
       );
     }
 
+    buttons.push(
+      <ActivateDeactivateSwitch
+        key="active2"
+        activateTooltip="Enable Transformation"
+        deactivateTooltip="Disable Transformation"
+        isActive={!this.props.transformation.get('disabled')}
+        isPending={this.props.pendingActions.has('save-disabled')}
+        onChange={this._handleActiveChange}
+      />
+    );
+
     return buttons;
   },
 
@@ -94,7 +107,7 @@ export default createReactClass({
     if (isKnownTransformationType(this.props.transformation)) {
       return (
         <Link
-          className="tr"
+          className={classnames('tr', { 'row-disabled': this.props.transformation.get('disabled') })}
           to="transformationDetail"
           params={{row: this.props.transformation.get('id'), config: this.props.bucket.get('id')}}
         >
