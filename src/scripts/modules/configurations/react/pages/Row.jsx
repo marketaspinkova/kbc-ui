@@ -126,8 +126,6 @@ export default React.createClass({
           key="activate"
           activateTooltip="Enable"
           deactivateTooltip="Disable"
-          activateLabel="Enable"
-          deactivateLabel="Disable"
           isActive={!this.state.row.get('isDisabled', false)}
           isPending={this.state.isEnableDisablePending}
           onChange={function() {
