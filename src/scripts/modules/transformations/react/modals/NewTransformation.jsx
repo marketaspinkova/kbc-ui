@@ -21,8 +21,8 @@ function prepareDataForCreate(data) {
         .set('queries', [
           '-- This is a sample query.\n' +
           '-- Adjust accordingly to your input mapping, output mapping\n' +
-          '-- and desired functionality.\n' +
-          'CREATE VIEW `out_table` AS SELECT * FROM `in_table`;'
+          '-- and desired functionality.\n\n' +
+          '-- CREATE TABLE "out_table" AS SELECT * FROM "in_table";*/'
         ]);
       break;
     case 'redshift':
@@ -31,8 +31,8 @@ function prepareDataForCreate(data) {
         .set('queries', [
           '-- This is a sample query.\n' +
           '-- Adjust accordingly to your input mapping, output mapping\n' +
-          '-- and desired functionality.\n' +
-          'CREATE TABLE "out_table" AS SELECT * FROM "in_table";'
+          '-- and desired functionality.\n\n' +
+          '-- CREATE TABLE "out_table" AS SELECT * FROM "in_table";'
         ]);
       break;
     case 'snowflake':
@@ -41,8 +41,8 @@ function prepareDataForCreate(data) {
         .set('queries', [
           '-- This is a sample query.\n' +
           '-- Adjust accordingly to your input mapping, output mapping\n' +
-          '-- and desired functionality.\n' +
-          'CREATE TABLE "out_table" AS SELECT * FROM "in_table";'
+          '-- and desired functionality.\n\n' +
+          '-- CREATE TABLE "out_table" AS SELECT * FROM "in_table";'
         ]);
       break;
     case 'r':
@@ -52,9 +52,9 @@ function prepareDataForCreate(data) {
           '# This is a sample script.\n' +
           '# Adjust accordingly to your input mapping, output mapping\n' +
           '# and desired functionality.\n\n' +
-          'input_data <- read.csv(file = "in/tables/input.csv");\n' +
-          'result <- input_data\n' +
-          'write.csv(result, file = "out/tables/output.csv", row.names = FALSE)'
+          '# input_data <- read.csv(file = "in/tables/input.csv");\n' +
+          '# result <- input_data\n' +
+          '# write.csv(result, file = "out/tables/output.csv", row.names = FALSE)'
         ]);
       break;
     case 'python':
@@ -64,6 +64,7 @@ function prepareDataForCreate(data) {
           '# This is a sample script.\n' +
           '# Adjust accordingly to your input mapping, output mapping\n' +
           '# and desired functionality.\n\n' +
+          '\'\'\'\n' +
           'import csv\n' +
           '\n' +
           'with open(\'in/tables/input.csv\', mode=\'rt\', encoding=\'utf-8\') as in_file, open(\'out/tables/output.csv\', mode=\'wt\', encoding=\'utf-8\') as out_file:\n' +
@@ -74,11 +75,19 @@ function prepareDataForCreate(data) {
           '\n' +
           '    for row in reader:\n' +
           '        # do something and write row\n' +
-          '        writer.writerow(row)'
+          '        writer.writerow(row)' +
+          '\n' +
+          '\'\'\''
         ]);
       break;
     case 'openrefine':
-      newData = newData.set('backend', 'docker').set('type', 'openrefine');
+      newData = newData.set('backend', 'docker')
+        .set('type', 'openrefine')
+        .set('queries', [
+          '# This is a sample query.\n' +
+          '# Adjust accordingly to your input mapping, output mapping\n' +
+          '# and desired functionality.'
+        ]);
       break;
 
     default:
