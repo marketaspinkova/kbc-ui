@@ -52,7 +52,7 @@ export default React.createClass({
     return (
       <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
         <InlineEditArea
-          placeholder="Click to edit project description"
+          placeholder="Describe project"
           isEditing={this.state.isEditing}
           onEditStart={this.handleEditStart}
           onEditCancel={this.handleEditCancel}
