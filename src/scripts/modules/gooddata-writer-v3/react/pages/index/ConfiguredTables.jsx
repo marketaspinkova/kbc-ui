@@ -8,6 +8,7 @@ import ActivateDeactivateButton from '../../../../../react/common/ActivateDeacti
 import RunLoadButton from '../../components/RunLoadButton';
 
 import Tooltip from '../../../../../react/common/Tooltip';
+import Confirm from '../../../../../react/common/Confirm';
 import {Loader} from '@keboola/indigo-ui';
 
 
@@ -73,15 +74,20 @@ export default React.createClass({
   renderDeleteButton(tableId) {
     const isPending = this.props.isTablePending([tableId, 'delete']);
     return (
-      <Tooltip key="deletebutton" placement="top" tooltip="delete">
-        <button disabled={this.props.isSaving}
-          className="btn btn-link" onClick={(e) => this.deleteTable(e, tableId)}>
-          { isPending
-            ? <Loader className="fa-fw"/>
-            : <i className="kbc-icon-cup fa fa-fw"/>
-          }
+      <Confirm
+        text={`Do you really want to delete table ${tableId} from the confuration?`}
+        title={`Delete table ${tableId}`}
+        buttonLabel="Delete"
+        onConfirm={(e) => this.deleteTable(e, tableId)}>
+        <button disabled={this.props.isSaving} className="btn btn-link">
+          <Tooltip key="deletebutton" placement="top" tooltip="delete">
+            { isPending
+              ? <Loader className="fa-fw"/>
+              : <i className="kbc-icon-cup fa fa-fw"/>
+            }
+          </Tooltip>
         </button>
-      </Tooltip>
+      </Confirm>
     );
   },
 
