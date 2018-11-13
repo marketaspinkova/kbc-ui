@@ -9,7 +9,6 @@ import RunComponentButton from '../../../components/react/components/RunComponen
 import DeleteButton from '../../../../react/common/DeleteButton';
 import StorageBucketsStore from '../../../components/stores/StorageBucketsStore';
 import StorageTablesStore from '../../../components/stores/StorageTablesStore';
-import {ExternalLink} from '@keboola/indigo-ui';
 
 var SnowflakeSandbox = React.createClass({
   mixins: [createStoreMixin(SnowflakeSandboxCredentialsStore, StorageBucketsStore, StorageTablesStore)],
@@ -76,14 +75,15 @@ var SnowflakeSandbox = React.createClass({
             </RunComponentButton>
           </div>
           <div>
-            <ExternalLink
-              href={connectLink}
-              className="btn btn-link"
-              disabled={this.state.pendingActions.size > 0}
-            >
-              <span className="fa fa-fw fa-database" />
-              &nbsp;Connect
-            </ExternalLink>
+            <form action={connectLink} target="_blank">
+              <button
+                type="submit"
+                className="btn btn-link"
+                disabled={this.state.pendingActions.size > 0}
+              >
+                <span className="fa fa-fw fa-database" />&nbsp;Connect
+              </button>
+            </form>
             <div>
               <DeleteButton
                 tooltip="Delete Snowflake Sandbox"
