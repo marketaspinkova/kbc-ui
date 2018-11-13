@@ -26,6 +26,10 @@ export default createReactClass({
     };
   },
 
+  componentWillUnmount() {
+    this.props.onCancel();
+  },
+
   render() {
     return (
       <div className="edit kbc-configuration-editor">
@@ -33,7 +37,7 @@ export default createReactClass({
           <SaveButtons
             isSaving={this.props.isSaving}
             isChanged={this.props.isChanged}
-            onSave={this.handleSave}
+            onSave={this.props.onSave}
             disabled={!this.props.isValid}
             onReset={this.props.onCancel} />
         </div>
@@ -49,7 +53,6 @@ export default createReactClass({
     }
     return (
       <JSONSchemaEditor
-        ref="paramsEditor"
         schema={this.props.schema}
         value={Immutable.fromJS(JSON.parse(this.props.data))}
         onChange={this.handleParamsChange}
@@ -94,14 +97,5 @@ export default createReactClass({
     if (!value.equals(Immutable.fromJS(JSON.parse(this.props.data)))) {
       this.props.onChange(JSON.stringify(value));
     }
-  },
-
-  handleSave() {
-    if (this.refs.paramsEditor) {
-      // json-editor doesn't trigger onChange handler on each key stroke
-      // so sometimes not actualized data were saved https://github.com/keboola/kbc-ui/issues/501
-      this.handleParamsChange(this.refs.paramsEditor.getCurrentValue());
-    }
-    this.props.onSave();
   }
 });

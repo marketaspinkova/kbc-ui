@@ -69,7 +69,7 @@ export default createReactClass({
       disable_properties: this.props.disableProperties,
       object_layout: 'normal',
       required_by_default: false,
-      show_errors: 'interaction'
+      show_errors: 'always'
     };
 
     if (nextReadOnly) {
@@ -82,15 +82,18 @@ export default createReactClass({
 
     this.jsoneditor = new JSONEditor(this.refs.jsoneditor, options);
 
+    this.jsoneditor.on('ready', this.checkHiddenRows);
+
     // When the value of the editor changes, update the JSON output and validation message
     this.jsoneditor.on('change', () => {
       // editor calls onChange after its init causing isChanged = true without any user input. This will prevent calling onChange after editors init
       if (this.state.blockOnChangeOnce) {
         this.setState({ blockOnChangeOnce: false });
-      } else {
-        const json = this.jsoneditor.getValue();
-        this.props.onChange(fromJS(json));
+        return;
       }
+
+      const json = this.jsoneditor.getValue();
+      this.props.onChange(fromJS(json));
 
       if (this.props.onValidation) {
         this.props.onValidation(this.jsoneditor.validate());
@@ -129,5 +132,15 @@ export default createReactClass({
         <div ref="jsoneditor" />
       </form>
     );
+  },
+
+  checkHiddenRows() {
+    const selector = '.kbc-configuration-editor .row > div:not(.col-md-12)';
+
+    Array.from(document.querySelectorAll(selector)).forEach(el => {
+      if (el.style.display === 'none') {
+        el.parentNode.style.display = 'none';
+      }
+    });
   }
 });
