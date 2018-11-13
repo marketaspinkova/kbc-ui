@@ -78,6 +78,12 @@ module.exports = function(options) {
     resolve: {
       extensions: ['*', '.js', '.jsx', '.coffee']
     },
+    devServer: {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers': '*'
+        }
+    },
     module: {
       // via http://andrewhfarmer.com/aws-sdk-with-webpack/
       noParse: /aws\-sdk/,
