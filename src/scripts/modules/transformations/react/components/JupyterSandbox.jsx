@@ -81,7 +81,7 @@ var JupyterSandbox = React.createClass({
         <span>
           <CreateDockerSandboxModal
             show={this.state.showModal}
-            close={this.closeModal}
+            close={this.handleClose}
             create={this._createCredentials}
             tables={this.tablesList()}
             type="Jupyter"
@@ -134,8 +134,11 @@ var JupyterSandbox = React.createClass({
   _dropCredentials: function() {
     return CredentialsActionCreators.dropJupyterSandboxCredentials();
   },
-  closeModal() {
-    this.setState({ showModal: false });
+  handleClose() {
+    this.setState({
+      showModal: false,
+      sandboxConfiguration: Immutable.Map()
+    });
   },
   openModal() {
     this.setState({ showModal: true });

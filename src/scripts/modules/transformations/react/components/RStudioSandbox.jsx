@@ -81,7 +81,7 @@ var RStudioSandbox = React.createClass({
         <span>
           <CreateDockerSandboxModal
             show={this.state.showModal}
-            close={this.closeModal}
+            close={this.handleClose}
             create={this._createCredentials}
             tables={this.tablesList()}
             type="RStudio"
@@ -133,8 +133,11 @@ var RStudioSandbox = React.createClass({
   _dropCredentials: function() {
     return CredentialsActionCreators.dropRStudioSandboxCredentials();
   },
-  closeModal() {
-    this.setState({ showModal: false });
+  handleClose() {
+    this.setState({
+      showModal: false,
+      sandboxConfiguration: Immutable.Map()
+    });
   },
   openModal() {
     this.setState({ showModal: true });
