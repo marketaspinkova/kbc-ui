@@ -130,7 +130,16 @@ const snowflake = [
   'boolean',
   { char: { defaultSize: '255' } },
   { character: { defaultSize: '255' } },
-  { varchar: { defaultSize: '255', options: ['255', '65535', { value: '16777213', label: '16M ' }] } },
+  {
+    varchar: {
+      defaultSize: '255',
+      options: [
+        { value: '255', label: '255 ' },
+        { value: '65535', label: '65535 ' },
+        { value: '16777213', label: '16M ' }
+      ]
+    }
+  },
   { string: { defaultSize: '255' } },
   { text: { defaultSize: '16777216' } },
   { binary: { defaultSize: '255' } },
@@ -187,6 +196,16 @@ const thoughtspot = [
   'date',
   'time',
   'datetime'
+];
+
+export const defaultDataTypes = [
+  'INT',
+  'BIGINT',
+  { VARCHAR: { defaultSize: '255' } },
+  'TEXT',
+  { DECIMAL: { defaultSize: '12,2' } },
+  'DATE',
+  'DATETIME'
 ];
 
 export default {
