@@ -9,6 +9,7 @@ import StorageBucketsStore from '../../../components/stores/StorageBucketsStore'
 import StorageTablesStore from '../../../components/stores/StorageTablesStore';
 import CreateDockerSandboxModal from '../modals/CreateDockerSandboxModal';
 import ExtendJupyterCredentials from '../../../provisioning/react/components/ExtendJupyterCredentials';
+import {ExternalLink} from '@keboola/indigo-ui';
 
 var JupyterSandbox = React.createClass({
   mixins: [createStoreMixin(JupyterSandboxCredentialsStore, StorageBucketsStore, StorageTablesStore)],
@@ -46,15 +47,14 @@ var JupyterSandbox = React.createClass({
       return (
         <div>
           <div>
-            <a
+            <ExternalLink
               href={this._connectLink(this.state.credentials)}
               className="btn btn-link"
-              target="_blank"
               disabled={this.state.pendingActions.size > 0}
             >
               <span className="fa fa-fw fa-database" />
               &nbsp;Connect
-            </a>
+            </ExternalLink>
             <div>
               <DeleteButton
                 tooltip="Delete Jupyter Sandbox"

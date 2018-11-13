@@ -5,7 +5,7 @@ import AuthorizationForm from './AuthorizationForm';
 import DirectTokenInsertFields from './DirectTokenInsertFields';
 import CustomAuthorizationFields from './CustomAuthorizationFields';
 import * as oauthUtils from '../OauthUtils';
-import {Loader} from '@keboola/indigo-ui';
+import {Loader, ExternalLink} from '@keboola/indigo-ui';
 import { Button, ButtonToolbar, Modal, Tabs, Tab } from 'react-bootstrap';
 
 const DIRECT_TOKEN_COMPONENTS = ['keboola.ex-facebook', 'keboola.ex-facebook-ads', 'keboola.ex-instagram'];
@@ -110,9 +110,9 @@ export default React.createClass({
   renderExternal() {
     const externalLink = this.state.externalLink ? (
       <pre>
-        <a href={this.state.externalLink} target="_blank">
+        <ExternalLink href={this.state.externalLink}>
           {this.state.externalLink}
-        </a>
+        </ExternalLink>
         <div style={{paddingTop: '10px'}}>
           <Clipboard text={this.state.externalLink} label="Copy link to clipboard" />
         </div>

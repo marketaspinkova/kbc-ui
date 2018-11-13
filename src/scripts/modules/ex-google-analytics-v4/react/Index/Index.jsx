@@ -19,6 +19,7 @@ import RunComponentButton from '../../../components/react/components/RunComponen
 import DeleteConfigurationButton from '../../../components/react/components/DeleteConfigurationButton';
 import EmptyState from '../../../components/react/components/ComponentEmptyState';
 import {Link} from 'react-router';
+import {ExternalLink} from '@keboola/indigo-ui';
 import ProfileInfo from '../ProfileInfo';
 import LatestJobs from '../../../components/react/components/SidebarJobs';
 import LatestVersions from '../../../components/react/components/SidebarVersionsWrapper';
@@ -118,9 +119,9 @@ export default function(componentId) {
                 </li>
                 : null }
               <li>
-                <a href={this.state.component.get('documentationUrl')} target="_blank">
+                <ExternalLink href={this.state.component.get('documentationUrl')}>
                   <i className="fa fa-question-circle fa-fw" /> Documentation
-                </a>
+                </ExternalLink>
               </li>
               <li>
                 <DeleteConfigurationButton

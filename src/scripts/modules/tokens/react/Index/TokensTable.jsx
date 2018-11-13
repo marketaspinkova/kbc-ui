@@ -5,7 +5,7 @@ import TokenAge from './TokenAge';
 
 import Tooltip from '../../../../react/common/Tooltip';
 import Confirm from '../../../../react/common/Confirm';
-import {Loader} from '@keboola/indigo-ui';
+import {Loader, ExternalLink} from '@keboola/indigo-ui';
 import RefreshTokenModal from './RefreshTokenModal';
 import SendTokenModal from './SendTokenModal';
 import ExpiresInfo from '../tokenEditor/ExpiresInfo';
@@ -35,7 +35,7 @@ export default React.createClass({
         {this.renderTokenSendModal()}
         <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
           <p>
-            Create new <a target="_blank" href="https://help.keboola.com/storage/tokens/">token</a> and limit access to specific buckets or components in you project.
+            Create new <ExternalLink href="https://help.keboola.com/storage/tokens/">token</ExternalLink> and limit access to specific buckets or components in you project.
             <Link to="tokens-detail" params={{tokenId: 'new-token'}} className="btn btn-success pull-right">
               + New Token
             </Link>

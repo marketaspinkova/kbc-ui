@@ -21,7 +21,7 @@ import RunComponentButton from '../../../components/react/components/RunComponen
 import DeleteConfigurationButton from '../../../components/react/components/DeleteConfigurationButton';
 import QueriesTable from './QueriesTable';
 import EmptyState from '../../../components/react/components/ComponentEmptyState';
-// import {Link} from 'react-router';
+import {ExternalLink} from '@keboola/indigo-ui';
 import LatestJobs from '../../../components/react/components/SidebarJobs';
 import LatestVersions from '../../../components/react/components/SidebarVersionsWrapper';
 import AccountsManagerModal from './AccountsManagerModal.jsx';
@@ -130,9 +130,9 @@ export default function(COMPONENT_ID) {
                 </RunComponentButton>
               </li>
               <li>
-                <a href={this.state.component.get('documentationUrl')} target="_blank">
+                <ExternalLink href={this.state.component.get('documentationUrl')}>
                   <i className="fa fa-question-circle fa-fw" /> Documentation
-                </a>
+                </ExternalLink>
               </li>
               <li>
                 <DeleteConfigurationButton

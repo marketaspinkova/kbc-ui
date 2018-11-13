@@ -10,7 +10,7 @@ import DockerCredentialsContainer from '../components/DockerCredentialsContainer
 import ConnectToMySqlSandbox from '../components/ConnectToMySqlSandbox';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import ExtendMySqlCredentials from '../../../provisioning/react/components/ExtendMySqlCredentials';
-
+import {ExternalLink} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -198,10 +198,10 @@ export default React.createClass({
     }
     return (
       <div>
-        <a href={'https://' + this.props.snowflakeCredentials.get('hostname') + '/console/login#/?returnUrl=sql/worksheet'} target="_blank" className="btn btn-link">
+        <ExternalLink href={'https://' + this.props.snowflakeCredentials.get('hostname') + '/console/login#/?returnUrl=sql/worksheet'} className="btn btn-link">
           <span className="fa fa-fw fa-database" />
           <span> Connect</span>
-        </a>
+        </ExternalLink>
       </div>
     );
   },

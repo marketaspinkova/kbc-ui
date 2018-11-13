@@ -94,11 +94,6 @@ export default React.createClass({
                 You are about to run an extraction of all configured sheets.
               </RunComponentButton>
             </li>
-            {/* <li>
-                <a href={this.state.component.get('documentationUrl')} target="_blank">
-                <i className="fa fa-question-circle fa-fw" /> Documentation
-                </a>
-                </li> */}
             <li>
               <DeleteConfigurationButton
                 componentId={COMPONENT_ID}

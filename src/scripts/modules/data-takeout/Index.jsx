@@ -2,6 +2,7 @@ import React from 'react';
 import {Map} from 'immutable';
 import {Link} from 'react-router';
 import Form from './Form';
+import { ExternalLink } from '@keboola/indigo-ui';
 
 import actionCreators from '../components/InstalledComponentsActionCreators';
 import createStoreMixin from '../../react/mixins/createStoreMixin';
@@ -51,7 +52,7 @@ export default React.createClass({
           </div>
           <div className="row">
             <p>
-              Export this project to <a href="http://aws.amazon.com/s3/" target="_blank">AWS Simple Storage Service (S3)</a>.
+              Export this project to <ExternalLink href="http://aws.amazon.com/s3/">AWS Simple Storage Service (S3)</ExternalLink>.
             </p>
             <p>
               <strong>
@@ -64,9 +65,9 @@ export default React.createClass({
               <li>All component configurations</li>
             </ul>
             <p>
-              <a href="https://help.keboola.com/management/project-export/" target="_blank">
+              <ExternalLink href="https://help.keboola.com/management/project-export/">
                 Read more in Data Takeout documentation
-              </a>
+              </ExternalLink>
             </p>
           </div>
           <div className="row">

@@ -10,7 +10,7 @@ import SshTunnelRow from '../../../../../react/common/SshTunnelRow';
 import TestCredentialsButton from '../../../../../react/common/TestCredentialsButtonGroup';
 import contactSupport from '../../../../../utils/contactSupport';
 import { Input, FormControls } from '../../../../../react/common/KbcBootstrap';
-import { Protected } from '@keboola/indigo-ui';
+import { Protected, ExternalLink } from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -186,9 +186,9 @@ export default React.createClass({
     const value = this.props.credentials.get(propName);
     if (this.props.componentId === 'keboola.wr-db-snowflake' && propName === 'host') {
       return (
-        <a href={`https://${value}`} target="_blank">
+        <ExternalLink href={`https://${value}`}>
           {value}
-        </a>
+        </ExternalLink>
       );
     } else {
       return value;

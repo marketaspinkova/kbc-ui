@@ -1,7 +1,6 @@
 import React from 'react';
-
 import ApplicationStore from '../../../../stores/ApplicationStore';
-
+import { ExternalLink } from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -15,9 +14,7 @@ export default React.createClass({
 
   render() {
     return (
-      <a
-        target="_blank"
-        href={this.tableUrl()}>{this.props.children}</a>
+      <ExternalLink href={this.tableUrl()}>{this.props.children}</ExternalLink>
     );
   }
 

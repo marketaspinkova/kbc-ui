@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import CodeMirror from 'react-code-mirror';
+import { ExternalLink } from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -40,7 +41,7 @@ export default React.createClass({
             <CodeMirror {...codeMirrorParams} />
           </div>
           <div className="small help-block">
-            Learn more about <a href="https://developers.keboola.com/integrate/docker-runner/processors/" target="_blank">Processors</a>
+            Learn more about <ExternalLink href="https://developers.keboola.com/integrate/docker-runner/processors/">Processors</ExternalLink>
           </div>
         </div>
       </div>

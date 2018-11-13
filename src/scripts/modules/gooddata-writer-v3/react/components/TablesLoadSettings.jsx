@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import {Form, FormGroup, Checkbox, HelpBlock} from 'react-bootstrap';
-import {Loader} from '@keboola/indigo-ui';
+import {Loader, ExternalLink} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -43,9 +43,9 @@ export default React.createClass({
           </Checkbox>
           <HelpBlock>
             if checked, tables will be integrated all at once otherwise one by one. For more info see {' '}
-            <a href="https://help.gooddata.com/display/doc/Multiload+of+CSV+Data" target="_blank noopener noreferrer">
+            <ExternalLink href="https://help.gooddata.com/display/doc/Multiload+of+CSV+Data">
               https://help.gooddata.com/display/doc/Multiload+of+CSV+Data
-            </a>
+            </ExternalLink>
           </HelpBlock>
 
         </FormGroup>

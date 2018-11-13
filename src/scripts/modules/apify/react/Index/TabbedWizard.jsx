@@ -4,6 +4,7 @@ import {RadioGroup} from 'react-radio-group';
 import RadioGroupInput from '../../../../react/common/RadioGroupInput';
 import SapiTableSelector from '../../../components/react/components/SapiTableSelector';
 import ApifyObjectSelector from './ApifyObjectSelector';
+import { ExternalLink } from '@keboola/indigo-ui';
 
 export const CRAWLER_KEY = 1;
 export const AUTH_KEY = 2;
@@ -196,7 +197,7 @@ export default React.createClass({
             <div className="col-xs-10">
               {editor}
               <div className="help-text">
-              Optional parameter. Specifies a JSON object with properties that override the default crawler settings. For more information, see <a href="https://www.apify.com/docs#crawlers" target="_blank" rel="noopener noreferrer">documentation</a>.
+              Optional parameter. Specifies a JSON object with properties that override the default crawler settings. For more information, see <ExternalLink href="https://www.apify.com/docs#crawlers">documentation</ExternalLink>.
               </div>
             </div>
           </div>
@@ -238,8 +239,8 @@ export default React.createClass({
   },
 
   renderTokenForm() {
-    const userHelp = <span>User ID from your <a href="https://my.apify.com/account#/integrations" target="_blank" rel="noopener noreferrer">account page</a>.</span>;
-    const tokenHelp = <span>API token from your <a href="https://my.apify.com/account#/integrations" target="_blank" rel="noopener noreferrer">account page</a>.</span>;
+    const userHelp = <span>User ID from your <ExternalLink href="https://my.apify.com/account#/integrations">account page</ExternalLink>.</span>;
+    const tokenHelp = <span>API token from your <ExternalLink href="https://my.apify.com/account#/integrations">account page</ExternalLink>.</span>;
     return (
       <div className="form-horizontal">
         {this.renderInput('User ID', 'userId', userHelp, 'Enter User ID')}

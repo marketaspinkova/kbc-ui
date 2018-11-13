@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Input} from './../../../../react/common/KbcBootstrap';
 import {Button} from 'react-bootstrap';
-import {Loader} from '@keboola/indigo-ui';
+import {Loader, ExternalLink} from '@keboola/indigo-ui';
 import {DateDimensionTemplates} from '../../constants';
 
 export default React.createClass({
@@ -131,9 +131,9 @@ export default React.createClass({
       <small>
         Provide your own template. You can generate the csv file containing all necessary details and provide it to GoodData.
         More info:{' '}
-        <a href="http://wiki.keboola.com/pure-gooddata-hints/custom-date-dimensions" target="_blank">
+        <ExternalLink href="http://wiki.keboola.com/pure-gooddata-hints/custom-date-dimensions">
            Custom date dimmensions
-        </a>
+        </ExternalLink>
       </small>
     );
   },
