@@ -8,7 +8,6 @@ import MergePhasesModal from '../../modals/MergePhasesModal';
 import MoveTasksModal from '../../modals/MoveTasksModal';
 import AddTaskModal from '../../modals/add-task/AddTaskModal';
 import EmptyState from '../../../../components/react/components/ComponentEmptyState';
-import { DropdownButton } from 'react-bootstrap';
 import { Table, DropdownButton } from 'react-bootstrap';
 import AboutPhases from '../../components/AboutPhases';
 import ComponentsStore from '../../../../components/stores/ComponentsStore';
