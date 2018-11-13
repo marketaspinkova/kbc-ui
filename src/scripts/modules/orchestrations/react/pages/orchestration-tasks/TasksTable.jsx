@@ -23,8 +23,8 @@ export default React.createClass({
       <Table responsive stripped>
         <thead>
           <tr>
-            <th>Component</th>
-            <th>Configuration</th>
+            <th style={{ width: '31%' }}>Component</th>
+            <th style={{ width: '31%' }}>Configuration</th>
             <th style={{ width: '12%' }}>Action</th>
             <th style={{ width: '8%' }}>Active</th>
             <th style={{ width: '8%' }}>Continue on Failure</th>
