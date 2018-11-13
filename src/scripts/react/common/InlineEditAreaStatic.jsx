@@ -6,14 +6,11 @@ export default React.createClass({
     text: React.PropTypes.string,
     placeholder: React.PropTypes.string,
     editTooltip: React.PropTypes.string,
-    onCancel: React.PropTypes.func,
     onEditStart: React.PropTypes.func
   },
 
   render() {
-    const { text, ...props } = this.props;
-
-    return <div {...props}>{text ? this.renderText() : this.renderEdit()}</div>;
+    return <div>{this.props.text ? this.renderText() : this.renderEdit()}</div>;
   },
 
   renderEdit() {
@@ -28,16 +25,16 @@ export default React.createClass({
 
   renderText() {
     return (
-      <span>
-        <div key="button-div" className="text-right">
+      <div>
+        <div className="text-right">
           <button className="btn btn-link" onClick={this.props.onEditStart}>
             <span className="kbc-icon-pencil" /> {this.props.placeholder}
           </button>
         </div>
-        <div key="markdown-div">
+        <div>
           <Markdown source={this.props.text} escapeHtml={true} />
         </div>
-      </span>
+      </div>
     );
   }
 });
