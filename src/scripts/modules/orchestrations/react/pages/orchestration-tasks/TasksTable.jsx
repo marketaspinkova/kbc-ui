@@ -1,5 +1,6 @@
 import React from 'react';
 import { List } from 'immutable';
+import { Table } from 'react-bootstrap';
 import TasksTableRow from './TasksTableRow';
 import PhaseRow from './PhaseRow';
 
@@ -19,15 +20,15 @@ export default React.createClass({
 
   render() {
     return (
-      <table className="table table-stripped kbc-table-layout-fixed">
+      <Table responsive stripped>
         <thead>
           <tr>
             <th>Component</th>
             <th>Configuration</th>
-            <th style={{ width: '12%' }}>Action</th>
-            <th style={{ width: '8%' }}>Active</th>
-            <th style={{ width: '8%' }}>Continue on Failure</th>
-            <th style={{ width: '10%' }} />
+            <th>Action</th>
+            <th>Active</th>
+            <th>Continue on Failure</th>
+            <th />
           </tr>
         </thead>
         <tbody>
@@ -41,7 +42,7 @@ export default React.createClass({
             </tr>
           )}
         </tbody>
-      </table>
+      </Table>
     );
   },
 

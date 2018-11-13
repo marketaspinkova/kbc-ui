@@ -9,6 +9,7 @@ import MoveTasksModal from '../../modals/MoveTasksModal';
 import AddTaskModal from '../../modals/add-task/AddTaskModal';
 import EmptyState from '../../../../components/react/components/ComponentEmptyState';
 import { DropdownButton } from 'react-bootstrap';
+import { Table, DropdownButton } from 'react-bootstrap';
 import AboutPhases from '../../components/AboutPhases';
 import ComponentsStore from '../../../../components/stores/ComponentsStore';
 
@@ -34,16 +35,16 @@ export default React.createClass({
         {this._renderMergePhaseModal()}
         {this._renderMoveTasksModal()}
         {this._renderAddTaskModal()}
-        <table className="table table-stripped kbc-table-layout-fixed">
+        <Table responsive stripped>
           <thead>
             <tr>
-              <th style={{ width: '12%' }}>{this.renderHeaderActionButtons()}</th>
+              <th>{this.renderHeaderActionButtons()}</th>
               <th>Component</th>
               <th>Configuration</th>
-              <th style={{ width: '12%' }}>Action</th>
-              <th style={{ width: '8%' }}>Active</th>
-              <th style={{ width: '8%' }}>Continue on Failure</th>
-              <th style={{ width: '10%' }} />
+              <th>Action</th>
+              <th>Active</th>
+              <th>Continue on Failure</th>
+              <th />
             </tr>
           </thead>
           <tbody>
@@ -57,7 +58,7 @@ export default React.createClass({
               </tr>
             )}
           </tbody>
-        </table>
+        </Table>
       </span>
     );
   },
