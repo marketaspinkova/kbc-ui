@@ -40,10 +40,10 @@ export default React.createClass({
               <th>{this.renderHeaderActionButtons()}</th>
               <th>Component</th>
               <th>Configuration</th>
-              <th>Action</th>
-              <th>Active</th>
-              <th>Continue on Failure</th>
-              <th />
+              <th style={{ width: '12%' }}>Action</th>
+              <th style={{ width: '8%' }}>Active</th>
+              <th style={{ width: '8%' }}>Continue on Failure</th>
+              <th style={{ width: '10%' }} />
             </tr>
           </thead>
           <tbody>
@@ -346,9 +346,11 @@ export default React.createClass({
     const markedPhases = this.props.localState.get('markedPhases');
     let mergedTasks = List();
     // find the best suitable position for new phase
-    const markedPhasesIndexes = markedPhases.filter(isMarked => isMarked === true).map((_, phaseId) => {
-      return this.props.tasks.findIndex(phase => phase.get('id') === phaseId);
-    });
+    const markedPhasesIndexes = markedPhases
+      .filter(isMarked => isMarked === true)
+      .map((_, phaseId) => {
+        return this.props.tasks.findIndex(phase => phase.get('id') === phaseId);
+      });
     const newPhasePosition = markedPhasesIndexes.min();
 
     // filter only those not selected and not choosed to merge to and
