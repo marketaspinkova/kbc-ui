@@ -24,7 +24,7 @@ const TableCell = React.createClass({
       const tableName = this.props.valueFn(this.props.row);
       const bucketId = defaultBucketStage + '.c-' + sanitizedComponentId + '-' + this.props.configurationId;
       if (!tableName) {
-        return (<span>
+        return (<span onClick={e => e.stopPropagation()}>
           Unable to determine table name.<br />
           Check bucket
           {' '}<StorageApiBucketLink bucketId={bucketId}>{bucketId}</StorageApiBucketLink>
