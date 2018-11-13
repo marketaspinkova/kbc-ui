@@ -321,7 +321,7 @@ Dispatcher.register(payload => {
         const isConfigLink = linkParams.get('config') === action.configId;
         const isComponentLink = linkParams.get('component') === action.componentId;
         const isGenericComponentRoute =
-          isConfigLink && isComponentLink && Array.from(genericDetailRoutesNames).includes(routeName);
+          isConfigLink && isComponentLink && genericDetailRoutesNames.includes(routeName);
         const isComponentRoute = isConfigLink && routeName === action.componentId;
         const isTransformationRoute = isConfigLink && routeName === 'transformationBucket';
 
