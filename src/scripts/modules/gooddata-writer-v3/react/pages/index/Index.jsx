@@ -8,6 +8,7 @@ import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import VersionsStore from '../../../../components/stores/VersionsStore';
 import makeConfigProvisioning from '../../../configProvisioning';
 import makeLocalStateProvisioning from '../../../localStateProvisioning';
+import GoodDataProvisioningStore from '../../../gooddataProvisioning/store';
 
 // helpers
 import tablesProvisioning from '../../../tablesProvisioning';
@@ -28,6 +29,7 @@ import ConfiguredTables from './ConfiguredTables';
 import DimensionsSection from '../../components/DimensionsSection';
 import CredentialsContainer from '../../components/CredentialsContainer';
 import TablesLoadSettings from '../../components/TablesLoadSettings';
+import CredentialsSectionTitle from '../../components/CredentialsSectionTitle';
 
 const COMPONENT_ID = 'keboola.gooddata-writer';
 
@@ -38,9 +40,9 @@ const DimensionsCollapsibleComponent = CollapsibleSection({
 });
 
 const CredentialsCollapsibleComponent = CollapsibleSection({
-  title: 'Gooddata Project',
+  title: CredentialsSectionTitle,
   contentComponent: CredentialsContainer,
-  options: {stretchContentToBody: true}
+  options: {stretchContentToBodye: true}
 });
 
 const LoadSettingsCollapsibleComponent = CollapsibleSection({
@@ -50,7 +52,7 @@ const LoadSettingsCollapsibleComponent = CollapsibleSection({
 
 export default React.createClass({
 
-  mixins: [createStoreMixin(InstalledComponentsStore, LatestJobsStore, VersionsStore)],
+  mixins: [createStoreMixin(InstalledComponentsStore, LatestJobsStore, VersionsStore, GoodDataProvisioningStore)],
 
   getStateFromStores() {
     const configurationId = RoutesStore.getCurrentRouteParam('config');

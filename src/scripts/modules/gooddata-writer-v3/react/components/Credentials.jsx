@@ -53,7 +53,7 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="kbc-inner-padding">
+      <div className="kbc-inner-paddinge">
         <ResetProjectModal
           isReseting={this.props.provisioning.isDeleting}
           show={this.state.showResetProjectModal}
@@ -80,7 +80,7 @@ export default React.createClass({
     const {provisioning: {data, isLoading}, config: {pid}} = this.props;
 
     if (isLoading) {
-      return <Loader />;
+      return <div className="pull-right"><Loader /></div>;
     }
     if (!pid) {
       return this.renderNoCredentials();
@@ -96,7 +96,6 @@ export default React.createClass({
 
   renderKeboolaCredentialsWithSSO() {
     const {pid} = this.props.config;
-    const token = this.props.provisioning.data.get('token');
     const sso = this.props.provisioning.data.get('sso');
     const targetUrl = `/#s=/gdc/projects/${pid}|projectDashboardPage`;
     const submitUrl = 'https://secure.gooddata.com/gdc/account/customerlogin';
@@ -118,23 +117,14 @@ export default React.createClass({
             </div>
           </form>
         </div>
-        <div>
-          <h4>Provisioned By Keboola</h4>
-          <div> Project Id: {pid}</div>
-          <div> Token: {token}</div>
-        </div>
       </div>
     );
   },
 
   renderKeboolaCredentialsWithoutSSO() {
-    const {pid} = this.props.config;
-    const token = this.props.provisioning.data.get('token');
+    // const {pid} = this.props.config;
     return (
-      <div>
-        <h4>Provisioned by Keboola</h4>
-        <div>GoodData Project Id: {pid}</div>
-        <div>Token: {token}</div>
+      <div className="pull-right">
         {this.renderEnableAccessButton()}
         {this.renderResetProjectButton()}
       </div>
