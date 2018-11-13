@@ -77,7 +77,10 @@ export default componentId => {
     },
 
     getInitialState() {
-      return { dataPreview: null };
+      return {
+        dataPreview: null,
+        allColumnsDataTypeOptions: []
+      };
     },
 
     _prepareColumns(configColumns, storageColumns) {
@@ -355,11 +358,16 @@ export default componentId => {
           <select
             defaultValue=""
             onChange={e => {
-              const { value } = e.target;
+              const dataType = e.target.value;
+
+              this.setState({
+                allColumnsDataTypeOptions: this._getDataTypeOptions(dataType)
+              });
+
               return this.state.editingColumns.map(ec => {
-                let newColumn = ec.set('type', value);
-                if (_.isString(this._getSizeParam(value))) {
-                  const defaultSize = this._getSizeParam(value);
+                let newColumn = ec.set('type', dataType);
+                if (_.isString(this._getSizeParam(dataType))) {
+                  const defaultSize = this._getSizeParam(dataType);
                   newColumn = newColumn.set('size', defaultSize);
                 } else {
                   newColumn = newColumn.set('size', '');
@@ -370,6 +378,36 @@ export default componentId => {
           >
             {options}
           </select>
+
+          {this.state.allColumnsDataTypeOptions.length > 0 && (
+            <select
+              defaultValue=""
+              onChange={e => {
+                const size = e.target.value;
+
+                return this.state.editingColumns.map(ec => {
+                  let newColumn = ec.set('size', size);
+                  return this._onEditColumn(newColumn);
+                });
+              }}
+            >
+              {this.state.allColumnsDataTypeOptions.map(option => {
+                if (_.isObject(option)) {
+                  return (
+                    <option value={option.value} key={option.value}>
+                      {option.label}
+                    </option>
+                  );
+                }
+
+                return (
+                  <option value={option} key={option}>
+                    {option}
+                  </option>
+                );
+              })}
+            </select>
+          )}
         </span>
       );
     },
@@ -419,6 +457,12 @@ export default componentId => {
       const dtypes = this._getComponentDataTypes();
       const dt = _.find(dtypes, d => _.isObject(d) && _.keys(d)[0] === dataType);
       return dt && dt[dataType] && dt[dataType].defaultSize;
+    },
+
+    _getDataTypeOptions(dataType) {
+      const dtypes = this._getComponentDataTypes();
+      const dt = _.find(dtypes, d => _.isObject(d) && _.keys(d)[0] === dataType);
+      return (dt && dt[dataType] && dt[dataType].options) || [];
     },
 
     _getDataTypes() {

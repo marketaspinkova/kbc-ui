@@ -130,7 +130,7 @@ const snowflake = [
   'boolean',
   { char: { defaultSize: '255' } },
   { character: { defaultSize: '255' } },
-  { varchar: { defaultSize: '255' } },
+  { varchar: { defaultSize: '255', options: ['255', '65535', { value: '16777213', label: '16M ' }] } },
   { string: { defaultSize: '255' } },
   { text: { defaultSize: '16777216' } },
   { binary: { defaultSize: '255' } },
