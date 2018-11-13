@@ -4,7 +4,7 @@ import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import SnowflakeSandboxCredentialsStore from '../../../provisioning/stores/SnowflakeSandboxCredentialsStore';
 import CredentialsActionCreators from '../../../provisioning/ActionCreators';
 import SnowflakeCredentials from '../../../provisioning/react/components/SnowflakeCredentials';
-import ConfigureSandbox from '../components/ConfigureSandbox';
+import ConfigureSandbox from './ConfigureSandbox';
 import RunComponentButton from '../../../components/react/components/RunComponentButton';
 import DeleteButton from '../../../../react/common/DeleteButton';
 import StorageBucketsStore from '../../../components/stores/StorageBucketsStore';
@@ -66,6 +66,11 @@ var SnowflakeSandbox = React.createClass({
                 backend="snowflake"
                 tables={this.state.tables}
                 buckets={this.state.buckets}
+                onHide={() => {
+                  component.setState({
+                    sandboxConfiguration: Immutable.Map()
+                  });
+                }}
                 onChange={params => {
                   component.setState({
                     sandboxConfiguration: Immutable.fromJS(params)

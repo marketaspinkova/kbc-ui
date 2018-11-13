@@ -5,7 +5,7 @@ import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import MySqlSandboxCredentialsStore from '../../../provisioning/stores/MySqlSandboxCredentialsStore';
 import CredentialsActionCreators from '../../../provisioning/ActionCreators';
 import MySqlCredentials from '../../../provisioning/react/components/MySqlCredentials';
-import ConfigureSandbox from '../components/ConfigureSandbox';
+import ConfigureSandbox from './ConfigureSandbox';
 import ConnectToMySqlSandbox from '../components/ConnectToMySqlSandbox';
 import RunComponentButton from '../../../components/react/components/RunComponentButton';
 import DeleteButton from '../../../../react/common/DeleteButton';
@@ -69,6 +69,11 @@ export default React.createClass({
                 backend="mysql"
                 tables={this.state.tables}
                 buckets={this.state.buckets}
+                onHide={() => {
+                  component.setState({
+                    sandboxConfiguration: Map()
+                  });
+                }}
                 onChange={params => {
                   return component.setState({
                     sandboxConfiguration: fromJS(params)
