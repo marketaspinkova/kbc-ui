@@ -1,6 +1,6 @@
 React = require 'react'
 
-InlineEditText = React.createFactory(require '../../../../../react/common/InlineEditTextInput').default
+InlineEditText = React.createFactory(require('../../../../../react/common/InlineEditTextInput').default)
 actionCreators = require '../../../actionCreators'
 
 module.exports = React.createClass
