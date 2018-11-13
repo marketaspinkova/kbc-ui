@@ -41,7 +41,9 @@ export default (componentId, driver, isProvisioning) => {
     _handleResetSelection() {
       ActionCreators.saveCredentials(componentId, this.state.configId, Map()).then(() => {
         this._updateLocalState('credentialsState', States.INIT);
-        ActionCreators.resetProvisioning(componentId, this.state.configId, driver);
+        if (isProvisioning) {
+          ActionCreators.resetProvisioning(componentId, this.state.configId, driver);
+        }
         ActionCreators.resetCredentials(componentId, this.state.configId);
       });
     },
@@ -79,31 +81,34 @@ export default (componentId, driver, isProvisioning) => {
       const state = this.state.localState.get('credentialsState');
 
       if ([States.SHOW_STORED_CREDS].includes(state)) {
-        return (
-          <div>
-            {isProvisioning && (
-              <button className="btn btn-link" onClick={this._handleResetSelection}>
-                <span className="fa fa-fw fa-times" />
-                {' Reset Credentials'}
-              </button>
-            )}
-          </div>
-        );
+        return <div>{isProvisioning && this.resetSelectionButton()}</div>;
       }
 
       if ([States.CREATE_NEW_CREDS, States.SAVING_NEW_CREDS].includes(state)) {
         return (
-          <SaveButtons
-            isSaving={this.state.isSaving}
-            isChanged={this.state.isEditing}
-            disabled={this.state.isSaving || !this.state.editingCredsValid}
-            onReset={this._handleReset}
-            onSave={this._handleSave}
-          />
+          <div>
+            {this.resetSelectionButton()}
+            <SaveButtons
+              isSaving={this.state.isSaving}
+              isChanged={this.state.isEditing}
+              disabled={this.state.isSaving || !this.state.editingCredsValid}
+              onReset={this._handleReset}
+              onSave={this._handleSave}
+            />
+          </div>
         );
       }
 
       return null;
+    },
+
+    resetSelectionButton() {
+      return (
+        <button className="btn btn-link" onClick={this._handleResetSelection}>
+          <span className="fa fa-fw fa-times" />
+          {' Reset Credentials'}
+        </button>
+      );
     }
   });
 };
