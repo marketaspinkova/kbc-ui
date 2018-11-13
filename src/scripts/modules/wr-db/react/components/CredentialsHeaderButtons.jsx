@@ -1,6 +1,7 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
 import _ from 'underscore';
+import { Map } from 'immutable';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import WrDbStore from '../../store';
 import RoutesStore from '../../../../stores/RoutesStore';
@@ -38,9 +39,11 @@ export default (componentId, driver, isProvisioning) => {
     },
 
     _handleResetSelection() {
-      ActionCreators.resetProvisioning(componentId, this.state.configId, driver);
-      ActionCreators.resetCredentials(componentId, this.state.configId);
-      return this._updateLocalState('credentialsState', States.INIT);
+      ActionCreators.saveCredentials(componentId, this.state.configId, Map()).then(() => {
+        this._updateLocalState('credentialsState', States.INIT);
+        ActionCreators.resetProvisioning(componentId, this.state.configId, driver);
+        ActionCreators.resetCredentials(componentId, this.state.configId);
+      });
     },
 
     _handleReset() {
@@ -60,7 +63,7 @@ export default (componentId, driver, isProvisioning) => {
         }
       });
 
-      return ActionCreators.saveCredentials(componentId, this.state.configId, editingCredentials).then(() => {
+      ActionCreators.saveCredentials(componentId, this.state.configId, editingCredentials).then(() => {
         this._updateLocalState('credentialsState', States.SHOW_STORED_CREDS);
         return RoutesStore.getRouter().transitionTo(componentId, { config: this.state.configId });
       });
