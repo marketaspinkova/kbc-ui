@@ -1,13 +1,12 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
-
+import classnames from 'classnames';
 import {Check} from '@keboola/indigo-ui';
 
 import StorageTableLink from '../../../components/react/components/StorageApiTableLinkEx';
 
-import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
+import ActivateDeactivateSwitch from '../../../../react/common/ActivateDeactivateSwitch';
 import RunExtractionButton from '../../../components/react/components/RunComponentButton';
 
 import QueryDeleteButton from './../components/QueryDeleteButton';
@@ -67,7 +66,8 @@ export default createReactClass({
           config: this.props.configId,
           query: query.get('id')
         }}
-        className="tr">
+        className={classnames('tr', { 'row-disabled': query.get('enabled') })}
+      >
         <span className="td kbc-break-all">
           { query.get('name') ?
             query.get('name')
@@ -92,13 +92,6 @@ export default createReactClass({
             onDeleteFn={() => this.props.deleteQueryFn(query.get('id'))}
             isPending={this.props.isPendingFn(['deleteQuery', query.get('id')])}
           />
-          <ActivateDeactivateButton
-            activateTooltip="Enable Query"
-            deactivateTooltip="Disable Query"
-            isActive={query.get('enabled')}
-            isPending={this.props.isPendingFn(['toggleQuery', query.get('id')])}
-            onChange={() => this.handleToggleQuery(query)}
-          />
           <RunExtractionButton
             title="Run Extraction"
             component={this.props.componentId}
@@ -111,6 +104,13 @@ export default createReactClass({
           >
             You are about to run an extraction.
           </RunExtractionButton>
+          <ActivateDeactivateSwitch
+            activateTooltip="Enable Query"
+            deactivateTooltip="Disable Query"
+            isActive={query.get('enabled')}
+            isPending={this.props.isPendingFn(['toggleQuery', query.get('id')])}
+            onChange={() => this.handleToggleQuery(query)}
+          />
         </span>
       </Link>
     );

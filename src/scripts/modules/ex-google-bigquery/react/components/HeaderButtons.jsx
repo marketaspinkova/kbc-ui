@@ -15,7 +15,7 @@ import actionsProvisioning from '../../actionsProvisioning';
 // ui components
 import QueryDeleteButton from './QueryDeleteButton';
 import RunExtractionButton from '../../../components/react/components/RunComponentButton';
-import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
+import ActivateDeactivateSwitch from '../../../../react/common/ActivateDeactivateSwitch';
 
 // CONSTS
 const COMPONENT_ID = 'keboola.ex-google-bigquery';
@@ -53,14 +53,6 @@ export default createReactClass({
           isPending={this.state.store.isPending(['deleteQuery', queryId])}
           tooltipPlacement="bottom"
         />
-        <ActivateDeactivateButton
-          activateTooltip="Enable Query"
-          deactivateTooltip="Disable Query"
-          isActive={query.get('enabled')}
-          isPending={this.state.store.isPending(['toggleQuery', queryId])}
-          onChange={() => this.handleToggle(queryId)}
-          tooltipPlacement="bottom"
-        />
         <RunExtractionButton
           title="Run Extraction"
           component={COMPONENT_ID}
@@ -74,6 +66,14 @@ export default createReactClass({
         >
           You are about to run an extraction.
         </RunExtractionButton>
+        <ActivateDeactivateSwitch
+          activateTooltip="Enable Query"
+          deactivateTooltip="Disable Query"
+          isActive={query.get('enabled')}
+          isPending={this.state.store.isPending(['toggleQuery', queryId])}
+          onChange={() => this.handleToggle(queryId)}
+          tooltipPlacement="bottom"
+        />
       </div>
     );
   },
