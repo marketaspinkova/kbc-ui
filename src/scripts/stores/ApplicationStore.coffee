@@ -115,4 +115,9 @@ Dispatcher.register (payload) ->
           .set 'notifications', Immutable.fromJS(action.applicationData.notifications)
           .set 'projectTemplates', Immutable.fromJS(action.applicationData.projectTemplates)
 
+    when Constants.ActionTypes.PROJECT_CHANGE_DESCRIPTION_SUCCESS
+      _store = _store.withMutations (store) ->
+        store
+          .setIn(['sapiToken', 'owner', 'description'], action.project.description)
+
 module.exports = ApplicationStore
