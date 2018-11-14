@@ -147,8 +147,6 @@ export default createReactClass({
         <li>
           <ActivateDeactivateButton
             key="activate"
-            activateTooltip="Enable"
-            deactivateTooltip="Disable"
             mode="link"
             isActive={!isTableDisabled}
             isPending={isPendingFn([tableId, 'activate'])}

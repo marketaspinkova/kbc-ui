@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
+import classnames from 'classnames';
 import { Loader, SearchBar } from '@keboola/indigo-ui';
 import RoutesStore from '../../../../../stores/RoutesStore';
 import StorageApiTableLinkEx from '../../../../components/react/components/StorageApiTableLinkEx';
-import ActivateDeactivateButton from '../../../../../react/common/ActivateDeactivateButton';
+import ActivateDeactivateSwitch from '../../../../../react/common/ActivateDeactivateSwitch';
 import Tooltip from '../../../../../react/common/Tooltip';
 import Confirm from '../../../../../react/common/Confirm';
 import matchByWords from '../../../../../utils/matchByWords';
@@ -77,7 +78,10 @@ export default createReactClass({
 
   renderTableRow(table, tableId) {
     return (
-      <div className="tr" key={tableId} onClick={() => this.transitionToTableDetail(tableId)}>
+      <div
+        className={classnames('tr', { 'row-disabled': table.get('disabled') } )}
+        key={tableId}
+        onClick={() => this.transitionToTableDetail(tableId)}>
         <div className="td">
           <StorageApiTableLinkEx tableId={tableId} />
         </div>
@@ -110,8 +114,14 @@ export default createReactClass({
     const isDisabled = table.get('disabled');
     return [
       this.renderDeleteButton(tableId),
-      <ActivateDeactivateButton
-        key={`activate${tableId}`}
+      <RunLoadButton
+        tableId={tableId}
+        isTableDisabled={isDisabled}
+        key="run"
+        getRunParams={this.props.getSingleRunParams}
+      />,
+      <ActivateDeactivateSwitch
+        key="activate"
         activateTooltip="Enable load to GoodData project"
         deactivateTooltip="Disable load to GoodData project"
         isActive={!isDisabled}
