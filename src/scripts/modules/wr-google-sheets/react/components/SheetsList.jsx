@@ -181,8 +181,6 @@ export default createReactClass({
   renderEnabledButton(item) {
     return (
       <ActivateDeactivateSwitch
-        activateTooltip="Enable"
-        deactivateTooltip="Disable"
         isActive={item.get('enabled')}
         isPending={this.props.isPendingFn(item.get('id'))}
         onChange={() => this.props.toggleEnabledFn(item)}
