@@ -14,9 +14,7 @@ export default createReactClass({
     onChange: PropTypes.func.isRequired,
     readOnly: PropTypes.bool.isRequired,
     onValidation: PropTypes.func,
-    isChanged: PropTypes.bool,
-    disableProperties: PropTypes.bool,
-    disableCollapse: PropTypes.bool
+    isChanged: PropTypes.bool
   },
 
   getInitialState() {
@@ -28,9 +26,7 @@ export default createReactClass({
   getDefaultProps() {
     return {
       readOnly: false,
-      schema: Map(),
-      disableProperties: false,
-      disableCollapse: false
+      schema: Map()
     };
   },
 
@@ -61,19 +57,13 @@ export default createReactClass({
       iconlib: 'fontawesome4',
       disable_array_delete_last_row: true,
       disable_array_reorder: true,
-      disable_collapse: this.props.disableCollapse,
+      disable_array_add: true,
+      disable_array_delete: true,
+      disable_collapse: true,
       disable_edit_json: true,
-      disable_properties: this.props.disableProperties,
+      disable_properties: true,
       show_errors: 'always'
     };
-
-    if (nextReadOnly) {
-      options.disable_array_add = true;
-      options.disable_collapse = true;
-      options.disable_edit_json = true;
-      options.disable_properties = true;
-      options.disable_array_delete = true;
-    }
 
     this.jsoneditor = new JSONEditor(this.refs.jsoneditor, options);
 
@@ -115,10 +105,6 @@ export default createReactClass({
 
   componentDidMount() {
     this.initJsonEditor(this.props.value, this.props.readOnly);
-  },
-
-  getCurrentValue() {
-    return fromJS(this.jsoneditor.getValue());
   },
 
   render() {

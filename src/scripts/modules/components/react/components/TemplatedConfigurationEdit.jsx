@@ -59,8 +59,6 @@ export default createReactClass({
         onChange={this.handleParamsChange}
         onValidation={this.handleEditorValidation}
         readOnly={this.props.isSaving}
-        disableCollapse={true}
-        disableProperties={true}
       />
     );
   },
