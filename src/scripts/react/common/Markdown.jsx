@@ -5,13 +5,15 @@ import { PanelWithDetails } from '@keboola/indigo-ui';
 export default React.createClass({
   propTypes: {
     source: React.PropTypes.string,
-    size: React.PropTypes.string
+    size: React.PropTypes.string,
+    collapsible: React.PropTypes.bool
   },
 
   getDefaultProps() {
     return {
       source: '',
-      size: 'normal'
+      size: 'normal',
+      collapsible: true
     };
   },
 
@@ -34,7 +36,7 @@ export default React.createClass({
   render() {
     return (
       <div className="kbc-markdown" ref="container">
-        {this.state.ellipseContent ? (
+        {this.props.collapsible && this.state.ellipseContent ? (
           <PanelWithDetails
             placement="bottom"
             preview={this.props.size}

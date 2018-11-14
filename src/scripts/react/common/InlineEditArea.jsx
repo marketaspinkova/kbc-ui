@@ -12,7 +12,8 @@ export default React.createClass({
     isSaving: React.PropTypes.bool,
     isEditing: React.PropTypes.bool,
     editTooltip: React.PropTypes.string,
-    placeholder: React.PropTypes.string
+    placeholder: React.PropTypes.string,
+    collapsible: React.PropTypes.bool
   },
 
   getDefaultProps() {
@@ -43,6 +44,7 @@ export default React.createClass({
         editTooltip={this.props.editTooltip}
         placeholder={this.props.placeholder}
         onEditStart={this.props.onEditStart}
+        collapsible={this.props.collapsible}
       />
     );
   }

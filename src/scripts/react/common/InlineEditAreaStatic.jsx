@@ -6,7 +6,8 @@ export default React.createClass({
     text: React.PropTypes.string,
     placeholder: React.PropTypes.string,
     editTooltip: React.PropTypes.string,
-    onEditStart: React.PropTypes.func
+    onEditStart: React.PropTypes.func,
+    collapsible: React.PropTypes.bool
   },
 
   render() {
@@ -32,7 +33,7 @@ export default React.createClass({
           </button>
         </div>
         <div>
-          <Markdown source={this.props.text} escapeHtml={true} />
+          <Markdown source={this.props.text} escapeHtml={true} collapsible={this.props.collapsible}/>
         </div>
       </div>
     );
