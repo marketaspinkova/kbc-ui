@@ -7494,7 +7494,6 @@ raw-body@2.3.2:
 rc-switch@~1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/rc-switch/-/rc-switch-1.7.0.tgz#a655f08951d6db94d83f162da5b69506cb703b6f"
-  integrity sha512-G7ynfwK5/w7FN1vOnOlEnKOgJmCbB8pd91rHV7thlXh7NSAzOotn1/dCkk5C//sD/T9RH95WSNVgLFdRxTjpFA==
   dependencies:
     babel-runtime "^6.23.0"
     classnames "^2.2.1"
