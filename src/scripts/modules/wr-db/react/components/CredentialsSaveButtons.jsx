@@ -41,41 +41,6 @@ export default React.createClass({
     };
   },
 
-  _handleReset() {
-    ActionCreators.setEditingData(
-      this.props.componentId,
-      this.props.configId,
-      'creds',
-      credentialsUtils.defaultCredentials(this.props.componentId, this.props.driver, this.state.currentCredentials)
-    );
-  },
-
-  _handleSave() {
-    this._updateLocalState('credentialsState', States.SAVING_NEW_CREDS);
-
-    const editingCredentials = this.state.editingCredentials.map((value, key) => {
-      const isHashed = key[0] === '#';
-      if (isHashed && _.isEmpty(value)) {
-        return this.state.currentCredentials.get(key);
-      } else {
-        return value;
-      }
-    });
-
-    ActionCreators.saveCredentials(this.props.componentId, this.props.configId, editingCredentials).then(() => {
-      this._updateLocalState('credentialsState', States.SHOW_STORED_CREDS);
-      return RoutesStore.getRouter().transitionTo(this.props.componentId, { config: this.props.configId });
-    });
-  },
-
-  _updateLocalState(path, data) {
-    return InstalledComponentsActions.updateLocalState(
-      this.props.componentId,
-      this.props.configId,
-      this.state.localState.setIn(path, data)
-    );
-  },
-
   render() {
     if (![States.CREATE_NEW_CREDS, States.SAVING_NEW_CREDS].includes(this.state.credsState)) {
       return null;
@@ -88,11 +53,46 @@ export default React.createClass({
             isSaving={this.state.isSaving}
             isChanged={this.state.isEditing}
             disabled={this.state.isSaving || !this.state.editingCredsValid}
-            onReset={this._handleReset}
-            onSave={this._handleSave}
+            onReset={this.handleReset}
+            onSave={this.handleSave}
           />
         </div>
       </div>
+    );
+  },
+
+  handleReset() {
+    ActionCreators.setEditingData(
+      this.props.componentId,
+      this.props.configId,
+      'creds',
+      credentialsUtils.defaultCredentials(this.props.componentId, this.props.driver, this.state.currentCredentials)
+    );
+  },
+
+  handleSave() {
+    this.updateLocalState('credentialsState', States.SAVING_NEW_CREDS);
+
+    const editingCredentials = this.state.editingCredentials.map((value, key) => {
+      const isHashed = key[0] === '#';
+      if (isHashed && _.isEmpty(value)) {
+        return this.state.currentCredentials.get(key);
+      } else {
+        return value;
+      }
+    });
+
+    ActionCreators.saveCredentials(this.props.componentId, this.props.configId, editingCredentials).then(() => {
+      this.updateLocalState('credentialsState', States.SHOW_STORED_CREDS);
+      RoutesStore.getRouter().transitionTo(this.props.componentId, { config: this.props.configId });
+    });
+  },
+
+  updateLocalState(path, data) {
+    InstalledComponentsActions.updateLocalState(
+      this.props.componentId,
+      this.props.configId,
+      this.state.localState.setIn(path, data)
     );
   }
 });

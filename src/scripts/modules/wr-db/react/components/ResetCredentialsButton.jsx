@@ -22,16 +22,6 @@ export default (componentId, isProvisioning) => {
       };
     },
 
-    handleReset() {
-      if (this.state.currentCredentials.count()) {
-        return ActionCreators.saveCredentials(componentId, this.state.configId, Map()).then(() => {
-          this.setInitState();
-        });
-      }
-
-      this.setInitState();
-    },
-
     render() {
       const state = this.state.localState.get('credentialsState');
 
@@ -52,6 +42,16 @@ export default (componentId, isProvisioning) => {
           {' Reset Credentials'}
         </button>
       );
+    },
+
+    handleReset() {
+      if (this.state.currentCredentials.count()) {
+        return ActionCreators.saveCredentials(componentId, this.state.configId, Map()).then(() => {
+          this.setInitState();
+        });
+      }
+
+      this.setInitState();
     },
 
     setInitState() {
