@@ -69,6 +69,7 @@ export default React.createClass({
           onEditChange={this.handleChange}
           onEditSubmit={this.handleSubmit}
           text={this.state.description}
+          collapsible={false}
         />
       </div>
     );
