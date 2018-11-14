@@ -20,7 +20,8 @@ export default React.createClass({
     return {
       placeholder: 'Click to edit',
       editTooltip: 'Click to edit',
-      isSaving: false
+      isSaving: false,
+      collapsible: true
     };
   },
 
