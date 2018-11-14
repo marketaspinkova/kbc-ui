@@ -26,10 +26,6 @@ export default createReactClass({
     };
   },
 
-  componentWillUnmount() {
-    this.props.onCancel();
-  },
-
   render() {
     return (
       <div className="edit kbc-configuration-editor">
