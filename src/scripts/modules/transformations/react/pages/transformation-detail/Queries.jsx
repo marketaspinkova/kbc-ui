@@ -32,6 +32,8 @@ export default React.createClass({
     disabled: PropTypes.bool
   },
 
+  queriesBlock: null,
+
   getInitialState() {
     return {
       highlightQueryNumber: null,
@@ -105,7 +107,7 @@ export default React.createClass({
     }
 
     return (
-      <div id="sql-queries-block">
+      <div ref={element => (this.queriesBlock = element)}>
         <AlertBlock type="danger" title={this.validationErrorMessage(this.state.errors)}>
           <Row>
             <Col md={9}>
@@ -159,10 +161,8 @@ export default React.createClass({
               this.props.transformation.get('id'),
               errors.count(),
               () => {
-                const sqlBlock = document.getElementById('sql-queries-block');
-
-                if (sqlBlock) {
-                  sqlBlock.scrollIntoView({
+                if (this.queriesBlock) {
+                  this.queriesBlock.scrollIntoView({
                     behavior: 'smooth',
                     block: 'start'
                   });
