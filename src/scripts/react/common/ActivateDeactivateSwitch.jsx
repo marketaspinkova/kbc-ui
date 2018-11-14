@@ -9,6 +9,7 @@ export default React.createClass({
     isPending: React.PropTypes.bool.isRequired,
     buttonDisabled: React.PropTypes.bool.isRequired,
     onChange: React.PropTypes.func.isRequired,
+    tooltipPlacement: React.PropTypes.string,
     activateTooltip: React.PropTypes.string,
     deactivateTooltip: React.PropTypes.string
   },
@@ -17,6 +18,7 @@ export default React.createClass({
     return {
       isPending: false,
       buttonDisabled: false,
+      tooltipPlacement: 'top',
       activateTooltip: 'Enable',
       deactivateTooltip: 'Disable'
     };
@@ -26,7 +28,7 @@ export default React.createClass({
     const tooltip = this.props.isActive ? this.props.deactivateTooltip : this.props.activateTooltip;
 
     return (
-      <Tooltip placement="top" tooltip={tooltip}>
+      <Tooltip placement={this.props.tooltipPlacement} tooltip={tooltip}>
         <div className="rc-switch-wrapper" onClick={this.handleOnClick}>
           <Switch
             defaultChecked={this.props.isActive}
