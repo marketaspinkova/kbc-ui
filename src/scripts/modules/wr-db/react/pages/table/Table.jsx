@@ -7,7 +7,7 @@ import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import TableNameEdit from './TableNameEdit';
 import ColumnsEditor from './ColumnsEditor';
 import ColumnRow from './ColumnRow';
-import DataTypes from '../../../templates/dataTypes';
+import DataTypes, { defaultDataTypes } from '../../../templates/dataTypes';
 import columnTypeValidation from '../../../columnTypeValidation';
 
 import storageApi from '../../../../components/StorageApi';
@@ -24,16 +24,6 @@ import FiltersDescription from '../../../../components/react/components/generic/
 import IsDockerBasedFn from '../../../templates/dockerProxyApi';
 import IncrementalSetupModal from './IncrementalSetupModal';
 import {Alert} from 'react-bootstrap';
-
-const defaultDataTypes = [
-  'INT',
-  'BIGINT',
-  { VARCHAR: { defaultSize: '255' } },
-  'TEXT',
-  { DECIMAL: { defaultSize: '12,2' } },
-  'DATE',
-  'DATETIME'
-];
 
 export default componentId => {
   return React.createClass({
@@ -382,26 +372,15 @@ export default componentId => {
             <select
               defaultValue=""
               onChange={e => {
-                const size = e.target.value;
-
-                return this.state.editingColumns.map(ec => {
-                  let newColumn = ec.set('size', size);
-                  return this._onEditColumn(newColumn);
+                return this.state.editingColumns.map(column => {
+                  return this._onEditColumn(column.set('size', e.target.value));
                 });
               }}
             >
               {this.state.allColumnsDataTypeOptions.map(option => {
-                if (_.isObject(option)) {
-                  return (
-                    <option value={option.value} key={option.value}>
-                      {option.label}
-                    </option>
-                  );
-                }
-
                 return (
-                  <option value={option} key={option}>
-                    {option}
+                  <option value={option.value} key={option.value}>
+                    {option.label}
                   </option>
                 );
               })}
