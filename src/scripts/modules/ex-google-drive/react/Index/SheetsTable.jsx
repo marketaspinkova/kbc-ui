@@ -1,25 +1,22 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
+import classnames from 'classnames';
 import * as common from '../../common';
-// import {List} from 'immutable';
 import StorageTableLink from '../../../components/react/components/StorageApiTableLinkEx';
 
-import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
+import ActivateDeactivateSwitch from '../../../../react/common/ActivateDeactivateSwitch';
 import RunExtractionButton from '../../../components/react/components/RunComponentButton';
 
 import Tooltip from '../../../../react/common/Tooltip';
 import {Loader, ExternalLink} from '@keboola/indigo-ui';
 import Confirm from '../../../../react/common/Confirm';
 
-// import {Link} from 'react-router';
-
 const COMPONENT_ID = 'keboola.ex-google-drive';
 
 function getDocumentTitle(sheet) {
   return common.sheetFullName(sheet, ' / ');
 }
-
 
 export default createReactClass({
   propTypes: {
@@ -82,7 +79,8 @@ export default createReactClass({
           config: this.props.configId,
           sheetId: sheet.get('id')
         }}
-        className="tr">
+        className={classnames('tr', { 'row-disabled': !sheet.get('enabled') })}>
+
         <div className="td">
           {this.renderGoogleLink(sheet)}
         </div>
@@ -95,13 +93,6 @@ export default createReactClass({
         <div className="td text-right kbc-no-wrap">
           {this.renderEditButton(sheet)}
           {this.renderDeleteButton(sheet)}
-          <ActivateDeactivateButton
-            activateTooltip="Enable Sheet"
-            deactivateTooltip="Disable Sheet"
-            isActive={sheet.get('enabled')}
-            isPending={this.props.isPendingFn(['toggle', sheet.get('id')])}
-            onChange={() => this.props.toggleSheetEnabledFn(sheet.get('id'))}
-          />
           <RunExtractionButton
             title="Run Extraction"
             component={COMPONENT_ID}
@@ -114,6 +105,13 @@ export default createReactClass({
           >
             You are about to run an extraction of {documentTitle}.
           </RunExtractionButton>
+          <ActivateDeactivateSwitch
+            activateTooltip="Enable Sheet"
+            deactivateTooltip="Disable Sheet"
+            isActive={sheet.get('enabled')}
+            isPending={this.props.isPendingFn(['toggle', sheet.get('id')])}
+            onChange={() => this.props.toggleSheetEnabledFn(sheet.get('id'))}
+          />
         </div>
       </div>
     );
