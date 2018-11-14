@@ -1,11 +1,11 @@
 import React from 'react';
-import ColumnRow from './ColumnRow';
 import Hint from '../../../../../react/common/Hint';
 import Tooltip from '../../../../../react/common/Tooltip';
 
 export default React.createClass({
   propTypes: {
     columns: React.PropTypes.object.isRequired,
+    renderRowFn: React.PropTypes.func.isRequired,
     filterColumnFn: React.PropTypes.func.isRequired,
     onToggleHideIgnored: React.PropTypes.func.isRequired,
     editButtons: React.PropTypes.object.isRequired,
@@ -22,6 +22,35 @@ export default React.createClass({
   },
 
   render() {
+    const columns = this.props.columns.filter(column => {
+      let fn = column;
+      if (this.props.editingColumns) {
+        fn = this.props.editingColumns.get(column.get('name'));
+      }
+      return this.props.filterColumnFn(fn);
+    });
+    const rows = columns.map((column, index) => {
+      const cname = column.get('name');
+      let editingColumn = null;
+      let isValid = true;
+      if (this.props.editingColumns) {
+        editingColumn = this.props.editingColumns.get(cname);
+        isValid = this.props.columnsValidation.get(cname, true);
+      }
+
+      return this.props.renderRowFn({
+        key: index,
+        isValid,
+        isSaving: this.props.isSaving,
+        column,
+        editingColumn,
+        dataTypes: this.props.dataTypes,
+        editColumnFn: this.props.editColumnFn,
+        dataPreview: this.props.dataPreview,
+        disabledFields: this.props.disabledColumnFields
+      });
+    });
+
     return (
       <div style={{ overflow: 'scroll' }}>
         <table className="table table-striped kbc-table-editor">
@@ -47,54 +76,20 @@ export default React.createClass({
               <th>{this.props.editButtons}</th>
             </tr>
           </thead>
-          <tbody>{this._renderRows()}</tbody>
+          <tbody>
+            {rows.count() > 0 ? (
+              rows
+            ) : (
+              <tr>
+                <td colSpan="6">
+                  <div className="text-center">No Columns.</div>
+                </td>
+              </tr>
+            )}
+          </tbody>
         </table>
       </div>
     );
-  },
-
-  _renderRows() {
-    const columns = this.props.columns.filter(column => {
-      let fn = column;
-      if (this.props.editingColumns) {
-        fn = this.props.editingColumns.get(column.get('name'));
-      }
-      return this.props.filterColumnFn(fn);
-    });
-
-    if (!columns.count()) {
-      return (
-        <tr>
-          <td colSpan="6">
-            <div className="text-center">No Columns.</div>
-          </td>
-        </tr>
-      );
-    }
-
-    return columns.map((column, index) => {
-      const cname = column.get('name');
-      let editingColumn = null;
-      let isValid = true;
-      if (this.props.editingColumns) {
-        editingColumn = this.props.editingColumns.get(cname);
-        isValid = this.props.columnsValidation.get(cname, true);
-      }
-
-      return (
-        <ColumnRow
-          key={index}
-          isValid={isValid}
-          isSaving={this.props.isSaving}
-          column={column}
-          editingColumn={editingColumn}
-          dataTypes={this.props.dataTypes}
-          editColumnFn={this.props.editColumnFn}
-          dataPreview={this.props.dataPreview}
-          disabledFields={this.props.disabledColumnFields}
-        />
-      );
-    });
   },
 
   _renderNullableHeader() {

@@ -6,7 +6,8 @@ import { capitalize } from 'underscore.string';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import TableNameEdit from './TableNameEdit';
 import ColumnsEditor from './ColumnsEditor';
-import DataTypes, { defaultDataTypes } from '../../../templates/dataTypes';
+import ColumnRow from './ColumnRow';
+import DataTypes from '../../../templates/dataTypes';
 import columnTypeValidation from '../../../columnTypeValidation';
 
 import storageApi from '../../../../components/StorageApi';
@@ -22,7 +23,17 @@ import InstalledComponentsStore from '../../../../components/stores/InstalledCom
 import FiltersDescription from '../../../../components/react/components/generic/FiltersDescription';
 import IsDockerBasedFn from '../../../templates/dockerProxyApi';
 import IncrementalSetupModal from './IncrementalSetupModal';
-import { Alert } from 'react-bootstrap';
+import {Alert} from 'react-bootstrap';
+
+const defaultDataTypes = [
+  'INT',
+  'BIGINT',
+  { VARCHAR: { defaultSize: '255' } },
+  'TEXT',
+  { DECIMAL: { defaultSize: '12,2' } },
+  'DATE',
+  'DATETIME'
+];
 
 export default componentId => {
   return React.createClass({
@@ -76,7 +87,7 @@ export default componentId => {
       const configColumnsNamesSet = configColumns.map(c => c.get('name')).toSet();
       const deletedColumns = configColumnsNamesSet.subtract(storageColumns);
       const allColumns = storageColumns.concat(deletedColumns);
-      return allColumns.map(storageColumn => {
+      return allColumns.map(function(storageColumn) {
         const configColumnFound = configColumns.find(cc => cc.get('name') === storageColumn);
         if (configColumnFound) {
           return configColumnFound;
@@ -94,6 +105,11 @@ export default componentId => {
     },
 
     componentDidMount() {
+      // if @state.columns.reduce(
+      //   (memo, value) ->
+      //     memo and value.get('type') == 'IGNORE'
+      // , true)
+      //   @_handleEditColumnsStart()
       const tableId = RoutesStore.getCurrentRouteParam('tableId');
       return storageApi.tableDataJsonPreview(tableId, { limit: 10 }).then(json =>
         this.setState({
@@ -108,9 +124,9 @@ export default componentId => {
       const primaryKey = exportInfo.get('primaryKey', List());
       const dbColumns = this.state.columns.map(c => c.get('dbName'));
       const pkMismatchList = primaryKey.reduce(
-        (memo, pkColumn) => (!dbColumns.find(dbColumn => dbColumn === pkColumn) ? memo.push(pkColumn) : memo),
-        List()
-      );
+        (memo, pkColumn) =>
+          !dbColumns.find(dbColumn => dbColumn === pkColumn) ? memo.push(pkColumn) : memo
+        , List());
 
       return (
         <div className="container-fluid">
@@ -125,11 +141,11 @@ export default componentId => {
                 {isRenderIncremental && <li className="list-group-item">{this._renderTableFiltersRow()}</li>}
                 {isRenderIncremental && <li className="list-group-item">{this._renderPrimaryKey()}</li>}
               </ul>
-              {pkMismatchList.size > 0 && (
-                <Alert bsStyle="warning">
-                  Primary Key is set to non-existing column(s). Please update Primary Key settings.
-                </Alert>
-              )}
+              {pkMismatchList.size > 0 &&
+              <Alert bsStyle="warning">
+                Primary Key is set to non-existing column(s). Please update Primary Key settings.
+              </Alert>
+              }
             </div>
             <ColumnsEditor
               onToggleHideIgnored={e => {
@@ -138,6 +154,7 @@ export default componentId => {
               }}
               dataTypes={this._getComponentDataTypes()}
               columns={this.state.columns}
+              renderRowFn={this._renderColumnRow}
               editingColumns={this.state.editingColumns}
               isSaving={this.state.isSavingColumns}
               editColumnFn={this._onEditColumn}
@@ -151,9 +168,9 @@ export default componentId => {
               disabledColumnFields={this._getDisabledColumnFields()}
               onSetAllColumnsNull={e => {
                 const value = e.target.checked ? '1' : '0';
-                this.state.editingColumns.map(ec => {
+                return this.state.editingColumns.map(ec => {
                   const newColumn = ec.set('null', value);
-                  this._onEditColumn(newColumn);
+                  return this._onEditColumn(newColumn);
                 });
               }}
             />
@@ -164,7 +181,7 @@ export default componentId => {
 
     _setValidateColumn(cname, isValid) {
       const path = ['validation', this.state.tableId, cname];
-      WrDbActions.setEditingData(componentId, this.state.configId, path, isValid);
+      return WrDbActions.setEditingData(componentId, this.state.configId, path, isValid);
     },
 
     _validateColumn(column) {
@@ -182,6 +199,7 @@ export default componentId => {
 
     _renderIncrementalSetup() {
       const exportInfo = this.state.v2ConfigTable;
+      const { v2State } = this.state;
       const isIncremental = exportInfo.get('incremental');
       const primaryKey = exportInfo.get('primaryKey', List());
       const showIncrementalSetupPath = ['IncrementalSetup', 'show'];
@@ -203,11 +221,11 @@ export default componentId => {
             </button>
             <IncrementalSetupModal
               isSaving={this.state.v2State.get('savingIncremental', false)}
-              show={this.state.v2State.getIn(showIncrementalSetupPath, false)}
+              show={v2State.getIn(showIncrementalSetupPath, false)}
               onHide={() => this.state.v2Actions.updateV2State(showIncrementalSetupPath, false)}
               currentPK={primaryKey.join(',')}
               currentMapping={tableMapping}
-              columns={this.state.columns.map(column => column.get('dbName'))}
+              columns={this.state.columns.map(c => c.get('dbName'))}
               isIncremental={isIncremental}
               allTables={this.state.allTables}
               onSave={(incremental, primary, newMapping, customFieldsValues) => {
@@ -221,8 +239,9 @@ export default componentId => {
                 return this._setV2TableInfo(newExportInfo).then(() => {
                   if (newMapping !== tableMapping) {
                     return this.state.v2Actions.setTableMapping(newMapping).then(finishSaving);
+                  } else {
+                    return finishSaving();
                   }
-                  return finishSaving();
                 });
               }}
               customFieldsValues={this._getCustomFieldsValues()}
@@ -288,7 +307,7 @@ export default componentId => {
       const cname = newColumn.get('name');
       const path = ['columns', this.state.tableId, cname];
       WrDbActions.setEditingData(componentId, this.state.configId, path, newColumn);
-      this._validateColumn(newColumn);
+      return this._validateColumn(newColumn);
     },
 
     _filterColumn(column) {
@@ -305,30 +324,33 @@ export default componentId => {
       return newCols;
     },
 
+    _renderColumnRow(props) {
+      return <ColumnRow {...props} />;
+    },
+
     _handleEditColumnsStart() {
       const path = ['columns', this.state.tableId];
       const columns = this.state.columns.toMap().mapKeys((key, column) => column.get('name'));
-      WrDbActions.setEditingData(componentId, this.state.configId, path, columns);
+      return WrDbActions.setEditingData(componentId, this.state.configId, path, columns);
     },
 
     _handleEditColumnsSave() {
       // to preserve order remap according the original columns
-      const columns = this.state.columns.map(column => {
-        return this.state.editingColumns.get(column.get('name'));
+      const columns = this.state.columns.map(c => {
+        return this.state.editingColumns.get(c.get('name'));
       });
-
-      WrDbActions.saveTableColumns(componentId, this.state.configId, this.state.tableId, columns).then(() => {
-        this._handleEditColumnsCancel();
-        this.setState({
-          allColumnsDataTypeOptions: []
-        });
+      return WrDbActions.saveTableColumns(componentId, this.state.configId, this.state.tableId, columns).then(() => {
+        return this._handleEditColumnsCancel();
       });
     },
 
     _renderSetColumnsType() {
-      const tmpDataTypes = this._getDataTypes()
-        .concat('IGNORE')
-        .concat('');
+      const tmpDataTypes = this._getDataTypes();
+      const options = _.map(tmpDataTypes.concat('IGNORE').concat(''), opKey => (
+        <option disabled={opKey === ''} value={opKey} key={opKey}>
+          {opKey === '' ? 'Set All Columns To' : opKey}
+        </option>
+      ));
 
       return (
         <span>
@@ -336,41 +358,53 @@ export default componentId => {
             defaultValue=""
             onChange={e => {
               const dataType = e.target.value;
+
               this.setState({
                 allColumnsDataTypeOptions: this._getDataTypeOptions(dataType)
               });
-              this.state.editingColumns.map(column => {
-                const size = this._getSizeParam(dataType);
-                this._onEditColumn(
-                  column.merge({
-                    type: dataType,
-                    size: _.isString(size) ? size : ''
-                  })
-                );
+
+              return this.state.editingColumns.map(ec => {
+                let newColumn = ec.set('type', dataType);
+                if (_.isString(this._getSizeParam(dataType))) {
+                  const defaultSize = this._getSizeParam(dataType);
+                  newColumn = newColumn.set('size', defaultSize);
+                } else {
+                  newColumn = newColumn.set('size', '');
+                }
+                return this._onEditColumn(newColumn);
               });
             }}
           >
-            {_.map(tmpDataTypes, opKey => (
-              <option disabled={opKey === ''} value={opKey} key={opKey}>
-                {opKey === '' ? 'Set All Columns To' : opKey}
-              </option>
-            ))}
+            {options}
           </select>
 
           {this.state.allColumnsDataTypeOptions.length > 0 && (
             <select
               defaultValue=""
               onChange={e => {
-                this.state.editingColumns.map(column => {
-                  this._onEditColumn(column.set('size', e.target.value));
+                const size = e.target.value;
+
+                return this.state.editingColumns.map(ec => {
+                  let newColumn = ec.set('size', size);
+                  return this._onEditColumn(newColumn);
                 });
               }}
             >
-              {this.state.allColumnsDataTypeOptions.map(option => (
-                <option value={option.value} key={option.value}>
-                  {option.label}
-                </option>
-              ))}
+              {this.state.allColumnsDataTypeOptions.map(option => {
+                if (_.isObject(option)) {
+                  return (
+                    <option value={option.value} key={option.value}>
+                      {option.label}
+                    </option>
+                  );
+                }
+
+                return (
+                  <option value={option} key={option}>
+                    {option}
+                  </option>
+                );
+              })}
             </select>
           )}
         </span>
@@ -432,7 +466,7 @@ export default componentId => {
 
     _getDataTypes() {
       const dtypes = this._getComponentDataTypes();
-      return _.map(dtypes, dataType => {
+      return _.map(dtypes, function(dataType) {
         // it could be object eg {VARCHAR: {defaultSize:''}}
         if (_.isObject(dataType)) {
           return _.keys(dataType)[0];
@@ -515,7 +549,7 @@ export default componentId => {
         ? this.state.columnsValidation.reduce((memo, value) => memo && value, true)
         : null;
       const hasColumns = this.state.editingColumns
-        ? this.state.editingColumns.reduce((memo, c) => {
+        ? this.state.editingColumns.reduce(function(memo, c) {
           const type = c.get('type');
           return type !== 'IGNORE' || memo;
         }, false)
