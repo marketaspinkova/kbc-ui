@@ -22,7 +22,7 @@ function prepareDataForCreate(data) {
           '-- This is a sample query.\n' +
           '-- Adjust accordingly to your input mapping, output mapping\n' +
           '-- and desired functionality.\n\n' +
-          '/*CREATE TABLE `out_table` AS SELECT * FROM `in_table`;*/'
+          '-- CREATE TABLE `out_table` AS SELECT * FROM `in_table`;'
         ]);
       break;
     case 'redshift':
@@ -32,7 +32,7 @@ function prepareDataForCreate(data) {
           '-- This is a sample query.\n' +
           '-- Adjust accordingly to your input mapping, output mapping\n' +
           '-- and desired functionality.\n\n' +
-          '/*CREATE TABLE "out_table" AS SELECT * FROM "in_table";*/'
+          '-- CREATE TABLE "out_table" AS SELECT * FROM "in_table";'
         ]);
       break;
     case 'snowflake':
@@ -42,7 +42,7 @@ function prepareDataForCreate(data) {
           '-- This is a sample query.\n' +
           '-- Adjust accordingly to your input mapping, output mapping\n' +
           '-- and desired functionality.\n\n' +
-          '/*CREATE TABLE "out_table" AS SELECT * FROM "in_table";*/'
+          '-- CREATE TABLE "out_table" AS SELECT * FROM "in_table";'
         ]);
       break;
     case 'r':
