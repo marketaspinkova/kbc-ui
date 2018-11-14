@@ -81,13 +81,7 @@ function prepareDataForCreate(data) {
         ]);
       break;
     case 'openrefine':
-      newData = newData.set('backend', 'docker')
-        .set('type', 'openrefine')
-        .set('queries', [
-          '# This is a sample query.\n' +
-          '# Adjust accordingly to your input mapping, output mapping\n' +
-          '# and desired functionality.'
-        ]);
+      newData = newData.set('backend', 'docker').set('type', 'openrefine');
       break;
 
     default:
