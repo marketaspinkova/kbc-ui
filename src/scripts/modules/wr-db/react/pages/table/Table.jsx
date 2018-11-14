@@ -69,6 +69,7 @@ export default componentId => {
     getInitialState() {
       return {
         dataPreview: null,
+        allColumnsDataTypeSize: null,
         allColumnsDataTypeOptions: []
       };
     },
@@ -95,13 +96,8 @@ export default componentId => {
     },
 
     componentDidMount() {
-      // if @state.columns.reduce(
-      //   (memo, value) ->
-      //     memo and value.get('type') == 'IGNORE'
-      // , true)
-      //   @_handleEditColumnsStart()
       const tableId = RoutesStore.getCurrentRouteParam('tableId');
-      return storageApi.tableDataJsonPreview(tableId, { limit: 10 }).then(json =>
+      storageApi.tableDataJsonPreview(tableId, { limit: 10 }).then(json =>
         this.setState({
           dataPreview: json
         })
@@ -329,8 +325,12 @@ export default componentId => {
       const columns = this.state.columns.map(c => {
         return this.state.editingColumns.get(c.get('name'));
       });
-      return WrDbActions.saveTableColumns(componentId, this.state.configId, this.state.tableId, columns).then(() => {
-        return this._handleEditColumnsCancel();
+      WrDbActions.saveTableColumns(componentId, this.state.configId, this.state.tableId, columns).then(() => {
+        this._handleEditColumnsCancel();
+        this.setState({
+          allColumnsDataTypeSize: null,
+          allColumnsDataTypeOptions: []
+        });
       });
     },
 
@@ -347,21 +347,18 @@ export default componentId => {
           <select
             defaultValue=""
             onChange={e => {
-              const dataType = e.target.value;
+              const defaultSize = this._getSizeParam(e.target.value);
 
               this.setState({
-                allColumnsDataTypeOptions: this._getDataTypeOptions(dataType)
+                allColumnsDataTypeSize: defaultSize,
+                allColumnsDataTypeOptions: this._getDataTypeOptions(e.target.value)
               });
 
-              return this.state.editingColumns.map(ec => {
-                let newColumn = ec.set('type', dataType);
-                if (_.isString(this._getSizeParam(dataType))) {
-                  const defaultSize = this._getSizeParam(dataType);
-                  newColumn = newColumn.set('size', defaultSize);
-                } else {
-                  newColumn = newColumn.set('size', '');
-                }
-                return this._onEditColumn(newColumn);
+              this.state.editingColumns.map(column => {
+                this._onEditColumn(column.merge({
+                  type: e.target.value,
+                  size: _.isString(defaultSize) ? defaultSize : ''
+                }));
               });
             }}
           >
@@ -370,10 +367,13 @@ export default componentId => {
 
           {this.state.allColumnsDataTypeOptions.length > 0 && (
             <select
-              defaultValue=""
+              defaultValue={this.state.allColumnsDataTypeSize}
               onChange={e => {
-                return this.state.editingColumns.map(column => {
-                  return this._onEditColumn(column.set('size', e.target.value));
+                this.setState({
+                  allColumnsDataTypeSize: e.target.value
+                });
+                this.state.editingColumns.map(column => {
+                  this._onEditColumn(column.set('size', e.target.value));
                 });
               }}
             >
@@ -459,12 +459,16 @@ export default componentId => {
     _handleEditColumnsCancel() {
       const path = ['columns', this.state.tableId];
       WrDbActions.setEditingData(componentId, this.state.configId, path, null);
-      return this._clearValidation();
+      this._clearValidation();
+      this.setState({
+        allColumnsDataTypeSize: null,
+        allColumnsDataTypeOptions: []
+      });
     },
 
     _clearValidation() {
       const path = ['validation', this.state.tableId];
-      return WrDbActions.setEditingData(componentId, this.state.configId, path, Map());
+      WrDbActions.setEditingData(componentId, this.state.configId, path, Map());
     },
 
     _renderTableEdit() {

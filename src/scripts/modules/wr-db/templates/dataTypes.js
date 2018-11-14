@@ -133,11 +133,7 @@ const snowflake = [
   {
     varchar: {
       defaultSize: '255',
-      options: [
-        { value: '255', label: '255 ' },
-        { value: '65535', label: '65535 ' },
-        { value: '16777213', label: '16M ' }
-      ]
+      options: [{ value: '255', label: '255' }, { value: '65535', label: '65535' }, { value: '16777216', label: '16M' }]
     }
   },
   { string: { defaultSize: '255' } },
