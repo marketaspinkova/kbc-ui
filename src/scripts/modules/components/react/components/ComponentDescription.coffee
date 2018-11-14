@@ -1,5 +1,5 @@
 React = require 'react'
-InlineEditTextArea = require '../../../../react/common/InlineEditArea'
+InlineEditTextArea = require('../../../../react/common/InlineEditArea').default
 ComponentEditField = require './ComponentEditField'
 
 module.exports = React.createClass
@@ -19,5 +19,3 @@ module.exports = React.createClass
       fieldName: 'description'
       editElement: InlineEditTextArea
       placeholder: @props.placeholder
-
-
