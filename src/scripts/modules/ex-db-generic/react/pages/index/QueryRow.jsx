@@ -1,7 +1,8 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import { Label } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
+import { Label } from 'react-bootstrap';
+import classnames from 'classnames';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { List } from 'immutable';
 
@@ -9,7 +10,7 @@ import {Link} from 'react-router';
 import QueryDeleteButton from '../../components/QueryDeleteButton';
 import RunExtractionButton from '../../../../components/react/components/RunComponentButton';
 import SapiTableLinkEx from '../../../../components/react/components/StorageApiTableLinkEx';
-import ActivateDeactivateButton from '../../../../../react/common/ActivateDeactivateButton';
+import ActivateDeactivateSwitch from '../../../../../react/common/ActivateDeactivateSwitch';
 
 import * as actionsProvisioning from '../../../actionsProvisioning';
 
@@ -45,7 +46,7 @@ export default createReactClass({
     const runParams = actionCreators.prepareSingleQueryRunData(this.props.configurationId, this.props.query, 'index');
     return (
       <Link
-        className="tr"
+        className={classnames('tr', { 'row-disabled': !this.props.query.get('enabled') })}
         to={link}
         params={{
           config: this.props.configurationId,
@@ -82,20 +83,22 @@ export default createReactClass({
             componentId={this.props.componentId}
             actionsProvisioning={actionsProvisioning}
           />
-          <ActivateDeactivateButton
-            activateTooltip="Enable Query"
-            deactivateTooltip="Disable Query"
-            isActive={this.props.query.get('enabled')}
-            isPending={this.props.pendingActions.get('enabled')}
-            onChange={this.handleActiveChange}
-          />
           <RunExtractionButton
             title="Run Extraction"
             component={this.props.componentId}
             runParams={() => {
               return runParams;
             }}
-          >You are about to run an extraction</RunExtractionButton>
+          >
+            You are about to run extraction
+          </RunExtractionButton>
+          <ActivateDeactivateSwitch
+            activateTooltip="Enable Query"
+            deactivateTooltip="Disable Query"
+            isActive={this.props.query.get('enabled')}
+            isPending={this.props.pendingActions.get('enabled')}
+            onChange={this.handleActiveChange}
+          />
         </span>
       </Link>
     );

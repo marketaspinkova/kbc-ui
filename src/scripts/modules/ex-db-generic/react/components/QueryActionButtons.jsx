@@ -7,7 +7,7 @@ import RoutesStore from '../../../../stores/RoutesStore';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import QueryDeleteButton from './QueryDeleteButton';
 import RunExtractionButton from '../../../components/react/components/RunComponentButton';
-import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
+import ActivateDeactivateSwitch from '../../../../react/common/ActivateDeactivateSwitch';
 
 export default function(
   componentId,
@@ -50,15 +50,6 @@ export default function(
             actionsProvisioning={actionsProvisioning}
             entityName={entityName}
           />
-          <ActivateDeactivateButton
-            activateTooltip={'Enable ' + entityName}
-            deactivateTooltip={'Disable ' + entityName}
-            isActive={this.state.query.get('enabled')}
-            isPending={this.state.pendingActions.get('enabled')}
-            onChange={this.handleActiveChange}
-            tooltipPlacement="bottom"
-            buttonDisabled={this.state.isEditingQuery}
-          />
           <RunExtractionButton
             title="Run Extraction"
             component={componentId}
@@ -69,6 +60,15 @@ export default function(
           >
             You are about to run an extraction.
           </RunExtractionButton>
+          <ActivateDeactivateSwitch
+            activateTooltip={'Enable ' + entityName}
+            deactivateTooltip={'Disable ' + entityName}
+            isActive={this.state.query.get('enabled')}
+            isPending={this.state.pendingActions.get('enabled')}
+            onChange={this.handleActiveChange}
+            tooltipPlacement="bottom"
+            buttonDisabled={this.state.isEditingQuery}
+          />
         </div>
       );
     },
