@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
-// import {List} from 'immutable';
+import classnames from 'classnames';
 import StorageTableLink from '../../../components/react/components/StorageApiTableLinkEx';
 
-import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
+import ActivateDeactivateSwitch from '../../../../react/common/ActivateDeactivateSwitch';
 import RunExtractionButton from '../../../components/react/components/RunComponentButton';
 
 import QueryDeleteButton from './QueryDeleteButton';
@@ -74,7 +74,8 @@ export default createReactClass({
           config: this.props.configId,
           queryId: query.get('id')
         }}
-        className="tr">
+        className={classnames('tr', { 'row-disabled': !query.get('enabled') })}
+      >
         <div className="td">
           {propValue('name')}
         </div>
@@ -98,13 +99,6 @@ export default createReactClass({
             onDeleteFn={() => this.props.deleteQueryFn(query.get('id'))}
             isPending={this.props.isPendingFn(['delete', query.get('id')])}
           />
-          <ActivateDeactivateButton
-            activateTooltip="Enable Query"
-            deactivateTooltip="Disable Query"
-            isActive={query.get('enabled')}
-            isPending={this.props.isPendingFn(['toggle', query.get('id')])}
-            onChange={() => this.handleToggleQuery(query)}
-          />
           <RunExtractionButton
             title="Run Extraction"
             component={this.props.componentId}
@@ -117,7 +111,13 @@ export default createReactClass({
           >
             You are about to run an extraction.
           </RunExtractionButton>
-
+          <ActivateDeactivateSwitch
+            activateTooltip="Enable Query"
+            deactivateTooltip="Disable Query"
+            isActive={query.get('enabled')}
+            isPending={this.props.isPendingFn(['toggle', query.get('id')])}
+            onChange={() => this.handleToggleQuery(query)}
+          />
         </div>
       </Link>
     );
