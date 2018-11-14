@@ -59,17 +59,19 @@ export default React.createClass({
 
   render() {
     return (
-      <InlineEditArea
-        placeholder="Describe project"
-        isEditing={this.state.isEditing}
-        isSaving={this.state.isSaving}
-        onEditStart={this.handleEditStart}
-        onEditCancel={this.handleEditCancel}
-        onEditChange={this.handleChange}
-        onEditSubmit={this.handleSubmit}
-        text={this.state.description}
-        collapsible={false}
-      />
+      <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
+        <InlineEditArea
+          placeholder="Describe project"
+          isEditing={this.state.isEditing}
+          isSaving={this.state.isSaving}
+          onEditStart={this.handleEditStart}
+          onEditCancel={this.handleEditCancel}
+          onEditChange={this.handleChange}
+          onEditSubmit={this.handleSubmit}
+          text={this.state.description}
+          collapsible={false}
+        />
+      </div>
     );
   }
 });
