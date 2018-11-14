@@ -2,6 +2,7 @@ import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Link} from 'react-router';
 import JobStatusLabel from '../../../../../react/common/JobStatusLabel';
+import JobPartialRunLabel from '../../../../../react/common/JobPartialRunLabel';
 import ComponentIcon from '../../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../../react/common/ComponentName';
 import Duration from '../../../../../react/common/Duration';
@@ -27,6 +28,7 @@ export default React.createClass({
           <ComponentIcon component={component} size="32"/> <ComponentName component={component} showType />
         </div>
         <div className="td">
+          <JobPartialRunLabel job={this.props.job} />
           { this.jobConfiguration() }
         </div>
         <div className="td">
