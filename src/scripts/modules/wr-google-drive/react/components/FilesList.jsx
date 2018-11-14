@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
+import classnames from 'classnames';
 import {Loader} from '@keboola/indigo-ui';
 import {Map} from 'immutable';
 import Tooltip from '../../../../react/common/Tooltip';
 import Confirm from '../../../../react/common/Confirm';
-import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
+import ActivateDeactivateSwitch from '../../../../react/common/ActivateDeactivateSwitch';
 import RunButton from '../../../components/react/components/RunComponentButton';
 import StorageTableLink from '../../../components/react/components/StorageApiTableLinkEx';
 import TablesByBucketsPanel from '../../../components/react/components/TablesByBucketsPanel';
@@ -89,8 +90,9 @@ export default createReactClass({
 
   renderRow(table, index) {
     const item = this.props.items.filter((i) => i.get('tableId') === table.get('id')).first();
+
     return (
-      <div key={index} className="tr">
+      <div key={index} className={classnames('tr', { 'row-disabled': !item.get('enabled') })}>
         <div className="td">
           {this.renderFieldTable(item.get('tableId'))}
         </div>
@@ -109,8 +111,8 @@ export default createReactClass({
         <div className="td text-right kbc-no-wrap">
           {this.renderEditButton(item)}
           {this.renderDeleteButton(item)}
-          {this.renderEnabledButton(item)}
           {this.renderRunButton(item)}
+          {this.renderEnabledButton(item)}
         </div>
       </div>
     );
@@ -205,9 +207,7 @@ export default createReactClass({
 
   renderEnabledButton(item) {
     return (
-      <ActivateDeactivateButton
-        activateTooltip="Enable"
-        deactivateTooltip="Disable"
+      <ActivateDeactivateSwitch
         isActive={item.get('enabled')}
         isPending={this.props.isPendingFn(item.get('id'))}
         onChange={() => this.props.toggleEnabledFn(item)}

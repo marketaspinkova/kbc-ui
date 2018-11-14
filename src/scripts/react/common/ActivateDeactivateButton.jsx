@@ -76,7 +76,7 @@ export default createReactClass({
   },
 
   renderIcon() {
-    return <Check isChecked={this.props.isActive} />;
+    return <Check isChecked={!this.props.isActive} />;
   },
 
   handleClick(e) {
