@@ -9,7 +9,7 @@ import dbwrIndex from './react/pages/index/Index';
 import dbWrTableDetail from './react/pages/table/Table';
 import dbWrCredentialsDetail from './react/pages/credentials/Credentials';
 import dbWrActionCreators from './actionCreators';
-import dbWrCredentialsHeader from './react/components/CredentialsHeaderButtons';
+import dbWrResetCredentialsButton from './react/components/ResetCredentialsButton';
 import dbWrDockerProxyApi from './templates/dockerProxyApi';
 
 export default function(componentId, driver, isProvisioning) {
@@ -62,7 +62,7 @@ export default function(componentId, driver, isProvisioning) {
         name: componentId + '-credentials',
         path: 'credentials',
         handler: dbWrCredentialsDetail(componentId, driver, isProvisioning),
-        headerButtonsHandler: dbWrCredentialsHeader(componentId, driver, isProvisioning),
+        headerButtonsHandler: dbWrResetCredentialsButton(componentId, isProvisioning),
         title: () => 'Credentials'
       }
     ]

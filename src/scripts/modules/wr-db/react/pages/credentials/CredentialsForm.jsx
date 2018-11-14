@@ -13,6 +13,7 @@ import Tooltip from '../../../../../react/common/Tooltip';
 import SshTunnelRow from '../../../../../react/common/SshTunnelRow';
 import TestCredentialsButton from '../../../../../react/common/TestCredentialsButtonGroup';
 import contactSupport from '../../../../../utils/contactSupport';
+import CredentialsSaveButtons from '../../components/CredentialsSaveButtons';
 
 export default createReactClass({
   propTypes: {
@@ -57,6 +58,13 @@ export default createReactClass({
               <h2>Database credentials</h2>
             )}
           </div>
+        </div>
+        <div className="kbc-inner-padding">
+          <CredentialsSaveButtons
+            componentId={this.props.componentId}
+            configId={this.props.configId}
+            driver={this.props.driver}
+          />
         </div>
         <div className="kbc-inner-padding">
           {_.map(fields, (field, index) => {
