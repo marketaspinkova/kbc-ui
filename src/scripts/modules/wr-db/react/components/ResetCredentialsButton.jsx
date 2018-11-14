@@ -1,5 +1,6 @@
 import React from 'react';
 import { Map } from 'immutable';
+import { Loader } from '@keboola/indigo-ui';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import WrDbStore from '../../store';
 import RoutesStore from '../../../../stores/RoutesStore';
@@ -18,6 +19,7 @@ export default (componentId, isProvisioning) => {
       return {
         configId,
         currentCredentials: WrDbStore.getCredentials(componentId, configId),
+        savingCredentials: WrDbStore.getSavingCredentials(componentId, configId),
         localState: InstalledComponentsStore.getLocalState(componentId, configId)
       };
     },
@@ -32,15 +34,13 @@ export default (componentId, isProvisioning) => {
         return null;
       }
 
-      return <div>{this.resetButton()}</div>;
-    },
-
-    resetButton() {
       return (
-        <button className="btn btn-link" onClick={this.handleReset}>
-          <span className="fa fa-fw fa-times" />
-          {' Reset Credentials'}
-        </button>
+        <div>
+          <button onClick={this.handleReset} disabled={this.state.savingCredentials} className="btn btn-link">
+            {this.state.savingCredentials ? <Loader /> : <span className="fa fa-fw fa-times" />}
+            {' Reset Credentials'}
+          </button>
+        </div>
       );
     },
 
