@@ -1,8 +1,11 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
+import ComponentConfigurationRowLink from '../ComponentConfigurationRowLink';
 
-export default (errors, onClick) => {
+export default (bucketId, transformationId, errors, onClick) => {
   return React.createClass({
+    mixins: [PureRenderMixin],
+
     propTypes: {
       onClick: React.PropTypes.func.isRequired
     },
@@ -11,12 +14,17 @@ export default (errors, onClick) => {
       return (
         <span onClick={this.props.onClick}>
           SQL Validation found{' '}
-          <Button className="btn btn-link btn-link-inline" onClick={onClick}>
+          <ComponentConfigurationRowLink
+            componentId="transformation"
+            configId={bucketId}
+            rowId={transformationId}
+            onClick={onClick}
+          >
             <b>
               {errors} error
               {errors > 1 ? 's' : ''}.
             </b>
-          </Button>
+          </ComponentConfigurationRowLink>
         </span>
       );
     }

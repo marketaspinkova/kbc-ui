@@ -154,12 +154,21 @@ export default React.createClass({
 
         if (errors.count()) {
           ApplicationActionCreators.sendNotification({
-            message: sqlValidationErrors(errors.count(), () => {
-              document.getElementById('sql-queries-block').scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-              });
-            }),
+            message: sqlValidationErrors(
+              this.props.bucketId,
+              this.props.transformation.get('id'),
+              errors.count(),
+              () => {
+                const sqlBlock = document.getElementById('sql-queries-block');
+
+                if (sqlBlock) {
+                  sqlBlock.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                  });
+                }
+              }
+            ),
             type: 'error'
           });
         }
