@@ -27,10 +27,8 @@ import columnsEditorAdapter from '../../../adapters/columnsEditorAdapter';
 
 const LoadTypeCollapsibleComponent = CollapsibleSection({
   title: LoadTypeSectionTitle,
-  contentComponent: LoadTypeSection,
-  options: {stretchContentToBody: true}
+  contentComponent: LoadTypeSection
 });
-
 
 export default React.createClass({
 
@@ -77,12 +75,8 @@ export default React.createClass({
     return (
       <div className="container-fluid">
         <div className="col-md-9 kbc-main-content">
-          <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
-            <div>
-              {this.renderButtons()}
-              {this.renderSections()}
-            </div>
-          </div>
+          {this.renderButtons()}
+          {this.renderSections()}
         </div>
         <div className="col-md-3 kbc-main-sidebar">
           {this.renderActionsSideBar()}
@@ -94,18 +88,22 @@ export default React.createClass({
   renderSections() {
     return (
       <div>
-        <TitleSection
-          {...this.state.titleSectionProps}
-          disabled={this.state.isSaving}
-        />
+        <div className="kbc-inner-padding">
+          <TitleSection
+            {...this.state.titleSectionProps}
+            disabled={this.state.isSaving}
+          />
+        </div>
         <LoadTypeCollapsibleComponent
           {...this.state.loadTypeSectionProps}
           disabled={this.state.isSaving}
         />
-        <StorageTableColumnsEditor
-          {...this.state.columnsEditorSectionProps}
-          disabled={this.state.isSaving}
-        />
+        <div className="kbc-inner-padding">
+          <StorageTableColumnsEditor
+            {...this.state.columnsEditorSectionProps}
+            disabled={this.state.isSaving}
+          />
+        </div>
       </div>
     );
   },
@@ -114,7 +112,7 @@ export default React.createClass({
     const {isSaving, isPendingToggleExport, isChanged, saveEditingTable, tableId, resetEditingTable} = this.state;
 
     return (
-      <div className="form-group">
+      <div className="kbc-inner-padding">
         <div className="text-right">
           <SaveButtons
             disabled={isPendingToggleExport}
