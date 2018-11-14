@@ -1,8 +1,9 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
+import classnames from 'classnames';
 import immutableMixin from 'react-immutable-render-mixin';
-import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
+import ActivateDeactivateSwitch from '../../../../react/common/ActivateDeactivateSwitch';
 import DeleteConfigurationRowButton from './DeleteConfigurationRowButton';
 import RunComponentButton from '../../../components/react/components/RunComponentButton';
 import ChangeOrderHandle from './ChangeOrderHandle';
@@ -44,7 +45,7 @@ const TableRow = createReactClass({
 
     return (
       <div
-        className="tr"
+        className={classnames('tr', { 'row-disabled': this.props.row.get('isDisabled') })}
         data-id={this.props.row.get('id')}
         onClick={() => {
           router.transitionTo(this.props.linkTo, {
@@ -83,20 +84,12 @@ const TableRow = createReactClass({
   renderRowActionButtons() {
     const props = this.props;
     return [
-      (<DeleteConfigurationRowButton
+      <DeleteConfigurationRowButton
         key="delete"
         isPending={this.props.isDeletePending}
         onClick={this.props.onDelete}
-      />),
-      (<ActivateDeactivateButton
-        key="activate"
-        activateTooltip="Enable"
-        deactivateTooltip="Disable"
-        isActive={!this.props.row.get('isDisabled', false)}
-        isPending={this.props.isEnableDisablePending}
-        onChange={this.props.onEnableDisable}
-      />),
-      (<RunComponentButton
+      />,
+      <RunComponentButton
         key="run"
         title="Run"
         component={this.props.componentId}
@@ -108,8 +101,13 @@ const TableRow = createReactClass({
         }}
       >
         {this.renderRunModalContent()}
-      </RunComponentButton>
-      )
+      </RunComponentButton>,
+      <ActivateDeactivateSwitch
+        key="activate"
+        isActive={!this.props.row.get('isDisabled', false)}
+        isPending={this.props.isEnableDisablePending}
+        onChange={this.props.onEnableDisable}
+      />
     ];
   },
 

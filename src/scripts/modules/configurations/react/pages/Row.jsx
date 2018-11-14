@@ -133,8 +133,6 @@ export default createReactClass({
       <li key="activate">
         <ActivateDeactivateButton
           key="activate"
-          activateTooltip="Enable"
-          deactivateTooltip="Disable"
           isActive={!this.state.row.get('isDisabled', false)}
           isPending={this.state.isEnableDisablePending}
           onChange={function() {
