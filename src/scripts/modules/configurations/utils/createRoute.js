@@ -10,7 +10,6 @@ import InstalledComponentsStore from '../../components/stores/InstalledComponent
 import ComponentsStore from '../../components/stores/ComponentsStore';
 import ConfigurationRowsStore from '../ConfigurationRowsStore';
 import _ from 'lodash';
-import fuzzy from 'fuzzy';
 import Immutable from 'immutable';
 import {createTablesRoute} from '../../table-browser/routes';
 import {loadCredentialsFromConfig as loadOauthCredentials} from '../../oauth-v2/OauthUtils';
@@ -36,7 +35,8 @@ const defaults = {
     },
     columns: [],
     searchFilter: function(row, query) {
-      return fuzzy.test(query, row.get('name')) || fuzzy.test(query, row.get('description'));
+      const lowerCaseQuery = query.toLowerCase();
+      return row.get('name').toLowerCase().match(lowerCaseQuery) || row.get('description').toLowerCase().match(lowerCaseQuery);
     }
   }
 };
