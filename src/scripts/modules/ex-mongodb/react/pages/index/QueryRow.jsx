@@ -1,13 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
+import classnames from 'classnames';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { Link } from 'react-router';
 import { Check } from '@keboola/indigo-ui';
 
 import QueryDeleteButton from '../../components/QueryDeleteButton';
 import RunExtractionButton from '../../../../components/react/components/RunComponentButton';
-import ActivateDeactivateButton from '../../../../../react/common/ActivateDeactivateButton';
+import ActivateDeactivateSwitch from '../../../../../react/common/ActivateDeactivateSwitch';
 import * as actionsProvisioning from '../../../actionsProvisioning';
 
 export default createReactClass({
@@ -28,7 +29,7 @@ export default createReactClass({
 
     return (
       <Link
-        className="tr"
+        className={classnames('tr', { 'row-disabled': !query.get('enabled') } )}
         to="ex-mongodb-query"
         params={{
           config: configurationId,
@@ -50,13 +51,6 @@ export default createReactClass({
             actionsProvisioning={actionsProvisioning}
             entityName="Export"
           />
-          <ActivateDeactivateButton
-            activateTooltip="Enable Export"
-            deactivateTooltip="Disable Export"
-            isActive={query.get('enabled')}
-            isPending={pendingActions.get('enabled')}
-            onChange={this.handleActiveChange}
-          />
           <RunExtractionButton
             title="Run Extraction"
             component={componentId}
@@ -69,6 +63,13 @@ export default createReactClass({
           >
             You are about to run an extraction.
           </RunExtractionButton>
+          <ActivateDeactivateSwitch
+            activateTooltip="Enable Export"
+            deactivateTooltip="Disable Export"
+            isActive={query.get('enabled')}
+            isPending={pendingActions.get('enabled')}
+            onChange={this.handleActiveChange}
+          />
         </span>
       </Link>
     );
