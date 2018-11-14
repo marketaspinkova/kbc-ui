@@ -19,8 +19,13 @@ export default (componentId, isProvisioning) => {
       return {
         configId,
         currentCredentials: WrDbStore.getCredentials(componentId, configId),
-        savingCredentials: WrDbStore.getSavingCredentials(componentId, configId),
         localState: InstalledComponentsStore.getLocalState(componentId, configId)
+      };
+    },
+
+    getInitialState() {
+      return {
+        isLoading: false
       };
     },
 
@@ -36,8 +41,8 @@ export default (componentId, isProvisioning) => {
 
       return (
         <div>
-          <button onClick={this.handleReset} disabled={this.state.savingCredentials} className="btn btn-link">
-            {this.state.savingCredentials ? <Loader /> : <span className="fa fa-fw fa-times" />}
+          <button onClick={this.handleReset} disabled={this.state.isLoading} className="btn btn-link">
+            {this.state.isLoading ? <Loader /> : <span className="fa fa-fw fa-times" />}
             {' Reset Credentials'}
           </button>
         </div>
@@ -46,7 +51,9 @@ export default (componentId, isProvisioning) => {
 
     handleReset() {
       if (this.state.currentCredentials.count()) {
+        this.loading(true);
         return ActionCreators.saveCredentials(componentId, this.state.configId, Map()).then(() => {
+          this.loading(false);
           this.setInitState();
         });
       }
@@ -60,6 +67,12 @@ export default (componentId, isProvisioning) => {
         this.state.configId,
         this.state.localState.set('credentialsState', States.INIT)
       );
+    },
+
+    loading(state) {
+      this.setState({
+        isLoading: state
+      });
     }
   });
 };

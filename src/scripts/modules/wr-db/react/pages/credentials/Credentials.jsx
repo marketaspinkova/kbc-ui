@@ -153,6 +153,7 @@ export default (componentId, driver, isProvisioning) => {
           return this._renderCredentialsForm(this.state.credentials, false);
 
         case States.CREATE_NEW_CREDS:
+        case States.SAVING_NEW_CREDS:
           return this._renderCredentialsForm(this.state.editingCredentials, true);
 
         default:

@@ -92,7 +92,7 @@ export default React.createClass({
     InstalledComponentsActions.updateLocalState(
       this.props.componentId,
       this.props.configId,
-      this.state.localState.setIn(path, data)
+      this.state.localState.set(path, data)
     );
   }
 });
