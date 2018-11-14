@@ -369,9 +369,6 @@ export default componentId => {
             <select
               defaultValue={this.state.allColumnsDataTypeSize}
               onChange={e => {
-                this.setState({
-                  allColumnsDataTypeSize: e.target.value
-                });
                 this.state.editingColumns.map(column => {
                   this._onEditColumn(column.set('size', e.target.value));
                 });
