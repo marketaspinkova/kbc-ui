@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
-// import {List} from 'immutable';
+import classnames from 'classnames';
 
-import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
+import ActivateDeactivateSwitch from '../../../../react/common/ActivateDeactivateSwitch';
 import RunExtractionButton from '../../../components/react/components/RunComponentButton';
 
 import Tooltip from '../../../../react/common/Tooltip';
@@ -65,7 +65,8 @@ export default createReactClass({
     const qname = query.get('name');
     return (
       <tr
-        className="tr">
+        className={classnames('tr', { 'row-disabled': query.get('disabled') })}
+      >
         <td className="td">
           {qname}
         </td>
@@ -81,13 +82,6 @@ export default createReactClass({
         <td className="td text-right kbc-no-wrap">
           {this.renderEditButton(query)}
           {this.renderDeleteButton(query)}
-          <ActivateDeactivateButton
-            activateTooltip="Enable"
-            deactivateTooltip="Disable"
-            isActive={!query.get('disabled')}
-            isPending={this.props.isPendingFn(['toggle', query.get('id')])}
-            onChange={() => this.props.toggleQueryEnabledFn(query.get('id'))}
-          />
           <RunExtractionButton
             title="Run"
             component={this.props.componentId}
@@ -100,6 +94,11 @@ export default createReactClass({
           >
             You are about to run an extraction of {qname}.
           </RunExtractionButton>
+          <ActivateDeactivateSwitch
+            isActive={!query.get('disabled')}
+            isPending={this.props.isPendingFn(['toggle', query.get('id')])}
+            onChange={() => this.props.toggleQueryEnabledFn(query.get('id'))}
+          />
         </td>
       </tr>
     );
