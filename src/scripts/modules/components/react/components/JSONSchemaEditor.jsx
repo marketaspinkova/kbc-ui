@@ -59,16 +59,11 @@ export default createReactClass({
       startval: nextValue.toJS(),
       theme: 'bootstrap3',
       iconlib: 'fontawesome4',
-      ajax: false,
-      disable_array_add: false,
-      disable_array_delete: false,
       disable_array_delete_last_row: true,
       disable_array_reorder: true,
       disable_collapse: this.props.disableCollapse,
       disable_edit_json: true,
       disable_properties: this.props.disableProperties,
-      object_layout: 'normal',
-      required_by_default: false,
       show_errors: 'always'
     };
 
