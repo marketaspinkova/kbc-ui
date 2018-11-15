@@ -158,7 +158,7 @@ export default React.createClass({
           ApplicationActionCreators.sendNotification({
             message: sqlValidationErrors(
               this.props.bucketId,
-              this.props.transformation.get('id'),
+              this.props.transformation,
               errors.count(),
               () => {
                 if (this.queriesBlock) {

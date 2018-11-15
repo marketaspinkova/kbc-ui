@@ -2,7 +2,7 @@ import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import ComponentConfigurationRowLink from '../ComponentConfigurationRowLink';
 
-export default (bucketId, transformationId, errors, onClick) => {
+export default (bucketId, transformation, errors, onClick) => {
   return React.createClass({
     mixins: [PureRenderMixin],
 
@@ -13,20 +13,19 @@ export default (bucketId, transformationId, errors, onClick) => {
     render() {
       return (
         <span>
-          SQL Validation found{' '}
+          SQL Validation found {errors} error
+          {errors > 1 ? 's' : ''} in transformation {transformation.get('name')}.
+          <br />
           <ComponentConfigurationRowLink
             componentId="transformation"
             configId={bucketId}
-            rowId={transformationId}
+            rowId={transformation.get('id')}
             onClick={() => {
               this.props.onClick();
               onClick();
             }}
           >
-            <b>
-              {errors} error
-              {errors > 1 ? 's' : ''}.
-            </b>
+            <b>Show errors</b>
           </ComponentConfigurationRowLink>
         </span>
       );
