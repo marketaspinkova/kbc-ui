@@ -7,7 +7,7 @@ import React from 'react';
 import classnames from 'classnames';
 
 import { Loader } from '@keboola/indigo-ui';
-import { Button } from 'react-bootstrap';
+import { Button, ButtonToolbar } from 'react-bootstrap';
 
 export default React.createClass({
   propTypes: {
@@ -42,22 +42,22 @@ export default React.createClass({
   render() {
     if (this.props.placement === 'left') {
       return (
-        <div className={classnames('kbc-buttons', this.props.className)}>
+        <ButtonToolbar className={classnames('kbc-buttons', this.props.className)}>
           {this._saveButton()}
           {this._cancelButton()}
           {!this.props.showCancel && ' '}
           {this._loader()}
-        </div>
+        </ButtonToolbar>
       );
     } else {
       return (
-        <div className={classnames('kbc-buttons', this.props.className)}>
+        <ButtonToolbar className={classnames('kbc-buttons', this.props.className)}>
           {this._loader()}
           {this.props.children}
           {!this.props.showCancel && ' '}
           {this._cancelButton()}
           {this._saveButton()}
-        </div>
+        </ButtonToolbar>
       );
     }
   },
