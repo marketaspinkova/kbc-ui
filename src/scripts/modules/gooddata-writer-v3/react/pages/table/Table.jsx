@@ -148,6 +148,8 @@ export default createReactClass({
           <ActivateDeactivateButton
             key="activate"
             mode="link"
+            activateTooltip="Enable Table"
+            deactivateTooltip="Disable Table"
             isActive={!isTableDisabled}
             isPending={isPendingFn([tableId, 'activate'])}
             onChange={val => toggleTableExport(tableId, val)}

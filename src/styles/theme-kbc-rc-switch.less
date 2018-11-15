@@ -1,9 +1,9 @@
-.rc-switch-wrapper {
+.switch-wrapper {
   display: inline;
   padding: 7px 12px;
 }
 
-.rc-switch {
+.switch {
   position: relative;
   display: inline-block;
   box-sizing: border-box;
@@ -18,7 +18,7 @@
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.35, 0, 0.25, 1);
 
-  & > .fa-spinner {
+  .switch-spinner {
     position: relative;
     right: auto;
     left: 8px;
@@ -55,7 +55,7 @@
     border: 1px solid #a0c66f;
     background-color: #a0c66f;
 
-    .rc-switch-inner {
+    .switch-inner {
       left: 6px;
     }
 
@@ -63,7 +63,7 @@
       left: 20px;
     }
 
-    & > .fa-spinner {
+    .switch-spinner {
       position: relative;
       right: 8px;
       left: auto;
@@ -104,13 +104,13 @@
       top: 3px;
     }
 
-    .rc-switch-inner {
+    .switch-inner {
       font-size: 19px;
       left: 49px;
     }
 
-    &.rc-switch-checked {
-      .rc-switch-inner {
+    &.switch-checked {
+      .switch-inner {
         left: 16px;
       }
 

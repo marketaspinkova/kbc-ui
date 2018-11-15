@@ -95,6 +95,8 @@ export default createReactClass({
             You are about to run an extraction of {qname}.
           </RunExtractionButton>
           <ActivateDeactivateSwitch
+            activateTooltip="Enable Query"
+            deactivateTooltip="Disable Query"
             isActive={!query.get('disabled')}
             isPending={this.props.isPendingFn(['toggle', query.get('id')])}
             onChange={() => this.props.toggleQueryEnabledFn(query.get('id'))}

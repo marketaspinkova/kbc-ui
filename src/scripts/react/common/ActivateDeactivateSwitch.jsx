@@ -29,13 +29,14 @@ export default React.createClass({
 
     return (
       <Tooltip placement={this.props.tooltipPlacement} tooltip={tooltip}>
-        <div className="rc-switch-wrapper" onClick={this.handleOnClick}>
+        <div className="switch-wrapper" onClick={this.handleOnClick}>
           <Switch
+            prefixCls="switch"
             defaultChecked={this.props.isActive}
             checked={this.props.isActive}
             disabled={this.props.buttonDisabled || this.props.isPending}
             onChange={() => this.props.onChange(!this.props.isActive)}
-            loadingIcon={this.props.isPending && <Loader />}
+            loadingIcon={this.props.isPending && <Loader className="switch-spinner" />}
           />
         </div>
       </Tooltip>

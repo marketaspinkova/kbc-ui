@@ -1,7 +1,7 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
-import { Check, Loader } from '@keboola/indigo-ui';
+import { Loader } from '@keboola/indigo-ui';
 import Tooltip from './Tooltip';
 
 const MODE_BUTTON = 'button',
@@ -76,7 +76,11 @@ export default createReactClass({
   },
 
   renderIcon() {
-    return <Check isChecked={!this.props.isActive} />;
+    if (this.props.isActive) {
+      return <i className="fa fa-fw fa-times" />;
+    }
+
+    return <i className="fa fa-fw fa-check" />;
   },
 
   handleClick(e) {

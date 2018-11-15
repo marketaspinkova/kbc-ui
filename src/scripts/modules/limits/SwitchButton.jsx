@@ -21,7 +21,8 @@ export default createReactClass({
     return (
       <span>
         <Switch
-          className="kbc-switch rc-switch-big"
+          prefixCls="switch"
+          className="kbc-switch switch-big"
           checkedChildren={'✓'}
           unCheckedChildren={'x'}
           checked={!!this.props.limit.get('limitValue')}
