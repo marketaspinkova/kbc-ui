@@ -79,10 +79,10 @@ module.exports = function(options) {
       extensions: ['*', '.js', '.jsx', '.coffee']
     },
     devServer: {
-        headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Headers': '*'
-        }
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*'
+      }
     },
     module: {
       // via http://andrewhfarmer.com/aws-sdk-with-webpack/
