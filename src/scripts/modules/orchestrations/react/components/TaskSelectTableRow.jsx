@@ -32,12 +32,12 @@ export default React.createClass({
           {this._renderConfiguration()}
         </td>
         <td>
-          <input
-            type="checkbox"
-            disabled={false}
-            checked={this.props.task.get('active')}
-            onChange={this._handleActiveChange}
-          />
+          <div className="checkbox">
+            <label>
+              <input type="checkbox" checked={this.props.task.get('active')} onChange={this._handleActiveChange} />
+              Selected
+            </label>
+          </div>
         </td>
       </tr>
     );

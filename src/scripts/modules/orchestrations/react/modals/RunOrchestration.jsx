@@ -114,7 +114,11 @@ export default React.createClass({
           </strong>
         </p>
         <PanelWithDetails placement="top" labelCollapse="Hide Tasks" labelOpen="Show Tasks">
-          <TaskSelectTable tasks={this.props.tasks} onTaskUpdate={this._handleTaskUpdate} />
+          <TaskSelectTable
+            tasks={this.props.tasks}
+            onTaskUpdate={this._handleTaskUpdate}
+            onTasksUpdate={this._handleTasksUpdate}
+          />
         </PanelWithDetails>
       </div>
     );
@@ -166,6 +170,13 @@ export default React.createClass({
     } else {
       return this.close();
     }
+  },
+
+  _handleTasksUpdate(updatedTasks) {
+    return OrchestrationActionCreators.updateOrchestrationRunTasksEdit(
+      this.props.orchestration.get('id'),
+      updatedTasks
+    );
   },
 
   _handleTaskUpdate(updatedTask) {
