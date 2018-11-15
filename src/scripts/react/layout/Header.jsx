@@ -23,14 +23,12 @@ export default React.createClass({
 
   getStateFromStores() {
     const componentId = RoutesStore.getCurrentRouteComponentId();
-    const component = ComponentsStore.getComponent(componentId);
 
     return {
       breadcrumbs: RoutesStore.getBreadcrumbs(),
       currentRouteConfig: RoutesStore.getCurrentRouteConfig(),
       isRoutePending: RoutesStore.getIsPending(),
-      currentRouteComponentId: RoutesStore.getCurrentRouteComponentId(),
-      component,
+      component: ComponentsStore.getComponent(componentId),
       currentRouteParams: RoutesStore.getRouterState().get('params'),
       currentRouteQuery: RoutesStore.getRouterState().get('query')
     };
