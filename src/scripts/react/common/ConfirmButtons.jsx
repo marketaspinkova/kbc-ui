@@ -22,7 +22,8 @@ export default React.createClass({
     saveButtonType: React.PropTypes.oneOf(['button', 'submit']),
     showCancel: React.PropTypes.bool,
     showSave: React.PropTypes.bool,
-    className: React.PropTypes.string
+    className: React.PropTypes.string,
+    children: React.PropTypes.any
   },
 
   getDefaultProps() {
@@ -52,6 +53,7 @@ export default React.createClass({
       return (
         <div className={classnames('kbc-buttons', this.props.className)}>
           {this._loader()}
+          {this.props.children}
           {!this.props.showCancel && ' '}
           {this._cancelButton()}
           {this._saveButton()}

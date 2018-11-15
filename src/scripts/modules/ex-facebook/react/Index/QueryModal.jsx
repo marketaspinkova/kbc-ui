@@ -70,11 +70,6 @@ export default React.createClass({
           </Tabs>
         </Modal.Body>
         <Modal.Footer>
-          <GraphAPIExplorerLink
-            ids={this.props.accounts.keySeq()}
-            query={this.query('query', Map())}
-            apiVersion={this.props.apiVersion}
-          />
           <ConfirmButtons
             isSaving={this.props.isSavingFn(this.query('id'))}
             onSave={this.handleSave}
@@ -83,7 +78,13 @@ export default React.createClass({
             saveLabel={this.localState(['currentQuery', 'name'], false) ? 'Save Query' : 'Create'}
             isDisabled={this.isSavingDisabled()}
             className="kbc-buttons-inline"
-          />
+          >
+            <GraphAPIExplorerLink
+              ids={this.props.accounts.keySeq()}
+              query={this.query('query', Map())}
+              apiVersion={this.props.apiVersion}
+            />
+          </ConfirmButtons>
         </Modal.Footer>
       </Modal>
     );
