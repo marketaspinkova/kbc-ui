@@ -12,13 +12,16 @@ export default (bucketId, transformationId, errors, onClick) => {
 
     render() {
       return (
-        <span onClick={this.props.onClick}>
+        <span>
           SQL Validation found{' '}
           <ComponentConfigurationRowLink
             componentId="transformation"
             configId={bucketId}
             rowId={transformationId}
-            onClick={onClick}
+            onClick={() => {
+              this.props.onClick();
+              onClick();
+            }}
           >
             <b>
               {errors} error
