@@ -13,6 +13,7 @@ import _ from 'lodash';
 import Immutable from 'immutable';
 import {createTablesRoute} from '../../table-browser/routes';
 import {loadCredentialsFromConfig as loadOauthCredentials} from '../../oauth-v2/OauthUtils';
+import matchByWords from '../../../utils/matchByWords';
 
 // defaults
 const defaults = {
@@ -36,7 +37,8 @@ const defaults = {
     columns: [],
     searchFilter: function(row, query) {
       const lowerCaseQuery = query.toLowerCase();
-      return row.get('name').toLowerCase().match(lowerCaseQuery) || row.get('description').toLowerCase().match(lowerCaseQuery);
+      return matchByWords(row.get('name').toLowerCase(), lowerCaseQuery) ||
+             matchByWords(row.get('description').toLowerCase(), lowerCaseQuery);
     }
   }
 };
