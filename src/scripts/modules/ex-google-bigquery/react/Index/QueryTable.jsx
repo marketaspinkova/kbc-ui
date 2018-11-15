@@ -66,7 +66,7 @@ export default createReactClass({
           config: this.props.configId,
           query: query.get('id')
         }}
-        className={classnames('tr', { 'row-disabled': query.get('enabled') })}
+        className={classnames('tr', { 'row-disabled': !query.get('enabled') })}
       >
         <span className="td kbc-break-all">
           { query.get('name') ?
