@@ -21,10 +21,10 @@ export default React.createClass({
 
   render() {
     return (
-      <Form>
+      <Form horizontal>
         <FormGroup>
-          <Col componentClass={ControlLabel} sm={2}>Update Type</Col>
-          <Col sm={10}>
+          <Col componentClass={ControlLabel} sm={3}>Update Type</Col>
+          <Col sm={9}>
             <Radio
               disabled={this.props.disabled}
               checked={!this.props.value.loadOnly}
@@ -40,8 +40,8 @@ export default React.createClass({
           </Col>
         </FormGroup>
         <FormGroup>
-          <Col componentClass={ControlLabel} sm={2}>Load Type</Col>
-          <Col sm={10}>
+          <Col componentClass={ControlLabel} sm={3}>Load Type</Col>
+          <Col sm={9}>
             <Radio
               disabled={this.props.disabled}
               checked={this.props.value.multiLoad}
