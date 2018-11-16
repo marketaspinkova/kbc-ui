@@ -97,7 +97,9 @@ export default React.createClass({
             />
           </Col>
         </FormGroup>
-        <FormGroup>
+        <FormGroup
+          className={(this.props.value.connectionType !== 'SFTP') ? 'hidden' : ''}
+        >
           <Col componentClass={ControlLabel} sm={4}>
             Private key
           </Col>
@@ -108,7 +110,6 @@ export default React.createClass({
               onChange={function(e) {
                 props.onChange({privateKey: e.target.value});
               }}
-              disabled={this.props.value.connectionType !== 'SFTP'}
             />
             <div className="help-block">Only to use with SFTP connection type.</div>
           </Col>
