@@ -52,4 +52,12 @@ Dispatcher.register (payload) ->
             notifications.delete index
           NotificationsStore.emitChange()
 
+    when Constants.ActionTypes.ROUTER_ROUTE_CHANGE_SUCCESS
+      _store = _store
+        .update 'notifications', (notifications) ->
+          notifications.map( (notf) ->
+            notf.set('paused', false)
+          )
+      NotificationsStore.emitChange()
+
 module.exports = NotificationsStore
