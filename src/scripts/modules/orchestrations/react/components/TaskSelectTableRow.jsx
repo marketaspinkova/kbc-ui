@@ -14,7 +14,7 @@ export default React.createClass({
 
   render() {
     return (
-      <tr>
+      <tr onClick={this._handleActiveChange}>
         <td>
           <span className="kbc-component-icon">
             {this.props.component && <ComponentIcon component={this.props.component} />}{' '}
@@ -32,12 +32,7 @@ export default React.createClass({
           {this._renderConfiguration()}
         </td>
         <td>
-          <div className="checkbox">
-            <label>
-              <input type="checkbox" checked={this.props.task.get('active')} onChange={this._handleActiveChange} />
-              Selected
-            </label>
-          </div>
+          <input type="checkbox" checked={this.props.task.get('active')} />
         </td>
       </tr>
     );

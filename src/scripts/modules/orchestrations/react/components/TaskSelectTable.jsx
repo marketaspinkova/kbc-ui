@@ -32,7 +32,7 @@ export default React.createClass({
               <div className="checkbox">
                 <label>
                   <input type="checkbox" checked={allActive} onChange={() => this.handleActiveAll(allActive)} />
-                  Select all
+                  Active
                 </label>
               </div>
             </th>
