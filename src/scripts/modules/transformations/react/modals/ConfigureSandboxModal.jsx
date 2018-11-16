@@ -133,9 +133,8 @@ export default React.createClass({
 
   renderCredentials() {
     const { backend } = this.props;
-
     if (backend === 'docker') {
-      return <div className="clearfix">{this.renderDockerCredentials()}</div>;
+      return this.renderDockerCredentials();
     }
     if (!['mysql', 'redshift', 'snowflake'].includes(backend)) {
       return null;
