@@ -39,12 +39,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Modal
-        show={this.props.show}
-        bsSize={this.props.backend === 'docker' ? null : 'large'}
-        onHide={this.onHide}
-        enforceFocus={false}
-      >
+      <Modal show={this.props.show} onHide={this.onHide} enforceFocus={false}>
         <Modal.Header closeButton={true}>
           <Modal.Title>Create sandbox</Modal.Title>
         </Modal.Header>
@@ -52,15 +47,25 @@ export default React.createClass({
           {this.props.backend !== 'docker' && (
             <Col xs={12}>
               <h2>Mode</h2>
+              <HelpBlock>Note: Disabled transformations will not be executed.</HelpBlock>
+
               <RadioGroup name="mode" selectedValue={this.props.mode} onChange={this.props.onModeChange}>
-                <RadioGroupInput label="Load input tables only" value="input" />
                 <RadioGroupInput
+                  wrapperClassName="col-sm-offset-2 col-sm-10"
+                  label="Load input tables only"
+                  value="input"
+                />
+                <RadioGroupInput
+                  wrapperClassName="col-sm-offset-2 col-sm-10"
                   label="Prepare transformation"
                   help="Load input tables AND execute required transformations"
                   value="prepare"
                 />
-                <RadioGroupInput label="Execute transformation without writing to Storage" value="dry-run" />
-                <HelpBlock>Note: Disabled transformations will NOT be executed in any of these modes.</HelpBlock>
+                <RadioGroupInput
+                  wrapperClassName="col-sm-offset-2 col-sm-10"
+                  label="Execute transformation without writing to Storage"
+                  value="dry-run"
+                />
               </RadioGroup>
             </Col>
           )}
