@@ -39,7 +39,12 @@ export default React.createClass({
 
   render() {
     return (
-      <Modal show={this.props.show} onHide={this.onHide} enforceFocus={false}>
+      <Modal
+        show={this.props.show}
+        bsSize={this.props.backend === 'docker' ? null : 'large'}
+        onHide={this.onHide}
+        enforceFocus={false}
+      >
         <Modal.Header closeButton={true}>
           <Modal.Title>Create sandbox</Modal.Title>
         </Modal.Header>
@@ -47,7 +52,7 @@ export default React.createClass({
           {this.props.backend !== 'docker' && (
             <Col xs={12}>
               <h2>Mode</h2>
-              <HelpBlock>Note: Disabled transformations will not be executed.</HelpBlock>
+              <HelpBlock>Disabled transformations will not be executed.</HelpBlock>
 
               <RadioGroup name="mode" selectedValue={this.props.mode} onChange={this.props.onModeChange}>
                 <RadioGroupInput
