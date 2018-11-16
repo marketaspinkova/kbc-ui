@@ -103,7 +103,7 @@ export default React.createClass({
           </Col>
           <Col sm={8}>
             <FormControl
-              type="text"
+              type="password"
               value={this.props.value.privateKey}
               onChange={function(e) {
                 props.onChange({privateKey: e.target.value});
@@ -125,6 +125,7 @@ export default React.createClass({
                 props.onChange({timeout: e.target.value});
               }}
             />
+            <div className="help-block">Connection timeout in seconds</div>
           </Col>
         </FormGroup>
       </Form>
