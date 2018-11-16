@@ -30,7 +30,7 @@ export default React.createClass({
               type="radio"
               title="Full Load"
               disabled={disabled}
-              onChange={() => onChange({grain: [], changedSince: ''})}
+              onChange={() => onChange({changedSince: ''})}
               checked={!isIncremental}>
               Full Load
             </Radio>
