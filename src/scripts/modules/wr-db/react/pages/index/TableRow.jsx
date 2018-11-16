@@ -1,6 +1,5 @@
 import React from 'react';
 import ActivateDeactivateButton from '../../../../../react/common/ActivateDeactivateButton';
-import Confirm from '../../../../../react/common/Confirm';
 import Tooltip from '../../../../../react/common/Tooltip';
 import { Check, Loader } from '@keboola/indigo-ui';
 import { Link } from 'react-router';
@@ -98,30 +97,18 @@ export default React.createClass({
       );
     }
 
-    if (this.props.isUpdating) {
-      return (
-        <button disabled className="btn btn-link">
+    return (
+      <Tooltip tooltip="Remove table from configuration" placement="top">
+        <button className="btn btn-link" disabled={this.props.isUpdating} onClick={this.handleDeleteTable}>
           <i className="kbc-icon-cup" />
         </button>
-      );
-    }
-
-    return (
-      <Confirm
-        key={this.props.table.get('id')}
-        title={`Remove ${this.props.table.get('id')}`}
-        text="You are about to remove the table from the configuration."
-        buttonLabel="Remove"
-        onConfirm={() => {
-          return this.props.deleteTableFn(this.props.table.get('id'));
-        }}
-      >
-        <Tooltip tooltip="Remove table from configuration" placement="top">
-          <button className="btn btn-link">
-            <i className="kbc-icon-cup" />
-          </button>
-        </Tooltip>
-      </Confirm>
+      </Tooltip>
     );
+  },
+
+  handleDeleteTable(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    return this.props.deleteTableFn(this.props.table.get('id'));
   }
 });
