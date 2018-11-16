@@ -5,9 +5,9 @@ export default {
     return Immutable.fromJS({
       parameters: {
         host: localState.get('host', ''),
-        port: localState.get('port', ''),
+        port: parseInt(localState.get('port', ''), 10),
         connectionType: localState.get('connectionType', ''),
-        timeout: localState.get('timeout', ''),
+        timeout: parseInt(localState.get('timeout', ''), 10),
         username: localState.get('username', ''),
         '#password': localState.get('password', ''),
         '#privateKey': localState.get('privateKey', '')

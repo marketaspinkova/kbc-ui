@@ -57,6 +57,20 @@ export default React.createClass({
         </FormGroup>
         <FormGroup>
           <Col componentClass={ControlLabel} sm={4}>
+            Port
+          </Col>
+          <Col sm={8}>
+            <FormControl
+              type="number"
+              value={this.props.value.port}
+              onChange={function(e) {
+                props.onChange({port: e.target.value});
+              }}
+            />
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col componentClass={ControlLabel} sm={4}>
             Username
           </Col>
           <Col sm={8}>
