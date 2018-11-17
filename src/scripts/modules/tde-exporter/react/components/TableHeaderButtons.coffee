@@ -5,7 +5,7 @@ createStoreMixin = require('../../../../react/mixins/createStoreMixin').default
 PureRenderMixin = require('react-addons-pure-render-mixin')
 {fromJS, List, Map} = require 'immutable'
 
-RoutesStore = require '../../../../stores/RoutesStore'
+RoutesStore = require('../../../../stores/RoutesStore').default
 storageTablesStore = require('../../../components/stores/StorageTablesStore').default
 InstalledComponentsActions = require '../../../components/InstalledComponentsActionCreators'
 InstalledComponentsStore = require('../../../components/stores/InstalledComponentsStore').default

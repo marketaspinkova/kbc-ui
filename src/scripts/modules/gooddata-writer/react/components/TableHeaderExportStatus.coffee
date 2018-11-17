@@ -1,7 +1,7 @@
 React = require 'react'
 createStoreMixin = require('../../../../react/mixins/createStoreMixin').default
 goodDataWriterStore = require '../../store'
-RoutesStore = require '../../../../stores/RoutesStore'
+RoutesStore = require('../../../../stores/RoutesStore').default
 
 Tooltip = require('../../../../react/common/Tooltip').default
 {Loader} = require '@keboola/indigo-ui'

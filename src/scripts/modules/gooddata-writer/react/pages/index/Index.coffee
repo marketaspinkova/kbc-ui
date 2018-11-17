@@ -3,12 +3,12 @@ React = require 'react'
 Promise = require('bluebird')
 {GoodDataWriterTokenTypes} = require '../../../../components/Constants'
 createStoreMixin = require('../../../../../react/mixins/createStoreMixin').default
-RoutesStore = require '../../../../../stores/RoutesStore'
+RoutesStore = require('../../../../../stores/RoutesStore').default
 ComponentDescription = require '../../../../components/react/components/ComponentDescription'
 ComponentMetadata = require '../../../../components/react/components/ComponentMetadata'
 ComponentEmptyState = require('../../../../components/react/components/ComponentEmptyState').default
 AddNewTableButton = require('../../components/AddNewTableButton').default
-ApplicationStore = require '../../../../../stores/ApplicationStore'
+ApplicationStore = require('../../../../../stores/ApplicationStore').default
 StorageTablesStore = require('../../../../components/stores/StorageTablesStore').default
 
 SearchBar = require('@keboola/indigo-ui').SearchBar

@@ -1,5 +1,5 @@
 React = require('react')
-ApplicationStore = require '../../../../stores/ApplicationStore'
+ApplicationStore = require('../../../../stores/ApplicationStore').default
 _ = require('underscore')
 ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('react-bootstrap').Button)
@@ -9,7 +9,7 @@ ModalTitle = React.createFactory(require('react-bootstrap').Modal.Title)
 ModalBody = React.createFactory(require('react-bootstrap').Modal.Body)
 ModalFooter = React.createFactory(require('react-bootstrap').Modal.Footer)
 Input = React.createFactory(require('./../../../../react/common/KbcBootstrap').Input)
-RouterStore = require('../../../../stores/RoutesStore')
+RouterStore = require('../../../../stores/RoutesStore').default
 
 {i, span, div, p, strong, form, input, label, div} = React.DOM
 

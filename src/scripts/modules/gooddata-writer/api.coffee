@@ -1,6 +1,6 @@
 Immutable = require 'immutable'
 SyrupApi = require('../components/SyrupComponentApi').default
-ApplicationStore = require '../../stores/ApplicationStore'
+ApplicationStore = require('../../stores/ApplicationStore').default
 
 createRequest = (method, path) ->
   SyrupApi.createRequest('gooddata-writer', method, path)

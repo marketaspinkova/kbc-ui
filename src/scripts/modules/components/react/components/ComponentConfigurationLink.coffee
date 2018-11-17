@@ -1,5 +1,5 @@
 React = require 'react'
-RoutesStore = require '../../../../stores/RoutesStore'
+RoutesStore = require('../../../../stores/RoutesStore').default
 ComponentsStore = require('../../stores/ComponentsStore').default
 {GENERIC_DETAIL_PREFIX} = require('../../Constants').Routes
 
