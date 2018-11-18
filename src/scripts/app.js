@@ -32,7 +32,7 @@ Promise.config({
   warnings: false,
   cancellation: true,
   longStackTraces: true
-})
+});
 
 /*
   Bootstrap and start whole application
