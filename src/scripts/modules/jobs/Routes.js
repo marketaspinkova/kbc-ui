@@ -30,7 +30,7 @@ export default {
       if (params.jobId) {
         // job detail
         return Promise.resolve();
-      } else if (query.q && query.q !== currentQuery) {
+      } else if ((query.q || query.q === '') && query.q !== currentQuery) {
         JobsActionCreators.setQuery(query.q || '');
         return JobsActionCreators.loadJobsForce(0, true, false);
       } else {
