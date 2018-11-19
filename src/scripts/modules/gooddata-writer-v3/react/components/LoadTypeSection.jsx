@@ -30,7 +30,7 @@ export default React.createClass({
               type="radio"
               title="Full Load"
               disabled={disabled}
-              onChange={() => onChange({changedSince: ''})}
+              onChange={() => onChange({grain: [], changedSince: ''})}
               checked={!isIncremental}>
               Full Load
             </Radio>
@@ -64,7 +64,7 @@ export default React.createClass({
            </Col>
          </FormGroup>
         }
-        {isIncremental && !value.hasConnectionPoint &&
+        {isIncremental &&
          <FormGroup>
            <Col sm={4} componentClass={ControlLabel}>
              Fact Grain
@@ -73,7 +73,7 @@ export default React.createClass({
              <Select
                placeholder="Select at least 2 columns"
                multi={true}
-               disabled={disabled}
+               disabled={disabled || value.hasConnectionPoint}
                options={value.grainColumns.map(column => ({value: column, label: column}))}
                value={value.grain}
                onChange={newColumns => onChange({grain: newColumns.map(column => column.value)})}
