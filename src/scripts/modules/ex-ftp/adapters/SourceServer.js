@@ -5,9 +5,9 @@ export default {
     return Immutable.fromJS({
       parameters: {
         host: localState.get('host', ''),
-        port: parseInt(localState.get('port', ''), 10),
+        port: parseInt(localState.get('port', 21), 10),
         connectionType: localState.get('connectionType', ''),
-        timeout: parseInt(localState.get('timeout', ''), 10),
+        timeout: parseInt(localState.get('timeout', 10), 10),
         username: localState.get('username', ''),
         '#password': localState.get('password', ''),
         '#privateKey': localState.get('privateKey', '')
@@ -18,9 +18,9 @@ export default {
   parseConfiguration: function(configuration) {
     return Immutable.fromJS({
       host: configuration.getIn(['parameters', 'host'], ''),
-      port: configuration.getIn(['parameters', 'port'], ''),
+      port: configuration.getIn(['parameters', 'port'], 21),
       connectionType: configuration.getIn(['parameters', 'connectionType'], ''),
-      timeout: configuration.getIn(['parameters', 'timeout'], ''),
+      timeout: configuration.getIn(['parameters', 'timeout'], 10),
       username: configuration.getIn(['parameters', 'username'], ''),
       password: configuration.getIn(['parameters', '#password'], ''),
       privateKey: configuration.getIn(['parameters', '#privateKey'], '')
