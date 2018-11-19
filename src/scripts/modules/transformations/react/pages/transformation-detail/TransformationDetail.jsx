@@ -20,6 +20,9 @@ import SqlDepButton from '../../components/SqlDepButton';
 import ValidateQueriesButton from '../../components/ValidateQueriesButton';
 import * as sandboxUtils from '../../../utils/sandboxUtils';
 
+import LatestJobs from '../../../../components/react/components/SidebarJobs';
+import LatestRowVersions from '../../../../components/react/components/SidebarVersionsRow';
+
 export default React.createClass({
   mixins: [
     createStoreMixin(
@@ -240,6 +243,16 @@ export default React.createClass({
               </ExternalLink>
             </li>
           </ul>
+          <LatestJobs
+            jobs={this.state.latestJobs}
+            limit="3"
+            showAllJobs={false}
+          />
+          <LatestRowVersions
+            componentId="transformation"
+            configId={this.state.bucketId}
+            rowId={this.state.transformationId}
+          />
         </div>
       </div>
     );
