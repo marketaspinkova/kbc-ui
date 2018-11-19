@@ -48,31 +48,37 @@ export default React.createClass({
         <Modal.Header closeButton={true}>
           <Modal.Title>Create sandbox</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="clearfix">
+        <Modal.Body>
           {this.props.backend !== 'docker' && (
-            <Col xs={12}>
+            <div>
               <h2>Mode</h2>
               <HelpBlock>Disabled transformations will not be executed.</HelpBlock>
 
-              <RadioGroup name="mode" selectedValue={this.props.mode} onChange={this.props.onModeChange}>
-                <RadioGroupInput
-                  wrapperClassName="col-sm-offset-2 col-sm-10"
-                  label="Load input tables only"
-                  value="input"
-                />
-                <RadioGroupInput
-                  wrapperClassName="col-sm-offset-2 col-sm-10"
-                  label="Prepare transformation"
-                  help="Load input tables AND execute required transformations"
-                  value="prepare"
-                />
-                <RadioGroupInput
-                  wrapperClassName="col-sm-offset-2 col-sm-10"
-                  label="Execute transformation without writing to Storage"
-                  value="dry-run"
-                />
-              </RadioGroup>
-            </Col>
+              <div className="row">
+                <div className="col-sm-9">
+                  <div className="form-horizontal">
+                    <RadioGroup name="mode" selectedValue={this.props.mode} onChange={this.props.onModeChange}>
+                      <RadioGroupInput
+                        wrapperClassName="col-sm-offset-3 col-sm-9"
+                        label="Load input tables only"
+                        value="input"
+                      />
+                      <RadioGroupInput
+                        wrapperClassName="col-sm-offset-3 col-sm-9"
+                        label="Prepare transformation"
+                        help="Load input tables AND execute required transformations"
+                        value="prepare"
+                      />
+                      <RadioGroupInput
+                        wrapperClassName="col-sm-offset-3 col-sm-9"
+                        label="Execute transformation without writing to Storage"
+                        value="dry-run"
+                      />
+                    </RadioGroup>
+                  </div>
+                </div>
+              </div>
+            </div>
           )}
           {this.renderCredentials()}
         </Modal.Body>
@@ -151,17 +157,23 @@ export default React.createClass({
     }
 
     return (
-      <Col xs={12}>
+      <div>
         <h2>Credentials</h2>
         {backend === 'redshift' ? this.renderRedshiftCredentials() : null}
         {backend === 'mysql' ? this.renderMysqlCredentials() : null}
         {backend === 'snowflake' ? this.renderSnowflakeCredentials() : null}
-      </Col>
+      </div>
     );
   },
 
   renderRedshiftCredentials() {
-    return <RedshiftCredentialsContainer isAutoLoad={true} />;
+    return (
+      <Row>
+        <Col sm={9}>
+          <RedshiftCredentialsContainer isAutoLoad={true} />
+        </Col>
+      </Row>
+    );
   },
 
   renderDockerCredentials() {

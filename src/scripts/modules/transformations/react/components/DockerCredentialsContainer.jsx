@@ -45,11 +45,9 @@ export default React.createClass({
 
   renderCreateInfo() {
     return (
-      <div className="col-md-12">
-        <p>
-          You will create a new sandbox and load all required data in the input mapping of the transformation along with the transformation script.
-        </p>
-      </div>
+      <p>
+        You will create a new sandbox and load all required data in the input mapping of the transformation along with the transformation script.
+      </p>
     );
   },
 
@@ -66,7 +64,7 @@ export default React.createClass({
     if (!this.state.credentials.get('id') && !this.state.isLoading) return this.renderCreateInfo();
     const isPython = this.isPythonTransformation();
     return (
-      <span>
+      <div className="row">
         <div className="help-block col-md-12">
           Note: To create a new sandbox or load new data you have to drop the current sandbox.
         </div>
@@ -87,7 +85,7 @@ export default React.createClass({
         <div className="col-md-3">
           {this.renderDockerConnect()}
         </div>
-      </span>
+      </div>
     );
   },
 
