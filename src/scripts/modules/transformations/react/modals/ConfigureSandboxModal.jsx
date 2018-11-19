@@ -1,7 +1,7 @@
-import React, {PropTypes} from 'react';
-import {Modal} from 'react-bootstrap';
-import {Link} from 'react-router';
-import {RadioGroup} from 'react-radio-group';
+import React, { PropTypes } from 'react';
+import { Modal, HelpBlock, Row, Col } from 'react-bootstrap';
+import { Link } from 'react-router';
+import { RadioGroup } from 'react-radio-group';
 import RadioGroupInput from '../../../../react/common/RadioGroupInput';
 import MySqlCredentialsContainer from '../components/MySqlCredentialsContainer';
 import RedshiftCredentialsContainer from '../components/RedshiftCredentialsContainer';
@@ -10,7 +10,7 @@ import DockerCredentialsContainer from '../components/DockerCredentialsContainer
 import ConnectToMySqlSandbox from '../components/ConnectToMySqlSandbox';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import ExtendMySqlCredentials from '../../../provisioning/react/components/ExtendMySqlCredentials';
-import {ExternalLink} from '@keboola/indigo-ui';
+import { ExternalLink } from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -39,59 +39,65 @@ export default React.createClass({
 
   render() {
     return (
-      <Modal show={this.props.show}
+      <Modal
+        show={this.props.show}
         bsSize={this.props.backend === 'docker' ? null : 'large'}
-        onHide={this.onHide} enforceFocus={false}>
+        onHide={this.onHide}
+        enforceFocus={false}
+      >
         <Modal.Header closeButton={true}>
           <Modal.Title>Create sandbox</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {this.props.backend !== 'docker' &&
-           <div>
-             <h3>Mode</h3>
-             <RadioGroup
-               name="mode"
-               selectedValue={this.props.mode}
-               onChange={this.props.onModeChange}
-             >
-               <div className="form-horizontal">
-                 <RadioGroupInput
-                   label="Load input tables only"
-                   wrapperClassName="col-sm-offset-1 col-sm-8"
-                   value="input"
-                 />
-                 <RadioGroupInput
-                   label="Prepare transformation"
-                   help="Load input tables AND execute required transformations"
-                   wrapperClassName="col-sm-offset-1 col-sm-8"
-                   value="prepare"
-                 />
-                 <RadioGroupInput
-                   label="Execute transformation without writing to Storage"
-                   wrapperClassName="col-sm-offset-1 col-sm-8"
-                   value="dry-run"
-                 />
-               </div>
-               <div className="help-block">
-                 Note: Disabled transformations will NOT be executed in any of these modes.
-               </div>
+          {this.props.backend !== 'docker' && (
+            <div>
+              <h2>Mode</h2>
+              <HelpBlock>Disabled transformations will not be executed.</HelpBlock>
 
-             </RadioGroup>
-           </div>
-          }
+              <div className="row">
+                <div className="col-sm-9">
+                  <div className="form-horizontal">
+                    <RadioGroup name="mode" selectedValue={this.props.mode} onChange={this.props.onModeChange}>
+                      <RadioGroupInput
+                        wrapperClassName="col-sm-offset-3 col-sm-9"
+                        label="Load input tables only"
+                        value="input"
+                      />
+                      <RadioGroupInput
+                        wrapperClassName="col-sm-offset-3 col-sm-9"
+                        label="Prepare transformation"
+                        help="Load input tables AND execute required transformations"
+                        value="prepare"
+                      />
+                      <RadioGroupInput
+                        wrapperClassName="col-sm-offset-3 col-sm-9"
+                        label="Execute transformation without writing to Storage"
+                        value="dry-run"
+                      />
+                    </RadioGroup>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
           {this.renderCredentials()}
         </Modal.Body>
         <Modal.Footer>
-          {(this.props.backend !== 'docker' || this.hasDockerCredentials() || this.props.isRunning || this.props.progressStatus === 'danger') &&
-           <div className="pull-left" style={{padding: '6px 15px'}}>
-             <span className={'text-' + this.props.progressStatus}>
-               {this.renderStatusIcon()} {this.props.progress}
-               <span />
-               {' '}
-               {this.props.jobId ? <Link to="jobDetail" params={{jobId: this.props.jobId}}>More details</Link> : null}
-             </span>
-           </div>
-          }
+          {(this.props.backend !== 'docker' ||
+            this.hasDockerCredentials() ||
+            this.props.isRunning ||
+            this.props.progressStatus === 'danger') && (
+            <div className="pull-left" style={{ padding: '6px 15px' }}>
+              <span className={'text-' + this.props.progressStatus}>
+                {this.renderStatusIcon()} {this.props.progress}
+                {this.props.jobId ? (
+                  <Link to="jobDetail" params={{ jobId: this.props.jobId }} style={{ paddingLeft: '5px' }}>
+                    More details
+                  </Link>
+                ) : null}
+              </span>
+            </div>
+          )}
           <ConfirmButtons
             onCancel={this.props.onHide}
             onSave={this.props.onCreateStart}
@@ -107,16 +113,13 @@ export default React.createClass({
   },
 
   renderStatusIcon() {
-    if (this.props.progressStatus === 'success') {
-      return (
-        <span className="fa fa-check"/>
-      );
-    } else if (this.props.progressStatus === 'danger') {
-      return (
-        <span className="fa fa-times"/>
-      );
-    } else {
-      return null;
+    switch (this.props.progressStatus) {
+      case 'success':
+        return <span className="fa fa-check" />;
+      case 'danger':
+        return <span className="fa fa-times" />;
+      default:
+        return null;
     }
   },
 
@@ -125,70 +128,66 @@ export default React.createClass({
   },
 
   showSave() {
-    if (this.props.backend !== 'docker') return !this.props.isCreated;
+    if (this.props.backend !== 'docker') {
+      return !this.props.isCreated;
+    }
     return !this.props.isLoadingDockerCredentials && !this.hasDockerCredentials();
   },
 
   hasCredentials() {
-    if (this.props.backend === 'mysql') {
-      return this.props.mysqlCredentials.has('id');
-    } else if (this.props.backend === 'redshift') {
-      return this.props.redshiftCredentials.has('id');
-    } else if (this.props.backend === 'snowflake') {
-      return this.props.snowflakeCredentials.has('id');
-    } else {
-      return true;
+    switch (this.props.backend) {
+      case 'mysql':
+        return this.props.mysqlCredentials.has('id');
+      case 'redshift':
+        return this.props.redshiftCredentials.has('id');
+      case 'snowflake':
+        return this.props.snowflakeCredentials.has('id');
+      default:
+        return true;
     }
   },
 
   renderCredentials() {
     const { backend } = this.props;
-
     if (backend === 'docker') {
-      return (
-        <div className="clearfix">
-          {this.renderDockerCredentials()}
-        </div>
-      );
+      return this.renderDockerCredentials();
     }
     if (!['mysql', 'redshift', 'snowflake'].includes(backend)) {
       return null;
     }
 
     return (
-      <div className="clearfix">
-        <h3>Credentials</h3>
-        <div className="col-sm-offset-1 col-sm-10">
-          {backend === 'redshift' ? this.renderRedshiftCredentials() : null}
-          {backend === 'mysql' ? this.renderMysqlCredentials() : null}
-          {backend === 'snowflake' ? this.renderSnowflakeCredentials() : null}
-        </div>
+      <div>
+        <h2>Credentials</h2>
+        {backend === 'redshift' ? this.renderRedshiftCredentials() : null}
+        {backend === 'mysql' ? this.renderMysqlCredentials() : null}
+        {backend === 'snowflake' ? this.renderSnowflakeCredentials() : null}
       </div>
     );
   },
 
   renderRedshiftCredentials() {
-    return (<RedshiftCredentialsContainer isAutoLoad={true}/>);
+    return (
+      <Row>
+        <Col sm={9}>
+          <RedshiftCredentialsContainer isAutoLoad={true} />
+        </Col>
+      </Row>
+    );
   },
 
   renderDockerCredentials() {
-    return (
-      <DockerCredentialsContainer
-        type={this.props.transformationType}
-        isAutoLoad={true} />
-    );
+    return <DockerCredentialsContainer type={this.props.transformationType} isAutoLoad={true} />;
   },
 
   renderSnowflakeCredentials() {
     return (
-      <div className="row">
-        <div className="col-md-9">
+      <Row>
+        <Col sm={9}>
           <SnowflakeCredentialsContainer isAutoLoad={true} />
-        </div>
-        <div className="col-md-3">
-          {this.renderSnowflakeConnect()}
-        </div>
-      </div>
+        </Col>
+        <Col sm={3}>{this.renderSnowflakeConnect()}</Col>
+      </Row>
     );
   },
 
@@ -196,9 +195,15 @@ export default React.createClass({
     if (!this.props.snowflakeCredentials.get('id')) {
       return null;
     }
+
     return (
       <div>
-        <ExternalLink href={'https://' + this.props.snowflakeCredentials.get('hostname') + '/console/login#/?returnUrl=sql/worksheet'} className="btn btn-link">
+        <ExternalLink
+          href={
+            'https://' + this.props.snowflakeCredentials.get('hostname') + '/console/login#/?returnUrl=sql/worksheet'
+          }
+          className="btn btn-link"
+        >
           <span className="fa fa-fw fa-database" />
           <span> Connect</span>
         </ExternalLink>
@@ -208,14 +213,12 @@ export default React.createClass({
 
   renderMysqlCredentials() {
     return (
-      <div className="row">
-        <div className="col-md-9">
+      <Row>
+        <Col sm={9}>
           <MySqlCredentialsContainer isAutoLoad={true} />
-        </div>
-        <div className="col-md-3">
-          {this.renderMysqlConnect()}
-        </div>
-      </div>
+        </Col>
+        <Col sm={3}>{this.renderMysqlConnect()}</Col>
+      </Row>
     );
   },
 
@@ -223,11 +226,12 @@ export default React.createClass({
     if (!this.props.mysqlCredentials.get('id')) {
       return null;
     }
+
     return (
       <span>
         <ConnectToMySqlSandbox credentials={this.props.mysqlCredentials}>
           <button className="btn btn-link" title="Connect to Sandbox" type="submit">
-            <span className="fa fa-fw fa-database"/> Connect
+            <span className="fa fa-fw fa-database" /> Connect
           </button>
         </ConnectToMySqlSandbox>
         <ExtendMySqlCredentials />

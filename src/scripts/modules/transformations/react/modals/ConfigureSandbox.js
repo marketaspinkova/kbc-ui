@@ -80,7 +80,7 @@ export default React.createClass({
     this.setState({
       isRunning: true,
       jobId: null,
-      progress: 'Creating sandbox and loading data...',
+      progress: 'Creating sandbox and loading data.',
       progressStatus: null
     });
     const createCredentialsAction = this.isPythonTransformation() ? provisioningActions.createJupyterSandboxCredentials : provisioningActions.createRStudioSandboxCredentials;
@@ -116,7 +116,7 @@ export default React.createClass({
     this.setState({
       isRunning: true,
       jobId: null,
-      progress: 'Waiting for load to start...',
+      progress: 'Waiting for load to start.',
       progressStatus: null
     });
     actionCreators.runComponent({
@@ -156,7 +156,7 @@ export default React.createClass({
     } else {
       this.setState({
         jobId: job.id,
-        progress: job.state === 'waiting' ? 'Waiting for load to start...' : 'Loading data into sandbox ...'
+        progress: job.state === 'waiting' ? 'Waiting for load to start.' : 'Loading data into sandbox.'
       });
       setTimeout(this.checkJobStatus, 5000);
     }
