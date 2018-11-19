@@ -12,8 +12,8 @@ export default React.createClass({
       username: PropTypes.string.isRequired,
       password: PropTypes.string.isRequired,
       privateKey: PropTypes.string.isRequired,
-      port: PropTypes.number.isRequired,
-      timeout: PropTypes.number.isRequired
+      port: PropTypes.number,
+      timeout: PropTypes.number
     }),
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired

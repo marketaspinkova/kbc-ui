@@ -29,12 +29,15 @@ export default {
 
   isComplete: function(configuration) {
     return configuration.getIn(['parameters', 'host'], '') !== ''
-     && configuration.getIn(['parameters', 'port'], '') !== ''
-     && configuration.getIn(['parameters', 'connectionType'], '') !== ''
-     && configuration.getIn(['parameters', 'username'], '') !== ''
-     && configuration.getIn(['parameters', '#password'], '') !== ''
-     && configuration.getIn(['parameters', 'timeout'], '') !== ''
-    ;
+      && configuration.getIn(['parameters', 'port'], '') !== ''
+      && configuration.getIn(['parameters', 'connectionType'], '') !== ''
+      && configuration.getIn(['parameters', 'username'], '') !== ''
+      && configuration.getIn(['parameters', '#password'], '') !== ''
+      && configuration.getIn(['parameters', 'timeout'], '') !== '';
+  },
+
+  createEmptyConfiguration: function() {
+    return this.createConfiguration(Immutable.fromJS({'timeout': 10, 'port': 21}));
   }
 }
 ;
