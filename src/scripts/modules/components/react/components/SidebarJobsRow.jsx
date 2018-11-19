@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import JobStatusCircle from '../../../../react/common/JobStatusCircle';
-import FinishedWithIcon from '../../../../react/common/FinishedWithIcon';
+import { Finished } from '@keboola/indigo-ui';
 import DurationWithIcon from '../../../../react/common/DurationWithIcon';
 import JobPartialRunLabel from '../../../../react/common/JobPartialRunLabel';
 
@@ -39,7 +39,7 @@ export default React.createClass({
                   )}
                 </small>
                 <small className="pull-right">
-                  <FinishedWithIcon endTime={this.props.job.get('endTime')} tooltipPlacement="bottom" />
+                  <Finished endTime={this.props.job.get('endTime')} showIcon />
                 </small>
               </div>
             </span>
