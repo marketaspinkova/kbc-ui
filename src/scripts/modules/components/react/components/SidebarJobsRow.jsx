@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import JobStatusCircle from '../../../../react/common/JobStatusCircle';
-import { Finished } from '@keboola/indigo-ui';
+import { Finished, JobStatusCircle } from '@keboola/indigo-ui';
 import DurationWithIcon from '../../../../react/common/DurationWithIcon';
 import JobPartialRunLabel from '../../../../react/common/JobPartialRunLabel';
 

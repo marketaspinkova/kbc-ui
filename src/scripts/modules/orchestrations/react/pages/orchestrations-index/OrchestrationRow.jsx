@@ -1,7 +1,6 @@
 import React from 'react';
 import DurationWithIcon from '../../../../../react/common/DurationWithIcon';
-import { Finished } from '@keboola/indigo-ui';
-import JobStatusCircle from '../../../../../react/common/JobStatusCircle';
+import { Finished, JobStatusCircle } from '@keboola/indigo-ui';
 import { Link } from 'react-router';
 import OrchestrationActiveButton from '../../components/OrchestrationActiveButton';
 import OrchestrationDeleteButton from '../../components/OrchestrationDeleteButton';
