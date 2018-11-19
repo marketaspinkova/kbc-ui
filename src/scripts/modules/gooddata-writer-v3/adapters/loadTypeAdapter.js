@@ -44,6 +44,7 @@ export default function(configProvisioning, tablesProvisioning, tableId) {
   return {
     value: value.toJS(),
     onChange: onChange,
-    disabled: isSaving
+    disabled: isSaving,
+    isComplete: true
   };
 }

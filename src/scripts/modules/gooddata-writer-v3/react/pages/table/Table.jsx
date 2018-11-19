@@ -27,8 +27,7 @@ import columnsEditorAdapter from '../../../adapters/columnsEditorAdapter';
 
 const LoadTypeCollapsibleComponent = CollapsibleSection({
   title: LoadTypeSectionTitle,
-  contentComponent: LoadTypeSection,
-  isComplete: true
+  contentComponent: LoadTypeSection
 });
 
 export default React.createClass({
