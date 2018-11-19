@@ -7,6 +7,10 @@ import callDockerAction from '../components/DockerActionsApi';
 
 import getDefaultPort from './templates/defaultPorts';
 import {getProtectedProperties} from './templates/credentials';
+import {
+  incrementalFetchingTimestampTypes,
+  incrementalFetchingAutoIncrementProperty
+} from './templates/incrementalFetchingCandidates';
 
 export function loadConfiguration(componentId, configId) {
   return componentsActions.loadComponentConfigData(componentId, configId);
@@ -55,6 +59,7 @@ export function componentSupportsSimpleSetup(componentId) {
 export function componentSupportsConfigRows(componentId) {
   const supoortedComponents = [
     'keboola.ex-db-mysql',
+    'keboola.ex-db-mssql',
     'keboola.ex-teradata'
   ];
   return supoortedComponents.indexOf(componentId) > -1;
@@ -142,9 +147,11 @@ export function createActions(componentId) {
   }
 
   function getIncrementalCandidates(sourceTables) {
+    const autoincProperty = incrementalFetchingAutoIncrementProperty.get(componentId);
+    const timestampTypes = incrementalFetchingTimestampTypes.get(componentId);
     return sourceTables.reduce((memo, table) => {
       const qualifyingColumns = table.get('columns', List()).filter((column) => {
-        if (column.has('autoIncrement') || column.get('type') === 'timestamp') {
+        if (column.has(autoincProperty) || timestampTypes.includes(column.get('type'))) {
           return column;
         }
       });
