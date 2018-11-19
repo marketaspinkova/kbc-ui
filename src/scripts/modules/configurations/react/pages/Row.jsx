@@ -203,7 +203,7 @@ export default React.createClass({
           <LatestJobs
             jobs={this.state.latestJobs}
             limit={3}
-            showAllJobs={false}
+            showAllJobsLink={false}
           />
           <LatestRowVersions
             componentId={this.state.componentId}
