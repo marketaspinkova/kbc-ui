@@ -126,7 +126,6 @@ const parseConfiguration = function(configuration) {
     columnsFrom = 'manual';
   }
   return Immutable.fromJS({
-    bucket: configuration.getIn(['parameters', 'bucket'], ''),
     path: configuration.getIn(['parameters', 'path'], ''),
     name: processorMoveFiles.getIn(['parameters', 'folder'], ''),
     onlyNewFiles: configuration.getIn(['parameters', 'onlyNewFiles'], ''),
