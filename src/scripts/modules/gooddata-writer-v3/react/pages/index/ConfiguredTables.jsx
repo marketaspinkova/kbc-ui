@@ -85,13 +85,14 @@ export default React.createClass({
     const isPending = this.props.isTablePending([tableId, 'delete']);
     return (
       <Confirm
+        key={`confirm${tableId}`}
         text={`Do you really want to delete table ${tableId} from the confuration?`}
         title={`Delete table ${tableId}`}
         buttonLabel="Delete"
         onConfirm={e => this.deleteTable(e, tableId)}
       >
         <button disabled={this.props.isSaving} className="btn btn-link">
-          <Tooltip key="deletebutton" placement="top" tooltip="delete">
+          <Tooltip placement="top" tooltip="delete">
             {isPending ? <Loader className="fa-fw" /> : <i className="kbc-icon-cup fa fa-fw" />}
           </Tooltip>
         </button>
@@ -110,7 +111,7 @@ export default React.createClass({
     return [
       this.renderDeleteButton(tableId),
       <ActivateDeactivateButton
-        key="activate"
+        key={`activate${tableId}`}
         activateTooltip="Enable load to GoodData project"
         deactivateTooltip="Disable load to GoodData project"
         isActive={!isDisabled}
@@ -120,7 +121,7 @@ export default React.createClass({
       <RunLoadButton
         tableId={tableId}
         isTableDisabled={isDisabled}
-        key="run"
+        key={`run${tableId}`}
         getRunParams={this.props.getSingleRunParams}
       />
     ];
