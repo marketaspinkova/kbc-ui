@@ -13,14 +13,14 @@ StorageTablesStore = require('../../../../components/stores/StorageTablesStore')
 
 SearchBar = require('@keboola/indigo-ui').SearchBar
 TableRow = require './TableRow'
-TablesByBucketsPanel = require '../../../../components/react/components/TablesByBucketsPanel'
+TablesByBucketsPanel = require('../../../../components/react/components/TablesByBucketsPanel').default
 {Protected} = require '@keboola/indigo-ui'
 
 {Link} = require('react-router')
 Confirm = require('../../../../../react/common/Confirm').default
 {Loader} = require '@keboola/indigo-ui'
 
-LatestJobs = require '../../../../components/react/components/SidebarJobs'
+LatestJobs = require('../../../../components/react/components/SidebarJobs').default
 LatestJobsStore = require('../../../../jobs/stores/LatestJobsStore').default
 LatestVersions = React.createFactory(require('../../../../components/react/components/SidebarVersionsWrapper').default)
 InstalledComponentStore = require('../../../../components/stores/InstalledComponentsStore').default
