@@ -27,8 +27,8 @@ export default React.createClass({
           <tr>
             <th style={{ width: '40%' }}>Component</th>
             <th style={{ width: '20%' }}>Action</th>
-            <th style={{ width: '25%' }}>Parameters</th>
-            <th style={{ width: '15%' }}>
+            <th style={{ width: '32%' }}>Parameters</th>
+            <th style={{ width: '8%' }}>
               <div className="checkbox">
                 <label>
                   <input type="checkbox" checked={allActive} onChange={() => this.handleActiveAll(allActive)} />
