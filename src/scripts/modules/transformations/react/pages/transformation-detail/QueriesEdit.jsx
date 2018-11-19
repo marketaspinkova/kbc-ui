@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import CodeMirror from 'react-code-mirror';
 import resolveHighlightMode from './resolveHighlightMode';
 import {ExternalLink} from '@keboola/indigo-ui';
+import normalizeNewlines from './normalizeNewlines';
 
 export default React.createClass({
   propTypes: {
@@ -32,7 +33,7 @@ export default React.createClass({
           <div className="edit form-group kbc-queries-editor">
             <CodeMirror
               ref="CodeMirror"
-              value={this.props.queries}
+              value={normalizeNewlines(this.props.queries)}
               theme="solarized"
               lineNumbers={true}
               mode={resolveHighlightMode(this.props.backend, null)}
@@ -62,7 +63,7 @@ export default React.createClass({
   },
 
   handleChange(e) {
-    this.props.onChange(e.target.value);
+    this.props.onChange(normalizeNewlines(e.target.value));
   },
 
   highlightQuery() {

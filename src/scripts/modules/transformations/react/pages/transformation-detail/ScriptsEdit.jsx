@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import CodeMirror from 'react-code-mirror';
 import resolveHighlightMode from './resolveHighlightMode';
 import {ExternalLink} from '@keboola/indigo-ui';
+import normalizeNewlines from './normalizeNewlines';
 
 export default React.createClass({
   propTypes: {
@@ -13,7 +14,7 @@ export default React.createClass({
 
   render() {
     var codeMirrorParams = {
-      value: this.props.script,
+      value: normalizeNewlines(this.props.script),
       theme: 'solarized',
       lineNumbers: true,
       mode: resolveHighlightMode('docker', this.props.backend),
@@ -60,6 +61,6 @@ export default React.createClass({
   },
 
   handleChange(e) {
-    this.props.onChange(e.target.value);
+    this.props.onChange(normalizeNewlines(e.target.value));
   }
 });

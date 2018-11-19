@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import CodeMirror from 'codemirror';
 import _ from 'underscore';
+import normalizeNewlines from './normalizeNewlines';
 
 export default React.createClass({
   propTypes: {
@@ -27,7 +28,7 @@ export default React.createClass({
   highlight(string, mode) {
     var state = mode.startState();
 
-    var lines = string.replace(/\r\n/g, '\n').split('\n');
+    var lines = normalizeNewlines(string).split('\n');
     var st = [], pos = 0;
 
     for (var i = 0; i < lines.length; ++i) {
