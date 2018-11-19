@@ -5,6 +5,7 @@ JobStatusCircle = React.createFactory(require('../../../../react/common/JobStatu
 FinishedWithIcon = React.createFactory(require('../../../../react/common/FinishedWithIcon').default)
 DurationWithIcon = React.createFactory(require('../../../../react/common/DurationWithIcon').default)
 ImmutableRendererMixin = require 'react-immutable-render-mixin'
+JobPartialRunLabel = React.createFactory(require('../../../../react/common/JobPartialRunLabel').default)
 
 Link = React.createFactory(require('react-router').Link)
 
@@ -28,6 +29,8 @@ JobNavRow = React.createClass
           JobStatusCircle status: @props.job.get('status')
         span className: 'td',
           div null,
+            JobPartialRunLabel
+              job: @props.job
             @props.job.getIn ['token', 'description']
           div null,
             small className: 'pull-left',
