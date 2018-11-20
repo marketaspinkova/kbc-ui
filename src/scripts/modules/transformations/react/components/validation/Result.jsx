@@ -1,113 +1,72 @@
 import React from 'react';
-import { endsWith } from 'underscore.string';
-import ComponentConfigurationRowLink from '../../../../components/react/components/ComponentConfigurationRowLink';
-import TransformationsStore from '../../../stores/TransformationsStore';
-import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
+import InvalidQuery from './InvalidQuery';
+import InvalidInput from './InvalidInput';
+import InvalidOutput from './InvalidOutput';
+import contactSupport from '../../../../../utils/contactSupport';
 
 export default React.createClass({
-  mixins: [createStoreMixin(TransformationsStore)],
-
   propTypes: {
-    error: React.PropTypes.object.isRequired,
     bucketId: React.PropTypes.string.isRequired,
-    onErrorMessageClick: React.PropTypes.func.isRequired
-  },
-
-  getStateFromStores() {
-    return {
-      transformation: TransformationsStore.getTransformation(
-        this.props.bucketId,
-        this.props.error.get('transformation')
-      )
-    };
+    result: React.PropTypes.object.isRequired,
+    onRedirect: React.PropTypes.func.isRequired
   },
 
   render() {
-    const messageTitle = this.renderTitle();
-
-    if (messageTitle) {
+    if (this.props.result.count() > 0) {
       return (
-        <div style={{ marginBottom: '15px' }}>
-          {messageTitle}
-          <br />
-          {this.renderMessage()}
-        </div>
+        <div className="alert alert-danger">
+          <h4>Following errors found</h4>
+          {this.props.result.map((error, index) => {
+            switch (error.getIn(['object', 'type'])) {
+              case 'query':
+                return (
+                  <InvalidQuery
+                    bucketId={this.props.bucketId}
+                    key={index}
+                    transformationId={error.get('transformation')}
+                    queryNumber={parseInt(error.getIn(['object', 'id']), 10)}
+                    message={error.get('message')}
+                    onClick={this.props.onRedirect}
+                  />
+                );
+              case 'input':
+                return (
+                  <InvalidInput
+                    bucketId={this.props.bucketId}
+                    key={index}
+                    transformationId={error.get('transformation')}
+                    tableId={error.getIn(['object', 'id'])}
+                    message={error.get('message')}
+                    onClick={this.props.onRedirect}
+                  />
+                );
+              case 'output':
+              case 'output_consistency':
+                return (
+                  <InvalidOutput
+                    bucketId={this.props.bucketId}
+                    key={index}
+                    transformationId={error.get('transformation')}
+                    tableId={error.getIn(['object', 'id'])}
+                    message={error.get('message')}
+                    onClick={this.props.onRedirect}
+                  />
+                );
+              default:
+                return (
+                  <p>{error.get('message')}</p>
+                );
+            }
+          }).toArray()}
+          <p>
+            Not an error?
+            Please <a onClick={() => contactSupport({type: 'project'})}>contact us</a>.
+          </p>
+        </div>);
+    } else {
+      return (
+        <span>SQL is valid.</span>
       );
     }
-
-    return <div>{this.renderMessage()}</div>;
-  },
-
-  renderMessage() {
-    const message = this.props.error.get('message', '');
-
-    if (!endsWith(message, '^')) {
-      return message;
-    }
-
-    const [errorMessage, codeBlock] = message
-      .replace(/\n\r/g, '\n')
-      .replace(/\r/g, '\n')
-      .split(/\n{2,}/g);
-
-    return (
-      <span>
-        <span>{errorMessage}</span>
-        {codeBlock && <pre>{codeBlock}</pre>}
-      </span>
-    );
-  },
-
-  renderTitle() {
-    const name = this.state.transformation.get('name');
-    const object = this.props.error.getIn(['object', 'id']);
-    const errorType = this.props.error.getIn(['object', 'type']);
-
-    if (errorType === 'query') {
-      const lineNumber = parseInt(object, 10);
-
-      return (
-        <ComponentConfigurationRowLink
-          componentId="transformation"
-          configId={this.props.bucketId}
-          rowId={this.state.transformation.get('id')}
-          onClick={() => this.props.onErrorMessageClick(lineNumber)}
-        >
-          <b>
-            Transformation {name}, query #{object}
-          </b>
-        </ComponentConfigurationRowLink>
-      );
-    }
-
-    if (errorType === 'input') {
-      return (
-        <ComponentConfigurationRowLink
-          componentId="transformation"
-          configId={this.props.bucketId}
-          rowId={this.state.transformation.get('id')}
-        >
-          <b>
-            Transformation {name}, input mapping of {object}
-          </b>
-        </ComponentConfigurationRowLink>
-      );
-    }
-
-    if (['output', 'output_consistency'].includes(errorType)) {
-      return (
-        <ComponentConfigurationRowLink
-          componentId="transformation"
-          configId={this.props.bucketId}
-          rowId={this.state.transformation.get('id')}
-        >
-          <b>
-            Transformation {name}, output mapping of {object}
-          </b>
-        </ComponentConfigurationRowLink>
-      );
-    }
-
-    return null;
   }
 });
