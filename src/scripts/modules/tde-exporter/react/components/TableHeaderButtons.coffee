@@ -55,7 +55,7 @@ module.exports = React.createClass
   render: ->
     React.createElement EditButtons,
       isEditing: @state.isEditing
-      isSaving: @state.isSaving
+      isSaving: !!@state.isSaving
       isDisabled: not @state.isValid
       editLabel: 'Edit'
       cancelLabel: 'Cancel'
