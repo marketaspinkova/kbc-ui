@@ -46,6 +46,7 @@ export default React.createClass({
           {this._saveButton()}
           {this._cancelButton()}
           {!this.props.showCancel && ' '}
+          {this.props.children}
           {this._loader()}
         </ButtonToolbar>
       );
