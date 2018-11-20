@@ -48,7 +48,9 @@ export default React.createClass({
     transformationId: React.PropTypes.string.isRequired,
     openInputMappings: React.PropTypes.object.isRequired,
     openOutputMappings: React.PropTypes.object.isRequired,
-    showDetails: React.PropTypes.bool.isRequired
+    showDetails: React.PropTypes.bool.isRequired,
+    highlightQueryNumber: React.PropTypes.number,
+    highlightingQueryDisabled: React.PropTypes.bool
   },
 
   // TODO move this to component definition UI Options
@@ -513,6 +515,8 @@ export default React.createClass({
           splitQueries={this.props.editingFields.get('splitQueries', this.props.transformation.get('queries'))}
           isQueriesProcessing={this.props.isQueriesProcessing}
           isChanged={this.props.editingFields.get('queriesChanged', false)}
+          highlightQueryNumber={this.props.highlightQueryNumber}
+          highlightingQueryDisabled={this.props.highlightingQueryDisabled}
           disabled={this._isMySqlTransformation()}
           onEditCancel={() => {
             TransformationsActionCreators.cancelTransformationEditingField(
