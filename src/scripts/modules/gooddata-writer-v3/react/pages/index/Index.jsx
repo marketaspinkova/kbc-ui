@@ -29,7 +29,6 @@ import ConfiguredTables from './ConfiguredTables';
 import DimensionsSection from '../../components/DimensionsSection';
 import CredentialsContainer from '../../components/CredentialsContainer';
 import TablesLoadSettings from '../../components/TablesLoadSettings';
-import CredentialsSectionTitle from '../../components/CredentialsSectionTitle';
 
 const COMPONENT_ID = 'keboola.gooddata-writer';
 
@@ -40,7 +39,7 @@ const DimensionsCollapsibleComponent = CollapsibleSection({
 });
 
 const CredentialsCollapsibleComponent = CollapsibleSection({
-  title: CredentialsSectionTitle,
+  title: 'GoodData Project',
   contentComponent: CredentialsContainer,
   options: {stretchContentToBodye: true}
 });
