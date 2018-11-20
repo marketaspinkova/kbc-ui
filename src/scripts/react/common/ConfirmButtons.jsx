@@ -42,7 +42,7 @@ export default React.createClass({
   render() {
     if (this.props.placement === 'left') {
       return (
-        <ButtonToolbar className={classnames('kbc-buttons', this.props.className)}>
+        <ButtonToolbar className={classnames('kbc-buttons pull-left', this.props.className)}>
           {this._saveButton()}
           {this._cancelButton()}
           {!this.props.showCancel && ' '}
@@ -52,7 +52,7 @@ export default React.createClass({
       );
     } else {
       return (
-        <ButtonToolbar className={classnames('kbc-buttons', this.props.className)}>
+        <ButtonToolbar className={classnames('kbc-buttons pull-right', this.props.className)}>
           {this._loader()}
           {this.props.children}
           {!this.props.showCancel && ' '}
