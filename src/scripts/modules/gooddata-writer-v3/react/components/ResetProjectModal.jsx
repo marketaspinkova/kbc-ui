@@ -24,7 +24,7 @@ export default React.createClass({
       <Modal onHide={this.props.onHide} show={this.props.show}>
         <Modal.Header closeButton>
           <Modal.Title>
-            Reset GoodData Project
+            Disconnect GoodData Project
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -37,7 +37,7 @@ export default React.createClass({
         </Modal.Body>
         <Modal.Footer>
           <ConfirmButtons
-            saveLabel="Reset"
+            saveLabel="Disconnect"
             saveStyle="danger"
             isSaving={this.props.isReseting || this.props.disabled}
             onCancel={this.props.onHide}
