@@ -31,7 +31,13 @@ export default React.createClass({
               placeholder="select"
               value={this.props.value.connectionType}
               onChange={function(e) {
-                props.onChange({connectionType: e.target.value});
+                let port;
+                if (e.target.value === 'SFTP') {
+                  port = 22;
+                } else {
+                  port = 21;
+                }
+                props.onChange({connectionType: e.target.value, port: port});
               }}
             >
               <option value="" disabled>Select type</option>
