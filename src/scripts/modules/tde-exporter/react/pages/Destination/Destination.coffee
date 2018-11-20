@@ -7,7 +7,7 @@ ComponentName = React.createFactory(require('../../../../../react/common/Compone
 ComponentIcon = React.createFactory(require('../../../../../react/common/ComponentIcon').default)
 ComponentEmptyState = require('../../../../components/react/components/ComponentEmptyState').default
 
-uploadUtils = require '../../../uploadUtils'
+uploadUtils = require('../../../uploadUtils').default
 
 SelectWriterModal = require('./WritersModal').default
 
