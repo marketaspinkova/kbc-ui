@@ -23,36 +23,36 @@ export default React.createClass({
     return (
       <Form horizontal>
         <FormGroup>
-          <Col componentClass={ControlLabel} sm={3}>Update Type</Col>
+          <Col componentClass={ControlLabel} sm={3}>Update Type {this.renderLoader('loadOnly')}</Col>
           <Col sm={9}>
             <Radio
               disabled={this.props.disabled}
               checked={!this.props.value.loadOnly}
               onChange={() => this.onSave('loadOnly')}
-              name="updatetype" > Update model and load data {this.renderLoader('loadOnly', true)}
+              name="updatetype" > Update model and load data
             </Radio>
             <Radio
               disabled={this.props.disabled}
               checked={this.props.value.loadOnly}
               onChange={() => this.onSave('loadOnly')}
-              name="updatetype" > Load data only {this.renderLoader('loadOnly', false)}
+              name="updatetype" > Load data only
             </Radio>
           </Col>
         </FormGroup>
         <FormGroup>
-          <Col componentClass={ControlLabel} sm={3}>Load Type</Col>
+          <Col componentClass={ControlLabel} sm={3}>Load Type {this.renderLoader('multiLoad')} </Col>
           <Col sm={9}>
             <Radio
               disabled={this.props.disabled}
               checked={this.props.value.multiLoad}
               onChange={() => this.onSave('multiLoad')}
-              name="multiload" > Multiload - all tables at once{this.renderLoader('multiLoad', false)}
+              name="multiload" > Multiload - all tables at once
             </Radio>
             <Radio
               disabled={this.props.disabled}
               checked={!this.props.value.multiLoad}
               onChange={() => this.onSave('multiLoad')}
-              name="multiload" > Separate - one table at a time  {this.renderLoader('multiLoad', true)}
+              name="multiload" > Separate - one table at a time
             </Radio>
           </Col>
         </FormGroup>
@@ -60,10 +60,9 @@ export default React.createClass({
     );
   },
 
-  renderLoader(property, nextValue) {
+  renderLoader(property) {
     const {saving} = this.state;
-    const {value} = this.props;
-    return saving === property && value[property] === nextValue && <Loader />;
+    return saving === property && <Loader />;
   },
 
   onSave(property) {
