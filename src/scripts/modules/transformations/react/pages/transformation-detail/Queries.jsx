@@ -11,7 +11,6 @@ import sqlValidationErrors from '../../../../components/react/components/notific
 import { AlertBlock } from '@keboola/indigo-ui';
 import { Col, Row } from 'react-bootstrap';
 import contactSupport from '../../../../../utils/contactSupport';
-import HttpError from '../../../../../utils/HttpError';
 
 /* global require */
 require('codemirror/mode/sql/sql');
@@ -175,22 +174,15 @@ export default React.createClass({
         }
 
         this.setState({
+          validationRunning: false,
           errors: errors
         });
       })
-      .catch(HttpError, () => {
-        ApplicationActionCreators.sendNotification({
-          message: 'Could not connect to SQL validation service. Please try again later.',
-          type: 'error'
-        });
-      })
       .catch(error => {
-        throw error;
-      })
-      .finally(() => {
         this.setState({
           validationRunning: false
         });
+        throw error;
       });
   },
 
