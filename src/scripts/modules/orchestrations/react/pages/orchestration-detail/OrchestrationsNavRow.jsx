@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import ImmutableRendererMixin from 'react-immutable-render-mixin';
-import DurationWithIcon from '../../../../../react/common/DurationWithIcon';
+import Duration from '@keboola/indigo-ui';
 import FinishedWithIcon from '../../../../../react/common/FinishedWithIcon';
 import JobStatusCircle from '../../../../../react/common/JobStatusCircle';
 
@@ -38,9 +38,10 @@ export default React.createClass({
               <span>
                 {lastExecutedJob &&
                   lastExecutedJob.get('startTime') && (
-                  <DurationWithIcon
+                  <Duration
                     startTime={lastExecutedJob.get('startTime')}
                     endTime={lastExecutedJob.get('endTime')}
+                    hasIcon
                   />
                 )}
               </span>

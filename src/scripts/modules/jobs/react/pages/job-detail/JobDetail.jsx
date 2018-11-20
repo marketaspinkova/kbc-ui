@@ -16,7 +16,6 @@ import { fromJS } from 'immutable';
 import Events from '../../../../sapi-events/react/Events';
 import ComponentName from '../../../../../react/common/ComponentName';
 import ComponentIcon from '../../../../../react/common/ComponentIcon';
-import Duration from '../../../../../react/common/Duration';
 import JobRunId from '../../../../../react/common/JobRunId';
 import JobStatsContainer from './JobStatsContainer';
 import GoodDataStatsContainer from './GoodDataStatsContainer';
@@ -30,7 +29,7 @@ import ComponentConfigurationRowLink from '../../../../components/react/componen
 import contactSupport from '../../../../../utils/contactSupport';
 
 import date from '../../../../../utils/date';
-import { Tree, NewLineToBr } from '@keboola/indigo-ui';
+import { Tree, NewLineToBr, Duration } from '@keboola/indigo-ui';
 
 const APPLICATION_ERROR = 'application';
 

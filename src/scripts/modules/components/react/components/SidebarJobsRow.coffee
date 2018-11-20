@@ -3,7 +3,7 @@ React = require 'react'
 
 JobStatusCircle = React.createFactory(require('../../../../react/common/JobStatusCircle').default)
 FinishedWithIcon = React.createFactory(require('../../../../react/common/FinishedWithIcon').default)
-DurationWithIcon = React.createFactory(require('../../../../react/common/DurationWithIcon').default)
+Duration = React.createFactory(require('@keboola/indigo-ui').Duration)
 ImmutableRendererMixin = require 'react-immutable-render-mixin'
 JobPartialRunLabel = React.createFactory(require('../../../../react/common/JobPartialRunLabel').default)
 
@@ -35,7 +35,7 @@ JobNavRow = React.createClass
           div null,
             small className: 'pull-left',
               if @props.job.get('startTime')
-                DurationWithIcon startTime: @props.job.get('startTime'), endTime: @props.job.get('endTime')
+                Duration startTime: @props.job.get('startTime'), endTime: @props.job.get('endTime'), hasIcon: true
             small className: 'pull-right',
               FinishedWithIcon endTime: @props.job.get('endTime'), tooltipPlacement: 'bottom'
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import Router from 'react-router';
-import Duration from '../../../../../react/common/Duration';
+import Duration from '@keboola/indigo-ui';
 import JobStatusLabel from '../../../../../react/common/JobStatusLabel';
 import date from '../../../../../utils/date';
 import ImmutableRendererMixin from 'react-immutable-render-mixin';

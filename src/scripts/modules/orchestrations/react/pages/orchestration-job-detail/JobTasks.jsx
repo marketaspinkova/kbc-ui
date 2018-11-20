@@ -5,8 +5,7 @@ import { Panel, PanelGroup, Alert } from 'react-bootstrap';
 import ComponentConfigurationLink from '../../../../components/react/components/ComponentConfigurationLink';
 import ComponentIcon from '../../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../../react/common/ComponentName';
-import Duration from '../../../../../react/common/Duration';
-import { Tree } from '@keboola/indigo-ui';
+import { Tree, Duration } from '@keboola/indigo-ui';
 import JobStatusLabel from '../../../../../react/common/JobStatusLabel';
 import date from '../../../../../utils/date';
 

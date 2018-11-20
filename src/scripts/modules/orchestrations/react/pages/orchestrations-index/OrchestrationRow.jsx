@@ -1,5 +1,5 @@
 import React from 'react';
-import DurationWithIcon from '../../../../../react/common/DurationWithIcon';
+import Duration from '@keboola/indigo-ui';
 import FinishedWithIcon from '../../../../../react/common/FinishedWithIcon';
 import JobStatusCircle from '../../../../../react/common/JobStatusCircle';
 import { Link } from 'react-router';
@@ -46,7 +46,7 @@ export default React.createClass({
     const lastExecutedJob = this.props.orchestration.get('lastExecutedJob');
     if (lastExecutedJob && lastExecutedJob.get('startTime')) {
       duration = (
-        <DurationWithIcon startTime={lastExecutedJob.get('startTime')} endTime={lastExecutedJob.get('endTime')} />
+        <Duration startTime={lastExecutedJob.get('startTime')} endTime={lastExecutedJob.get('endTime')} hasIcon />
       );
     } else {
       duration = 'No run yet';
