@@ -77,7 +77,6 @@ export default React.createClass({
             placement="right"
             saveLabel={this.localState(['currentQuery', 'name'], false) ? 'Save Query' : 'Create'}
             isDisabled={this.isSavingDisabled()}
-            className="kbc-buttons-inline"
           >
             <GraphAPIExplorerLink
               ids={this.props.accounts.keySeq()}
