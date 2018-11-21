@@ -188,7 +188,7 @@ export default React.createClass({
 
   _hasUploadTask(taskName) {
     const tasks = this.state.configData.getIn(['parameters', 'uploadTasks'], List());
-    return tasks.find(t => t === taskName) !== null;
+    return !!tasks.find(t => t === taskName);
   },
 
   _toggleImmediateUpload(taskName, isActive) {
