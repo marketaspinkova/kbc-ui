@@ -2,13 +2,13 @@ import React from 'react';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
 import { RefreshIcon } from '@keboola/indigo-ui';
 const createStoreMixin = require('../../../../react/mixins/createStoreMixin').default;
-const InstalledComponetsStore = require('../../stores/InstalledComponentsStore').default;
+const InstalledComponentsStore = require('../../stores/InstalledComponentsStore').default;
 
 export default React.createClass({
-  mixins: [createStoreMixin(InstalledComponetsStore)],
+  mixins: [createStoreMixin(InstalledComponentsStore)],
 
   getStateFromStores() {
-    return { isLoading: InstalledComponetsStore.getIsLoading() || InstalledComponetsStore.getIsDeletedLoading() };
+    return { isLoading: InstalledComponentsStore.getIsLoading() || InstalledComponentsStore.getIsDeletedLoading() };
   },
 
   _handleRefreshClick() {
