@@ -1,5 +1,5 @@
 import React from 'react';
-import Duration from '@keboola/indigo-ui';
+import { Duration } from '@keboola/indigo-ui';
 import FinishedWithIcon from '../../../../../react/common/FinishedWithIcon';
 import JobStatusCircle from '../../../../../react/common/JobStatusCircle';
 import { Link } from 'react-router';

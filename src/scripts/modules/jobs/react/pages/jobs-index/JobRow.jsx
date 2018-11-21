@@ -5,7 +5,7 @@ import JobStatusLabel from '../../../../../react/common/JobStatusLabel';
 import JobPartialRunLabel from '../../../../../react/common/JobPartialRunLabel';
 import ComponentIcon from '../../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../../react/common/ComponentName';
-import Duration from '@keboola/indigo-ui';
+import { Duration } from '@keboola/indigo-ui';
 
 import ComponentsStore from '../../../../components/stores/ComponentsStore';
 import InstalledComponentsStore from '../../../../components/stores/InstalledComponentsStore';

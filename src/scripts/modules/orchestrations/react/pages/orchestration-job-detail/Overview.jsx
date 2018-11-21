@@ -1,7 +1,7 @@
 import React from 'react';
 import { List } from 'immutable';
 import JobTasks from './JobTasks';
-import Duration from '@keboola/indigo-ui';
+import { Duration } from '@keboola/indigo-ui';
 import JobStatusLabel from '../../../../../react/common/JobStatusLabel';
 import date from '../../../../../utils/date';
 

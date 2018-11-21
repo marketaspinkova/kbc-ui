@@ -1,7 +1,7 @@
 import React from 'react';
 import JobStatusCircle from '../../../../../react/common/JobStatusCircle';
 import FinishedWithIcon from '../../../../../react/common/FinishedWithIcon';
-import Duration from '@keboola/indigo-ui';
+import { Duration } from '@keboola/indigo-ui';
 import ImmutableRendererMixin from 'react-immutable-render-mixin';
 import { Link } from 'react-router';
 
