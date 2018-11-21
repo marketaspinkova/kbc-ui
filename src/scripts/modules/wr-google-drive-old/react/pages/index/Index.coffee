@@ -18,7 +18,7 @@ TablesByBucketsPanel = React.createFactory require('../../../../components/react
 
 ComponentDescription = require('../../../../components/react/components/ComponentDescription').default
 ComponentDescription = React.createFactory(ComponentDescription)
-DeleteConfigurationButton = require '../../../../components/react/components/DeleteConfigurationButton'
+DeleteConfigurationButton = require('../../../../components/react/components/DeleteConfigurationButton').default
 ComponentMetadata = require('../../../../components/react/components/ComponentMetadata').default
 RunButtonModal = React.createFactory(require('../../../../components/react/components/RunComponentButton'))
 TableRow = React.createFactory(require './TableRow')
