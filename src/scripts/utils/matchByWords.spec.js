@@ -4,54 +4,54 @@ import matchByWords from './matchByWords';
 
 describe('test matchByWords', () => {
   it('should match empty query', () => {
-    assert.ok(matchByWords(' some input string with spaces  ', ''));
-    assert.ok(matchByWords('someinputstringwithoutspace', ''));
-    assert.ok(matchByWords('', ''));
+    assert.strictEqual(matchByWords(' some input string with spaces  ', ''), true);
+    assert.strictEqual(matchByWords('someinputstringwithoutspace', ''), true);
+    assert.strictEqual(matchByWords('', ''), true);
   });
 
   it('should strict match one word query', () => {
-    assert.ok(matchByWords('some input param string', 'param'));
-    assert.ok(matchByWords('some input param string', 'param  '));
-    assert.ok(matchByWords('some input param string', ' param  '));
+    assert.strictEqual(matchByWords('some input param string', 'param'), true);
+    assert.strictEqual(matchByWords('some input param string', 'param  '), true);
+    assert.strictEqual(matchByWords('some input param string', ' param  '), true);
   });
 
   it('should not fuzzy match word', () => {
-    assert.ok(!matchByWords('some input param string', 'taram'));
-    assert.ok(!matchByWords('some input param string', 'taram  '));
-    assert.ok(!matchByWords('some input param string', ' taram  '));
-    assert.ok(!matchByWords('some input param string', ' mara  '));
+    assert.strictEqual(matchByWords('some input param string', 'taram'), false);
+    assert.strictEqual(matchByWords('some input param string', 'taram  '), false);
+    assert.strictEqual(matchByWords('some input param string', ' taram  '), false);
+    assert.strictEqual(matchByWords('some input param string', ' mara  '), false);
   });
 
   it('should match words in order', () => {
-    assert.ok(matchByWords('some input param string', 'some param'));
-    assert.ok(matchByWords('some input param string', ' string param'));
-    assert.ok(matchByWords('some input param string', '  some   param  '));
-    assert.ok(matchByWords('some input param string', ' some  string   '));
+    assert.strictEqual(matchByWords('some input param string', 'some param'), true);
+    assert.strictEqual(matchByWords('some input param string', ' string param'), true);
+    assert.strictEqual(matchByWords('some input param string', '  some   param  '), true);
+    assert.strictEqual(matchByWords('some input param string', ' some  string   '), true);
   });
 
   it('should not match more words', () => {
-    assert.ok(!matchByWords('some input param string', '  blabla   param  '));
-    assert.ok(!matchByWords('some input param string', ' some  blablag   '));
-    assert.ok(!matchByWords('some input param string', ' total  blablag   '));
+    assert.strictEqual(matchByWords('some input param string', '  blabla   param  '), false);
+    assert.strictEqual(matchByWords('some input param string', ' some  blablag   '), false);
+    assert.strictEqual(matchByWords('some input param string', ' total  blablag   '), false);
   });
 
   it('should not fuzzy match more words', () => {
-    assert.ok(!matchByWords('some input param string', ' prm str'));
-    assert.ok(!matchByWords('some input param string', '  param   sti  '));
-    assert.ok(!matchByWords('some input param string', ' sm  st '));
+    assert.strictEqual(matchByWords('some input param string', ' prm str'), false);
+    assert.strictEqual(matchByWords('some input param string', '  param   sti  '), false);
+    assert.strictEqual(matchByWords('some input param string', ' sm  st '), false);
   });
 
   it('should fuzzy match by single characters', () => {
-    assert.ok(matchByWords('some input param string', ' string p r m str'));
-    assert.ok(matchByWords('some input param string', ' p r m str'));
-    assert.ok(matchByWords('some input param string', '  param   st i  '));
-    assert.ok(matchByWords('some input param string', ' som  s g '));
-    assert.ok(matchByWords('some input param string', ' i g put'));
+    assert.strictEqual(matchByWords('some input param string', ' string p r m str'), true);
+    assert.strictEqual(matchByWords('some input param string', ' p r m str'), true);
+    assert.strictEqual(matchByWords('some input param string', '  param   st i  '), true);
+    assert.strictEqual(matchByWords('some input param string', ' som  s g '), true);
+    assert.strictEqual(matchByWords('some input param string', ' i g put'), true);
 
-    assert.ok(matchByWords('some input param string', ' input  e'));
+    assert.strictEqual(matchByWords('some input param string', ' input  e'), true);
   });
 
   it('should not fuzzy match by single characters', () => {
-    assert.ok(!matchByWords('some input param string', ' igput  s'));
+    assert.strictEqual(matchByWords('some input param string', ' igput  s'), false);
   });
 });
