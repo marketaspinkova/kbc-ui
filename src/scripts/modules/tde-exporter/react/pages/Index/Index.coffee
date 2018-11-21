@@ -5,7 +5,7 @@ moment = require 'moment'
 classnames = require 'classnames'
 tdeCommon = require '../../../tdeCommon'
 LatestJobsStore = require('../../../../jobs/stores/LatestJobsStore').default
-LatestJobs = require '../../../../components/react/components/SidebarJobs'
+LatestJobs = require('../../../../components/react/components/SidebarJobs').default
 
 Link = React.createFactory(require('react-router').Link)
 
@@ -22,7 +22,9 @@ ComponentDescription = require('../../../../components/react/components/Componen
 ComponentDescription = React.createFactory(ComponentDescription)
 ComponentMetadata = require('../../../../components/react/components/ComponentMetadata').default
 DeleteConfigurationButton = require('../../../../components/react/components/DeleteConfigurationButton').default
-TablesByBucketsPanel = React.createFactory require('../../../../components/react/components/TablesByBucketsPanel')
+TablesByBucketsPanel = React.createFactory(
+  require('../../../../components/react/components/TablesByBucketsPanel').default
+)
 InstalledComponentsActions = require '../../../../components/InstalledComponentsActionCreators'
 storageActionCreators = require '../../../../components/StorageActionCreators'
 LatestVersions = React.createFactory(require('../../../../components/react/components/SidebarVersionsWrapper').default)

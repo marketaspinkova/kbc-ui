@@ -4,7 +4,7 @@ _ = require 'underscore'
 classnames = require 'classnames'
 createStoreMixin = require('../../../../../react/mixins/createStoreMixin').default
 LatestJobsStore = require('../../../../jobs/stores/LatestJobsStore').default
-LatestJobs = require '../../../../components/react/components/SidebarJobs'
+LatestJobs = require('../../../../components/react/components/SidebarJobs').default
 RoutesStore = require('../../../../../stores/RoutesStore').default
 Link = React.createFactory(require('react-router').Link)
 RowEditor = require './RowEditor'
@@ -14,7 +14,8 @@ GdriveStore = require '../../../wrGdriveStore'
 InstalledComponentsStore = require('../../../../components/stores/InstalledComponentsStore').default
 InstalledComponentsActions = require '../../../../components/InstalledComponentsActionCreators'
 
-TablesByBucketsPanel = React.createFactory require('../../../../components/react/components/TablesByBucketsPanel')
+TablesByBucketsPanel = require('../../../../components/react/components/TablesByBucketsPanel').default
+TablesByBucketsPanel = React.createFactory(TablesByBucketsPanel)
 
 ComponentDescription = require('../../../../components/react/components/ComponentDescription').default
 ComponentDescription = React.createFactory(ComponentDescription)
