@@ -209,7 +209,6 @@ export default React.createClass({
 
   _renderSetColumnsType() {
     const options = _.map(columnTdeTypes.concat('IGNORE').concat(''), opKey => {
-      console.log(opKey); // eslint-disable-line
       return (
         <option disabled={opKey === ''} value={opKey} key={opKey}>
           {opKey || 'Set All Types to:'}
