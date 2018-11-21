@@ -61,7 +61,7 @@ export default React.createClass({
         <span className="td">
           {lastExecutedJob &&
             lastExecutedJob.get('startTime') && (
-            <Finished hasIcon endTime={lastExecutedJob && lastExecutedJob.get('startTime')} />
+            <Finished showIcon endTime={lastExecutedJob && lastExecutedJob.get('startTime')} />
           )}
         </span>
         <span className="td">{duration}</span>

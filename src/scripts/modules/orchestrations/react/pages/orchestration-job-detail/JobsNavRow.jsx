@@ -44,7 +44,7 @@ export default React.createClass({
                 )}
               </span>
               <span className="kb-info clearfix pull-right">
-                <Finished hasIcon endTime={this.props.job.get('endTime')} />
+                <Finished showIcon endTime={this.props.job.get('endTime')} />
               </span>
             </span>
           </span>
