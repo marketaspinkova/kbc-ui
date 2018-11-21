@@ -45,12 +45,12 @@ export default React.createClass({
   render() {
     if (isObsoleteComponent(this.props.componentId)) {
       const text = (
-        <span>
+        <div>
           <p>Are you sure you want to move the configuration {this.state.config.get('name')} to Trash?</p>
           <p>
             <i className="fa fa-exclamation-triangle" /> This configuration can't be restored.
           </p>
-        </span>
+        </div>
       );
 
       return (
