@@ -80,7 +80,7 @@ export default React.createClass({
         {this.renderModal()}
         {hasDimensions ?
           <span>
-            <div className="kbc-inner-padding">
+            <div className="btn-toolbar kbc-inner-padding">
               <div className="pull-right">
                 {this.renderAddButton()}
               </div>
@@ -157,7 +157,7 @@ export default React.createClass({
 
   renderAddButton() {
     return (
-      <div className="kbc-no-wrap">
+      <div>
         <button
           disabled={this.props.disabled}
           onClick={this.openModal}

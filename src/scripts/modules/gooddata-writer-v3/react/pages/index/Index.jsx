@@ -40,8 +40,7 @@ const DimensionsCollapsibleComponent = CollapsibleSection({
 
 const CredentialsCollapsibleComponent = CollapsibleSection({
   title: 'GoodData Project',
-  contentComponent: CredentialsContainer,
-  options: {stretchContentToBodye: true}
+  contentComponent: CredentialsContainer
 });
 
 const LoadSettingsCollapsibleComponent = CollapsibleSection({

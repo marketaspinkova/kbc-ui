@@ -81,7 +81,7 @@ export default React.createClass({
     const {provisioning: {isLoading}} = this.props;
 
     if (isLoading) {
-      return <div className="pull-left">Loading <Loader /></div>;
+      return <span><Loader /> Loading</span>;
     }
 
     if (!this.isConnected()) {
@@ -135,7 +135,7 @@ export default React.createClass({
     const isProvisioned = this.isKeboolaProvisioned();
     const hasSso = this.isSsoEnabled();
     return (
-      <div className="clearfix">
+      <div className="btn-toolbar form-group">
         {!isProvisioned &&
          <button className="btn btn-success pull-right"
            onClick={() => this.setState({showCreateProjectModal: true})}>
