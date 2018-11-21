@@ -16,6 +16,16 @@ export const cases = {
       'port': 21,
       'username': ''
     }
+  },
+  'changedConfig': {
+    'parameters': {
+      '#password': '',
+      '#privateKey': '',
+      'connectionType': '',
+      'host': 'changed-host.com',
+      'port': 100,
+      'username': ''
+    }
   }
 };
 

@@ -15,5 +15,12 @@ describe('sourceServer', function() {
       cases.emptyState,
       sourceServerAdapter.parseConfiguration(Immutable.fromJS({})).toJS());
   });
+
+  it('should return change host from default configuration', function() {
+    assert.deepEqual(
+      cases.changedConfig,
+      sourceServerAdapter.createConfiguration(Immutable.fromJS({'host': 'changed-host.com', port: 100})).toJS()
+    );
+  });
 }
 );
