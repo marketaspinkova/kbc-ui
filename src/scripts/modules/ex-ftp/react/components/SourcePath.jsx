@@ -61,7 +61,7 @@ export default React.createClass({
         />
         <Input
           type="checkbox"
-          label="Only new files"
+          label="Only New Files"
           wrapperClassName="col-xs-8 col-xs-offset-4"
           checked={this.props.value.onlyNewFiles}
           onChange={function(e) {

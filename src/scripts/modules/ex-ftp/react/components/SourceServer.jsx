@@ -24,7 +24,7 @@ export default React.createClass({
     return (
       <Form horizontal>
         <FormGroup>
-          <Col componentClass={ControlLabel} sm={4}>Connection type</Col>
+          <Col componentClass={ControlLabel} sm={4}>Connection Type</Col>
           <Col sm={8}>
             <FormControl
               componentClass="select"
@@ -107,7 +107,7 @@ export default React.createClass({
           className={(this.props.value.connectionType !== 'SFTP') ? 'hidden' : ''}
         >
           <Col componentClass={ControlLabel} sm={4}>
-            Private key
+            Private Key
           </Col>
           <Col sm={8}>
             <FormControl
@@ -122,7 +122,7 @@ export default React.createClass({
         </FormGroup>
         <FormGroup>
           <Col componentClass={ControlLabel} sm={4}>
-            Connection timeout
+            Connection Timeout
           </Col>
           <Col sm={8}>
             <FormControl
