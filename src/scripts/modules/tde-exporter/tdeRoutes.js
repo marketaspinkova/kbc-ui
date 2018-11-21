@@ -48,15 +48,14 @@ const registerOAuthV2Route = writerComponentId => ({
               return router.transitionTo('tde-exporter-destination', { config: params.config });
             });
           })
-          .error(error => {
+          .error(() => {
             ApplicationActionCreators.sendNotification({
               message:
                 'Failed to verify authorized account, please contact us using the Support button in the menu on the left.',
               type: 'error'
             });
 
-            router.transitionTo('tde-exporter', { config: params.config });
-            throw error;
+            return router.transitionTo('tde-exporter', { config: params.config });
           });
       })
   ]
@@ -223,7 +222,7 @@ export default {
                   });
                   return router.transitionTo('tde-exporter-destination', { config: params.config });
                 })
-                .error(error => {
+                .error(() => {
                   const notification =
                     'Failed to authorize the Google Drive account, please contact us ' +
                     'using the Support button in the menu on the left.';
@@ -232,8 +231,7 @@ export default {
                     type: 'error'
                   });
 
-                  router.transitionTo(componentId, { config: params.config });
-                  throw error;
+                  return router.transitionTo(componentId, { config: params.config });
                 });
             }
           });
