@@ -1,7 +1,6 @@
 import React from 'react';
-import { PanelWithDetails } from '@keboola/indigo-ui';
+import { PanelWithDetails, Duration } from '@keboola/indigo-ui';
 
-import { timeInWords } from '../../../../../utils/duration';
 import TableLinkEx from '../../../../components/react/components/StorageApiTableLinkEx';
 
 const VISIBLE_TABLES_LIMIT = 10;
@@ -30,10 +29,6 @@ export default React.createClass({
     );
   },
 
-  duration(durationSeconds) {
-    return timeInWords(Math.round(durationSeconds));
-  },
-
   renderSlicedItems(start, count) {
     return this.props.tables
       .get('tables')
@@ -54,7 +49,7 @@ export default React.createClass({
           tableId={table.get('id')}>
           {table.get('id')}
           <span className="text-muted">
-            {' ' + this.duration(table.get('durationTotalSeconds'))}
+            {' '}<Duration duration={table.get('durationTotalSeconds')} />
           </span>
         </TableLinkEx>
       </li>

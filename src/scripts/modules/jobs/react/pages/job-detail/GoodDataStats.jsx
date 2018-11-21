@@ -4,9 +4,8 @@ import moment from 'moment';
 import StatusLabel from '../../../../../react/common/JobStatusLabel';
 import { fromJS } from 'immutable';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
-import { timeInWords } from '../../../../../utils/duration';
 import date from '../../../../../utils/date';
-import { Tree, ExternalLink } from '@keboola/indigo-ui';
+import { Tree, ExternalLink, Duration } from '@keboola/indigo-ui';
 
 export default React.createClass({
   mixins: [ImmutableRenderMixin],
@@ -57,7 +56,7 @@ export default React.createClass({
       let details = 'N/A';
 
       if (task.event) {
-        duration = task.event.performance.duration;
+        duration = <Duration duration={task.event.performance.duration} />;
         const finished = moment(task.event.created);
         started = finished.subtract(duration, 'seconds'); // TODO
         status = <StatusLabel status={task.event && task.event.type} />;
@@ -80,7 +79,7 @@ export default React.createClass({
           {this.renderCell(taskId.toString())}
           {this.renderCell(task.name)}
           {this.renderCell(started)}
-          {this.renderCell(timeInWords(duration))}
+          {this.renderCell(duration)}
           {this.renderCell(status)}
           {this.renderCell(this.renderLinkIf(details))}
           {this.renderCell(<Tree data={params} />)}
