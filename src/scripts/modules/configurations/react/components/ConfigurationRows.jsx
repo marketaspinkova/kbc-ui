@@ -1,6 +1,5 @@
 import React from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
-import fuzzy from 'fuzzy';
 import {SearchBar} from '@keboola/indigo-ui';
 import Immutable from 'immutable';
 import ConfigurationRowsTable from './ConfigurationRowsTable';
@@ -44,9 +43,6 @@ export default React.createClass({
           );
         }
       ],
-      filter: function(row, query) {
-        return fuzzy.test(query, row.get('name')) || fuzzy.test(query, row.get('description'));
-      },
       objectName: 'Row'
     };
   },

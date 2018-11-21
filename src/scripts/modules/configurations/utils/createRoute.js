@@ -10,10 +10,10 @@ import InstalledComponentsStore from '../../components/stores/InstalledComponent
 import ComponentsStore from '../../components/stores/ComponentsStore';
 import ConfigurationRowsStore from '../ConfigurationRowsStore';
 import _ from 'lodash';
-import fuzzy from 'fuzzy';
 import Immutable from 'immutable';
 import {createTablesRoute} from '../../table-browser/routes';
 import {loadCredentialsFromConfig as loadOauthCredentials} from '../../oauth-v2/OauthUtils';
+import matchByWords from '../../../utils/matchByWords';
 
 // defaults
 const defaults = {
@@ -36,7 +36,9 @@ const defaults = {
     },
     columns: [],
     searchFilter: function(row, query) {
-      return fuzzy.test(query, row.get('name')) || fuzzy.test(query, row.get('description'));
+      const lowerCaseQuery = query.toLowerCase();
+      return matchByWords(row.get('name').toLowerCase(), lowerCaseQuery) ||
+             matchByWords(row.get('description').toLowerCase(), lowerCaseQuery);
     }
   }
 };
