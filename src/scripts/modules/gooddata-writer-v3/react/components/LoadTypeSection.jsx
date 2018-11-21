@@ -19,6 +19,7 @@ export default React.createClass({
   render() {
     const {value, onChange, disabled} = this.props;
     const isIncremental = !!value.changedSince;
+    const isGrainInvalid = value.grain && value.grain.length === 1;
     return (
       <Form horizontal>
         <FormGroup>
@@ -65,7 +66,7 @@ export default React.createClass({
          </FormGroup>
         }
         {isIncremental &&
-         <FormGroup>
+         <FormGroup className={isGrainInvalid && 'danger alert-danger'}>
            <Col sm={4} componentClass={ControlLabel}>
              Fact Grain
            </Col>
@@ -82,7 +83,7 @@ export default React.createClass({
                <ExternalLink href="https://developer.gooddata.com/article/set-fact-table-grain">
                  Fact grain
                </ExternalLink>
-               {' '} columns help to avoid of duplicates records in GoodData dataset without connection point. Specify at least two attribute, reference or date type columns.
+               {' '} columns help to avoid of duplicates records in GoodData dataset without a connection point. <strong> Specify at least 2 of</strong> attribute, reference or date type columns.
              </HelpBlock>
            </Col>
          </FormGroup>
