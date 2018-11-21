@@ -36,7 +36,7 @@ export default React.createClass({
           </FormGroup>
           {this._isAuthorized() && (
             <FormGroup>
-              <ControlLabel className="col-sm-2">Instand upload</ControlLabel>
+              <ControlLabel className="col-sm-2">Instant upload</ControlLabel>
               <FormControl.Static className="col-sm-10" componentClass="div">
                 {this.props.renderEnableUpload(this._accountName())}
               </FormControl.Static>
