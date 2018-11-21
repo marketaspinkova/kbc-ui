@@ -4,23 +4,29 @@ import sourceServerAdapter from './SourceServer';
 import {cases} from './SourceServer.spec.def';
 
 describe('sourceServer', function() {
-  it('should return default configuration', function() {
-    assert.deepEqual(
-      cases.emptyConfig,
-      sourceServerAdapter.createConfiguration(Immutable.fromJS({})).toJS());
+  describe('createConfiguration', function() {
+    it('should return default configuration', function() {
+      assert.deepEqual(
+        cases.emptyConfig.configuration,
+        sourceServerAdapter.createConfiguration(Immutable.fromJS({})).toJS());
+    });
+    Object.keys(cases).forEach(function(key) {
+      it('should return a valid config for local state with ' + key, function() {
+        assert.deepEqual(cases[key].configuration, sourceServerAdapter.createConfiguration(Immutable.fromJS(cases[key].localState)).toJS());
+      });
+    });
   });
-
-  it('should return localState with default from empty configuration', function() {
-    assert.deepEqual(
-      cases.emptyState,
-      sourceServerAdapter.parseConfiguration(Immutable.fromJS({})).toJS());
-  });
-
-  it('should return change host from default configuration', function() {
-    assert.deepEqual(
-      cases.changedConfig,
-      sourceServerAdapter.createConfiguration(Immutable.fromJS({'host': 'changed-host.com', port: 100})).toJS()
-    );
+  describe('parseConfiguration', function() {
+    it('should return default configuration', function() {
+      assert.deepEqual(
+        cases.emptyConfig.localState,
+        sourceServerAdapter.parseConfiguration(Immutable.fromJS({})).toJS());
+    });
+    Object.keys(cases).forEach(function(key) {
+      it('should return a valid config for local state with ' + key, function() {
+        assert.deepEqual(cases[key].localState, sourceServerAdapter.parseConfiguration(Immutable.fromJS(cases[key].configuration)).toJS());
+      });
+    });
   });
 }
 );
