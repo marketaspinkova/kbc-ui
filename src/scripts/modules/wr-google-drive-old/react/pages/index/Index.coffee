@@ -16,7 +16,7 @@ InstalledComponentsActions = require '../../../../components/InstalledComponents
 
 TablesByBucketsPanel = React.createFactory require('../../../../components/react/components/TablesByBucketsPanel')
 
-ComponentDescription = require '../../../../components/react/components/ComponentDescription'
+ComponentDescription = require('../../../../components/react/components/ComponentDescription').default
 ComponentDescription = React.createFactory(ComponentDescription)
 DeleteConfigurationButton = require '../../../../components/react/components/DeleteConfigurationButton'
 ComponentMetadata = require '../../../../components/react/components/ComponentMetadata'
