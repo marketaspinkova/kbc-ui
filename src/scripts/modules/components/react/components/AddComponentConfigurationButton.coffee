@@ -9,7 +9,7 @@ createStoreMixin = require('../../../../react/mixins/createStoreMixin').default
 
 Modal = React.createFactory(require('react-bootstrap').Modal)
 Button = React.createFactory(require('react-bootstrap').Button)
-NewComponentModal = React.createFactory(require('../pages/new-component-form/NewComponentModal'))
+NewComponentModal = React.createFactory(require('../pages/new-component-form/NewComponentModal').default)
 
 module.exports = React.createClass
   displayName: 'AddComponentConfigurationButton'
