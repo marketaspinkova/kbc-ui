@@ -5,7 +5,6 @@ export const cases = {
     'password': '',
     'port': 21,
     'privateKey': '',
-    'timeout': 10,
     'username': ''
   },
   'emptyConfig': {
@@ -15,7 +14,6 @@ export const cases = {
       'connectionType': '',
       'host': '',
       'port': 21,
-      'timeout': 10,
       'username': ''
     }
   }

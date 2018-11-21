@@ -12,8 +12,7 @@ export default React.createClass({
       username: PropTypes.string.isRequired,
       password: PropTypes.string.isRequired,
       privateKey: PropTypes.string.isRequired,
-      port: PropTypes.number.isRequired,
-      timeout: PropTypes.number.isRequired
+      port: PropTypes.number.isRequired
     }),
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired
@@ -118,21 +117,6 @@ export default React.createClass({
               }}
             />
             <div className="help-block">Only to use with SFTP connection type.</div>
-          </Col>
-        </FormGroup>
-        <FormGroup>
-          <Col componentClass={ControlLabel} sm={4}>
-            Connection Timeout
-          </Col>
-          <Col sm={8}>
-            <FormControl
-              type="number"
-              value={this.props.value.timeout}
-              onChange={function(e) {
-                props.onChange({timeout: e.target.value});
-              }}
-            />
-            <div className="help-block">Connection timeout in seconds</div>
           </Col>
         </FormGroup>
       </Form>
