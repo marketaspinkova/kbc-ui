@@ -86,17 +86,11 @@ export default React.createClass({
   },
 
   _createInput(labelValue, propName, type = 'text', desc = '') {
-    let additionalProps = {};
-
-    if (propName === 'site') {
-      additionalProps.placeholder = 'default if empty';
-    }
-
     return (
       <Input
-        {...additionalProps}
         label={labelValue}
         help={desc}
+        placeholder={propName === 'site' ? 'default if empty' : null}
         type={type}
         value={this.state.credentials.get(propName)}
         labelClassName="col-xs-4"
