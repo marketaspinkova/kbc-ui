@@ -1,6 +1,5 @@
-
 import createRoute from '../configurations/utils/createRoute';
-import columnTypes  from '../configurations/utils/columnTypeConstants';
+import columnTypes from '../configurations/utils/columnTypeConstants';
 
 import SourceServerSection from './react/components/SourceServer';
 import SourceServerAdapter from './adapters/SourceServer';
@@ -8,6 +7,9 @@ import SourceServerAdapter from './adapters/SourceServer';
 import SourcePathSection from './react/components/SourcePath';
 import SourcePathAdapter from './adapters/SourcePath';
 import {CollapsibleSection} from '../configurations/utils/renderHelpers';
+
+import Immutable from 'immutable';
+import React from 'react';
 
 const routeSettings = {
   componentId: 'keboola.ex-ftp',
@@ -18,7 +20,7 @@ const routeSettings = {
         render: CollapsibleSection({
           title: 'Connection configuration',
           contentComponent: SourceServerSection,
-          options: { includeSaveButtons: true }
+          options: {includeSaveButtons: true}
         }),
         onLoad: SourceServerAdapter.parseConfiguration,
         onSave: SourceServerAdapter.createConfiguration,
@@ -49,17 +51,24 @@ const routeSettings = {
         }
       },
       {
-        name: 'Path',
-        type: columnTypes.VALUE,
+        name: 'Storage',
+        type: columnTypes.TABLE_LINK_DEFAULT_BUCKET,
         value: function(row) {
-          return row.getIn(['configuration', 'parameters', 'path']);
+          const processorMoveFiles = row.getIn(['configuration', 'processors', 'after'], Immutable.List()).find(function(processor) {
+            return processor.getIn(['definition', 'component']) === 'keboola.processor-move-files';
+          }, null, Immutable.Map());
+          return processorMoveFiles.getIn(['parameters', 'folder']);
         }
       },
       {
-        name: 'Only new files',
+        name: 'Description',
         type: columnTypes.VALUE,
         value: function(row) {
-          return row.getIn(['configuration', 'parameters', 'onlyNewFiles']) ? 'Yes' : 'No';
+          return (
+            <small>
+              {(row.get('description') !== '') ? row.get('description') : 'No description'}
+            </small>
+          );
         }
       }
     ]
