@@ -120,7 +120,11 @@ export default React.createClass({
       <Picker
         email={this.props.account.get('email')}
         dialogTitle="Select a folder"
-        buttonLabel={React.createElement('span', null, <span className="fa fa-fw fa-folder-o" />, ' Select a folder')}
+        buttonLabel={(
+          <span>
+            <span className="fa fa-fw fa-folder-o" /> Select a folder
+          </span>
+        )}
         onPickedFn={data => {
           let folders = _.filter(data, file => file.type === 'folder');
           folderId = folders[0].id;
