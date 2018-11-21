@@ -21,22 +21,17 @@ export default React.createClass({
     const tableId = RoutesStore.getCurrentRouteParam('tableId');
     const configData = InstalledComponentsStore.getConfigData(componentId, configId);
     const localState = InstalledComponentsStore.getLocalState(componentId, configId);
-    const editingData = localState.getIn(['editing', tableId]);
+    const editingData = localState.getIn(['editing', tableId], Map());
 
-    let isValid = false;
-    let isOneColumnType = false;
+    const isValid = editingData.reduce((memo, value) => {
+      return (
+        memo || (['date', 'datetime'].includes(value && value.get('type')) && _.isEmpty(value && value.get('format')))
+      );
+    }, false);
 
-    if (editingData) {
-      isValid = editingData.reduce((memo, value) => {
-        return (
-          memo || (['date', 'datetime'].includes(value && value.get('type')) && _.isEmpty(value && value.get('format')))
-        );
-      }, false);
-
-      isOneColumnType = editingData.reduce((memo, value) => {
-        return memo || (value && value.get('type') !== 'IGNORE');
-      }, false);
-    }
+    const isOneColumnType = editingData.reduce((memo, value) => {
+      return memo || (value && value.get('type') !== 'IGNORE');
+    }, false);
 
     const tdeFileName = tdeCommon.getEditingTdeFileName(configData, localState, tableId);
     const fileNameValid = tdeCommon.assertTdeFileName(tdeFileName) === null;
