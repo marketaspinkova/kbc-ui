@@ -35,7 +35,7 @@ JobNavRow = React.createClass
           div null,
             small className: 'pull-left',
               if @props.job.get('startTime')
-                Duration startTime: @props.job.get('startTime'), endTime: @props.job.get('endTime'), hasIcon: true
+                Duration startTime: @props.job.get('startTime'), endTime: @props.job.get('endTime'), showIcon: true
             small className: 'pull-right',
               FinishedWithIcon endTime: @props.job.get('endTime'), tooltipPlacement: 'bottom'
 

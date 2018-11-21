@@ -40,7 +40,7 @@ export default React.createClass({
                   <Duration
                     startTime={this.props.job.get('startTime')}
                     endTime={this.props.job.get('endTime')}
-                    hasIcon
+                    showIcon
                   />
                 )}
               </span>

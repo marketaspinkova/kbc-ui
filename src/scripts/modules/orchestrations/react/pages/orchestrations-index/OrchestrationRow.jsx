@@ -46,7 +46,7 @@ export default React.createClass({
     const lastExecutedJob = this.props.orchestration.get('lastExecutedJob');
     if (lastExecutedJob && lastExecutedJob.get('startTime')) {
       duration = (
-        <Duration startTime={lastExecutedJob.get('startTime')} endTime={lastExecutedJob.get('endTime')} hasIcon />
+        <Duration startTime={lastExecutedJob.get('startTime')} endTime={lastExecutedJob.get('endTime')} showIcon />
       );
     } else {
       duration = 'No run yet';

@@ -41,7 +41,7 @@ export default React.createClass({
                   <Duration
                     startTime={lastExecutedJob.get('startTime')}
                     endTime={lastExecutedJob.get('endTime')}
-                    hasIcon
+                    showIcon
                   />
                 )}
               </span>
