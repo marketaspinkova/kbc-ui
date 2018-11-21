@@ -29,16 +29,12 @@ export default React.createClass({
           </Col>
         </FormGroup>
         <FormGroup>
-          <Col componentClass={ControlLabel} sm={3}>Include Time</Col>
-          <Col sm={9}>
+          <Col sm={9} smPush={3}>
             <Checkbox
               checked={value.includeTime}
               onChange={() => this.handleChange({includeTime: !value.includeTime})}>
-              Include
+              Include time
             </Checkbox>
-            <HelpBlock>
-              Your project may include multiple date dimensions, each associated with a different event
-            </HelpBlock>
           </Col>
         </FormGroup>
         <FormGroup>
