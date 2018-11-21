@@ -178,7 +178,9 @@ export default React.createClass({
         value={this.state.editingTdeFileName}
         bsSize="small"
         bsStyle={errorMsg ? 'error' : ''}
-        help={React.createElement('small', null, errorMsg || msg)}
+        help={(
+          <small>{errorMsg || msg}</small>
+        )}
         type="text"
         label={tlabel}
         wrapperClassName="wrapper"
