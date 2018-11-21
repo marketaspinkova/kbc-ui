@@ -48,7 +48,6 @@ export default React.createClass({
     );
 
     const task = this.state.configData.getIn(['parameters', 'stageUploadTask']);
-    console.log(task); // eslint-disable-line
     switch (task) {
       case 'tableauServer':
         destinationRow = this._renderTableauServer();
