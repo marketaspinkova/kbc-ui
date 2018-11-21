@@ -32,11 +32,9 @@ export default React.createClass({
             <OverlayTrigger
               overlay={
                 <Tooltip id={this.props.tdeFile.get('id')}>
-                  <span>
-                    <div>{this.props.tdeFile.getIn(['creatorToken', 'description'])}</div>
-                    <div>{date.format(this.props.tdeFile.get('created'))}</div>
-                    <div>{filesize(this.props.tdeFile.get('sizeBytes'))}</div>
-                  </span>
+                  <div>{this.props.tdeFile.getIn(['creatorToken', 'description'])}</div>
+                  <div>{date.format(this.props.tdeFile.get('created'))}</div>
+                  <div>{filesize(this.props.tdeFile.get('sizeBytes'))}</div>
                 </Tooltip>
               }
               placement="top"
