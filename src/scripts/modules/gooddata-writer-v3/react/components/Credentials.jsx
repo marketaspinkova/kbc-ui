@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import {Loader, ExternalLink} from '@keboola/indigo-ui';
 import ResetProjectModal from './ResetProjectModal';
 import CreateProjectModal from './CreateProjectModal';
+import ComponentsStore from '../../../components/stores/ComponentsStore';
 
 export default React.createClass({
   propTypes: {
@@ -176,7 +177,12 @@ export default React.createClass({
   },
 
   renderGoToProjectLink() {
-    const targetUrl = `https://secure.gooddata.com/#s=/gdc/projects/${this.props.config.pid}|projectDashboardPage`;
+    let gdUrl = 'https://secure.gooddata.com/#s=/gdc/projects';
+    const componentUri = ComponentsStore.getComponent('gooddata-writer').get('uri');
+    if (componentUri === 'https://syrup.eu-central-1.keboola.com/gooddata-writer') {
+      gdUrl = 'https://keboola.eu.gooddata.com/gdc/projects';
+    }
+    const targetUrl = `${gdUrl}/${this.props.config.pid}|projectDashboardPage`;
     return (
       <ExternalLink href={targetUrl} className="btn btn-link pull-right">
         <span className="fa fa-bar-chart-o fa-fw"/>
@@ -185,11 +191,20 @@ export default React.createClass({
     );
   },
 
+  getGoodDataLoginUrl() {
+    let loginUrl = 'https://secure.gooddata.com/gdc/account/customerlogin';
+    const componentUri = ComponentsStore.getComponent('gooddata-writer').get('uri');
+    if (componentUri === 'https://syrup.eu-central-1.keboola.com/gooddata-writer') {
+      loginUrl = 'https://keboola.eu.gooddata.com/gdc/account/customerlogin';
+    }
+    return loginUrl;
+  },
+
   renderLoginToProjectLink() {
     const {pid} = this.props.config;
     const sso = this.props.provisioning.data.get('sso');
     const targetUrl = `/#s=/gdc/projects/${pid}|projectDashboardPage`;
-    const submitUrl = 'https://secure.gooddata.com/gdc/account/customerlogin';
+    const submitUrl = this.getGoodDataLoginUrl();
 
     return (
       <form
