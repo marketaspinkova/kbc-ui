@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Form, Radio, HelpBlock, FormGroup, ControlLabel, Col} from 'react-bootstrap';
+import {Form, Radio, HelpBlock, FormGroup, ControlLabel, Col, Alert} from 'react-bootstrap';
 import {ExternalLink} from '@keboola/indigo-ui';
 import Select from 'react-select';
 import ChangedSinceInput from '../../../../react/common/ChangedSinceInput';
@@ -66,7 +66,7 @@ export default React.createClass({
          </FormGroup>
         }
         {isIncremental &&
-         <FormGroup className={isGrainInvalid && 'danger alert-danger'}>
+         <FormGroup>
            <Col sm={4} componentClass={ControlLabel}>
              Fact Grain
            </Col>
@@ -80,6 +80,11 @@ export default React.createClass({
                onChange={newColumns => onChange({grain: newColumns.map(column => column.value)})}
              />
              <HelpBlock>
+               {isGrainInvalid &&
+                 <Alert bsStyle="danger">
+                   <i className="fa fa-warning" /> Please specify second attribute, reference or date type columns.
+                 </Alert>
+               }
                <ExternalLink href="https://developer.gooddata.com/article/set-fact-table-grain">
                  Fact grain
                </ExternalLink>
