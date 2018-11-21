@@ -4,16 +4,28 @@ import sourcePathAdapter from './SourcePath';
 import {cases} from './SourcePath.spec.def';
 
 describe('sourcePath', function() {
-  it('should return default configuration', function() {
-    assert.deepEqual(
-      cases.emptyConfig,
-      sourcePathAdapter.createConfiguration(Immutable.fromJS({})).toJS());
+  describe('createConfiguration', function() {
+    it('should return default configuration', function() {
+      assert.deepEqual(
+        cases.emptyConfig.configuration,
+        sourcePathAdapter.createConfiguration(Immutable.fromJS({})).toJS());
+    });
+    Object.keys(cases).forEach(function(key) {
+      it('should return a valid config for a local state with ' + key, function() {
+        assert.deepEqual(cases[key].configuration, sourcePathAdapter.createConfiguration(Immutable.fromJS(cases[key].localState)).toJS());
+      });
+    });
   });
-
-  it('should return localState with default from empty configuration', function() {
-    assert.deepEqual(
-      cases.emptyState,
-      sourcePathAdapter.parseConfiguration(Immutable.fromJS({})).toJS());
+  describe('parseConfiguration', function() {
+    it('should return default configuration', function() {
+      assert.deepEqual(
+        cases.emptyConfig.localState,
+        sourcePathAdapter.parseConfiguration(Immutable.fromJS({})).toJS());
+    });
+    Object.keys(cases).forEach(function(key) {
+      it('should return a valid config for a local state with ' + key, function() {
+        assert.deepEqual(cases[key].localState, sourcePathAdapter.parseConfiguration(Immutable.fromJS(cases[key].configuration)).toJS());
+      });
+    });
   });
-}
-);
+});
