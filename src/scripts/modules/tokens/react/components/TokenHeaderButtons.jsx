@@ -15,10 +15,6 @@ import ApplicationActionCreators from '../../../../actions/ApplicationActionCrea
 export default React.createClass({
   mixins: [createStoreMixin(TokensStore)],
 
-  componentDidUpdate(prevProps, prevState) {
-    this.checkNewTokenCreated(RoutesStore.getCurrentRouteParam('tokenId'), prevState.tokenId);
-  },
-
   getStateFromStores() {
     const tokens = TokensStore.getAll();
     const tokenId = RoutesStore.getCurrentRouteParam('tokenId');
@@ -182,11 +178,5 @@ export default React.createClass({
 
   refreshToken() {
     return TokensActions.refreshToken(this.state.token);
-  },
-
-  checkNewTokenCreated(token, prevToken) {
-    if (token !== 'new-token' && prevToken === 'new-token') {
-      this.setState(this.getStateFromStores());
-    }
   }
 });
