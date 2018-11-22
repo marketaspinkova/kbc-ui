@@ -42,6 +42,7 @@ dispatcher.register(function(payload) {
       _store = _store.setIn(actionPath, Immutable.fromJS({
         status: 'pending'
       }));
+      DockerActionsStore.emitChange();
       break;
 
     case constants.ActionTypes.DOCKER_RUNNER_SYNC_ACTION_RUN_SUCCESS:
@@ -49,6 +50,7 @@ dispatcher.register(function(payload) {
         status: 'success',
         data: action.response
       }));
+      DockerActionsStore.emitChange();
       break;
 
     case constants.ActionTypes.DOCKER_RUNNER_SYNC_ACTION_RUN_ERROR:
@@ -56,12 +58,12 @@ dispatcher.register(function(payload) {
         status: 'error',
         error: action.error
       }));
+      DockerActionsStore.emitChange();
       break;
 
     default:
       break;
   }
-  DockerActionsStore.emitChange();
 });
 
 module.exports = DockerActionsStore;
