@@ -56,7 +56,7 @@ export default React.createClass({
     return (
       <EditButtons
         isEditing={this.state.isEditing}
-        isSaving={this.state.isSaving}
+        isSaving={!!this.state.isSaving}
         isDisabled={!this.state.isValid}
         editLabel="Edit"
         cancelLabel="Cancel"
