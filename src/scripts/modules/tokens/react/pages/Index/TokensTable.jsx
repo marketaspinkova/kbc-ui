@@ -15,7 +15,6 @@ export default React.createClass({
 
   propTypes: {
     tokens: PropTypes.object.isRequired,
-    allBuckets: PropTypes.object.isRequired,
     currentAdmin: PropTypes.object.isRequired,
     onDeleteFn: PropTypes.func.isRequired,
     isDeletingFn: PropTypes.func.isRequired,

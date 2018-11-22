@@ -1,5 +1,5 @@
 import React from 'react';
-import {Map} from 'immutable';
+import { Map } from 'immutable';
 import BucketsStore from '../../../../components/stores/StorageBucketsStore';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import SettingsTabs from '../../../../../react/layout/SettingsTabs';
@@ -10,7 +10,7 @@ import TokensStore from '../../../StorageTokensStore';
 import TokensTable from './TokensTable';
 
 export default React.createClass({
-  mixins: [createStoreMixin(TokensStore, BucketsStore)],
+  mixins: [createStoreMixin(TokensStore)],
 
   getStateFromStores() {
     const tokens = TokensStore.getAll();
@@ -21,8 +21,7 @@ export default React.createClass({
       isDeletingTokenFn: TokensStore.isDeletingToken,
       isSendingToken: TokensStore.isSendingToken,
       isRefreshingTokenFn: TokensStore.isRefreshingToken,
-      localState: TokensStore.localState(),
-      allBuckets: BucketsStore.getAll()
+      localState: TokensStore.localState()
     };
   },
 
@@ -35,7 +34,7 @@ export default React.createClass({
             <div className="tab-pane tab-pane-no-padding active">
               <TokensTable
                 localState={this.state.localState.get('TokensTable', Map())}
-                updateLocalState={(newState) => this.updateLocalState('TokensTable', newState)}
+                updateLocalState={newState => this.updateLocalState('TokensTable', newState)}
                 isDeletingFn={t => this.state.isDeletingTokenFn(t.get('id'))}
                 onDeleteFn={TokensActions.deleteToken}
                 onSendTokenFn={this.sendToken}
@@ -44,7 +43,6 @@ export default React.createClass({
                 isRefreshingFn={t => this.state.isRefreshingTokenFn(t.get('id'))}
                 currentAdmin={this.state.currentAdmin}
                 tokens={this.state.tokens}
-                allBuckets={this.state.allBuckets}
               />
             </div>
           </div>
@@ -57,11 +55,11 @@ export default React.createClass({
     return TokensActions.sendToken(token.get('id'), params).then(() =>
       ApplicationActionCreators.sendNotification({
         message: `Token ${token.get('description')} sent to ${params.email}`
-      }));
+      })
+    );
   },
 
   updateLocalState(key, newValue) {
     TokensActions.updateLocalState(this.state.localState.set(key, newValue));
   }
-
 });
