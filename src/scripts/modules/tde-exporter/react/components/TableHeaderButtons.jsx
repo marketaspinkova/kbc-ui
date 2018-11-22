@@ -116,11 +116,10 @@ export default React.createClass({
     this.state.table.get('columns').forEach(column => {
       if (this.state.columnsTypes.has(column)) {
         prepareData = prepareData.set(column, this.state.columnsTypes.get(column));
-        return;
+      } else {
+        const emptyColumn = fromJS({ type: 'IGNORE' });
+        prepareData = prepareData.set(column, emptyColumn);
       }
-
-      const emptyColumn = fromJS({ type: 'IGNORE' });
-      prepareData = prepareData.set(column, emptyColumn);
     });
 
     const path = ['editing', this.state.tableId];
