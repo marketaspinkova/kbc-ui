@@ -2,6 +2,7 @@ import Index from './react/pages/Index/Index';
 import NewPage from './react/pages/New/New';
 import DetailPage from './react/pages/Detail/Detail';
 import tokensActions from './actionCreators';
+import StorageActions from '../components/StorageActionCreators';
 import TokensStore from './StorageTokensStore';
 
 export default {
