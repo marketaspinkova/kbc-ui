@@ -18,22 +18,16 @@ export default React.createClass({
 
   getStateFromStores() {
     return {
-      allBuckets: BucketsStore.getAll(),
-      isSendingToken: TokensStore.isSendingToken
-    };
-  },
-
-  getInitialState() {
-    return {
       token: Map(),
       sendModal: false,
-      tokenCreated: false
+      tokenCreated: false,
+      allBuckets: BucketsStore.getAll(),
+      isSendingToken: TokensStore.isSendingToken,
+      isSaving: false
     };
   },
 
   render() {
-    const isSending = this.state.isSendingToken(this.state.token.get('id'));
-
     return (
       <div className="container-fluid">
         <div className="kbc-main-content">
@@ -46,7 +40,7 @@ export default React.createClass({
                   <Col sm={12} className="text-right">
                     <ConfirmButtons
                       saveButtonType="submit"
-                      isSaving={isSending}
+                      isSaving={this.state.isSaving}
                       isDisabled={!this.isValid()}
                       saveLabel="Create"
                       showCancel={false}
@@ -55,7 +49,7 @@ export default React.createClass({
                 </FormGroup>
                 <TokenEditor
                   isEditing={false}
-                  disabled={!!isSending}
+                  disabled={!!this.state.isSaving}
                   token={this.state.token}
                   allBuckets={this.state.allBuckets}
                   updateToken={this.updateToken}
@@ -124,6 +118,7 @@ export default React.createClass({
 
   handleSubmit(e) {
     e.preventDefault();
+    this.saving(true);
 
     return TokensActions.createToken(this.state.token.toJS())
       .then(createdToken => {
@@ -134,6 +129,9 @@ export default React.createClass({
       })
       .catch(error => {
         throw error;
+      })
+      .finally(() => {
+        this.saving(false);
       });
   },
 
@@ -152,6 +150,12 @@ export default React.createClass({
   closeSendModal() {
     this.setState({
       sendModal: false
+    });
+  },
+
+  saving(value) {
+    this.setState({
+      isSaving: value
     });
   }
 });
