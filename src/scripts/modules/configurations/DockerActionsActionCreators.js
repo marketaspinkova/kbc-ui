@@ -1,7 +1,7 @@
 import dispatcher from '../../Dispatcher';
 import * as Constants from './DockerActionsConstants';
 import * as ValiditayConstants from './DockerActionsValidityConstants';
-import callAction from '../components/DockerActionsApi';
+import { unhandledRequest } from '../components/DockerActionsApi';
 import Store from './DockerActionsStore';
 import RoutesStore from '../../stores/RoutesStore';
 import { getIndexAutoloadActions } from './utils/settingsHelper';
@@ -19,7 +19,7 @@ module.exports = {
       validity: validity,
       actionName: actionName
     });
-    return callAction(componentId, actionName, body).then(function(response) {
+    return unhandledRequest(componentId, actionName, body).then(function(response) {
       dispatcher.handleViewAction({
         type: Constants.ActionTypes.DOCKER_RUNNER_SYNC_ACTION_RUN_SUCCESS,
         component: componentId,

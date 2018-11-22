@@ -14,6 +14,17 @@ function createRequest(method, url) {
 }
 
 export default function(componentId, action, body) {
+  return unhandledRequest(componentId, action, body)
+    .catch((err) => {
+      if (err.response) {
+        return err.response.body;
+      } else {
+        return err;
+      }
+    });
+}
+
+export function unhandledRequest(componentId, action, body) {
   const url = createUrl(componentId, action);
   return createRequest('POST', url)
     .send(body)
