@@ -4,9 +4,9 @@ import * as ValiditayConstants from './DockerActionsValidityConstants';
 import { unhandledRequest } from '../components/DockerActionsApi';
 import Store from './DockerActionsStore';
 import RoutesStore from '../../stores/RoutesStore';
-import { getIndexAutoloadActions, getRowAutoloadActions } from './utils/settingsHelper';
 import ConfigurationsStore from './ConfigurationsStore';
 import ConfigurationRowsStore from './ConfigurationRowsStore';
+import Immutable from 'immutable';
 
 module.exports = {
   callAction: function(componentId, configurationId, configurationVersion, rowId, rowVersion, actionName, validity, body) {
@@ -61,7 +61,9 @@ module.exports = {
 
   reloadIndexSyncActions(componentId, configurationId) {
     const settings = RoutesStore.getRouteSettings();
-    const actions = getIndexAutoloadActions(settings);
+    const actions = settings.getIn(['index', 'actions'], Immutable.List()).filter(actionItem => {
+      return actionItem.get('autoload', false) === true;
+    });
     const configuration = ConfigurationsStore.get(componentId, configurationId);
     actions.forEach((action) => {
       this.get(
@@ -79,7 +81,9 @@ module.exports = {
 
   reloadRowSyncActions(componentId, configurationId, rowId) {
     const settings = RoutesStore.getRouteSettings();
-    const actions = getRowAutoloadActions(settings);
+    const actions = settings.getIn(['row', 'actions'], Immutable.List()).filter(actionItem => {
+      return actionItem.get('autoload', false) === true;
+    });
     const configuration = ConfigurationsStore.get(componentId, configurationId);
     const row = ConfigurationRowsStore.get(componentId, configurationId, rowId);
     actions.forEach((action) => {
