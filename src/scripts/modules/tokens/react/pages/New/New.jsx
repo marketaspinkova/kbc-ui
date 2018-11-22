@@ -14,7 +14,7 @@ import TokensStore from '../../../StorageTokensStore';
 import TokensActions from '../../../actionCreators';
 
 export default React.createClass({
-  mixins: [createStoreMixin(TokensStore), BucketsStore],
+  mixins: [createStoreMixin(TokensStore, BucketsStore)],
 
   getStateFromStores() {
     return {
