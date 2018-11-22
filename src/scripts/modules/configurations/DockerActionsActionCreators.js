@@ -3,7 +3,6 @@ import * as Constants from './DockerActionsConstants';
 import * as ValiditayConstants from './DockerActionsValidityConstants';
 import callAction from '../components/DockerActionsApi';
 import Store from './DockerActionsStore';
-import Promise from 'bluebird';
 import RoutesStore from '../../stores/RoutesStore';
 import { getIndexAutoloadActions } from './utils/settingsHelper';
 import ConfigurationsStore from './ConfigurationsStore';
@@ -42,34 +41,21 @@ module.exports = {
         row: rowId,
         rowVersion: rowVersion,
         validity: validity,
-        actionName: actionName
+        actionName: actionName,
+        error: error.response.body.message
       });
-      throw error;
+      if (error.message !== 'User error') {
+        throw error;
+      }
     });
   },
 
   get: function(componentId, configurationId, configurationVersion, rowId, rowVersion, actionName, validity, body) {
-    const deferred = Promise.defer();
-    const deferredWrapper = Promise.defer();
-    deferredWrapper.promise.then(() => {
-      if (validity !== ValiditayConstants.NO_CACHE && Store.has(componentId, configurationId, configurationVersion, rowId, rowVersion, actionName, validity)) {
-        deferred.resolve(Store.get(componentId, configurationId, configurationVersion, rowId, rowVersion, actionName, validity));
-      } else {
-        this.callAction(componentId, configurationId, configurationVersion, rowId, rowVersion, actionName, validity, body)
-          .then(function() {
-            deferred.resolve(Store.get(componentId, configurationId, configurationVersion, rowId, rowVersion, actionName, validity));
-          })
-          .catch(function(error) {
-            if (error.message === 'User error') {
-              deferred.reject(error.response.body.message);
-            } else {
-              throw error;
-            }
-          });
-      }
-    });
-    deferredWrapper.resolve();
-    return deferred.promise;
+    if (validity !== ValiditayConstants.NO_CACHE && Store.has(componentId, configurationId, configurationVersion, rowId, rowVersion, actionName, validity)) {
+      return;
+    } else {
+      this.callAction(componentId, configurationId, configurationVersion, rowId, rowVersion, actionName, validity, body);
+    }
   },
 
   reloadIndexSyncActions(componentId, configurationId) {
