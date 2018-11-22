@@ -35,7 +35,7 @@ export default React.createClass({
         <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
           <p>
             Create new <ExternalLink href="https://help.keboola.com/storage/tokens/">token</ExternalLink> and limit access to specific buckets or components in you project.
-            <Link to="tokens-detail" params={{tokenId: 'new-token'}} className="btn btn-success pull-right">
+            <Link to="tokens-new" className="btn btn-success pull-right">
               + New Token
             </Link>
           </p>
@@ -216,6 +216,7 @@ export default React.createClass({
   renderTokenRefreshModal() {
     const token = this.props.localState.get('refreshToken', Map());
     const isRefreshing = token && this.props.isRefreshingFn(token);
+
     return (
       <RefreshTokenModal
         token={token}
