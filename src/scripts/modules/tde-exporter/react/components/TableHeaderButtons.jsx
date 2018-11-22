@@ -23,14 +23,15 @@ export default React.createClass({
     const localState = InstalledComponentsStore.getLocalState(componentId, configId);
     const editingData = localState.getIn(['editing', tableId], Map());
 
-    const isValid = editingData.reduce((memo, value) => {
+    const isValid = editingData && editingData.reduce((memo, value) => {
       return (
         memo || (['date', 'datetime'].includes(value && value.get('type')) && _.isEmpty(value && value.get('format')))
       );
-    }, false);
+    }
+    , false);
 
-    const isOneColumnType = editingData.reduce((memo, value) => {
-      return memo || (value && value.get('type') !== 'IGNORE');
+    const isOneColumnType = editingData && editingData.reduce((memo, value) => {
+      return memo || (value && value.get('type')) !== 'IGNORE';
     }, false);
 
     const tdeFileName = tdeCommon.getEditingTdeFileName(configData, localState, tableId);
