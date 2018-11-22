@@ -9,14 +9,13 @@ import ConfigurationRowsStore from './ConfigurationRowsStore';
 import Immutable from 'immutable';
 
 module.exports = {
-  callAction: function(componentId, configurationId, configurationVersion, rowId, rowVersion, actionName, validity, body) {
+  callAction: function(componentId, configurationId, configurationVersion, rowId, actionName, validity, body) {
     dispatcher.handleViewAction({
       type: Constants.ActionTypes.DOCKER_RUNNER_SYNC_ACTION_RUN,
       component: componentId,
       configuration: configurationId,
       configurationVersion: configurationVersion,
       row: rowId,
-      rowVersion: rowVersion,
       validity: validity,
       actionName: actionName
     });
@@ -27,7 +26,6 @@ module.exports = {
         configuration: configurationId,
         configurationVersion: configurationVersion,
         row: rowId,
-        rowVersion: rowVersion,
         validity: validity,
         actionName: actionName,
         response: response
@@ -40,7 +38,6 @@ module.exports = {
         configuration: configurationId,
         configurationVersion: configurationVersion,
         row: rowId,
-        rowVersion: rowVersion,
         validity: validity,
         actionName: actionName,
         error: error.response.body.message
@@ -51,14 +48,14 @@ module.exports = {
     });
   },
 
-  get: function(componentId, configurationId, configurationVersion, rowId, rowVersion, actionName, validity, body) {
+  get: function(componentId, configurationId, configurationVersion, rowId, actionName, validity, body) {
     if (body === false) {
       return;
     }
     if (validity !== ValiditayConstants.NO_CACHE && Store.has(componentId, configurationId, configurationVersion, rowId, actionName)) {
       return;
     } else {
-      this.callAction(componentId, configurationId, configurationVersion, rowId, rowVersion, actionName, validity, body);
+      this.callAction(componentId, configurationId, configurationVersion, rowId, actionName, validity, body);
     }
   },
 
@@ -73,7 +70,6 @@ module.exports = {
         componentId,
         configurationId,
         configuration.get('version'),
-        null,
         null,
         action.get('name'),
         action.get('validity'),
@@ -95,7 +91,6 @@ module.exports = {
         configurationId,
         configuration.get('version'),
         rowId,
-        row.get('version'),
         action.get('name'),
         action.get('validity'),
         action.get('body')(configuration.get('configuration'), row.get('configuration'))
