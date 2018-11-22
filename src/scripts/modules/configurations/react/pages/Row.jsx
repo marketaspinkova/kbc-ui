@@ -28,9 +28,6 @@ import LatestJobs from '../../../components/react/components/SidebarJobs';
 // adapters
 import isParsableConfiguration from '../../utils/isParsableConfiguration';
 import sections from '../../utils/sections';
-import { findRowAction } from '../../utils/settingsHelper';
-
-// sync api
 import dockerActions from '../../DockerActionsActionCreators';
 
 export default React.createClass({
@@ -113,6 +110,11 @@ export default React.createClass({
 
       latestJobs: LatestJobsStore.getRowJobs(componentId, configurationId, rowId)
     };
+  },
+
+  componentDidMount() {
+    dockerActions.reloadIndexSyncActions(this.state.componentId, this.state.configurationId);
+    dockerActions.reloadRowSyncActions(this.state.componentId, this.state.configurationId, this.state.rowId);
   },
 
   renderActions() {
@@ -265,18 +267,23 @@ export default React.createClass({
     const returnTrue = () => true;
 
     let actionsData = Immutable.Map();
-    this.state.settings.getIn(['index', 'actions']).forEach((action) => {
-      if (action.get('autoload', false)) {
-        actionsData = actionsData.set(action.get('name'), Immutable.fromJS(DockerActionsStore.get(
-          state.settings.get('componentId'),
-          state.configurationId,
-          state.configurationVersion,
-          state.rowId,
-          state.rowVersion,
-          action.get('name'),
-          action.get('validity'),
-        )));
-      }
+    this.state.settings.getIn(['index', 'actions'], Immutable.List()).forEach((action) => {
+      actionsData = actionsData.set(action.get('name'), DockerActionsStore.get(
+        state.settings.get('componentId'),
+        state.configurationId,
+        state.configurationVersion,
+        null,
+        action.get('name')
+      ));
+    });
+    this.state.settings.getIn(['row', 'actions'], Immutable.List()).forEach((action) => {
+      actionsData = actionsData.set(action.get('name'), DockerActionsStore.get(
+        state.settings.get('componentId'),
+        state.configurationId,
+        state.configurationVersion,
+        state.rowId,
+        action.get('name')
+      ));
     });
 
     return settingsSections.map((section, key) => {
@@ -292,21 +299,6 @@ export default React.createClass({
             onChange={diff => this.onUpdateSection(key, diff)}
             value={this.state.configurationBySections.get(key).toJS()}
             actions={actionsData}
-            invokeAction={actionName => {
-              const action = findRowAction(state.settings, actionName);
-              const actionData = action.get('body')(state.rawConfiguration.get('configuration'), state.rawRowConfiguration.get('configuration'));
-              return dockerActions.get(
-                state.settings.get('componentId'),
-                state.configurationId,
-                state.configurationVersion,
-                state.rowId,
-                state.rowVersion,
-                action.get('name'),
-                action.get('validity'),
-                actionData
-              );
-            }}
-            pendingActions={DockerActionsStore.getPendingActions(state.settings.get('componentId'))}
           />
         </div>
       );

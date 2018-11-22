@@ -31,12 +31,8 @@ export function getIndexAutoloadActions(settings) {
 }
 
 export function getRowAutoloadActions(settings) {
-  let actions = getIndexAutoloadActions(settings);
-  settings.getIn(['row', 'actions'], Immutable.List()).forEach(actionItem => {
-    if (actionItem.get('autoload', false) === true) {
-      actions = actions.push(actionItem);
-    }
+  return settings.getIn(['row', 'actions'], Immutable.List()).filter(actionItem => {
+    return actionItem.get('autoload', false) === true;
   });
-  return actions;
 }
 

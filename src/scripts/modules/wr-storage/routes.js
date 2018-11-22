@@ -23,7 +23,7 @@ const routeSettings = {
     actions: [
       {
         name: 'info',
-        validity: ValidityConstants.CONFIGURATION_VERSION,
+        validity: ValidityConstants.VERSION,
         autoload: true,
         body: function(configuration) {
           return fromJS({

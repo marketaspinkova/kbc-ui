@@ -115,20 +115,15 @@ export default React.createClass({
     const returnTrue = () => true;
 
     let actionsData = Immutable.Map();
-    this.state.settings.getIn(['index', 'actions']).forEach((action) => {
-      if (action.get('autoload', false)) {
-        actionsData = actionsData.set(action.get('name'), Immutable.fromJS(DockerActionsStore.get(
-          state.settings.get('componentId'),
-          state.configurationId,
-          state.configurationVersion,
-          null,
-          null,
-          action.get('name'),
-          action.get('validity'),
-        )));
-      }
+    this.state.settings.getIn(['index', 'actions'], Immutable.List()).forEach((action) => {
+      actionsData = actionsData.set(action.get('name'), DockerActionsStore.get(
+        state.settings.get('componentId'),
+        state.configurationId,
+        state.configurationVersion,
+        null,
+        action.get('name')
+      ));
     });
-
 
     return settingsSections.map((section, key) => {
       const SectionComponent = section.get('render');

@@ -2,42 +2,22 @@ import StoreUtils from '../../utils/StoreUtils';
 import Immutable from 'immutable';
 import * as constants from './DockerActionsConstants';
 import dispatcher from '../../Dispatcher';
-import validityConstants from './DockerActionsValidityConstants';
 
 var _store = Immutable.Map({
   actions: Immutable.Map()
 });
 
-function constructActionPath(componentId, configurationId, configurationVersion, rowId, rowVersion, actionName, validity) {
-  let path = ['actions', componentId, configurationId];
-  switch (validity) {
-    case validityConstants.CONFIGURATION:
-      path.push(...[null, null, null]);
-      break;
-    case validityConstants.CONFIGURATION_VERSION:
-      path.push(...[configurationVersion, null, null]);
-      break;
-    case validityConstants.ROW:
-      path.push(...[configurationVersion, rowId, null]);
-      break;
-    case validityConstants.ROW_VERSION:
-    case validityConstants.NO_CACHE:
-      path.push(...[configurationVersion, rowId, rowVersion]);
-      break;
-    default:
-      break;
-  }
-  path.push(actionName);
-  return path;
+function constructActionPath(componentId, configurationId, configurationVersion, rowId, actionName) {
+  return ['actions', componentId, configurationId, configurationVersion, rowId, actionName];
 }
 
 var DockerActionsStore = StoreUtils.createStore({
-  has: function(componentId, configurationId, configurationVersion, rowId, rowVersion, actionName, validity) {
-    return _store.hasIn(constructActionPath(componentId, configurationId, configurationVersion, rowId, rowVersion, actionName, validity));
+  has: function(componentId, configurationId, configurationVersion, rowId, actionName) {
+    return _store.hasIn(constructActionPath(componentId, configurationId, configurationVersion, rowId, actionName));
   },
 
-  get: function(componentId, configurationId, configurationVersion, rowId, rowVersion, actionName, validity) {
-    const path = constructActionPath(componentId, configurationId, configurationVersion, rowId, rowVersion, actionName, validity);
+  get: function(componentId, configurationId, configurationVersion, rowId, actionName) {
+    const path = constructActionPath(componentId, configurationId, configurationVersion, rowId, actionName);
     if (_store.hasIn(path)) {
       return _store.getIn(path);
     }
@@ -55,9 +35,7 @@ dispatcher.register(function(payload) {
     action.configuration,
     action.configurationVersion,
     action.row,
-    action.rowVersion,
-    action.actionName,
-    action.validity
+    action.actionName
   );
   switch (action.type) {
     case constants.ActionTypes.DOCKER_RUNNER_SYNC_ACTION_RUN:
