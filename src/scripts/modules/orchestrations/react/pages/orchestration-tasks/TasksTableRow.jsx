@@ -1,10 +1,12 @@
 import React from 'react';
+import { HelpBlock } from 'react-bootstrap';
 import ComponentIcon from '../../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../../react/common/ComponentName';
 import ComponentConfigurationLink from '../../../../components/react/components/ComponentConfigurationLink';
 import TaskParametersEditModal from '../../modals/TaskParametersEdit';
 import OrchestrationTaskRunButton from '../../components/OrchestrationTaskRunButton';
 import { Check } from '@keboola/indigo-ui';
+import descriptionExcerpt from '../../../../../utils/descriptionExcerpt';
 
 export default React.createClass({
   propTypes: {
@@ -35,9 +37,11 @@ export default React.createClass({
               configId={this.props.task.getIn(['config', 'id'])}
             >
               {this.props.task.getIn(['config', 'name'])}
-              <div className="help-block">
-                <small>{this.props.task.getIn(['config', 'description'])}</small>
-              </div>
+              <HelpBlock>
+                <small className="kbc-break-all">
+                  {descriptionExcerpt(this.props.task.getIn(['config', 'description']))}
+                </small>
+              </HelpBlock>
             </ComponentConfigurationLink>
           ) : (
             'N/A'
