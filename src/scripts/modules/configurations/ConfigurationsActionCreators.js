@@ -111,7 +111,7 @@ module.exports = {
     });
     const configuration = createFn(ConfigurationsStore.getEditingConfiguration(componentId, configurationId, parseFn));
     return storeEncodedConfiguration(componentId, configurationId, configuration.toJS(), changeDescription ? changeDescription : 'Configuration edited')
-      .then((response) => {
+      .then(function(response) {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
         Dispatcher.handleViewAction({
           type: Constants.ActionTypes.CONFIGURATIONS_SAVE_CONFIGURATION_SUCCESS,
@@ -139,7 +139,7 @@ module.exports = {
       configurationId: configurationId
     });
     return storeEncodedConfiguration(componentId, configurationId, forcedConfiguration.toJS(), changeDescription ? changeDescription : 'Configuration edited')
-      .then((response) => {
+      .then(function(response) {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
         Dispatcher.handleViewAction({
           type: Constants.ActionTypes.CONFIGURATIONS_SAVE_CONFIGURATION_SUCCESS,
@@ -194,7 +194,7 @@ module.exports = {
       configurationId: configurationId
     });
 
-    oauthUtils.deleteCredentialsAndConfigAuth(componentId, configurationId).then(() => {
+    oauthUtils.deleteCredentialsAndConfigAuth(componentId, configurationId).then(function() {
       VersionActionCreators.loadVersionsForce(componentId, configurationId);
       Dispatcher.handleViewAction({
         type: Constants.ActionTypes.CONFIGURATIONS_OAUTH_RESET_SUCCESS,
