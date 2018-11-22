@@ -118,8 +118,8 @@ export default React.createClass({
 
   handleSubmit(e) {
     e.preventDefault();
-    this.saving(true);
 
+    this.saving(true);
     return TokensActions.createToken(this.state.token.toJS())
       .then(createdToken => {
         this.setState({

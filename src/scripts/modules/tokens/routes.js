@@ -9,10 +9,7 @@ export default {
   name: 'tokens',
   title: 'API Tokens',
   defaultRouteHandler: Index,
-  requireData: [
-    () => tokensActions.loadTokens(),
-    () => StorageActions.loadBuckets()
-  ],
+  requireData: [() => tokensActions.loadTokens(), () => StorageActions.loadBuckets()],
   childRoutes: [
     {
       name: 'tokens-new',
@@ -24,14 +21,15 @@ export default {
       name: 'tokens-detail',
       path: ':tokenId',
       handler: Detail,
-      title: (routerState) => {
+      title: routerState => {
         const tokenId = routerState.getIn(['params', 'tokenId']);
         const token = tokenId && TokensStore.getAll().find(t => t.get('id') === tokenId);
-        if (token) {
-          return `${token.get('description')} (${token.get('id')})`;
-        } else {
+
+        if (!token) {
           return `Unknown token ${tokenId}`;
         }
+
+        return `${token.get('description')} (${token.get('id')})`;
       }
     }
   ]
