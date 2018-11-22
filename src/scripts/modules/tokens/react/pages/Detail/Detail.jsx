@@ -23,7 +23,12 @@ export default React.createClass({
       token,
       savedToken: token,
       allBuckets: BucketsStore.getAll(),
-      eventsApi: createTokenEventsApi(tokenId),
+      eventsApi: createTokenEventsApi(tokenId)
+    };
+  },
+
+  getInitialState() {
+    return {
       isSaving: false
     };
   },

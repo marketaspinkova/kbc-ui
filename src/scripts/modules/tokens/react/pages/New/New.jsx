@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { Map } from 'immutable';
-import { Form, FormGroup, Col, Alert, Button } from 'react-bootstrap';
+import { FormGroup, Col, Alert, Button } from 'react-bootstrap';
 
 import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
@@ -18,11 +18,16 @@ export default React.createClass({
 
   getStateFromStores() {
     return {
+      allBuckets: BucketsStore.getAll(),
+      isSendingToken: TokensStore.isSendingToken
+    };
+  },
+
+  getInitialState() {
+    return {
       token: Map(),
       sendModal: false,
       tokenCreated: false,
-      allBuckets: BucketsStore.getAll(),
-      isSendingToken: TokensStore.isSendingToken,
       isSaving: false
     };
   },
@@ -35,13 +40,14 @@ export default React.createClass({
             {this.state.tokenCreated ? (
               this.renderTokenCreated()
             ) : (
-              <Form horizontal onSubmit={this.handleSubmit}>
+              <div className="form form-horizontal">
                 <FormGroup>
                   <Col sm={12} className="text-right">
                     <ConfirmButtons
                       saveButtonType="submit"
                       isSaving={this.state.isSaving}
                       isDisabled={!this.isValid()}
+                      onSave={this.handleSave}
                       saveLabel="Create"
                       showCancel={false}
                     />
@@ -54,7 +60,7 @@ export default React.createClass({
                   allBuckets={this.state.allBuckets}
                   updateToken={this.updateToken}
                 />
-              </Form>
+              </div>
             )}
           </div>
         </div>
@@ -116,7 +122,7 @@ export default React.createClass({
     return !!(this.state.token.get('description') && this.state.token.get('expiresIn') !== 0);
   },
 
-  handleSubmit(e) {
+  handleSave(e) {
     e.preventDefault();
 
     this.saving(true);
