@@ -39,7 +39,7 @@ export default React.createClass({
 
   render() {
     return (
-      <ButtonToolbar className={classnames('kbc-buttons pull-right', this.props.className)}>
+      <ButtonToolbar className={classnames('kbc-buttons', this.props.className)}>
         {this._loader()}
         {this.props.children}
         {!this.props.showCancel && ' '}
