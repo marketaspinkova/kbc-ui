@@ -19,9 +19,7 @@ export default (TitleComponent, InnerComponent, options = {}) => {
       onSave: PropTypes.func,
       onChange: PropTypes.func,
       value: PropTypes.any,
-      actions: PropTypes.any,
-      invokeAction: PropTypes.func,
-      pendingActions: PropTypes.object
+      actions: PropTypes.any
     },
 
     getInitialState() {
@@ -110,8 +108,6 @@ export default (TitleComponent, InnerComponent, options = {}) => {
           onSave={this.props.onSave}
           value={this.props.value}
           actions={this.props.actions}
-          invokeAction={this.props.invokeAction}
-          pendingActions={this.props.pendingActions}
         />);
     },
 

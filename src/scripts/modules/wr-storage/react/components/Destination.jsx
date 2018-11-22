@@ -13,17 +13,11 @@ export default React.createClass({
     }),
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired,
-    actions: PropTypes.object,
-    invokeAction: PropTypes.func.isRequired,
-    pendingActions: PropTypes.object.isRequired
-  },
-
-  componentDidMount() {
-    this.props.invokeAction('info');
+    actions: PropTypes.object
   },
 
   renderInfoActionLoader() {
-    if (this.props.pendingActions.has('info')) {
+    if (this.props.actions.getIn(['info', 'status']) === 'pending') {
       return (<Loader />);
     }
   },

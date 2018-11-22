@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
+
 import immutableMixin from 'react-immutable-render-mixin';
-// import { Input } from './../../../../react/common/KbcBootstrap';
 import {FormControl, FormGroup, ControlLabel, HelpBlock, Form, Col} from 'react-bootstrap';
-import {Loader} from '@keboola/indigo-ui';
+import SyncActionSimpleValue from '../../../configurations/react/components/SyncActionSimpleValue';
 
 export default React.createClass({
   mixins: [immutableMixin],
@@ -14,23 +14,12 @@ export default React.createClass({
     }),
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired,
-    actions: PropTypes.object.isRequired,
-    invokeAction: PropTypes.func.isRequired,
-    pendingActions: PropTypes.object.isRequired
+    actions: PropTypes.object.isRequired
   },
 
-  componentDidMount() {
-    this.props.invokeAction('info');
-  },
-
-
-  renderInfoActionLoader() {
-    if (this.props.pendingActions.has('info')) {
-      return (<Loader />);
-    }
-  },
 
   render() {
+    const infoAction = this.props.actions.get('info');
     const props = this.props;
     return (
       <Form horizontal>
@@ -77,8 +66,10 @@ export default React.createClass({
           </Col>
           <Col sm={8}>
             <FormControl.Static>
-              {this.renderInfoActionLoader()}
-              {this.props.actions.getIn(['info', 'data', 'projectName'])}
+              <SyncActionSimpleValue
+                action={infoAction}
+                valueKey="projectName"
+              />
             </FormControl.Static>
           </Col>
         </FormGroup>
@@ -88,8 +79,10 @@ export default React.createClass({
           </Col>
           <Col sm={8}>
             <FormControl.Static>
-              {this.renderInfoActionLoader()}
-              {this.props.actions.getIn(['info', 'data', 'bucket'])}
+              <SyncActionSimpleValue
+                action={infoAction}
+                valueKey="bucket"
+              />
             </FormControl.Static>
           </Col>
         </FormGroup>

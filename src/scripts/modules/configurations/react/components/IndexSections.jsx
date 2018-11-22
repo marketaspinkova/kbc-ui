@@ -19,7 +19,7 @@ import isParsableConfiguration from '../../utils/isParsableConfiguration';
 import JsonConfiguration from '../components/JsonConfiguration';
 import dockerActions from '../../../components/DockerActionsActionCreators';
 import DockerActionsStore from '../../../components/stores/DockerActionsStore';
-import { findIndexAction } from '../../utils/settingsHelper';
+import { getIndexAutoloadActions } from '../../utils/settingsHelper';
 
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore, Store, DockerActionsStore)],
@@ -84,6 +84,27 @@ export default React.createClass({
     };
   },
 
+  componentDidMount() {
+    const actions = getIndexAutoloadActions(this.state.settings);
+    actions.forEach((action) => {
+      this.invokeSyncAction(action);
+    });
+  },
+
+  invokeSyncAction(action) {
+    const actionData = action.get('body')(this.state.rawConfiguration.get('configuration'));
+    return dockerActions.get(
+      this.state.settings.get('componentId'),
+      this.state.configurationId,
+      this.state.configurationVersion,
+      null,
+      null,
+      action.get('name'),
+      action.get('validity'),
+      actionData
+    );
+  },
+
   onUpdateSection(sectionKey, diff) {
     const {configurationBySections, componentId, configurationId} = this.state;
     const newConfigurationBySections = configurationBySections.set(
@@ -141,21 +162,6 @@ export default React.createClass({
             onSave={(diff) => this.onSaveSection(key, diff)}
             value={this.state.configurationBySections.get(key).toJS()}
             actions={actionsData}
-            invokeAction={actionName => {
-              const action = findIndexAction(state.settings, actionName);
-              const actionData = action.get('body')(state.rawConfiguration.get('configuration'));
-              return dockerActions.get(
-                state.settings.get('componentId'),
-                state.configurationId,
-                state.configurationVersion,
-                null,
-                null,
-                action.get('name'),
-                action.get('validity'),
-                actionData
-              );
-            }}
-            pendingActions={DockerActionsStore.getPendingActions(state.settings.get('componentId'))}
           />
         </div>
       );
