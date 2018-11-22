@@ -27,7 +27,7 @@ const routeSettings = {
         name: 'info',
         validity: ValidityConstants.VERSION,
         autoload: true,
-        body: actions.info
+        getPayload: actions.info
       }
     ],
     sections: [

@@ -73,7 +73,7 @@ module.exports = {
         null,
         action.get('name'),
         action.get('validity'),
-        action.get('body')(configuration.get('configuration'))
+        action.get('getPayload')(configuration.get('configuration'))
       );
     });
   },
@@ -93,7 +93,7 @@ module.exports = {
         rowId,
         action.get('name'),
         action.get('validity'),
-        action.get('body')(configuration.get('configuration'), row.get('configuration'))
+        action.get('getPayload')(configuration.get('configuration'), row.get('configuration'))
       );
     });
   }
