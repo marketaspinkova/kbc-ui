@@ -4,6 +4,9 @@ import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import NewDimensionForm from './NewDimensionForm';
 // import Confirm from '../../../../react/common/Confirm';
 import {Check} from '@keboola/indigo-ui';
+import Confirm from '../../../../react/common/Confirm';
+import Tooltip from '../../../../react/common/Tooltip';
+
 
 export default React.createClass({
   propTypes: {
@@ -39,7 +42,7 @@ export default React.createClass({
       <Modal onHide={this.closeModal} show={this.state.showModal}>
         <Modal.Header closeButton={true}>
           <Modal.Title>
-            Add Date Dimension
+            New Date Dimension
           </Modal.Title>
         </Modal.Header>
 
@@ -55,7 +58,7 @@ export default React.createClass({
           <ConfirmButtons
             isSaving={this.props.disabled}
             isDisabled={!this.isValid()}
-            saveLabel="Create"
+            saveLabel="Create Date Dimension"
             onCancel={this.closeModal}
             onSave={this.handleCreate}/>
         </Modal.Footer>
@@ -76,33 +79,40 @@ export default React.createClass({
       <div className="table-config-rows">
         {this.renderModal()}
         {hasDimensions ?
-          <table className="table table-striped">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Include Time</th>
-                <th>Identifier</th>
-                <th>Template</th>
-                <th>{this.renderAddButton()}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                dimensionKeys.map(dimName => {
-                  const dim = dimensions[dimName];
-                  return (
-                    <tr key={dimName}>
-                      <td> {dimName}</td>
-                      <td> <Check isChecked={!!dim.includeTime}/></td>
-                      <td> {dim.identifier}</td>
-                      <td> {dim.template}</td>
-                      <td> {this.renderDeleteButton(dimName)}</td>
-                    </tr>
-                  );
-                })
-              }
-            </tbody>
-          </table>
+          <span>
+            <div className="btn-toolbar kbc-inner-padding">
+              <div className="pull-right">
+                {this.renderAddButton()}
+              </div>
+            </div>
+            <table className="table table-striped">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Include Time</th>
+                  <th>Identifier</th>
+                  <th>Template</th>
+                  <th/>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  dimensionKeys.map(dimName => {
+                    const dim = dimensions[dimName];
+                    return (
+                      <tr key={dimName}>
+                        <td> {dimName}</td>
+                        <td> <Check isChecked={!!dim.includeTime}/></td>
+                        <td> {dim.identifier}</td>
+                        <td> {dim.template}</td>
+                        <td> {this.renderDeleteButton(dimName)}</td>
+                      </tr>
+                    );
+                  })
+                }
+              </tbody>
+            </table>
+          </span>
           : this.renderEmptyDimensions()
         }
       </div>
@@ -122,13 +132,20 @@ export default React.createClass({
 
   renderDeleteButton(dimensionName) {
     return (
-      <div className="kbc-no-wrap">
-        <button
-          onClick={() => this.handleDelete(dimensionName)}
-          disabled={this.props.disabled} className="btn btn-link">
-          <i className="kbc-icon-cup fa fa-fw"/>
-        </button>
-      </div>
+      <Confirm
+        text={`Do you really want to delete dimensions ${dimensionName}?`}
+        title={`Delete dimension ${dimensionName}`}
+        buttonLabel="Delete"
+        onConfirm={() => this.handleDelete(dimensionName)}>
+        <div className="kbc-no-wrap pull-right">
+          <Tooltip tooltip="Delete" placement="top">
+            <button className="btn btn-link"
+              disabled={this.props.disabled}>
+              <i className="kbc-icon-cup fa fa-fw"/>
+            </button>
+          </Tooltip>
+        </div>
+      </Confirm>
     );
   },
 
@@ -140,7 +157,7 @@ export default React.createClass({
 
   renderAddButton() {
     return (
-      <div className="kbc-no-wrap">
+      <div>
         <button
           disabled={this.props.disabled}
           onClick={this.openModal}

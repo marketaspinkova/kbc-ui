@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Form, Col, FormControl, ControlLabel, FormGroup, Radio, HelpBlock} from 'react-bootstrap';
-import ReactSelect from 'react-select';
+import {Form, Col, FormControl, ControlLabel, FormGroup, Radio, HelpBlock, Button, ButtonGroup} from 'react-bootstrap';
 import {TokenTypes} from '../../gooddataProvisioning/utils';
 
 export default React.createClass({
@@ -22,17 +21,22 @@ export default React.createClass({
       <Form horizontal>
         <FormGroup>
           <Col sm={12}>
-            <ReactSelect
-              searchable={false}
-              clearable={false}
-              disabled={disabled}
-              value={value.isCreateNewProject}
-              onChange={(selected) => this.handleChange({isCreateNewProject: selected.value})}
-              options={[
-                {label: 'Create new GoodData Project', value: true},
-                {label: 'Use Existing GoodData Project', value: false}
-              ]}
-            />
+            <ButtonGroup justified>
+              <Button
+                componentClass="span"
+                disabled={disabled}
+                active={value.isCreateNewProject}
+                onClick={() => this.handleChange({isCreateNewProject: true})}>
+                Create new GoodData Project
+              </Button>
+              <Button
+                componentClass="span"
+                disabled={disabled}
+                active={!value.isCreateNewProject}
+                onClick={() => this.handleChange({isCreateNewProject: false})}>
+                Use Existing GoodData Project
+              </Button>
+            </ButtonGroup>
           </Col>
         </FormGroup>
         {value.isCreateNewProject ?

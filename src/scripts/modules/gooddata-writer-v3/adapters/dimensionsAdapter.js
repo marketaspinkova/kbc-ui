@@ -5,13 +5,16 @@ export default function(configProvisioning, localStateProvisioning) {
   const {updateLocalState, getLocalStateValue} = localStateProvisioning;
   const savedDimensions = parameters.get('dimensions', Map());
   const localDimensions = getLocalStateValue(PATH, savedDimensions);
+  const isUpdated = getLocalStateValue('dimensionsUpdated', false);
 
   function saveDimensions(value) {
     const newParams = parameters.set('dimensions', fromJS(value.dimensions));
-    return saveParameters(newParams, 'update dimensions');
+    return saveParameters(newParams, 'update dimensions').then(
+      () => updateLocalState('dimensionsUpdated', true)
+    );
   }
 
-  const isComplete = savedDimensions.count() > 0;
+  const isComplete = savedDimensions.count() > 0 && !isUpdated;
 
   return {
     value: {dimensions: localDimensions.toJS()},

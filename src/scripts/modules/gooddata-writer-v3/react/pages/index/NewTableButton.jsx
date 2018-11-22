@@ -31,7 +31,7 @@ export default React.createClass({
       <Modal onHide={this.close} show={this.state.showModal}>
         <Modal.Header closeButton={true}>
           <Modal.Title>
-            Add Table
+            New Table
           </Modal.Title>
         </Modal.Header>
 
@@ -43,7 +43,7 @@ export default React.createClass({
           <ConfirmButtons
             isSaving={this.state.isSaving}
             isDisabled={!this.state.tableId}
-            saveLabel="Create"
+            saveLabel="Create Table"
             onCancel={this.close}
             onSave={this.handleCreate}
           />

@@ -15,6 +15,7 @@ export default function(configProvisioning, tablesProvisioning, tableId) {
   }
 
   return {
+    tableId: tableId,
     value: value.toJS(),
     onChange: onChange,
     disabled: isSaving

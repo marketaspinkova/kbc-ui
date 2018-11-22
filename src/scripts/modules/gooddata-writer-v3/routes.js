@@ -30,12 +30,12 @@ export default {
     action: (params) => jobsActionCreators.loadComponentConfigurationLatestJobs(componentId, params.config)
   },
   childRoutes: [
-    createTablesRoute(componentId),
     {
       name: componentId + '-table',
       path: 'table/:table',
       defaultRouteHandler: Table,
-      title: (routerState) => routerState.getIn(['params', 'table'])
+      title: (routerState) => routerState.getIn(['params', 'table']),
+      childRoutes: [ createTablesRoute(componentId)]
     }
   ]
 };

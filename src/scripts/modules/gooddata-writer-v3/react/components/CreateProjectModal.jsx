@@ -52,7 +52,7 @@ export default React.createClass({
           <ConfirmButtons
             isSaving={this.props.disabled || this.props.isCreating}
             isDisabled={!this.isValid()}
-            saveLabel={this.state.newProject.isCreateNewProject ? 'Create' : 'Save'}
+            saveLabel={this.state.newProject.isCreateNewProject ? 'Create Project' : 'Update Project'}
             onCancel={this.props.onHide}
             onSave={() => this.props.onCreate(this.state.newProject)}/>
         </Modal.Footer>

@@ -1,7 +1,8 @@
 import React, {PropTypes} from 'react';
-import {Loader} from '@keboola/indigo-ui';
+import {Loader, ExternalLink} from '@keboola/indigo-ui';
 import ResetProjectModal from './ResetProjectModal';
 import CreateProjectModal from './CreateProjectModal';
+import ComponentsStore from '../../../components/stores/ComponentsStore';
 
 export default React.createClass({
   propTypes: {
@@ -77,101 +78,173 @@ export default React.createClass({
   },
 
   renderProvisioning() {
-    const {provisioning: {data, isLoading}, config: {pid}} = this.props;
+    const {provisioning: {isLoading}} = this.props;
 
     if (isLoading) {
-      return <Loader />;
+      return <span><Loader /> Loading</span>;
     }
-    if (!pid) {
+
+    if (!this.isConnected()) {
       return this.renderNoCredentials();
     }
-    if (!data) {
-      return this.renderOwnCredentials();
-    }
-    if (!data.get('sso')) {
-      return this.renderKeboolaCredentialsWithoutSSO();
-    }
-    return this.renderKeboolaCredentialsWithSSO();
-  },
 
-  renderResetProject() {
     return (
-      <span>
-        <button type="button"
-          onClick={() => this.setState({showResetProjectModal: true})}
-          className="btn btn-danger">
-          Reset Project
-        </button>
-      </span>
+      <div>
+        {this.renderActionsRow()}
+        {this.renderInfoRow()}
+      </div>
     );
   },
 
-  renderKeboolaCredentialsWithSSO() {
+  getProjectDescription() {
+    if (!this.isKeboolaProvisioned()) {
+      return 'User Own Project';
+    }
+
+    let token = this.props.provisioning.data.get('token', '');
+    if (['demo', 'production'].includes(token)) {
+      token = 'keboola_' + token;
+    }
+    if (token) {
+      switch (token) {
+        case 'keboola_demo': {
+          return 'Keboola DEMO Provisioned project';
+        }
+        case 'keboola_production': {
+          return 'Keboola PRODUCTION Provisioned project';
+        }
+        default: {
+          return 'Keboola Custom Provisioned project';
+        }
+      }
+    }
+  },
+
+  renderInfoRow() {
+    const projectDescription = this.getProjectDescription();
+    return (
+      <div>
+        <h4>Connected to {projectDescription}</h4>
+        <div>GoodData Project Id: {this.props.config.pid}</div>
+        <div>GoodData Project Login: {this.props.config.login}</div>
+      </div>
+    );
+  },
+
+  renderActionsRow() {
+    const isProvisioned = this.isKeboolaProvisioned();
+    const hasSso = this.isSsoEnabled();
+    return (
+      <div className="btn-toolbar form-group">
+        {!isProvisioned &&
+         <button className="btn btn-success pull-right"
+           onClick={() => this.setState({showCreateProjectModal: true})}>
+           Change
+         </button>
+        }
+        {!isProvisioned && this.renderGoToProjectLink()}
+
+        {isProvisioned && this.renderResetProjectButton()}
+        {isProvisioned && !hasSso && this.renderEnableAccessButton()}
+        {isProvisioned &&  hasSso && this.renderDisableAccessButton()}
+        {isProvisioned &&  hasSso && this.renderLoginToProjectLink()}
+
+      </div>
+    );
+  },
+
+  isConnected() {
+    return !!this.props.config.pid;
+  },
+
+  isKeboolaProvisioned() {
+    return this.isConnected() && !!this.props.provisioning.data;
+  },
+
+  isSsoEnabled() {
+    return this.isKeboolaProvisioned() && !!this.props.provisioning.data.get('sso');
+  },
+
+
+  renderResetProjectButton() {
+    return (
+      <button type="button"
+        onClick={() => this.setState({showResetProjectModal: true})}
+        className="btn btn-danger pull-right">
+        Disconnect
+      </button>
+    );
+  },
+
+  renderGoToProjectLink() {
+    let gdUrl = 'https://secure.gooddata.com/#s=/gdc/projects';
+    const componentUri = ComponentsStore.getComponent('gooddata-writer').get('uri');
+    if (componentUri === 'https://syrup.eu-central-1.keboola.com/gooddata-writer') {
+      gdUrl = 'https://keboola.eu.gooddata.com/gdc/projects';
+    }
+    const targetUrl = `${gdUrl}/${this.props.config.pid}|projectDashboardPage`;
+    return (
+      <ExternalLink href={targetUrl} className="btn btn-link pull-right">
+        <span className="fa fa-bar-chart-o fa-fw"/>
+        Go To Project
+      </ExternalLink>
+    );
+  },
+
+  getGoodDataLoginUrl() {
+    let loginUrl = 'https://secure.gooddata.com/gdc/account/customerlogin';
+    const componentUri = ComponentsStore.getComponent('gooddata-writer').get('uri');
+    if (componentUri === 'https://syrup.eu-central-1.keboola.com/gooddata-writer') {
+      loginUrl = 'https://keboola.eu.gooddata.com/gdc/account/customerlogin';
+    }
+    return loginUrl;
+  },
+
+  renderLoginToProjectLink() {
     const {pid} = this.props.config;
-    const token = this.props.provisioning.data.get('token');
     const sso = this.props.provisioning.data.get('sso');
     const targetUrl = `/#s=/gdc/projects/${pid}|projectDashboardPage`;
-    const submitUrl = 'https://secure.gooddata.com/gdc/account/customerlogin';
-    return (
-      <div>
-        <h4>Provisioned By Keboola</h4>
-        <div> Project Id: {pid}</div>
-        <div> Token: {token}</div>
-        <form
-          target="_blank noopener noreferrer"
-          method="POST"
-          action={submitUrl}>
-          {sso.map((value, name) =>
-            <input key={name} type="hidden" name={name} value={value}/>
-          ).toArray()}
-          <input key="targetUrl" type="hidden" name="targetUrl" value={targetUrl}/>
-          <button type="submit"
-            className="btn btn-link">
-            <span className="fa fa-bar-chart-o fa-fw"/>
-            Go To Project
-          </button>
-          <span className="btn btn-link"
-            onClick={() => this.props.onToggleEnableAcess(pid, false)}>
-            <span className="fa fa-unlink fa-fw" />
-            Disable Access To Project
-          </span>
-        </form>
-        {this.renderResetProject()}
-      </div>
-    );
-  },
+    const submitUrl = this.getGoodDataLoginUrl();
 
-  renderKeboolaCredentialsWithoutSSO() {
-    const {pid} = this.props.config;
-    const token = this.props.provisioning.data.get('token');
     return (
-      <div>
-        <h4>Provisioned by Keboola</h4>
-        <div>GoodData Project Id: {pid}</div>
-        <div>Token: {token}</div>
-        <span
-          onClick={() => this.props.onToggleEnableAcess(pid, true)}
+      <form
+        className="pull-right"
+        target="_blank noopener noreferrer"
+        method="POST"
+        action={submitUrl}>
+        {sso.map((value, name) =>
+          <input key={name} type="hidden" name={name} value={value}/>
+        ).toArray()}
+        <input key="targetUrl" type="hidden" name="targetUrl" value={targetUrl}/>
+        <button type="submit"
           className="btn btn-link">
-          <span className="fa fa-link fa-fw" />
-          Enable Access To Project
-        </span>
-        {this.renderResetProject()}
-      </div>
+          <span className="fa fa-bar-chart-o fa-fw"/>
+          Go To Project
+        </button>
+      </form>
     );
   },
 
-  renderOwnCredentials() {
-    const {pid, login} = this.props.config;
+
+  renderDisableAccessButton() {
     return (
-      <div>
-        <h4>Not provisioned by Keboola</h4>
-        <div>GoodData Project Id: {pid}</div>
-        <div>GoodData Username: {login}</div>
-        <button onClick={() => this.setState({showCreateProjectModal: true})}
-          className="btn btn-success">
-          change
-        </button>
-      </div>
+      <button type="button"
+        className="btn btn-link pull-right"
+        onClick={() => this.props.onToggleEnableAcess(this.props.config.pid, false)}>
+        <span className="fa fa-unlink fa-fw" />
+        Disable Access To Project
+      </button>
+    );
+  },
+
+  renderEnableAccessButton() {
+    return (
+      <button type="button"
+        className="btn btn-link pull-right"
+        onClick={() => this.props.onToggleEnableAcess(this.props.config.pid, true)}>
+        <span className="fa fa-link fa-fw" />
+        Enable Access To Project
+      </button>
     );
   },
 

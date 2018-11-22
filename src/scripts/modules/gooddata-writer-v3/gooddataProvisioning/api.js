@@ -1,9 +1,11 @@
 import request from '../../../utils/request';
 import ApplicationStore from '../../../stores/ApplicationStore';
 import {TokenTypes} from './utils';
+import ServicesStore from '../../services/Store';
 
 const createUrl = function(path) {
-  return 'https://gooddata-provisioning.keboola.com/' + path;
+  const baseUrl = ServicesStore.getService('gooddata-provisioning').get('url');
+  return baseUrl + '/' + path;
 };
 
 const createRequest = function(method, path) {
