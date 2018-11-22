@@ -1,6 +1,6 @@
 import Index from './react/pages/Index/Index';
-import New from './react/pages/New/New';
-import Detail from './react/pages/Detail/Detail';
+import NewPage from './react/pages/New/New';
+import DetailPage from './react/pages/Detail/Detail';
 import tokensActions from './actionCreators';
 import StorageActions from '../components/StorageActionCreators';
 import TokensStore from './StorageTokensStore';
@@ -14,13 +14,13 @@ export default {
     {
       name: 'tokens-new',
       path: 'new-token',
-      handler: New,
+      handler: NewPage,
       title: 'New Token'
     },
     {
       name: 'tokens-detail',
       path: ':tokenId',
-      handler: Detail,
+      handler: DetailPage,
       title: routerState => {
         const tokenId = routerState.getIn(['params', 'tokenId']);
         const token = tokenId && TokensStore.getAll().find(t => t.get('id') === tokenId);
