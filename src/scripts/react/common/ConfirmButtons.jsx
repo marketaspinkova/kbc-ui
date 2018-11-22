@@ -18,7 +18,6 @@ export default React.createClass({
     saveStyle: React.PropTypes.string,
     onCancel: React.PropTypes.func,
     onSave: React.PropTypes.func.isRequired,
-    placement: React.PropTypes.oneOf(['left', 'right']),
     saveButtonType: React.PropTypes.oneOf(['button', 'submit']),
     showCancel: React.PropTypes.bool,
     showSave: React.PropTypes.bool,
@@ -31,7 +30,6 @@ export default React.createClass({
       saveLabel: 'Save',
       saveStyle: 'success',
       cancelLabel: 'Cancel',
-      placement: 'right',
       saveButtonType: 'button',
       isDisabled: false,
       showSave: true,
@@ -40,27 +38,15 @@ export default React.createClass({
   },
 
   render() {
-    if (this.props.placement === 'left') {
-      return (
-        <ButtonToolbar className={classnames('kbc-buttons pull-left', this.props.className)}>
-          {this._saveButton()}
-          {this._cancelButton()}
-          {!this.props.showCancel && ' '}
-          {this.props.children}
-          {this._loader()}
-        </ButtonToolbar>
-      );
-    } else {
-      return (
-        <ButtonToolbar className={classnames('kbc-buttons pull-right', this.props.className)}>
-          {this._loader()}
-          {this.props.children}
-          {!this.props.showCancel && ' '}
-          {this._cancelButton()}
-          {this._saveButton()}
-        </ButtonToolbar>
-      );
-    }
+    return (
+      <ButtonToolbar className={classnames('kbc-buttons pull-right', this.props.className)}>
+        {this._loader()}
+        {this.props.children}
+        {!this.props.showCancel && ' '}
+        {this._cancelButton()}
+        {this._saveButton()}
+      </ButtonToolbar>
+    );
   },
 
   _loader() {

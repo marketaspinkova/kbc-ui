@@ -54,7 +54,6 @@ export default React.createClass({
             isSaving={this.props.isSaving}
             onSave={this.handleSave}
             onCancel={this.props.onHideFn}
-            placement="right"
             saveLabel="Save Changes"
             isDisabled={!this.isProfilesChanged()}
           />

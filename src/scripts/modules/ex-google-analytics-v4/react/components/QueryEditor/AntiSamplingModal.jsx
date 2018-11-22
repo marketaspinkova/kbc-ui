@@ -43,7 +43,6 @@ export default React.createClass({
             isSaving={false}
             onSave={this.handleSave}
             onCancel={this.props.onHideFn}
-            placement="right"
             saveLabel="Set"
             saveStyle="primary"
           />

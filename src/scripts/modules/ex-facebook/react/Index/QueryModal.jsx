@@ -74,7 +74,6 @@ export default React.createClass({
             isSaving={this.props.isSavingFn(this.query('id'))}
             onSave={this.handleSave}
             onCancel={this.props.onHideFn}
-            placement="right"
             saveLabel={this.localState(['currentQuery', 'name'], false) ? 'Save Query' : 'Create'}
             isDisabled={this.isSavingDisabled()}
           >

@@ -74,7 +74,6 @@ export default React.createClass({
             isDisabled={!this.isValid()}
             onSave={this.handleSend}
             onCancel={this.handleClose}
-            placement="right"
             saveLabel="Send"
           />
         </Modal.Footer>
