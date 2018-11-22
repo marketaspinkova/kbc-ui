@@ -20,6 +20,23 @@ const routeSettings = {
   componentId: 'keboola.wr-storage',
   componentType: 'writer',
   index: {
+    actions: [
+      {
+        name: 'info',
+        validity: ValidityConstants.CONFIGURATION_VERSION,
+        autoload: true,
+        body: function(configuration) {
+          return fromJS({
+            configData: {
+              parameters: {
+                '#token': configuration.getIn(['parameters', '#token']),
+                url: configuration.getIn(['parameters', 'url'])
+              }
+            }
+          });
+        }
+      }
+    ],
     sections: [
       {
         render: CollapsibleSection({
@@ -34,22 +51,6 @@ const routeSettings = {
     ]
   },
   row: {
-    actions: [
-      {
-        name: 'info',
-        validity: ValidityConstants.CONFIGURATION,
-        body: function(configuration) {
-          return fromJS({
-            configData: {
-              parameters: {
-                '#token': configuration.getIn(['parameters', '#token']),
-                url: configuration.getIn(['parameters', 'url'])
-              }
-            }
-          });
-        }
-      }
-    ],
     onConform: (configuration) => {
       const configDraft = fromJS({
         storage: {

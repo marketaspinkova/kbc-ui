@@ -28,6 +28,7 @@ import LatestJobs from '../../../components/react/components/SidebarJobs';
 // adapters
 import isParsableConfiguration from '../../utils/isParsableConfiguration';
 import sections from '../../utils/sections';
+import { findRowAction } from '../../utils/settingsHelper';
 
 // sync api
 import dockerActions from '../../../components/DockerActionsActionCreators';
@@ -262,6 +263,22 @@ export default React.createClass({
     const settingsSections = this.state.settings.getIn(['row', 'sections']);
     const { storedConfigurationSections } = this.state;
     const returnTrue = () => true;
+
+    let actionsData = Immutable.Map();
+    this.state.settings.getIn(['index', 'actions']).forEach((action) => {
+      if (action.get('autoload', false)) {
+        actionsData = actionsData.set(action.get('name'), Immutable.fromJS(DockerActionsStore.get(
+          state.settings.get('componentId'),
+          state.configurationId,
+          state.configurationVersion,
+          state.rowId,
+          state.rowVersion,
+          action.get('name'),
+          action.get('validity'),
+        )));
+      }
+    });
+
     return settingsSections.map((section, key) => {
       const SectionComponent = section.get('render');
       const onSectionSave = section.get('onSave');
@@ -274,10 +291,9 @@ export default React.createClass({
             disabled={this.state.isSaving}
             onChange={diff => this.onUpdateSection(key, diff)}
             value={this.state.configurationBySections.get(key).toJS()}
-            onAction={actionName => {
-              const action = state.settings.getIn(['row', 'actions']).find(actionItem => {
-                return actionItem.get('name') === actionName;
-              });
+            actions={actionsData}
+            invokeAction={actionName => {
+              const action = findRowAction(state.settings, actionName);
               const actionData = action.get('body')(state.rawConfiguration.get('configuration'), state.rawRowConfiguration.get('configuration'));
               return dockerActions.get(
                 state.settings.get('componentId'),

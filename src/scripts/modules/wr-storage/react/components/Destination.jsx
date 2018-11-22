@@ -13,26 +13,13 @@ export default React.createClass({
     }),
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired,
-    onAction: PropTypes.func.isRequired,
+    actions: PropTypes.object,
+    invokeAction: PropTypes.func.isRequired,
     pendingActions: PropTypes.object.isRequired
   },
 
-  getInitialState() {
-    return {
-      project: null,
-      bucket: null
-    };
-  },
-
   componentDidMount() {
-    const infoAction = this.props.onAction('info');
-    infoAction.then(
-      (data) =>
-        this.setState({
-          project: data.get('projectName'),
-          bucket: data.get('bucket')
-        })
-    );
+    this.props.invokeAction('info');
   },
 
   renderInfoActionLoader() {
@@ -53,7 +40,7 @@ export default React.createClass({
           <Col sm={8}>
             <FormControl.Static>
               {this.renderInfoActionLoader()}
-              {this.state.project}
+              {this.props.actions.getIn(['info', 'data', 'projectName'])}
             </FormControl.Static>
           </Col>
         </FormGroup>
@@ -64,7 +51,7 @@ export default React.createClass({
           <Col sm={8}>
             <FormControl.Static>
               {this.renderInfoActionLoader()}
-              {this.state.bucket}
+              {this.props.actions.getIn(['info', 'data', 'bucket'])}
             </FormControl.Static>
           </Col>
         </FormGroup>

@@ -17,9 +17,12 @@ import sections from '../../utils/sections';
 import isParsableConfiguration from '../../utils/isParsableConfiguration';
 
 import JsonConfiguration from '../components/JsonConfiguration';
+import dockerActions from '../../../components/DockerActionsActionCreators';
+import DockerActionsStore from '../../../components/stores/DockerActionsStore';
+import { findIndexAction } from '../../utils/settingsHelper';
 
 export default React.createClass({
-  mixins: [createStoreMixin(InstalledComponentsStore, Store)],
+  mixins: [createStoreMixin(InstalledComponentsStore, Store, DockerActionsStore)],
 
   getStateFromStores() {
     const settings = RoutesStore.getRouteSettings();
@@ -52,6 +55,7 @@ export default React.createClass({
       settings: settings,
       component: component,
       configurationId: configurationId,
+      configurationVersion: ConfigurationsStore.get(componentId, configurationId).get('version'),
       createBySectionsFn,
       parseBySectionsFn,
       jsonConfigurationValue: Store.getEditingJsonConfigurationString(componentId, configurationId),
@@ -73,6 +77,7 @@ export default React.createClass({
       ),
       isJsonEditorOpen: Store.hasJsonEditor(componentId, configurationId, parseBySectionsFn, createBySectionsFn, conformFn),
       configurationBySections: configurationBySections,
+      rawConfiguration: ConfigurationsStore.get(componentId, configurationId),
       isSaving: Store.getPendingActions(componentId, configurationId).has('save-configuration'),
       isChanged: isChanged
 
@@ -103,7 +108,25 @@ export default React.createClass({
   renderSections() {
     const settingsSections = this.state.settings.getIn(['index', 'sections']);
     const {storedConfigurationSections} = this.state;
+    const state = this.state;
     const returnTrue = () => true;
+
+    let actionsData = Immutable.Map();
+    this.state.settings.getIn(['index', 'actions']).forEach((action) => {
+      if (action.get('autoload', false)) {
+        actionsData = actionsData.set(action.get('name'), Immutable.fromJS(DockerActionsStore.get(
+          state.settings.get('componentId'),
+          state.configurationId,
+          state.configurationVersion,
+          null,
+          null,
+          action.get('name'),
+          action.get('validity'),
+        )));
+      }
+    });
+
+
     return settingsSections.map((section, key) => {
       const SectionComponent = section.get('render');
       const onSectionSave = section.get('onSave');
@@ -117,6 +140,22 @@ export default React.createClass({
             onChange={(diff) => this.onUpdateSection(key, diff)}
             onSave={(diff) => this.onSaveSection(key, diff)}
             value={this.state.configurationBySections.get(key).toJS()}
+            actions={actionsData}
+            invokeAction={actionName => {
+              const action = findIndexAction(state.settings, actionName);
+              const actionData = action.get('body')(state.rawConfiguration.get('configuration'));
+              return dockerActions.get(
+                state.settings.get('componentId'),
+                state.configurationId,
+                state.configurationVersion,
+                null,
+                null,
+                action.get('name'),
+                action.get('validity'),
+                actionData
+              );
+            }}
+            pendingActions={DockerActionsStore.getPendingActions(state.settings.get('componentId'))}
           />
         </div>
       );

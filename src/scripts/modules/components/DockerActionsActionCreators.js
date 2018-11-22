@@ -47,15 +47,25 @@ module.exports = {
 
   get: function(componentId, configurationId, configurationVersion, rowId, rowVersion, actionName, validity, body) {
     const deferred = Promise.defer();
-    if (validity !== ValiditayConstants.NO_CACHE && Store.has(componentId, configurationId, configurationVersion, rowId, rowVersion, actionName, validity)) {
-      deferred.resolve(Store.get(componentId, configurationId, configurationVersion, rowId, rowVersion, actionName, validity));
-    } else {
-      this.callAction(componentId, configurationId, configurationVersion, rowId, rowVersion, actionName, validity, body).then(function() {
+    const deferredWrapper = Promise.defer();
+    deferredWrapper.promise.then(() => {
+      if (validity !== ValiditayConstants.NO_CACHE && Store.has(componentId, configurationId, configurationVersion, rowId, rowVersion, actionName, validity)) {
         deferred.resolve(Store.get(componentId, configurationId, configurationVersion, rowId, rowVersion, actionName, validity));
-      });
-    }
+      } else {
+        this.callAction(componentId, configurationId, configurationVersion, rowId, rowVersion, actionName, validity, body)
+          .then(function() {
+            deferred.resolve(Store.get(componentId, configurationId, configurationVersion, rowId, rowVersion, actionName, validity));
+          })
+          .catch(function(error) {
+            if (error.message === 'User error') {
+              deferred.reject(error.response.body.message);
+            } else {
+              throw error;
+            }
+          });
+      }
+    });
+    deferredWrapper.resolve();
     return deferred.promise;
   }
-
-
 };

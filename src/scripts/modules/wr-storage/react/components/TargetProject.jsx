@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
 // import { Input } from './../../../../react/common/KbcBootstrap';
 import {FormControl, FormGroup, ControlLabel, HelpBlock, Form, Col} from 'react-bootstrap';
+import {Loader} from '@keboola/indigo-ui';
 
 export default React.createClass({
   mixins: [immutableMixin],
@@ -12,7 +13,21 @@ export default React.createClass({
       token: PropTypes.string.isRequired
     }),
     onChange: PropTypes.func.isRequired,
-    disabled: PropTypes.bool.isRequired
+    disabled: PropTypes.bool.isRequired,
+    actions: PropTypes.object.isRequired,
+    invokeAction: PropTypes.func.isRequired,
+    pendingActions: PropTypes.object.isRequired
+  },
+
+  componentDidMount() {
+    this.props.invokeAction('info');
+  },
+
+
+  renderInfoActionLoader() {
+    if (this.props.pendingActions.has('info')) {
+      return (<Loader />);
+    }
   },
 
   render() {
@@ -54,6 +69,28 @@ export default React.createClass({
               disabled={this.props.disabled}
             />
             <HelpBlock>Use token with permissions limited only to write to a single target bucket.</HelpBlock>
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col componentClass={ControlLabel} sm={4}>
+            Project
+          </Col>
+          <Col sm={8}>
+            <FormControl.Static>
+              {this.renderInfoActionLoader()}
+              {this.props.actions.getIn(['info', 'data', 'projectName'])}
+            </FormControl.Static>
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col componentClass={ControlLabel} sm={4}>
+            Bucket
+          </Col>
+          <Col sm={8}>
+            <FormControl.Static>
+              {this.renderInfoActionLoader()}
+              {this.props.actions.getIn(['info', 'data', 'bucket'])}
+            </FormControl.Static>
           </Col>
         </FormGroup>
       </Form>

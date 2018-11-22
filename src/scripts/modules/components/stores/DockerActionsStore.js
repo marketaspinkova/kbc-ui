@@ -6,7 +6,8 @@ import validityConstants from '../DockerActionsValidityConstants';
 
 var _store = Immutable.Map({
   pendingActions: Immutable.Map(),
-  responses: Immutable.Map()
+  responses: Immutable.Map(),
+  registeredDataReceiveCallbacks: Immutable.Map()
 });
 
 function constructResponsesPath(componentId, configurationId, configurationVersion, rowId, rowVersion, actionName, validity) {
@@ -43,7 +44,20 @@ var DockerActionsStore = StoreUtils.createStore({
 
   get: function(componentId, configurationId, configurationVersion, rowId, rowVersion, actionName, validity) {
     const path = constructResponsesPath(componentId, configurationId, configurationVersion, rowId, rowVersion, actionName, validity);
-    return _store.getIn(path, Immutable.Map());
+    if (this.getPendingActions(componentId).has(actionName)) {
+      return {
+        status: 'pending'
+      };
+    }
+    if (_store.hasIn(path)) {
+      return {
+        status: 'success',
+        data: _store.getIn(path, Immutable.Map())
+      };
+    }
+    return {
+      status: 'none'
+    };
   }
 });
 

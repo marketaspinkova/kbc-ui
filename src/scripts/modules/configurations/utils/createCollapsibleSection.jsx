@@ -18,7 +18,10 @@ export default (TitleComponent, InnerComponent, options = {}) => {
       isComplete: PropTypes.bool,
       onSave: PropTypes.func,
       onChange: PropTypes.func,
-      value: PropTypes.any
+      value: PropTypes.any,
+      actions: PropTypes.any,
+      invokeAction: PropTypes.func,
+      pendingActions: PropTypes.object
     },
 
     getInitialState() {
@@ -106,6 +109,9 @@ export default (TitleComponent, InnerComponent, options = {}) => {
           onChange={this.handleChange}
           onSave={this.props.onSave}
           value={this.props.value}
+          actions={this.props.actions}
+          invokeAction={this.props.invokeAction}
+          pendingActions={this.props.pendingActions}
         />);
     },
 
