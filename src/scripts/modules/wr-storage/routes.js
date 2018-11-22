@@ -14,7 +14,7 @@ import targetProjectAdapter from './adapters/targetProject';
 import DestinationSection from './react/components/Destination';
 import destinationAdapter from './adapters/destination';
 
-import ValidityConstants from '../components/DockerActionsValidityConstants';
+import ValidityConstants from '../configurations/DockerActionsValidityConstants';
 
 const routeSettings = {
   componentId: 'keboola.wr-storage',

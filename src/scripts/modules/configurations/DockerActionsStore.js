@@ -1,8 +1,8 @@
-import StoreUtils from '../../../utils/StoreUtils';
+import StoreUtils from '../../utils/StoreUtils';
 import Immutable from 'immutable';
-import * as constants from '../DockerActionsConstants';
-import dispatcher from '../../../Dispatcher';
-import validityConstants from '../DockerActionsValidityConstants';
+import * as constants from './DockerActionsConstants';
+import dispatcher from '../../Dispatcher';
+import validityConstants from './DockerActionsValidityConstants';
 
 var _store = Immutable.Map({
   pendingActions: Immutable.Map(),

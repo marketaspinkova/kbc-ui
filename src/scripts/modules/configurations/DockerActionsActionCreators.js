@@ -1,9 +1,12 @@
 import dispatcher from '../../Dispatcher';
 import * as Constants from './DockerActionsConstants';
 import * as ValiditayConstants from './DockerActionsValidityConstants';
-import callAction from './DockerActionsApi';
-import Store from './stores/DockerActionsStore';
+import callAction from '../components/DockerActionsApi';
+import Store from './DockerActionsStore';
 import Promise from 'bluebird';
+import RoutesStore from '../../stores/RoutesStore';
+import { getIndexAutoloadActions } from './utils/settingsHelper';
+import ConfigurationsStore from './ConfigurationsStore';
 
 module.exports = {
   callAction: function(componentId, configurationId, configurationVersion, rowId, rowVersion, actionName, validity, body) {
@@ -67,5 +70,23 @@ module.exports = {
     });
     deferredWrapper.resolve();
     return deferred.promise;
+  },
+
+  reloadIndexSyncActions(componentId, configurationId) {
+    const settings = RoutesStore.getRouteSettings();
+    const actions = getIndexAutoloadActions(settings);
+    const configuration = ConfigurationsStore.get(componentId, configurationId);
+    actions.forEach((action) => {
+      this.get(
+        componentId,
+        configurationId,
+        configuration.get('version'),
+        null,
+        null,
+        action.get('name'),
+        action.get('validity'),
+        action.get('body')(configuration.get('configuration'))
+      );
+    });
   }
 };

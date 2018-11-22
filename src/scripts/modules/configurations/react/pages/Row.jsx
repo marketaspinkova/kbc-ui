@@ -7,8 +7,8 @@ import RoutesStore from '../../../../stores/RoutesStore';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import ConfigurationsStore from '../../ConfigurationsStore';
 import TablesStore from '../../../components/stores/StorageTablesStore';
-import DockerActionsStore from '../../../components/stores/DockerActionsStore';
 import LatestJobsStore from '../../../jobs/stores/LatestJobsStore';
+import DockerActionsStore from '../../DockerActionsStore';
 
 // actions
 import Actions from '../../ConfigurationRowsActionCreators';
@@ -31,7 +31,7 @@ import sections from '../../utils/sections';
 import { findRowAction } from '../../utils/settingsHelper';
 
 // sync api
-import dockerActions from '../../../components/DockerActionsActionCreators';
+import dockerActions from '../../DockerActionsActionCreators';
 
 export default React.createClass({
   mixins: [createStoreMixin(Store, TablesStore, DockerActionsStore, LatestJobsStore)],

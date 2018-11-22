@@ -4,6 +4,7 @@ import ConfigurationsStore from './ConfigurationsStore';
 import InstalledComponentsApi from '../components/InstalledComponentsApi';
 import VersionActionCreators from '../components/VersionsActionCreators';
 import ApplicationStore from '../../stores/ApplicationStore';
+import DockerActionsActionCreators from './DockerActionsActionCreators';
 import preferEncryptedAttributes from '../components/utils/preferEncryptedAttributes';
 import Immutable from 'immutable';
 import * as oauthUtils from '../oauth-v2/OauthUtils';
@@ -109,10 +110,11 @@ module.exports = {
       configurationId: configurationId
     });
     const configuration = createFn(ConfigurationsStore.getEditingConfiguration(componentId, configurationId, parseFn));
-
     return storeEncodedConfiguration(componentId, configurationId, configuration.toJS(), changeDescription ? changeDescription : 'Configuration edited')
-      .then(function(response) {
-        VersionActionCreators.loadVersionsForce(componentId, configurationId);
+      .then((response) => {
+        VersionActionCreators.loadVersionsForce(componentId, configurationId).then(
+          () => DockerActionsActionCreators.reloadIndexSyncActions(componentId, configurationId)
+        );
         Dispatcher.handleViewAction({
           type: Constants.ActionTypes.CONFIGURATIONS_SAVE_CONFIGURATION_SUCCESS,
           componentId: componentId,
@@ -138,8 +140,10 @@ module.exports = {
       configurationId: configurationId
     });
     return storeEncodedConfiguration(componentId, configurationId, forcedConfiguration.toJS(), changeDescription ? changeDescription : 'Configuration edited')
-      .then(function(response) {
-        VersionActionCreators.loadVersionsForce(componentId, configurationId);
+      .then((response) => {
+        VersionActionCreators.loadVersionsForce(componentId, configurationId).then(
+          () => DockerActionsActionCreators.reloadIndexSyncActions(componentId, configurationId)
+        );
         Dispatcher.handleViewAction({
           type: Constants.ActionTypes.CONFIGURATIONS_SAVE_CONFIGURATION_SUCCESS,
           componentId: componentId,
@@ -192,7 +196,10 @@ module.exports = {
       configurationId: configurationId
     });
 
-    oauthUtils.deleteCredentialsAndConfigAuth(componentId, configurationId).then(function() {
+    oauthUtils.deleteCredentialsAndConfigAuth(componentId, configurationId).then(() => {
+      VersionActionCreators.loadVersionsForce(componentId, configurationId).then(
+        () => DockerActionsActionCreators.reloadIndexSyncActions(componentId, configurationId)
+      );
       Dispatcher.handleViewAction({
         type: Constants.ActionTypes.CONFIGURATIONS_OAUTH_RESET_SUCCESS,
         componentId: componentId,

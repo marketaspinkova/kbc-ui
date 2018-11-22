@@ -17,9 +17,8 @@ import sections from '../../utils/sections';
 import isParsableConfiguration from '../../utils/isParsableConfiguration';
 
 import JsonConfiguration from '../components/JsonConfiguration';
-import dockerActions from '../../../components/DockerActionsActionCreators';
-import DockerActionsStore from '../../../components/stores/DockerActionsStore';
-import { getIndexAutoloadActions } from '../../utils/settingsHelper';
+import dockerActions from '../../DockerActionsActionCreators';
+import DockerActionsStore from '../../DockerActionsStore';
 
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore, Store, DockerActionsStore)],
@@ -85,24 +84,7 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    const actions = getIndexAutoloadActions(this.state.settings);
-    actions.forEach((action) => {
-      this.invokeSyncAction(action);
-    });
-  },
-
-  invokeSyncAction(action) {
-    const actionData = action.get('body')(this.state.rawConfiguration.get('configuration'));
-    return dockerActions.get(
-      this.state.settings.get('componentId'),
-      this.state.configurationId,
-      this.state.configurationVersion,
-      null,
-      null,
-      action.get('name'),
-      action.get('validity'),
-      actionData
-    );
+    dockerActions.reloadIndexSyncActions(this.state.componentId, this.state.configurationId);
   },
 
   onUpdateSection(sectionKey, diff) {
