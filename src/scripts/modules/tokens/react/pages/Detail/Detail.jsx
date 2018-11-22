@@ -1,21 +1,21 @@
 import React from 'react';
-import TokensStore from '../StorageTokensStore';
-import createStoreMixin from '../../../react/mixins/createStoreMixin';
-import TokenEditor from './tokenEditor/TokenEditor';
-import TokensActions from '../actionCreators';
-import {Map} from 'immutable';
-import BucketsStore from '../../components/stores/StorageBucketsStore';
-import RoutesStore from '../../../stores/RoutesStore';
-import {Tabs, Tab} from 'react-bootstrap';
-import Events from '../../sapi-events/react/Events';
-import createTokenEventsApi from '../TokenEventsApi';
-import SaveButtons from '../../../react/common/SaveButtons';
-import ConfirmButtons from '../../../react/common/ConfirmButtons';
-import TokenString from './Index/TokenString';
-import SendTokenModal from '../react/Index/SendTokenModal';
 import {Link} from 'react-router';
-// import Tooltip from '../../../react/common/Tooltip';
-import ApplicationActionCreators from '../../../actions/ApplicationActionCreators';
+import {Map} from 'immutable';
+import {Tabs, Tab} from 'react-bootstrap';
+
+import Events from '../../../../sapi-events/react/Events';
+import SaveButtons from '../../../../../react/common/SaveButtons';
+import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
+import RoutesStore from '../../../../../stores/RoutesStore';
+import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
+import ApplicationActionCreators from '../../../../../actions/ApplicationActionCreators';
+import BucketsStore from '../../../../components/stores/StorageBucketsStore';
+import TokenEditor from '../../components/tokenEditor/TokenEditor';
+import SendTokenModal from '../../modals/SendTokenModal';
+import TokenString from '../../components/TokenString';
+import TokensStore from '../../../StorageTokensStore';
+import createTokenEventsApi from '../../../TokenEventsApi';
+import TokensActions from '../../../actionCreators';
 
 const makeDetailPath = (tokenId) => (rest) => ['TokenDetail', tokenId].concat(rest || []);
 

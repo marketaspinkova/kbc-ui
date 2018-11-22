@@ -1,16 +1,15 @@
 import React, {PropTypes} from 'react';
-import {List, Map} from 'immutable';
-import { Check } from '@keboola/indigo-ui';
-import TokenAge from './TokenAge';
-
-import Tooltip from '../../../../react/common/Tooltip';
-import Confirm from '../../../../react/common/Confirm';
-import {Loader, ExternalLink} from '@keboola/indigo-ui';
-import RefreshTokenModal from './RefreshTokenModal';
-import SendTokenModal from './SendTokenModal';
-import ExpiresInfo from '../tokenEditor/ExpiresInfo';
 import {Link} from 'react-router';
-import CreatedDate from './CreatedDate';
+import {List, Map} from 'immutable';
+import {Check, Loader, ExternalLink} from '@keboola/indigo-ui';
+
+import Tooltip from '../../../../../react/common/Tooltip';
+import Confirm from '../../../../../react/common/Confirm';
+import ExpiresInfo from '../../components/tokenEditor/ExpiresInfo';
+import TokenAge from '../../components/TokenAge';
+import CreatedDate from '../../components/CreatedDate';
+import SendTokenModal from '../../modals/SendTokenModal';
+import RefreshTokenModal from '../../modals/RefreshTokenModal';
 
 export default React.createClass({
 
