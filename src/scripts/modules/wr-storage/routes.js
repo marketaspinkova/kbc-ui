@@ -16,6 +16,8 @@ import destinationAdapter from './adapters/destination';
 
 import ValidityConstants from '../configurations/DockerActionsValidityConstants';
 
+import actions from './adapters/actions';
+
 const routeSettings = {
   componentId: 'keboola.wr-storage',
   componentType: 'writer',
@@ -25,16 +27,7 @@ const routeSettings = {
         name: 'info',
         validity: ValidityConstants.VERSION,
         autoload: true,
-        body: function(configuration) {
-          return fromJS({
-            configData: {
-              parameters: {
-                '#token': configuration.getIn(['parameters', '#token']),
-                url: configuration.getIn(['parameters', 'url'])
-              }
-            }
-          });
-        }
+        body: actions.info
       }
     ],
     sections: [
