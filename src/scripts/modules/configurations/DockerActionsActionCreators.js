@@ -52,6 +52,9 @@ module.exports = {
   },
 
   get: function(componentId, configurationId, configurationVersion, rowId, rowVersion, actionName, validity, body) {
+    if (body === false) {
+      return;
+    }
     if (validity !== ValiditayConstants.NO_CACHE && Store.has(componentId, configurationId, configurationVersion, rowId, actionName)) {
       return;
     } else {
