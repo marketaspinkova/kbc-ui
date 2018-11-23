@@ -2,7 +2,7 @@ actionCreators = require './actionCreators'
 InstalledComponentsStore = require('../components/stores/InstalledComponentsStore').default
 GoodDataWriterStore = require './store'
 
-IndexPage = require './react/pages/index/Index'
+IndexPage = require('./react/pages/index/Index').default
 TablePage = require './react/pages/table/Table'
 WriterReloader = require('./react/components/WritersReloaderButton').default
 TablePageHeaderButtons = require('./react/components/TableHeaderButtons').default
