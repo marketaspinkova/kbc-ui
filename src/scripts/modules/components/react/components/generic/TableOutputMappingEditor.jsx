@@ -8,7 +8,7 @@ import AutosuggestWrapper from '../../../../transformations/react/components/map
 import DestinationTableSelector from '../../../../../react/common/DestinationTableSelector';
 import tableIdParser from '../../../../../utils/tableIdParser';
 import whereOperatorConstants from '../../../../../react/common/whereOperatorConstants';
-import { webalize } from '../../../../../utils/string';
+import stringUtils from '../../../../../utils/string';
 
 export default React.createClass({
   mixins: [ImmutableRenderMixin],
@@ -54,7 +54,7 @@ export default React.createClass({
       sourceValue = sourceValue.substring(0, lastDotIdx);
     }
     const dstParser = this._parseDestination();
-    const webalizedSourceValue = webalize(sourceValue, { caseSensitive: true });
+    const webalizedSourceValue = stringUtils.webalize(sourceValue, { caseSensitive: true });
     const newDestination = dstParser.setPart('table', webalizedSourceValue);
     return newDestination.tableId;
   },
