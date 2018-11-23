@@ -9,6 +9,8 @@ export default React.createClass({
 
   propTypes: {
     jobs: React.PropTypes.object.isRequired,
+    componentId: React.PropTypes.string.isRequired,
+    configId: React.PropTypes.string.isRequired,
     limit: React.PropTypes.number
   },
 
@@ -49,24 +51,28 @@ export default React.createClass({
     const jobs = this.props.jobs.get('jobs');
     const firstJob = jobs && jobs.first();
     const params = firstJob && firstJob.get('params');
-    let component;
+    let query = '';
 
     if (!params) {
       return null;
     }
 
+
     if (params.get('component')) {
-      component = `+params.component:${params.get('component')}`;
+      query += `+params.component:${this.props.componentId}`;
     } else {
-      component = `+component:${firstJob.get('component')}`;
+      // legacy components
+      query += `+component:${this.props.componentId}`;
     }
+
+    query += ` +params.config:${this.props.configId}`;
 
     return (
       <div className="jobs-link" key="jobs-link">
         <Link
           to="jobs"
           query={{
-            q: `${component} +params.config:${params.get('config')}`
+            q: query
           }}
         >
           Show all jobs
