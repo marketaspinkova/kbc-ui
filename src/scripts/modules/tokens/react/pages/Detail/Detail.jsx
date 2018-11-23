@@ -15,13 +15,15 @@ export default React.createClass({
   mixins: [createStoreMixin(TokensStore, BucketsStore)],
 
   getStateFromStores() {
+    const localState = TokensStore.localState();
     const tokenId = RoutesStore.getCurrentRouteParam('tokenId');
     const token = TokensStore.getAll().find(t => t.get('id') === tokenId);
 
     return {
+      localState,
       tokenId,
       token,
-      savedToken: token,
+      editedToken: localState.get('editedToken', token),
       allBuckets: BucketsStore.getAll(),
       eventsApi: createTokenEventsApi(tokenId)
     };
@@ -31,6 +33,10 @@ export default React.createClass({
     return {
       isSaving: false
     };
+  },
+
+  componentWillUnmount() {
+    this.resetEditedToken();
   },
 
   render() {
@@ -45,16 +51,16 @@ export default React.createClass({
                     <SaveButtons
                       isSaving={this.state.isSaving}
                       disabled={!this.isValid()}
-                      isChanged={!this.state.token.equals(this.state.savedToken)}
+                      isChanged={!this.state.token.equals(this.state.editedToken)}
                       onSave={this.handleSave}
-                      onReset={this.handleReset}
+                      onReset={this.resetEditedToken}
                     />
                   </div>
                 </div>
                 <TokenEditor
                   isEditing={true}
                   disabled={!!this.state.isSaving}
-                  token={this.state.token}
+                  token={this.state.editedToken}
                   allBuckets={this.state.allBuckets}
                   updateToken={this.updateToken}
                 />
@@ -74,29 +80,29 @@ export default React.createClass({
   },
 
   isValid() {
-    return !!(this.state.token.get('description') && this.state.token.get('expiresIn') !== 0);
+    return !!(this.state.editedToken.get('description') && this.state.editedToken.get('expiresIn') !== 0);
   },
 
-  handleReset() {
-    this.setState({
-      token: this.state.savedToken
-    });
+  resetEditedToken() {
+    const updatedLocalState = this.state.localState.delete('editedToken');
+    TokensActions.updateLocalState(updatedLocalState);
   },
 
   updateToken(name, value) {
-    this.setState({
-      token: this.state.token.set(name, value)
-    });
+    const updatedToken = this.state.editedToken.set(name, value);
+    const updatedLocalState = this.state.localState.set('editedToken', updatedToken);
+    TokensActions.updateLocalState(updatedLocalState);
   },
 
   handleSave() {
     this.saving(true);
-    return TokensActions.updateToken(this.state.tokenId, this.state.token.toJS())
+    return TokensActions.updateToken(this.state.tokenId, this.state.editedToken.toJS())
       .catch(error => {
         throw error;
       })
       .finally(() => {
         this.saving(false);
+        this.resetEditedToken();
       });
   },
 
