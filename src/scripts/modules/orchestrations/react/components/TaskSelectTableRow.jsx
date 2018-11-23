@@ -14,7 +14,7 @@ export default React.createClass({
 
   render() {
     return (
-      <tr onClick={this._handleActiveChange}>
+      <tr onClick={this._handleActiveChange} className="kbc-cursor-pointer">
         <td>
           <span className="kbc-component-icon">
             {this.props.component && <ComponentIcon component={this.props.component} />}{' '}
@@ -31,7 +31,7 @@ export default React.createClass({
         <td className="kbc-break-all kbc-break-word">
           {this._renderConfiguration()}
         </td>
-        <td>
+        <td className="text-center">
           <input type="checkbox" checked={this.props.task.get('active')} />
         </td>
       </tr>
