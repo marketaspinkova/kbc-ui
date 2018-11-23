@@ -187,6 +187,7 @@ export default React.createClass({
   renderNewTableButton() {
     return (
       <NewTableButton
+        createdTables={this.state.tables}
         onCreateTable={this.createNewTableAndRedirect}
       />
     );

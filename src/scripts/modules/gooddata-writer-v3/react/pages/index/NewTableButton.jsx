@@ -7,7 +7,8 @@ import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
 export default React.createClass({
 
   propTypes: {
-    onCreateTable: PropTypes.func.isRequired
+    onCreateTable: PropTypes.func.isRequired,
+    createdTables: PropTypes.object
   },
 
   getInitialState() {
@@ -77,7 +78,7 @@ export default React.createClass({
             placeholder="Select..."
             value={this.state.tableId}
             onSelectTableFn={this.setSelectedTable}
-            excludeTableFn={() => false}/>
+            excludeTableFn={(tableId) => this.props.createdTables.has(tableId)}/>
         </div>
       </div>
 
