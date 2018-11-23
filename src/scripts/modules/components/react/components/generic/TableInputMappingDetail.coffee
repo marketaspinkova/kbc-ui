@@ -8,7 +8,7 @@ ListGroup = React.createFactory(require('react-bootstrap').ListGroup)
 ListGroupItem = React.createFactory(require('react-bootstrap').ListGroupItem)
 _ = require('underscore')
 TableLinkEx = React.createFactory(require('../../../../components/react/components/StorageApiTableLinkEx').default)
-FiltersDescription = require './FiltersDescription'
+FiltersDescription = require('./FiltersDescription').default
 
 {span, div, a, button, i, h4, small, em, ul, li, strong} = React.DOM
 numeral = require 'numeral'
