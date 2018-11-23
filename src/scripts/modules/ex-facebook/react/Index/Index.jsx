@@ -141,7 +141,12 @@ export default function(COMPONENT_ID) {
                 />
               </li>
             </ul>
-            <LatestJobs jobs={this.state.latestJobs} limit={3} />
+            <LatestJobs
+              componentId={COMPONENT_ID}
+              configId={this.state.configId}
+              jobs={this.state.latestJobs}
+              limit={3}
+            />
             <LatestVersions
               limit={3}
               componentId={COMPONENT_ID}

@@ -278,6 +278,8 @@ export default React.createClass({
             </li>
           </ul>
           <LatestJobs
+            componentId={this.state.componentId}
+            configId={this.state.config.get('id')}
             jobs={this.state.latestJobs}
             limit={3}
           />

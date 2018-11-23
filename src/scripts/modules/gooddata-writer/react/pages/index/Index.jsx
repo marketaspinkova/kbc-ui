@@ -318,7 +318,12 @@ export default React.createClass({
               </li>
             </ul>
           )}
-          <LatestJobs jobs={this.state.latestJobs} limit={3} />
+          <LatestJobs
+            componentId="gooddata-writer"
+            configId={this.state.writer.getIn(['config', 'id'])}
+            jobs={this.state.latestJobs}
+            limit={3}
+          />
           <LatestVersions componentId="gooddata-writer" limit={3} />
         </div>
       </div>
