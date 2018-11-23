@@ -91,7 +91,7 @@ export default React.createClass({
             jobs={this.state.latestJobs}
             limit={3}
           />
-          <SidebarVersions limit={3} />
+          <SidebarVersions componentId="transformation" limit={3} />
         </div>
       </div>
     );
