@@ -130,10 +130,7 @@ export default React.createClass({
           },
           React.createElement(Detail,
             {
-              fill: true,
-              value: output,
-              tables: component.props.tables,
-              definition: definition
+              value: output
             }
           )
         );
