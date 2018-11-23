@@ -89,7 +89,7 @@ export default React.createClass({
         text={`Do you really want to delete table ${tableId} from the confuration?`}
         title={`Delete table ${tableId}`}
         buttonLabel="Delete"
-        onConfirm={e => this.deleteTable(e, tableId)}
+        onConfirm={() => this.props.deleteTable(tableId)}
       >
         <button disabled={this.props.isSaving} className="btn btn-link">
           <Tooltip placement="top" tooltip="delete">
@@ -98,12 +98,6 @@ export default React.createClass({
         </button>
       </Confirm>
     );
-  },
-
-  deleteTable(e, tableId) {
-    e.preventDefault();
-    e.stopPropagation();
-    this.props.deleteTable(tableId);
   },
 
   renderRowActionButtons(tableId, table) {
