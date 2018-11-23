@@ -1,7 +1,5 @@
-import React from 'react';
 import Promise from 'bluebird';
 import _ from 'underscore';
-import { Link } from 'react-router';
 import dispatcher from '../../Dispatcher';
 import * as constants from './constants';
 import goodDataWriterStore from './store';
@@ -10,8 +8,16 @@ import jobPoller from '../../utils/jobPoller';
 import installedComponentsApi from '../components/InstalledComponentsApi';
 import applicationStore from '../../stores/ApplicationStore';
 import applicationActionCreators from '../../actions/ApplicationActionCreators';
-
 import dimensionsStore from './dateDimensionsStore';
+
+// notifications
+import dataSetSynchronizationInitiated from './react/notifications/dataSetSynchronizationInitiated';
+import dimensionUploadInitiated from './react/notifications/dimensionUploadInitiated';
+import projectScheduledToReset from './react/notifications/projectScheduledToReset';
+import sliHashesOptimizationTriggered from './react/notifications/sliHashesOptimizationTriggered';
+import tableResetInitiated from './react/notifications/tableResetInitiated';
+import tableUploadInitiated from './react/notifications/tableUploadInitiated';
+import uploadInitiated from './react/notifications/uploadInitiated';
 
 export default {
   deleteTable(configurationId, tableId) {
@@ -188,28 +194,7 @@ export default {
           configurationId
         });
         return applicationActionCreators.sendNotification({
-          message: React.createClass({
-            propTypes: {
-              onClick: React.PropTypes.func
-            },
-            render() {
-              return React.DOM.span(
-                null,
-                'Optimalization of SLI hashes has been triggered! You can track the job progress ',
-                React.createElement(
-                  Link,
-                  {
-                    to: 'jobDetail',
-                    params: {
-                      jobId: job.id
-                    },
-                    onClick: this.props.onClick
-                  },
-                  'here'
-                )
-              );
-            }
-          })
+          message: sliHashesOptimizationTriggered(job)
         });
       })
       .catch(function(e) {
@@ -236,28 +221,7 @@ export default {
           configurationId
         });
         return applicationActionCreators.sendNotification({
-          message: React.createClass({
-            propTypes: {
-              onClick: React.PropTypes.func
-            },
-            render() {
-              return React.DOM.span(
-                null,
-                'Project has been scheduled to reset! You can track the job progress ',
-                React.createElement(
-                  Link,
-                  {
-                    to: 'jobDetail',
-                    params: {
-                      jobId: job.id
-                    },
-                    onClick: this.props.onClick
-                  },
-                  'here'
-                )
-              );
-            }
-          })
+          message: projectScheduledToReset(job)
         });
       })
       .catch(function(e) {
@@ -449,30 +413,7 @@ export default {
         });
 
         return applicationActionCreators.sendNotification({
-          message: React.createClass({
-            propTypes: {
-              onClick: React.PropTypes.func
-            },
-            render() {
-              return React.DOM.span(
-                null,
-                'GoodData upload of dimension ',
-                React.DOM.strong(null, dimensionName),
-                ' has been initiated You can track the job progress ',
-                React.createElement(
-                  Link,
-                  {
-                    to: 'jobDetail',
-                    params: {
-                      jobId: job.id
-                    },
-                    onClick: this.props.onClick
-                  },
-                  'here'
-                )
-              );
-            }
-          })
+          message: dimensionUploadInitiated(job, dimensionName)
         });
       })
       .catch(function(e) {
@@ -512,55 +453,11 @@ export default {
         if (tableId) {
           const table = goodDataWriterStore.getTable(configurationId, tableId);
           return applicationActionCreators.sendNotification({
-            message: React.createClass({
-              propTypes: {
-                onClick: React.PropTypes.func
-              },
-              render() {
-                return React.DOM.span(
-                  null,
-                  'GoodData upload of table ',
-                  React.DOM.strong(null, table.getIn(['data', 'title'])),
-                  ' has been initiated You can track the job progress ',
-                  React.createElement(
-                    Link,
-                    {
-                      to: 'jobDetail',
-                      params: {
-                        jobId: job.id
-                      },
-                      onClick: this.props.onClick
-                    },
-                    'here'
-                  )
-                );
-              }
-            })
+            message: tableUploadInitiated(job, table)
           });
         } else {
           return applicationActionCreators.sendNotification({
-            message: React.createClass({
-              propTypes: {
-                onClick: React.PropTypes.func
-              },
-              render() {
-                return React.DOM.span(
-                  null,
-                  'GoodData upload has been initiated. You can track the job progress ',
-                  React.createElement(
-                    Link,
-                    {
-                      to: 'jobDetail',
-                      params: {
-                        jobId: job.id
-                      },
-                      onClick: this.props.onClick
-                    },
-                    'here'
-                  )
-                );
-              }
-            })
+            message: uploadInitiated(job)
           });
         }
       })
@@ -593,28 +490,7 @@ export default {
         });
 
         return applicationActionCreators.sendNotification({
-          message: React.createClass({
-            propTypes: {
-              onClick: React.PropTypes.func
-            },
-            render() {
-              return React.DOM.span(
-                null,
-                'Table reset has been initiated. You can track the job progress ',
-                React.createElement(
-                  Link,
-                  {
-                    to: 'jobDetail',
-                    params: {
-                      jobId: job.id
-                    },
-                    onClick: this.props.onClick
-                  },
-                  'here'
-                )
-              );
-            }
-          })
+          message: tableResetInitiated(job)
         });
       })
       .catch(function(e) {
@@ -645,28 +521,7 @@ export default {
         });
 
         return applicationActionCreators.sendNotification({
-          message: React.createClass({
-            propTypes: {
-              onClick: React.PropTypes.func
-            },
-            render() {
-              return React.DOM.span(
-                null,
-                'Dataset synchronize has been initiated. You can track the job progress ',
-                React.createElement(
-                  Link,
-                  {
-                    to: 'jobDetail',
-                    params: {
-                      jobId: job.id
-                    },
-                    onClick: this.props.onClick
-                  },
-                  'here'
-                )
-              );
-            }
-          })
+          message: dataSetSynchronizationInitiated(job)
         });
       })
       .catch(function(e) {
