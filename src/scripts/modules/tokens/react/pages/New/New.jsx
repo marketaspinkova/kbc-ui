@@ -17,17 +17,20 @@ export default React.createClass({
   mixins: [createStoreMixin(TokensStore, BucketsStore)],
 
   getStateFromStores() {
+    const localState = TokensStore.localState();
+
     return {
+      localState,
       allBuckets: BucketsStore.getAll(),
+      token: localState.get('newToken', Map()),
       isSendingToken: TokensStore.isSendingToken
     };
   },
 
   getInitialState() {
     return {
-      token: Map(),
+      createdToken: Map(),
       sendModal: false,
-      tokenCreated: false,
       isSaving: false
     };
   },
@@ -37,7 +40,7 @@ export default React.createClass({
       <div className="container-fluid">
         <div className="kbc-main-content">
           <div className="kbc-inner-padding">
-            {this.state.tokenCreated ? (
+            {this.state.createdToken.count() ? (
               this.renderTokenCreated()
             ) : (
               <div className="form form-horizontal">
@@ -70,18 +73,18 @@ export default React.createClass({
 
   renderTokenCreated() {
     const creatorLink = (
-      <Link to="tokens-detail" params={{ tokenId: this.state.token.get('id') }}>
-        {this.state.token.get('description')}
+      <Link to="tokens-detail" params={{ tokenId: this.state.createdToken.get('id') }}>
+        {this.state.createdToken.get('description')}
       </Link>
     );
 
     return (
       <div className="text-center">
-        {this.renderTokenSendModal()}
+        {this.renderSendModal()}
         <Alert bsStyle="success">
           <p>Token {creatorLink} has been created.</p>
         </Alert>
-        <TokenString token={this.state.token} sendTokenComponent={this.renderSendButton()} />
+        <TokenString token={this.state.createdToken} sendTokenComponent={this.renderSendButton()} />
       </div>
     );
   },
@@ -94,12 +97,12 @@ export default React.createClass({
     );
   },
 
-  renderTokenSendModal() {
-    const isSending = this.state.isSendingToken(this.state.token.get('id'));
+  renderSendModal() {
+    const isSending = this.state.isSendingToken(this.state.createdToken.get('id'));
 
     return (
       <SendTokenModal
-        token={this.state.token}
+        token={this.state.createdToken}
         show={!!this.state.sendModal}
         onSendFn={params => this.sendToken(params)}
         onHideFn={this.closeSendModal}
@@ -109,9 +112,9 @@ export default React.createClass({
   },
 
   sendToken(params) {
-    return TokensActions.sendToken(this.state.token.get('id'), params).then(() => {
+    return TokensActions.sendToken(this.state.createdToken.get('id'), params).then(() => {
       ApplicationActionCreators.sendNotification({
-        message: `Token ${this.state.token.get('description')} sent to ${params.email}`
+        message: `Token ${this.state.createdToken.get('description')} sent to ${params.email}`
       });
 
       this.closeSendModal();
@@ -129,9 +132,9 @@ export default React.createClass({
     return TokensActions.createToken(this.state.token.toJS())
       .then(createdToken => {
         this.setState({
-          tokenCreated: true,
-          token: createdToken
+          createdToken
         });
+        this.resetToken();
       })
       .catch(error => {
         throw error;
@@ -142,9 +145,14 @@ export default React.createClass({
   },
 
   updateToken(name, value) {
-    this.setState({
-      token: this.state.token.set(name, value)
-    });
+    const updatedToken = this.state.token.set(name, value);
+    const updatedLocalState = this.state.localState.set('newToken', updatedToken);
+    TokensActions.updateLocalState(updatedLocalState);
+  },
+
+  resetToken() {
+    const updatedLocalState = this.state.localState.delete('newToken');
+    TokensActions.updateLocalState(updatedLocalState);
   },
 
   openSendModal() {
