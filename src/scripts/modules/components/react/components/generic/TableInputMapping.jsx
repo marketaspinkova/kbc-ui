@@ -139,9 +139,7 @@ export default React.createClass({
           },
           React.createElement(Detail,
             {
-              fill: true,
-              value: input,
-              tables: component.props.tables
+              value: input
             }
           )
         );
