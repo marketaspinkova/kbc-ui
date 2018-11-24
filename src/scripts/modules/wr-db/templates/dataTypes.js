@@ -1,4 +1,4 @@
-/* defulat defined in .../wr-db/react/pages/table.coffee
+/* defulat defined in .../wr-db/react/pages/table.jsx
 defaultDataTypes =
 ['INT','BIGINT',
 'VARCHAR': {defaultSize: '255'},

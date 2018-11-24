@@ -19,13 +19,6 @@ module.exports = function(options) {
         LATER_COV: false
       }
     }),
-    new webpack.LoaderOptionsPlugin({
-      options: {
-        coffeelint: {
-          configFile: path.resolve(__dirname, '../coffeelint.json')
-        }
-      }
-    }),
     new MiniCssExtractPlugin({
       filename: '[name].min.css',
       disable: isDevelopment
@@ -76,7 +69,7 @@ module.exports = function(options) {
     ),
     plugins: plugins,
     resolve: {
-      extensions: ['*', '.js', '.jsx', '.coffee']
+      extensions: ['*', '.js', '.jsx']
     },
     devServer: {
       headers: {
@@ -99,21 +92,10 @@ module.exports = function(options) {
           }
         },
         {
-          test: /\.coffee$/,
-          exclude: /node_modules/,
-          enforce: 'pre',
-          loader: 'coffee-lint-loader'
-        },
-        {
           test: /\.jsx?$/,
           exclude: /node_modules/,
           include: path.resolve(__dirname, '../src/scripts'),
           use: [isDevelopment ? 'react-hot-loader' : false, 'babel-loader'].filter(Boolean)
-        },
-        {
-          test: /\.coffee$/,
-          exclude: /node_modules/,
-          use: [isDevelopment ? 'react-hot-loader' : false, 'babel-loader', 'coffee-loader'].filter(Boolean)
         },
         {
           test: /\.less$/,
