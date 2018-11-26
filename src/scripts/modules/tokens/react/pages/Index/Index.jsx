@@ -1,6 +1,5 @@
 import React from 'react';
 import { Map } from 'immutable';
-import BucketsStore from '../../../../components/stores/StorageBucketsStore';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import SettingsTabs from '../../../../../react/layout/SettingsTabs';
 import ApplicationStore from '../../../../../stores/ApplicationStore';
