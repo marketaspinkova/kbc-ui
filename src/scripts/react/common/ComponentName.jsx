@@ -1,9 +1,5 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import { capitalize } from 'underscore.string';
-
-const shouldShowType = (component) => {
-  return component.get('type') === 'extractor' || component.get('type') === 'writer';
-};
 
 export default React.createClass({
   propTypes: {
@@ -23,9 +19,19 @@ export default React.createClass({
     return (
       <span>
         {this.componentName()}
-        {this.props.showType && shouldShowType(this.props.component) && (
-          <span>{' '}<small>{this.props.component.get('type')}</small></span>
-        )}
+        {this.props.showType && this.renderType()}
+      </span>
+    );
+  },
+
+  renderType() {
+    if (!this.shouldShowType()) {
+      return null;
+    }
+
+    return (
+      <span>
+        <small> {this.props.component.get('type')}</small>
       </span>
     );
   },
@@ -33,5 +39,9 @@ export default React.createClass({
   componentName() {
     const name = this.props.component.get('name');
     return this.props.capitalize ? capitalize(name) : name;
+  },
+
+  shouldShowType() {
+    return ['extractor', 'writer'].includes(this.props.component.get('type'));
   }
 });
