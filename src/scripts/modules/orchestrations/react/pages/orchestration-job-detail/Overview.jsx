@@ -3,6 +3,7 @@ import { List } from 'immutable';
 import JobTasks from './JobTasks';
 import Duration from '../../../../../react/common/Duration';
 import JobStatusLabel from '../../../../../react/common/JobStatusLabel';
+import JobRunId from '../../../../../react/common/JobRunId';
 import date from '../../../../../utils/date';
 
 export default React.createClass({
@@ -17,29 +18,35 @@ export default React.createClass({
           <div className="tr">
             <div className="td">
               <div className="row">
-                <span className="col-md-4">{'Created At '}</span>
+                <span className="col-md-4">Created At</span>
                 <strong className="col-md-8">{date.format(this.props.job.get('createdTime'))}</strong>
               </div>
               <div className="row">
-                <span className="col-md-4">{'Start '}</span>
+                <span className="col-md-4">Start</span>
                 <strong className="col-md-8">{this._getValidStartTime()}</strong>
+              </div>
+              <div className="row">
+                <span className="col-md-4">RunId</span>
+                <strong className="col-md-8">
+                  <JobRunId runId={this.props.job.get('runId')} />
+                </strong>
               </div>
             </div>
             <div className="td">
               <div className="row">
-                <span className="col-md-4">{'Status '}</span>
+                <span className="col-md-4">Status</span>
                 <span className="col-md-8">
                   <JobStatusLabel status={this.props.job.get('status')} />
                 </span>
               </div>
               <div className="row">
-                <span className="col-md-4">{'End '}</span>
+                <span className="col-md-4">End</span>
                 <strong className="col-md-8">
                   {this.props.job.get('endTime') ? date.format(this.props.job.get('endTime')) : 'N/A'}
                 </strong>
               </div>
               <div className="row">
-                <span className="col-md-4">{'Created By '}</span>
+                <span className="col-md-4">Created By</span>
                 <strong className="col-md-8">{this.props.job.getIn(['initiatorToken', 'description'])}</strong>
               </div>
             </div>
