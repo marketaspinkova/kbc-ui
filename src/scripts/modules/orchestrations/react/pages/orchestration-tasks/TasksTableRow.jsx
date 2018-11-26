@@ -25,7 +25,7 @@ export default React.createClass({
             {this.props.component ? <ComponentIcon component={this.props.component} /> : ' '}
           </span>
           {this.props.component ? (
-            <ComponentName component={this.props.component} />
+            <ComponentName component={this.props.component} showType />
           ) : (
             this.props.task.get('componentUrl')
           )}
