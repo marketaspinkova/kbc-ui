@@ -89,14 +89,14 @@ Some [story](https://hackernoon.com/testing-react-components-with-jest-and-enzym
 
 ### Add assets
 
-Whole application is bundled by Webpack, not just js and coffee script files but also stylesheets (less, css), media and image files.
+Whole application is bundled by Webpack, not just js files but also stylesheets (less, css), media and image files.
 Assets should be loaded by `require` or `import` function.
 
 **Examples:**
 
- * [CSS include](https://github.com/keboola/kbc-ui/blob/b6f8568ff3f5ac76e3c5063d6327b33ae543da24/src/scripts/react/layout/App.coffee#L18)
- * [Image](https://github.com/keboola/kbc-ui/blob/b6f8568ff3f5ac76e3c5063d6327b33ae543da24/src/scripts/react/common/JobStatusCircle.coffee#L5)
- * [mp3](https://github.com/keboola/kbc-ui/blob/b6f8568ff3f5ac76e3c5063d6327b33ae543da24/src/scripts/utils/SoundNotifications.coffee#L4)
+ * [CSS include](https://github.com/keboola/kbc-ui/blob/master/src/scripts/react/layout/App.jsx#L16)
+ * [Image](https://github.com/keboola/kbc-ui/blob/master/src/scripts/react/common/JobStatusCircle.jsx#L5)
+ * [mp3](https://github.com/keboola/kbc-ui/blob/master/src/scripts/utils/SoundNotifications.js#L3)
 
 
 ### Add New Component (extractor, writer or application)
@@ -112,5 +112,5 @@ Assets should be loaded by `require` or `import` function.
     * Use curl or some http client to trigger [Create Config API call](http://docs.keboola.apiary.io/#post-%2Fv2%2Fstorage%2Fcomponents%2F%7Bcomponent_id%7D%2Fconfigs)
     * cUrl example `curl -H "X-StorageApi-Token:YOUR_STORAGE_API_TOKEN" -d "name=My First Dropbox" https://connection.keboola.com/v2/storage/components/ex-dropbox/configs`
   * Create and register routes for new component
-    * Components routes, you can just copy and modify `ex-adform` routes https://github.com/keboola/kbc-ui/blob/77ab46b41a473cf3ad8bab01b807f9bf74d7da47/src/scripts/modules/ex-adform/routes.js
-    * Register routes https://github.com/keboola/kbc-ui/blob/77ab46b41a473cf3ad8bab01b807f9bf74d7da47/src/scripts/modules/components/Routes.coffee#L111
+    * Components routes, you can just copy and modify `ex-adform` routes https://github.com/keboola/kbc-ui/blob/master/src/scripts/modules/ex-adform/routes.js
+    * Register routes https://github.com/keboola/kbc-ui/blob/master/src/scripts/modules/components/Routes.js#L91
