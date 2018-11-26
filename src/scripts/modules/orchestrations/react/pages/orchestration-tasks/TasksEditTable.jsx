@@ -183,7 +183,7 @@ export default React.createClass({
 
   _renderEmptyTasksRow(phaseId, color) {
     return (
-      <tr style={{ backgroundColor: color }}>
+      <tr style={{ backgroundColor: color }} key="empty-phase-row">
         <td className="text-muted" colSpan={7}>
           <EmptyState>
             <span>{`No tasks assigned to ${phaseId} yet. Empty phases will not be saved. `}</span>
