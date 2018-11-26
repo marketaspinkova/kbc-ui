@@ -82,10 +82,10 @@ export default function(configId) {
     return inputMapping.map((table, tableId) => (tableId === ptableId ? updateFn(table) : table));
   }
 
-  function createNewTable(tableId) {
+  function createNewTable(tableId, title) {
     const newTable = Map({
       columns: {},
-      title: tableId
+      title
     });
     const newTableMapping = Map({ source: tableId, columns: [] });
     const newParameters = parameters.setIn(['tables', tableId], newTable);

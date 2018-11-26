@@ -193,9 +193,9 @@ export default React.createClass({
     );
   },
 
-  createNewTableAndRedirect(tableId) {
+  createNewTableAndRedirect(tableId, title) {
     const router = RoutesStore.getRouter();
-    return this.state.createNewTable(tableId).then(() =>
+    return this.state.createNewTable(tableId, title).then(() =>
       router.transitionTo('keboola.gooddata-writer-table', {config: this.state.configurationId, table: tableId})
     );
   },
