@@ -162,7 +162,6 @@ export default React.createClass({
             isDisabled={!this.isGoogleValid(this.props.google)}
             onSave={this.handleSave}
             onCancel={this.props.onHideFn}
-            placement="right"
             saveLabel="Save Changes"
           />
 

@@ -48,7 +48,6 @@ export default React.createClass({
             isSaving={this.props.isSaving}
             onSave={this.handleSave}
             onCancel={this.props.onHideFn}
-            placement="right"
             saveLabel="Save"
             isDisabled={Boolean(this.invalidReason()) || isNaN(headerRowValue) || headerRowValue < 1}
           />

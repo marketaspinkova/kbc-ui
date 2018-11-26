@@ -35,7 +35,6 @@ export default React.createClass({
             saveStyle="danger"
             onCancel={this.props.onClose}
             onSave={this.props.onRollback}
-            placement="right"
             showSave={true}
           />
         </Modal.Footer>

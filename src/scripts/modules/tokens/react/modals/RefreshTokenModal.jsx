@@ -43,7 +43,6 @@ export default React.createClass({
             isSaving={this.props.isRefreshing}
             onSave={this.handleRefresh}
             onCancel={this.handleClose}
-            placement="right"
             saveLabel="Refresh"
             showSave={!this.state.newToken}
             cancelLabel="Close"

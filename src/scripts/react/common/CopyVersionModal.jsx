@@ -53,7 +53,6 @@ export default React.createClass({
             saveStyle="success"
             onCancel={this.props.onClose}
             onSave={this.props.onCopy}
-            placement="right"
             showSave={true}
           />
         </Modal.Footer>
