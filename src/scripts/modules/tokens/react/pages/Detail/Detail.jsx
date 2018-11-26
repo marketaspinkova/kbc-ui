@@ -23,7 +23,7 @@ export default React.createClass({
       localState,
       tokenId,
       token,
-      editedToken: localState.get('editedToken', token),
+      editedToken: localState.getIn(['editedToken', tokenId], token),
       allBuckets: BucketsStore.getAll(),
       eventsApi: createTokenEventsApi(tokenId)
     };
@@ -33,10 +33,6 @@ export default React.createClass({
     return {
       isSaving: false
     };
-  },
-
-  componentWillUnmount() {
-    this.resetEditedToken();
   },
 
   render() {
@@ -84,13 +80,13 @@ export default React.createClass({
   },
 
   resetEditedToken() {
-    const updatedLocalState = this.state.localState.delete('editedToken');
+    const updatedLocalState = this.state.localState.deleteIn(['editedToken', this.state.tokenId]);
     TokensActions.updateLocalState(updatedLocalState);
   },
 
   updateToken(name, value) {
     const updatedToken = this.state.editedToken.set(name, value);
-    const updatedLocalState = this.state.localState.set('editedToken', updatedToken);
+    const updatedLocalState = this.state.localState.setIn(['editedToken', this.state.tokenId], updatedToken);
     TokensActions.updateLocalState(updatedLocalState);
   },
 
