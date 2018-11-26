@@ -2,8 +2,8 @@ import React from 'react';
 import { fromJS } from 'immutable';
 import { Button } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
-import RefreshTokenModal from '../Index/RefreshTokenModal';
-import SendTokenModal from '../Index/SendTokenModal';
+import RefreshTokenModal from '../modals/RefreshTokenModal';
+import SendTokenModal from '../modals/SendTokenModal';
 import Confirm from '../../../../react/common/Confirm';
 import Tooltip from '../../../../react/common/Tooltip';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
@@ -16,9 +16,8 @@ export default React.createClass({
   mixins: [createStoreMixin(TokensStore)],
 
   getStateFromStores() {
-    const tokens = TokensStore.getAll();
     const tokenId = RoutesStore.getCurrentRouteParam('tokenId');
-    const token = tokens.find(t => t.get('id') === tokenId) || fromJS({});
+    const token = TokensStore.getAll().find(t => t.get('id') === tokenId) || fromJS({});
 
     return {
       tokenId,
@@ -168,11 +167,11 @@ export default React.createClass({
     const description = this.state.description;
 
     return TokensActions.deleteToken(this.state.token).then(() => {
+      RoutesStore.getRouter().transitionTo('tokens');
+
       ApplicationActionCreators.sendNotification({
         message: `Token ${description} has been removed`
       });
-
-      RoutesStore.getRouter().transitionTo('tokens');
     });
   },
 
