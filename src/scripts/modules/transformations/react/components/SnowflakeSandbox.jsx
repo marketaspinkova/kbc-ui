@@ -4,7 +4,7 @@ import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import SnowflakeSandboxCredentialsStore from '../../../provisioning/stores/SnowflakeSandboxCredentialsStore';
 import CredentialsActionCreators from '../../../provisioning/ActionCreators';
 import SnowflakeCredentials from '../../../provisioning/react/components/SnowflakeCredentials';
-import ConfigureSandbox from '../components/ConfigureSandbox';
+import ConfigureSandbox from './ConfigureSandbox';
 import RunComponentButton from '../../../components/react/components/RunComponentButton';
 import DeleteButton from '../../../../react/common/DeleteButton';
 import StorageBucketsStore from '../../../components/stores/StorageBucketsStore';
@@ -42,8 +42,6 @@ var SnowflakeSandbox = React.createClass({
   },
 
   _renderControlButtons: function() {
-    var state = this.state;
-    var component = this;
     const connectLink =
       'https://' + this.state.credentials.get('hostname') + '/console/login#/?returnUrl=sql/worksheet';
     if (this.state.credentials.get('id')) {
@@ -56,8 +54,11 @@ var SnowflakeSandbox = React.createClass({
               title="Load tables into Snowflake sandbox"
               mode="button"
               label="Load data"
-              runParams={() => {
-                return state.sandboxConfiguration.toJS();
+              runParams={() => this.state.sandboxConfiguration.toJS()}
+              modalOnHide={() => {
+                this.setState({
+                  sandboxConfiguration: Immutable.Map()
+                });
               }}
               disabled={this.state.pendingActions.size > 0}
               modalRunButtonDisabled={this.state.sandboxConfiguration.get('include', Immutable.List()).size === 0}
@@ -67,7 +68,7 @@ var SnowflakeSandbox = React.createClass({
                 tables={this.state.tables}
                 buckets={this.state.buckets}
                 onChange={params => {
-                  component.setState({
+                  this.setState({
                     sandboxConfiguration: Immutable.fromJS(params)
                   });
                 }}

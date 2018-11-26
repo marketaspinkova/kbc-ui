@@ -5,7 +5,7 @@ import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import RedshiftSandboxCredentialsStore from '../../../provisioning/stores/RedshiftSandboxCredentialsStore';
 import CredentialsActionCreators from '../../../provisioning/ActionCreators';
 import RedshiftCredentials from '../../../provisioning/react/components/RedshiftCredentials';
-import ConfigureSandbox from '../components/ConfigureSandbox';
+import ConfigureSandbox from './ConfigureSandbox';
 import RunComponentButton from '../../../components/react/components/RunComponentButton';
 import DeleteButton from '../../../../react/common/DeleteButton';
 import StorageBucketsStore from '../../../components/stores/StorageBucketsStore';
@@ -54,7 +54,6 @@ export default React.createClass({
 
   _renderControlButtons() {
     if (this.state.credentials.get('id')) {
-      const component = this;
       return (
         <div>
           <div>
@@ -65,7 +64,12 @@ export default React.createClass({
               mode="button"
               label="Load data"
               disabled={this.state.pendingActions.size > 0}
-              runParams={() => component.state.sandboxConfiguration}
+              runParams={() => this.state.sandboxConfiguration}
+              modalOnHide={() => {
+                this.setState({
+                  sandboxConfiguration: Immutable.Map()
+                });
+              }}
               modalRunButtonDisabled={this.state.sandboxConfiguration.get('include', Immutable.List()).size === 0}
             >
               <ConfigureSandbox
@@ -73,7 +77,7 @@ export default React.createClass({
                 tables={this.state.tables}
                 buckets={this.state.buckets}
                 onChange={params => {
-                  return component.setState({
+                  this.setState({
                     sandboxConfiguration: Immutable.fromJS(params)
                   });
                 }}

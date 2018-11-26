@@ -24,7 +24,8 @@ module.exports = React.createClass({
     disabledReason: React.PropTypes.string,
     tooltipPlacement: React.PropTypes.string,
     children: React.PropTypes.node,
-    modalRunButtonDisabled: React.PropTypes.bool
+    modalRunButtonDisabled: React.PropTypes.bool,
+    modalOnHide: React.PropTypes.func
   },
 
   getDefaultProps: function() {
@@ -88,7 +89,12 @@ module.exports = React.createClass({
   renderModal() {
     return (
       <RunModal
-        onHide={() => this.setState({showModal: false})}
+        onHide={() => {
+          if (this.props.modalOnHide) {
+            this.props.modalOnHide();
+          }
+          this.setState({showModal: false});
+        }}
         show={this.state.showModal}
         title={this.props.title}
         body={this.props.children}
