@@ -7,8 +7,7 @@ export default React.createClass({
     backend: React.PropTypes.string.isRequired,
     tables: React.PropTypes.object.isRequired,
     buckets: React.PropTypes.object.isRequired,
-    onChange: React.PropTypes.func.isRequired,
-    onHide: React.PropTypes.func
+    onChange: React.PropTypes.func.isRequired
   },
 
   getInitialState() {
@@ -19,12 +18,6 @@ export default React.createClass({
       exclude: [],
       rows: 0
     };
-  },
-
-  componentWillUnmount() {
-    if (this.props.onHide) {
-      this.props.onHide();
-    }
   },
 
   render() {

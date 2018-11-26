@@ -51,7 +51,6 @@ export default React.createClass({
 
   _renderControlButtons() {
     if (this.state.credentials.get('id')) {
-      const component = this;
       return (
         <div>
           <div>
@@ -62,20 +61,20 @@ export default React.createClass({
               mode="button"
               label="Load data"
               disabled={this.state.pendingActions.size > 0}
-              runParams={() => component.state.sandboxConfiguration.toJS()}
+              runParams={() => this.state.sandboxConfiguration.toJS()}
+              modalOnHide={() => {
+                this.setState({
+                  sandboxConfiguration: Map()
+                });
+              }}
               modalRunButtonDisabled={this.state.sandboxConfiguration.get('include', List()).size === 0}
             >
               <ConfigureSandbox
                 backend="mysql"
                 tables={this.state.tables}
                 buckets={this.state.buckets}
-                onHide={() => {
-                  component.setState({
-                    sandboxConfiguration: Map()
-                  });
-                }}
                 onChange={params => {
-                  return component.setState({
+                  this.setState({
                     sandboxConfiguration: fromJS(params)
                   });
                 }}
