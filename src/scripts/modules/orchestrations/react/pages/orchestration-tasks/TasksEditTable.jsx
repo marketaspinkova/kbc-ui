@@ -8,7 +8,7 @@ import MergePhasesModal from '../../modals/MergePhasesModal';
 import MoveTasksModal from '../../modals/MoveTasksModal';
 import AddTaskModal from '../../modals/add-task/AddTaskModal';
 import EmptyState from '../../../../components/react/components/ComponentEmptyState';
-import { DropdownButton } from 'react-bootstrap';
+import { Table, DropdownButton } from 'react-bootstrap';
 import AboutPhases from '../../components/AboutPhases';
 import ComponentsStore from '../../../../components/stores/ComponentsStore';
 
@@ -34,12 +34,12 @@ export default React.createClass({
         {this._renderMergePhaseModal()}
         {this._renderMoveTasksModal()}
         {this._renderAddTaskModal()}
-        <table className="table table-stripped kbc-table-layout-fixed">
+        <Table responsive stripped>
           <thead>
             <tr>
-              <th style={{ width: '12%' }}>{this.renderHeaderActionButtons()}</th>
-              <th>Component</th>
-              <th>Configuration</th>
+              <th style={{ width: '10%' }}>{this.renderHeaderActionButtons()}</th>
+              <th style={{ width: '26%' }}>Component</th>
+              <th style={{ width: '26%' }}>Configuration</th>
               <th style={{ width: '12%' }}>Action</th>
               <th style={{ width: '8%' }}>Active</th>
               <th style={{ width: '8%' }}>Continue on Failure</th>
@@ -57,7 +57,7 @@ export default React.createClass({
               </tr>
             )}
           </tbody>
-        </table>
+        </Table>
       </span>
     );
   },
@@ -183,7 +183,7 @@ export default React.createClass({
 
   _renderEmptyTasksRow(phaseId, color) {
     return (
-      <tr style={{ backgroundColor: color }}>
+      <tr style={{ backgroundColor: color }} key="empty-phase-row">
         <td className="text-muted" colSpan={7}>
           <EmptyState>
             <span>{`No tasks assigned to ${phaseId} yet. Empty phases will not be saved. `}</span>
@@ -346,9 +346,11 @@ export default React.createClass({
     const markedPhases = this.props.localState.get('markedPhases');
     let mergedTasks = List();
     // find the best suitable position for new phase
-    const markedPhasesIndexes = markedPhases.filter(isMarked => isMarked === true).map((_, phaseId) => {
-      return this.props.tasks.findIndex(phase => phase.get('id') === phaseId);
-    });
+    const markedPhasesIndexes = markedPhases
+      .filter(isMarked => isMarked === true)
+      .map((_, phaseId) => {
+        return this.props.tasks.findIndex(phase => phase.get('id') === phaseId);
+      });
     const newPhasePosition = markedPhasesIndexes.min();
 
     // filter only those not selected and not choosed to merge to and
