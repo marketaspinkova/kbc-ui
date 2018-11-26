@@ -6,6 +6,7 @@ import { NewLineToBr } from '@keboola/indigo-ui';
 import { format } from '../../../../utils/date';
 import ComponentName from '../../../../react/common/ComponentName';
 import ComponentIcon from '../../../../react/common/ComponentIcon';
+import EventDetailModal from '../modals/EventDetailModal';
 
 export default React.createClass({
   mixins: [PureRendererMixin],
@@ -14,23 +15,33 @@ export default React.createClass({
     events: PropTypes.object.isRequired
   },
 
+  getInitialState() {
+    return {
+      eventDetail: null
+    };
+  },
+
   render() {
     if (!this.props.events.count()) {
       return null;
     }
 
     return (
-      <Table responsive stripped hover>
-        <thead>
-          <tr>
-            <th>Created</th>
-            <th>Component</th>
-            <th>Event</th>
-            <th>Creator</th>
-          </tr>
-        </thead>
-        <tbody>{this.props.events.map(this.renderRow)}</tbody>
-      </Table>
+      <div>
+        {this.renderEventDetailModal()}
+
+        <Table responsive stripped hover>
+          <thead>
+            <tr>
+              <th>Created</th>
+              <th>Component</th>
+              <th>Event</th>
+              <th>Creator</th>
+            </tr>
+          </thead>
+          <tbody>{this.props.events.map(this.renderRow).toArray()}</tbody>
+        </Table>
+      </div>
     );
   },
 
@@ -38,7 +49,7 @@ export default React.createClass({
     const component = this.getComponent(event.get('component'));
 
     return (
-      <tr>
+      <tr key={event.get('id')} onClick={() => this.eventDetail(event)} className="kbc-cursor-pointer">
         <td>{format(event.get('created'))}</td>
         <td>
           <span>
@@ -52,6 +63,26 @@ export default React.createClass({
         <td>{event.getIn(['token', 'name'])}</td>
       </tr>
     );
+  },
+
+  renderEventDetailModal() {
+    if (!this.state.eventDetail) {
+      return null;
+    }
+
+    return <EventDetailModal event={this.state.eventDetail} onHide={this.resetEvent} />;
+  },
+
+  eventDetail(event) {
+    this.setState({
+      eventDetail: event
+    });
+  },
+
+  resetEvent() {
+    this.setState({
+      eventDetail: null
+    });
   },
 
   getComponent(componentId) {
