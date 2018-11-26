@@ -1,8 +1,8 @@
 import React, {PropTypes} from 'react';
 import Select from 'react-select';
 import {fromJS} from 'immutable';
-import ComponentIcon from '../../../../react/common/ComponentIcon';
-import ComponentName from '../../../../react/common/ComponentName';
+import ComponentIcon from '../../../../../react/common/ComponentIcon';
+import ComponentName from '../../../../../react/common/ComponentName';
 
 export default React.createClass({
 

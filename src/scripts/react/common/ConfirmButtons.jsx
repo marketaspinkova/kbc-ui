@@ -16,7 +16,7 @@ export default React.createClass({
     cancelLabel: React.PropTypes.string,
     saveLabel: React.PropTypes.string,
     saveStyle: React.PropTypes.string,
-    onCancel: React.PropTypes.func.isRequired,
+    onCancel: React.PropTypes.func,
     onSave: React.PropTypes.func.isRequired,
     placement: React.PropTypes.oneOf(['left', 'right']),
     saveButtonType: React.PropTypes.oneOf(['button', 'submit']),

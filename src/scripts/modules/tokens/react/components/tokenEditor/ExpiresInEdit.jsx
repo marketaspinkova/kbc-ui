@@ -43,15 +43,16 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <Select
-          className="col-sm-4"
-          disabled={this.props.disabled}
-          clearable={false}
-          searchable={false}
-          options={this.selectOptions}
-          value={this.state.selectValue}
-          onChange={this.handleSelectChange}
-        />
+        <div className="col-sm-4">
+          <Select
+            disabled={this.props.disabled}
+            clearable={false}
+            searchable={false}
+            options={this.selectOptions}
+            value={this.state.selectValue}
+            onChange={this.handleSelectChange}
+          />
+        </div>
         {this.state.selectValue === CUSTOM_VALUE &&
          <span className="col-sm-3">
            <div className="input-group">

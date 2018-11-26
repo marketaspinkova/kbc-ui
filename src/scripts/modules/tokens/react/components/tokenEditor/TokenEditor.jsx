@@ -1,19 +1,18 @@
 import React, {PropTypes} from 'react';
+import {Link} from 'react-router';
 import { Check } from '@keboola/indigo-ui';
+import {List, Map} from 'immutable';
 
-import ComponentsStore from '../../../components/stores/ComponentsStore';
+import CreatedWithIcon from '../../../../../react/common/CreatedWithIcon';
+import ComponentsStore from '../../../../components/stores/ComponentsStore';
+import ComponentsSelector from './ComponentsSelector';
+import BucketsSelector from './BucketsSelector.jsx';
 import ExpiresInEdit from './ExpiresInEdit';
 import ExpiresInfo from './ExpiresInfo';
-import ComponentsSelector from './ComponentsSelector';
-import {List, Map} from 'immutable';
-import {Link} from 'react-router';
-import CreatedWithIcon from '../../../../react/common/CreatedWithIcon';
-import BucketsSelector from './BucketsSelector.jsx';
-import Immutable from 'immutable';
 
 const getAllComponents = () => {
   const allComponents = ComponentsStore.getAll();
-  const newOrchestratorFlags = allComponents.getIn(['orchestrator', 'flags'], Immutable.List()).filter((flag) => {
+  const newOrchestratorFlags = allComponents.getIn(['orchestrator', 'flags'], List()).filter((flag) => {
     return flag !== 'excludeFromNewList';
   });
   return allComponents

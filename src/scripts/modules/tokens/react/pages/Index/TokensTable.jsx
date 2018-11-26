@@ -1,16 +1,15 @@
 import React, {PropTypes} from 'react';
-import {List, Map} from 'immutable';
-import { Check } from '@keboola/indigo-ui';
-import TokenAge from './TokenAge';
-
-import Tooltip from '../../../../react/common/Tooltip';
-import Confirm from '../../../../react/common/Confirm';
-import {Loader, ExternalLink} from '@keboola/indigo-ui';
-import RefreshTokenModal from './RefreshTokenModal';
-import SendTokenModal from './SendTokenModal';
-import ExpiresInfo from '../tokenEditor/ExpiresInfo';
 import {Link} from 'react-router';
-import CreatedDate from './CreatedDate';
+import {List, Map} from 'immutable';
+import {Check, Loader, ExternalLink} from '@keboola/indigo-ui';
+
+import Tooltip from '../../../../../react/common/Tooltip';
+import Confirm from '../../../../../react/common/Confirm';
+import ExpiresInfo from '../../components/tokenEditor/ExpiresInfo';
+import TokenAge from '../../components/TokenAge';
+import CreatedDate from '../../components/CreatedDate';
+import SendTokenModal from '../../modals/SendTokenModal';
+import RefreshTokenModal from '../../modals/RefreshTokenModal';
 
 export default React.createClass({
 
@@ -36,7 +35,7 @@ export default React.createClass({
         <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
           <p>
             Create new <ExternalLink href="https://help.keboola.com/storage/tokens/">token</ExternalLink> and limit access to specific buckets or components in you project.
-            <Link to="tokens-detail" params={{tokenId: 'new-token'}} className="btn btn-success pull-right">
+            <Link to="tokens-new" className="btn btn-success pull-right">
               + New Token
             </Link>
           </p>
@@ -217,6 +216,7 @@ export default React.createClass({
   renderTokenRefreshModal() {
     const token = this.props.localState.get('refreshToken', Map());
     const isRefreshing = token && this.props.isRefreshingFn(token);
+
     return (
       <RefreshTokenModal
         token={token}
