@@ -85,7 +85,12 @@ export default React.createClass({
               </a>
             </li>
           </ul>
-          <SidebarJobs jobs={this.state.latestJobs} limit={3} />
+          <SidebarJobs
+            componentId="transformation"
+            configId={this.state.bucketId}
+            jobs={this.state.latestJobs}
+            limit={3}
+          />
           <SidebarVersions componentId="transformation" limit={3} />
         </div>
       </div>

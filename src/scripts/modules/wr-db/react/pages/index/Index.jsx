@@ -257,7 +257,12 @@ export default componentId => {
               <DeleteConfigurationButton componentId={componentId} configId={this.state.configId} />
             </li>
           </ul>
-          <LatestJobs jobs={this.state.latestJobs} />
+          <LatestJobs
+            componentId={componentId}
+            configId={this.state.configId}
+            jobs={this.state.latestJobs}
+            limit={3}
+          />
           {dockerProxyApi(componentId) && <LatestVersions componentId={componentId} limit={3} />}
         </div>
       );

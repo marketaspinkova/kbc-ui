@@ -210,7 +210,12 @@ export default React.createClass({
             <DeleteConfigurationButton componentId={componentId} configId={this.state.configId} />
           </li>
         </ul>
-        <LatestJobs jobs={this.state.latestJobs} />
+        <LatestJobs
+          componentId={componentId}
+          configId={this.state.configId}
+          limit={3}
+          jobs={this.state.latestJobs}
+        />
       </div>
     );
   },

@@ -159,6 +159,8 @@ export default React.createClass({
             </li>
           </ul>
           <LatestJobs
+            componentId={componentId}
+            configId={this.state.configId}
             jobs={this.state.latestJobs}
             limit={3}
           />

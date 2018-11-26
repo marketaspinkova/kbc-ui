@@ -238,8 +238,16 @@ export default React.createClass({
             />
           </li>
         </ul>
-        <LatestJobs limit={3} jobs={this.state.latestJobs} />
-        <LatestVersions limit={3} componentId={componentId} />
+        <LatestJobs
+          componentId={componentId}
+          configId={this.state.configId}
+          limit={3}
+          jobs={this.state.latestJobs}
+        />
+        <LatestVersions
+          limit={3}
+          componentId={componentId}
+        />
       </div>
     );
   },

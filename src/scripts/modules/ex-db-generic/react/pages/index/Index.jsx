@@ -307,11 +307,13 @@ export default function(componentId) {
                 />
               </li>
             </ul>
-
-            <LatestJobs limit={3} jobs={this.state.latestJobs}/>
-
+            <LatestJobs
+              componentId={componentId}
+              configId={this.state.configId}
+              limit={3}
+              jobs={this.state.latestJobs}
+            />
             <SidebarVersions limit={3} componentId={componentId}/>
-
           </div>
         </div>
       );

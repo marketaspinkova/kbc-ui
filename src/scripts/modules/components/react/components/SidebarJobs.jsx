@@ -3,12 +3,15 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { Loader } from '@keboola/indigo-ui';
 import { Link } from 'react-router';
 import JobRow from './SidebarJobsRow';
+import { getQuery, getLegacyComponentQuery } from '../../../../utils/jobsQueryBuilder';
 
 export default React.createClass({
   mixins: [PureRenderMixin],
 
   propTypes: {
     jobs: React.PropTypes.object.isRequired,
+    componentId: React.PropTypes.string.isRequired,
+    configId: React.PropTypes.string.isRequired,
     limit: React.PropTypes.number
   },
 
@@ -49,16 +52,15 @@ export default React.createClass({
     const jobs = this.props.jobs.get('jobs');
     const firstJob = jobs && jobs.first();
     const params = firstJob && firstJob.get('params');
-    let component;
 
     if (!params) {
       return null;
     }
 
-    if (params.get('component')) {
-      component = `+params.component:${params.get('component')}`;
-    } else {
-      component = `+component:${firstJob.get('component')}`;
+    let queryFunction = getQuery;
+    // legacy components
+    if (!params.get('component')) {
+      queryFunction = getLegacyComponentQuery;
     }
 
     return (
@@ -66,7 +68,7 @@ export default React.createClass({
         <Link
           to="jobs"
           query={{
-            q: `${component} +params.config:${params.get('config')}`
+            q: queryFunction(this.props.componentId, this.props.configId)
           }}
         >
           Show all jobs

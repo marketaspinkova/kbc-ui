@@ -153,7 +153,12 @@ export default function(componentId) {
               <DeleteConfigurationButton componentId={componentId} configId={configurationId} />
             </li>
           </ul>
-          <LatestJobs limit={3} jobs={this.state.latestJobs} />
+          <LatestJobs
+            componentId={componentId}
+            configId={this.state.configId}
+            jobs={this.state.latestJobs}
+            limit={3}
+          />
           <LatestVersions limit={3} componentId={componentId} />
         </div>
       );
