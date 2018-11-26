@@ -38,39 +38,51 @@ export default React.createClass({
   render() {
     return (
       <div className="container-fluid">
-        <div className="kbc-main-content">
-          <Tabs id="token-detail-tabs" animation={false}>
-            <Tab title="Overview" eventKey="overview">
-              <div className="form form-horizontal">
-                <div className="form-group">
-                  <div className="col-sm-12 text-right">
-                    <SaveButtons
-                      isSaving={this.state.isSaving}
-                      disabled={!this.isValid()}
-                      isChanged={!this.state.token.equals(this.state.editedToken)}
-                      onSave={this.handleSave}
-                      onReset={this.resetEditedToken}
-                    />
-                  </div>
-                </div>
-                <TokenEditor
-                  isEditing={true}
-                  disabled={!!this.state.isSaving}
-                  token={this.state.editedToken}
-                  allBuckets={this.state.allBuckets}
-                  updateToken={this.updateToken}
+        <div className="kbc-main-content">{this.state.token ? this.renderDetail() : this.renderNotFound()}</div>
+      </div>
+    );
+  },
+
+  renderDetail() {
+    return (
+      <Tabs id="token-detail-tabs" animation={false}>
+        <Tab title="Overview" eventKey="overview">
+          <div className="form form-horizontal">
+            <div className="form-group">
+              <div className="col-sm-12 text-right">
+                <SaveButtons
+                  isSaving={this.state.isSaving}
+                  disabled={!this.isValid()}
+                  isChanged={!this.state.token.equals(this.state.editedToken)}
+                  onSave={this.handleSave}
+                  onReset={this.resetEditedToken}
                 />
               </div>
-            </Tab>
-            <Tab title="Events" eventKey="events">
-              <Events
-                eventsApi={this.state.eventsApi}
-                autoReload={true}
-                link={{ to: 'tokens-detail', params: { tokenId: this.state.tokenId } }}
-              />
-            </Tab>
-          </Tabs>
-        </div>
+            </div>
+            <TokenEditor
+              isEditing={true}
+              disabled={!!this.state.isSaving}
+              token={this.state.editedToken}
+              allBuckets={this.state.allBuckets}
+              updateToken={this.updateToken}
+            />
+          </div>
+        </Tab>
+        <Tab title="Events" eventKey="events">
+          <Events
+            eventsApi={this.state.eventsApi}
+            autoReload={true}
+            link={{ to: 'tokens-detail', params: { tokenId: this.state.tokenId } }}
+          />
+        </Tab>
+      </Tabs>
+    );
+  },
+
+  renderNotFound() {
+    return (
+      <div className="kbc-inner-padding text-center">
+        <p>Token {this.state.tokenId} does not exist or has been removed.</p>
       </div>
     );
   },
