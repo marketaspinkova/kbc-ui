@@ -310,17 +310,9 @@ export default React.createClass({
               customDeleteFn={this.deleteCredentials}
             />
           </li>
-          <li>
-            <LatestJobs
-              limit={3}
-              jobs={this.state.latestJobs}
-            />
-            <LatestVersions
-              limit={3}
-              componentId={componentId}
-            />
-          </li>
         </ul>
+        <LatestJobs limit={3} jobs={this.state.latestJobs} />
+        <LatestVersions limit={3} componentId={componentId} />
       </div>
     );
   },
