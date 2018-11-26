@@ -166,7 +166,6 @@ export default React.createClass({
             />
           </li>
         </ul>
-        {/* <LatestJobs jobs={this.state.latestJobs} /> */}
       </div>
     );
   },
