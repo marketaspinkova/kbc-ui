@@ -75,12 +75,6 @@ export default React.createClass({
               configId={this.state.orchestration.get('id').toString()}
             />
           </Row>
-          {this.state.graphJobs.size >= 2 && (
-            <div className="kbc-row">
-              <h2>Jobs Graph</h2>
-              <JobsGraph jobs={this.state.graphJobs}/>
-            </div>
-          )}
           <div className="kbc-row">
             <Row>
               <Col sm={9}>
@@ -135,6 +129,12 @@ export default React.createClass({
               <span>{this.state.orchestration.get('notifications').count()} notifications set</span>
             ) : (
               <span>No notifications set yet.</span>
+            )}
+          </div>
+          <div className="kbc-inner-padding">
+            <h2 style={{marginTop: 0}}>Last Runs</h2>
+            {this.state.graphJobs.size >= 2 && (
+              <JobsGraph jobs={this.state.graphJobs}/>
             )}
           </div>
           <JobsTable

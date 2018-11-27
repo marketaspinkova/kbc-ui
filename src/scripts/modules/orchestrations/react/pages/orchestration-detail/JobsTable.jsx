@@ -34,7 +34,6 @@ export default React.createClass({
           <span className="pull-right">
             <RefreshIcon isLoading={this.props.jobsLoading} onClick={this.props.onJobsReload}/>
           </span>
-          <h2 style={{margin: '0px'}}>Last Runs</h2>
         </div>
         <table className="table table-striped table-hover kb-table-jobs kbc-cursor-pointer">
           <thead>
