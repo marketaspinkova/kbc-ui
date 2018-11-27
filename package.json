@@ -15,7 +15,7 @@
     "d3": "~3.5.6",
     "dagre-d3": "git+https://git@github.com/keboola/dagre-d3.git#6b444d10ddb5276789b4b2bc1eafcd22a767968a",
     "deep-equal": "^1.0.1",
-    "diff": "^2.2.3",
+    "diff": "^3.5.0",
     "dimple": "git+https://github.com/PMSI-AlignAlytics/dimple.git",
     "filesize": "~2.0.4",
     "flux": "^2.0.0",
