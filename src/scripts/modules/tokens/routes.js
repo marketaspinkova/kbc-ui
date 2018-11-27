@@ -4,6 +4,7 @@ import DetailPage from './react/pages/Detail/Detail';
 import tokensActions from './actionCreators';
 import StorageActions from '../components/StorageActionCreators';
 import TokensStore from './StorageTokensStore';
+import TokenHeaderButtons from './react/components/TokenHeaderButtons';
 
 export default {
   name: 'tokens',
@@ -21,6 +22,7 @@ export default {
       name: 'tokens-detail',
       path: ':tokenId',
       handler: DetailPage,
+      headerButtonsHandler: TokenHeaderButtons,
       title: routerState => {
         const tokenId = routerState.getIn(['params', 'tokenId']);
         const token = tokenId && TokensStore.getAll().find(t => t.get('id') === tokenId);
