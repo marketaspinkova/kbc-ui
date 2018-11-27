@@ -513,10 +513,7 @@ export default React.createClass({
         <Scripts
           scripts={this.props.editingFields.get('queriesString', this.props.transformation.get('queriesString'))}
           isEditingValid={this.props.isEditingValid}
-          changeDescription={editingFields.get(
-            'description',
-            'Change Scripts in ' + this.props.transformation.get('name')
-          )}
+          changeDescription={editingFields.get('description', '')}
           onEditSubmit={() => {
             return TransformationsActionCreators.saveTransformationScript(
               this.props.bucketId,

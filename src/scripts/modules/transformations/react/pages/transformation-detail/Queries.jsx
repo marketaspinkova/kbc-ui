@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Edit from './QueriesEdit';
 import Clipboard from '../../../../../react/common/Clipboard';
-import QueriesSaveButtons from '../../components/QueriesSaveButtons';
+import SaveButton from '../../components/SaveButton';
 
 /* global require */
 require('codemirror/mode/sql/sql');
@@ -51,7 +51,7 @@ export default React.createClass({
   renderButtons() {
     return (
       <span className="pull-right">
-        <QueriesSaveButtons
+        <SaveButton
           isSaving={this.props.isSaving}
           isChanged={this.props.isChanged}
           onReset={this.props.onEditCancel}
