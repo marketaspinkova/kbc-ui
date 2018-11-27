@@ -536,10 +536,7 @@ export default React.createClass({
           highlightQueryNumber={this.props.highlightQueryNumber}
           highlightingQueryDisabled={this.props.highlightingQueryDisabled}
           disabled={this._isMySqlTransformation()}
-          changeDescription={editingFields.get(
-            'description',
-            'Change Queries in ' + this.props.transformation.get('name')
-          )}
+          changeDescription={editingFields.get('description', '')}
           onEditSubmit={() => {
             return TransformationsActionCreators.saveTransformationQueries(
               this.props.bucketId,

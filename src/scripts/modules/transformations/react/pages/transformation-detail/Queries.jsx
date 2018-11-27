@@ -1,9 +1,8 @@
 import React, { PropTypes } from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import Edit from './QueriesEdit';
 import Clipboard from '../../../../../react/common/Clipboard';
-import SaveButtons from '../../../../../react/common/SaveButtons';
+import QueriesSaveButtons from '../../components/QueriesSaveButtons';
 
 /* global require */
 require('codemirror/mode/sql/sql');
@@ -52,27 +51,14 @@ export default React.createClass({
   renderButtons() {
     return (
       <span className="pull-right">
-        <SaveButtons
+        <QueriesSaveButtons
           isSaving={this.props.isSaving}
-          disabled={this.props.isQueriesProcessing || this.props.disabled}
           isChanged={this.props.isChanged}
-          onSave={this.props.onEditSubmit}
           onReset={this.props.onEditCancel}
-          showModal={true}
-          modalTitle="Save new queries"
-          modalBody={
-            <FormGroup>
-              <ControlLabel>Update description</ControlLabel>
-              <FormControl
-                componentClass="textarea"
-                rows={4}
-                autoFocus
-                value={this.props.changeDescription}
-                onChange={e => this.props.onDescriptionChange(e.target.value)}
-                disabled={this.props.isSaving}
-              />
-            </FormGroup>
-          }
+          onSave={this.props.onEditSubmit}
+          disabled={!!(this.props.isQueriesProcessing || this.props.disabled)}
+          onDescriptionChange={this.props.onDescriptionChange}
+          changeDescription={this.props.changeDescription}
         />
       </span>
     );
