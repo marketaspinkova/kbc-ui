@@ -1,5 +1,5 @@
 import React from 'react';
-import PureRendererMixin from 'react-immutable-render-mixin';
+import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { List } from 'immutable';
 import { Button } from 'react-bootstrap';
 import { RefreshIcon, SearchBar } from '@keboola/indigo-ui';
@@ -7,7 +7,7 @@ import { factory as eventsFactory } from '../../../sapi-events/EventsService';
 import EventsTable from './EventsTable';
 
 export default React.createClass({
-  mixins: [PureRendererMixin],
+  mixins: [ImmutableRenderMixin],
 
   getInitialState() {
     return {
@@ -48,7 +48,7 @@ export default React.createClass({
   },
 
   renderMoreButton() {
-    if (!this.state.hasMore) {
+    if (!this.state.events || !this.state.hasMore) {
       return null;
     }
 

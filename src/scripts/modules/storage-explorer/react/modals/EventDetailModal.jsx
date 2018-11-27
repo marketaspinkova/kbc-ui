@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { Table, Button, Modal } from 'react-bootstrap';
 import { ExternalLink, Tree } from '@keboola/indigo-ui';
 import { format } from '../../../../utils/date';
-import FileSize from '../../../../react/common/FileSize';
+import FileLink from '../../../sapi-events/react/FileLink';
 
 export default React.createClass({
   propTypes: {
@@ -70,7 +70,14 @@ export default React.createClass({
       return null;
     }
 
-    return <div className="well message">{message}</div>;
+    const classMap = {
+      error: 'alert alert-danger',
+      warn: 'alert alert-warning',
+      success: 'alert alert-success',
+      info: 'well'
+    };
+
+    return <div className={classMap[this.props.event.get('type')] || 'well'}>{message}</div>;
   },
 
   renderDeprecatedAuthorization() {
@@ -109,11 +116,13 @@ export default React.createClass({
       <div>
         <h3>Attachments</h3>
         <ul>
-          {attachments.map(attachment => (
-            <li>
-              {attachment.get('uploadType')} <FileSize size={attachment.get('sizeBytes')} />
-            </li>
-          ))}
+          {attachments
+            .map((attachment, index) => (
+              <li key={index}>
+                <FileLink file={attachment} />
+              </li>
+            ))
+            .toArray()}
         </ul>
       </div>
     );
