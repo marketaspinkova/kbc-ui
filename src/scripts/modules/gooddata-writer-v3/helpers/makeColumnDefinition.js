@@ -110,7 +110,7 @@ function processColumnFieldsChange(fields, column, oldColumn) {
     const onChange = fields[field].onChange;
     const show = fields[field].show;
     const defaultValue = fields[field].defaultValue;
-    if (show && defaultValue && !memo[field]) {
+    if (show && defaultValue && !memo[field] && !oldColumn[field]) {
       memo[field] = defaultValue;
     }
     if (onChange && fields[field].show) {
