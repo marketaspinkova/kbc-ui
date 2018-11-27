@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tabs, Tab } from 'react-bootstrap';
+import { Tab, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../../../stores/RoutesStore';
 import TablesStore from '../../../../components/stores/StorageTablesStore';
@@ -18,6 +18,12 @@ export default React.createClass({
     };
   },
 
+  getInitialState() {
+    return {
+      activeTab: 'overview'
+    };
+  },
+
   render() {
     if (!this.state.table) {
       return (
@@ -33,30 +39,69 @@ export default React.createClass({
           <h2>Table {this.state.table.get('name')}</h2>
         </div>
 
-        <Tabs defaultActiveKey={1} animation={false} id="bucket-detail-tabs">
-          <Tab eventKey={1} title="Overview">
-            Overview
-          </Tab>
-          <Tab eventKey={2} title="Description">
-            Description
-          </Tab>
-          <Tab eventKey={3} title="Events">
-            Events
-          </Tab>
-          <Tab eventKey={4} title="Data sample">
-            Data sample
-          </Tab>
-          <Tab eventKey={5} title="Snapshot and Restore">
-            Snapshot and Restore
-          </Tab>
-          <Tab eventKey={6} title="Graph">
-            Graph
-          </Tab>
-          <Tab eventKey={7} title="Actions">
-            Actions
-          </Tab>
-        </Tabs>
+        <Tab.Container
+          activeKey={this.state.activeTab}
+          onSelect={this.handleSelectTab}
+          id="bucket-tabs"
+          generateChildId={this.generateTabId}
+        >
+          <div>
+            <Nav bsStyle="tabs">
+              <NavItem eventKey="overview">Overview</NavItem>
+              <NavItem eventKey="description">Description</NavItem>
+              <NavItem eventKey="events">Events</NavItem>
+              <NavItem eventKey="data-sample">Data sample</NavItem>
+              <NavItem eventKey="snapshot-and-restore">Snapshot and Restore</NavItem>
+              <NavItem eventKey="graph">Graph</NavItem>
+              <NavDropdown title="Actions">
+                <MenuItem eventKey="export" onSelect={this.handleDropdownAction}>
+                  Export
+                </MenuItem>
+                <MenuItem eventKey="load" onSelect={this.handleDropdownAction}>
+                  Load
+                </MenuItem>
+                <MenuItem eventKey="restore" onSelect={this.handleDropdownAction}>
+                  Time Travel Restore
+                </MenuItem>
+                <MenuItem eventKey="snapshot" onSelect={this.handleDropdownAction}>
+                  Create snapshot
+                </MenuItem>
+                <MenuItem divider />
+                <MenuItem eventKey="truncate" onSelect={this.handleDropdownAction}>
+                  Truncate table
+                </MenuItem>
+                <MenuItem eventKey="delete" onSelect={this.handleDropdownAction}>
+                  Delete table
+                </MenuItem>
+              </NavDropdown>
+            </Nav>
+            <Tab.Content animation={false}>
+              <Tab.Pane eventKey="overview">Overview</Tab.Pane>
+              <Tab.Pane eventKey="description">Description</Tab.Pane>
+              <Tab.Pane eventKey="events">Events</Tab.Pane>
+              <Tab.Pane eventKey="data-sample">Data sample</Tab.Pane>
+              <Tab.Pane eventKey="snapshot-and-restore">Snapshot and Restore</Tab.Pane>
+              <Tab.Pane eventKey="graph">Graph</Tab.Pane>
+            </Tab.Content>
+          </div>
+        </Tab.Container>
       </div>
     );
+  },
+
+  handleSelectTab(tab) {
+    if (['overview', 'description', 'events', 'data-sample', 'snapshot-and-restore', 'graph'].includes(tab)) {
+      this.setState({
+        activeTab: tab
+      });
+    }
+  },
+
+  handleDropdownAction(key) {
+    alert('action ' + key);
+  },
+
+  generateTabId(eventKey, type) {
+    return `${eventKey}-${type}`;
   }
 });

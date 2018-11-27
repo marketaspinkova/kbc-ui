@@ -15,6 +15,12 @@ export default React.createClass({
     };
   },
 
+  getInitialState() {
+    return {
+      activeTab: 'overview'
+    };
+  },
+
   render() {
     if (!this.state.bucket) {
       return (
@@ -30,21 +36,34 @@ export default React.createClass({
           <h2>Bucket {this.state.bucket.get('id')}</h2>
         </div>
 
-        <Tabs defaultActiveKey={1} animation={false} id="bucket-detail-tabs">
-          <Tab eventKey={1} title="Overview">
+        <Tabs
+          activeKey={this.state.activeTab}
+          onSelect={this.handleSelectTab}
+          animation={false}
+          id="bucket-detail-tabs"
+        >
+          <Tab eventKey="overview" title="Overview">
             Overview
           </Tab>
-          <Tab eventKey={2} title="Description">
+          <Tab eventKey="description" title="Description">
             Description
           </Tab>
-          <Tab eventKey={3} title="Tables">
+          <Tab eventKey="tables" title="Tables">
             Tables
           </Tab>
-          <Tab eventKey={4} title="Events">
+          <Tab eventKey="events" title="Events">
             Events
           </Tab>
         </Tabs>
       </div>
     );
+  },
+
+  handleSelectTab(tab) {
+    if (['overview', 'description', 'tables', 'events'].includes(tab)) {
+      this.setState({
+        activeTab: tab
+      });
+    }
   }
 });
