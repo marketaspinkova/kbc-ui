@@ -42,13 +42,13 @@ export default function(componentIdValue, readOnlyMode = false) {
         configId: configId,
         rowId: rowId,
         versions: versions,
-        versionsConfigs: VersionsStore.getVersionsConfigs(componentId, configId),
+        versionsConfigs: VersionsStore.getVersionsConfigs(componentId, configId, rowId),
         filteredVersions: filteredVersions,
-        newVersionNames: VersionsStore.getNewVersionNames(componentId, configId),
-        query: VersionsStore.getSearchFilter(componentId, configId),
-        isPending: VersionsStore.isPendingConfig(componentId, configId),
-        pendingActions: VersionsStore.getPendingVersions(componentId, configId),
-        pendingMultiLoad: VersionsStore.getPendingMultiLoad(componentId, configId)
+        newVersionNames: VersionsStore.getNewVersionNames(componentId, configId, rowId),
+        query: VersionsStore.getSearchFilter(componentId, configId, rowId),
+        isPending: VersionsStore.isPendingConfig(componentId, configId, rowId),
+        pendingActions: VersionsStore.getPendingVersions(componentId, configId, rowId),
+        pendingMultiLoad: VersionsStore.getPendingMultiLoad(componentId, configId, rowId)
       };
     },
 
@@ -100,13 +100,13 @@ export default function(componentIdValue, readOnlyMode = false) {
 
 
     prepareVersionsDiffData(version1, version2) {
-      const configId = this.state.configId;
       return VersionsActionCreators.loadTwoComponentConfigVersions(
-        this.state.componentId, configId, version1.get('version'), version2.get('version'));
+        this.state.componentId, this.state.configId, this.state.rowId, version1.get('version'), version2.get('version')
+      );
     },
 
     onSearchChange(query) {
-      VersionsActionCreators.changeFilter(this.state.componentId, this.state.configId, query);
+      VersionsActionCreators.changeFilter(this.state.componentId, this.state.configId, this.state.rowId, query);
     },
 
     onShowMore() {
