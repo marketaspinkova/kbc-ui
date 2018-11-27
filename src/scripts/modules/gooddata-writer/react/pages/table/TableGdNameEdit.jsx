@@ -8,9 +8,9 @@ export default React.createClass({
     table: React.PropTypes.object.isRequired,
     configurationId: React.PropTypes.string.isRequired,
     fieldName: React.PropTypes.string.isRequired,
-    placeholder: React.PropTypes.string.isRequired,
     canEdit: React.PropTypes.bool.isRequired,
-    editTooltip: React.PropTypes.string.isRequired
+    editTooltip: React.PropTypes.string.isRequired,
+    placeholder: React.PropTypes.string
   },
 
   getDefaultProps() {

@@ -97,8 +97,8 @@ export default React.createClass({
         <div className="kbc-main-content">
           <div className="row kbc-header">
             {this.state.showIdentifier && (
-              <p>
-                <strong className="col-xs-2">Identifier</strong>{' '}
+              <div>
+                <strong className="col-xs-2">Identifier</strong>
                 <TableGdName
                   table={this.state.table}
                   configurationId={this.state.configurationId}
@@ -110,10 +110,10 @@ export default React.createClass({
                       : 'Edit GoodData identifier'
                   }
                 />
-              </p>
+              </div>
             )}
-            <p className="">
-              <strong className="col-xs-2">Title</strong>{' '}
+            <div style={{ 'paddingTop': '6px' }}>
+              <strong className="col-xs-2">Title</strong>
               <TableGdName
                 table={this.state.table}
                 configurationId={this.state.configurationId}
@@ -126,16 +126,16 @@ export default React.createClass({
                     : 'Edit title in GoodData'
                 }
               />
-            </p>
-            <p className="">
-              <strong style={{ 'padding-top': '6px' }} className="col-xs-2">
+            </div>
+            <div style={{ 'paddingTop': '6px' }}>
+              <strong className="col-xs-2">
                 Project Upload
               </strong>
               <ActivateTableExportButton
                 configId={this.state.configurationId}
                 table={this.state.table}
               />
-            </p>
+            </div>
             <div className="kbc-buttons">
               <EditButtons
                 isEditing={this.state.isEditingColumns}
