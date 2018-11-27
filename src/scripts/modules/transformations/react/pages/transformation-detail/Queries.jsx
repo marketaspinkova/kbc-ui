@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import Edit from './QueriesEdit';
@@ -37,10 +37,10 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h2 style={{lineHeight: '32px'}}>
+        <h2 style={{ lineHeight: '32px' }}>
           Queries
           <small>
-            <Clipboard text={this.props.queries}/>
+            <Clipboard text={this.props.queries} />
           </small>
           {this.renderButtons()}
         </h2>
@@ -90,5 +90,5 @@ export default React.createClass({
         highlightingQueryDisabled={this.props.highlightingQueryDisabled}
       />
     );
-}
+  }
 });
