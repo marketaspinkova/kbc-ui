@@ -13,6 +13,7 @@ import { Loader } from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
+    loadOnly: PropTypes.bool.isRequired,
     configurationId: PropTypes.string.isRequired,
     tables: PropTypes.object,
     isSaving: PropTypes.bool,
@@ -113,6 +114,7 @@ export default React.createClass({
         onChange={val => this.props.toggleTableExport(tableId, val)}
       />,
       <RunLoadButton
+        loadOnly={this.props.loadOnly}
         tableId={tableId}
         isTableDisabled={isDisabled}
         key={`run${tableId}`}
