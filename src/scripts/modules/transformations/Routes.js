@@ -91,6 +91,12 @@ const routes = {
               return StorageActionCreators.loadBuckets();
             }
           ],
+          poll: {
+            interval: 10,
+            action(params) {
+              return JobsActionCreators.loadComponentConfigurationLatestJobs('transformation', params.config);
+            }
+          },
           childRoutes: [
             createTablesRoute('transformationDetail'),
             {

@@ -22,6 +22,7 @@ import * as sandboxUtils from '../../../utils/sandboxUtils';
 
 import LatestJobs from '../../../../components/react/components/SidebarJobs';
 import LatestRowVersions from '../../../../components/react/components/SidebarVersionsRow';
+import LatestJobsStore from '../../../../jobs/stores/LatestJobsStore';
 
 export default React.createClass({
   mixins: [
@@ -30,7 +31,8 @@ export default React.createClass({
       TransformationBucketsStore,
       StorageTablesStore,
       StorageBucketsStore,
-      VersionsStore
+      VersionsStore,
+      LatestJobsStore
     ),
     Router.Navigation,
     Router.State
@@ -65,7 +67,8 @@ export default React.createClass({
       transformations: TransformationsStore.getTransformations(bucketId),
       isTransformationEditingValid: TransformationsStore.getTransformationEditingIsValid(bucketId, transformationId),
       highlightQueryNumber,
-      latestVersionId
+      latestVersionId,
+      latestJobs: LatestJobsStore.getRowJobs('transformation', bucketId, transformationId)
     };
   },
 
