@@ -16,12 +16,14 @@ import TransformationBucketButtons from './react/components/TransformationBucket
 import TransformationBucketsStore from './stores/TransformationBucketsStore';
 import TransformationsStore from './stores/TransformationsStore';
 import createVersionsPageRoute from '../../modules/components/utils/createVersionsPageRoute';
+import createRowVersionsPageRoute from '../../modules/components/utils/createRowVersionsPageRoute';
 import ComponentNameEdit from '../components/react/components/ComponentName';
 import TransformationNameEdit from './react/components/TransformationNameEditField';
 import ApplicationsStore from '../../stores/ApplicationStore';
 import JobsActionCreators from '../jobs/ActionCreators';
 import injectProps from '../components/react/injectProps';
 import { createTablesRoute } from '../table-browser/routes';
+import rowVersionsActions from '../configurations/RowVersionsActionCreators';
 
 const routes = {
   name: 'transformations',
@@ -34,6 +36,7 @@ const routes = {
     () => InstalledComponentsActionCreators.loadComponents()
   ],
   childRoutes: [
+    createVersionsPageRoute('transformation', 'config', 'transformation-versions'),
     {
       name: 'transformationBucket',
       path: 'bucket/:config',
@@ -63,7 +66,6 @@ const routes = {
       },
 
       childRoutes: [
-        createVersionsPageRoute('transformation', 'config'),
         {
           name: 'transformationDetail',
           path: 'transformation/:row',
@@ -89,7 +91,8 @@ const routes = {
             () => {
               StorageActionCreators.loadTables();
               return StorageActionCreators.loadBuckets();
-            }
+            },
+            (params) => rowVersionsActions.loadVersions('transformation', params.config, params.row)
           ],
           poll: {
             interval: 10,
@@ -98,6 +101,7 @@ const routes = {
             }
           },
           childRoutes: [
+            createRowVersionsPageRoute('transformation'),
             createTablesRoute('transformationDetail'),
             {
               name: 'transformationDetailGraph',

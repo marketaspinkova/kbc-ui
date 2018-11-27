@@ -21,7 +21,7 @@ import ValidateQueriesButton from '../../components/ValidateQueriesButton';
 import * as sandboxUtils from '../../../utils/sandboxUtils';
 
 import LatestJobs from '../../../../components/react/components/SidebarJobs';
-import LatestRowVersions from '../../../../components/react/components/SidebarVersionsRow';
+import LatestRowVersions from '../../../../configurations/react/components/SidebarRowVersionsWrapper';
 import LatestJobsStore from '../../../../jobs/stores/LatestJobsStore';
 
 export default React.createClass({
