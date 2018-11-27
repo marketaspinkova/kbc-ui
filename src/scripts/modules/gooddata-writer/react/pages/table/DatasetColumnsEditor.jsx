@@ -28,7 +28,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Table striped className="kbc-table-editor">
+      <Table striped responsive className="kbc-table-editor">
         <thead>
           <tr>
             <th>Column</th>
