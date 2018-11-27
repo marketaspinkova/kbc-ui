@@ -68,7 +68,7 @@ export default React.createClass({
       isTransformationEditingValid: TransformationsStore.getTransformationEditingIsValid(bucketId, transformationId),
       highlightQueryNumber,
       latestVersionId,
-      latestJobs: LatestJobsStore.getRowJobs('transformation', bucketId, transformationId)
+      latestJobs: LatestJobsStore.getTransformationJobs(bucketId, transformationId)
     };
   },
 
