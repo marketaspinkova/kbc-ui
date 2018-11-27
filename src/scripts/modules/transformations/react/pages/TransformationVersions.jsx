@@ -145,7 +145,7 @@ export default React.createClass({
           {this.state.filteredVersions.count() > this.state.page * ITEMS_PER_PAGE ?
             <div className="kbc-block-with-padding">
               <button onClick={this.onShowMore} className="btn btn-default btn-large text-center">
-                More..
+                More...
               </button>
             </div>
             : null
