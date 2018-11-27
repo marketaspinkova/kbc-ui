@@ -41,16 +41,16 @@ export default React.createClass({
           <Tab eventKey={3} title="Events">
             Events
           </Tab>
-          <Tab eventKey={3} title="Data sample">
+          <Tab eventKey={4} title="Data sample">
             Data sample
           </Tab>
-          <Tab eventKey={3} title="Snapshot and Restore">
+          <Tab eventKey={5} title="Snapshot and Restore">
             Snapshot and Restore
           </Tab>
-          <Tab eventKey={3} title="Graph">
+          <Tab eventKey={6} title="Graph">
             Graph
           </Tab>
-          <Tab eventKey={3} title="Actions">
+          <Tab eventKey={7} title="Actions">
             Actions
           </Tab>
         </Tabs>
