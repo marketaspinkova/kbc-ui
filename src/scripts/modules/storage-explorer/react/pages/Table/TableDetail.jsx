@@ -28,8 +28,10 @@ export default React.createClass({
     }
 
     return (
-      <div className="kbc-inner-padding">
-        <h2>Table {this.state.table.get('name')}</h2>
+      <div>
+        <div className="kbc-inner-padding">
+          <h2>Table {this.state.table.get('name')}</h2>
+        </div>
 
         <Tabs defaultActiveKey={1} animation={false} id="bucket-detail-tabs">
           <Tab eventKey={1} title="Overview">
