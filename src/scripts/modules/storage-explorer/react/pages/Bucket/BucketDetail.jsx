@@ -1,4 +1,5 @@
 import React from 'react';
+import { Tabs, Tab } from 'react-bootstrap';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../../../stores/RoutesStore';
 import BucketsStore from '../../../../components/stores/StorageBucketsStore';
@@ -26,6 +27,21 @@ export default React.createClass({
     return (
       <div className="kbc-inner-padding">
         <h2>Bucket {this.state.bucket.get('id')}</h2>
+
+        <Tabs defaultActiveKey={1} animation={false} id="bucket-detail-tabs">
+          <Tab eventKey={1} title="Overview">
+            Overview
+          </Tab>
+          <Tab eventKey={2} title="Description">
+            Description
+          </Tab>
+          <Tab eventKey={3} title="Tables">
+            Tables
+          </Tab>
+          <Tab eventKey={4} title="Events">
+            Events
+          </Tab>
+        </Tabs>
       </div>
     );
   }
