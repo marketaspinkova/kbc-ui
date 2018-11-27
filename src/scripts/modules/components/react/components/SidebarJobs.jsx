@@ -12,6 +12,7 @@ export default React.createClass({
     jobs: React.PropTypes.object.isRequired,
     componentId: React.PropTypes.string.isRequired,
     configId: React.PropTypes.string.isRequired,
+    rowId: React.PropTypes.string,
     limit: React.PropTypes.number
   },
 
@@ -68,7 +69,7 @@ export default React.createClass({
         <Link
           to="jobs"
           query={{
-            q: queryFunction(this.props.componentId, this.props.configId)
+            q: queryFunction(this.props.componentId, this.props.configId, this.props.rowId)
           }}
         >
           Show all jobs

@@ -246,6 +246,7 @@ export default React.createClass({
           <LatestJobs
             componentId="transformation"
             configId={this.state.bucketId}
+            rowId={this.state.transformationId}
             jobs={this.state.latestJobs}
             limit={3}
           />

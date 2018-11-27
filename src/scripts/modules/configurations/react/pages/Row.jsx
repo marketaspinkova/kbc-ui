@@ -203,6 +203,7 @@ export default React.createClass({
           <LatestJobs
             componentId={this.state.componentId}
             configId={this.state.configurationId}
+            rowId={this.state.rowId}
             jobs={this.state.latestJobs}
             limit={3}
           />
