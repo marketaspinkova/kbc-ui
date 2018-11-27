@@ -187,7 +187,7 @@ export default React.createClass({
             <li>
               <ExternalLink href="https://help.keboola.com/orchestrator/running/">
                 <i className="fa fa-question-circle fa-fw"/> Documentation
-              </ExternalLink>.
+              </ExternalLink>
             </li>
           </ul>
           <SidebarVersions
