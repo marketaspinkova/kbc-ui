@@ -201,9 +201,10 @@ export default React.createClass({
           />
           <ul className="nav nav-stacked">{this.renderActions()}</ul>
           <LatestJobs
+            componentId={this.state.componentId}
+            configId={this.state.configurationId}
             jobs={this.state.latestJobs}
             limit={3}
-            showAllJobsLink={false}
           />
           <LatestRowVersions
             componentId={this.state.componentId}

@@ -244,9 +244,10 @@ export default React.createClass({
             </li>
           </ul>
           <LatestJobs
+            componentId="transformation"
+            configId={this.state.bucketId}
             jobs={this.state.latestJobs}
             limit={3}
-            showAllJobsLink={false}
           />
           <LatestRowVersions
             componentId="transformation"
