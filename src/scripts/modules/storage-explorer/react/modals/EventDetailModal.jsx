@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Table, Button, Modal } from 'react-bootstrap';
+import { Table, Button, Modal, Alert } from 'react-bootstrap';
 import { ExternalLink, Tree } from '@keboola/indigo-ui';
 import { format } from '../../../../utils/date';
 import FileLink from '../../../sapi-events/react/FileLink';
@@ -70,14 +70,10 @@ export default React.createClass({
       return null;
     }
 
-    const classMap = {
-      error: 'alert alert-danger',
-      warn: 'alert alert-warning',
-      success: 'alert alert-success',
-      info: 'well'
-    };
+    const type = this.props.event.get('type');
+    const validType = ['success', 'warning', 'danger', 'info'].includes(type);
 
-    return <div className={classMap[this.props.event.get('type')] || 'well'}>{message}</div>;
+    return <Alert bsStyle={validType ? type : 'info'}>{message}</Alert>;
   },
 
   renderDeprecatedAuthorization() {
@@ -86,12 +82,14 @@ export default React.createClass({
     }
 
     return (
-      <p className="well error">
-        Used authorization method is deprecated and will be disabled soon.
-        <br />
-        Please move your tokens from query string parameters to "X-StorageApi-Token" http header. See more in{' '}
-        <ExternalLink href="http://docs.keboola.apiary.io/">API documentation</ExternalLink>
-      </p>
+      <Alert bsStyle="danger">
+        <p>
+          Used authorization method is deprecated and will be disabled soon.
+          <br />
+          Please move your tokens from query string parameters to "X-StorageApi-Token" http header. See more in{' '}
+          <ExternalLink href="http://docs.keboola.apiary.io/">API documentation</ExternalLink>
+        </p>
+      </Alert>
     );
   },
 
