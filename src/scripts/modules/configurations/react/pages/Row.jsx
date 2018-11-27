@@ -70,9 +70,6 @@ export default React.createClass({
       rowVersion: row.get('version'),
       row: row,
 
-      rawConfiguration: ConfigurationsStore.get(componentId, configurationId),
-      rawRowConfiguration: Store.getConfiguration(componentId, configurationId, rowId),
-
       jsonConfigurationValue: Store.getEditingJsonConfigurationString(componentId, configurationId, rowId),
       isJsonConfigurationSaving: Store.getPendingActions(componentId, configurationId, rowId).has('save-json'),
       isJsonConfigurationValid: isJsonConfigurationValid,
