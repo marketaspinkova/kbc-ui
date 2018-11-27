@@ -39,7 +39,6 @@ export default React.createClass({
           saveLabel={this.props.saveLabel}
           onCancel={this.props.onCancel}
           onSave={this.props.onSave}
-          className="pull-right"
         />
       );
     }

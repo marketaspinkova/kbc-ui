@@ -45,7 +45,7 @@ export default React.createClass({
             ) : (
               <div className="form form-horizontal">
                 <FormGroup>
-                  <Col sm={12}>
+                  <Col sm={12} className="text-right">
                     <ConfirmButtons
                       saveButtonType="submit"
                       isSaving={this.state.isSaving}
@@ -53,7 +53,6 @@ export default React.createClass({
                       onSave={this.handleSave}
                       saveLabel="Create"
                       showCancel={false}
-                      className="pull-right"
                     />
                   </Col>
                 </FormGroup>
