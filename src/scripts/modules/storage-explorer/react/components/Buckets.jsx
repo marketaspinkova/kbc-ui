@@ -1,10 +1,11 @@
 import React from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import { RefreshIcon, SearchBar } from '@keboola/indigo-ui';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
+import matchByWords from '../../../../utils/matchByWords';
 import BucketsStore from '../../../components/stores/StorageBucketsStore';
 import TablesStore from '../../../components/stores/StorageTablesStore';
 import StorageActionCreators from '../../../components/StorageActionCreators';
-import { RefreshIcon, SearchBar } from '@keboola/indigo-ui';
 import BucketsList from './BucketsList';
 
 export default React.createClass({
@@ -49,13 +50,7 @@ export default React.createClass({
     if (this.state.searchQuery) {
       const search = this.state.searchQuery.toLowerCase();
 
-      buckets = buckets.filter(
-        bucket =>
-          bucket
-            .get('id')
-            .toLowerCase()
-            .indexOf(search) > -1
-      );
+      buckets = buckets.filter(bucket => matchByWords(bucket.get('id').toLowerCase(), search));
     }
 
     return buckets.sortBy(bucket => bucket.get('name').toLowerCase());
