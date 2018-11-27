@@ -76,7 +76,6 @@ export default React.createClass({
       ),
       isJsonEditorOpen: Store.hasJsonEditor(componentId, configurationId, parseBySectionsFn, createBySectionsFn, conformFn),
       configurationBySections: configurationBySections,
-      rawConfiguration: ConfigurationsStore.get(componentId, configurationId),
       isSaving: Store.getPendingActions(componentId, configurationId).has('save-configuration'),
       isChanged: isChanged
 
