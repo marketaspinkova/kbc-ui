@@ -35,9 +35,14 @@ export default function(configId) {
 
   function setEditingTable(tableId, tableParams, tableInputMapping) {
     const tableMappingIndex = editingTables.get('inputMapping').findIndex(tableIm => tableIm.get('source') === tableId);
-    const newEditingTables = editingTables
-      .setIn(['parameters', tableId], tableParams)
-      .setIn(['inputMapping', tableMappingIndex], tableInputMapping);
+    let newEditingTables = editingTables.setIn(['parameters', tableId], tableParams);
+    if (tableMappingIndex > -1) {
+      newEditingTables = newEditingTables.setIn(['inputMapping', tableMappingIndex], tableInputMapping);
+    } else {
+      newEditingTables = newEditingTables.update('inputMapping', editingInputMapping =>
+        editingInputMapping.push(tableInputMapping)
+      );
+    }
     updateLocalState(EDITING_PATH, newEditingTables);
   }
 
