@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
-import { Panel } from 'react-bootstrap';
+import { Panel, Button } from 'react-bootstrap';
+import RoutesStore from '../../../../stores/RoutesStore';
 
 export default React.createClass({
   propTypes: {
@@ -18,9 +19,30 @@ export default React.createClass({
 
   renderBucketPanel(bucket) {
     return (
-      <Panel header={bucket.get('id')} key={bucket.get('id')} collapsible={true}>
+      <Panel header={this.renderBucketHeader(bucket)} key={bucket.get('id')} collapsible={true}>
         {this.renderTables(bucket)}
       </Panel>
+    );
+  },
+
+  renderBucketHeader(bucket) {
+    return (
+      <h4>
+        <div className="pull-right">
+          <Button
+            bsSize="small"
+            className="btn btn-link"
+            onClick={e => {
+              e.preventDefault();
+              e.stopPropagation();
+              this.goToBucketDetail(bucket);
+            }}
+          >
+            <i className="fa fa-fw fa-chevron-right" />
+          </Button>
+        </div>
+        {bucket.get('id')}
+      </h4>
     );
   },
 
@@ -45,5 +67,11 @@ export default React.createClass({
         <p>{tableName}</p>
       </Link>
     );
+  },
+
+  goToBucketDetail(bucket) {
+    RoutesStore.getRouter().transitionTo('storage-explorer-bucket', {
+      bucketId: bucket.get('id')
+    });
   }
 });
