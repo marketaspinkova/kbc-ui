@@ -46,7 +46,9 @@ const updateTransformationEditingFieldQueriesStringDebouncer = debounce(function
 const reloadVersions = function(configId, rowId) {
   var promises = [];
   promises.push(VersionActionCreators.loadVersionsForce('transformation', configId));
-  promises.push(RowVersionActionCreators.loadVersionsForce('transformation', configId, rowId));
+  if (rowId) {
+    promises.push(RowVersionActionCreators.loadVersionsForce('transformation', configId, rowId));
+  }
   return Promise.all(promises);
 };
 
@@ -169,7 +171,7 @@ module.exports = {
         bucketId: bucketId
       });
       InstalledComponentsActionCreators.loadComponentConfigsData('transformation');
-      return reloadVersions(bucketId, transformationId);
+      return reloadVersions(bucketId);
     }).catch(function(error) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.TRANSFORMATION_DELETE_ERROR,
