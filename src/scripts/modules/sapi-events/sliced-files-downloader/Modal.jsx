@@ -1,7 +1,6 @@
 import React from 'react';
 import {Modal, Button} from 'react-bootstrap';
-import {ExternalLink} from '@keboola/indigo-ui';
-import ConfirmButtons from '../../../react/common/ConfirmButtons';
+import {ExternalLink, ConfirmButtons} from '@keboola/indigo-ui';
 import filesize from 'filesize';
 
 export default React.createClass({

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Modal} from 'react-bootstrap';
-import ConfirmButtons from '../../../../react/common/ConfirmButtons';
+import {ConfirmButtons} from '@keboola/indigo-ui';
 import NewProjectForm from './NewProjectForm';
 import {isNewProjectValid, TokenTypes} from '../../gooddataProvisioning/utils';
 

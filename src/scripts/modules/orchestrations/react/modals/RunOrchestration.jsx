@@ -1,9 +1,8 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import Tooltip from '../../../../react/common/Tooltip';
-import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import TaskSelectTable from '../components/TaskSelectTable';
-import { Loader, PanelWithDetails } from '@keboola/indigo-ui';
+import { Loader, PanelWithDetails, ConfirmButtons } from '@keboola/indigo-ui';
 import OrchestrationActionCreators from '../../ActionCreators';
 
 export default React.createClass({

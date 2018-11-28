@@ -3,7 +3,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import underscoreString from 'underscore.string';
 import classnames from 'classnames';
 import { Col, Modal, Form, FormGroup, FormControl, HelpBlock } from 'react-bootstrap';
-import ConfirmButtons from '../../../../react/common/ConfirmButtons';
+import {ConfirmButtons} from '@keboola/indigo-ui';
 
 export default React.createClass({
   mixins: [PureRenderMixin],

@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {Modal, Button} from 'react-bootstrap';
 import Tooltip from './../../../../../react/common/Tooltip';
-import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
+import {ConfirmButtons} from '@keboola/indigo-ui';
 import Editor from './TableInputMappingEditor';
 import {resolveTableInputShowDetails} from './resolveInputShowDetails';
 import Immutable from 'immutable';

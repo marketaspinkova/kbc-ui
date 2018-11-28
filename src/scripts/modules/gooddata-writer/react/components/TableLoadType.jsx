@@ -3,7 +3,7 @@ import { fromJS } from 'immutable';
 import { Modal } from 'react-bootstrap';
 
 import { Input } from './../../../../react/common/KbcBootstrap';
-import ConfirmButtons from '../../../../react/common/ConfirmButtons';
+import {ConfirmButtons} from '@keboola/indigo-ui';
 
 import actionCreators from '../../actionCreators';
 

@@ -1,9 +1,7 @@
 import React, {PropTypes} from 'react';
 import {List, Map} from 'immutable';
 import {Modal} from 'react-bootstrap';
-import ConfirmButtons from '../../../../react/common/ConfirmButtons';
-import {Loader} from '@keboola/indigo-ui';
-import {SearchBar} from '@keboola/indigo-ui';
+import {SearchBar, ConfirmButtons, Loader} from '@keboola/indigo-ui';
 
 import EmptyState from '../../../components/react/components/ComponentEmptyState';
 

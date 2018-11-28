@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 
 import {fromJS} from 'immutable';
 import {Modal} from 'react-bootstrap';
-import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
+import {ConfirmButtons} from '@keboola/indigo-ui';
 import Select from 'react-select';
 import ChangedSinceInput from '../../../../components/react/components/generic/ChangedSinceFilterInput';
 import DataFilterRow from '../../../../components/react/components/generic/DataFilterRow';

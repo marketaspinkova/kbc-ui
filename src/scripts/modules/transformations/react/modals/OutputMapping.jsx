@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {Button, Modal} from 'react-bootstrap';
 import Tooltip from './../../../../react/common/Tooltip';
-import ConfirmButtons from '../../../../react/common/ConfirmButtons';
+import {ConfirmButtons} from '@keboola/indigo-ui';
 import OutputMappingRowEditor from '../components/mapping/OutputMappingRowEditor';
 import resolveOutputShowDetails from './resolveOutputShowDetails';
 import validateStorageTableId from '../../../../utils/validateStorageTableId';

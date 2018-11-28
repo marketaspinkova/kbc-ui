@@ -4,7 +4,7 @@ import Immutable from 'immutable';
 import SapiTableSelector from '../../../components/react/components/SapiTableSelector';
 
 import { Input } from '../../../../react/common/KbcBootstrap';
-import ConfirmButtons from '../../../../react/common/ConfirmButtons';
+import {ConfirmButtons} from '@keboola/indigo-ui';
 import ConfigurationRowsActions from '../../ConfigurationRowsActionCreators';
 
 import immutableMixin from 'react-immutable-render-mixin';

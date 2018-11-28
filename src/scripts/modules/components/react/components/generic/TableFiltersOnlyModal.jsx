@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import {Modal} from 'react-bootstrap';
 import ChangedSinceInput from './ChangedSinceFilterInput';
 import DataFilterRow from './DataFilterRow';
-import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
+import {ConfirmButtons} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {

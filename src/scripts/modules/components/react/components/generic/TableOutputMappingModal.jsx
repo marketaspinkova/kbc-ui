@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {Modal} from 'react-bootstrap';
 import Tooltip from '../../../../../react/common/Tooltip';
-import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
+import {ConfirmButtons} from '@keboola/indigo-ui';
 import Editor from './TableOutputMappingEditor';
 import resolveOutputShowDetails from './resolveOutputShowDetails';
 const MODE_CREATE = 'create', MODE_EDIT = 'edit';

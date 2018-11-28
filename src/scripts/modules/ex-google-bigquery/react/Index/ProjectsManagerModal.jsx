@@ -3,9 +3,7 @@ import {Input} from './../../../../react/common/KbcBootstrap';
 import {Modal} from 'react-bootstrap';
 import Select from 'react-select';
 
-import {Loader} from '@keboola/indigo-ui';
-
-import ConfirmButtons from '../../../../react/common/ConfirmButtons';
+import {Loader, ConfirmButtons} from '@keboola/indigo-ui';
 
 import EmptyState from '../../../components/react/components/ComponentEmptyState';
 

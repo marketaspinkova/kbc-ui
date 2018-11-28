@@ -1,6 +1,6 @@
 import React from 'react';
 import {Modal, Checkbox} from 'react-bootstrap';
-import ConfirmButtons from '../../../../react/common/ConfirmButtons';
+import {ConfirmButtons} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {

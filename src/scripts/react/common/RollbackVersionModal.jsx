@@ -1,7 +1,7 @@
 import React from 'react';
 import {Modal} from 'react-bootstrap';
 import moment from 'moment';
-import ConfirmButtons from './ConfirmButtons';
+import {ConfirmButtons} from '@keboola/indigo-ui';
 
 export default React.createClass({
 

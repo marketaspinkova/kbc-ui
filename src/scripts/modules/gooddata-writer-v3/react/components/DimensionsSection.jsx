@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import { Modal } from 'react-bootstrap';
-import ConfirmButtons from '../../../../react/common/ConfirmButtons';
+import {ConfirmButtons} from '@keboola/indigo-ui';
 import NewDimensionForm from './NewDimensionForm';
 // import Confirm from '../../../../react/common/Confirm';
 import {Check} from '@keboola/indigo-ui';

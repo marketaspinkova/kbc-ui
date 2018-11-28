@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import {List, Map} from 'immutable';
 import {Modal} from 'react-bootstrap';
 import ProfileInfo from '../ProfileInfo';
-import ConfirmButtons from '../../../../react/common/ConfirmButtons';
+import {ConfirmButtons} from '@keboola/indigo-ui';
 
 import ProfilesPicker from '../../../google-utils/react/ProfilesPicker';
 import ApplicationActionCreators from '../../../../actions/ApplicationActionCreators';

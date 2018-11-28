@@ -3,7 +3,7 @@ import {Input} from './KbcBootstrap';
 import {Modal} from 'react-bootstrap';
 import moment from 'moment';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
-import ConfirmButtons from './ConfirmButtons';
+import {ConfirmButtons} from '@keboola/indigo-ui';
 import defaultCopyVersionName from '../../utils/defaultCopyVersionName';
 
 export default React.createClass({

@@ -1,6 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
-import ConfirmButtons from '../../../react/common/ConfirmButtons';
+import {ConfirmButtons} from '@keboola/indigo-ui';
 import {Modal} from 'react-bootstrap';
 
 export default React.createClass({

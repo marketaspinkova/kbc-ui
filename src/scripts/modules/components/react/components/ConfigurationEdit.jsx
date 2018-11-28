@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react';
-// import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import CodeMirror from 'react-code-mirror';
 import JSONSchemaEditor from './JSONSchemaEditor';
 import Immutable from 'immutable';

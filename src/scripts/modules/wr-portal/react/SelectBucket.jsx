@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {Modal, Button} from 'react-bootstrap';
 import SapiTableSelector from '../../components/react/components/SapiTableSelector';
-import ConfirmButtons from '../../../react/common/ConfirmButtons';
+import {ConfirmButtons} from '@keboola/indigo-ui';
 export default React.createClass({
   propTypes: {
     selectBucketFn: PropTypes.func,

@@ -4,7 +4,7 @@
   Edit butotn is shown when editing mode is disabled.
 */
 import React from 'react';
-import ConfirmButtons from './ConfirmButtons';
+import {ConfirmButtons} from '@keboola/indigo-ui';
 import { Button } from 'react-bootstrap';
 
 export default React.createClass({

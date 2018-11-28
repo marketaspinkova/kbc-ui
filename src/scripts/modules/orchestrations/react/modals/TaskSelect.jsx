@@ -1,8 +1,7 @@
 import React from 'react';
 import TaskSelectTable from '../components/TaskSelectTable';
 import { Modal, Button } from 'react-bootstrap';
-import { Loader } from '@keboola/indigo-ui';
-import ConfirmButtons from '../../../../react/common/ConfirmButtons';
+import { Loader, ConfirmButtons } from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {

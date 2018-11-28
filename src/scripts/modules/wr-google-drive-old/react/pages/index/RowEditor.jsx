@@ -1,9 +1,8 @@
 import React from 'react';
 import _ from 'underscore';
 import { Modal } from 'react-bootstrap';
-import { Loader } from '@keboola/indigo-ui';
+import { Loader, ConfirmButtons } from '@keboola/indigo-ui';
 
-import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
 import { Input } from './../../../../../react/common/KbcBootstrap';
 import Picker from '../../../../google-utils/react/GooglePicker';
 import ViewTemplates from '../../../../google-utils/react/PickerViewTemplates';

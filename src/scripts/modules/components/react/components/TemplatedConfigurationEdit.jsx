@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react';
-// import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import JSONSchemaEditor from './JSONSchemaEditor';
 import TemplateSelector from './ConfigurationTemplateSelector';
 import CodeMirror from 'react-code-mirror';

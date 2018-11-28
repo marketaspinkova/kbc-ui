@@ -1,8 +1,7 @@
 import React, {PropTypes} from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Modal, FormControl, FormGroup, ControlLabel, Form, Col} from 'react-bootstrap';
-import { ExternalLink } from '@keboola/indigo-ui';
-import ConfirmButtons from '../../../../react/common/ConfirmButtons';
+import { ExternalLink, ConfirmButtons } from '@keboola/indigo-ui';
 
 export default React.createClass({
   mixins: [PureRenderMixin],

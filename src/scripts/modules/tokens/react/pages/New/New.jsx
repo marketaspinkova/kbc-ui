@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { Map } from 'immutable';
 import { FormGroup, Col, Alert, Button } from 'react-bootstrap';
 
-import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
+import {ConfirmButtons} from '@keboola/indigo-ui';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import ApplicationActionCreators from '../../../../../actions/ApplicationActionCreators';
 import BucketsStore from '../../../../components/stores/StorageBucketsStore';

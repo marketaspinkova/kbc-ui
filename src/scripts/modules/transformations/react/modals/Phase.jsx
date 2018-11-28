@@ -3,7 +3,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { Form, FormControl, FormGroup, Modal, ControlLabel } from 'react-bootstrap';
 import { ExternalLink } from '@keboola/indigo-ui';
 import Tooltip from './../../../../react/common/Tooltip';
-import ConfirmButtons from '../../../../react/common/ConfirmButtons';
+import {ConfirmButtons} from '@keboola/indigo-ui';
 import actionCreators from '../../ActionCreators';
 
 export default React.createClass({

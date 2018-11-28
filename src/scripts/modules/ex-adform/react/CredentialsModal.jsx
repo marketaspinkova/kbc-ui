@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import {Modal} from 'react-bootstrap';
-import ConfirmButtons from '../../../react/common/ConfirmButtons';
+import {ConfirmButtons} from '@keboola/indigo-ui';
 import CredentialsForm from './CredentialsForm';
 
 export default React.createClass({

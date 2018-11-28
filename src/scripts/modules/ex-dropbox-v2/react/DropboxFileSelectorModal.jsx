@@ -1,6 +1,6 @@
 import { first, isEmpty } from 'underscore';
 import React from 'react';
-import ConfirmButtons from '../../../react/common/ConfirmButtons';
+import {ConfirmButtons} from '@keboola/indigo-ui';
 import {Modal, Tabs, Tab} from 'react-bootstrap';
 import DropboxChooser from 'react-dropbox-chooser';
 import { Button } from 'react-bootstrap';

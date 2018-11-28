@@ -8,9 +8,8 @@ import RedshiftCredentialsContainer from '../components/RedshiftCredentialsConta
 import SnowflakeCredentialsContainer from '../components/SnowflakeCredentialsContainer';
 import DockerCredentialsContainer from '../components/DockerCredentialsContainer';
 import ConnectToMySqlSandbox from '../components/ConnectToMySqlSandbox';
-import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import ExtendMySqlCredentials from '../../../provisioning/react/components/ExtendMySqlCredentials';
-import { ExternalLink } from '@keboola/indigo-ui';
+import { ExternalLink, ConfirmButtons } from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {

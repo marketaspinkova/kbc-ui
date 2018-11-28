@@ -4,7 +4,7 @@ import { Input } from './../../../../react/common/KbcBootstrap';
 import {Map} from 'immutable';
 import {createTransformation} from '../../ActionCreators';
 
-import ConfirmButtons from '../../../../react/common/ConfirmButtons';
+import {ConfirmButtons} from '@keboola/indigo-ui';
 
 import ApplicationStore from '../../../../stores/ApplicationStore';
 

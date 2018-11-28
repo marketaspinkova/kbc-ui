@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import {fromJS, List, Map} from 'immutable';
-import ConfirmButtons from '../../../../react/common/ConfirmButtons';
+import {ConfirmButtons} from '@keboola/indigo-ui';
 import {Modal} from 'react-bootstrap';
 import {sanitizeTableName, sheetFullName} from '../../common';
 import ProcessorControls from '../components/ProcessorControls';

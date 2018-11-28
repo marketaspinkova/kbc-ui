@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {Map, List, fromJS} from 'immutable';
 import {Modal} from 'react-bootstrap';
-import ConfirmButtons from '../../../../react/common/ConfirmButtons';
+import {ConfirmButtons} from '@keboola/indigo-ui';
 
 import GdrivePicker from '../../../google-utils/react/GooglePicker';
 // import ApplicationActionCreators from '../../../../actions/ApplicationActionCreators';
