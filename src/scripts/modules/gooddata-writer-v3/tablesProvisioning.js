@@ -68,8 +68,8 @@ export default function(configId) {
     );
   }
 
-  function updateTableMapping(ptableId, updateFn) {
-    return inputMapping.map((table, tableId) => (tableId === ptableId ? updateFn(table) : table));
+  function updateTableMapping(tableId, updateFn) {
+    return inputMapping.map(table => (table.get('source') === tableId ? updateFn(table) : table));
   }
 
   function createNewTable(tableId, title) {
