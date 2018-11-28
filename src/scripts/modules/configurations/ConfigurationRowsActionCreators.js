@@ -244,7 +244,6 @@ module.exports = {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
         RowVersionsActionCreators.loadVersionsForce(componentId, configurationId, rowId);
         InstalledComponentsActionCreators.loadComponentConfigDataForce(componentId, configurationId).then(() => {
-          DockerActionsActionCreators.reloadIndexSyncActions(componentId, configurationId);
           DockerActionsActionCreators.reloadRowSyncActions(componentId, configurationId, rowId);
         });
         Dispatcher.handleViewAction({
