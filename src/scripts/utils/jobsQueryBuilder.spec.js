@@ -8,7 +8,6 @@ describe('getQuery', () => {
   it('should return a valid query with rowId', () => {
     assert.strictEqual('+params.component:component +params.config:config +(params.row:row OR (NOT _exists_: params.row))', getQuery('component', 'config', 'row'));
   });
-
 });
 
 describe('getLegacyComponentQuery', () => {
