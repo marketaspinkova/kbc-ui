@@ -48,6 +48,14 @@ const _pages = [
   }
 ];
 
+if (process.env.NODE_ENV === 'development') {
+  _pages.push({
+    id: 'storage-explorer',
+    title: 'Storage Explorer',
+    icon: 'kbc-icon-storage'
+  });
+}
+
 const SidebarNavigation = React.createClass({
   mixins: [State],
 
