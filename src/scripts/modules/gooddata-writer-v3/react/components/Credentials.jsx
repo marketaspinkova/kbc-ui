@@ -209,7 +209,7 @@ export default React.createClass({
     return (
       <form
         className="pull-right"
-        target="_blank noopener noreferrer"
+        target="_blank"
         method="POST"
         action={submitUrl}>
         {sso.map((value, name) =>

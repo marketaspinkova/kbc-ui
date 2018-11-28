@@ -1,6 +1,7 @@
 import React from 'react';
 import { fromJS } from 'immutable';
 import { Modal } from 'react-bootstrap';
+import { ExternalLink } from '@keboola/indigo-ui';
 
 import { Input } from './../../../../react/common/KbcBootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
@@ -206,9 +207,9 @@ export default React.createClass({
         <label>Fact Grain:</label>
         <div>
           <small>
-            <a href="https://developer.gooddata.com/article/set-fact-table-grain" target="_blank">
+            <ExternalLink href="https://developer.gooddata.com/article/set-fact-table-grain">
               https://developer.gooddata.com/article/set-fact-table-grain
-            </a>
+            </ExternalLink>
           </small>
         </div>
         <div className="col-sm-12">

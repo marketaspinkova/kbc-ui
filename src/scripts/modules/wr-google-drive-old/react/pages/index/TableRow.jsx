@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'underscore';
 import { fromJS } from 'immutable';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
-import { Loader } from '@keboola/indigo-ui';
+import { Loader, ExternalLink } from '@keboola/indigo-ui';
 
 import Confirm from '../../../../../react/common/Confirm';
 import Tooltip from '../../../../../react/common/Tooltip';
@@ -234,11 +234,11 @@ export default React.createClass({
     const name = googleInfo.get('title') || googleInfo.get('originalFilename');
     return (
       <div>
-        <a href={url} target="_blank">
+        <ExternalLink href={url}>
           <small>
             {name}
           </small>
-        </a>
+        </ExternalLink>
       </div>
     );
   },
