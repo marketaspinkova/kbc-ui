@@ -10,6 +10,7 @@ import {extractors, writers, applications} from './modules/components/Routes';
 import orchestrationRoutes  from './modules/orchestrations/Routes';
 import transformationRoutes from './modules/transformations/Routes';
 import jobRoutes from './modules/jobs/Routes';
+import storageExplorerRouter from './modules/storage-explorer/Routes';
 import trashRoutes from './modules/trash/routes';
 import tables from './modules/table-browser/routes';
 
@@ -30,6 +31,7 @@ export default {
     jobRoutes,
     billingRoutes,
     transformationRoutes,
+    storageExplorerRouter,
     tables,
     trashRoutes,
     tokensRoutes,
