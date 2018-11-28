@@ -7,12 +7,9 @@ import InstalledComponentStore from '../../stores/InstalledComponentsStore';
 import ComponentStore from '../../stores/ComponentsStore';
 import VersionsStore from '../../stores/VersionsStore';
 import VersionsActionCreators from '../../VersionsActionCreators';
-import OrchestrationStore from '../../../orchestrations/stores/OrchestrationsStore';
 
 export default React.createClass({
-  displayName: 'LatestVersionsWrapper',
-
-  mixins: [createStoreMixin(InstalledComponentStore,  ComponentStore, VersionsStore, OrchestrationStore)],
+  mixins: [createStoreMixin(InstalledComponentStore, ComponentStore, VersionsStore)],
 
   getStateFromStores: function() {
     const configId = RoutesStore.getCurrentRouteParam('config') || RoutesStore.getCurrentRouteParam('orchestrationId'),
