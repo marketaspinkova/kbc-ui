@@ -1,11 +1,10 @@
 import React, {PropTypes} from 'react';
 import {Map} from 'immutable';
-import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import TemplateSelector from './TemplateSelector';
 import GraphAPIExplorerLink from './GraphAPIExplorerLink';
 import DateRangeSelector from './DateRangeSelector';
 import {Modal, Tabs, Tab} from 'react-bootstrap';
-import {ExternalLink} from '@keboola/indigo-ui';
+import {ExternalLink, ConfirmButtons} from '@keboola/indigo-ui';
 import Select from 'react-select';
 
 const NAME_HELP = 'Helps describing the query and also used to prefix output tables name resulting from the query if they differ.';
