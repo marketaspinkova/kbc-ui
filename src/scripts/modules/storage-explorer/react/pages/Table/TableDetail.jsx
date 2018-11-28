@@ -97,8 +97,19 @@ export default React.createClass({
     }
   },
 
-  handleDropdownAction(key) {
-    alert('action ' + key);
+  handleDropdownAction(action) {
+    switch (action) {
+      case 'export':
+      case 'load':
+      case 'restore':
+      case 'snapshot':
+      case 'truncate':
+      case 'delete':
+        return null;
+
+      default:
+        return null;
+    }
   },
 
   generateTabId(eventKey, type) {
