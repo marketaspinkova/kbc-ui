@@ -30,6 +30,11 @@ export default React.createClass({
 
     return (
       <div>
+        <div className="kbc-inner-padding">
+          <span className="pull-right">
+            <RefreshIcon isLoading={this.props.jobsLoading} onClick={this.props.onJobsReload}/>
+          </span>
+        </div>
         <table className="table table-striped table-hover kb-table-jobs kbc-cursor-pointer">
           <thead>
             <tr>
@@ -37,9 +42,6 @@ export default React.createClass({
               <th>Created At</th>
               <th>Status</th>
               <th>Duration</th>
-              <th className="text-right kbc-last-column-header">
-                <RefreshIcon isLoading={this.props.jobsLoading} onClick={this.props.onJobsReload} />
-              </th>
             </tr>
           </thead>
           <tbody>{rows}</tbody>

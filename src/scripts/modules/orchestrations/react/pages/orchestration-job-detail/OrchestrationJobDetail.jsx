@@ -61,7 +61,7 @@ export default React.createClass({
                 <JobsNav jobs={this.state.jobs} activeJobId={this.state.job.get('id')} />
               </div>
             </div>
-            <div className="col-md-9 kb-orchestrations-main kbc-main-content-with-nav">
+            <div className="col-md-9 kbc-main-content-with-nav">
               <div>
                 <Tabs defaultActiveKey={this.state.openedTab} animation={false} id="orchestration-job-detail-tabs">
                   <Tab eventKey="overview" title="Overview" className="tab-pane-no-padding">

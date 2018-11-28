@@ -9,12 +9,10 @@ import VersionsStore from '../../stores/VersionsStore';
 import VersionsActionCreators from '../../VersionsActionCreators';
 
 export default React.createClass({
-  displayName: 'LatestVersionsWrapper',
-
   mixins: [createStoreMixin(InstalledComponentStore, ComponentStore, VersionsStore)],
 
   getStateFromStores: function() {
-    const configId = RoutesStore.getCurrentRouteParam('config'),
+    const configId = RoutesStore.getCurrentRouteParam('config') || RoutesStore.getCurrentRouteParam('orchestrationId'),
       componentId = this.props.componentId || RoutesStore.getCurrentRouteParam('component'),
       component = ComponentStore.getComponent(componentId);
 
@@ -22,11 +20,18 @@ export default React.createClass({
     var versionsLinkParams = null;
 
     if (component) {
-      versionsLinkTo = component.get('type') + '-versions';
-      versionsLinkParams = {
-        component: componentId,
-        config: configId
-      };
+      if (componentId === 'orchestrator') {
+        versionsLinkTo = 'orchestrator-versions';
+        versionsLinkParams = {
+          orchestrationId: configId
+        };
+      } else {
+        versionsLinkTo = component.get('type') + '-versions';
+        versionsLinkParams = {
+          component: componentId,
+          config: configId
+        };
+      }
     }
 
     return {

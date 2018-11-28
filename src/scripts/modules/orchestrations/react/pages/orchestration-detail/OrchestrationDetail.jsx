@@ -8,10 +8,11 @@ import OrchestrationStore from '../../../stores/OrchestrationsStore';
 import OrchestrationJobsStore from '../../../stores/OrchestrationJobsStore';
 import RoutesStore from '../../../../../stores/RoutesStore';
 import VersionsStore from '../../../../components/stores/VersionsStore';
+import LatestJobsStore from '../../../../jobs/stores/LatestJobsStore';
 
 // React components
 import ComponentDescription from '../../../../components/react/components/ComponentDescription';
-import OrchestrationsNav from './OrchestrationsNav';
+import SidebarVersions from '../../../../components/react/components/SidebarVersionsWrapper';
 import JobsTable from './JobsTable';
 import JobsGraph from './JobsGraph';
 import { Link } from 'react-router';
@@ -19,10 +20,14 @@ import TasksSummary from './TasksSummary';
 import CronRecord from '../../components/CronRecord';
 import ScheduleModal from '../../modals/Schedule';
 import CreatedWithIcon from '../../../../../react/common/CreatedWithIcon';
-import { SearchBar } from '@keboola/indigo-ui';
+import OrchestrationRunButton from '../../components/OrchestrationRunButton';
+import OrchestrationDeleteButton from '../../components/OrchestrationDeleteButton';
+import OrchestrationActiveButton from '../../components/OrchestrationActiveButton';
+import {ExternalLink} from '@keboola/indigo-ui';
+import {Row, Col} from 'react-bootstrap';
 
 export default React.createClass({
-  mixins: [createStoreMixin(OrchestrationStore, OrchestrationJobsStore, VersionsStore)],
+  mixins: [createStoreMixin(OrchestrationStore, OrchestrationJobsStore, VersionsStore, LatestJobsStore)],
 
   getStateFromStores() {
     const orchestrationId = RoutesStore.getCurrentRouteIntParam('orchestrationId');
@@ -34,6 +39,7 @@ export default React.createClass({
 
     return {
       orchestration: OrchestrationStore.get(orchestrationId),
+      tasksToRun: OrchestrationStore.getTasksToRun(orchestrationId),
       tasks,
       isLoading: OrchestrationStore.getIsOrchestrationLoading(orchestrationId),
       filteredOrchestrations: OrchestrationStore.getFiltered(),
@@ -41,7 +47,9 @@ export default React.createClass({
       jobs,
       versions,
       graphJobs: jobs.filter(job => job.get('startTime') && job.get('endTime')),
-      jobsLoading: OrchestrationJobsStore.isLoading(orchestrationId)
+      jobsLoading: OrchestrationJobsStore.isLoading(orchestrationId),
+      pendingActions: OrchestrationStore.getPendingActionsForOrchestration(orchestrationId),
+      latestJobs: LatestJobsStore.getJobs('orchestration', orchestrationId)
     };
   },
 
@@ -57,132 +65,136 @@ export default React.createClass({
     return OrchestrationsActionCreators.loadOrchestrationJobsForce(this.state.orchestration.get('id'));
   },
 
-  _renderLastUpdate() {
-    const lastVersion = this.state.versions.first();
-
-    if (!lastVersion.get('version')) {
-      return 'unknown';
-    } else {
-      return (
-        <span>
-          {lastVersion.getIn(['changeDescription'], '')}
-          <small className="text-muted">
-            {' '}
-            {`#${lastVersion.get('version')}`} <CreatedWithIcon createdTime={lastVersion.get('created')} />
-          </small>
-          <br />
-          {lastVersion.getIn(['creatorToken', 'description'], 'unknown')}
-          <br />
-          <Link
-            to="orchestrator-versions"
-            params={{
-              orchestrationId: this.state.orchestration.get('id')
-            }}
-          >
-            Show all versions
-          </Link>
-        </span>
-      );
-    }
-  },
-
   render() {
     return (
       <div className="container-fluid">
-        <div className="kbc-main-content">
-          <div className="row kbc-row-orchestration-detail">
-            <div className="col-md-3 kb-orchestrations-sidebar kbc-main-nav">
-              <div className="kbc-container">
-                <div className="layout-master-detail-search">
-                  <SearchBar onChange={this._handleFilterChange} query={this.state.filter} />
-                </div>
-                <OrchestrationsNav
-                  orchestrations={this.state.filteredOrchestrations}
-                  activeOrchestrationId={this.state.orchestration.get('id')}
+        <Col md={9} className="kbc-main-content">
+          <Row>
+            <ComponentDescription
+              componentId="orchestrator"
+              configId={this.state.orchestration.get('id').toString()}
+            />
+          </Row>
+          <div className="kbc-row">
+            <Row>
+              <Col sm={9}>
+                <h2>Tasks</h2>
+              </Col>
+              <Col sm={3}>
+                <Link
+                  className="pull-right btn btn-primary"
+                  to="orchestrationTasks"
+                  params={{
+                    orchestrationId: this.state.orchestration.get('id')
+                  }}
+                >
+                  <span className="fa fa-edit"/> Configure Tasks
+                </Link>
+              </Col>
+            </Row>
+            <TasksSummary tasks={this.state.tasks}/>
+          </div>
+          <div className="kbc-row">
+            <Row>
+              <Col sm={9}>
+                <h2>Schedule</h2>
+              </Col>
+              <Col sm={3}>
+                <ScheduleModal
+                  crontabRecord={this.state.orchestration.get('crontabRecord')}
+                  orchestrationId={this.state.orchestration.get('id')}
                 />
-              </div>
-            </div>
-            <div className="col-md-9 kb-orchestrations-main kbc-main-content-with-nav">
-              <div className="row kbc-header">
-                <ComponentDescription
-                  componentId="orchestrator"
-                  configId={this.state.orchestration.get('id').toString()}
-                />
-              </div>
-              <div className="table kbc-table-border-vertical kbc-detail-table">
-                <div className="tr">
-                  <div className="td">
-                    <div className="row">
-                      <div className="col-lg-3 kbc-orchestration-detail-label">{'Schedule '}</div>
-                      <div className="col-lg-9">
-                        <CronRecord crontabRecord={this.state.orchestration.get('crontabRecord')} />
-                        <br />
-                        <ScheduleModal
-                          crontabRecord={this.state.orchestration.get('crontabRecord')}
-                          orchestrationId={this.state.orchestration.get('id')}
-                        />
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-lg-3 kbc-orchestration-detail-label">Assigned Token</div>
-                      <div className="col-lg-9">{this.state.orchestration.getIn(['token', 'description'])}</div>
-                    </div>
-                    <div className="row">
-                      <div className="col-lg-3 kbc-orchestration-detail-label">Updates</div>
-                      <div className="col-lg-9">{this._renderLastUpdate()}</div>
-                    </div>
-                  </div>
-                  <div className="td">
-                    <div className="row">
-                      <div className="col-lg-3 kbc-orchestration-detail-label">{'Notifications '}</div>
-                      <div className="col-lg-9">
-                        {this.state.orchestration.get('notifications').count() ? (
-                          <span className="badge">{this.state.orchestration.get('notifications').count()}</span>
-                        ) : (
-                          <span>No notifications set yet</span>
-                        )}
-                        <br />
-                        <Link
-                          to="orchestrationNotifications"
-                          params={{
-                            orchestrationId: this.state.orchestration.get('id')
-                          }}
-                        >
-                          {' '}
-                          <span className="fa fa-edit" />
-                          {' Configure Notifications'}
-                        </Link>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-lg-3 kbc-orchestration-detail-label">{'Tasks '}</div>
-                      <div className="col-lg-9">
-                        <TasksSummary tasks={this.state.tasks} />
-                        <br />
-                        <Link
-                          to="orchestrationTasks"
-                          params={{
-                            orchestrationId: this.state.orchestration.get('id')
-                          }}
-                        >
-                          {' '}
-                          <span className="fa fa-edit" />
-                          {' Configure Tasks'}
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {this.state.graphJobs.size >= 2 && <JobsGraph jobs={this.state.graphJobs} />}
-              <JobsTable
-                jobs={this.state.jobs}
-                jobsLoading={this.state.jobsLoading}
-                onJobsReload={this._handleJobsReload}
-              />
+              </Col>
+            </Row>
+            <CronRecord crontabRecord={this.state.orchestration.get('crontabRecord')}/>
+          </div>
+          <div className="kbc-row">
+            <Row>
+              <Col sm={9}>
+                <h2>Notifications</h2>
+              </Col>
+              <Col sm={3}>
+                <Link
+                  className="pull-right btn btn-primary"
+                  to="orchestrationNotifications"
+                  params={{
+                    orchestrationId: this.state.orchestration.get('id')
+                  }}
+                >
+                  <span className="fa fa-edit"/> Configure Notifications
+                </Link>
+              </Col>
+            </Row>
+            {this.state.orchestration.get('notifications').count() ? (
+              <span>{this.state.orchestration.get('notifications').count()} notifications set</span>
+            ) : (
+              <span>No notifications set yet.</span>
+            )}
+          </div>
+          <div className="kbc-inner-padding">
+            <h2 style={{marginTop: 0}}>Last Runs</h2>
+            {this.state.graphJobs.size >= 2 && (
+              <JobsGraph jobs={this.state.graphJobs}/>
+            )}
+          </div>
+          <JobsTable
+            jobs={this.state.jobs}
+            jobsLoading={this.state.jobsLoading}
+            onJobsReload={this._handleJobsReload}
+          />
+        </Col>
+        <Col md={3} className="kbc-main-sidebar">
+          <div style={{marginBottom: '12px'}}>
+            <div>
+              <div>Created</div>
+              <div><strong><CreatedWithIcon createdTime={this.state.orchestration.get('createdTime')} /></strong></div>
             </div>
           </div>
-        </div>
+          <div>
+            <div>Assigned Token</div>
+            <div>
+              <strong>
+                {this.state.orchestration.getIn(['token', 'description'])}
+              </strong>
+            </div>
+          </div>
+          <ul className="nav nav-stacked">
+            <li>
+              <OrchestrationRunButton
+                orchestration={this.state.orchestration}
+                notify={true}
+                tasks={this.state.tasksToRun}
+                key="run"
+                label="Run Orchestration"
+              />
+            </li>
+            <li>
+              <OrchestrationActiveButton
+                orchestration={this.state.orchestration}
+                isPending={this.state.pendingActions.get('active', false)}
+                mode="link"
+                key="activate"
+              />
+            </li>
+            <li>
+              <OrchestrationDeleteButton
+                orchestration={this.state.orchestration}
+                isPending={this.state.pendingActions.get('delete', false)}
+                key="delete"
+                label="Move to Trash"
+              />
+            </li>
+            <li>
+              <ExternalLink href="https://help.keboola.com/orchestrator/running/">
+                <i className="fa fa-question-circle fa-fw"/> Documentation
+              </ExternalLink>
+            </li>
+          </ul>
+          <SidebarVersions
+            componentId="orchestrator"
+            limit={3}
+          />
+        </Col>
       </div>
     );
   }

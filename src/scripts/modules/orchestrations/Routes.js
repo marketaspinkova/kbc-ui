@@ -15,7 +15,6 @@ import NewOrchestrationHeaderButton from './react/components/NewOrchestionHeader
 import OrchestrationReloaderButton from './react/components/OrchestrationReloaderButton';
 import JobReloaderButton from './react/components/JobReloaderButton';
 import JobDetailButtons from './react/components/JobDetailButtons';
-import OrchestrationDetailButtons from './react/components/OrchestrationDetailButtons';
 import OrchestrationTasksButtons from './react/components/OrchestrationTasksButtons';
 import OrchestrationNotificationsButtons from './react/components/OrchestrationNotificationsButtons';
 import OrchestrationNameEdit from './react/components/OrchestrationNameEdit';
@@ -52,7 +51,6 @@ const routes = {
       },
       path: ':orchestrationId',
       reloaderHandler: OrchestrationReloaderButton,
-      headerButtonsHandler: OrchestrationDetailButtons,
       defaultRouteHandler: OrchestrationDetail,
       poll: {
         interval: 20,

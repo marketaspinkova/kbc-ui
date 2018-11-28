@@ -167,6 +167,13 @@ const RoutesStore = StoreUtils.createStore({
     return defaultValue;
   },
 
+  getOrchestrationId(defaultValue) {
+    if (this.getRouterState().hasIn(['params', 'orchestrationId'])) {
+      return this.getRouterState().getIn(['params', 'orchestrationId']);
+    }
+    return defaultValue;
+  },
+
   getCurrentRouteParam(paramName, defaultValue = null) {
     if (paramName === 'config' || paramName === 'configId') {
       return this.getConfigId(defaultValue);
@@ -174,6 +181,10 @@ const RoutesStore = StoreUtils.createStore({
 
     if (paramName === 'component' || paramName === 'componentId') {
       return this.getComponentId(defaultValue);
+    }
+
+    if (paramName === 'orchestrationId') {
+      return this.getOrchestrationId(defaultValue);
     }
 
     return this.getRouterState().getIn(['params', paramName], defaultValue);

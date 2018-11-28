@@ -6,7 +6,8 @@ export default React.createClass({
   propTypes: {
     orchestration: React.PropTypes.object.isRequired,
     isPending: React.PropTypes.bool.isRequired,
-    tooltipPlacement: React.PropTypes.string
+    tooltipPlacement: React.PropTypes.string,
+    mode: React.PropTypes.string
   },
 
   getDefaultProps() {
@@ -22,6 +23,7 @@ export default React.createClass({
         isPending={this.props.isPending}
         onChange={this._handleActiveChange}
         tooltipPlacement={this.props.tooltipPlacement}
+        mode={this.props.mode}
       />
     );
   },

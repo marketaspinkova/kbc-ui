@@ -14,11 +14,18 @@ export default React.createClass({
     onRequestCancel: React.PropTypes.func,
     isLoading: React.PropTypes.bool.isRequired,
     tooltipPlacement: React.PropTypes.string,
-    onOpen: React.PropTypes.func
+    onOpen: React.PropTypes.func,
+    label: React.PropTypes.string
   },
 
   getInitialState() {
     return { showModal: false };
+  },
+
+  getDefaultProps() {
+    return {
+      label: ''
+    };
   },
 
   close() {
@@ -76,7 +83,11 @@ export default React.createClass({
     return (
       <Tooltip tooltip="Run" id="run" placement={this.props.tooltipPlacement}>
         <Button onClick={this._handleOpenButtonClick} bsStyle="link">
-          {this.props.isLoading ? <Loader className="fa-fw" /> : <i className="fa fa-fw fa-play" />}
+          {this.props.isLoading ? (
+            <Loader className="fa-fw" />
+          ) : (
+            <span><i className="fa fa-fw fa-play" /> <span>{this.props.label}</span></span>
+          )}
         </Button>
       </Tooltip>
     );

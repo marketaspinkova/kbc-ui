@@ -13,8 +13,6 @@ import RoutesStore from '../../../../../stores/RoutesStore';
 import mergeTasksWithConfigurations from '../../../mergeTasksWithConfigruations';
 
 // React components
-import OrchestrationsNav from './../orchestration-detail/OrchestrationsNav';
-import { SearchBar } from '@keboola/indigo-ui';
 import TasksTable from './TasksTable';
 import TasksEditor from './TasksEditor';
 
@@ -97,48 +95,33 @@ const OrchestrationTasks = React.createClass({
     return (
       <div className="container-fluid">
         <div className="kbc-main-content">
-          <div className="row kbc-row-orchestration-detail">
-            <div className="col-md-3 kb-orchestrations-sidebar kbc-main-nav">
-              <div className="kbc-container">
-                <div className="layout-master-detail-search">
-                  <SearchBar onChange={this._handleFilterChange} query={this.state.filter} />
-                </div>
-                <OrchestrationsNav
-                  orchestrations={this.state.filteredOrchestrations}
-                  activeOrchestrationId={this.state.orchestration.get('id')}
-                />
-              </div>
+          {this.state.isEditing ? (
+            <div>
+              <TasksEditor
+                tasks={this.state.tasks}
+                isSaving={this.state.isSaving}
+                components={this.state.components}
+                onChange={this._handleTasksChange}
+                localState={this.state.localState.get('taskstable', Map())}
+                updateLocalState={(path, data) => {
+                  return this.updateLocalState(['taskstable'].concat(path), data);
+                }}
+              />
             </div>
-            <div className="col-md-9 kb-orchestrations-main kbc-main-content-with-nav">
-              {this.state.isEditing ? (
-                <div>
-                  <TasksEditor
-                    tasks={this.state.tasks}
-                    isSaving={this.state.isSaving}
-                    components={this.state.components}
-                    onChange={this._handleTasksChange}
-                    localState={this.state.localState.get('taskstable', Map())}
-                    updateLocalState={(path, data) => {
-                      return this.updateLocalState(['taskstable'].concat(path), data);
-                    }}
-                  />
-                </div>
-              ) : (
-                <div>
-                  <TasksTable
-                    tasks={this.state.tasks}
-                    orchestration={this.state.orchestration}
-                    components={this.state.components}
-                    onRun={this._handleTaskRun}
-                    localState={this.state.localState.get('taskstable', Map())}
-                    updateLocalState={(path, data) => {
-                      return this.updateLocalState(['taskstable'].concat(path), data);
-                    }}
-                  />
-                </div>
-              )}
+          ) : (
+            <div>
+              <TasksTable
+                tasks={this.state.tasks}
+                orchestration={this.state.orchestration}
+                components={this.state.components}
+                onRun={this._handleTaskRun}
+                localState={this.state.localState.get('taskstable', Map())}
+                updateLocalState={(path, data) => {
+                  return this.updateLocalState(['taskstable'].concat(path), data);
+                }}
+              />
             </div>
-          </div>
+          )}
         </div>
       </div>
     );

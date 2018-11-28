@@ -38,7 +38,6 @@ export default React.createClass({
         <td>
           <Duration startTime={this.props.job.get('startTime')} endTime={this.props.job.get('endTime')} />
         </td>
-        <td />
       </tr>
     );
   }
