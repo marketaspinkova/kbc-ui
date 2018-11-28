@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { Panel, Button } from 'react-bootstrap';
+import Tooltip from '../../../../react/common/Tooltip';
 import RoutesStore from '../../../../stores/RoutesStore';
 
 export default React.createClass({
@@ -29,17 +30,19 @@ export default React.createClass({
     return (
       <h4>
         <div className="pull-right">
-          <Button
-            bsSize="small"
-            className="btn btn-link"
-            onClick={e => {
-              e.preventDefault();
-              e.stopPropagation();
-              this.goToBucketDetail(bucket);
-            }}
-          >
-            <i className="fa fa-fw fa-chevron-right" />
-          </Button>
+          <Tooltip tooltip="Go to Bucket Detail" placement="top">
+            <Button
+              bsSize="small"
+              className="btn btn-link"
+              onClick={e => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.goToBucketDetail(bucket);
+              }}
+            >
+              <i className="fa fa-fw fa-chevron-right" />
+            </Button>
+          </Tooltip>
         </div>
         {bucket.get('id')}
       </h4>
