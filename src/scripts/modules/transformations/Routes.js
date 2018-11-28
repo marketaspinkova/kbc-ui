@@ -36,7 +36,6 @@ const routes = {
     () => InstalledComponentsActionCreators.loadComponents()
   ],
   childRoutes: [
-    createVersionsPageRoute('transformation', 'config', 'transformation-versions'),
     {
       name: 'transformationBucket',
       path: 'bucket/:config',
@@ -66,6 +65,7 @@ const routes = {
       },
 
       childRoutes: [
+        createVersionsPageRoute('transformation', 'config', 'transformation-versions'),
         {
           name: 'transformationDetail',
           path: 'transformation/:row',
