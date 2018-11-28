@@ -5,6 +5,7 @@ import { RefreshIcon, SearchBar } from '@keboola/indigo-ui';
 import ApplicationStore from '../../../../stores/ApplicationStore';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import matchByWords from '../../../../utils/matchByWords';
+import Tooltip from '../../../../react/common/Tooltip';
 import BucketsStore from '../../../components/stores/StorageBucketsStore';
 import TablesStore from '../../../components/stores/StorageTablesStore';
 import StorageActionCreators from '../../../components/StorageActionCreators';
@@ -54,12 +55,16 @@ export default React.createClass({
     return (
       <div className="pull-right">
         <ButtonGroup bsSize="small">
-          <Button onClick={this.openCreateBucketModal}>
-            <i className="fa fa-plus" />
-          </Button>
-          <Button onClick={this.handleRefresh}>
-            <RefreshIcon isLoading={this.state.isLoading} />
-          </Button>
+          <Tooltip tooltip="Create new bucket" placement="top">
+            <Button onClick={this.openCreateBucketModal}>
+              <i className="fa fa-plus" />
+            </Button>
+          </Tooltip>
+          <Tooltip tooltip="Refresh buckets" placement="top">
+            <Button onClick={this.handleRefresh}>
+              <RefreshIcon isLoading={this.state.isLoading} title="" />
+            </Button>
+          </Tooltip>
         </ButtonGroup>
       </div>
     );
