@@ -111,11 +111,7 @@ export default React.createClass({
   },
 
   saveButtonDisabled() {
-    if (this.props.isChanged) {
-      return false;
-    }
-
-    return true;
+    return this.props.disabled || this.props.isSaving || !this.props.isChanged;
   },
 
   handleSubmit(e) {
