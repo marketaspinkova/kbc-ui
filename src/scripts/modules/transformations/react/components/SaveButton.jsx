@@ -8,7 +8,6 @@ import {
   SplitButton,
   FormGroup,
   FormControl,
-  ControlLabel,
   MenuItem
 } from 'react-bootstrap';
 
@@ -72,11 +71,10 @@ export default React.createClass({
       <Modal show={this.state.openModal} onHide={this.closeModal}>
         <Form onSubmit={this.handleSubmit}>
           <Modal.Header closeButton>
-            <Modal.Title>Save new queries</Modal.Title>
+            <Modal.Title>Set description of the change you made</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <FormGroup>
-              <ControlLabel>Update description</ControlLabel>
               <FormControl
                 componentClass="textarea"
                 rows={4}
