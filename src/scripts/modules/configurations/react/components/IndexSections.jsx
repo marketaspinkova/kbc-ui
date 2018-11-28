@@ -54,7 +54,7 @@ export default React.createClass({
       settings: settings,
       component: component,
       configurationId: configurationId,
-      configurationVersion: ConfigurationsStore.get(componentId, configurationId).get('version'),
+      configuration: ConfigurationsStore.get(componentId, configurationId),
       createBySectionsFn,
       parseBySectionsFn,
       jsonConfigurationValue: Store.getEditingJsonConfigurationString(componentId, configurationId),
@@ -117,10 +117,8 @@ export default React.createClass({
     this.state.settings.getIn(['index', 'actions'], Immutable.List()).forEach((action) => {
       actionsData = actionsData.set(action.get('name'), DockerActionsStore.get(
         state.settings.get('componentId'),
-        state.configurationId,
-        state.configurationVersion,
-        null,
-        action.get('name')
+        action,
+        state.configuration.get('configuration')
       ));
     });
 

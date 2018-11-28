@@ -7,17 +7,27 @@ var _store = Immutable.Map({
   actions: Immutable.Map()
 });
 
-function constructActionPath(componentId, configurationId, configurationVersion, rowId, actionName) {
-  return ['actions', componentId, configurationId, configurationVersion, rowId, actionName];
+function constructActionPath(componentId, actionName, cacheId) {
+  return ['actions', componentId, actionName, cacheId];
+}
+
+function getCacheId(action, configuration, row) {
+  const body = action.get('getPayload')(configuration, row);
+  if (!body) {
+    return null;
+  }
+  return body.hashCode();
 }
 
 var DockerActionsStore = StoreUtils.createStore({
-  has: function(componentId, configurationId, configurationVersion, rowId, actionName) {
-    return _store.hasIn(constructActionPath(componentId, configurationId, configurationVersion, rowId, actionName));
+  has: function(componentId, action, configuration, row) {
+    const cacheId = getCacheId(action, configuration, row);
+    return _store.hasIn(constructActionPath(componentId, action.get('name'), cacheId));
   },
 
-  get: function(componentId, configurationId, configurationVersion, rowId, actionName) {
-    const path = constructActionPath(componentId, configurationId, configurationVersion, rowId, actionName);
+  get: function(componentId, action, configuration, row) {
+    const cacheId = getCacheId(action, configuration, row);
+    const path = constructActionPath(componentId, action.get('name'), cacheId);
     if (_store.hasIn(path)) {
       return _store.getIn(path);
     }
@@ -32,10 +42,8 @@ dispatcher.register(function(payload) {
   action = payload.action;
   const actionPath = constructActionPath(
     action.component,
-    action.configuration,
-    action.configurationVersion,
-    action.row,
-    action.actionName
+    action.actionName,
+    action.cacheId
   );
   switch (action.type) {
     case constants.ActionTypes.DOCKER_RUNNER_SYNC_ACTION_RUN:

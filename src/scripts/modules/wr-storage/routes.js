@@ -14,8 +14,6 @@ import targetProjectAdapter from './adapters/targetProject';
 import DestinationSection from './react/components/Destination';
 import destinationAdapter from './adapters/destination';
 
-import ValidityConstants from '../configurations/DockerActionsValidityConstants';
-
 import actions from './adapters/actions';
 
 const routeSettings = {
@@ -25,7 +23,7 @@ const routeSettings = {
     actions: [
       {
         name: 'info',
-        validity: ValidityConstants.VERSION,
+        cache: true,
         autoload: true,
         getPayload: actions.info
       }

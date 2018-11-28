@@ -1,6 +1,5 @@
 import dispatcher from '../../Dispatcher';
 import * as Constants from './DockerActionsConstants';
-import * as ValiditayConstants from './DockerActionsValidityConstants';
 import { unhandledRequest } from '../components/DockerActionsApi';
 import Store from './DockerActionsStore';
 import RoutesStore from '../../stores/RoutesStore';
@@ -9,24 +8,20 @@ import ConfigurationRowsStore from './ConfigurationRowsStore';
 import Immutable from 'immutable';
 
 module.exports = {
-  callAction: function(componentId, configurationId, configurationVersion, rowId, actionName, validity, body) {
+  callActionForce: function(componentId, actionName, body, cache) {
     dispatcher.handleViewAction({
       type: Constants.ActionTypes.DOCKER_RUNNER_SYNC_ACTION_RUN,
       component: componentId,
-      configuration: configurationId,
-      configurationVersion: configurationVersion,
-      row: rowId,
-      validity: validity,
+      cache: cache,
+      cacheId: body.hashCode(),
       actionName: actionName
     });
     return unhandledRequest(componentId, actionName, body).then(function(response) {
       dispatcher.handleViewAction({
         type: Constants.ActionTypes.DOCKER_RUNNER_SYNC_ACTION_RUN_SUCCESS,
         component: componentId,
-        configuration: configurationId,
-        configurationVersion: configurationVersion,
-        row: rowId,
-        validity: validity,
+        cache: cache,
+        cacheId: body.hashCode(),
         actionName: actionName,
         response: response
       });
@@ -35,10 +30,8 @@ module.exports = {
       dispatcher.handleViewAction({
         type: Constants.ActionTypes.DOCKER_RUNNER_SYNC_ACTION_RUN_ERROR,
         component: componentId,
-        configuration: configurationId,
-        configurationVersion: configurationVersion,
-        row: rowId,
-        validity: validity,
+        cache: cache,
+        cacheId: body.hashCode(),
         actionName: actionName,
         error: error.response.body.message
       });
@@ -48,14 +41,16 @@ module.exports = {
     });
   },
 
-  get: function(componentId, configurationId, configurationVersion, rowId, actionName, validity, body) {
+  callAction: function(componentId, action, configuration, row) {
+    const body = action.get('getPayload')(configuration, row);
     if (body === false) {
       return;
     }
-    if (validity !== ValiditayConstants.NO_CACHE && Store.has(componentId, configurationId, configurationVersion, rowId, actionName)) {
+    if (action.get('cache') === true && Store.has(componentId, action, configuration, row)) {
       return;
     } else {
-      this.callAction(componentId, configurationId, configurationVersion, rowId, actionName, validity, body);
+      this.callActionForce(componentId, action.get('name'), body, action.get('cache', false));
+      return;
     }
   },
 
@@ -66,14 +61,10 @@ module.exports = {
     });
     const configuration = ConfigurationsStore.get(componentId, configurationId);
     actions.forEach((action) => {
-      this.get(
+      this.callAction(
         componentId,
-        configurationId,
-        configuration.get('version'),
-        null,
-        action.get('name'),
-        action.get('validity'),
-        action.get('getPayload')(configuration.get('configuration'))
+        action,
+        configuration.get('configuration')
       );
     });
   },
@@ -86,14 +77,11 @@ module.exports = {
     const configuration = ConfigurationsStore.get(componentId, configurationId);
     const row = ConfigurationRowsStore.get(componentId, configurationId, rowId);
     actions.forEach((action) => {
-      this.get(
+      this.callAction(
         componentId,
-        configurationId,
-        configuration.get('version'),
-        rowId,
-        action.get('name'),
-        action.get('validity'),
-        action.get('getPayload')(configuration.get('configuration'), row.get('configuration'))
+        action,
+        configuration.get('configuration'),
+        row.get('configuration')
       );
     });
   }

@@ -65,9 +65,8 @@ export default React.createClass({
       componentId: componentId,
       settings: settings,
       configurationId: configurationId,
-      configurationVersion: ConfigurationsStore.get(componentId, configurationId).get('version'),
+      configuration: ConfigurationsStore.get(componentId, configurationId),
       rowId: rowId,
-      rowVersion: row.get('version'),
       row: row,
 
       jsonConfigurationValue: Store.getEditingJsonConfigurationString(componentId, configurationId, rowId),
@@ -267,19 +266,16 @@ export default React.createClass({
     this.state.settings.getIn(['index', 'actions'], Immutable.List()).forEach((action) => {
       actionsData = actionsData.set(action.get('name'), DockerActionsStore.get(
         state.settings.get('componentId'),
-        state.configurationId,
-        state.configurationVersion,
-        null,
-        action.get('name')
+        action,
+        state.configuration.get('configuration')
       ));
     });
     this.state.settings.getIn(['row', 'actions'], Immutable.List()).forEach((action) => {
       actionsData = actionsData.set(action.get('name'), DockerActionsStore.get(
         state.settings.get('componentId'),
-        state.configurationId,
-        state.configurationVersion,
-        state.rowId,
-        action.get('name')
+        action,
+        state.configuration.get('configuration'),
+        state.row.get('configuration')
       ));
     });
 
