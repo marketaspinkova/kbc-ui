@@ -10,7 +10,7 @@ export default React.createClass({
 
   render() {
     if (!this.props.buckets.count()) {
-      <p>No buckets found.</p>;
+      return <p>No buckets found.</p>;
     }
 
     return <div>{this.props.buckets.map(this.renderBucketPanel).toArray()}</div>;
