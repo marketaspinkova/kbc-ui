@@ -1,8 +1,8 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Edit from './QueriesEdit';
 import Clipboard from '../../../../../react/common/Clipboard';
-import SaveButtons from '../../../../../react/common/SaveButtons';
+import SaveButton from '../../components/SaveButton';
 
 /* global require */
 require('codemirror/mode/sql/sql');
@@ -18,6 +18,8 @@ export default React.createClass({
     isQueriesProcessing: PropTypes.bool.isRequired,
     onEditCancel: PropTypes.func.isRequired,
     onEditChange: PropTypes.func.isRequired,
+    onDescriptionChange: PropTypes.func.isRequired,
+    changeDescription: PropTypes.string.isRequired,
     onEditSubmit: PropTypes.func.isRequired,
     isChanged: PropTypes.bool.isRequired,
     highlightQueryNumber: PropTypes.number,
@@ -34,10 +36,10 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h2 style={{lineHeight: '32px'}}>
+        <h2 style={{ lineHeight: '32px' }}>
           Queries
           <small>
-            <Clipboard text={this.props.queries}/>
+            <Clipboard text={this.props.queries} />
           </small>
           {this.renderButtons()}
         </h2>
@@ -49,12 +51,14 @@ export default React.createClass({
   renderButtons() {
     return (
       <span className="pull-right">
-        <SaveButtons
+        <SaveButton
           isSaving={this.props.isSaving}
-          disabled={this.props.isQueriesProcessing || this.props.disabled}
           isChanged={this.props.isChanged}
-          onSave={this.props.onEditSubmit}
           onReset={this.props.onEditCancel}
+          onSave={this.props.onEditSubmit}
+          disabled={!!(this.props.isQueriesProcessing || this.props.disabled)}
+          onDescriptionChange={this.props.onDescriptionChange}
+          changeDescription={this.props.changeDescription}
         />
       </span>
     );

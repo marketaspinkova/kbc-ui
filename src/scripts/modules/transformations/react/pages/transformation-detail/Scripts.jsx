@@ -1,7 +1,7 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import Edit from './ScriptsEdit';
 import Clipboard from '../../../../../react/common/Clipboard';
-import SaveButtons from '../../../../../react/common/SaveButtons';
+import SaveButton from '../../components/SaveButton';
 
 /* global require */
 require('codemirror/mode/r/r');
@@ -16,6 +16,8 @@ export default React.createClass({
     isSaving: PropTypes.bool.isRequired,
     onEditCancel: PropTypes.func.isRequired,
     onEditChange: PropTypes.func.isRequired,
+    onDescriptionChange: PropTypes.func.isRequired,
+    changeDescription: PropTypes.string.isRequired,
     onEditSubmit: PropTypes.func.isRequired,
     isChanged: PropTypes.bool.isRequired
   },
@@ -23,10 +25,10 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h2 style={{lineHeight: '32px'}}>
+        <h2 style={{ lineHeight: '32px' }}>
           Scripts
           <small>
-            <Clipboard text={this.props.scripts}/>
+            <Clipboard text={this.props.scripts} />
           </small>
           {this.renderButtons()}
         </h2>
@@ -38,12 +40,14 @@ export default React.createClass({
   renderButtons() {
     return (
       <span className="pull-right">
-        <SaveButtons
+        <SaveButton
           isSaving={this.props.isSaving}
-          disabled={!this.props.isEditingValid}
           isChanged={this.props.isChanged}
           onSave={this.props.onEditSubmit}
           onReset={this.props.onEditCancel}
+          disabled={!this.props.isEditingValid}
+          onDescriptionChange={this.props.onDescriptionChange}
+          changeDescription={this.props.changeDescription}
         />
       </span>
     );

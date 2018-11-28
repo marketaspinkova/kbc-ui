@@ -319,9 +319,9 @@ module.exports = {
 
   saveTransformationQueries: function(bucketId, transformationId) {
     var transformation = TransformationsStore.getTransformation(bucketId, transformationId);
-    const pendingAction = 'save-queries';
-    const changeDescription = 'Change Queries in ' + transformation.get('name');
     const transformationEditingFields = TransformationsStore.getTransformationEditingFields(bucketId, transformationId);
+    const pendingAction = 'save-queries';
+    const changeDescription = transformationEditingFields.get('description', 'Change Queries in ' + transformation.get('name'));
     transformation = transformation.set('queries', transformationEditingFields.get('splitQueries'));
     dispatcher.handleViewAction({
       type: constants.ActionTypes.TRANSFORMATION_EDIT_SAVE_START,
@@ -354,9 +354,9 @@ module.exports = {
 
   saveTransformationScript: function(bucketId, transformationId) {
     var transformation = TransformationsStore.getTransformation(bucketId, transformationId);
-    const pendingAction = 'save-queries';
-    const changeDescription = 'Change Script in ' + transformation.get('name');
     const transformationEditingFields = TransformationsStore.getTransformationEditingFields(bucketId, transformationId);
+    const pendingAction = 'save-queries';
+    const changeDescription = transformationEditingFields.get('description', 'Change Scripts in ' + transformation.get('name'));
     transformation = transformation.set('queries', List([transformationEditingFields.get('queriesString')]));
     dispatcher.handleViewAction({
       type: constants.ActionTypes.TRANSFORMATION_EDIT_SAVE_START,
