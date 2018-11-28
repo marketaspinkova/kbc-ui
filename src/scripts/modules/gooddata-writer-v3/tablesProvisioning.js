@@ -8,34 +8,21 @@ export default function(configId) {
   const { getLocalStateValue, updateLocalState } = localStateProvisioning(configId);
   const tables = parameters.get('tables', Map());
   const initialEditingTables = Map({
-    parameters: tables.map(() => null), // init all tables to tableId=>null key value pair
+    parameters: Map(),
     inputMapping: List()
   });
 
-  // fill missing editing objects with objects from the stored configuration
-  const editingTables = getLocalStateValue(EDITING_PATH, initialEditingTables)
-    .update('parameters', editingTablesParameters =>
-      editingTablesParameters.map(
-        (editingTableParams, tableId) => (editingTableParams ? editingTableParams : tables.get(tableId))
-      )
-    )
-    .update('inputMapping', currentEditingMapping => {
-      return inputMapping.reduce((memo, storedMapping) => {
-        const isInitialized = memo.find(
-          memoMapping => memoMapping.get('source') === storedMapping.get('source')
-        );
-        if (!isInitialized) {
-          return memo.push(storedMapping);
-        } else {
-          return memo;
-        }
-      }, currentEditingMapping);
-    });
+  const editingTables = getLocalStateValue(EDITING_PATH, initialEditingTables);
 
   function getEditingTable(tableId) {
+    const storedTableParameters = tables.get(tableId);
+    const storedInputMapping = inputMapping.find(table => table.get('source') === tableId);
+    const tableParameters = editingTables.getIn(['parameters', tableId]) || storedTableParameters;
+    const tableInputMapping =
+      editingTables.get('inputMapping').find(table => table.get('source') === tableId) || storedInputMapping;
     return {
-      tableParameters: editingTables.getIn(['parameters', tableId]),
-      tableInputMapping: editingTables.get('inputMapping').find(table => table.get('source') === tableId)
+      tableParameters,
+      tableInputMapping
     };
   }
 
@@ -46,21 +33,19 @@ export default function(configId) {
     return tableParameters !== storedTableParameters || tableInputMapping !== storedInputMapping;
   }
 
-  function updateEditingTable(tableId, tableParams, tableInputMapping) {
-    const tableMappingIndex = editingTables.get('inputMapping').findIndex(tableIm => tableIm.get('source') === tableId);
-    const newEditingTables = editingTables
-      .mergeDeepIn(['parameters', tableId], tableParams)
-      .mergeDeepIn(['inputMapping', tableMappingIndex], tableInputMapping);
-
-    updateLocalState(EDITING_PATH, newEditingTables);
-  }
-
   function setEditingTable(tableId, tableParams, tableInputMapping) {
     const tableMappingIndex = editingTables.get('inputMapping').findIndex(tableIm => tableIm.get('source') === tableId);
     const newEditingTables = editingTables
       .setIn(['parameters', tableId], tableParams)
       .setIn(['inputMapping', tableMappingIndex], tableInputMapping);
     updateLocalState(EDITING_PATH, newEditingTables);
+  }
+
+  function updateEditingTable(tableId, tableParams, tableInputMapping) {
+    const editingTable = getEditingTable(tableId);
+    const newTableParams = editingTable.tableParameters.mergeDeep(tableParams);
+    const newTableInputMapping = editingTable.tableInputMapping.mergeDeep(tableInputMapping);
+    setEditingTable(tableId, newTableParams, newTableInputMapping);
   }
 
   function resetEditingTable(tableId) {
