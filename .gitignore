@@ -11,4 +11,3 @@ npm-debug.log
 /.dir-locals.el
 /yarn-error.log
 .vscode
-.env

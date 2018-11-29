@@ -63,7 +63,6 @@
   },
   "scripts": {
     "start": "webpack-dev-server --config webpack/dev-server.config.js --hot --progress --colors --host 0.0.0.0 --port 3000 --inline --https",
-    "start-poll": "webpack-dev-server --config webpack/dev-server.config.js --hot --progress --colors --host 0.0.0.0 --port 3000 --inline --https --watch-poll $WATCH_POLL_MS",
     "start-http": "webpack-dev-server --config webpack/dev-server.config.js --hot --progress --colors --host 0.0.0.0 --port 3000 --inline",
     "start-projects-list": "webpack-dev-server --config webpack/dev-server-projects-list.config.js --hot --progress --colors --host 0.0.0.0 --port 3000 --inline --https",
     "start-settings-users": "webpack-dev-server --config webpack/dev-server-setting-user.config.js --hot --progress --colors --host 0.0.0.0 --port 3000 --inline --https",
