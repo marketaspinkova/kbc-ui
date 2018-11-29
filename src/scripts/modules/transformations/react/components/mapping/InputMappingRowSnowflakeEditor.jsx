@@ -12,6 +12,7 @@ import whereOperatorConstants from '../../../../../react/common/whereOperatorCon
 import {PanelWithDetails} from '@keboola/indigo-ui';
 import MetadataStore from '../../../../components/stores/MetadataStore';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
+import { SnowflakeDataTypesMapping } from '../../../Constants';
 
 export default React.createClass({
   propTypes: {
@@ -169,56 +170,6 @@ export default React.createClass({
     return null;
   },
 
-  snowflakeDatatypesMap: new Immutable.fromJS({
-    NUMBER: {
-      name: 'NUMBER',
-      basetype: 'NUMERIC',
-      size: true
-    },
-    INTEGER: {
-      name: 'INTEGER',
-      basetype: 'INTEGER',
-      size: false
-    },
-    FLOAT: {
-      name: 'FLOAT',
-      basetype: 'FLOAT',
-      size: false
-    },
-    VARCHAR: {
-      name: 'VARCHAR',
-      basetype: 'STRING',
-      size: true,
-      maxLength: 16777216
-    },
-    DATE: {
-      name: 'DATE',
-      basetype: 'DATE',
-      size: false
-    },
-    TIMESTAMP: {
-      name: 'TIMESTAMP',
-      basetype: 'TIMESTAMP',
-      size: false
-    },
-    TIMESTAMP_LTZ: {
-      name: 'TIMESTAMP_LTZ',
-      size: false
-    },
-    TIMESTAMP_NTZ: {
-      name: 'TIMESTAMP_NTZ',
-      size: false
-    },
-    TIMESTAMP_TZ: {
-      name: 'TIMESTAMP_TZ',
-      size: false
-    },
-    VARIANT: {
-      name: 'VARIANT',
-      size: false
-    }
-  }),
-
   getMetadataDataTypes(columnMetadata) {
     return columnMetadata.map((metadata, colname) => {
       let datatypeLength = metadata.filter((entry) => {
@@ -244,7 +195,7 @@ export default React.createClass({
       }
       let datatypeName, length = null;
 
-      let datatype = this.snowflakeDatatypesMap.map((mappedDatatype) => {
+      let datatype = SnowflakeDataTypesMapping.map((mappedDatatype) => {
         if (mappedDatatype.get('basetype') === basetype.get('value')) {
           datatypeName = mappedDatatype.get('name');
           return mappedDatatype;
@@ -427,7 +378,7 @@ export default React.createClass({
             <DatatypeForm
               datatypes={this.getDatatypes()}
               columns={this._getFilteredColumns()}
-              datatypesMap={this.snowflakeDatatypesMap}
+              datatypesMap={SnowflakeDataTypesMapping}
               disabled={this.props.disabled || !this.props.value.get('source')}
               onChange={this._handleChangeDataTypes}
             />
