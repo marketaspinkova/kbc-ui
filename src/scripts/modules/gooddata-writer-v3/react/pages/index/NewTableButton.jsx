@@ -7,7 +7,8 @@ import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
 export default React.createClass({
 
   propTypes: {
-    onCreateTable: PropTypes.func.isRequired
+    onCreateTable: PropTypes.func.isRequired,
+    createdTables: PropTypes.object
   },
 
   getInitialState() {
@@ -42,7 +43,7 @@ export default React.createClass({
         <Modal.Footer>
           <ConfirmButtons
             isSaving={this.state.isSaving}
-            isDisabled={!this.state.tableId}
+            isDisabled={!this.state.tableId || !this.state.title}
             saveLabel="Create Table"
             onCancel={this.close}
             onSave={this.handleCreate}
@@ -77,7 +78,7 @@ export default React.createClass({
             placeholder="Select..."
             value={this.state.tableId}
             onSelectTableFn={this.setSelectedTable}
-            excludeTableFn={() => false}/>
+            excludeTableFn={(tableId) => this.props.createdTables.has(tableId)}/>
         </div>
       </div>
 
@@ -86,7 +87,8 @@ export default React.createClass({
 
   setSelectedTable(newTableId) {
     this.setState({
-      tableId: newTableId
+      tableId: newTableId,
+      title: newTableId
     });
   },
 
@@ -94,6 +96,16 @@ export default React.createClass({
     return (
       <form className="form-horizontal" onSubmit={this.handleSubmit}>
         {this.renderTableSelector()}
+        <div className="form-group">
+          <label className="col-sm-3 control-label">
+            Title
+          </label>
+          <div className="col-sm-9">
+            <input className="form-control"
+              onChange={e => this.setState({title: e.target.value})}
+              value={this.state.title} />
+          </div>
+        </div>
       </form>
     );
   },
@@ -109,9 +121,9 @@ export default React.createClass({
 
   handleCreate() {
     this.setState({isSaving: true});
-    this.props.onCreateTable(this.state.tableId).then(
-      this.cancelSaving,
-      this.cancelSaving
-    ).catch(this.cancelSaving);
+    this.props.onCreateTable(
+      this.state.tableId,
+      this.state.title
+    ).finally(this.cancelSaving);
   }
 });

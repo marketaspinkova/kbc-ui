@@ -108,6 +108,11 @@ function makeColumnWithDefaults(fields, column) {
 function processColumnFieldsChange(fields, column, oldColumn) {
   return Object.keys(fields).reduce((memo, field) => {
     const onChange = fields[field].onChange;
+    const show = fields[field].show;
+    const defaultValue = fields[field].defaultValue;
+    if (show && defaultValue && !memo[field] && !oldColumn[field]) {
+      memo[field] = defaultValue;
+    }
     if (onChange && fields[field].show) {
       return onChange(memo, oldColumn);
     }

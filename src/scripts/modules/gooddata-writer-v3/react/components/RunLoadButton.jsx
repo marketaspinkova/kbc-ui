@@ -7,13 +7,20 @@ export default React.createClass({
   propTypes: {
     getRunParams: PropTypes.func.isRequired,
     isTableDisabled: PropTypes.bool,
+    loadOnly: PropTypes.bool,
     buttonMode: PropTypes.string,
     tableId: PropTypes.string
   },
 
-  getInitialState: () => ({
-    loadOnly: false
-  }),
+  getInitialState() {
+    return {
+      loadOnly: this.props.loadOnly
+    };
+  },
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({loadOnly: nextProps.loadOnly});
+  },
 
   render() {
     return (

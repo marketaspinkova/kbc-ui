@@ -24,6 +24,7 @@ import titleAdapter from '../../../adapters/titleAdapter';
 import {CollapsibleSection} from '../../../../configurations/utils/renderHelpers';
 import loadTypeAdater from '../../../adapters/loadTypeAdapter';
 import columnsEditorAdapter from '../../../adapters/columnsEditorAdapter';
+import tableLoadSettingsAdapter from '../../../adapters/tablesLoadSettingsAdapter';
 
 const LoadTypeCollapsibleComponent = CollapsibleSection({
   title: LoadTypeSectionTitle,
@@ -43,6 +44,7 @@ export default React.createClass({
     const {isSaving, isPendingFn} = configProvisioning;
     const storageTable = TablesStore.getAll().get(tableId);
     const isPendingToggleExport = isPendingFn([tableId, 'activate']);
+    const loadOnly = tableLoadSettingsAdapter(configProvisioning).value.loadOnly;
 
     // section props adapters
     const titleSectionProps = titleAdapter(configProvisioning, tablesProvisioning, tableId);
@@ -66,7 +68,8 @@ export default React.createClass({
       saveEditingTable,
       resetEditingTable,
       getSingleRunParams,
-      isChanged: isEditingTableChanged(tableId)
+      isChanged: isEditingTableChanged(tableId),
+      loadOnly
     };
   },
 
@@ -133,6 +136,7 @@ export default React.createClass({
       <ul className="nav nav-stacked">
         <li>
           <RunLoadButton
+            loadOnly={this.state.loadOnly}
             tableId={tableId}
             isTableDisabled={isTableDisabled}
             buttonMode="link"

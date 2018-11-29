@@ -171,6 +171,7 @@ export default React.createClass({
     } else {
       return (
         <ConfiguredTables
+          loadOnly={this.state.tableLoadSettingsSectionProps.value.loadOnly}
           configurationId={this.state.configurationId}
           tables={this.state.tables}
           isSaving={this.state.isSaving}
@@ -187,14 +188,15 @@ export default React.createClass({
   renderNewTableButton() {
     return (
       <NewTableButton
+        createdTables={this.state.tables}
         onCreateTable={this.createNewTableAndRedirect}
       />
     );
   },
 
-  createNewTableAndRedirect(tableId) {
+  createNewTableAndRedirect(tableId, title) {
     const router = RoutesStore.getRouter();
-    return this.state.createNewTable(tableId).then(() =>
+    return this.state.createNewTable(tableId, title).then(() =>
       router.transitionTo('keboola.gooddata-writer-table', {config: this.state.configurationId, table: tableId})
     );
   },

@@ -1,7 +1,8 @@
 import React, {PropTypes} from 'react';
-import {FormControl, Form, FormGroup, Col, ControlLabel} from 'react-bootstrap';
+import {FormControl, Form, FormGroup, InputGroup, Col, ControlLabel} from 'react-bootstrap';
 import makeColumnDefinition from '../../helpers/makeColumnDefinition';
 import {DataTypes, Types} from '../../constants';
+import DateFormatHint from './DateFormatHint';
 
 // import ReactSelect from 'react-select';
 
@@ -28,29 +29,32 @@ export default React.createClass({
 
         {fields.title.show && this.renderInputGroup('Title', 'title')}
 
-        {fields.dataType.show && this.renderSelectGroup(
-          'Data Type',
-          'dataType',
-          Object.keys(DataTypes),
-          fields.dataTypeSize.show && this.renderInput('dataTypeSize')
-        )}
+        {fields.dataType.show &&
+         this.renderSelectGroup(
+           'Data Type',
+           'dataType',
+           Object.keys(DataTypes),
+           fields.dataTypeSize.show && this.renderInput('dataTypeSize')
+         )}
         {fields.dateDimension.show &&
          this.renderSelectGroup(
            'Date Dimensions',
            'dateDimension',
            this.props.context.dimensions
          )}
-        {fields.format.show && this.renderInputGroup('Date format', 'format')}
-        {fields.schemaReference.show && this.renderSelectGroup(
-          'Reference',
-          'schemaReference',
-          this.props.context.referencableTables
-        )}
-        {fields.reference.show && this.renderSelectGroup(
-          'Reference',
-          'reference',
-          this.props.context.referencableColumns
-        )}
+        {fields.format.show && this.renderInputGroupWithAddon('Date format', 'format', <DateFormatHint />)}
+        {fields.schemaReference.show &&
+         this.renderSelectGroup(
+           'Reference',
+           'schemaReference',
+           this.props.context.referencableTables
+         )}
+        {fields.reference.show &&
+         this.renderSelectGroup(
+           'Reference',
+           'reference',
+           this.props.context.referencableColumns
+         )}
         {fields.sortLabel.show && this.props.context.sortLabelsColumns[column.id] &&
          this.renderSelectGroup(
            'Sort Label',
@@ -142,6 +146,19 @@ export default React.createClass({
         onChange={e => this.onChangeColumn(fieldName, e.target.value)}
         value={column[fieldName]}
       />);
+  },
+
+  renderInputGroupWithAddon(label, fieldName, addon) {
+    const control = (
+      <InputGroup>
+        {this.renderInput(fieldName)}
+        <InputGroup.Addon>{addon}</InputGroup.Addon>
+      </InputGroup>
+    );
+    return this.renderControlGroup(
+      label,
+      control
+    );
   },
 
   renderInputGroup(label, fieldName) {
