@@ -8,7 +8,7 @@ import ConfigurationRowsStore from './ConfigurationRowsStore';
 import Immutable from 'immutable';
 
 module.exports = {
-  callActionForce: function(componentId, actionName, body, cache) {
+  callAction: function(componentId, actionName, body, cache) {
     dispatcher.handleViewAction({
       type: Constants.ActionTypes.DOCKER_RUNNER_SYNC_ACTION_RUN,
       component: componentId,
@@ -41,7 +41,7 @@ module.exports = {
     });
   },
 
-  callAction: function(componentId, action, configuration, row) {
+  requestAction: function(componentId, action, configuration, row) {
     const body = action.get('getPayload')(configuration, row);
     if (body === false) {
       return;
@@ -49,7 +49,7 @@ module.exports = {
     if (action.get('cache') === true && Store.has(componentId, action, configuration, row)) {
       return;
     } else {
-      this.callActionForce(componentId, action.get('name'), body, action.get('cache', false));
+      this.callAction(componentId, action.get('name'), body, action.get('cache', false));
       return;
     }
   },
@@ -61,7 +61,7 @@ module.exports = {
     });
     const configuration = ConfigurationsStore.get(componentId, configurationId);
     actions.forEach((action) => {
-      this.callAction(
+      this.requestAction(
         componentId,
         action,
         configuration.get('configuration')
@@ -77,7 +77,7 @@ module.exports = {
     const configuration = ConfigurationsStore.get(componentId, configurationId);
     const row = ConfigurationRowsStore.get(componentId, configurationId, rowId);
     actions.forEach((action) => {
-      this.callAction(
+      this.requestAction(
         componentId,
         action,
         configuration.get('configuration'),
