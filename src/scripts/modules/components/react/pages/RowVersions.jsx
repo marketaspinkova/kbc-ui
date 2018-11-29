@@ -20,13 +20,12 @@ export default function(componentIdValue, readOnlyMode = false) {
     mixins: [createStoreMixin(VersionsStore), immutableMixin],
 
     getStateFromStores() {
-      var versions, filteredVersions, query;
       const configId = RoutesStore.getCurrentRouteParam('config');
       const componentId = RoutesStore.getCurrentRouteParam('component') || componentIdValue;
       const rowId = RoutesStore.getCurrentRouteParam('row');
-      versions = VersionsStore.getVersions(componentId, configId, rowId);
-      query = VersionsStore.getSearchFilter(componentId, configId, rowId);
-      filteredVersions = versions;
+      const versions = VersionsStore.getVersions(componentId, configId, rowId);
+      const query = VersionsStore.getSearchFilter(componentId, configId, rowId);
+      let filteredVersions = versions;
       if (query && query !== '') {
         filteredVersions = versions.filter(function(version) {
           return (

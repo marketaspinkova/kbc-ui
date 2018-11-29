@@ -44,8 +44,9 @@ const updateTransformationEditingFieldQueriesStringDebouncer = debounce(function
 }, 1000);
 
 const reloadVersions = function(configId, rowId) {
-  var promises = [];
-  promises.push(VersionActionCreators.loadVersionsForce('transformation', configId));
+  let promises = [
+    VersionActionCreators.loadVersionsForce('transformation', configId)
+  ];
   if (rowId) {
     promises.push(RowVersionActionCreators.loadVersionsForce('transformation', configId, rowId));
   }
