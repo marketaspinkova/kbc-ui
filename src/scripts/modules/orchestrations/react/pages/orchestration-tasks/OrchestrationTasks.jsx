@@ -109,9 +109,10 @@ const OrchestrationTasks = React.createClass({
             components={this.state.components}
             disabled={this.state.isSaving}
             onTaskDelete={this._handleTaskDelete}
-            onTaskUpdate={this._handleTaskUpdate}
-            updateLocalState={this.state.updateLocalState}
-            localState={this.state.localState}
+            updateLocalState={(path, data) => {
+              return this.updateLocalState(['taskstable'].concat(path), data);
+            }}
+            localState={this.state.localState.get('taskstable', Map())}
             handlePhaseMove={this._handlePhaseMove}
             handlePhaseUpdate={this._handlePhaseUpdate}
             handlePhasesSet={this._handlePhasesSet}
