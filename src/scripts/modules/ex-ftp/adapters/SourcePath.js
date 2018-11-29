@@ -36,8 +36,7 @@ const createConfiguration = function(localState) {
       delimiter: localState.get('delimiter', ','),
       enclosure: localState.get('enclosure', '"'),
       incremental: localState.get('incremental', false),
-      primary_key: localState.get('primaryKey', Immutable.List()),
-      columns_from: localState.get('columnsFrom', 'header')
+      primary_key: localState.get('primaryKey', Immutable.List())
     }
   });
   if (localState.get('columnsFrom', 'header') === 'header') {
@@ -71,7 +70,7 @@ const createConfiguration = function(localState) {
           component: 'keboola.processor-add-row-number-column'
         },
         parameters: {
-          column_name: 'row_number'
+          column_name: 'ftp_row_number'
         }
       }
     ));
@@ -112,11 +111,11 @@ const parseConfiguration = function(configuration) {
   });
   const processorAddRowNumberColumn = configuration.getIn(['processors', 'after'], Immutable.List()).find(function(processor) {
     return processor.getIn(['definition', 'component']) === 'keboola.processor-add-row-number-column' &&
-      processor.getIn(['parameters', 'column_name']) === 's3_row_number';
+      processor.getIn(['parameters', 'column_name']) === 'ftp_row_number';
   });
   const processorAddFilenameColumn = configuration.getIn(['processors', 'after'], Immutable.List()).find(function(processor) {
     return processor.getIn(['definition', 'component']) === 'keboola.processor-add-filename-column' &&
-      processor.getIn(['parameters', 'column_name']) === 's3_filename';
+      processor.getIn(['parameters', 'column_name']) === 'ftp_filename';
   });
   const processorMoveFiles = configuration.getIn(['processors', 'after'], Immutable.List()).find(function(processor) {
     return processor.getIn(['definition', 'component']) === 'keboola.processor-move-files';

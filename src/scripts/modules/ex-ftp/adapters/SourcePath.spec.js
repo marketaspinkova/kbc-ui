@@ -7,7 +7,7 @@ describe('sourcePath', function() {
   describe('createConfiguration', function() {
     it('should return default configuration', function() {
       assert.deepEqual(
-        cases.emptyConfig.configuration,
+        cases.emptyWithDefaults.configuration,
         sourcePathAdapter.createConfiguration(Immutable.fromJS({})).toJS());
     });
     Object.keys(cases).forEach(function(key) {
@@ -19,7 +19,7 @@ describe('sourcePath', function() {
   describe('parseConfiguration', function() {
     it('should return default configuration', function() {
       assert.deepEqual(
-        cases.emptyConfig.localState,
+        cases.emptyWithDefaults.localState,
         sourcePathAdapter.parseConfiguration(Immutable.fromJS({})).toJS());
     });
     Object.keys(cases).forEach(function(key) {

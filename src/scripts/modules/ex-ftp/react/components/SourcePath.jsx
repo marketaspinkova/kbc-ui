@@ -33,7 +33,9 @@ export default React.createClass({
       enclosure: PropTypes.string.isRequired,
       columnsFrom: PropTypes.oneOf(['manual', 'header', 'auto']),
       columns: PropTypes.array.isRequired,
-      primaryKey: PropTypes.array.isRequired
+      primaryKey: PropTypes.array.isRequired,
+      addRowNumberColumn: PropTypes.bool.isRequired,
+      addFilenameColumn: PropTypes.bool.isRequired
     }),
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired
@@ -196,6 +198,29 @@ export default React.createClass({
             <div className="help-block">If primary key is set, updates can be done on table by selecting <strong>incremental loads</strong>. Primary key can consist of multiple columns. Primary key of an existing table cannot be changed.</div>
           </div>
         </div>
+        <h3>Audit</h3>
+        <Input
+          type="checkbox"
+          label="Filename"
+          wrapperClassName="col-xs-8 col-xs-offset-4"
+          checked={this.props.value.addFilenameColumn}
+          onChange={function(e) {
+            props.onChange({addFilenameColumn: e.target.checked});
+          }}
+          help={(<span>Add an <code>ftp_filename</code> column that will store the processed file name.</span>)}
+          disabled={this.props.disabled}
+        />
+        <Input
+          type="checkbox"
+          label="Row Number"
+          wrapperClassName="col-xs-8 col-xs-offset-4"
+          checked={this.props.value.addRowNumberColumn}
+          onChange={function(e) {
+            props.onChange({addRowNumberColumn: e.target.checked});
+          }}
+          help={(<span>Add an <code>ftp_row_number</code> column that will store the row number from the processed file.</span>)}
+          disabled={this.props.disabled}
+        />
       </div>
     );
   }
