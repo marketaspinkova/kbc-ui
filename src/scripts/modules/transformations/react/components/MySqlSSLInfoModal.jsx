@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal, ButtonToolbar, Button } from 'react-bootstrap';
+import { ExternalLink } from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -16,9 +17,9 @@ export default React.createClass({
         <Modal.Body>
           <p>
             {'For instructions to establish a secure connection to MySQL sandbox see '}
-            <a href="https://help.keboola.com/manipulation/transformations/sandbox/#connecting-to-sandbox">
+            <ExternalLink href="https://help.keboola.com/manipulation/transformations/sandbox/#connecting-to-sandbox">
               the documentation
-            </a>
+            </ExternalLink>
             .
           </p>
         </Modal.Body>

@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import { ExternalLink } from '@keboola/indigo-ui';
 import {Input} from './../../../../react/common/KbcBootstrap';
 import SaveButtons from '../../../../react/common/SaveButtons';
 
@@ -73,7 +74,12 @@ export default React.createClass({
             wrapperClassName="col-xs-9"
             value={this.props.data.get('version', '')}
             onChange={this.onChangeVersion}
-            help={(<span>Branch or tag in the repository. Using <code>master</code> as a version is inefficient and should not be used in a production setup. We recommend using <a href="http://semver.org/">Semantic versioning</a>.</span>)}
+            help={(
+              <span>
+                Branch or tag in the repository. Using <code>master</code> as a version is inefficient and should not be used in a production setup.
+                {' '}We recommend using <ExternalLink href="http://semver.org/">Semantic versioning</ExternalLink>.
+              </span>
+            )}
             placeholder="1.0.0"
           />
 

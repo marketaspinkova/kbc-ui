@@ -37,7 +37,6 @@ export default React.createClass({
                 <li><code>s3:PutObject</code> to upload files</li>
                 <li><code>s3:GetBucketLocation</code> to determine the bucket region</li>
               </ul>
-              More information is available in the <a href="https://help.keboola.com/writers/aws-s3/">documentation</a>.
             </span>
           )}
         />

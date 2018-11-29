@@ -1,4 +1,5 @@
 import React from 'react';
+import { ExternalLink } from '@keboola/indigo-ui';
 
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../../stores/RoutesStore';
@@ -49,7 +50,7 @@ export default React.createClass({
     if (this.state.component.get('documentationUrl')) {
       return (
         <span>
-          See the <a href={this.state.component.get('documentationUrl')}>documentation</a> for more details about this configuration.
+          See the <ExternalLink href={this.state.component.get('documentationUrl')}>documentation</ExternalLink> for more details about this configuration.
         </span>
       );
     } else {

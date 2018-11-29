@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import { Map, List, fromJS } from 'immutable';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import { ExternalLink } from '@keboola/indigo-ui';
 import TransformationsActionCreators from '../../../ActionCreators';
 import ApplicationStore from '../../../../../stores/ApplicationStore';
 import InputMappingRow from './InputMappingRow';
@@ -232,7 +233,7 @@ export default React.createClass({
                   contact us
                 </button>
                 {' or read more in the '}
-                <a href="https://help.keboola.com/manipulation/transformations/openrefine/">documentation</a>.
+                <ExternalLink href="https://help.keboola.com/manipulation/transformations/openrefine/">documentation</ExternalLink>.
               </span>
             </div>
           ]}
@@ -245,9 +246,9 @@ export default React.createClass({
                   {'Please migrate this transformation to Snowflake. '}
                   {'If you encounter any issues, please contact us using the Support button in the menu on the left. '}
                   {'Learn more about the MySQL transformation deprecation '}
-                  <a href="http://status.keboola.com/deprecating-mysql-storage-and-transformations">
+                  <ExternalLink href="http://status.keboola.com/deprecating-mysql-storage-and-transformations">
                     timeline and reasons
-                  </a>
+                  </ExternalLink>
                   .
                 </span>
               </div>

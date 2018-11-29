@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
+import { ExternalLink } from '@keboola/indigo-ui';
 import { Input } from './../../../../react/common/KbcBootstrap';
 
 export default React.createClass({
@@ -37,7 +38,7 @@ export default React.createClass({
                 <li><code>s3:ListBucket</code> to access all wildcard files</li>
                 <li><code>s3:GetBucketLocation</code> to determine the bucket region</li>
               </ul>
-              More information is available in the <a href="https://help.keboola.com/extractors/other/aws-s3/">documentation</a>.
+              More information is available in the <ExternalLink href="https://help.keboola.com/extractors/storage/aws-s3/">documentation</ExternalLink>.
             </span>
           )}
         />
