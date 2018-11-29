@@ -306,84 +306,82 @@ export default React.createClass({
             />
           </div>
         </div>
-        <div className="row col-md-12">
-          <PanelWithDetails defaultExpanded={this.props.initialShowDetails}>
-            <div className="form-horizontal clearfix">
-              <div className="form-group">
-                <label className="col-xs-2 control-label">Columns</label>
-                <div className="col-xs-10">
-                  <Select
-                    multi={true}
-                    name="columns"
-                    value={this.props.value.get('columns', Immutable.List()).toJS()}
-                    disabled={this.props.disabled || !this.props.value.get('source')}
-                    placeholder="All columns will be imported"
-                    onChange={this._handleChangeColumns}
-                    options={this._getColumnsOptions()}
-                  />
-                  <div className="help-block">
-                    Import only specified columns
-                  </div>
+        <PanelWithDetails defaultExpanded={this.props.initialShowDetails}>
+          <div className="form-horizontal clearfix">
+            <div className="form-group">
+              <label className="col-xs-2 control-label">Columns</label>
+              <div className="col-xs-10">
+                <Select
+                  multi={true}
+                  name="columns"
+                  value={this.props.value.get('columns', Immutable.List()).toJS()}
+                  disabled={this.props.disabled || !this.props.value.get('source')}
+                  placeholder="All columns will be imported"
+                  onChange={this._handleChangeColumns}
+                  options={this._getColumnsOptions()}
+                />
+                <div className="help-block">
+                  Import only specified columns
                 </div>
               </div>
-              <div className="form-group">
-                <label className="col-xs-2 control-label">Changed in last</label>
-                <div className="col-xs-10">
-                  <ChangedSinceInput
-                    value={this.getChangedSinceValue()}
-                    disabled={this.props.disabled}
-                    onChange={this._handleChangeChangedSince}
-                  />
-                </div>
-              </div>
-              <div className="form-group">
-                <label className="col-xs-2 control-label">Data filter</label>
-                <div className="col-xs-4">
-                  <Select
-                    name="whereColumn"
-                    value={this.props.value.get('whereColumn')}
-                    disabled={this.props.disabled || !this.props.value.get('source')}
-                    placeholder="Select column"
-                    onChange={this._handleChangeWhereColumn}
-                    options={this._getColumnsOptions()}
-                  />
-                </div>
-                <div className="col-xs-2">
-                  <Input
-                    type="select"
-                    name="whereOperator"
-                    value={this.props.value.get('whereOperator')}
-                    disabled={this.props.disabled}
-                    onChange={this._handleChangeWhereOperator}
-                  >
-                    <option value={whereOperatorConstants.EQ_VALUE}>{whereOperatorConstants.EQ_LABEL}</option>
-                    <option value={whereOperatorConstants.NOT_EQ_VALUE}>{whereOperatorConstants.NOT_EQ_LABEL}</option>
-                  </Input>
-                </div>
-                <div className="col-xs-4">
-                  <Select
-                    name="whereValues"
-                    value={this.props.value.get('whereValues')}
-                    multi={true}
-                    disabled={this.props.disabled}
-                    allowCreate={true}
-                    placeholder="Add a value..."
-                    emptyStrings={true}
-                    onChange={this._handleChangeWhereValues}
-                  />
-                </div>
-              </div>
-              <label className="control-label">Data types</label>
             </div>
-            <DatatypeForm
-              datatypes={this.getDatatypes()}
-              columns={this._getFilteredColumns()}
-              datatypesMap={SnowflakeDataTypesMapping}
-              disabled={this.props.disabled || !this.props.value.get('source')}
-              onChange={this._handleChangeDataTypes}
-            />
-          </PanelWithDetails>
-        </div>
+            <div className="form-group">
+              <label className="col-xs-2 control-label">Changed in last</label>
+              <div className="col-xs-10">
+                <ChangedSinceInput
+                  value={this.getChangedSinceValue()}
+                  disabled={this.props.disabled}
+                  onChange={this._handleChangeChangedSince}
+                />
+              </div>
+            </div>
+            <div className="form-group">
+              <label className="col-xs-2 control-label">Data filter</label>
+              <div className="col-xs-4">
+                <Select
+                  name="whereColumn"
+                  value={this.props.value.get('whereColumn')}
+                  disabled={this.props.disabled || !this.props.value.get('source')}
+                  placeholder="Select column"
+                  onChange={this._handleChangeWhereColumn}
+                  options={this._getColumnsOptions()}
+                />
+              </div>
+              <div className="col-xs-2">
+                <Input
+                  type="select"
+                  name="whereOperator"
+                  value={this.props.value.get('whereOperator')}
+                  disabled={this.props.disabled}
+                  onChange={this._handleChangeWhereOperator}
+                >
+                  <option value={whereOperatorConstants.EQ_VALUE}>{whereOperatorConstants.EQ_LABEL}</option>
+                  <option value={whereOperatorConstants.NOT_EQ_VALUE}>{whereOperatorConstants.NOT_EQ_LABEL}</option>
+                </Input>
+              </div>
+              <div className="col-xs-4">
+                <Select
+                  name="whereValues"
+                  value={this.props.value.get('whereValues')}
+                  multi={true}
+                  disabled={this.props.disabled}
+                  allowCreate={true}
+                  placeholder="Add a value..."
+                  emptyStrings={true}
+                  onChange={this._handleChangeWhereValues}
+                />
+              </div>
+            </div>
+            <label className="control-label">Data types</label>
+          </div>
+          <DatatypeForm
+            datatypes={this.getDatatypes()}
+            columns={this._getFilteredColumns()}
+            datatypesMap={SnowflakeDataTypesMapping}
+            disabled={this.props.disabled || !this.props.value.get('source')}
+            onChange={this._handleChangeDataTypes}
+          />
+        </PanelWithDetails>
       </div>
     );
   }
