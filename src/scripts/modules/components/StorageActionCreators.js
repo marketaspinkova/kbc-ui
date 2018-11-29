@@ -186,6 +186,29 @@ module.exports = {
       });
   },
 
+  deleteBucket: (bucketId, force) => {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.STORAGE_BUCKET_DELETE,
+      bucketId: bucketId
+    });
+    return storageApi.deleteBucket(bucketId, { force }).then(() => {
+      dispatcher.handleViewAction({
+        type: constants.ActionTypes.STORAGE_BUCKET_DELETE_SUCCESS,
+        bucketId: bucketId
+      });
+      return ApplicationActionCreators.sendNotification({
+        message: `Bucket ${bucketId} has been removed`
+      });
+    })
+      .catch(error => {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_BUCKET_DELETE_ERROR,
+          bucketId: bucketId
+        });
+        throw error;
+      });
+  },
+
   createTable: function(bucketId, params) {
     var self;
     self = this;
@@ -219,6 +242,34 @@ module.exports = {
         }
         dispatcher.handleViewAction({
           type: constants.ActionTypes.STORAGE_TABLE_CREATE_ERROR,
+          bucketId: bucketId,
+          errors: error
+        });
+        throw message;
+      });
+  },
+
+  createAliasTable: function(bucketId, params) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.STORAGE_ALIAS_TABLE_CREATE,
+      bucketId: bucketId,
+      params: params
+    });
+    return storageApi.createAliasTable(bucketId, params).then(() => {
+      dispatcher.handleViewAction({
+        type: constants.ActionTypes.STORAGE_ALIAS_TABLE_CREATE_SUCCESS,
+        bucketId: bucketId
+      });
+      return this.loadTablesForce();
+    })
+      .catch(function(error) {
+        var message;
+        message = error;
+        if (error.message) {
+          message = error.message;
+        }
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_ALIAS_TABLE_CREATE_ERROR,
           bucketId: bucketId,
           errors: error
         });
