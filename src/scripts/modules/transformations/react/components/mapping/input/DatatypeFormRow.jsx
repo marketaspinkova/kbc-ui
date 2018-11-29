@@ -1,5 +1,5 @@
 import React from 'react';
-import {Input} from './../../../../../../react/common/KbcBootstrap';
+import { FormControl, Checkbox } from 'react-bootstrap';
 import Select from 'react-select';
 
 export default React.createClass({
@@ -98,28 +98,26 @@ export default React.createClass({
           />
         </td>
         <td>
-          {
-            this.lengthEnabled()
-              ? <Input
-                name={this.props.datatype.get('column') + '_length'}
-                type="text"
-                size={15}
-                value={this.props.datatype.get('length')}
-                onChange={this.handleLengthChange}
-                disabled={this.props.disabled || !this.lengthEnabled()}
-                placeholder="Length, eg. 38,0"
-              />
-              : null
-          }
+          {this.lengthEnabled() && (
+            <FormControl
+              name={this.props.datatype.get('column') + '_length'}
+              type="text"
+              size={15}
+              value={this.props.datatype.get('length')}
+              onChange={this.handleLengthChange}
+              disabled={this.props.disabled || !this.lengthEnabled()}
+              placeholder="Length, eg. 38,0"
+            />
+          )}
         </td>
         <td>
-          <Input
+          <Checkbox
             name={this.props.datatype.get('column') + '_nullable'}
-            type="checkbox"
             checked={this.props.datatype.get('convertEmptyValuesToNull')}
             onChange={this.handleNullableChange}
-            label={this.getCheckboxLabel()}
-          />
+          >
+            {this.getCheckboxLabel()}
+          </Checkbox>
         </td>
       </tr>
     );
