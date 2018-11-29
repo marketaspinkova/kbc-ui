@@ -137,12 +137,12 @@ export function createActions(componentId) {
       && table.get('name') === targetTable.get('tableName')
     );
     if (!matchedTable) {
-      return [];
+      return Map();
     }
     if (matchedTable.get('columns')) {
       return matchedTable.get('columns').filter((column) => column.get('primaryKey') === true);
     } else {
-      return [];
+      return Map();
     }
   }
 
