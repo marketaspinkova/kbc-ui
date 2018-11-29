@@ -15,7 +15,6 @@ import NewOrchestrationHeaderButton from './react/components/NewOrchestionHeader
 import OrchestrationReloaderButton from './react/components/OrchestrationReloaderButton';
 import JobReloaderButton from './react/components/JobReloaderButton';
 import JobDetailButtons from './react/components/JobDetailButtons';
-import OrchestrationTasksButtons from './react/components/OrchestrationTasksButtons';
 import OrchestrationNotificationsButtons from './react/components/OrchestrationNotificationsButtons';
 import OrchestrationNameEdit from './react/components/OrchestrationNameEdit';
 
@@ -92,8 +91,7 @@ const routes = {
           name: 'orchestrationTasks',
           title: 'Tasks',
           path: 'tasks',
-          handler: OrchestrationTasks,
-          headerButtonsHandler: OrchestrationTasksButtons
+          handler: OrchestrationTasks
         },
         {
           name: 'orchestrationNotifications',
