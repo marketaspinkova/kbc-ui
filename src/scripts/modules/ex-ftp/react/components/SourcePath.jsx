@@ -54,10 +54,13 @@ export default React.createClass({
           }}
           placeholder="folder/*.csv"
           disabled={this.props.disabled}
-          help={(<span>Exact path to file or glob syntax. Use absolute path for FTP(s) connection and relative for SFTP connection.<br/>
-            - <code>**/*.csv</code> will download all CSV files in all subdirectories <br/>
-            - <code>files/*.csv</code> will download all CSV files in files/ directory <br/>
-            - <code>files/directory/file.txt</code> will download exact TXT file</span>)}
+          help={(<span>Exact path to file or glob syntax. Use absolute path for FTP(s) connection and relative for SFTP connection.
+            <ul>
+              <li><code>**/*.csv</code> will download all CSV files in all subdirectories</li>
+              <li><code>files/*.csv</code> will download all CSV files in files/ directory </li>
+              <li><code>files/directory/file.txt</code> will download exact TXT file)}</li>
+            </ul>
+          </span>)}
         />
         <Input
           type="checkbox"
