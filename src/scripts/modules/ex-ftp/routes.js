@@ -30,10 +30,6 @@ const routeSettings = {
   },
   row: {
     hasState: false,
-    name: {
-      singular: 'path',
-      plural: 'path'
-    },
     sections: [
       {
         render: SourcePathSection,
