@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import { ExternalLink } from '@keboola/indigo-ui';
 // import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import JSONSchemaEditor from './JSONSchemaEditor';
 import TemplateSelector from './ConfigurationTemplateSelector';
@@ -87,7 +88,7 @@ export default React.createClass({
     return (
       <span>
         <p className="kbc-template-editor-toggle"><a onClick={this.switchToTemplateEditor}><small>Switch to templates</small></a></p>
-        <p>JSON configuration uses <a href="https://developers.keboola.com/extend/generic-extractor/">Generic extractor</a> format.</p>
+        <p>JSON configuration uses <ExternalLink href="https://developers.keboola.com/extend/generic-extractor/">Generic extractor</ExternalLink> format.</p>
         <CodeMirror
           ref="string"
           value={this.props.editingString}

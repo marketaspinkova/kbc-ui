@@ -66,18 +66,6 @@ export default React.createClass({
     };
   },
 
-  documentationLink() {
-    if (this.state.component.get('documentationUrl')) {
-      return (
-        <span>
-          See the <a href={this.state.component.get('documentationUrl')}>documentation</a> for more details.
-        </span>
-      );
-    } else {
-      return null;
-    }
-  },
-
   // handle configuration->Runtime runtime object
   runtimeConfiguration() {
     if (this.state.component.get('flags').includes('genericDockerUI-runtime')) {

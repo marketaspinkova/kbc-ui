@@ -2,7 +2,7 @@ import React from 'react';
 import { Map } from 'immutable';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { Button, ButtonGroup, DropdownButton, MenuItem } from 'react-bootstrap';
-import { Loader } from '@keboola/indigo-ui';
+import { Loader, ExternalLink } from '@keboola/indigo-ui';
 
 import Confirm from '../../../../react/common/Confirm';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
@@ -114,9 +114,9 @@ to the table and reset its export status. Are you sure you want to reset the tab
     const synchronizeTableText = (
       <span>
         {'Are you sure you want to execute the '}
-        <a href="https://developer.gooddata.com/article/maql-ddl#synchronize" target="_blank">
+        <ExternalLink href="https://developer.gooddata.com/article/maql-ddl#synchronize">
           synchronize
-        </a>
+        </ExternalLink>
         {' operation on the '}
         <strong>{this.state.table.getIn(['data', 'title'])}</strong>
         {' dataset?'}

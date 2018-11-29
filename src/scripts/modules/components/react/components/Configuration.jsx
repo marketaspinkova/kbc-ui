@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import { ExternalLink } from '@keboola/indigo-ui';
 import Edit from './ConfigurationEdit';
 import Immutable from 'immutable';
 import Markdown from '../../../../react/common/Markdown';
@@ -70,8 +71,8 @@ export default React.createClass({
     }
     if (this.props.showDocumentationLink) {
       return (
-        <p className="help-block">This component is configured manually. Read the <a href={this.props.documentationUrl}>configuration
-          documentation</a> for more information.</p>
+        <p className="help-block">This component is configured manually. Read the <ExternalLink href={this.props.documentationUrl}>configuration
+          documentation</ExternalLink> for more information.</p>
       );
     }
     return null;

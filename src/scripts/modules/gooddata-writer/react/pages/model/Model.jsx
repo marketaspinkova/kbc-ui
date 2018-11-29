@@ -1,4 +1,5 @@
 import React from 'react';
+import { ExternalLink } from '@keboola/indigo-ui';
 
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../../../stores/RoutesStore';
@@ -26,7 +27,7 @@ export default React.createClass({
             <p>
               This graph represents the model defined in Keboola Connection.
               {'To see the current model in GoodData, open the '}
-              <a href={this._gdModelLink()}>GoodData LDM Visualizer</a>
+              <ExternalLink href={this._gdModelLink()}>GoodData LDM Visualizer</ExternalLink>
             </p>
             <p className="well">
               <span className="label label-success">Dataset</span>{' '}

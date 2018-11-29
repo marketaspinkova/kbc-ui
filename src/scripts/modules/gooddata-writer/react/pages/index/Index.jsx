@@ -184,7 +184,7 @@ export default React.createClass({
               {writer.getIn(['project', 'ssoAccess']) && !writer.get('toDelete') && (
                 <li>
                   <form
-                    target="_blank noopener noreferrer"
+                    target="_blank"
                     method="POST"
                     action={this._getGoodDataLoginUrl()}
                   >

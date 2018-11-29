@@ -1,6 +1,7 @@
 import React from 'react';
 import Router, { Link } from 'react-router';
 import classnames from 'classnames';
+import { ExternalLink } from '@keboola/indigo-ui';
 import TransformationDetailStatic from './TransformationDetailStatic';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import TransformationsStore from '../../../stores/TransformationsStore';
@@ -233,10 +234,10 @@ export default React.createClass({
               </a>
             </li>
             <li>
-              <a href={this.resolveLinkDocumentationLink()}>
+              <ExternalLink href={this.resolveLinkDocumentationLink()}>
                 <span className="fa fa-question-circle fa-fw" />
                 {' Documentation'}
-              </a>
+              </ExternalLink>
             </li>
           </ul>
         </div>
