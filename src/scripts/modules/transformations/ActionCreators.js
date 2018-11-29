@@ -11,6 +11,7 @@ import Promise from 'bluebird';
 import _ from 'underscore';
 import parseQueries from './utils/parseQueries';
 import VersionActionCreators from '../components/VersionsActionCreators';
+import RowVersionActionCreators from '../configurations/RowVersionsActionCreators';
 import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
 import StringUtils from '../../utils/string';
 import {debounce} from 'lodash';
@@ -42,6 +43,16 @@ const updateTransformationEditingFieldQueriesStringDebouncer = debounce(function
   });
 }, 1000);
 
+const reloadVersions = function(configId, rowId) {
+  let promises = [
+    VersionActionCreators.loadVersionsForce('transformation', configId)
+  ];
+  if (rowId) {
+    promises.push(RowVersionActionCreators.loadVersionsForce('transformation', configId, rowId));
+  }
+  return Promise.all(promises);
+};
+
 module.exports = {
   createTransformationBucket: function(data) {
     var changeDescription, newBucket;
@@ -70,7 +81,7 @@ module.exports = {
         bucketId: bucketId,
         transformation: transformation
       });
-      VersionActionCreators.loadVersionsForce('transformation', bucketId);
+      reloadVersions(bucketId, transformation.id);
       return RoutesStore.getRouter().transitionTo('transformationDetail', {
         row: transformation.id,
         config: bucketId
@@ -160,8 +171,8 @@ module.exports = {
         transformationId: transformationId,
         bucketId: bucketId
       });
-      VersionActionCreators.loadVersionsForce('transformation', bucketId);
       InstalledComponentsActionCreators.loadComponentConfigsData('transformation');
+      return reloadVersions(bucketId);
     }).catch(function(error) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.TRANSFORMATION_DELETE_ERROR,
@@ -257,7 +268,7 @@ module.exports = {
         pendingAction: pendingAction,
         data: response
       });
-      return VersionActionCreators.loadVersionsForce('transformation', bucketId);
+      return reloadVersions(bucketId, transformationId);
     }).catch(function(error) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.TRANSFORMATION_EDIT_SAVE_ERROR,
@@ -338,7 +349,7 @@ module.exports = {
         pendingAction: pendingAction,
         data: response
       });
-      return VersionActionCreators.loadVersionsForce('transformation', bucketId);
+      return reloadVersions(bucketId, transformationId);
     }).catch(function(error) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.TRANSFORMATION_EDIT_SAVE_ERROR,
@@ -373,7 +384,7 @@ module.exports = {
         pendingAction: pendingAction,
         data: response
       });
-      return VersionActionCreators.loadVersionsForce('transformation', bucketId);
+      return reloadVersions(bucketId, transformationId);
     }).catch(function(error) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.TRANSFORMATION_EDIT_SAVE_ERROR,
@@ -412,7 +423,7 @@ module.exports = {
         pendingAction: pendingAction,
         data: response
       });
-      return VersionActionCreators.loadVersionsForce('transformation', bucketId);
+      return reloadVersions(bucketId, transformationId);
     }).catch(function(error) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.TRANSFORMATION_EDIT_SAVE_ERROR,
@@ -456,7 +467,7 @@ module.exports = {
         editingId: editingId,
         data: response
       });
-      return VersionActionCreators.loadVersionsForce('transformation', bucketId);
+      return reloadVersions(bucketId, transformationId);
     }).catch(function(error) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.TRANSFORMATION_EDIT_SAVE_ERROR,
@@ -489,7 +500,7 @@ module.exports = {
         data: response,
         pendingAction: pendingAction
       });
-      return VersionActionCreators.loadVersionsForce('transformation', bucketId);
+      return reloadVersions(bucketId, transformationId);
     }).catch(function(error) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.TRANSFORMATION_EDIT_SAVE_ERROR,

@@ -14,6 +14,36 @@ let _store = Map();
 const JobsStore = StoreUtils.createStore({
   getJobs(componentId, configurationId) {
     return _store.getIn([componentId, configurationId], new JobsRecord());
+  },
+
+  getRowJobs(componentId, configurationId, rowId) {
+    const configJobs = _store.getIn([componentId, configurationId], new JobsRecord());
+    return configJobs.update('jobs', function(jobs) {
+      return jobs.filter(function(job) {
+        if (!job.hasIn(['params', 'row'])) {
+          return true;
+        }
+        if (job.getIn(['params', 'row']) === rowId) {
+          return true;
+        }
+        return false;
+      });
+    });
+  },
+
+  getTransformationJobs(configurationId, rowId) {
+    const configJobs = _store.getIn(['transformation', configurationId], new JobsRecord());
+    return configJobs.update('jobs', function(jobs) {
+      return jobs.filter(function(job) {
+        if (job.getIn(['params', 'transformations']).count() === 0) {
+          return true;
+        }
+        if (job.getIn(['params', 'transformations', 0]) === rowId) {
+          return true;
+        }
+        return false;
+      });
+    });
   }
 });
 

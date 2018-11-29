@@ -7,6 +7,7 @@ import RoutesStore from '../../../../stores/RoutesStore';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import ConfigurationsStore from '../../ConfigurationsStore';
 import TablesStore from '../../../components/stores/StorageTablesStore';
+import LatestJobsStore from '../../../jobs/stores/LatestJobsStore';
 
 // actions
 import Actions from '../../ConfigurationRowsActionCreators';
@@ -21,13 +22,14 @@ import JsonConfiguration from '../components/JsonConfiguration';
 import SaveButtons from '../../../../react/common/SaveButtons';
 import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
 import LatestRowVersions from '../components/SidebarRowVersionsWrapper';
+import LatestJobs from '../../../components/react/components/SidebarJobs';
 
 // adapters
 import isParsableConfiguration from '../../utils/isParsableConfiguration';
 import sections from '../../utils/sections';
 
 export default React.createClass({
-  mixins: [createStoreMixin(Store, TablesStore)],
+  mixins: [createStoreMixin(Store, TablesStore, LatestJobsStore)],
 
   getStateFromStores() {
     const settings = RoutesStore.getRouteSettings();
@@ -97,7 +99,9 @@ export default React.createClass({
       hasState: !Store.get(componentId, configurationId, rowId)
         .get('state', Immutable.Map())
         .isEmpty(),
-      isClearStatePending: Store.getPendingActions(componentId, configurationId, rowId).has('clear-state')
+      isClearStatePending: Store.getPendingActions(componentId, configurationId, rowId).has('clear-state'),
+
+      latestJobs: LatestJobsStore.getRowJobs(componentId, configurationId, rowId)
     };
   },
 
@@ -196,6 +200,13 @@ export default React.createClass({
             rowId={this.state.rowId}
           />
           <ul className="nav nav-stacked">{this.renderActions()}</ul>
+          <LatestJobs
+            componentId={this.state.componentId}
+            configId={this.state.configurationId}
+            rowId={this.state.rowId}
+            jobs={this.state.latestJobs}
+            limit={3}
+          />
           <LatestRowVersions
             componentId={this.state.componentId}
             configId={this.state.configurationId}

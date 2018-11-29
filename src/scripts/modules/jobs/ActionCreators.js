@@ -160,7 +160,7 @@ export default {
 
     const query = `(component:${componentId} OR params.component:${componentId}) AND params.config:${configurationId}`;
     return jobsApi
-      .getJobsParametrized(query, 10, 0)
+      .getJobsParametrized(query, 30, 0)
       .then(jobs => {
         this.reloadSapiTablesTrigger(jobs);
 

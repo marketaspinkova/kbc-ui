@@ -33,7 +33,7 @@ export default React.createClass({
           {this.state.isLoadMore && (
             <div className="kbc-block-with-padding">
               <button onClick={this._loadMore} className="btn btn-default btn-large text-center">
-                More..
+                More...
               </button>
             </div>
           )}

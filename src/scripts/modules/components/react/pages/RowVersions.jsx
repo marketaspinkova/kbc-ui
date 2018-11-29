@@ -1,34 +1,31 @@
 import React from 'react';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
-import VersionsStore from '../../stores/VersionsStore';
-import ComponentsStore from '../../stores/ComponentsStore';
+import VersionsStore from '../../../configurations/RowVersionsStore';
 import RoutesStore from '../../../../stores/RoutesStore';
 import VersionRow from '../components/VersionRow';
 import { getPreviousVersion } from '../../../../utils/VersionsDiffUtils';
 import { Table } from 'react-bootstrap';
-import {SearchBar} from '@keboola/indigo-ui';
-import VersionsActionCreators from '../../VersionsActionCreators';
+import { SearchBar } from '@keboola/indigo-ui';
+import VersionsActionCreators from '../../../configurations/RowVersionsActionCreators';
 import fuzzy from 'fuzzy';
 import immutableMixin from 'react-immutable-render-mixin';
 import { Map } from 'immutable';
-import createVersionOnRollback from '../../../../utils/createVersionOnRollback';
-import createVersionOnCopy from '../../../../utils/createVersionOnCopy';
+import createRowVersionOnRollback from '../../../configurations/utils/createRowVersionOnRollback';
 import simpleMatch from '../../../../utils/simpleMatch';
 
 const ITEMS_PER_PAGE = 20;
 
-export default function(componentIdValue, configIdParam = 'config', readOnlyMode = false) {
+export default function(componentIdValue, readOnlyMode = false) {
   return React.createClass({
     mixins: [createStoreMixin(VersionsStore), immutableMixin],
 
     getStateFromStores() {
-      var versions, filteredVersions, query;
-      const configId = RoutesStore.getCurrentRouteParam(configIdParam);
+      const configId = RoutesStore.getCurrentRouteParam('config');
       const componentId = RoutesStore.getCurrentRouteParam('component') || componentIdValue;
-      const component = ComponentsStore.getComponent(componentId);
-      versions = VersionsStore.getVersions(componentId, configId);
-      query = VersionsStore.getSearchFilter(componentId, configId);
-      filteredVersions = versions;
+      const rowId = RoutesStore.getCurrentRouteParam('row');
+      const versions = VersionsStore.getVersions(componentId, configId, rowId);
+      const query = VersionsStore.getSearchFilter(componentId, configId, rowId);
+      let filteredVersions = versions;
       if (query && query !== '') {
         filteredVersions = versions.filter(function(version) {
           return (
@@ -42,15 +39,15 @@ export default function(componentIdValue, configIdParam = 'config', readOnlyMode
       return {
         componentId: componentId,
         configId: configId,
+        rowId: rowId,
         versions: versions,
-        versionsConfigs: VersionsStore.getVersionsConfigs(componentId, configId),
+        versionsConfigs: VersionsStore.getVersionsConfigs(componentId, configId, rowId),
         filteredVersions: filteredVersions,
-        newVersionNames: VersionsStore.getNewVersionNames(componentId, configId),
-        query: VersionsStore.getSearchFilter(componentId, configId),
-        isPending: VersionsStore.isPendingConfig(componentId, configId),
-        pendingActions: VersionsStore.getPendingVersions(componentId, configId),
-        pendingMultiLoad: VersionsStore.getPendingMultiLoad(componentId, configId),
-        deprecated: component.get('flags').includes('deprecated')
+        newVersionNames: VersionsStore.getNewVersionNames(componentId, configId, rowId),
+        query: VersionsStore.getSearchFilter(componentId, configId, rowId),
+        isPending: VersionsStore.isPendingConfig(componentId, configId, rowId),
+        pendingActions: VersionsStore.getPendingVersions(componentId, configId, rowId),
+        pendingMultiLoad: VersionsStore.getPendingMultiLoad(componentId, configId, rowId)
       };
     },
 
@@ -86,16 +83,14 @@ export default function(componentIdValue, configIdParam = 'config', readOnlyMode
             isRollbackPending={this.state.pendingActions.getIn([version.get('version'), 'rollback'], false)}
             isRollbackDisabled={readOnlyMode || this.state.isPending}
             hideRollback={readOnlyMode || (i === 0)}
-            hideCopy={readOnlyMode || this.state.deprecated}
             isDiffPending={isMultiPending}
             isDiffDisabled={this.state.isPending || isMultiPending}
             previousVersion={previousVersion}
             previousVersionConfig={previousVersionConfig}
             onPrepareVersionsDiffData={() => this.prepareVersionsDiffData(version, previousVersion)}
             isLast={allVersions.first().get('version') === version.get('version')}
-            onChangeName={(name) => VersionsActionCreators.changeNewVersionName(this.state.componentId, this.state.configId, version.get('version'), name)}
-            onCopy={createVersionOnCopy(this.state.componentId, this.state.configId, version, this.state.newVersionNames.get(version.get('version')))}
-            onRollback={createVersionOnRollback(this.state.componentId, this.state.configId, version)}
+            onRollback={createRowVersionOnRollback(this.state.componentId, this.state.configId, this.state.rowId, version.get('version'))}
+            hideCopy={true}
           />
         );
       }, this).toArray();
@@ -103,13 +98,13 @@ export default function(componentIdValue, configIdParam = 'config', readOnlyMode
 
 
     prepareVersionsDiffData(version1, version2) {
-      const configId = this.state.configId;
       return VersionsActionCreators.loadTwoComponentConfigVersions(
-        this.state.componentId, configId, version1.get('version'), version2.get('version'));
+        this.state.componentId, this.state.configId, this.state.rowId, version1.get('version'), version2.get('version')
+      );
     },
 
     onSearchChange(query) {
-      VersionsActionCreators.changeFilter(this.state.componentId, this.state.configId, query);
+      VersionsActionCreators.changeFilter(this.state.componentId, this.state.configId, this.state.rowId, query);
     },
 
     onShowMore() {

@@ -16,12 +16,14 @@ import TransformationBucketButtons from './react/components/TransformationBucket
 import TransformationBucketsStore from './stores/TransformationBucketsStore';
 import TransformationsStore from './stores/TransformationsStore';
 import createVersionsPageRoute from '../../modules/components/utils/createVersionsPageRoute';
+import createRowVersionsPageRoute from '../../modules/components/utils/createRowVersionsPageRoute';
 import ComponentNameEdit from '../components/react/components/ComponentName';
 import TransformationNameEdit from './react/components/TransformationNameEditField';
 import ApplicationsStore from '../../stores/ApplicationStore';
 import JobsActionCreators from '../jobs/ActionCreators';
 import injectProps from '../components/react/injectProps';
 import { createTablesRoute } from '../table-browser/routes';
+import rowVersionsActions from '../configurations/RowVersionsActionCreators';
 
 const routes = {
   name: 'transformations',
@@ -63,7 +65,7 @@ const routes = {
       },
 
       childRoutes: [
-        createVersionsPageRoute('transformation', 'config'),
+        createVersionsPageRoute('transformation', 'config', 'transformation-versions'),
         {
           name: 'transformationDetail',
           path: 'transformation/:row',
@@ -89,9 +91,17 @@ const routes = {
             () => {
               StorageActionCreators.loadTables();
               return StorageActionCreators.loadBuckets();
-            }
+            },
+            (params) => rowVersionsActions.loadVersions('transformation', params.config, params.row)
           ],
+          poll: {
+            interval: 10,
+            action(params) {
+              return JobsActionCreators.loadComponentConfigurationLatestJobs('transformation', params.config);
+            }
+          },
           childRoutes: [
+            createRowVersionsPageRoute('transformation'),
             createTablesRoute('transformationDetail'),
             {
               name: 'transformationDetailGraph',
