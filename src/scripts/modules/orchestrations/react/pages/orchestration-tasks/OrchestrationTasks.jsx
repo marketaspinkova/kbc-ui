@@ -108,7 +108,9 @@ const OrchestrationTasks = React.createClass({
             tasks={this.state.tasks}
             components={this.state.components}
             disabled={this.state.isSaving}
+            onChange={this._handleTasksChange}
             onTaskDelete={this._handleTaskDelete}
+            onTaskUpdate={this._handleTaskUpdate}
             updateLocalState={(path, data) => {
               return this.updateLocalState(['taskstable'].concat(path), data);
             }}
@@ -169,7 +171,7 @@ const OrchestrationTasks = React.createClass({
     const phase = this.state.tasks.find(item => item.get('id') === id);
     const currentIndex = this.state.tasks.findIndex(item => item.get('id') === id);
     const afterIndex = this.state.tasks.findIndex(item => item.get('id') === afterId);
-    return this.state.onChange(this.state.tasks.splice(currentIndex, 1).splice(afterIndex, 0, phase));
+    return this._handleTasksChange(this.state.tasks.splice(currentIndex, 1).splice(afterIndex, 0, phase));
   },
 
   _handleTaskAdd(component, configuration, phaseId) {
