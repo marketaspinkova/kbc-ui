@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import DeleteButton from '../../../../react/common/DeleteButton';
-import Finished from '../../../../react/common/Finished';
+import { Finished } from '@keboola/indigo-ui';
 import Tooltip from '../../../../react/common/Tooltip';
 import RestoreConfigurationButton from '../../../../react/common/RestoreConfigurationButton';
 import InstalledComponentsActionCreators from '../../../components/InstalledComponentsActionCreators';

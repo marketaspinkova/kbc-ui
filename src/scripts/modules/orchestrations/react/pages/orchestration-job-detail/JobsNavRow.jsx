@@ -1,6 +1,6 @@
 import React from 'react';
 import JobStatusCircle from '../../../../../react/common/JobStatusCircle';
-import FinishedWithIcon from '../../../../../react/common/FinishedWithIcon';
+import { Finished } from '@keboola/indigo-ui';
 import DurationWithIcon from '../../../../../react/common/DurationWithIcon';
 import ImmutableRendererMixin from 'react-immutable-render-mixin';
 import { Link } from 'react-router';
@@ -44,7 +44,7 @@ export default React.createClass({
                 )}
               </span>
               <span className="kb-info clearfix pull-right">
-                <FinishedWithIcon endTime={this.props.job.get('endTime')} />
+                <Finished showIcon endTime={this.props.job.get('endTime')} />
               </span>
             </span>
           </span>

@@ -1,6 +1,6 @@
 import React from 'react';
 import DurationWithIcon from '../../../../../react/common/DurationWithIcon';
-import FinishedWithIcon from '../../../../../react/common/FinishedWithIcon';
+import { Finished } from '@keboola/indigo-ui';
 import JobStatusCircle from '../../../../../react/common/JobStatusCircle';
 import { Link } from 'react-router';
 import OrchestrationActiveButton from '../../components/OrchestrationActiveButton';
@@ -61,7 +61,7 @@ export default React.createClass({
         <span className="td">
           {lastExecutedJob &&
             lastExecutedJob.get('startTime') && (
-            <FinishedWithIcon endTime={lastExecutedJob && lastExecutedJob.get('startTime')} />
+            <Finished showIcon endTime={lastExecutedJob && lastExecutedJob.get('startTime')} />
           )}
         </span>
         <span className="td">{duration}</span>
