@@ -22,13 +22,13 @@ export default React.createClass({
 
   _renderPopover() {
     return (
-      <Popover title={`Preview - ${this.props.columnName}`}>
+      <Popover id={`data-preview-${this.props.columnName}`} title={`Preview - ${this.props.columnName}`}>
         {!this.props.tableData ? (
           'Loading data ...'
         ) : (
           <ul>
             {this._getColumnValues()
-              .map((value) => <li>{value}</li>)
+              .map((value, index) => <li key={index}>{value}</li>)
               .toArray()}
           </ul>
         )}

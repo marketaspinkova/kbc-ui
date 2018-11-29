@@ -23,7 +23,7 @@ export default React.createClass({
           </tr>
         </thead>
         <tbody>
-          {this.props.dimensions.map(this.renderRow)}
+          {this.props.dimensions.map(this.renderRow).toArray()}
         </tbody>
       </table>
     );
