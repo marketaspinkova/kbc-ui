@@ -51,10 +51,7 @@ const OrchestrationTasks = React.createClass({
   },
 
   componentDidMount() {
-    // start edit if orchestration is empty
-    if (!this.state.isEditing && this.state.tasks.count() === 0) {
-      return OrchestrationsActionCreators.startOrchestrationTasksEdit(this.state.orchestration.get('id'));
-    }
+    return OrchestrationsActionCreators.startOrchestrationTasksEdit(this.state.orchestration.get('id'));
   },
 
   componentWillReceiveProps() {
