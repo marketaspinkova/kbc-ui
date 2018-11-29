@@ -30,7 +30,7 @@ export default {
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Orchestration Overview',
-      'markdown': 'The orchestrator configuration consists of three separate parts in which you will create the desired **sequence** of the tasks you wish to execute. You will set your execution **schedule**, and select **notifications** you want to be sent to you in case of errors, delays, etc. <br/><br/> Start by clicking on <span class="btn btn-link btn-sm"> <i class="fa fa-edit"></i> Configure Tasks</span> to select and order the tasks.',
+      'markdown': 'The orchestrator configuration consists of three separate parts in which you will create the desired **sequence** of the tasks you wish to execute. You will set your execution **schedule**, and select **notifications** you want to be sent to you in case of errors, delays, etc. <br/><br/> Start by clicking on <span class="btn btn-primary btn-sm"> <i class="fa fa-edit"></i> Configure Tasks</span> to select and order the tasks.',
       'media': '',
       'mediaType': '',
       'route': {
@@ -71,7 +71,7 @@ Then click <span class="btn btn-success btn-sm">Save</span> in the upper right c
       'markdown': 'Now return to the orchestration overview and choose how often, on what days and at what time you want the configured tasks to run:' +
       `
 - Click on the name of your orchestration in the top navigation (Orchestrations > **Guide orchestration** > Tasks). 
-- Then click on <span class="btn btn-link btn-sm"> <i class="fa fa-edit"></i> Edit schedule</span>.
+- Then click on <span class="btn btn-primary btn-sm"> <i class="fa fa-edit"></i> Edit schedule</span>.
 - Choose whether you want to run the tasks every hour, every day, month, etc. Notice the generated **Next Schedules** below, telling you when the next orchestrations will run in your local time.
 - Click on <span class="btn btn-success btn-sm">Save</span>.
       
@@ -92,9 +92,9 @@ Then click <span class="btn btn-success btn-sm">Save</span> in the upper right c
       'title': 'Configure Notifications',
       'markdown': 'Finally, to receive email notifications about errors, warnings and processing delays, enter the email address where you want notifications about your scheduled tasks to be sent.' +
       `
-- Click on <span class="btn btn-link btn-sm"> <i class="fa fa-edit"></i> Configure Notifications</span>.
+- Click on <span class="btn btn-primary btn-sm"> <i class="fa fa-edit"></i> Configure Notifications</span>.
 - Then click on <span class="btn btn-success btn-sm">Edit Notifications</span> in the upper right corner.
-- Add your email address for at least one notification type, and click the <span class="btn btn-success btn-sm"> + </span> button. It moves the address to the subscriber field above. You can add as many recipients as you want.
+- Add your email address for at least one notification type. You can add as many recipients as you want.
 - Click on <span class="btn btn-success btn-sm">Save</span> in the upper right corner.
 
 `,
