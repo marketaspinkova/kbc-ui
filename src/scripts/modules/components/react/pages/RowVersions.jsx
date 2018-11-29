@@ -83,7 +83,6 @@ export default function(componentIdValue, readOnlyMode = false) {
             isRollbackPending={this.state.pendingActions.getIn([version.get('version'), 'rollback'], false)}
             isRollbackDisabled={readOnlyMode || this.state.isPending}
             hideRollback={readOnlyMode || (i === 0)}
-            hideCopy={readOnlyMode || this.state.deprecated}
             isDiffPending={isMultiPending}
             isDiffDisabled={this.state.isPending || isMultiPending}
             previousVersion={previousVersion}
