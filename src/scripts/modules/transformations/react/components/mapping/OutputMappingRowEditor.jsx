@@ -1,7 +1,7 @@
 import React from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import Immutable from 'immutable';
-import { Form, FormGroup, FormControl, ControlLabel, Col, HelpBlock } from 'react-bootstrap';
+import { FormGroup, FormControl } from 'react-bootstrap';
 import { Input } from '../../../../../react/common/KbcBootstrap';
 import AutosuggestWrapper from './AutoSuggestWrapper';
 import Select from '../../../../../react/common/Select';
@@ -160,9 +160,9 @@ export default React.createClass({
 
   render() {
     return (
-      <Form horizontal>
+      <div className="form-horizontal clearfix">
         {!this.props.definition.has('source') && (
-          <span>
+          <div className="row col-md-12">
             {this.props.backend === 'docker' ? (
               <Input
                 type="text"
@@ -198,120 +198,124 @@ export default React.createClass({
                 onFocus={this._handleFocusSource}
                 onBlur={() => this.setState({ overwriteDestination: false })}
                 onChange={this._handleChangeSource}
-                labelClassName="col-sm-2"
-                wrapperClassName="col-sm-10"
+                labelClassName="col-xs-2"
+                wrapperClassName="col-xs-10"
               />
             )}
-          </span>
+          </div>
         )}
-
-        <FormGroup>
-          <Col sm={2} componentClass={ControlLabel}>
-            Destination
-          </Col>
-          <Col sm={10}>
-            <DestinationTableSelector
-              currentSource={this.props.value.get('source')}
-              updatePart={this._updateDestinationPart}
-              disabled={false}
-              parts={this._parseDestination().parts}
-              tables={this.props.tables}
-              buckets={this.props.buckets}
-              placeholder={
-                'Storage table where the source table data will be loaded to - you can create a new table or use an existing one.'
-              }
-            />
-          </Col>
-        </FormGroup>
-
-        <FormGroup className="form-group">
-          <Col sm={2} componentClass={ControlLabel} />
-          <Col sm={10}>
-            <Input
-              standalone={true}
-              name="incremental"
-              type="checkbox"
-              label="Incremental"
-              checked={this.props.value.get('incremental')}
-              disabled={this.props.disabled}
-              onChange={this._handleChangeIncremental}
-              help="If the destination table exists in Storage, output mapping does not overwrite the table, it only appends the data to it. Uses incremental write to Storage."
-            />
-          </Col>
-        </FormGroup>
-        <FormGroup>
-          <Col sm={2} componentClass={ControlLabel}>
-            Primary key
-          </Col>
-          <Col sm={10}>
-            <Select
-              name="primaryKey"
-              value={this.props.value.get('primaryKey')}
-              multi={true}
-              trimMultiCreatedValues={true}
-              disabled={this.props.disabled}
-              allowCreate={this._getColumns().size === 0}
-              delimiter=","
-              placeholder="Add a column to primary key..."
-              emptyStrings={false}
-              noResultsText="No matching column found"
-              help="Primary key of the table in Storage. If the table already exists, primary key must match."
-              onChange={this._handleChangePrimaryKey}
-              options={this._getColumns()
-                .map(option => ({
-                  label: option,
-                  value: option
-                }))
-                .toJS()}
-            />
-          </Col>
-        </FormGroup>
-        {(this.props.value.get('incremental') || this.props.value.get('deleteWhereColumn', '') !== '') && (
-          <FormGroup>
-            <Col sm={2} componentClass={ControlLabel}>
-              Delete rows
-            </Col>
-            <Col sm={4}>
-              <AutosuggestWrapper
-                suggestions={this._getColumns()}
-                placeholder="Select column"
-                value={this.props.value.get('deleteWhereColumn', '')}
-                onChange={this._handleChangeDeleteWhereColumn}
+        <div className="row col-md-12">
+          <div className="form-group">
+            <label className="col-xs-2 control-label">Destination</label>
+            <div className="col-xs-10">
+              <DestinationTableSelector
+                currentSource={this.props.value.get('source')}
+                updatePart={this._updateDestinationPart}
+                disabled={false}
+                parts={this._parseDestination().parts}
+                tables={this.props.tables}
+                buckets={this.props.buckets}
+                placeholder={
+                  'Storage table where the source table data will be loaded to - you can create a new table or use an existing one.'
+                }
               />
-            </Col>
-            <Col sm={2}>
-              <FormGroup className="no-bottom-margin">
-                <FormControl
-                  componentClass="select"
-                  name="deleteWhereOperator"
-                  value={this.props.value.get('deleteWhereOperator')}
+            </div>
+          </div>
+        </div>
+        <div className="row col-md-12">
+          <div className="form-horizontal clearfix">
+            <div className="form-group">
+              <label className="control-label col-xs-2">
+                <span />
+              </label>
+              <div className="col-xs-10">
+                <Input
+                  standalone={true}
+                  name="incremental"
+                  type="checkbox"
+                  label="Incremental"
+                  checked={this.props.value.get('incremental')}
                   disabled={this.props.disabled}
-                  onChange={this._handleChangeDeleteWhereOperator}
-                >
-                  <option value={whereOperatorConstants.EQ_VALUE}>{whereOperatorConstants.EQ_LABEL}</option>
-                  <option value={whereOperatorConstants.NOT_EQ_VALUE}>{whereOperatorConstants.NOT_EQ_LABEL}</option>
-                </FormControl>
-              </FormGroup>
-            </Col>
-            <Col sm={4}>
-              <Select
-                name="deleteWhereValues"
-                value={this.props.value.get('deleteWhereValues')}
-                multi={true}
-                disabled={this.props.disabled}
-                allowCreate={true}
-                delimiter=","
-                placeholder="Add a value..."
-                emptyStrings={true}
-                onChange={this._handleChangeDeleteWhereValues}
-              />
-            </Col>
-            <Col sm={10} smOffset={2}>
-              <HelpBlock>Delete matching rows in the destination table before importing the result</HelpBlock>
-            </Col>
-          </FormGroup>
-        )}
-      </Form>
+                  onChange={this._handleChangeIncremental}
+                  help="If the destination table exists in Storage, output mapping does not overwrite the table, it only appends the data to it. Uses incremental write to Storage."
+                />
+              </div>
+            </div>
+            <div className="form-group">
+              <label className="control-label col-xs-2">
+                <span>Primary key</span>
+              </label>
+              <div className="col-xs-10">
+                <Select
+                  name="primaryKey"
+                  value={this.props.value.get('primaryKey')}
+                  multi={true}
+                  trimMultiCreatedValues={true}
+                  disabled={this.props.disabled}
+                  allowCreate={this._getColumns().size === 0}
+                  delimiter=","
+                  placeholder="Add a column to primary key..."
+                  emptyStrings={false}
+                  noResultsText="No matching column found"
+                  help="Primary key of the table in Storage. If the table already exists, primary key must match."
+                  onChange={this._handleChangePrimaryKey}
+                  options={this._getColumns()
+                    .map(option => ({
+                      label: option,
+                      value: option
+                    }))
+                    .toJS()}
+                />
+              </div>
+            </div>
+            {(this.props.value.get('incremental') || this.props.value.get('deleteWhereColumn', '') !== '') && (
+              <div className="form-group">
+                <label className="col-xs-2 control-label">Delete rows</label>
+                <div className="col-xs-4">
+                  <AutosuggestWrapper
+                    suggestions={this._getColumns()}
+                    placeholder="Select column"
+                    value={this.props.value.get('deleteWhereColumn', '')}
+                    onChange={this._handleChangeDeleteWhereColumn}
+                  />
+                </div>
+                <div className="col-xs-2">
+                  <FormGroup className="no-bottom-margin">
+                    <FormControl
+                      componentClass="select"
+                      name="deleteWhereOperator"
+                      value={this.props.value.get('deleteWhereOperator')}
+                      disabled={this.props.disabled}
+                      onChange={this._handleChangeDeleteWhereOperator}
+                    >
+                      <option value={whereOperatorConstants.EQ_VALUE}>{whereOperatorConstants.EQ_LABEL}</option>
+                      <option value={whereOperatorConstants.NOT_EQ_VALUE}>
+                        {whereOperatorConstants.NOT_EQ_LABEL}
+                      </option>
+                    </FormControl>
+                  </FormGroup>
+                </div>
+                <div className="col-xs-4">
+                  <Select
+                    name="deleteWhereValues"
+                    value={this.props.value.get('deleteWhereValues')}
+                    multi={true}
+                    disabled={this.props.disabled}
+                    allowCreate={true}
+                    delimiter=","
+                    placeholder="Add a value..."
+                    emptyStrings={true}
+                    onChange={this._handleChangeDeleteWhereValues}
+                  />
+                </div>
+                <div className="col-xs-10 col-xs-offset-2 help-block bottom-margin">
+                    Delete matching rows in the destination table before importing the result
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     );
   }
 });

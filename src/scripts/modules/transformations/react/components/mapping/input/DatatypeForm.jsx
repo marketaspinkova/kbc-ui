@@ -1,5 +1,6 @@
 import React from 'react';
-import {Table, HelpBlock, Checkbox} from 'react-bootstrap';
+import {Table} from 'react-bootstrap';
+import {Input} from './../../../../../../react/common/KbcBootstrap';
 import DatatypeFormRow from './DatatypeFormRow';
 
 export default React.createClass({
@@ -46,9 +47,9 @@ export default React.createClass({
   render() {
     if (this.props.disabled) {
       return (
-        <HelpBlock>
+        <div className="help-block">
           A source table must be selected to define data types.
-        </HelpBlock>
+        </div>
       );
     }
     return (
@@ -65,13 +66,15 @@ export default React.createClass({
               Length
             </th>
             <th>
-              <Checkbox
+              <Input
                 name="convertAll"
+                type="checkbox"
                 checked={this.state.convertAll}
                 onChange={this.handleConvertAllChange}
-              >
-                Set all empty values to <code>null</code>
-              </Checkbox>
+                label={
+                  <span>Set all empty values to <code>null</code></span>
+                }
+              />
             </th>
           </tr>
         </thead>

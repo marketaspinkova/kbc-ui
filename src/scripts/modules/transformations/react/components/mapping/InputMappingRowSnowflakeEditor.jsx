@@ -4,7 +4,6 @@ import _ from 'underscore';
 import Immutable from 'immutable';
 import {Input} from './../../../../../react/common/KbcBootstrap';
 
-import { Form, FormGroup, ControlLabel, Col, HelpBlock } from 'react-bootstrap';
 import Select from '../../../../../react/common/Select';
 import SapiTableSelector from '../../../../components/react/components/SapiTableSelector';
 import DatatypeForm from './input/DatatypeForm';
@@ -270,103 +269,111 @@ export default React.createClass({
 
   render() {
     return (
-      <Form horizontal>
-        <FormGroup>
-          <Col sm={2} componentClass={ControlLabel}>Source</Col>
-          <Col sm={10}>
-            <SapiTableSelector
-              value={this.props.value.get('source', '')}
+      <div>
+        <div className="form-horizontal clearfix">
+          <div className="row col-md-12">
+            <div className="form-group">
+              <label className="col-xs-2 control-label">Source</label>
+              <div className="col-xs-10">
+                <SapiTableSelector
+                  value={this.props.value.get('source', '')}
+                  disabled={this.props.disabled}
+                  placeholder="Source Table"
+                  onSelectTableFn={this._handleChangeSource}
+                  autoFocus={true}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="row col-md-12">
+            <Input
+              type="text"
+              label="Destination"
+              value={this.props.value.get('destination')}
               disabled={this.props.disabled}
-              placeholder="Source Table"
-              onSelectTableFn={this._handleChangeSource}
-              autoFocus={true}
+              placeholder="Destination table name in transformation DB"
+              onChange={this._handleChangeDestination}
+              labelClassName="col-xs-2"
+              wrapperClassName="col-xs-10"
+              bsStyle={this.props.isDestinationDuplicate ? 'error' : null}
+              help={
+                this.props.isDestinationDuplicate
+                  ? <span className="error">
+                        Duplicate Destination <code>{this.props.value.get('destination')}</code>.
+                  </span>
+                  : null
+              }
             />
-          </Col>
-        </FormGroup>
-        <Input
-          type="text"
-          label="Destination"
-          value={this.props.value.get('destination')}
-          disabled={this.props.disabled}
-          placeholder="Destination table name in transformation DB"
-          onChange={this._handleChangeDestination}
-          labelClassName="col-sm-2"
-          wrapperClassName="col-sm-10"
-          bsStyle={this.props.isDestinationDuplicate ? 'error' : null}
-          help={
-            this.props.isDestinationDuplicate
-              ? <span className="error">
-                    Duplicate Destination <code>{this.props.value.get('destination')}</code>.
-              </span>
-              : null
-          }
-        />
+          </div>
+        </div>
         <PanelWithDetails defaultExpanded={this.props.initialShowDetails}>
-          <FormGroup>
-            <Col sm={2} componentClass={ControlLabel}>Columns</Col>
-            <Col sm={10}>
-              <Select
-                multi={true}
-                name="columns"
-                value={this.props.value.get('columns', Immutable.List()).toJS()}
-                disabled={this.props.disabled || !this.props.value.get('source')}
-                placeholder="All columns will be imported"
-                onChange={this._handleChangeColumns}
-                options={this._getColumnsOptions()}
-              />
-              <HelpBlock>
-                Import only specified columns
-              </HelpBlock>
-            </Col>
-          </FormGroup>
-          <FormGroup>
-            <Col sm={2} componentClass={ControlLabel}>Changed in last</Col>
-            <Col sm={10}>
-              <ChangedSinceInput
-                value={this.getChangedSinceValue()}
-                disabled={this.props.disabled}
-                onChange={this._handleChangeChangedSince}
-              />
-            </Col>
-          </FormGroup>
-          <FormGroup>
-            <Col sm={2} componentClass={ControlLabel}>Data filter</Col>
-            <Col sm={4}>
-              <Select
-                name="whereColumn"
-                value={this.props.value.get('whereColumn')}
-                disabled={this.props.disabled || !this.props.value.get('source')}
-                placeholder="Select column"
-                onChange={this._handleChangeWhereColumn}
-                options={this._getColumnsOptions()}
-              />
-            </Col>
-            <Col sm={2}>
-              <Input
-                type="select"
-                name="whereOperator"
-                value={this.props.value.get('whereOperator')}
-                disabled={this.props.disabled}
-                onChange={this._handleChangeWhereOperator}
-              >
-                <option value={whereOperatorConstants.EQ_VALUE}>{whereOperatorConstants.EQ_LABEL}</option>
-                <option value={whereOperatorConstants.NOT_EQ_VALUE}>{whereOperatorConstants.NOT_EQ_LABEL}</option>
-              </Input>
-            </Col>
-            <Col sm={4}>
-              <Select
-                name="whereValues"
-                value={this.props.value.get('whereValues')}
-                multi={true}
-                disabled={this.props.disabled}
-                allowCreate={true}
-                placeholder="Add a value..."
-                emptyStrings={true}
-                onChange={this._handleChangeWhereValues}
-              />
-            </Col>
-          </FormGroup>
-          <ControlLabel>Data types</ControlLabel>
+          <div className="form-horizontal clearfix">
+            <div className="form-group">
+              <label className="col-xs-2 control-label">Columns</label>
+              <div className="col-xs-10">
+                <Select
+                  multi={true}
+                  name="columns"
+                  value={this.props.value.get('columns', Immutable.List()).toJS()}
+                  disabled={this.props.disabled || !this.props.value.get('source')}
+                  placeholder="All columns will be imported"
+                  onChange={this._handleChangeColumns}
+                  options={this._getColumnsOptions()}
+                />
+                <div className="help-block">
+                  Import only specified columns
+                </div>
+              </div>
+            </div>
+            <div className="form-group">
+              <label className="col-xs-2 control-label">Changed in last</label>
+              <div className="col-xs-10">
+                <ChangedSinceInput
+                  value={this.getChangedSinceValue()}
+                  disabled={this.props.disabled}
+                  onChange={this._handleChangeChangedSince}
+                />
+              </div>
+            </div>
+            <div className="form-group">
+              <label className="col-xs-2 control-label">Data filter</label>
+              <div className="col-xs-4">
+                <Select
+                  name="whereColumn"
+                  value={this.props.value.get('whereColumn')}
+                  disabled={this.props.disabled || !this.props.value.get('source')}
+                  placeholder="Select column"
+                  onChange={this._handleChangeWhereColumn}
+                  options={this._getColumnsOptions()}
+                />
+              </div>
+              <div className="col-xs-2">
+                <Input
+                  type="select"
+                  name="whereOperator"
+                  value={this.props.value.get('whereOperator')}
+                  disabled={this.props.disabled}
+                  onChange={this._handleChangeWhereOperator}
+                >
+                  <option value={whereOperatorConstants.EQ_VALUE}>{whereOperatorConstants.EQ_LABEL}</option>
+                  <option value={whereOperatorConstants.NOT_EQ_VALUE}>{whereOperatorConstants.NOT_EQ_LABEL}</option>
+                </Input>
+              </div>
+              <div className="col-xs-4">
+                <Select
+                  name="whereValues"
+                  value={this.props.value.get('whereValues')}
+                  multi={true}
+                  disabled={this.props.disabled}
+                  allowCreate={true}
+                  placeholder="Add a value..."
+                  emptyStrings={true}
+                  onChange={this._handleChangeWhereValues}
+                />
+              </div>
+            </div>
+            <label className="control-label">Data types</label>
+          </div>
           <DatatypeForm
             datatypes={this.getDatatypes()}
             columns={this._getFilteredColumns()}
@@ -375,7 +382,7 @@ export default React.createClass({
             onChange={this._handleChangeDataTypes}
           />
         </PanelWithDetails>
-      </Form>
+      </div>
     );
   }
 });
