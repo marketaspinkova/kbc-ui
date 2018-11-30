@@ -123,10 +123,9 @@ export default React.createClass({
     if (!this.props.value.get('source')) {
       return Map();
     }
-    const selectedTable = this.props.tables.find((table) => {
+    return this.props.tables.find((table) => {
       return table.get('id') === this.props.value.get('source');
     });
-    return selectedTable;
   },
 
   _getColumns() {
