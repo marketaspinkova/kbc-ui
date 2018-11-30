@@ -1,8 +1,6 @@
 import React from 'react';
 import _ from 'underscore';
 import { Map, List, fromJS } from 'immutable';
-
-import { Form, FormGroup, ControlLabel, Col, HelpBlock } from 'react-bootstrap';
 import { Input } from '../../../../../react/common/KbcBootstrap';
 import Select from '../../../../../react/common/Select';
 import SapiTableSelector from '../../../../components/react/components/SapiTableSelector';
@@ -195,186 +193,194 @@ export default React.createClass({
 
   render() {
     return (
-      <Form horizontal>
-        <FormGroup>
-          <Col sm={2} componentClass={ControlLabel}>Source</Col>
-          <Col sm={10}>
-            <SapiTableSelector
-              value={this.props.value.get('source', '')}
-              disabled={this.props.disabled}
-              placeholder="Source table"
-              onSelectTableFn={this._handleChangeSource}
-              autoFocus={true}
-            />
-          </Col>
-        </FormGroup>
-        <Input
-          type="text"
-          label="Destination"
-          value={this.props.value.get('destination')}
-          disabled={this.props.disabled}
-          placeholder="Destination table name in transformation DB"
-          onChange={this._handleChangeDestination}
-          labelClassName="col-sm-2"
-          wrapperClassName="col-sm-10"
-          bsStyle={this.props.isDestinationDuplicate ? 'error' : null}
-          help={
-            this.props.isDestinationDuplicate ? (
-              <span className="error">
-                {'Duplicate destination '}
-                <code>{this.props.value.get('destination')}</code>.
-              </span>
-            ) : null
-          }
-        />
-        <PanelWithDetails defaultExpanded={this.props.initialShowDetails}>
-          <FormGroup>
-            <Col sm={10} smOffset={2}>
-              <div className="checkbox">
-                <label>
-                  <input
-                    standalone={true}
-                    type="checkbox"
-                    checked={this.props.value.get('optional')}
-                    disabled={this.props.disabled}
-                    onChange={this._handleChangeOptional}
-                  />
-                  {' Optional'}
-                </label>
-                <HelpBlock>
-                  If the source table does not exist in Storage, the transformation won't show an error.
-                </HelpBlock>
+      <div className="form-horizontal clearfix">
+        <div className="row col-md-12">
+          <div className="form-group">
+            <label className="col-xs-2 control-label">Source</label>
+            <div className="col-xs-10">
+              <SapiTableSelector
+                value={this.props.value.get('source', '')}
+                disabled={this.props.disabled}
+                placeholder="Source table"
+                onSelectTableFn={this._handleChangeSource}
+                autoFocus={true}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="row col-md-12">
+          <Input
+            type="text"
+            label="Destination"
+            value={this.props.value.get('destination')}
+            disabled={this.props.disabled}
+            placeholder="Destination table name in transformation DB"
+            onChange={this._handleChangeDestination}
+            labelClassName="col-xs-2"
+            wrapperClassName="col-xs-10"
+            bsStyle={this.props.isDestinationDuplicate ? 'error' : null}
+            help={
+              this.props.isDestinationDuplicate ? (
+                <span className="error">
+                  {'Duplicate destination '}
+                  <code>{this.props.value.get('destination')}</code>.
+                </span>
+              ) : null
+            }
+          />
+        </div>
+        <div className="row col-md-12">
+          <PanelWithDetails defaultExpanded={this.props.initialShowDetails}>
+            <div className="form-horizontal clearfix">
+              <div className="form-group">
+                <div className="col-xs-10 col-xs-offset-2">
+                  <div className="checkbox">
+                    <label>
+                      <input
+                        standalone={true}
+                        type="checkbox"
+                        checked={this.props.value.get('optional')}
+                        disabled={this.props.disabled}
+                        onChange={this._handleChangeOptional}
+                      />
+                      {' Optional'}
+                    </label>
+                    <span className="help-block">
+                      If the source table does not exist in Storage, the transformation won't show an error.
+                    </span>
+                  </div>
+                </div>
               </div>
-            </Col>
-          </FormGroup>
-          <FormGroup>
-            <Col sm={2} componentClass={ControlLabel}>Columns</Col>
-            <Col sm={10}>
-              <Select
-                multi={true}
-                name="columns"
-                value={this.props.value.get('columns', List()).toJS()}
-                disabled={this.props.disabled || !this.props.value.get('source')}
-                placeholder="All columns will be imported"
-                onChange={this._handleChangeColumns}
-                options={this._getColumnsOptions()}
-              />
-              <HelpBlock>Import only specified columns</HelpBlock>
-            </Col>
-          </FormGroup>
-          <FormGroup>
-            <Col sm={2} componentClass={ControlLabel}>Changed in last</Col>
-            <Col sm={10}>
-              <ChangedSinceInput
-                value={this.props.value.get(
-                  'changedSince',
-                  this.props.value.get('days') > 0 ? `-${this.props.value.get('days')} days` : null
-                )}
-                disabled={this.props.disabled || !this.props.value.get('source')}
-                onChange={this._handleChangeChangedSince}
-              />
-            </Col>
-          </FormGroup>
-          <FormGroup>
-            <Col sm={2} componentClass={ControlLabel}>Data filter</Col>
-            <Col sm={4}>
-              <Select
-                name="whereColumn"
-                value={this.props.value.get('whereColumn')}
-                disabled={this.props.disabled || !this.props.value.get('source')}
-                placeholder="Select column"
-                onChange={this._handleChangeWhereColumn}
-                options={this._getColumnsOptions()}
-              />
-            </Col>
-            <Col sm={2}>
-              <Input
-                type="select"
-                name="whereOperator"
-                value={this.props.value.get('whereOperator')}
-                disabled={this.props.disabled}
-                onChange={this._handleChangeWhereOperator}
-              >
-                <option value={whereOperatorConstants.EQ_VALUE}>{whereOperatorConstants.EQ_LABEL}</option>
-                <option value={whereOperatorConstants.NOT_EQ_VALUE}>{whereOperatorConstants.NOT_EQ_LABEL}</option>
-              </Input>
-            </Col>
-            <Col sm={4}>
-              <Select
-                name="whereValues"
-                value={this.props.value.get('whereValues')}
-                multi={true}
-                disabled={this.props.disabled}
-                allowCreate={true}
-                delimiter=","
-                placeholder="Add a value..."
-                emptyStrings={true}
-                onChange={this._handleChangeWhereValues}
-              />
-            </Col>
-          </FormGroup>
-          <FormGroup>
-            <Col sm={2} componentClass={ControlLabel}>Data types</Col>
-            <Col sm={10}>
-              <RedshiftDataTypesContainer
-                value={this.props.value.get('datatypes', Map())}
-                disabled={this.props.disabled || !this.props.value.get('source')}
-                onChange={this._handleChangeDataTypes}
-                columnsOptions={this._getFilteredColumnsOptions()}
-              />
-            </Col>
-          </FormGroup>
-          <FormGroup>
-            <Col sm={2} componentClass={ControlLabel}>Sort key</Col>
-            <Col sm={10}>
-              <Select
-                multi={true}
-                name="sortKey"
-                value={this._getSortKeyImmutable()}
-                disabled={this.props.disabled || !this.props.value.get('source')}
-                placeholder="No sortkey"
-                onChange={this._handleChangeSortKey}
-                options={this._getFilteredColumnsOptions()}
-              />
-              <HelpBlock>
-                SORTKEY option for creating table in Redshift DB. You can create a compound sort key.
-              </HelpBlock>
-            </Col>
-          </FormGroup>
-          <FormGroup>
-            <Col sm={2} componentClass={ControlLabel}>Distribution</Col>
-            <Col sm={5}>
-              <Select
-                name="distStyle"
-                value={this.props.value.get('distStyle')}
-                disabled={this.props.disabled || !this.props.value.get('source')}
-                placeholder="Style"
-                onChange={this._handleChangeDistStyle}
-                options={this.distStyleOptions}
-              />
-            </Col>
-            <Col sm={5}>
-              <Select
-                name="distKey"
-                value={this.props.value.get('distKey')}
-                disabled={
-                  this.props.disabled ||
-                  !this.props.value.get('source') ||
-                  this.props.value.get('distStyle') !== 'KEY'
-                }
-                placeholder={
-                  this.props.value.get('distStyle') === 'KEY' ? 'Select column' : 'Column selection not available'
-                }
-                onChange={this._handleChangeDistKey}
-                options={this._getFilteredColumnsOptions()}
-              />
-            </Col>
-            <Col sm={10} smOffset={2}>
-              <HelpBlock>DISTKEY and DISTSTYLE options used for CREATE TABLE query in Redshift.</HelpBlock>
-            </Col>
-          </FormGroup>
-        </PanelWithDetails>
-      </Form>
+              <div className="form-group">
+                <label className="col-xs-2 control-label">Columns</label>
+                <div className="col-xs-10">
+                  <Select
+                    multi={true}
+                    name="columns"
+                    value={this.props.value.get('columns', List()).toJS()}
+                    disabled={this.props.disabled || !this.props.value.get('source')}
+                    placeholder="All columns will be imported"
+                    onChange={this._handleChangeColumns}
+                    options={this._getColumnsOptions()}
+                  />
+                  <div className="help-block">Import only specified columns</div>
+                </div>
+              </div>
+              <div className="form-group">
+                <label className="col-xs-2 control-label">Changed in last</label>
+                <div className="col-xs-10">
+                  <ChangedSinceInput
+                    value={this.props.value.get(
+                      'changedSince',
+                      this.props.value.get('days') > 0 ? `-${this.props.value.get('days')} days` : null
+                    )}
+                    disabled={this.props.disabled || !this.props.value.get('source')}
+                    onChange={this._handleChangeChangedSince}
+                  />
+                </div>
+              </div>
+              <div className="form-group">
+                <label className="col-xs-2 control-label">Data filter</label>
+                <div className="col-xs-4">
+                  <Select
+                    name="whereColumn"
+                    value={this.props.value.get('whereColumn')}
+                    disabled={this.props.disabled || !this.props.value.get('source')}
+                    placeholder="Select column"
+                    onChange={this._handleChangeWhereColumn}
+                    options={this._getColumnsOptions()}
+                  />
+                </div>
+                <div className="col-xs-2">
+                  <Input
+                    type="select"
+                    name="whereOperator"
+                    value={this.props.value.get('whereOperator')}
+                    disabled={this.props.disabled}
+                    onChange={this._handleChangeWhereOperator}
+                  >
+                    <option value={whereOperatorConstants.EQ_VALUE}>{whereOperatorConstants.EQ_LABEL}</option>
+                    <option value={whereOperatorConstants.NOT_EQ_VALUE}>{whereOperatorConstants.NOT_EQ_LABEL}</option>
+                  </Input>
+                </div>
+                <div className="col-xs-4">
+                  <Select
+                    name="whereValues"
+                    value={this.props.value.get('whereValues')}
+                    multi={true}
+                    disabled={this.props.disabled}
+                    allowCreate={true}
+                    delimiter=","
+                    placeholder="Add a value..."
+                    emptyStrings={true}
+                    onChange={this._handleChangeWhereValues}
+                  />
+                </div>
+              </div>
+              <div className="form-group">
+                <label className="col-xs-2 control-label">Data types</label>
+                <div className="col-xs-10">
+                  <RedshiftDataTypesContainer
+                    value={this.props.value.get('datatypes', Map())}
+                    disabled={this.props.disabled || !this.props.value.get('source')}
+                    onChange={this._handleChangeDataTypes}
+                    columnsOptions={this._getFilteredColumnsOptions()}
+                  />
+                </div>
+              </div>
+              <div className="form-group">
+                <label className="col-xs-2 control-label">Sort key</label>
+                <div className="col-xs-10">
+                  <Select
+                    multi={true}
+                    name="sortKey"
+                    value={this._getSortKeyImmutable()}
+                    disabled={this.props.disabled || !this.props.value.get('source')}
+                    placeholder="No sortkey"
+                    onChange={this._handleChangeSortKey}
+                    options={this._getFilteredColumnsOptions()}
+                  />
+                  <div className="help-block">
+                    SORTKEY option for creating table in Redshift DB. You can create a compound sort key.
+                  </div>
+                </div>
+              </div>
+              <div className="form-group">
+                <label className="col-xs-2 control-label">Distribution</label>
+                <div className="col-xs-5">
+                  <Select
+                    name="distStyle"
+                    value={this.props.value.get('distStyle')}
+                    disabled={this.props.disabled || !this.props.value.get('source')}
+                    placeholder="Style"
+                    onChange={this._handleChangeDistStyle}
+                    options={this.distStyleOptions}
+                  />
+                </div>
+                <div className="col-xs-5">
+                  <Select
+                    name="distKey"
+                    value={this.props.value.get('distKey')}
+                    disabled={
+                      this.props.disabled ||
+                      !this.props.value.get('source') ||
+                      this.props.value.get('distStyle') !== 'KEY'
+                    }
+                    placeholder={
+                      this.props.value.get('distStyle') === 'KEY' ? 'Select column' : 'Column selection not available'
+                    }
+                    onChange={this._handleChangeDistKey}
+                    options={this._getFilteredColumnsOptions()}
+                  />
+                </div>
+                <div className="col-xs-offset-2 col-xs-10 help-block">
+                  DISTKEY and DISTSTYLE options used for CREATE TABLE query in Redshift.
+                </div>
+              </div>
+            </div>
+          </PanelWithDetails>
+        </div>
+      </div>
     );
   }
 });
