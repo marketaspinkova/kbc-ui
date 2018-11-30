@@ -1,17 +1,20 @@
 import React from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
+import ApplicationStore from '../../../../../stores/ApplicationStore';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../../../stores/RoutesStore';
 import BucketsStore from '../../../../components/stores/StorageBucketsStore';
+import BucketOverview from './BucketOverview';
 
 export default React.createClass({
-  mixins: [createStoreMixin(BucketsStore)],
+  mixins: [createStoreMixin(BucketsStore, ApplicationStore)],
 
   getStateFromStores() {
     const bucketId = RoutesStore.getCurrentRouteParam('bucketId');
 
     return {
-      bucket: BucketsStore.getAll().find(item => item.get('id') === bucketId)
+      bucket: BucketsStore.getAll().find(item => item.get('id') === bucketId),
+      sapiToken: ApplicationStore.getSapiToken()
     };
   },
 
@@ -43,10 +46,7 @@ export default React.createClass({
           id="bucket-detail-tabs"
         >
           <Tab eventKey="overview" title="Overview">
-            Overview
-          </Tab>
-          <Tab eventKey="description" title="Description">
-            Description
+            <BucketOverview bucket={this.state.bucket} sapiToken={this.state.sapiToken} />
           </Tab>
           <Tab eventKey="tables" title="Tables">
             Tables
