@@ -17,7 +17,8 @@ export default React.createClass({
     isSaving: React.PropTypes.bool,
     dataPreview: React.PropTypes.array,
     columnsValidation: React.PropTypes.object,
-    setAllColumnsType: React.PropTypes.object
+    setAllColumnsType: React.PropTypes.object,
+    setAllColumnsName: React.PropTypes.object
   },
 
   render() {
@@ -56,7 +57,10 @@ export default React.createClass({
           <thead>
             <tr>
               <th>Column</th>
-              <th>Database Column Name</th>
+              <th>
+                Database Column Name
+                {this.props.editingColumns && this.props.setAllColumnsName}
+              </th>
               <th>
                 Data Type
                 <div style={{ margin: 0 }} className="checkbox">
