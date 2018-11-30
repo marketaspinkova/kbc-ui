@@ -4,6 +4,7 @@ import Constants from './ConfigurationRowsConstants';
 import ConfigurationRowsStore from './ConfigurationRowsStore';
 import InstalledComponentsApi from '../components/InstalledComponentsApi';
 import VersionActionCreators from '../components/VersionsActionCreators';
+import RowVersionsActionCreators from './RowVersionsActionCreators';
 import ApplicationStore from '../../stores/ApplicationStore';
 import RoutesStore from '../../stores/RoutesStore';
 import configurationRowDeleted from '../components/react/components/notifications/configurationRowDeleted';
@@ -237,6 +238,7 @@ module.exports = {
     return storeEncodedConfigurationRow(componentId, configurationId, rowId, configuration.toJS(), changeDescription ? changeDescription : ('Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' edited'))
       .then(function(response) {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
+        RowVersionsActionCreators.loadVersionsForce(componentId, configurationId, rowId);
         Dispatcher.handleViewAction({
           type: Constants.ActionTypes.CONFIGURATION_ROWS_SAVE_CONFIGURATION_SUCCESS,
           componentId: componentId,
