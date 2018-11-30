@@ -1,7 +1,6 @@
 import React from 'react';
 import _ from 'underscore';
-
-import Immutable from 'immutable';
+import { fromJS, Map, List } from 'immutable';
 import {Input} from './../../../../../react/common/KbcBootstrap';
 
 import { Form, FormGroup, ControlLabel, Col, HelpBlock } from 'react-bootstrap';
@@ -31,7 +30,7 @@ export default React.createClass({
     const source = this.props.value.get('source');
     return {
       hasMetadataDatatypes: source ? MetadataStore.tableHasMetadataDatatypes(source) : false,
-      tableColumnMetadata: source ? MetadataStore.getTableColumnsMetadata(source) : Immutable.Map()
+      tableColumnMetadata: source ? MetadataStore.getTableColumnsMetadata(source) : Map()
     };
   },
 
@@ -56,9 +55,9 @@ export default React.createClass({
       mutation = mutation.set('destination', destination);
       mutation = mutation.set('datatypes', this.getInitialDatatypes(value));
       mutation = mutation.set('whereColumn', '');
-      mutation = mutation.set('whereValues', Immutable.List());
+      mutation = mutation.set('whereValues', List());
       mutation = mutation.set('whereOperator', 'eq');
-      return mutation.set('columns', Immutable.List());
+      return mutation.set('columns', List());
     });
     return this.props.onChange(mutatedValue);
   },
@@ -84,11 +83,11 @@ export default React.createClass({
         const columns = mutation.get('columns');
         if (!_.contains(columns.toJS(), mutation.get('whereColumn'))) {
           mutation = mutation.set('whereColumn', '');
-          mutation = mutation.set('whereValues', Immutable.List());
+          mutation = mutation.set('whereValues', List());
           mutation = mutation.set('whereOperator', 'eq');
         }
         const currentDatatypes = this.getDatatypes();
-        let newDatatypes = Immutable.Map();
+        let newDatatypes = Map();
         columns.forEach((column) => {
           if (currentDatatypes.has(column)) {
             newDatatypes = newDatatypes.set(column, currentDatatypes.get(column));
@@ -96,9 +95,9 @@ export default React.createClass({
             newDatatypes = newDatatypes.set(column, initialDatatypes.get(column));
           }
         });
-        mutation = mutation.set('datatypes', Immutable.fromJS(newDatatypes || Immutable.Map()));
+        mutation = mutation.set('datatypes', fromJS(newDatatypes || Map()));
       } else {
-        mutation = mutation.set('datatypes', Immutable.fromJS(initialDatatypes || Immutable.Map()));
+        mutation = mutation.set('datatypes', fromJS(initialDatatypes || Map()));
       }
       return mutation;
     });
@@ -122,7 +121,7 @@ export default React.createClass({
 
   getSelectedTable() {
     if (!this.props.value.get('source')) {
-      return Immutable.Map();
+      return Map();
     }
     const selectedTable = this.props.tables.find((table) => {
       return table.get('id') === this.props.value.get('source');
@@ -131,11 +130,11 @@ export default React.createClass({
   },
 
   _getColumns() {
-    return this.getSelectedTable() ? this.getSelectedTable().get('columns', Immutable.List()) : Immutable.List();
+    return this.getSelectedTable() ? this.getSelectedTable().get('columns', List()) : List();
   },
 
   isPrimaryKeyColumn(column) {
-    return this.getSelectedTable().get('primaryKey', Immutable.List()).has(column);
+    return this.getSelectedTable().get('primaryKey', List()).has(column);
   },
 
   _getColumnsOptions() {
@@ -148,7 +147,7 @@ export default React.createClass({
   },
 
   _getFilteredColumns() {
-    return this.props.value.get('columns', Immutable.List()).count() > 0
+    return this.props.value.get('columns', List()).count() > 0
       ? this.props.value.get('columns')
       : this._getColumns();
   },
@@ -209,7 +208,7 @@ export default React.createClass({
           length = mapType.get('maxLength');
         }
       }
-      return Immutable.fromJS({
+      return fromJS({
         column: colname,
         type: datatypeName,
         length: length,
@@ -227,14 +226,14 @@ export default React.createClass({
       });
       return this.getMetadataDataTypes(metadataSet);
     } else {
-      return Immutable.fromJS(this._getFilteredColumns()).reduce((memo, column) => {
-        return memo.set(column, Immutable.fromJS({
+      return fromJS(this._getFilteredColumns()).reduce((memo, column) => {
+        return memo.set(column, fromJS({
           column: column,
           type: 'VARCHAR',
           length: this.isPrimaryKeyColumn(column) ? 255 : null,
           convertEmptyValuesToNull: false
         }));
-      }, Immutable.Map());
+      }, Map());
     }
   },
 
@@ -245,19 +244,19 @@ export default React.createClass({
       return this.props.tables.find((table) => {
         return table.get('id') === sourceTable;
       }).get('columns').reduce((memo, column) => {
-        return memo.set(column, Immutable.fromJS({
+        return memo.set(column, fromJS({
           column: column,
           type: 'VARCHAR',
           length: this.isPrimaryKeyColumn(column) ? 255 : null,
           convertEmptyValuesToNull: false
         }));
-      }, Immutable.Map());
+      }, Map());
     }
   },
 
   getDatatypes() {
     return this.getDefaultDatatypes().map((defaultType) => {
-      const existingTypeFilter = this.props.value.get('datatypes', Immutable.Map()).filter((existingType) => {
+      const existingTypeFilter = this.props.value.get('datatypes', Map()).filter((existingType) => {
         return existingType.get('column') === defaultType.get('column');
       });
       if (existingTypeFilter.count() > 0) {
@@ -308,7 +307,7 @@ export default React.createClass({
               <Select
                 multi={true}
                 name="columns"
-                value={this.props.value.get('columns', Immutable.List()).toJS()}
+                value={this.props.value.get('columns', List()).toJS()}
                 disabled={this.props.disabled || !this.props.value.get('source')}
                 placeholder="All columns will be imported"
                 onChange={this._handleChangeColumns}
