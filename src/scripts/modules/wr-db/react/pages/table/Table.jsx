@@ -393,7 +393,7 @@ export default componentId => {
               });
             }}
           >
-            <option disabled value="">Convert All Name To</option>
+            <option disabled value="">Convert All Names To</option>
             <option value="uppercase">UPPERCASE</option>
             <option value="lowercase">lowercase</option>
             <option value="capitalize">Capitalize</option>
