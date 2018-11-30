@@ -1,5 +1,4 @@
 import keyMirror from 'fbjs/lib/keyMirror';
-import { fromJS } from 'immutable';
 
 export const ActionTypes = keyMirror({
   TRANSFORMATION_BUCKET_CREATE: null,
@@ -54,54 +53,4 @@ export const ActionTypes = keyMirror({
   TRANSFORMATION_UPDATE_PARSE_QUERIES_START: null,
   TRANSFORMATION_UPDATE_PARSE_QUERIES_SUCCESS: null,
   TRANSFORMATION_UPDATE_PARSE_QUERIES_ERROR: null
-});
-
-export const SnowflakeDataTypesMapping = fromJS({
-  NUMBER: {
-    name: 'NUMBER',
-    basetype: 'NUMERIC',
-    size: true
-  },
-  INTEGER: {
-    name: 'INTEGER',
-    basetype: 'INTEGER',
-    size: false
-  },
-  FLOAT: {
-    name: 'FLOAT',
-    basetype: 'FLOAT',
-    size: false
-  },
-  VARCHAR: {
-    name: 'VARCHAR',
-    basetype: 'STRING',
-    size: true,
-    maxLength: 16777216
-  },
-  DATE: {
-    name: 'DATE',
-    basetype: 'DATE',
-    size: false
-  },
-  TIMESTAMP: {
-    name: 'TIMESTAMP',
-    basetype: 'TIMESTAMP',
-    size: false
-  },
-  TIMESTAMP_LTZ: {
-    name: 'TIMESTAMP_LTZ',
-    size: false
-  },
-  TIMESTAMP_NTZ: {
-    name: 'TIMESTAMP_NTZ',
-    size: false
-  },
-  TIMESTAMP_TZ: {
-    name: 'TIMESTAMP_TZ',
-    size: false
-  },
-  VARIANT: {
-    name: 'VARIANT',
-    size: false
-  }
 });
