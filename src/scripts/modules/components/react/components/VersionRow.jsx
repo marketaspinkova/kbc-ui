@@ -94,6 +94,7 @@ export default React.createClass({
         <td>
           <CreatedWithIcon
             createdTime={this.props.version.get('created')}
+            relative={false}
           />
         </td>
         <td>
