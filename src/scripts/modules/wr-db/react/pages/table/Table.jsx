@@ -2,6 +2,7 @@ import React from 'react';
 import _ from 'underscore';
 
 import { fromJS, Map, List } from 'immutable';
+import { capitalize } from 'underscore.string';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import TableNameEdit from './TableNameEdit';
 import ColumnsEditor from './ColumnsEditor';
@@ -161,6 +162,7 @@ export default componentId => {
               dataPreview={this.state.dataPreview}
               editButtons={this._renderEditButtons()}
               setAllColumnsType={this._renderSetColumnsType()}
+              setAllColumnsName={this._renderSetColumnsName()}
               disabledColumnFields={this._getDisabledColumnFields()}
               onSetAllColumnsNull={e => {
                 const value = e.target.checked ? '1' : '0';
@@ -368,6 +370,35 @@ export default componentId => {
             {options}
           </select>
         </span>
+      );
+    },
+
+    _renderSetColumnsName() {
+      return (
+        <div>
+          <select
+            defaultValue=""
+            onChange={e => {
+              return this.state.editingColumns.map(column => {
+                switch (e.target.value) {
+                  case 'uppercase':
+                    return this._onEditColumn(column.update('dbName', name => name.toUpperCase()));
+                  case 'lowercase':
+                    return this._onEditColumn(column.update('dbName', name => name.toLowerCase()));
+                  case 'capitalize':
+                    return this._onEditColumn(column.update('dbName', name => capitalize(name, true)));
+                  default:
+                    break;
+                }
+              });
+            }}
+          >
+            <option disabled value="">Convert All Names To</option>
+            <option value="uppercase">UPPERCASE</option>
+            <option value="lowercase">lowercase</option>
+            <option value="capitalize">Capitalize</option>
+          </select>
+        </div>
       );
     },
 
