@@ -15,6 +15,7 @@ import TableLoader from './TableLoaderQueryEditor';
 import {getQueryEditorPlaceholder, getQueryEditorHelpText} from '../../templates/helpAndHints';
 
 import editorMode from '../../templates/editorMode';
+import getCustomFields from '../../templates/customFields';
 
 export default React.createClass({
   propTypes: {
@@ -356,6 +357,26 @@ export default React.createClass({
         </div>
       </div>
     );
+  },
+
+  renderCustomFields() {
+    return getCustomFields(this.props.componentId).map(function(field) {
+      return <Input
+        key={propName}
+        label={labelValue}
+        type={type}
+        disabled={!this.props.enabled}
+        labelClassName={(type === 'checkbox') ? '' : 'col-xs-4'}
+        wrapperClassName={(type === 'checkbox') ? 'col-xs-8 col-xs-offset-4' : 'col-xs-8'}
+        value={this.props.credentials.get(propName)}
+        checked={(type === 'checkbox') ? this.props.credentials.get(propName) : false}
+        onChange={
+          (type === 'checkbox') ?
+            this.handleCheckboxChange.bind(this, propName) :
+            this.handleCustomFieldChange.bind(this, propName)
+        }
+      />;
+    }, this);  
   },
 
   renderIncrementalLoadOption() {
