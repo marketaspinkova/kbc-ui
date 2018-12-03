@@ -2,8 +2,6 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { Map } from 'immutable';
 import { Panel, Button } from 'react-bootstrap';
-import { Loader } from '@keboola/indigo-ui';
-import Confirm from '../../../../react/common/Confirm';
 import Tooltip from '../../../../react/common/Tooltip';
 import RoutesStore from '../../../../stores/RoutesStore';
 import CreateAliasTableModal from '../modals/CreateAliasTableModal';
@@ -13,9 +11,7 @@ export default React.createClass({
     buckets: PropTypes.object.isRequired,
     tables: PropTypes.object.isRequired,
     sapiToken: PropTypes.object.isRequired,
-    onDeleteBucket: PropTypes.func.isRequired,
     onCreateAliasTable: PropTypes.func.isRequired,
-    deletingBuckets: PropTypes.object.isRequired,
     isCreatingAliasTable: PropTypes.bool.isRequired
   },
 
@@ -48,11 +44,6 @@ export default React.createClass({
   },
 
   renderBucketHeader(bucket) {
-    const deleting = this.props.deletingBuckets.has(bucket.get('id'));
-    const tables = this.props.tables.filter(table => {
-      return table.getIn(['bucket', 'id']) === bucket.get('id');
-    });
-
     return (
       <div>
         <h4>{bucket.get('id')}</h4>
@@ -72,23 +63,6 @@ export default React.createClass({
                 </Button>
               </Tooltip>
             )}
-            <Confirm
-              title="Delete bucket"
-              text={
-                <span>
-                  <p>Do you really want to delete bucket {bucket.get('id')}?</p>
-                  {tables.count() > 0 && <p>Bucket is not empty. All tables will be also deleted!</p>}
-                </span>
-              }
-              buttonLabel="Delete"
-              onConfirm={() => this.deleteBucket(bucket, tables)}
-            >
-              <Tooltip tooltip="Delete bucket" placement="top">
-                <Button className="btn btn-link" disabled={deleting}>
-                  {deleting ? <Loader /> : <i className="fa fa-fw fa-trash" />}
-                </Button>
-              </Tooltip>
-            </Confirm>
             <Tooltip tooltip="Bucket detail" placement="top">
               <Button
                 className="btn btn-link"
@@ -157,12 +131,6 @@ export default React.createClass({
     const bucketId = bucket.get('id');
     const permissions = this.props.sapiToken.getIn(['bucketPermissions', bucketId], '');
     return ['write', 'manage'].includes(permissions);
-  },
-
-  deleteBucket(bucket, tables) {
-    const bucketId = bucket.get('id');
-    const force = tables.count() > 0;
-    this.props.onDeleteBucket(bucketId, force);
   },
 
   openCreateAliasTableModal(bucket) {

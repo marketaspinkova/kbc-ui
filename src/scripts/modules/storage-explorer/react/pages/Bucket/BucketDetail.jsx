@@ -6,7 +6,9 @@ import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../../../stores/RoutesStore';
 import BucketsStore from '../../../../components/stores/StorageBucketsStore';
 import TablesStore from '../../../../components/stores/StorageTablesStore';
+import StorageActionCreators from '../../../../components/StorageActionCreators';
 
+import DeleteBucketModal from '../../modals/DeleteBucketModal';
 import BucketOverview from './BucketOverview';
 import BucketTables from './BucketTables';
 
@@ -19,13 +21,15 @@ export default React.createClass({
     return {
       bucket: BucketsStore.getAll().find(item => item.get('id') === bucketId),
       sapiToken: ApplicationStore.getSapiToken(),
-      tables: TablesStore.getAll().filter(table => table.getIn(['bucket', 'id']) === bucketId)
+      tables: TablesStore.getAll().filter(table => table.getIn(['bucket', 'id']) === bucketId),
+      deletingBuckets: BucketsStore.deletingBuckets().has(bucketId)
     };
   },
 
   getInitialState() {
     return {
-      activeTab: 'overview'
+      activeTab: 'overview',
+      openDeleteBucketModal: false
     };
   },
 
@@ -72,8 +76,27 @@ export default React.createClass({
             </Tab.Content>
           </div>
         </Tab.Container>
+
+        {this.state.openDeleteBucketModal && this.renderDeleteBucketModal()}
       </div>
     );
+  },
+
+  renderDeleteBucketModal() {
+    return (
+      <DeleteBucketModal
+        bucket={this.state.bucket}
+        tables={this.state.tables}
+        deleting={this.state.deletingBuckets}
+        onConfirm={this.handleDeleteBucket}
+        onHide={this.closeDeleleBucketModal}
+      />
+    );
+  },
+
+  handleDeleteBucket() {
+    const force = this.state.tables.count() > 0;
+    return StorageActionCreators.deleteBucket(this.state.bucket.get('id'), force);
   },
 
   handleSelectTab(tab) {
@@ -84,7 +107,27 @@ export default React.createClass({
     }
   },
 
-  handleDropdownAction() {},
+  handleDropdownAction(action) {
+    switch (action) {
+      case 'delete':
+        return this.openDeleteBucketModal();
+
+      default:
+        return null;
+    }
+  },
+
+  openDeleteBucketModal() {
+    this.setState({
+      openDeleteBucketModal: true
+    });
+  },
+
+  closeDeleleBucketModal() {
+    this.setState({
+      openDeleteBucketModal: false
+    });
+  },
 
   generateTabId(eventKey, type) {
     return `${eventKey}-${type}`;
