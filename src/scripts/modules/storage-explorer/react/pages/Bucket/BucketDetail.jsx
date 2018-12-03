@@ -96,7 +96,7 @@ export default React.createClass({
         tables={this.state.tables}
         deleting={this.state.deletingBuckets}
         onConfirm={this.handleDeleteBucket}
-        onHide={this.closeDeleleBucketModal}
+        onHide={this.closeDeleteBucketModal}
       />
     );
   },
@@ -134,7 +134,7 @@ export default React.createClass({
     });
   },
 
-  closeDeleleBucketModal() {
+  closeDeleteBucketModal() {
     this.setState({
       openDeleteBucketModal: false
     });
