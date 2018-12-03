@@ -14,6 +14,7 @@ import Promise from 'bluebird';
 import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
 import VersionsActionCreators from '../components/VersionsActionCreators';
 import InstalledComponentsActionCreators from '../components/InstalledComponentsActionCreators';
+/* eslint no-console: 0 */
 
 const rephaseTasks = tasks => {
   const isNullPhase = phase => phase === null || phase === 0 || typeof phase === 'undefined';
@@ -515,7 +516,7 @@ export default {
   },
 
   /*
-    Editing notifications
+    Editing schedule
   */
   startOrchestrationScheduleEdit(id) {
     return this.startOrchestrationFieldEdit(id, 'schedule');
@@ -530,7 +531,7 @@ export default {
   },
 
   saveOrchestrationScheduleEdit(id) {
-    const schedule = {crontabRecord: OrchestrationStore.getEditingValue(id, 'schedule')};
+    const crontabRecord = {crontabRecord: OrchestrationStore.getEditingValue(id, 'schedule')};
 
     dispatcher.handleViewAction({
       type: constants.ActionTypes.ORCHESTRATION_FIELD_SAVE_START,
@@ -539,13 +540,13 @@ export default {
     });
 
     return orchestrationsApi
-      .updateOrchestration(id, schedule)
+      .updateOrchestration(id, crontabRecord)
       .then(data =>
         dispatcher.handleViewAction({
           type: constants.ActionTypes.ORCHESTRATION_FIELD_SAVE_SUCCESS,
           orchestrationId: id,
           field: 'schedule',
-          notifications: data
+          crontabRecord: {crontabRecord: data.crontabRecord}
         })
       )
       .catch(e => {

@@ -13,20 +13,20 @@ export default React.createClass({
   mixins: [createStoreMixin(OrchestrationStore)],
 
   getStateFromStores() {
-    let schedule;
+    let crontabRecord;
     const orchestrationId = RoutesStore.getCurrentRouteIntParam('orchestrationId');
     const orchestration = OrchestrationStore.get(orchestrationId);
     const isEditing = OrchestrationStore.isEditing(orchestrationId, 'schedule');
 
     if (isEditing) {
-      schedule = OrchestrationStore.getEditingValue(orchestrationId, 'schedule');
+      crontabRecord = OrchestrationStore.getEditingValue(orchestrationId, 'schedule');
     } else {
-      schedule = orchestration.get('crontabRecord') || '0 0 * * *';
+      crontabRecord = orchestration.get('crontabRecord') || '0 0 * * *';
     }
 
     return {
       orchestrationId,
-      schedule,
+      crontabRecord,
       isSaving: OrchestrationStore.isSaving(orchestrationId, 'schedule'),
       isEditing: OrchestrationStore.isEditing(orchestrationId, 'schedule')
     };
@@ -54,7 +54,7 @@ export default React.createClass({
                 </Button>
               </ConfirmButtons>
             </p>
-            <CronScheduler crontabRecord={this.state.schedule} onChange={this._handleCrontabChange}/>
+            <CronScheduler crontabRecord={this.state.crontabRecord} onChange={this._handleCrontabChange}/>
           </div>
         </div>
       </div>
