@@ -26,7 +26,7 @@ export default React.createClass({
     if (!this.props.table.getIn(['data', 'export'])) {
       titleClass = 'td text-muted';
     }
-    const Elem = this.props.isDeleted ? React.DOM.div : Link;
+    const Elem = this.props.isDeleted ? 'div' : Link;
     return (
       <Elem
         className="tr"
