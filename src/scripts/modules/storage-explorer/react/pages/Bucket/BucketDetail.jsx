@@ -11,6 +11,7 @@ import StorageActionCreators from '../../../../components/StorageActionCreators'
 import DeleteBucketModal from '../../modals/DeleteBucketModal';
 import BucketOverview from './BucketOverview';
 import BucketTables from './BucketTables';
+import { deleteBucket } from '../../../Actions';
 
 export default React.createClass({
   mixins: [createStoreMixin(BucketsStore, ApplicationStore, TablesStore)],
@@ -107,7 +108,7 @@ export default React.createClass({
 
   handleDeleteBucket() {
     const force = this.state.tables.count() > 0;
-    return StorageActionCreators.deleteBucket(this.state.bucket.get('id'), force);
+    return deleteBucket(this.state.bucket.get('id'), force);
   },
 
   handleSelectTab(tab) {
