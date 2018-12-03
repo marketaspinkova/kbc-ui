@@ -84,7 +84,6 @@ export default React.createClass({
     return (
       <CreateAliasTableModal
         bucket={this.props.bucket}
-        tables={this.props.tables}
         openModal={this.state.openCreateAliasTableModal}
         onSubmit={this.props.onCreateAliasTable}
         onHide={this.closeCreateAliasTableModal}

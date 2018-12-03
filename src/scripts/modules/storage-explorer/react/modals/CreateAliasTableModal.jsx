@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { fromJS } from 'immutable';
 import { Col, Modal, Form, FormGroup, FormControl, ControlLabel, Checkbox } from 'react-bootstrap';
 import Select from 'react-select';
+import SapiTableSelector from '../../../components/react/components/SapiTableSelector';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import Hint from '../../../../react/common/Hint';
 
@@ -19,7 +20,6 @@ const initialNewTableAlias = {
 export default React.createClass({
   propTypes: {
     bucket: PropTypes.object.isRequired,
-    tables: PropTypes.object.isRequired,
     openModal: PropTypes.bool.isRequired,
     onSubmit: PropTypes.func.isRequired,
     onHide: PropTypes.func.isRequired,
@@ -46,28 +46,12 @@ export default React.createClass({
                 Source table
               </Col>
               <Col sm={9}>
-                <FormControl
-                  componentClass="select"
-                  onChange={this.handleSourceTable}
+                <SapiTableSelector
+                  placeholder="Source table"
                   value={this.state.newTableAlias.get('sourceTable')}
-                >
-                  <option value="" disabled>
-                    Select source table...
-                  </option>
-                  {this.tablesGrouped()
-                    .map((group, groupName) => (
-                      <optgroup label={groupName} key={groupName}>
-                        {group
-                          .map(option => (
-                            <option value={option.get('id')} key={option.get('id')}>
-                              {option.get('id')}
-                            </option>
-                          ))
-                          .toArray()}
-                      </optgroup>
-                    ))
-                    .toArray()}
-                </FormControl>
+                  onSelectTableFn={this.handleSourceTable}
+                  autoFocus={true}
+                />
               </Col>
             </FormGroup>
 
@@ -168,19 +152,7 @@ export default React.createClass({
     );
   },
 
-  tablesGrouped() {
-    return this.props.tables
-      .filter(table => {
-        const bucket = table.get('bucket');
-        return bucket.get('stage') !== 'sys' && this.props.bucket.get('backend') === bucket.get('backend');
-      })
-      .groupBy(table => {
-        return table.getIn(['bucket', 'id']);
-      });
-  },
-
-  handleSourceTable(event) {
-    const table = this.props.tables.find(item => item.get('id') === event.target.value);
+  handleSourceTable(tableId, table) {
     const columns = table
       .get('columns')
       .map(column => ({
@@ -191,7 +163,7 @@ export default React.createClass({
 
     this.setState({
       tableColumns: columns,
-      newTableAlias: this.state.newTableAlias.set('sourceTable', event.target.value).remove('aliasColumns')
+      newTableAlias: this.state.newTableAlias.set('sourceTable', tableId).remove('aliasColumns')
     });
   },
 
