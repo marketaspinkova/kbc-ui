@@ -17,7 +17,8 @@ export default React.createClass({
     return {
       name: '',
       stage: 'in',
-      backend: ''
+      backend: '',
+      error: null
     };
   },
 
@@ -29,6 +30,7 @@ export default React.createClass({
             <Modal.Title>Create bucket</Modal.Title>
           </Modal.Header>
           <Modal.Body>
+            {this.renderError()}
             {this.renderCheckRedshift()}
             {this.renderCheckSnowflake()}
 
@@ -114,6 +116,17 @@ export default React.createClass({
     }
   },
 
+  renderError() {
+    if (!this.state.error) {
+      return null;
+    }
+    return (
+      <div className="alert alert-danger">
+        {this.state.error}
+      </div>
+    );
+  },
+
   handleName(event) {
     this.setState({
       name: event.target.value
@@ -144,14 +157,22 @@ export default React.createClass({
       backend: this.state.backend || this.props.defaultBackend
     };
 
-    this.props.onSubmit(newBucket).then(this.onHide);
+    this.props.onSubmit(newBucket)
+      .then(() => {
+        this.onHide();
+      }, (message) => {
+        this.setState({
+          error: message
+        });
+      });
   },
 
   resetState() {
     this.setState({
       name: '',
       stage: 'in',
-      backend: ''
+      backend: '',
+      error: null
     });
   },
 
