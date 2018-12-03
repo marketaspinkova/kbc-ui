@@ -8,6 +8,7 @@ import CodeEditor from '../../../../react/common/CodeEditor';
 import Select from '../../../../react/common/Select';
 import TableSelectorForm from '../../../../react/common/TableSelectorForm';
 import Tooltip from '../../../../react/common/Tooltip';
+import {Input} from './../../../../react/common/KbcBootstrap';
 
 import AsynchActionError from './AsynchActionError';
 import TableLoader from './TableLoaderQueryEditor';
@@ -117,6 +118,14 @@ export default React.createClass({
         .set('name', event.target.value)
         .set('outputTable', !currentOutputTable ? this.props.getDefaultOutputTable(event.target.name) : currentOutputTable)
     );
+  },
+
+  handleCustomFieldChange(propName, event) {
+    return this.props.onChange(this.props.query.set(propName, event.target.value));
+  },
+
+  handleCustomCheckboxChange(propName, event) {
+    return this.props.onChange(this.props.query.set(propName, event.target.checked));
   },
 
   sourceTableSelectOptions() {
@@ -351,6 +360,7 @@ export default React.createClass({
             </div>
           </div>
           {this.renderIncrementalLoadOption()}
+          {this.renderCustomFields()}
           <h3>Advanced Mode</h3>
           {this.renderQueryToggle()}
           {this.renderQueryEditor()}
@@ -361,22 +371,25 @@ export default React.createClass({
 
   renderCustomFields() {
     return getCustomFields(this.props.componentId).map(function(field) {
-      return <Input
-        key={propName}
-        label={labelValue}
-        type={type}
-        disabled={!this.props.enabled}
-        labelClassName={(type === 'checkbox') ? '' : 'col-xs-4'}
-        wrapperClassName={(type === 'checkbox') ? 'col-xs-8 col-xs-offset-4' : 'col-xs-8'}
-        value={this.props.credentials.get(propName)}
-        checked={(type === 'checkbox') ? this.props.credentials.get(propName) : false}
-        onChange={
-          (type === 'checkbox') ?
-            this.handleCheckboxChange.bind(this, propName) :
-            this.handleCustomFieldChange.bind(this, propName)
-        }
-      />;
-    }, this);  
+      return (
+        <Input
+          key={field.name}
+          label={field.label}
+          type={field.type}
+          disabled={this.props.disabled}
+          labelClassName={(field.type === 'checkbox') ? '' : 'col-xs-4'}
+          wrapperClassName={(field.type === 'checkbox') ? 'col-md-9 col-md-offset-3' : 'col-md-9'}
+          value={this.props.query.get(field.name)}
+          checked={(field.type === 'checkbox') ? this.props.query.get(field.name) : false}
+          onChange={
+            (field.type === 'checkbox') ?
+              this.handleCustomCheckboxChange.bind(this, field.name) :
+              this.handleCustomFieldChange.bind(this, field.name)
+          }
+          help={field.help}
+        />
+      );
+    }, this);
   },
 
   renderIncrementalLoadOption() {
