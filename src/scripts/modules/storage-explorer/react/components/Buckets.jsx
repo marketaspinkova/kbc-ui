@@ -21,8 +21,7 @@ export default React.createClass({
       allTables: TablesStore.getAll(),
       isLoading: BucketsStore.getIsLoading(),
       sapiToken: ApplicationStore.getSapiToken(),
-      isCreatingBucket: BucketsStore.isCreatingBucket(),
-      isCreatingAliasTable: TablesStore.getIsCreatingAliasTable()
+      isCreatingBucket: BucketsStore.isCreatingBucket()
     };
   },
 
@@ -47,13 +46,7 @@ export default React.createClass({
           </h3>
         </div>
 
-        <BucketsList
-          buckets={this.filteredBuckets()}
-          tables={this.state.allTables}
-          sapiToken={this.state.sapiToken}
-          onCreateAliasTable={this.handleCreateAliasTable}
-          isCreatingAliasTable={this.state.isCreatingAliasTable}
-        />
+        <BucketsList buckets={this.filteredBuckets()} tables={this.state.allTables} />
       </div>
     );
   },
@@ -109,10 +102,6 @@ export default React.createClass({
 
   handleCreateBucket(newBucket) {
     return StorageActionCreators.createBucket(newBucket);
-  },
-
-  handleCreateAliasTable(buckedId, params) {
-    return StorageActionCreators.createAliasTable(buckedId, params);
   },
 
   handleQueryChange(query) {

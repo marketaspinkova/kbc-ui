@@ -242,9 +242,8 @@ export default React.createClass({
 
   onSubmit(event) {
     event.preventDefault();
-    const bucketId = this.props.bucket.get('id');
     const tableAlias = this.state.newTableAlias.updateIn(['aliasFilter', 'values'], values => values.split(',')).toJS();
-    this.props.onSubmit(bucketId, tableAlias).then(this.onHide);
+    this.props.onSubmit(tableAlias).then(this.onHide);
   },
 
   resetState() {
@@ -266,7 +265,7 @@ export default React.createClass({
       return true;
     }
 
-    if (!tableAlias.get('aliasColumnsAutosync', false) && !tableAlias.get('aliasColumns')) {
+    if (!tableAlias.get('aliasColumnsAutosync', true) && !tableAlias.get('aliasColumns', []).length) {
       return true;
     }
 

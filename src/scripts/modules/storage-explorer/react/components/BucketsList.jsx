@@ -1,25 +1,13 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
-import { Map } from 'immutable';
 import { Panel, Button } from 'react-bootstrap';
 import Tooltip from '../../../../react/common/Tooltip';
 import RoutesStore from '../../../../stores/RoutesStore';
-import CreateAliasTableModal from '../modals/CreateAliasTableModal';
 
 export default React.createClass({
   propTypes: {
     buckets: PropTypes.object.isRequired,
-    tables: PropTypes.object.isRequired,
-    sapiToken: PropTypes.object.isRequired,
-    onCreateAliasTable: PropTypes.func.isRequired,
-    isCreatingAliasTable: PropTypes.bool.isRequired
-  },
-
-  getInitialState() {
-    return {
-      openCreateAliasTableModal: false,
-      openCreateAliasTableBucket: Map()
-    };
+    tables: PropTypes.object.isRequired
   },
 
   render() {
@@ -27,12 +15,7 @@ export default React.createClass({
       return <p>No buckets found.</p>;
     }
 
-    return (
-      <div>
-        {this.renderCreateAliasTableModal()}
-        {this.props.buckets.map(this.renderBucketPanel).toArray()}
-      </div>
-    );
+    return <div>{this.props.buckets.map(this.renderBucketPanel).toArray()}</div>;
   },
 
   renderBucketPanel(bucket) {
@@ -46,23 +29,8 @@ export default React.createClass({
   renderBucketHeader(bucket) {
     return (
       <div>
-        <h4>{bucket.get('id')}</h4>
-        <div className="clearfix">
+        <h4>
           <div className="pull-right">
-            {this.canCreateAliasTable(bucket) && (
-              <Tooltip tooltip="Create new alias table" placement="top">
-                <Button
-                  className="btn btn-link"
-                  onClick={e => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    this.openCreateAliasTableModal(bucket);
-                  }}
-                >
-                  <i className="fa fa-random" />
-                </Button>
-              </Tooltip>
-            )}
             <Tooltip tooltip="Bucket detail" placement="top">
               <Button
                 className="btn btn-link"
@@ -76,7 +44,8 @@ export default React.createClass({
               </Button>
             </Tooltip>
           </div>
-        </div>
+          {bucket.get('id')}
+        </h4>
       </div>
     );
   },
@@ -104,46 +73,9 @@ export default React.createClass({
     );
   },
 
-  renderCreateAliasTableModal() {
-    return (
-      <CreateAliasTableModal
-        bucket={this.state.openCreateAliasTableBucket}
-        tables={this.props.tables}
-        openModal={this.state.openCreateAliasTableModal}
-        onSubmit={this.props.onCreateAliasTable}
-        onHide={this.closeCreateAliasTableModal}
-        isSaving={this.props.isCreatingAliasTable}
-      />
-    );
-  },
-
   goToBucketDetail(bucket) {
     RoutesStore.getRouter().transitionTo('storage-explorer-bucket', {
       bucketId: bucket.get('id')
-    });
-  },
-
-  canCreateAliasTable(bucket) {
-    return this.canWriteBucket(bucket) && ['out', 'in'].includes(bucket.get('stage'));
-  },
-
-  canWriteBucket(bucket) {
-    const bucketId = bucket.get('id');
-    const permissions = this.props.sapiToken.getIn(['bucketPermissions', bucketId], '');
-    return ['write', 'manage'].includes(permissions);
-  },
-
-  openCreateAliasTableModal(bucket) {
-    this.setState({
-      openCreateAliasTableModal: true,
-      openCreateAliasTableBucket: bucket
-    });
-  },
-
-  closeCreateAliasTableModal() {
-    this.setState({
-      openCreateAliasTableModal: false,
-      openCreateAliasTableBucket: Map()
     });
   }
 });

@@ -22,7 +22,8 @@ export default React.createClass({
       bucket: BucketsStore.getAll().find(item => item.get('id') === bucketId),
       sapiToken: ApplicationStore.getSapiToken(),
       tables: TablesStore.getAll().filter(table => table.getIn(['bucket', 'id']) === bucketId),
-      deletingBuckets: BucketsStore.deletingBuckets().has(bucketId)
+      deletingBuckets: BucketsStore.deletingBuckets().has(bucketId),
+      creatingAliasTable: TablesStore.getIsCreatingAliasTable()
     };
   },
 
@@ -70,7 +71,13 @@ export default React.createClass({
                 <BucketOverview bucket={this.state.bucket} sapiToken={this.state.sapiToken} />
               </Tab.Pane>
               <Tab.Pane eventKey="tables">
-                <BucketTables bucket={this.state.bucket} tables={this.state.tables} />
+                <BucketTables
+                  bucket={this.state.bucket}
+                  tables={this.state.tables}
+                  sapiToken={this.state.sapiToken}
+                  onCreateAliasTable={this.handleCreateAliasTable}
+                  isCreatingAliasTable={this.state.creatingAliasTable}
+                />
               </Tab.Pane>
               <Tab.Pane eventKey="events">Events</Tab.Pane>
             </Tab.Content>
@@ -92,6 +99,10 @@ export default React.createClass({
         onHide={this.closeDeleleBucketModal}
       />
     );
+  },
+
+  handleCreateAliasTable(params) {
+    return StorageActionCreators.createAliasTable(this.state.bucket.get('id'), params);
   },
 
   handleDeleteBucket() {
