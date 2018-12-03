@@ -23,7 +23,7 @@ export default React.createClass({
       );
     }
 
-    if (dataPreview.count() === 0) {
+    if (dataPreview === null || dataPreview.rows.length === 0) {
       return (
         <EmptyState>
           No Data.
@@ -31,16 +31,16 @@ export default React.createClass({
       );
     }
 
-    const header = dataPreview.first().map( (c) => {
+    const header = dataPreview.columns.map( (c) => {
       return (
         <th>
           {c}
         </th>
       );
-    }).toArray();
-    const rows = dataPreview.rest().map( (row) => {
+    });
+    const rows = dataPreview.rows.map( (row) => {
       const cols = row.map( (c) => {
-        return (<td> {c} </td>);
+        return (<td> {c.isTruncated === '1' && <strong>[Truncated] </strong>} {c.value} </td>);
       });
 
       return (

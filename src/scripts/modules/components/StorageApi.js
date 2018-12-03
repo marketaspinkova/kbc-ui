@@ -126,6 +126,14 @@ var storageApi = {
     });
   },
 
+  tableDataJsonPreview: function(tableId, params) {
+    let queryParams = params || {};
+    queryParams.format = 'json';
+    return createRequest('GET', 'tables/' + tableId + '/data-preview').type('json').query(queryParams).promise().then(function(response) {
+      return response.body;
+    });
+  },
+
   prepareFileUpload: function(params) {
     return createRequest('POST', 'files/prepare').type('form').send(params).promise().then(function(response) {
       return response.body;

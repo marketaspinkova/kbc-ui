@@ -67,7 +67,7 @@ export default React.createClass({
       profilerData: Map(),
       loadingPreview: false,
       loadingProfilerData: false,
-      dataPreview: Immutable.List(),
+      dataPreview: null,
       dataPreviewError: null,
       events: Immutable.List()
     };
@@ -94,7 +94,7 @@ export default React.createClass({
       eventService: es,
       events: Immutable.List(),
       show: false,
-      dataPreview: Immutable.List(),
+      dataPreview: null,
       dataPreviewError: null,
       loadingPreview: false,
       loadingProfilerData: false,
@@ -364,11 +364,11 @@ export default React.createClass({
     });
     const component = this;
     return storageApi
-      .tableDataPreview(this.getTableId(), {limit: 10})
-      .then( (csv) => {
+      .tableDataJsonPreview(this.getTableId(), {limit: 10})
+      .then( (json) => {
         component.setState({
           loadingPreview: false,
-          dataPreview: Immutable.fromJS(csv)
+          dataPreview: json
         });
       })
       .catch((error) => {
