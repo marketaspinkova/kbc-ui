@@ -35,7 +35,7 @@ const JobsStore = StoreUtils.createStore({
     const configJobs = _store.getIn(['transformation', configurationId], new JobsRecord());
     return configJobs.update('jobs', function(jobs) {
       return jobs.filter(function(job) {
-        if (job.getIn(['params', 'transformations']).count() === 0) {
+        if (job.getIn(['params', 'transformations'], List()).count() === 0) {
           return true;
         }
         if (job.getIn(['params', 'transformations', 0]) === rowId) {
