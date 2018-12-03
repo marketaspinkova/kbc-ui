@@ -8,7 +8,7 @@ const mssqlCustomFields = [
     'type': 'checkbox',
     'protected': false,
     'required': false,
-    'help': 'Use WITH(NOLOCK) for query execution [note that this may result in "dirty" reads]'
+    'help': 'Use WITH(NOLOCK) for query execution'
   }
 ];
 
