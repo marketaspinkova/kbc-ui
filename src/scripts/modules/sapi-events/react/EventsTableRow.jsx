@@ -60,7 +60,9 @@ export default React.createClass({
 
   getComponent() {
     const componentId = this.props.event.get('component');
-    const component = ComponentsStore.getComponent(componentId);
+    const component = componentId === 'storage'
+      ? ComponentsStore.getComponent('keboola.storage')
+      : ComponentsStore.getComponent(componentId);
 
     if (!component) {
       return ComponentsStore.unknownComponent(componentId);
