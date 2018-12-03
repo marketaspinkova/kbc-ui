@@ -2,6 +2,13 @@ import React, { PropTypes } from 'react';
 import { Col, Alert, Modal, Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
+const INITIAL_STATE = {
+  name: '',
+  stage: 'in',
+  backend: '',
+  error: null
+};
+
 export default React.createClass({
   propTypes: {
     openModal: PropTypes.bool.isRequired,
@@ -14,12 +21,7 @@ export default React.createClass({
   },
 
   getInitialState() {
-    return {
-      name: '',
-      stage: 'in',
-      backend: '',
-      error: null
-    };
+    return INITIAL_STATE;
   },
 
   render() {
@@ -168,12 +170,7 @@ export default React.createClass({
   },
 
   resetState() {
-    this.setState({
-      name: '',
-      stage: 'in',
-      backend: '',
-      error: null
-    });
+    this.setState(INITIAL_STATE);
   },
 
   isDisabled() {
