@@ -131,7 +131,7 @@ export default React.createClass({
               {header}
             </div>
           )}
-          <div className="tbody" style={{ wordBreak: 'break-word' }}>
+          <div className="tbody kbc-break-all kbc-break-word">
             {childs}
           </div>
         </div>

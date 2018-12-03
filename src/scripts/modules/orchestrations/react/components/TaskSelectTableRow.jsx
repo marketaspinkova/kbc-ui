@@ -28,7 +28,9 @@ export default React.createClass({
         <td>
           <span className="label label-info">{this.props.task.get('action')}</span>
         </td>
-        <td style={{ wordBreak: 'break-word' }}>{this._renderConfiguration()}</td>
+        <td className="kbc-break-all kbc-break-word">
+          {this._renderConfiguration()}
+        </td>
         <td>
           <input
             type="checkbox"
