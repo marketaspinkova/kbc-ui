@@ -71,10 +71,10 @@ export default React.createClass({
           <FileSize size={table.get('dataSizeBytes')} />
         </td>
         <td>
-          <CreatedWithIcon createdTime={table.get('created')} />
+          <CreatedWithIcon createdTime={table.get('created')} relative={false} />
         </td>
         <td>
-          <CreatedWithIcon createdTime={table.get('lastChangeDate')} />
+          <CreatedWithIcon createdTime={table.get('lastChangeDate')} relative={false} />
         </td>
       </tr>
     );
