@@ -29,7 +29,8 @@ export default React.createClass({
   getInitialState() {
     return {
       newTableAlias: fromJS(initialNewTableAlias),
-      tableColumns: []
+      tableColumns: [],
+      error: null
     };
   },
 
@@ -41,6 +42,8 @@ export default React.createClass({
             <Modal.Title>Create table alias in {this.props.bucket.get('id')}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
+            {this.renderError()}
+
             <FormGroup>
               <Col sm={3} componentClass={ControlLabel}>
                 Source table
@@ -152,6 +155,14 @@ export default React.createClass({
     );
   },
 
+  renderError() {
+    if (!this.state.error) {
+      return null;
+    }
+
+    return <div className="alert alert-danger">{this.state.error}</div>;
+  },
+
   handleSourceTable(tableId, table) {
     const columns = table
       .get('columns')
@@ -215,13 +226,19 @@ export default React.createClass({
   onSubmit(event) {
     event.preventDefault();
     const tableAlias = this.state.newTableAlias.updateIn(['aliasFilter', 'values'], values => values.split(',')).toJS();
-    this.props.onSubmit(tableAlias).then(this.onHide);
+
+    this.props.onSubmit(tableAlias).then(this.onHide, message => {
+      this.setState({
+        error: message
+      });
+    });
   },
 
   resetState() {
     this.setState({
       newTableAlias: fromJS(initialNewTableAlias),
-      tableColumns: []
+      tableColumns: [],
+      error: null
     });
   },
 
