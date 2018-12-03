@@ -1,20 +1,25 @@
 import React from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
+
 import ApplicationStore from '../../../../../stores/ApplicationStore';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../../../stores/RoutesStore';
 import BucketsStore from '../../../../components/stores/StorageBucketsStore';
+import TablesStore from '../../../../components/stores/StorageTablesStore';
+
 import BucketOverview from './BucketOverview';
+import BucketTables from './BucketTables';
 
 export default React.createClass({
-  mixins: [createStoreMixin(BucketsStore, ApplicationStore)],
+  mixins: [createStoreMixin(BucketsStore, ApplicationStore, TablesStore)],
 
   getStateFromStores() {
     const bucketId = RoutesStore.getCurrentRouteParam('bucketId');
 
     return {
       bucket: BucketsStore.getAll().find(item => item.get('id') === bucketId),
-      sapiToken: ApplicationStore.getSapiToken()
+      sapiToken: ApplicationStore.getSapiToken(),
+      tables: TablesStore.getAll().filter(table => table.getIn(['bucket', 'id']) === bucketId)
     };
   },
 
@@ -49,7 +54,7 @@ export default React.createClass({
             <BucketOverview bucket={this.state.bucket} sapiToken={this.state.sapiToken} />
           </Tab>
           <Tab eventKey="tables" title="Tables">
-            Tables
+            <BucketTables bucket={this.state.bucket} tables={this.state.tables} />
           </Tab>
           <Tab eventKey="events" title="Events">
             Events
