@@ -42,7 +42,7 @@ export default React.createClass({
         <Tab.Container
           activeKey={this.state.activeTab}
           onSelect={this.handleSelectTab}
-          id="bucket-tabs"
+          id="table-detail-tabs"
           generateChildId={this.generateTabId}
         >
           <div>

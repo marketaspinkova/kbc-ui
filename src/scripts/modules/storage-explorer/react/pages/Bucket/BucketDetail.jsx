@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tabs, Tab } from 'react-bootstrap';
+import { Tab, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 
 import ApplicationStore from '../../../../../stores/ApplicationStore';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
@@ -44,22 +44,34 @@ export default React.createClass({
           <h2>Bucket {this.state.bucket.get('id')}</h2>
         </div>
 
-        <Tabs
+        <Tab.Container
           activeKey={this.state.activeTab}
           onSelect={this.handleSelectTab}
-          animation={false}
           id="bucket-detail-tabs"
+          generateChildId={this.generateTabId}
         >
-          <Tab eventKey="overview" title="Overview">
-            <BucketOverview bucket={this.state.bucket} sapiToken={this.state.sapiToken} />
-          </Tab>
-          <Tab eventKey="tables" title="Tables">
-            <BucketTables bucket={this.state.bucket} tables={this.state.tables} />
-          </Tab>
-          <Tab eventKey="events" title="Events">
-            Events
-          </Tab>
-        </Tabs>
+          <div>
+            <Nav bsStyle="tabs">
+              <NavItem eventKey="overview">Overview</NavItem>
+              <NavItem eventKey="tables">Tables</NavItem>
+              <NavItem eventKey="events">Events</NavItem>
+              <NavDropdown title="Actions">
+                <MenuItem eventKey="delete" onSelect={this.handleDropdownAction}>
+                  Delete bucket
+                </MenuItem>
+              </NavDropdown>
+            </Nav>
+            <Tab.Content animation={false}>
+              <Tab.Pane eventKey="overview">
+                <BucketOverview bucket={this.state.bucket} sapiToken={this.state.sapiToken} />
+              </Tab.Pane>
+              <Tab.Pane eventKey="tables">
+                <BucketTables bucket={this.state.bucket} tables={this.state.tables} />
+              </Tab.Pane>
+              <Tab.Pane eventKey="events">Events</Tab.Pane>
+            </Tab.Content>
+          </div>
+        </Tab.Container>
       </div>
     );
   },
@@ -70,5 +82,11 @@ export default React.createClass({
         activeTab: tab
       });
     }
+  },
+
+  handleDropdownAction() {},
+
+  generateTabId(eventKey, type) {
+    return `${eventKey}-${type}`;
   }
 });
