@@ -1,6 +1,6 @@
 import React from 'react';
+import { InlineEditInput } from '@keboola/indigo-ui';
 
-import InlineEditText from '../../../../../react/common/InlineEditTextInput';
 import actionCreators from '../../../actionCreators';
 
 export default React.createClass({
@@ -66,7 +66,7 @@ export default React.createClass({
     }
 
     return (
-      <InlineEditText
+      <InlineEditInput
         text={text}
         editTooltip={this.props.editTooltip}
         placeholder={this.props.placeholder}

@@ -1,10 +1,10 @@
 import React from 'react';
+import { InlineEditInput } from '@keboola/indigo-ui';
 
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import immutableMixin from 'react-immutable-render-mixin';
 import OrchestrationsStore from '../../stores/OrchestrationsStore';
 import actionCreators from '../../ActionCreators';
-import InlineEditTextInput from '../../../../react/common/InlineEditTextInput';
 
 const FIELD = 'name';
 
@@ -53,7 +53,7 @@ export default React.createClass({
 
   render() {
     return (
-      <InlineEditTextInput
+      <InlineEditInput
         text={this.state.isEditing ? this.state.editValue : this.state.value}
         placeholder="Name the component ..."
         tooltipPlacement="bottom"
