@@ -1,6 +1,5 @@
 import React from 'react';
-import StaticInput from './InlineEditTextStatic';
-import EditInput from './InlineEditTextEdit';
+import { InlineEditInput } from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -27,27 +26,19 @@ export default React.createClass({
   },
 
   render() {
-    if (this.props.isEditing) {
-      return (
-        <EditInput
-          text={this.props.text}
-          isSaving={this.props.isSaving}
-          isValid={this.props.isValid}
-          placeholder={this.props.placeholder}
-          onChange={this.props.onEditChange}
-          onCancel={this.props.onEditCancel}
-          onSave={this.props.onEditSubmit}
-        />
-      );
-    }
-
     return (
-      <StaticInput
+      <InlineEditInput
+        onEditStart={this.props.onEditStart}
+        onEditCancel={this.props.onEditCancel}
+        onEditChange={this.props.onEditChange}
+        onEditSubmit={this.props.onEditSubmit}
         text={this.props.text}
+        isSaving={this.props.isSaving}
+        isEditing={this.props.isEditing}
+        isValid={this.props.isValid}
         editTooltip={this.props.editTooltip}
         tooltipPlacement={this.props.tooltipPlacement}
         placeholder={this.props.placeholder}
-        onClick={this.props.onEditStart}
       />
     );
   }
