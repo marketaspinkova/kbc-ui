@@ -515,6 +515,51 @@ export default {
   },
 
   /*
+    Editing notifications
+  */
+  startOrchestrationScheduleEdit(id) {
+    return this.startOrchestrationFieldEdit(id, 'schedule');
+  },
+
+  cancelOrchestrationScheduleEdit(id) {
+    return this.cancelOrchestrationFieldEdit(id, 'schedule');
+  },
+
+  updateOrchestrationScheduleEdit(id, newSchedule) {
+    return this.updateOrchestrationFieldEdit(id, 'schedule', newSchedule);
+  },
+
+  saveOrchestrationScheduleEdit(id) {
+    const schedule = {crontabRecord: OrchestrationStore.getEditingValue(id, 'schedule')};
+
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.ORCHESTRATION_FIELD_SAVE_START,
+      orchestrationId: id,
+      field: 'schedule'
+    });
+
+    return orchestrationsApi
+      .updateOrchestration(id, schedule)
+      .then(data =>
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.ORCHESTRATION_FIELD_SAVE_SUCCESS,
+          orchestrationId: id,
+          field: 'schedule',
+          notifications: data
+        })
+      )
+      .catch(e => {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.ORCHESTRATION_FIELD_SAVE_ERROR,
+          orchestrationId: id,
+          field: 'schedule',
+          error: e
+        });
+        throw e;
+      });
+  },
+
+  /*
     Run and termination
   */
 

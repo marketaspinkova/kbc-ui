@@ -18,7 +18,6 @@ import JobsGraph from './JobsGraph';
 import { Link } from 'react-router';
 import TasksSummary from './TasksSummary';
 import CronRecord from '../../components/CronRecord';
-import ScheduleModal from '../../modals/Schedule';
 import CreatedWithIcon from '../../../../../react/common/CreatedWithIcon';
 import OrchestrationRunButton from '../../components/OrchestrationRunButton';
 import OrchestrationDeleteButton from '../../components/OrchestrationDeleteButton';
