@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { Panel, Button } from 'react-bootstrap';
 import Tooltip from '../../../../react/common/Tooltip';
-import RoutesStore from '../../../../stores/RoutesStore';
+import { navigateToBucketDetail } from '../../Actions';
 
 export default React.createClass({
   propTypes: {
@@ -37,7 +37,7 @@ export default React.createClass({
                 onClick={e => {
                   e.preventDefault();
                   e.stopPropagation();
-                  this.goToBucketDetail(bucket);
+                  navigateToBucketDetail(bucket.get('id'));
                 }}
               >
                 <i className="fa fa-fw fa-chevron-right" />
@@ -71,11 +71,5 @@ export default React.createClass({
         <p>{tableName}</p>
       </Link>
     );
-  },
-
-  goToBucketDetail(bucket) {
-    RoutesStore.getRouter().transitionTo('storage-explorer-bucket', {
-      bucketId: bucket.get('id')
-    });
   }
 });

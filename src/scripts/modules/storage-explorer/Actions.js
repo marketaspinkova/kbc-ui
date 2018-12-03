@@ -9,6 +9,13 @@ const deleteBucket = (bucketId, forceDelete) => {
     });
 };
 
+const navigateToBucketDetail = (bucketId) => {
+  RoutesStore.getRouter().transitionTo('storage-explorer-bucket', {
+    bucketId: bucketId
+  });
+};
+
 export {
-  deleteBucket
+  deleteBucket,
+  navigateToBucketDetail
 };
