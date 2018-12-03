@@ -9,6 +9,7 @@ import OrchestrationDetail from './react/pages/orchestration-detail/Orchestratio
 import OrchestrationJobDetail from './react/pages/orchestration-job-detail/OrchestrationJobDetail';
 import OrchestrationTasks from './react/pages/orchestration-tasks/OrchestrationTasks';
 import OrchestrationNotifications from './react/pages/orchestration-notifications/OrchestrationNotifications';
+import OrchestrationSchedule from './react/pages/orchestration-schedule/OrchestrationSchedule';
 
 import OrchestrationsReloaderButton from './react/components/OrchestrationsReloaderButton';
 import NewOrchestrationHeaderButton from './react/components/NewOrchestionHeaderButton';
@@ -101,6 +102,12 @@ const routes = {
           path: 'notifications',
           handler: OrchestrationNotifications,
           headerButtonsHandler: OrchestrationNotificationsButtons
+        },
+        {
+          name: 'orchestrationSchedule',
+          title: 'Schedule',
+          path: 'schedule',
+          handler: OrchestrationSchedule
         },
         createVersionsPageRoute('orchestrator', 'orchestrationId', null, { readOnlyMode: true })
       ]

@@ -100,10 +100,15 @@ export default React.createClass({
                 <h2>Schedule</h2>
               </Col>
               <Col sm={3}>
-                <ScheduleModal
-                  crontabRecord={this.state.orchestration.get('crontabRecord')}
-                  orchestrationId={this.state.orchestration.get('id')}
-                />
+                <Link
+                  className="pull-right btn btn-primary"
+                  to="orchestrationSchedule"
+                  params={{
+                    orchestrationId: this.state.orchestration.get('id')
+                  }}
+                >
+                  <i className="fa fa-edit" /> Edit Schedule
+                </Link>
               </Col>
             </Row>
             <CronRecord crontabRecord={this.state.orchestration.get('crontabRecord')}/>
