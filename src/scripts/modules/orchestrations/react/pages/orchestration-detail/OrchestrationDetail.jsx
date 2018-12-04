@@ -166,6 +166,7 @@ export default React.createClass({
                 tasks={this.state.tasksToRun}
                 key="run"
                 label="Run Orchestration"
+                mode="link"
               />
             </li>
             <li>
@@ -182,6 +183,7 @@ export default React.createClass({
                 isPending={this.state.pendingActions.get('delete', false)}
                 key="delete"
                 label="Move to Trash"
+                mode="link"
               />
             </li>
             <li>

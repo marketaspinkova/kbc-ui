@@ -6,6 +6,8 @@ import TaskSelectTable from '../components/TaskSelectTable';
 import { Loader, PanelWithDetails } from '@keboola/indigo-ui';
 import OrchestrationActionCreators from '../../ActionCreators';
 
+const MODE_BUTTON = 'button', MODE_LINK = 'link';
+
 export default React.createClass({
   propTypes: {
     orchestration: React.PropTypes.object.isRequired,
@@ -15,7 +17,8 @@ export default React.createClass({
     isLoading: React.PropTypes.bool.isRequired,
     tooltipPlacement: React.PropTypes.string,
     onOpen: React.PropTypes.func,
-    label: React.PropTypes.string
+    label: React.PropTypes.string,
+    mode: React.PropTypes.oneOf([MODE_BUTTON, MODE_LINK])
   },
 
   getInitialState() {
@@ -24,7 +27,8 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      label: ''
+      label: '',
+      mode: MODE_BUTTON
     };
   },
 
@@ -46,7 +50,7 @@ export default React.createClass({
   render() {
     return (
       <span>
-        {this.renderOpenButton()}
+        {this.renderOpenElement()}
         <Modal show={this.state.showModal} bsSize="large" onHide={this.close}>
           <Modal.Header closeButton={true}>
             <Modal.Title>{`Run orchestration ${this.props.orchestration.get('name')}`}</Modal.Title>
@@ -79,10 +83,18 @@ export default React.createClass({
     );
   },
 
+  renderOpenElement() {
+    if (this.props.mode === MODE_BUTTON) {
+      return this.renderOpenButton();
+    } else {
+      return this.renderOpenLink();
+    }
+  },
+
   renderOpenButton() {
     return (
       <Tooltip tooltip="Run" id="run" placement={this.props.tooltipPlacement}>
-        <Button onClick={this._handleOpenButtonClick} bsStyle="link">
+        <Button onClick={this._handleOpenClick} bsStyle="link">
           {this.props.isLoading ? (
             <Loader className="fa-fw" />
           ) : (
@@ -93,7 +105,16 @@ export default React.createClass({
     );
   },
 
-  _handleOpenButtonClick(e) {
+  renderOpenLink() {
+    return (
+      <a onClick={this._handleOpenClick} disabled={this.props.isLoading}>
+        {this.props.isLoading ? <span><Loader className="fa-fw"/> {this.props.label}</span> :
+          <span><i className="fa fa-fw fa-play"/> {this.props.label}</span>}
+      </a>
+    );
+  },
+
+  _handleOpenClick(e) {
     e.preventDefault();
     e.stopPropagation();
     return this.open();

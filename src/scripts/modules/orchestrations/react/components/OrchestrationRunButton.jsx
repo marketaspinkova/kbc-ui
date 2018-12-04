@@ -8,7 +8,8 @@ export default React.createClass({
     tasks: React.PropTypes.object,
     notify: React.PropTypes.bool,
     tooltipPlacement: React.PropTypes.string,
-    label: React.PropTypes.string
+    label: React.PropTypes.string,
+    mode: React.PropTypes.string
   },
 
   getDefaultProps() {
@@ -36,6 +37,7 @@ export default React.createClass({
         tooltipPlacement={this.props.tooltipPlacement}
         onOpen={this.handleOnOpen}
         label={this.props.label}
+        mode={this.props.mode}
       />
     );
   },

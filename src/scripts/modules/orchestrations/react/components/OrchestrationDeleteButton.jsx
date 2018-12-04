@@ -4,6 +4,9 @@ import Router from 'react-router';
 import Tooltip from '../../../../react/common/Tooltip';
 import Confirm from '../../../../react/common/Confirm';
 import { Loader } from '@keboola/indigo-ui';
+import {Button} from 'react-bootstrap';
+
+const MODE_BUTTON = 'button', MODE_LINK = 'link';
 
 export default React.createClass({
   mixins: [Router.Navigation],
@@ -12,13 +15,15 @@ export default React.createClass({
     orchestration: React.PropTypes.object.isRequired,
     isPending: React.PropTypes.bool.isRequired,
     tooltipPlacement: React.PropTypes.string,
-    label: React.PropTypes.string
+    label: React.PropTypes.string,
+    mode: React.PropTypes.oneOf([MODE_BUTTON, MODE_LINK])
   },
 
   getDefaultProps() {
     return {
       tooltipPlacement: 'top',
-      label: ''
+      label: '',
+      mode: MODE_BUTTON
     };
   },
 
@@ -46,12 +51,34 @@ export default React.createClass({
         buttonLabel="Move to Trash"
         onConfirm={this._deleteOrchestration}
       >
-        <Tooltip tooltip="Move to Trash" id="delete" placement={this.props.tooltipPlacement}>
-          <button className="btn btn-link">
-            <i className="kbc-icon-cup" /> {this.props.label}
-          </button>
-        </Tooltip>
+        {this.renderOpenElement()}
       </Confirm>
+    );
+  },
+
+  renderOpenElement() {
+    if (this.props.mode === MODE_BUTTON) {
+      return this.renderOpenButton();
+    } else {
+      return this.renderOpenLink();
+    }
+  },
+
+  renderOpenButton() {
+    return (
+      <Tooltip tooltip="Move to Trash" id="delete" placement={this.props.tooltipPlacement}>
+        <Button bsStyle="link">
+          <i className="kbc-icon-cup"/> {this.props.label}
+        </Button>
+      </Tooltip>
+    );
+  },
+
+  renderOpenLink() {
+    return (
+      <a>
+        <i className="kbc-icon-cup"/> {this.props.label}
+      </a>
     );
   },
 
