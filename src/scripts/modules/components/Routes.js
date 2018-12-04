@@ -101,6 +101,7 @@ module.exports = {
       createComponentRoute('radektomasek.ex-dropbox-v2', [dropoxExtractorRoutesV2]),
       createComponentRoute('keboola.ex-db-pgsql', [exDbGenericRoutes('keboola.ex-db-pgsql')]),
       createComponentRoute('keboola.ex-db-redshift', [exDbGenericRoutes('keboola.ex-db-redshift')]),
+      createComponentRoute('keboola.ex-db-redshift-cursors', [exDbGenericRoutes('keboola.ex-db-redshift-cursors')]),
       createComponentRoute('keboola.ex-db-firebird', [exDbGenericRoutes('keboola.ex-db-firebird')]),
       createComponentRoute('keboola.ex-db-db2', [exDbGenericRoutes('keboola.ex-db-db2')]),
       createComponentRoute('keboola.ex-db-db2-bata', [exDbGenericRoutes('keboola.ex-db-db2-bata')]),

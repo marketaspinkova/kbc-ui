@@ -225,6 +225,7 @@ const COMPONENTS_FIELDS = {
   'keboola.ex-db-mysql': mysqlFields,
   'keboola.ex-db-pgsql': defaultFields,
   'keboola.ex-db-redshift': defaultFields,
+  'keboola.ex-db-redshift-cursors': defaultFields,
   'keboola.ex-db-db2': defaultFields,
   'keboola.ex-db-firebird': firebirdFields,
   'keboola.ex-db-impala': defaultFields,
