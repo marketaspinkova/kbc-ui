@@ -108,6 +108,25 @@ export default React.createClass({
   },
 
   canDeleteColumn() {
+    const { table } = this.props;
+    const bucketId = table.getIn(['bucket', 'id']);
+    const permission = this.props.sapiToken.getIn(['bucketPermissions', bucketId]);
+
+    if (!['write', 'manage'].includes(permission)) {
+      return false;
+    }
+
+    if (table.get('columns').count() < 2) {
+      return false;
+    }
+
+    if (
+      table.get('isAlias') &&
+      (table.getIn(['bucket', 'backend']) === 'redshift' || table.get('aliasColumnsAutoSync'))
+    ) {
+      return false;
+    }
+
     return true;
   },
 
