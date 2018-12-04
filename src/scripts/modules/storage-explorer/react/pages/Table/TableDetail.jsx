@@ -8,6 +8,7 @@ import BucketsStore from '../../../../components/stores/StorageBucketsStore';
 import TablesStore from '../../../../components/stores/StorageTablesStore';
 
 import TableOverview from './TableOverview';
+import TableColumn from './TableColumn';
 
 export default React.createClass({
   mixins: [createStoreMixin(TablesStore, BucketsStore, ApplicationStore)],
@@ -88,6 +89,16 @@ export default React.createClass({
             <Tab.Content animation={false}>
               <Tab.Pane eventKey="overview">
                 <TableOverview
+                  table={this.state.table}
+                  tables={this.state.tables}
+                  tableAliases={this.getTableAliases()}
+                  tableLinks={this.getTableLinks()}
+                  sapiToken={this.state.sapiToken}
+                  creatingPrimaryKey={this.state.creatingPrimaryKey}
+                  deletingPrimaryKey={this.state.deletingPrimaryKey}
+                />
+
+                <TableColumn
                   table={this.state.table}
                   tables={this.state.tables}
                   tableAliases={this.getTableAliases()}
