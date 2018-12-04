@@ -1,8 +1,7 @@
-
 import React from 'react';
 import Immutable from 'immutable';
 import _ from 'underscore';
-import {Alert, FormGroup, HelpBlock, ControlLabel} from 'react-bootstrap';
+import { Alert, FormGroup, HelpBlock, Checkbox, Col } from 'react-bootstrap';
 
 import CodeEditor from '../../../../react/common/CodeEditor';
 import Select from '../../../../react/common/Select';
@@ -117,10 +116,6 @@ export default React.createClass({
         .set('name', event.target.value)
         .set('outputTable', !currentOutputTable ? this.props.getDefaultOutputTable(event.target.name) : currentOutputTable)
     );
-  },
-
-  handleCustomFieldChange(propName, event) {
-    return this.props.onChange(this.props.query.set(propName, event.target.value));
   },
 
   handleCustomCheckboxChange(propName, event) {
@@ -369,41 +364,24 @@ export default React.createClass({
   },
 
   renderCustomFields() {
-    return getCustomFields(this.props.componentId).map(function(field) {
-      const formControl = (<input
-        key={field.name}
-        type={field.type}
-        disabled={this.props.disabled}
-        value={this.props.query.get(field.name)}
-        checked={(field.type === 'checkbox') ? this.props.query.get(field.name) : false}
-        onChange={
-          (field.type === 'checkbox') ?
-            this.handleCustomCheckboxChange.bind(this, field.name) :
-            this.handleCustomFieldChange.bind(this, field.name)
-        }
-      />);
+    return getCustomFields(this.props.componentId).map((field) =>{
       if (field.type === 'checkbox') {
         return (
-          <FormGroup>
-            <div className={'col-md-9 col-md-offset-3 checkbox'}>
-              <label>
-                {formControl}
+          <FormGroup key={`custom-field-${field.name}`}>
+            <Col smOffset={3} sm={9}>
+              <Checkbox
+                checked={!!this.props.query.get(field.name)}
+                disabled={this.props.disabled}
+                onChange={(event) => this.handleCustomCheckboxChange(field.name, event)}
+              >
                 {field.label}
-              </label>
+              </Checkbox>
               <HelpBlock>{field.help}</HelpBlock>
-            </div>
-          </FormGroup>
-        );
-      } else {
-        return (
-          <FormGroup>
-            <ControlLabel bsClass={'col-md-3 control-label'}>{field.label}</ControlLabel>
-            {formControl}
-            <HelpBlock>{field.help}</HelpBlock>
+            </Col>
           </FormGroup>
         );
       }
-    }, this);
+    });
   },
 
   renderIncrementalLoadOption() {
