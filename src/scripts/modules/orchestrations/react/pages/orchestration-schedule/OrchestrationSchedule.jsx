@@ -7,8 +7,6 @@ import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
 import CronScheduler from '../../../../../react/common/CronScheduler';
 import OrchestrationsActionCreators from '../../../ActionCreators';
 
-/* eslint no-console: 0 */
-
 export default React.createClass({
   mixins: [createStoreMixin(OrchestrationStore)],
 
@@ -27,8 +25,8 @@ export default React.createClass({
     return {
       orchestrationId,
       crontabRecord,
-      isSaving: OrchestrationStore.isSaving(orchestrationId, 'schedule'),
-      isEditing: OrchestrationStore.isEditing(orchestrationId, 'schedule')
+      isEditing,
+      isSaving: OrchestrationStore.isSaving(orchestrationId, 'schedule')
     };
   },
 
@@ -73,7 +71,6 @@ export default React.createClass({
   },
 
   _handleSave() {
-    console.log('nuval 1');
     return OrchestrationsActionCreators.saveOrchestrationScheduleEdit(this.state.orchestrationId);
   },
 
