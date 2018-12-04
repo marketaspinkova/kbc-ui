@@ -51,7 +51,7 @@ export default React.createClass({
             </span>
           )}
         </td>
-        <td className="actions">{this.renderActions(column)}</td>
+        <td className="actions text-right">{this.renderActions(column)}</td>
       </tr>
     );
   },
