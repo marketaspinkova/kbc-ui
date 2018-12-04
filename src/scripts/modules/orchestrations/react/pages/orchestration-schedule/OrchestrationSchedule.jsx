@@ -35,23 +35,21 @@ export default React.createClass({
       <div className="container-fluid">
         <div className="kbc-main-content">
           <div className="kbc-block-with-padding">
-            <p>
-              <ConfirmButtons
-                isSaving={this.state.isSaving}
-                onCancel={this._handleCancel}
-                onSave={this._handleSave}
-                isDisabled={!this.state.isEditing}
-                className="text-right"
+            <ConfirmButtons
+              isSaving={this.state.isSaving}
+              onCancel={this._handleCancel}
+              onSave={this._handleSave}
+              isDisabled={!this.state.isEditing}
+              className="text-right"
+            >
+              <Button
+                bsStyle="danger"
+                onClick={this._handleRemoveSchedule}
+                disabled={this.state.isSaving}
               >
-                <Button
-                  bsStyle="danger"
-                  onClick={this._handleRemoveSchedule}
-                  disabled={this.state.isSaving}
-                >
-                  Remove Schedule
-                </Button>
-              </ConfirmButtons>
-            </p>
+                Remove Schedule
+              </Button>
+            </ConfirmButtons>
             <CronScheduler crontabRecord={this.state.crontabRecord} onChange={this._handleCrontabChange}/>
           </div>
         </div>
