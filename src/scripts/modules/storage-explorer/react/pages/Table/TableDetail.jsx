@@ -49,10 +49,6 @@ export default React.createClass({
 
     return (
       <div>
-        <div className="kbc-inner-padding">
-          <h2>Table {this.state.table.get('name')}</h2>
-        </div>
-
         <Tab.Container
           activeKey={this.state.activeTab}
           onSelect={this.handleSelectTab}
