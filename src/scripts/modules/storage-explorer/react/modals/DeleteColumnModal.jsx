@@ -2,21 +2,22 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { Modal, ButtonToolbar, Button, Checkbox, Table } from 'react-bootstrap';
 
+const INITIAL_STATE = {
+  forceDelete: false
+};
+
 export default React.createClass({
   propTypes: {
     column: PropTypes.string.isRequired,
     tableAliases: PropTypes.array.isRequired,
     tableLinks: PropTypes.array.isRequired,
-    deleting: PropTypes.bool.isRequired,
     onConfirm: PropTypes.func.isRequired,
     onHide: PropTypes.func.isRequired,
     sapiToken: PropTypes.object.isRequired
   },
 
   getInitialState() {
-    return {
-      forceDelete: false
-    };
+    return INITIAL_STATE;
   },
 
   render() {
@@ -106,7 +107,7 @@ export default React.createClass({
               Cancel
             </Button>
             <Button onClick={this.handleConfirm} disabled={this.isDisable()} bsStyle="danger">
-              {this.props.deleting ? 'Deleting...' : 'Delete'}
+              Delete
             </Button>
           </ButtonToolbar>
         </Modal.Footer>
@@ -121,12 +122,13 @@ export default React.createClass({
   },
 
   onHide() {
-    this.setState({ forceDelete: false });
+    this.setState(INITIAL_STATE);
     this.props.onHide();
   },
 
   handleConfirm() {
-    this.props.onConfirm(this.state.forceDelete).then(this.onHide);
+    this.props.onConfirm(this.props.column, this.state.forceDelete);
+    this.onHide();
   },
 
   isDisable() {
@@ -134,7 +136,7 @@ export default React.createClass({
       return true;
     }
 
-    return this.props.deleting;
+    return false;
   },
 
   hasAliasesOrLinks() {

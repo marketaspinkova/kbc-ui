@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react';
-import Promise from 'bluebird';
 import { Table, Button } from 'react-bootstrap';
-import Tooltip from '../../../../../react/common/Tooltip';
+import { Loader } from '@keboola/indigo-ui';
 
+import Tooltip from '../../../../../react/common/Tooltip';
+import StorageActionCreators from '../../../../components/StorageActionCreators';
 import DeleteColumnModal from '../../modals/DeleteColumnModal';
 
 export default React.createClass({
@@ -11,7 +12,8 @@ export default React.createClass({
     tables: PropTypes.object.isRequired,
     tableAliases: PropTypes.array.isRequired,
     tableLinks: PropTypes.array.isRequired,
-    sapiToken: PropTypes.object.isRequired
+    sapiToken: PropTypes.object.isRequired,
+    deletingColumn: PropTypes.object.isRequired
   },
 
   getInitialState() {
@@ -62,10 +64,12 @@ export default React.createClass({
     }
 
     if (this.isColumnForceDeletable(column)) {
+      const deleting = !!this.props.deletingColumn.getIn([this.props.table.get('id'), column]);
+
       return (
         <Tooltip tooltip="Delete column" placement="top">
-          <Button className="btn btn-link" onClick={() => this.openDeleteColumnModal(column)}>
-            <i className="fa fa-trash-o" />
+          <Button className="btn btn-link" onClick={() => this.openDeleteColumnModal(column)} disabled={deleting}>
+            {deleting ? <Loader /> : <i className="fa fa-trash-o" />}
           </Button>
         </Tooltip>
       );
@@ -86,7 +90,6 @@ export default React.createClass({
         column={this.state.deleteColumnName}
         tableAliases={this.props.tableAliases}
         tableLinks={this.props.tableLinks}
-        deleting={false}
         onConfirm={this.handleDeleteColumn}
         onHide={this.closeDeleteColumnModal}
         sapiToken={this.props.sapiToken}
@@ -94,8 +97,10 @@ export default React.createClass({
     );
   },
 
-  handleDeleteColumn() {
-    return Promise.resolve();
+  handleDeleteColumn(columnName, forceDelete) {
+    const tableId = this.props.table.get('id');
+    const params = { force: forceDelete };
+    return StorageActionCreators.deleteTableColumn(tableId, columnName, params);
   },
 
   isColumnInPrimaryKey(column) {

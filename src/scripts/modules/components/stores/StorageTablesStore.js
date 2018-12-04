@@ -34,6 +34,10 @@ const StorageTablesStore = StoreUtils.createStore({
     return _store.getIn(['pendingTables', 'creating'], false);
   },
 
+  getDeletingColumn() {
+    return _store.getIn(['pendingTables', 'deletingColumn'], Map());
+  },
+
   getIsCreatingAliasTable() {
     return _store.getIn(['pendingTables', 'creatingAlias'], false);
   },
@@ -88,6 +92,18 @@ Dispatcher.register(function(payload) {
 
     case constants.ActionTypes.STORAGE_TABLE_CREATE_ERROR:
       _store = _store.setIn(['pendingTables', 'creating'], false);
+      return StorageTablesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_DELETE_TABLE_COLUMN:
+      _store = _store.setIn(['pendingTables', 'deletingColumn', action.tableId, action.columnName], true);
+      return StorageTablesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_DELETE_TABLE_COLUMN_SUCCESS:
+      _store = _store.setIn(['pendingTables', 'deletingColumn', action.tableId, action.columnName], false);
+      return StorageTablesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_DELETE_TABLE_COLUMN_ERROR:
+      _store = _store.setIn(['pendingTables', 'deletingColumn', action.tableId, action.columnName], false);
       return StorageTablesStore.emitChange();
 
     case constants.ActionTypes.STORAGE_ALIAS_TABLE_CREATE:
