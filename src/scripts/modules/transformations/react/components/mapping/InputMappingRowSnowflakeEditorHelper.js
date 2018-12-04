@@ -21,24 +21,22 @@ const getMetadataDataTypes = (columnMetadata) => {
     });
     const dataTypeNullable = dataTypeNullables.count() > 0 ? dataTypeNullables.get(0) : Map();
 
-    let datatypeName, length = null;
-
-    let datatype = SnowflakeDataTypesMapping.map((mappedDatatype) => {
-      if (mappedDatatype.get('basetype') === baseType.get('value')) {
-        datatypeName = mappedDatatype.get('name');
-        return mappedDatatype;
-      }
+    const matchedDataType = SnowflakeDataTypesMapping.find((mappedDatatype) => {
+      return mappedDatatype.get('basetype') === baseType.get('value');
     });
-    const mapType = datatype.get(datatypeName);
-    if (mapType) {
-      length = mapType.get('size') ? dataTypeLength.get('value') : null;
-      if (mapType.has('maxLength') && length > mapType.get('maxLength')) {
-        length = mapType.get('maxLength');
+
+    const dataTypeName = matchedDataType ? matchedDataType.get('name') : null;
+    let length = null;
+
+    if (matchedDataType) {
+      length = matchedDataType.get('size') ? dataTypeLength.get('value', null) : null;
+      if (matchedDataType.has('maxLength') && length > matchedDataType.get('maxLength')) {
+        length = matchedDataType.get('maxLength');
       }
     }
     return fromJS({
       column: colname,
-      type: datatypeName,
+      type: dataTypeName,
       length: length,
       convertEmptyValuesToNull: !!parseInt(dataTypeNullable.get('value', 0), 10)
     });
