@@ -189,18 +189,21 @@ export default React.createClass({
                   {alias.get('id')}
                 </Link>
               )}
-              {isOrganizationMember && ownerId === project.get('id') ? (
+
+              {ownerId !== project.get('id') && isOrganizationMember && (
+                <span>
+                  {project.get('name')} / {alias.get('id')}
+                </span>
+              )}
+
+              {ownerId !== project.get('id') &&
+                isOrganizationMember &&
                 <a href={`/admin/projects/${project.get('id')}`}>{project.get('name')}</a> /
                 (
                   <a href={`/admin/projects/${project.get('id')}/storage#/buckets/${alias.get('id')}`}>
                     {alias.get('id')}
                   </a>
-                )
-              ) : (
-                <span>
-                  {project.get('name')} / {alias.get('id')}
-                </span>
-              )}
+                )}
             </div>
           );
         })}
