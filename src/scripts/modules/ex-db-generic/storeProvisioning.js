@@ -41,6 +41,9 @@ export function queryFromRow(row) {
   } else {
     query = query.set('table', rowConfig.get('table', null));
   }
+  if (rowConfig.has('nolock')) {
+    query = query.set('nolock', rowConfig.get('nolock'));
+  }
   return query;
 }
 
