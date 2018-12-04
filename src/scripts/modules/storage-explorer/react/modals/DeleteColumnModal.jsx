@@ -30,7 +30,7 @@ export default React.createClass({
             Do you really want to delete column <b>{this.props.column}</b>?
           </p>
 
-          {(this.props.tableAliases.length > 0 || this.props.tableLinks.length > 0) && (
+          {this.hasAliasesOrLinks() && (
             <div>
               <Checkbox checked={this.state.forceDelete} onChange={this.toggleForceDelete}>
                 Delete column from table and table aliases
@@ -130,10 +130,14 @@ export default React.createClass({
   },
 
   isDisable() {
-    if ((this.props.tableAliases.length > 0 || this.props.tableLinks.length > 0) && !this.state.forceDelete) {
+    if (this.hasAliasesOrLinks() && !this.state.forceDelete) {
       return true;
     }
 
     return this.props.deleting;
+  },
+
+  hasAliasesOrLinks() {
+    return this.props.tableAliases.length > 0 || this.props.tableLinks.length > 0;
   }
 });
