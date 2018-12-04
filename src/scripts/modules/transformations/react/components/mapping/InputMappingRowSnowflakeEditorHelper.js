@@ -3,6 +3,14 @@ import { SnowflakeDataTypesMapping } from '../../../Constants';
 
 const getMetadataDataTypes = (columnMetadata) => {
   return columnMetadata.map((metadata, colname) => {
+    const baseTypes = metadata.filter((entry) => {
+      return entry.get('key') === 'KBC.datatype.basetype';
+    });
+    if (baseTypes.count() === 0) {
+      return null;
+    }
+    const baseType = baseTypes.get(0);
+
     let datatypeLength = metadata.filter((entry) => {
       return entry.get('key') === 'KBC.datatype.length';
     });
@@ -15,19 +23,11 @@ const getMetadataDataTypes = (columnMetadata) => {
     if (datatypeNullable.count() > 0) {
       datatypeNullable = datatypeNullable.get(0);
     }
-    let basetype = metadata.filter((entry) => {
-      return entry.get('key') === 'KBC.datatype.basetype';
-    });
 
-    if (basetype.count() === 0) {
-      return null;
-    } else {
-      basetype = basetype.get(0);
-    }
     let datatypeName, length = null;
 
     let datatype = SnowflakeDataTypesMapping.map((mappedDatatype) => {
-      if (mappedDatatype.get('basetype') === basetype.get('value')) {
+      if (mappedDatatype.get('basetype') === baseType.get('value')) {
         datatypeName = mappedDatatype.get('name');
         return mappedDatatype;
       }
