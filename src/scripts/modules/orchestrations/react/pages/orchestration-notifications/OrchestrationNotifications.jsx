@@ -1,7 +1,7 @@
 import React from 'react';
 import { Map } from 'immutable';
 import Select from 'react-select';
-import { FormControl} from 'react-bootstrap';
+import {Col, ControlLabel, Form, FormControl, FormGroup, HelpBlock} from 'react-bootstrap';
 import RoutesStore from '../../../../../stores/RoutesStore';
 import OrchestrationStore from '../../../stores/OrchestrationsStore';
 import OrchestrationActionCreators from '../../../ActionCreators';
@@ -43,31 +43,60 @@ export default React.createClass({
       <div className="container-fluid">
         <div className="kbc-main-content">
           <div className="kbc-block-with-padding">
-            <p>
-              <ConfirmButtons
-                isSaving={this.state.isSaving}
-                onCancel={this._handleCancel}
-                onSave={this._handleSave}
-                isDisabled={!this.state.isEditing}
-                className="text-right"
-              />
-            </p>
-            <p>
-              {'Subscribe to receive notifications on some of the orchestration job '}
-              events that might require your attention.
-            </p>
+            <Form horizontal>
+              <FormGroup>
+                <Col sm={12}>
+                  <ConfirmButtons
+                    isSaving={this.state.isSaving}
+                    onCancel={this._handleCancel}
+                    onSave={this._handleSave}
+                    isDisabled={!this.state.isEditing}
+                    className="text-right"
+                  />
+                </Col>
+              </FormGroup>
+              <FormGroup>
+                <Col sm={12}>
+                  {'Subscribe to receive notifications on some of the orchestration job '}
+                  events that might require your attention.
+                </Col>
+              </FormGroup>
+              <FormGroup>
+                <Col componentClass={ControlLabel} sm={2}>
+                  Errors
+                </Col>
+                <Col sm={10}>
+                  {this._renderNotificationsEditor('error', errorEmails)}
+                  <HelpBlock>
+                    Get notified when the orchestration finishes with an error.
+                  </HelpBlock>
+                </Col>
+              </FormGroup>
 
-            <h2>Errors</h2>
-            <p>Get notified when the orchestration finishes with an error.</p>
-            {this._renderNotificationsEditor('error', errorEmails)}
+              <FormGroup>
+                <Col componentClass={ControlLabel} sm={2}>
+                  Warnings
+                </Col>
+                <Col sm={10}>
+                  {this._renderNotificationsEditor('warning', warningEmails)}
+                  <HelpBlock>
+                    Get notified when the orchestration finishes with an warning.
+                  </HelpBlock>
+                </Col>
+              </FormGroup>
 
-            <h2>Warnings</h2>
-            <p>Get notified when the orchestration finishes with a warning.</p>
-            {this._renderNotificationsEditor('warning', warningEmails)}
-
-            <h2>Processing</h2>
-            <p>Get notified when a job is processing {this._renderToleranceInput()} % longer than usual.</p>
-            {this._renderNotificationsEditor('processing', processingEmails)}
+              <FormGroup>
+                <Col componentClass={ControlLabel} sm={2}>
+                  Processing
+                </Col>
+                <Col sm={10}>
+                  {this._renderNotificationsEditor('processing', processingEmails)}
+                  <HelpBlock>
+                    Get notified when a job is processing {this._renderToleranceInput()} % longer than usual.
+                  </HelpBlock>
+                </Col>
+              </FormGroup>
+            </Form>
           </div>
         </div>
       </div>
