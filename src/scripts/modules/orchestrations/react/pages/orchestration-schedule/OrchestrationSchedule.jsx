@@ -19,7 +19,7 @@ export default React.createClass({
     if (isEditing) {
       crontabRecord = OrchestrationStore.getEditingValue(orchestrationId, 'schedule');
     } else {
-      crontabRecord = orchestration.get('crontabRecord') || '0 0 * * *';
+      crontabRecord =  OrchestrationStore.getCrontabRecord() || orchestration.get('crontabRecord') || '0 0 * * *';
     }
 
     return {

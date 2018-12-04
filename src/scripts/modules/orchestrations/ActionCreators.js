@@ -534,7 +534,7 @@ export default {
     const crontabRecord = {crontabRecord: OrchestrationStore.getEditingValue(id, 'schedule')};
 
     dispatcher.handleViewAction({
-      type: constants.ActionTypes.ORCHESTRATION_FIELD_SAVE_START,
+      type: constants.ActionTypes.ORCHESTRATION_SCHEDULE_SAVE_START,
       orchestrationId: id,
       field: 'schedule'
     });
@@ -543,15 +543,15 @@ export default {
       .updateOrchestration(id, crontabRecord)
       .then(data =>
         dispatcher.handleViewAction({
-          type: constants.ActionTypes.ORCHESTRATION_FIELD_SAVE_SUCCESS,
+          type: constants.ActionTypes.ORCHESTRATION_SCHEDULE_SAVE_SUCCESS,
           orchestrationId: id,
           field: 'schedule',
-          crontabRecord: {crontabRecord: data.crontabRecord}
+          crontabRecord: data.crontabRecord
         })
       )
       .catch(e => {
         dispatcher.handleViewAction({
-          type: constants.ActionTypes.ORCHESTRATION_FIELD_SAVE_ERROR,
+          type: constants.ActionTypes.ORCHESTRATION_SCHEDULE_SAVE_ERROR,
           orchestrationId: id,
           field: 'schedule',
           error: e

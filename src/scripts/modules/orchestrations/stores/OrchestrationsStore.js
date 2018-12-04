@@ -14,7 +14,8 @@ let _store = Map({
   filter: '',
   isLoading: false,
   isLoaded: false,
-  loadingOrchestrations: List()
+  loadingOrchestrations: List(),
+  crontabRecord: ''
 });
 
 const addEmptyPhase = tasks => {
@@ -111,6 +112,10 @@ const OrchestrationStore = StoreUtils.createStore({
 
   getTasksToRun(orchestrationId) {
     return _store.getIn(['tasksToRun', orchestrationId]);
+  },
+
+  getCrontabRecord() {
+    return _store.get('crontabRecord');
   },
 
   /*
@@ -330,6 +335,22 @@ Dispatcher.register(payload => {
           .setIn(['orchestrationTasksById', action.orchestrationId], fromJS(action.tasks))
           .deleteIn(['saving', action.orchestrationId, 'tasks'])
           .deleteIn(['editing', action.orchestrationId, 'tasks'])
+      );
+      return OrchestrationStore.emitChange();
+
+    case ActionTypes.ORCHESTRATION_SCHEDULE_SAVE_START:
+      _store = _store.setIn(['saving', action.orchestrationId, 'schedule'], true);
+      return OrchestrationStore.emitChange();
+
+    case ActionTypes.ORCHESTRATION_SCHEDULE_SAVE_ERROR:
+      return (_store = _store.deleteIn(['saving', action.orchestrationId, 'schedule'], OrchestrationStore.emitChange()));
+
+    case ActionTypes.ORCHESTRATION_SCHEDULE_SAVE_SUCCESS:
+      _store = _store.withMutations(store =>
+        store
+          .set('crontabRecord', action.crontabRecord)
+          .deleteIn(['saving', action.orchestrationId, 'schedule'])
+          .deleteIn(['editing', action.orchestrationId, 'schedule'])
       );
       return OrchestrationStore.emitChange();
 
