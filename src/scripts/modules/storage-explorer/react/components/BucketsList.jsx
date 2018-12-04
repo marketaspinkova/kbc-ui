@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { Panel, Button } from 'react-bootstrap';
 import Tooltip from '../../../../react/common/Tooltip';
-import RoutesStore from '../../../../stores/RoutesStore';
+import { navigateToBucketDetail } from '../../Actions';
 
 export default React.createClass({
   propTypes: {
@@ -28,24 +28,25 @@ export default React.createClass({
 
   renderBucketHeader(bucket) {
     return (
-      <h4>
-        <div className="pull-right">
-          <Tooltip tooltip="Go to Bucket Detail" placement="top">
-            <Button
-              bsSize="small"
-              className="btn btn-link"
-              onClick={e => {
-                e.preventDefault();
-                e.stopPropagation();
-                this.goToBucketDetail(bucket);
-              }}
-            >
-              <i className="fa fa-fw fa-chevron-right" />
-            </Button>
-          </Tooltip>
-        </div>
-        {bucket.get('id')}
-      </h4>
+      <div>
+        <h4>
+          <div className="pull-right">
+            <Tooltip tooltip="Bucket detail" placement="top">
+              <Button
+                className="btn btn-link"
+                onClick={e => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  navigateToBucketDetail(bucket.get('id'));
+                }}
+              >
+                <i className="fa fa-fw fa-chevron-right" />
+              </Button>
+            </Tooltip>
+          </div>
+          {bucket.get('id')}
+        </h4>
+      </div>
     );
   },
 
@@ -70,11 +71,5 @@ export default React.createClass({
         <p>{tableName}</p>
       </Link>
     );
-  },
-
-  goToBucketDetail(bucket) {
-    RoutesStore.getRouter().transitionTo('storage-explorer-bucket', {
-      bucketId: bucket.get('id')
-    });
   }
 });

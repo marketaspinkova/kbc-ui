@@ -132,8 +132,20 @@ var storageApi = {
     });
   },
 
+  deleteBucket: function(bucketId, params) {
+    return createRequest('DELETE', 'buckets/' + bucketId).type('form').send(params).promise().then(function(response) {
+      return response.body;
+    });
+  },
+
   createTable: function(bucketId, params) {
     return createRequest('POST', 'buckets/' + bucketId + '/tables-async').type('form').send(params).promise().then(function(response) {
+      return response.body;
+    });
+  },
+
+  createAliasTable: function(bucketId, params) {
+    return createRequest('POST', 'buckets/' + bucketId + '/table-aliases').type('form').send(params).promise().then(function(response) {
       return response.body;
     });
   },

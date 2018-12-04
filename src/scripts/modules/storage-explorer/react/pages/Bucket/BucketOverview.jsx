@@ -34,15 +34,17 @@ export default React.createClass({
           <tr>
             <td>Created</td>
             <td>
-              <CreatedWithIcon createdTime={bucket.get('created')} />
+              <CreatedWithIcon createdTime={bucket.get('created')} relative={false} />
             </td>
           </tr>
-          <tr>
-            <td>Last change</td>
-            <td>
-              <CreatedWithIcon createdTime={bucket.get('lastChangeDate')} />
-            </td>
-          </tr>
+          {bucket.get('lastChangeDate') && (
+            <tr>
+              <td>Last change</td>
+              <td>
+                <CreatedWithIcon createdTime={bucket.get('lastChangeDate')} relative={false} />
+              </td>
+            </tr>
+          )}
           <tr>
             <td>Rows count</td>
             <td>
@@ -102,7 +104,7 @@ export default React.createClass({
 
     return (
       <div>
-        <CreatedWithIcon createdTime={linkedBucket.get('created')} />
+        <CreatedWithIcon createdTime={linkedBucket.get('created')} relative={false} />
         {this.isOrganizationMember() ? (
           <span>
             <a href={`/admin/projects/${project.get('id')}`}>{project.get('name')}</a> /

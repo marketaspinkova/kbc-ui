@@ -34,6 +34,10 @@ const StorageTablesStore = StoreUtils.createStore({
     return _store.getIn(['pendingTables', 'creating'], false);
   },
 
+  getIsCreatingAliasTable() {
+    return _store.getIn(['pendingTables', 'creatingAlias'], false);
+  },
+
   getIsLoadingTable() {
     return _store.getIn(['pendingTables', 'loading'], false);
   },
@@ -66,7 +70,7 @@ Dispatcher.register(function(payload) {
       _store = _store.set('isLoading', false);
       return StorageTablesStore.emitChange();
 
-    case constants.ActionTypes.STORAGE_TABLES_CREATE:
+    case constants.ActionTypes.STORAGE_TABLE_CREATE:
       _store = _store.setIn(['pendingTables', 'creating'], true);
       return StorageTablesStore.emitChange();
 
@@ -76,6 +80,18 @@ Dispatcher.register(function(payload) {
 
     case constants.ActionTypes.STORAGE_TABLE_CREATE_ERROR:
       _store = _store.setIn(['pendingTables', 'creating'], false);
+      return StorageTablesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_ALIAS_TABLE_CREATE:
+      _store = _store.setIn(['pendingTables', 'creatingAlias'], true);
+      return StorageTablesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_ALIAS_TABLE_CREATE_SUCCESS:
+      _store = _store.setIn(['pendingTables', 'creatingAlias'], false);
+      return StorageTablesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_ALIAS_TABLE_CREATE_ERROR:
+      _store = _store.setIn(['pendingTables', 'creatingAlias'], false);
       return StorageTablesStore.emitChange();
 
     case constants.ActionTypes.STORAGE_TABLES_LOAD:

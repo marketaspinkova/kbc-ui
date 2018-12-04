@@ -27,7 +27,7 @@ export default React.createClass({
   render() {
     return (
       <Modal show={this.props.openModal} onHide={this.onHide} enforceFocus={false}>
-        <Form horizontal>
+        <Form onSubmit={this.onSubmit} horizontal>
           <Modal.Header closeButton>
             <Modal.Title>Create bucket</Modal.Title>
           </Modal.Header>
@@ -152,7 +152,8 @@ export default React.createClass({
     this.resetState();
   },
 
-  onSubmit() {
+  onSubmit(event) {
+    event.preventDefault();
     const newBucket = {
       name: this.state.name,
       stage: this.state.stage,

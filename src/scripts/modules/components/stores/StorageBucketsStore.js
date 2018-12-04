@@ -39,6 +39,10 @@ const StorageBucketsStore = StoreUtils.createStore({
     return _store.getIn(['pendingBuckets', 'creating'], false);
   },
 
+  deletingBuckets() {
+    return _store.getIn(['pendingBuckets', 'deleting'], Map());
+  },
+
   hasCredentials(bucketId) {
     return _store.get('credentials').has(bucketId);
   },
@@ -136,6 +140,20 @@ Dispatcher.register(function(payload) {
     case constants.ActionTypes.STORAGE_BUCKET_CREATE_ERROR:
       _store = _store.setIn(['pendingBuckets', 'creating'], false);
       return StorageBucketsStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_BUCKET_DELETE:
+      _store = _store.setIn(['pendingBuckets', 'deleting', action.bucketId], true);
+      return StorageBucketsStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_BUCKET_DELETE_SUCCESS:
+      _store = _store.removeIn(['pendingBuckets', 'deleting', action.bucketId]);
+      _store = _store.removeIn(['buckets', action.bucketId]);
+      return StorageBucketsStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_BUCKET_DELETE_ERROR:
+      _store = _store.removeIn(['pendingBuckets', 'deleting', action.bucketId]);
+      return StorageBucketsStore.emitChange();
+
     default:
   }
 });
