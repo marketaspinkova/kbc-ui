@@ -1,26 +1,36 @@
+const noLockField = {
+  label: 'WITH NO LOCK',
+  name: 'nolock',
+  type: 'checkbox',
+  protected: false,
+  required: false,
+  help: 'Use WITH(NOLOCK) for query execution'
+};
 
-const defaultCustomFields = [];
-
-const mssqlCustomFields = [
-  {
-    'label': 'WITH NO LOCK',
-    'name': 'nolock',
-    'type': 'checkbox',
-    'protected': false,
-    'required': false,
-    'help': 'Use WITH(NOLOCK) for query execution'
-  }
+const ALL_FIELDS = [
+  noLockField
 ];
 
 const CUSTOM_FIELDS = {
-  'keboola.ex-db-mssql': mssqlCustomFields
+  'keboola.ex-db-mssql': [
+    noLockField
+  ]
 };
 
-
-export default function getCustomFields(componentId) {
-  if (CUSTOM_FIELDS[componentId]) {
-    return CUSTOM_FIELDS[componentId];
-  } else {
-    return defaultCustomFields;
+const getCustomFieldsForComponent = (componentId) => {
+  if (!CUSTOM_FIELDS[componentId]) {
+    return [];
   }
-}
+  return CUSTOM_FIELDS[componentId];
+};
+
+const getAllCustomFieldsNames = () => {
+  return ALL_FIELDS.map((field) => {
+    return field.name;
+  });
+};
+
+export {
+  getCustomFieldsForComponent,
+  getAllCustomFieldsNames
+};

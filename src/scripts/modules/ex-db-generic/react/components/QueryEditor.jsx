@@ -14,7 +14,7 @@ import TableLoader from './TableLoaderQueryEditor';
 import {getQueryEditorPlaceholder, getQueryEditorHelpText} from '../../templates/helpAndHints';
 
 import editorMode from '../../templates/editorMode';
-import getCustomFields from '../../templates/customFields';
+import { getCustomFieldsForComponent } from '../../templates/customFields';
 
 export default React.createClass({
   propTypes: {
@@ -364,7 +364,7 @@ export default React.createClass({
   },
 
   renderCustomFields() {
-    return getCustomFields(this.props.componentId).map((field) =>{
+    return getCustomFieldsForComponent(this.props.componentId).map((field) =>{
       if (field.type === 'checkbox') {
         return (
           <FormGroup key={`custom-field-${field.name}`}>
