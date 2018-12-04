@@ -368,7 +368,7 @@ export default React.createClass({
       if (field.type === 'checkbox') {
         return (
           <FormGroup key={`custom-field-${field.name}`}>
-            <Col smOffset={3} sm={9}>
+            <Col mdOffset={3} md={9}>
               <Checkbox
                 checked={!!this.props.query.get(field.name)}
                 disabled={this.props.disabled}
