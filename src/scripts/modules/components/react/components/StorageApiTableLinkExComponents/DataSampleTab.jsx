@@ -40,7 +40,7 @@ export default React.createClass({
     });
     const rows = dataPreview.rows.map( (row) => {
       const cols = row.map( (c) => {
-        return (<td> {c.isTruncated === '1' && <strong>[Truncated] </strong>} {c.value} </td>);
+        return (<td> {c.isTruncated && <strong>[Truncated] </strong>} {c.value} </td>);
       });
 
       return (

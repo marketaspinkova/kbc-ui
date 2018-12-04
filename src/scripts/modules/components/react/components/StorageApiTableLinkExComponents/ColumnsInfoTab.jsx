@@ -213,7 +213,7 @@ export default React.createClass({
           {columnNameCell}
         </td>
         <td>
-          {values.map( (item, key) => <span>{key !== 0 && ', '}{item.isTruncated === '1' && <strong>[Truncated] </strong>}{item.value}</span>)}
+          {values.map( (item, key) => <span>{key !== 0 && ', '}{item.isTruncated && <strong>[Truncated] </strong>}{item.value}</span>)}
         </td>
         {enhancedCells}
       </tr>
