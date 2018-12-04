@@ -164,4 +164,60 @@ describe('getMetadataDataType', function() {
       }
     }));
   });
+
+  it('should work with KBC.datatype.basetype and KBC.datatype.length (should keep the length)', function() {
+    assert.deepStrictEqual(getMetadataDataTypes(fromJS({
+      Price: [
+        {
+          id: '85349679',
+          key: 'KBC.datatype.basetype',
+          value: 'STRING',
+          provider: 'keboola.ex-db-mssql',
+          timestamp: '2018-11-19T13:04:43+0100'
+        },
+        {
+          id: '85349680',
+          key: 'KBC.datatype.length',
+          value: '123',
+          provider: 'keboola.ex-db-mssql',
+          timestamp: '2018-11-19T13:04:43+0100'
+        }
+      ]
+    })), fromJS({
+      Price: {
+        column: 'Price',
+        type: 'VARCHAR',
+        length: '123',
+        convertEmptyValuesToNull: false
+      }
+    }));
+  });
+
+  it('should work with KBC.datatype.basetype and KBC.datatype.length (should decrease length)', function() {
+    assert.deepStrictEqual(getMetadataDataTypes(fromJS({
+      Price: [
+        {
+          id: '85349679',
+          key: 'KBC.datatype.basetype',
+          value: 'STRING',
+          provider: 'keboola.ex-db-mssql',
+          timestamp: '2018-11-19T13:04:43+0100'
+        },
+        {
+          id: '85349680',
+          key: 'KBC.datatype.length',
+          value: '2147483647',
+          provider: 'keboola.ex-db-mssql',
+          timestamp: '2018-11-19T13:04:43+0100'
+        }
+      ]
+    })), fromJS({
+      Price: {
+        column: 'Price',
+        type: 'VARCHAR',
+        length: 16777216,
+        convertEmptyValuesToNull: false
+      }
+    }));
+  });
 });
