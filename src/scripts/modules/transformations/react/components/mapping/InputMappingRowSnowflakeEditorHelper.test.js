@@ -60,13 +60,13 @@ describe('getMetadataDataType', function() {
     }));
   });
 
-  it('should work with random KBC.datatype.basetype', function() {
+  it('should work with nonexistent KBC.datatype.basetype', function() {
     assert.deepStrictEqual(getMetadataDataTypes(fromJS({
       Price: [
         {
           id: '85349671',
           key: 'KBC.datatype.basetype',
-          value: 'RANDOM',
+          value: 'NONEXISTENT_TYPE',
           provider: 'keboola.ex-db-mssql',
           timestamp: '2018-11-19T13:04:43+0100'
         }
