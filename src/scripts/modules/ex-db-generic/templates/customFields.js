@@ -4,7 +4,8 @@ const noLockField = {
   type: 'checkbox',
   protected: false,
   required: false,
-  help: 'Use WITH(NOLOCK) for query execution'
+  help: 'Use WITH(NOLOCK) for query execution',
+  showInAdvancedMode: false
 };
 
 const ALL_FIELDS = [

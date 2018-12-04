@@ -364,24 +364,31 @@ export default React.createClass({
   },
 
   renderCustomFields() {
-    return getCustomFieldsForComponent(this.props.componentId).map((field) =>{
-      if (field.type === 'checkbox') {
-        return (
-          <FormGroup key={`custom-field-${field.name}`}>
-            <Col mdOffset={3} md={9}>
-              <Checkbox
-                checked={!!this.props.query.get(field.name)}
-                disabled={this.props.disabled}
-                onChange={(event) => this.handleCustomCheckboxChange(field.name, event)}
-              >
-                {field.label}
-              </Checkbox>
-              <HelpBlock>{field.help}</HelpBlock>
-            </Col>
-          </FormGroup>
-        );
+    const isAdvancedMode = this.props.query.get('advancedMode');
+    return getCustomFieldsForComponent(this.props.componentId).reduce((customFields, field) => {
+      if (
+        (field.showInAdvancedMode && isAdvancedMode)
+        || (!field.showInAdvancedMode && !isAdvancedMode)
+      ) {
+        if (field.type === 'checkbox') {
+          customFields.push(
+            <FormGroup key={`custom-field-${field.name}`}>
+              <Col mdOffset={3} md={9}>
+                <Checkbox
+                  checked={!!this.props.query.get(field.name)}
+                  disabled={this.props.disabled}
+                  onChange={event => this.handleCustomCheckboxChange(field.name, event)}
+                >
+                  {field.label}
+                </Checkbox>
+                <HelpBlock>{field.help}</HelpBlock>
+              </Col>
+            </FormGroup>
+          );
+        }
       }
-    });
+      return customFields;
+    }, []);
   },
 
   renderIncrementalLoadOption() {
