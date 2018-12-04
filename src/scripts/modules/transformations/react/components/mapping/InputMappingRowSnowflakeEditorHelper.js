@@ -1,4 +1,4 @@
-import { fromJS } from 'immutable';
+import { fromJS, Map } from 'immutable';
 import { SnowflakeDataTypesMapping } from '../../../Constants';
 
 const getMetadataDataTypes = (columnMetadata) => {
@@ -11,18 +11,15 @@ const getMetadataDataTypes = (columnMetadata) => {
     }
     const baseType = baseTypes.get(0);
 
-    let datatypeLength = metadata.filter((entry) => {
+    const dataTypeLengths = metadata.filter((entry) => {
       return entry.get('key') === 'KBC.datatype.length';
     });
-    if (datatypeLength.count() > 0) {
-      datatypeLength = datatypeLength.get(0);
-    }
-    let datatypeNullable = metadata.filter((entry) => {
+    const dataTypeLength = dataTypeLengths.count() > 0 ? dataTypeLengths.get(0) : Map();
+
+    const dataTypeNullables = metadata.filter((entry) => {
       return entry.get('key') === 'KBC.datatype.nullable';
     });
-    if (datatypeNullable.count() > 0) {
-      datatypeNullable = datatypeNullable.get(0);
-    }
+    const dataTypeNullable = dataTypeNullables.count() > 0 ? dataTypeNullables.get(0) : Map();
 
     let datatypeName, length = null;
 
@@ -34,7 +31,7 @@ const getMetadataDataTypes = (columnMetadata) => {
     });
     const mapType = datatype.get(datatypeName);
     if (mapType) {
-      length = mapType.get('size') ? datatypeLength.get('value') : null;
+      length = mapType.get('size') ? dataTypeLength.get('value') : null;
       if (mapType.has('maxLength') && length > mapType.get('maxLength')) {
         length = mapType.get('maxLength');
       }
@@ -43,9 +40,9 @@ const getMetadataDataTypes = (columnMetadata) => {
       column: colname,
       type: datatypeName,
       length: length,
-      convertEmptyValuesToNull: isNaN(datatypeNullable.get('value'))
-        ? datatypeNullable.get('value')
-        : !!parseInt(datatypeNullable.get('value'), 10)
+      convertEmptyValuesToNull: isNaN(dataTypeNullable.get('value'))
+        ? dataTypeNullable.get('value')
+        : !!parseInt(dataTypeNullable.get('value'), 10)
     });
   });
 };
