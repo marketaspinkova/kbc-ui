@@ -63,6 +63,11 @@ export default React.createClass({
     return OrchestrationsActionCreators.startOrchestrationScheduleEdit(this.state.orchestrationId);
   },
 
+  _handleRemoveSchedule() {
+    this._handleCrontabChange('0 0 * * *');
+    this._handleSave();
+  },
+
   _handleCrontabChange(newSchedule) {
     return OrchestrationsActionCreators.updateOrchestrationScheduleEdit(
       this.state.orchestrationId,
