@@ -37,12 +37,14 @@ export default React.createClass({
               <CreatedWithIcon createdTime={bucket.get('created')} relative={false} />
             </td>
           </tr>
-          <tr>
-            <td>Last change</td>
-            <td>
-              <CreatedWithIcon createdTime={bucket.get('lastChangeDate')} relative={false} />
-            </td>
-          </tr>
+          {bucket.get('lastChangeDate') && (
+            <tr>
+              <td>Last change</td>
+              <td>
+                <CreatedWithIcon createdTime={bucket.get('lastChangeDate')} relative={false} />
+              </td>
+            </tr>
+          )}
           <tr>
             <td>Rows count</td>
             <td>
