@@ -5,6 +5,8 @@ export default function(componentId) {
       return 'text/x-sql';
     case 'keboola.ex-db-redshift':
       return 'text/x-sql';
+    case 'keboola.ex-db-redshift-cursors':
+      return 'text/x-sql';
     case 'keboola.ex-db-mysql':
       return 'text/x-mysql';
     case 'keboola.ex-db-mssql':

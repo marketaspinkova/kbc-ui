@@ -46,6 +46,7 @@ export function componentSupportsSimpleSetup(componentId) {
   const supportedComponents = [
     'keboola.ex-db-mysql',
     'keboola.ex-db-redshift',
+    'keboola.ex-db-redshift-cursors',
     'keboola.ex-db-snowflake',
     'keboola.ex-db-mssql',
     'keboola.ex-db-oracle',

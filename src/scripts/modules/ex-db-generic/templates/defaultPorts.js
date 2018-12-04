@@ -1,6 +1,7 @@
 const ports = {
   'keboola.ex-db-pgsql': 5432,
   'keboola.ex-db-redshift': 5439,
+  'keboola.ex-db-redshift-cursors': 5439,
   'keboola.ex-db-db2': 50000,
   'keboola.ex-db-impala': 21050,
   'keboola.ex-db-mysql': 3306,
