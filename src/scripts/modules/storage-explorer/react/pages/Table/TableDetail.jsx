@@ -1,17 +1,25 @@
 import React from 'react';
 import { Tab, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+
+import ApplicationStore from '../../../../../stores/ApplicationStore';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../../../stores/RoutesStore';
+import BucketsStore from '../../../../components/stores/StorageBucketsStore';
 import TablesStore from '../../../../components/stores/StorageTablesStore';
 
+import TableOverview from './TableOverview';
+
 export default React.createClass({
-  mixins: [createStoreMixin(TablesStore)],
+  mixins: [createStoreMixin(TablesStore, BucketsStore, ApplicationStore)],
 
   getStateFromStores() {
     const bucketId = RoutesStore.getCurrentRouteParam('bucketId');
     const tableName = RoutesStore.getCurrentRouteParam('tableName');
 
     return {
+      sapiToken: ApplicationStore.getSapiToken(),
+      tables: TablesStore.getAll(),
+      bucket: BucketsStore.getAll().find(item => item.get('id') === bucketId),
       table: TablesStore.getAll().find(item => {
         return item.getIn(['bucket', 'id']) === bucketId && item.get('name') === tableName;
       })
@@ -48,7 +56,6 @@ export default React.createClass({
           <div>
             <Nav bsStyle="tabs">
               <NavItem eventKey="overview">Overview</NavItem>
-              <NavItem eventKey="description">Description</NavItem>
               <NavItem eventKey="events">Events</NavItem>
               <NavItem eventKey="data-sample">Data sample</NavItem>
               <NavItem eventKey="snapshot-and-restore">Snapshot and Restore</NavItem>
@@ -76,8 +83,15 @@ export default React.createClass({
               </NavDropdown>
             </Nav>
             <Tab.Content animation={false}>
-              <Tab.Pane eventKey="overview">Overview</Tab.Pane>
-              <Tab.Pane eventKey="description">Description</Tab.Pane>
+              <Tab.Pane eventKey="overview">
+                <TableOverview
+                  table={this.state.table}
+                  tables={this.state.tables}
+                  tableAliases={this.getTableAliases()}
+                  tableLinks={this.getTableLinks()}
+                  sapiToken={this.state.sapiToken}
+                />
+              </Tab.Pane>
               <Tab.Pane eventKey="events">Events</Tab.Pane>
               <Tab.Pane eventKey="data-sample">Data sample</Tab.Pane>
               <Tab.Pane eventKey="snapshot-and-restore">Snapshot and Restore</Tab.Pane>
@@ -110,6 +124,43 @@ export default React.createClass({
       default:
         return null;
     }
+  },
+
+  getTableAliases() {
+    const foundAliases = [];
+
+    this.state.tables.forEach(table => {
+      if (
+        table.get('sourceTable') &&
+        table.get('isAlias') &&
+        table.getIn(['sourceTable', 'id']) === this.state.table.get('id') &&
+        this.state.sapiToken.getIn(['owner', 'id']) === table.getIn(['sourceTable', 'project', 'id'])
+      ) {
+        foundAliases.push(table);
+      }
+    });
+
+    return foundAliases;
+  },
+
+  getTableLinks() {
+    const foundLinks = [];
+
+    if (this.state.table.get('isAlias') || !this.state.bucket.get('linkedBy')) {
+      return foundLinks;
+    }
+
+    this.state.bucket.get('linkedBy').forEach(bucket => {
+      foundLinks.push(
+        bucket.merge({
+          id: `${bucket.get('id')}.${this.state.table.get('name')}`,
+          bucketId: bucket.get('id'),
+          tableName: this.state.table.get('name')
+        })
+      );
+    });
+
+    return foundLinks;
   },
 
   generateTabId(eventKey, type) {
