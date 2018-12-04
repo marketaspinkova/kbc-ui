@@ -57,8 +57,10 @@ export default React.createClass({
               </FormGroup>
               <FormGroup>
                 <Col sm={12}>
-                  {'Subscribe to receive notifications on some of the orchestration job '}
-                  events that might require your attention.
+                  <p>
+                    Subscribe to receive notifications on some of the orchestration job events that might require your
+                    attention.
+                  </p>
                 </Col>
               </FormGroup>
               <FormGroup>
