@@ -40,9 +40,7 @@ const getMetadataDataTypes = (columnMetadata) => {
       column: colname,
       type: datatypeName,
       length: length,
-      convertEmptyValuesToNull: isNaN(dataTypeNullable.get('value'))
-        ? dataTypeNullable.get('value')
-        : !!parseInt(dataTypeNullable.get('value'), 10)
+      convertEmptyValuesToNull: !!parseInt(dataTypeNullable.get('value', 0), 10)
     });
   });
 };
