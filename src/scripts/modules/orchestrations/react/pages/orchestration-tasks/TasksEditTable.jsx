@@ -147,18 +147,19 @@ export default React.createClass({
       idx++;
       const isPhaseHidden = this.isPhaseHidden(phase);
       const color = idx % 2 > 0 ? '#fff' : '#f9f9f9'; // 'rgb(227, 248, 255)'
-      const tasksRows = phase.get('tasks').map(task => {
+      const tasksRows = phase.get('tasks').map((task, index) => {
         const taskId = task.get('id');
+
         return (
           <TasksEditTableRow
             task={task}
             color={color}
             component={this.props.components.get(task.get('component'))}
             disabled={this.props.disabled}
-            key={taskId}
+            key={`${index}-${taskId}`}
             onTaskDelete={this.props.onTaskDelete}
             onTaskUpdate={this.props.onTaskUpdate}
-            isMarked={this.props.localState.getIn(['moveTasks', 'marked', taskId], false)}
+            isMarked={this.props.localState.hasIn(['moveTasks', 'marked', taskId])}
             toggleMarkTask={() => {
               return this._toggleMarkTask(task);
             }}
@@ -183,7 +184,7 @@ export default React.createClass({
 
   _renderEmptyTasksRow(phaseId, color) {
     return (
-      <tr style={{ backgroundColor: color }} key="empty-phase-row">
+      <tr style={{ backgroundColor: color }} key={`empty-phase-row-${phaseId}`}>
         <td className="text-muted" colSpan={7}>
           <EmptyState>
             <span>{`No tasks assigned to ${phaseId} yet. Empty phases will not be saved. `}</span>
@@ -292,7 +293,7 @@ export default React.createClass({
           return this.props.updateLocalState(['phases', phaseId, 'isHidden'], !isHidden);
         }}
         togglePhaseIdChange={this.togglePhaseIdEdit}
-        isMarked={this.props.localState.getIn(['markedPhases', phaseId], false)}
+        isMarked={this.props.localState.hasIn(['markedPhases', phaseId])}
         onMarkPhase={this.toggleMarkPhase}
         toggleAddNewTask={() => {
           return this.props.updateLocalState(['newTask', 'phaseId'], phase.get('id'));
