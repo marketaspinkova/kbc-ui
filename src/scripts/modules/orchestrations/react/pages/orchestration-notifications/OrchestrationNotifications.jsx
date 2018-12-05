@@ -9,23 +9,18 @@ export default React.createClass({
   mixins: [createStoreMixin(OrchestrationStore)],
 
   getStateFromStores() {
-    let notifications;
     const orchestrationId = RoutesStore.getCurrentRouteIntParam('orchestrationId');
     const orchestration = OrchestrationStore.get(orchestrationId);
     const isEditing = OrchestrationStore.isEditing(orchestrationId, 'notifications');
-
-    if (isEditing) {
-      notifications = OrchestrationStore.getEditingValue(orchestrationId, 'notifications');
-    } else {
-      notifications = orchestration.get('notifications');
-    }
+    const editingValues = OrchestrationStore.getEditingValue(orchestrationId, 'notifications');
 
     return {
       orchestrationId,
       orchestration,
-      notifications,
+      isEditing,
+      notifications: isEditing ? editingValues : orchestration.get('notifications'),
+      isEdited: !!(editingValues && !orchestration.get('notifications').equals(editingValues)),
       filter: OrchestrationStore.getFilter(),
-      isEditing: OrchestrationStore.isEditing(orchestrationId, 'notifications'),
       isSaving: OrchestrationStore.isSaving(orchestrationId, 'notifications'),
       filteredOrchestrations: OrchestrationStore.getFiltered()
     };
