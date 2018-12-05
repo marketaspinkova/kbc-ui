@@ -1,5 +1,5 @@
 import React from 'react';
-import { Map } from 'immutable';
+import { Map, List } from 'immutable';
 import Select from 'react-select';
 import {Col, ControlLabel, Form, FormControl, FormGroup, HelpBlock} from 'react-bootstrap';
 import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
@@ -105,6 +105,7 @@ export default React.createClass({
         backspaceRemoves={false}
         deleteRemoves={false}
         value={this._enteredEmails(emails)}
+        options={this.getAllEnteredEmails()}
         noResultsText=""
         placeholder="Enter email"
         promptTextCreator={() => 'Add email'}
@@ -118,6 +119,19 @@ export default React.createClass({
       .map(email => ({
         value: email.get('email'),
         label: email.get('email')
+      }))
+      .toArray();
+  },
+
+  getAllEnteredEmails() {
+    return this.props.notifications
+      .reduce((emails, item) => {
+        return emails.push(item.get('email'));
+      }, List())
+      .toSet()
+      .map(email => ({
+        value: email,
+        label: email
       }))
       .toArray();
   },
