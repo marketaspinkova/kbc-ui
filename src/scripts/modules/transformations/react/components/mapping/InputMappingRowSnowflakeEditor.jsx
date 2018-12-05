@@ -88,7 +88,14 @@ export default React.createClass({
   },
 
   handleChangeLoadType(newValue) {
-    const newMapping = this.props.value.set('loadType', newValue);
+    const newMapping = this.props.value.withMutations(mapping => {
+      mapping.set('loadType', newValue);
+      mapping.set('whereColumn', '');
+      mapping.set('whereValues', List());
+      mapping.set('whereOperator', 'eq');
+      mapping.set('columns', List());
+      mapping.set('datatypes', Map());
+    });
     return this.props.onChange(newMapping);
   },
 
@@ -235,6 +242,7 @@ export default React.createClass({
   },
 
   render() {
+    const isCloneTable = this.props.value.get('loadType') === 'clone';
     return (
       <Form horizontal>
         <FormGroup>
@@ -269,23 +277,6 @@ export default React.createClass({
         />
         <PanelWithDetails defaultExpanded={this.props.initialShowDetails}>
           <FormGroup>
-            <Col sm={2} componentClass={ControlLabel}>Columns</Col>
-            <Col sm={10}>
-              <Select
-                multi={true}
-                name="columns"
-                value={this.props.value.get('columns', List()).toJS()}
-                disabled={this.props.disabled || !this.props.value.get('source')}
-                placeholder="All columns will be imported"
-                onChange={this._handleChangeColumns}
-                options={this._getColumnsOptions()}
-              />
-              <HelpBlock>
-                Import only specified columns
-              </HelpBlock>
-            </Col>
-          </FormGroup>
-          <FormGroup>
             <Col sm={2} componentClass={ControlLabel}>Load Type</Col>
             <Col sm={10}>
               <Select
@@ -305,62 +296,82 @@ export default React.createClass({
               </HelpBlock>
             </Col>
           </FormGroup>
-
-          <FormGroup>
-            <Col sm={2} componentClass={ControlLabel}>Changed in last</Col>
-            <Col sm={10}>
-              <ChangedSinceInput
-                value={this.getChangedSinceValue()}
-                disabled={this.props.disabled}
-                onChange={this._handleChangeChangedSince}
-              />
-            </Col>
-          </FormGroup>
-          <FormGroup>
-            <Col sm={2} componentClass={ControlLabel}>Data filter</Col>
-            <Col sm={4}>
-              <Select
-                name="whereColumn"
-                value={this.props.value.get('whereColumn')}
-                disabled={this.props.disabled || !this.props.value.get('source')}
-                placeholder="Select column"
-                onChange={this._handleChangeWhereColumn}
-                options={this._getColumnsOptions()}
-              />
-            </Col>
-            <Col sm={2}>
-              <Input
-                type="select"
-                name="whereOperator"
-                value={this.props.value.get('whereOperator')}
-                disabled={this.props.disabled}
-                onChange={this._handleChangeWhereOperator}
-              >
-                <option value={whereOperatorConstants.EQ_VALUE}>{whereOperatorConstants.EQ_LABEL}</option>
-                <option value={whereOperatorConstants.NOT_EQ_VALUE}>{whereOperatorConstants.NOT_EQ_LABEL}</option>
-              </Input>
-            </Col>
-            <Col sm={4}>
-              <Select
-                name="whereValues"
-                value={this.props.value.get('whereValues')}
-                multi={true}
-                disabled={this.props.disabled}
-                allowCreate={true}
-                placeholder="Add a value..."
-                emptyStrings={true}
-                onChange={this._handleChangeWhereValues}
-              />
-            </Col>
-          </FormGroup>
-          <ControlLabel>Data types</ControlLabel>
-          <DatatypeForm
-            datatypes={this.getDatatypes()}
-            columns={this._getFilteredColumns()}
-            datatypesMap={SnowflakeDataTypesMapping}
-            disabled={this.props.disabled || !this.props.value.get('source')}
-            onChange={this._handleChangeDataTypes}
-          />
+          {!isCloneTable &&
+           <span>
+             <FormGroup>
+               <Col sm={2} componentClass={ControlLabel}>Columns</Col>
+               <Col sm={10}>
+                 <Select
+                   multi={true}
+                   name="columns"
+                   value={this.props.value.get('columns', List()).toJS()}
+                   disabled={this.props.disabled || !this.props.value.get('source')}
+                   placeholder="All columns will be imported"
+                   onChange={this._handleChangeColumns}
+                   options={this._getColumnsOptions()}
+                 />
+                 <HelpBlock>
+                   Import only specified columns
+                 </HelpBlock>
+               </Col>
+             </FormGroup>
+             <FormGroup>
+               <Col sm={2} componentClass={ControlLabel}>Changed in last</Col>
+               <Col sm={10}>
+                 <ChangedSinceInput
+                   value={this.getChangedSinceValue()}
+                   disabled={this.props.disabled}
+                   onChange={this._handleChangeChangedSince}
+                 />
+               </Col>
+             </FormGroup>
+             <FormGroup>
+               <Col sm={2} componentClass={ControlLabel}>Data filter</Col>
+               <Col sm={4}>
+                 <Select
+                   name="whereColumn"
+                   value={this.props.value.get('whereColumn')}
+                   disabled={this.props.disabled || !this.props.value.get('source')}
+                   placeholder="Select column"
+                   onChange={this._handleChangeWhereColumn}
+                   options={this._getColumnsOptions()}
+                 />
+               </Col>
+               <Col sm={2}>
+                 <Input
+                   type="select"
+                   name="whereOperator"
+                   value={this.props.value.get('whereOperator')}
+                   disabled={this.props.disabled}
+                   onChange={this._handleChangeWhereOperator}
+                 >
+                   <option value={whereOperatorConstants.EQ_VALUE}>{whereOperatorConstants.EQ_LABEL}</option>
+                   <option value={whereOperatorConstants.NOT_EQ_VALUE}>{whereOperatorConstants.NOT_EQ_LABEL}</option>
+                 </Input>
+               </Col>
+               <Col sm={4}>
+                 <Select
+                   name="whereValues"
+                   value={this.props.value.get('whereValues')}
+                   multi={true}
+                   disabled={this.props.disabled}
+                   allowCreate={true}
+                   placeholder="Add a value..."
+                   emptyStrings={true}
+                   onChange={this._handleChangeWhereValues}
+                 />
+               </Col>
+             </FormGroup>
+             <ControlLabel>Data types</ControlLabel>
+             <DatatypeForm
+               datatypes={this.getDatatypes()}
+               columns={this._getFilteredColumns()}
+               datatypesMap={SnowflakeDataTypesMapping}
+               disabled={this.props.disabled || !this.props.value.get('source')}
+               onChange={this._handleChangeDataTypes}
+             />
+           </span>
+          }
         </PanelWithDetails>
       </Form>
     );
