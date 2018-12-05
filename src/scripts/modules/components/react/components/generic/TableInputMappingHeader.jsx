@@ -29,7 +29,7 @@ export default React.createClass({
 
   render() {
     return (
-      <span className="table" style={{ 'word-break': 'break-word' }}>
+      <span className="table kbc-break-all kbc-break-word">
         <span className="tbody">
           <span className="tr">
             {this.props.definition.has('label')

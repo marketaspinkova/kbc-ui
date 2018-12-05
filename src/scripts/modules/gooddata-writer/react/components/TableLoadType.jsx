@@ -266,7 +266,7 @@ export default React.createClass({
       );
     }
     return (
-      <span style={{ 'padding-left': 0 }} className="col-sm-4">
+      <span style={{ 'paddingLeft': 0 }} className="col-sm-4">
         <select
           className="form-control"
           disabled={!enabled}

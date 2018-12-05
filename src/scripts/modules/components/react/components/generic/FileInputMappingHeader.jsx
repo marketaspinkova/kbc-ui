@@ -23,7 +23,7 @@ export default React.createClass({
 
   render() {
     return (
-      <span className="table" style={{'wordBreak': 'break-word'}}>
+      <span className="table kbc-break-all kbc-break-word">
         <span className="tbody">
           <span className="tr">
             <span className="td col-xs-3">
