@@ -20,7 +20,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Table responsive stripped>
+      <Table responsive striped>
         <thead>
           <tr>
             <th style={{ width: '31%' }}>Component</th>

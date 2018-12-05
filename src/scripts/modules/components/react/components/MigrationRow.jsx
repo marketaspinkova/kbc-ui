@@ -278,7 +278,7 @@ export default React.createClass({
     return (
       <span>
         {orchestrations.count() > 0 ?
-          <Table responsive className="table table-stripped">
+          <Table responsive striped>
             <thead>
               <tr>
                 <th>
@@ -342,7 +342,7 @@ export default React.createClass({
   renderConfigStatus() {
     const isReplacementApp = this.props.replacementAppId;
     return (
-      <Table responsive className="table table-stripped">
+      <Table responsive striped>
         <thead>
           <tr>
             <th>

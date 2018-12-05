@@ -34,7 +34,7 @@ export default React.createClass({
         {this._renderMergePhaseModal()}
         {this._renderMoveTasksModal()}
         {this._renderAddTaskModal()}
-        <Table responsive stripped>
+        <Table responsive striped>
           <thead>
             <tr>
               <th style={{ width: '10%' }}>{this.renderHeaderActionButtons()}</th>
