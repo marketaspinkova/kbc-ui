@@ -28,6 +28,7 @@ export default React.createClass({
               onCancel={this.props.onCancel}
               onSave={this.props.onSave}
               isDisabled={!this.props.isEditing}
+              showCancel={this.props.isEditing}
               className="text-right"
             />
           </Col>
