@@ -77,6 +77,11 @@ export default React.createClass({
     return this.props.onChange(value);
   },
 
+  handleChangeLoadType(newValue) {
+    const newMapping = this.props.value.set('loadType', newValue);
+    return this.props.onChange(newMapping);
+  },
+
   _handleChangeColumns(newValue) {
     const mutatedValue = this.props.value.withMutations((mapping) => {
       let mutation = mapping.set('columns', newValue);
@@ -270,6 +275,27 @@ export default React.createClass({
               </HelpBlock>
             </Col>
           </FormGroup>
+          <FormGroup>
+            <Col sm={2} componentClass={ControlLabel}>Load Type</Col>
+            <Col sm={10}>
+              <Select
+                name="loadType"
+                value={this.props.value.get('loadType', 'copy')}
+                disabled={this.props.disabled || !this.props.value.get('source')}
+                placeholder="Default input mapping"
+                clearable={false}
+                onChange={this.handleChangeLoadType}
+                options={[
+                  {label: 'Copy Table', value: 'copy'},
+                  {label: 'Clone Table', value: 'clone'}
+                ]}
+              />
+              <HelpBlock>
+                Type of table load from Storage into a Workspace. <code>Clone</code> load type can be aplied only on snowflake tables without any filtering parameters.
+              </HelpBlock>
+            </Col>
+          </FormGroup>
+
           <FormGroup>
             <Col sm={2} componentClass={ControlLabel}>Changed in last</Col>
             <Col sm={10}>
