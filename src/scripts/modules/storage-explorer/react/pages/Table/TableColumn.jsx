@@ -4,6 +4,7 @@ import { Loader } from '@keboola/indigo-ui';
 
 import Tooltip from '../../../../../react/common/Tooltip';
 import StorageActionCreators from '../../../../components/StorageActionCreators';
+import AddColumnModal from '../../modals/AddColumnModal';
 import DeleteColumnModal from '../../modals/DeleteColumnModal';
 
 export default React.createClass({
@@ -13,20 +14,35 @@ export default React.createClass({
     tableAliases: PropTypes.array.isRequired,
     tableLinks: PropTypes.array.isRequired,
     sapiToken: PropTypes.object.isRequired,
+    addingColumn: PropTypes.object.isRequired,
     deletingColumn: PropTypes.object.isRequired
   },
 
   getInitialState() {
     return {
       deleteColumnName: '',
-      deleteColumnModal: false
+      deleteColumnModal: false,
+      addColumnModal: false
     };
   },
 
   render() {
+    const addingColumn = this.props.addingColumn.get(this.props.table.get('id'), false);
+
     return (
       <div>
-        <h2>Columns</h2>
+        <h2>
+          {this.canAddColumn() && (
+            <div className="kbc-buttons pull-right">
+              <Tooltip tooltip="Add column" placement="top">
+                <Button onClick={this.openAddColumnModal} disabled={addingColumn}>
+                  {addingColumn ? <Loader /> : <i className="fa fa-plus" />}
+                </Button>
+              </Tooltip>
+            </div>
+          )}
+          Columns
+        </h2>
 
         <Table striped>
           <tbody>
@@ -37,6 +53,7 @@ export default React.createClass({
           </tbody>
         </Table>
 
+        {this.state.addColumnModal && this.renderAddColumnModal()}
         {this.state.deleteColumnModal && this.renderDeleteColumnModal()}
       </div>
     );
@@ -84,6 +101,17 @@ export default React.createClass({
     );
   },
 
+  renderAddColumnModal() {
+    return (
+      <AddColumnModal
+        table={this.props.table}
+        tables={this.props.tables}
+        onSubmit={this.handleAddColumn}
+        onHide={this.closeAddColumnModal}
+      />
+    );
+  },
+
   renderDeleteColumnModal() {
     return (
       <DeleteColumnModal
@@ -97,6 +125,12 @@ export default React.createClass({
     );
   },
 
+  handleAddColumn(columnName) {
+    const tableId = this.props.table.get('id');
+    const params = { name: columnName };
+    return StorageActionCreators.addTableColumn(tableId, params);
+  },
+
   handleDeleteColumn(columnName, forceDelete) {
     const tableId = this.props.table.get('id');
     const params = { force: forceDelete };
@@ -107,12 +141,27 @@ export default React.createClass({
     return this.props.table.get('primaryKey').find(item => item === column);
   },
 
-  canDeleteColumn() {
-    const { table } = this.props;
-    const bucketId = table.getIn(['bucket', 'id']);
+  canWriteTable() {
+    const bucketId = this.props.table.getIn(['bucket', 'id']);
     const permission = this.props.sapiToken.getIn(['bucketPermissions', bucketId]);
 
-    if (!['write', 'manage'].includes(permission)) {
+    return ['write', 'manage'].includes(permission);
+  },
+
+  canAddColumn() {
+    const { table } = this.props;
+
+    if (!this.canWriteTable() || table.getIn(['bucket', 'backend']) === 'redshift') {
+      return false;
+    }
+
+    return !table.get('isAlias') || !table.get('aliasColumnsAutoSync');
+  },
+
+  canDeleteColumn() {
+    const { table } = this.props;
+
+    if (!this.canWriteTable()) {
       return false;
     }
 
@@ -164,6 +213,18 @@ export default React.createClass({
     });
 
     return foundAliases.length > 0;
+  },
+
+  openAddColumnModal() {
+    this.setState({
+      addColumnModal: true
+    });
+  },
+
+  closeAddColumnModal() {
+    this.setState({
+      addColumnModal: false
+    });
   },
 
   openDeleteColumnModal(column) {

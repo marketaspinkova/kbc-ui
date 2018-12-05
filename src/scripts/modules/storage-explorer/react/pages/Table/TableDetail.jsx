@@ -27,6 +27,7 @@ export default React.createClass({
       bucket: BucketsStore.getAll().find(item => item.get('id') === bucketId),
       creatingPrimaryKey: TablesStore.getIsCreatingPrimaryKey(table.get('id')),
       deletingPrimaryKey: TablesStore.getIsDeletingPrimaryKey(table.get('id')),
+      addingColumn: TablesStore.getAddingColumn(),
       deletingColumn: TablesStore.getDeletingColumn()
     };
   },
@@ -107,6 +108,7 @@ export default React.createClass({
                   sapiToken={this.state.sapiToken}
                   creatingPrimaryKey={this.state.creatingPrimaryKey}
                   deletingPrimaryKey={this.state.deletingPrimaryKey}
+                  addingColumn={this.state.addingColumn}
                   deletingColumn={this.state.deletingColumn}
                 />
               </Tab.Pane>

@@ -175,6 +175,13 @@ var storageApi = {
       });
   },
 
+  addTableColumn: function(tableId, params) {
+    return createRequest('POST', 'tables/' + tableId + '/columns').type('form').send(params).promise()
+      .then(function(response) {
+        return response.body;
+      });
+  },
+
   deleteTableColumn: function(tableId, column, params) {
     return createRequest('DELETE', 'tables/' + tableId + '/columns/' + column).type('form').send(params).promise()
       .then(function(response) {
