@@ -78,7 +78,7 @@ export default React.createClass({
   },
 
   canCloneTable() {
-    const table = this.getSelectedTable();
+    const table = this.getSelectedTable() || Map();
     const isSnowflake = table.getIn(['bucket', 'backend']) === 'snowflake';
     const isAliased = table.get('isAlias', false);
     const isFiltered = table.get('aliasFilter', Map()).count() > 0;
