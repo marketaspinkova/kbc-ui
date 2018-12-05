@@ -77,6 +77,16 @@ export default React.createClass({
     return this.props.onChange(value);
   },
 
+  canCloneTable() {
+    const table = this.getSelectedTable();
+    const isSnowflake = table.getIn(['bucket', 'backend']) === 'snowflake';
+    const isAliased = table.get('isAlias', false);
+    const isFiltered = table.get('aliasFilter', Map()).count() > 0;
+    const isSynced = table.get('aliasColumnsAutoSync', false);
+    const isAliasClonable = isAliased ? isSynced && !isFiltered : true;
+    return isSnowflake && isAliasClonable;
+  },
+
   handleChangeLoadType(newValue) {
     const newMapping = this.props.value.set('loadType', newValue);
     return this.props.onChange(newMapping);
@@ -287,7 +297,7 @@ export default React.createClass({
                 onChange={this.handleChangeLoadType}
                 options={[
                   {label: 'Copy Table', value: 'copy'},
-                  {label: 'Clone Table', value: 'clone'}
+                  {label: 'Clone Table', value: 'clone', disabled: !this.canCloneTable()}
                 ]}
               />
               <HelpBlock>
