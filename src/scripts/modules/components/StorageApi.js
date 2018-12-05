@@ -174,6 +174,18 @@ var storageApi = {
     });
   },
 
+  createSnapshot: function(tableId, params) {
+    return createRequest('POST', 'tables/' + tableId + '/snapshots').type('form').send(params).promise().then(function(response) {
+      return response.body;
+    });
+  },
+
+  deleteSnapshot: function(snapshotId) {
+    return createRequest('DELETE', 'snapshots/' + snapshotId).type('form').promise().then(function(response) {
+      return response.body;
+    });
+  },
+
   loadDataIntoWorkspace: function(workspaceId, params) {
     return createRequest('POST', 'workspaces/' + workspaceId + '/load').type('form').send(params).promise()
       .then(function(response) {

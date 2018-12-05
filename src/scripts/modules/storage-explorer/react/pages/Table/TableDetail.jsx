@@ -31,7 +31,8 @@ export default React.createClass({
       creatingPrimaryKey: TablesStore.getIsCreatingPrimaryKey(table.get('id')),
       deletingPrimaryKey: TablesStore.getIsDeletingPrimaryKey(table.get('id')),
       addingColumn: TablesStore.getAddingColumn(),
-      deletingColumn: TablesStore.getDeletingColumn()
+      deletingColumn: TablesStore.getDeletingColumn(),
+      deletingSnapshot: TablesStore.getIsDeletingSnapshot()
     };
   },
 
@@ -116,7 +117,11 @@ export default React.createClass({
                 <DataSample table={this.state.table} />
               </Tab.Pane>
               <Tab.Pane eventKey="snapshot-and-restore">
-                <SnapshotRestore table={this.state.table} sapiToken={this.state.sapiToken} />
+                <SnapshotRestore
+                  table={this.state.table}
+                  sapiToken={this.state.sapiToken}
+                  deletingSnapshot={this.state.deletingSnapshot}
+                />
               </Tab.Pane>
               <Tab.Pane eventKey="graph">Graph</Tab.Pane>
             </Tab.Content>

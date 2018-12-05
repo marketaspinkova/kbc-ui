@@ -5,12 +5,15 @@ import { Loader } from '@keboola/indigo-ui';
 
 import CreatedWithIcon from '../../../../../react/common/CreatedWithIcon';
 import Tooltip from '../../../../../react/common/Tooltip';
+import ConfirmModal from '../../../../../react/common/ConfirmModal';
 import StorageApi from '../../../../components/StorageApi';
+import StorageActionCreators from '../../../../components/StorageActionCreators';
 
 export default React.createClass({
   propTypes: {
     table: PropTypes.object.isRequired,
-    sapiToken: PropTypes.object.isRequired
+    sapiToken: PropTypes.object.isRequired,
+    deletingSnapshot: PropTypes.object.isRequired
   },
 
   getInitialState() {
@@ -19,7 +22,9 @@ export default React.createClass({
       pagingCount: 20,
       offset: 0,
       loading: false,
-      hasMore: false
+      hasMore: false,
+      openRemoveSnapshotModal: false,
+      removeSnapshot: null
     };
   },
 
@@ -92,47 +97,57 @@ export default React.createClass({
     }
 
     return (
-      <Table responsive striped>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Description</th>
-            <th>Created time</th>
-            <th>Creator</th>
-            <th />
-          </tr>
-        </thead>
-        <tbody>
-          {this.state.snapshots.map(snapshot => {
-            return (
-              <tr key={snapshot.get('id')}>
-                <td>{snapshot.get('id')}</td>
-                <td>{snapshot.get('description')}</td>
-                <td>
-                  <CreatedWithIcon createdTime={snapshot.get('createdTime')} relative={false} />
-                </td>
-                <td>
-                  <span title={`ID: ${snapshot.getIn(['creatorToken', 'id'])}`}>
-                    {snapshot.getIn(['creatorToken', 'description'])}
-                  </span>
-                </td>
-                <td className="text-right">
-                  <Tooltip tooltip="Create new table from snapshot" placement="top">
-                    <Button className="btn btn-link" onClick={() => null}>
-                      <i className="fa fa-share" />
-                    </Button>
-                  </Tooltip>
-                  <Tooltip tooltip="Delete snapshot" placement="top">
-                    <Button className="btn btn-link" onClick={() => null}>
-                      <i className="fa fa-trash-o" />
-                    </Button>
-                  </Tooltip>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
+      <div>
+        <Table responsive striped>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Description</th>
+              <th>Created time</th>
+              <th>Creator</th>
+              <th />
+            </tr>
+          </thead>
+          <tbody>
+            {this.state.snapshots.map(snapshot => {
+              const deleting = this.props.deletingSnapshot.get(snapshot.get('id'), false);
+
+              return (
+                <tr key={snapshot.get('id')}>
+                  <td>{snapshot.get('id')}</td>
+                  <td>{snapshot.get('description')}</td>
+                  <td>
+                    <CreatedWithIcon createdTime={snapshot.get('createdTime')} relative={false} />
+                  </td>
+                  <td>
+                    <span title={`ID: ${snapshot.getIn(['creatorToken', 'id'])}`}>
+                      {snapshot.getIn(['creatorToken', 'description'])}
+                    </span>
+                  </td>
+                  <td className="text-right">
+                    <Tooltip tooltip="Create new table from snapshot" placement="top">
+                      <Button className="btn btn-link" onClick={() => null}>
+                        <i className="fa fa-share" />
+                      </Button>
+                    </Tooltip>
+                    <Tooltip tooltip="Delete snapshot" placement="top">
+                      <Button
+                        className="btn btn-link"
+                        onClick={() => this.openRemoveSnapshotModal(snapshot)}
+                        disabled={deleting}
+                      >
+                        {deleting ? <Loader /> : <i className="fa fa-trash-o" />}
+                      </Button>
+                    </Tooltip>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
+
+        {this.renderDeleteSnapshotModal()}
+      </div>
     );
   },
 
@@ -156,6 +171,46 @@ export default React.createClass({
     );
   },
 
+  renderDeleteSnapshotModal() {
+    const snapshot = this.state.removeSnapshot;
+
+    if (!snapshot) {
+      return null;
+    }
+
+    return (
+      <ConfirmModal
+        show={this.state.openRemoveSnapshotModal}
+        title="Delete snapshot"
+        buttonType="danger"
+        buttonLabel="Delete"
+        text={
+          snapshot.get('description') ? (
+            <p>
+              Do you really want to delete snapshot {snapshot.get('id')} ({snapshot.get('description')})?
+            </p>
+          ) : (
+            <p>Do you really want to delete snapshot {snapshot.get('id')}?</p>
+          )
+        }
+        onConfirm={this.handleRemoveSnapshot}
+        onHide={this.closeRemoveSnapshotModal}
+      />
+    );
+  },
+
+  handleRemoveSnapshot() {
+    const snapshotId = this.state.removeSnapshot.get('id');
+
+    return StorageActionCreators.deleteSnapshot(snapshotId).then(() => {
+      this.setState({
+        removeSnapshot: null
+      });
+
+      this.fetchSnapshots(true);
+    });
+  },
+
   canWriteTable() {
     const bucketId = this.props.table.getIn(['bucket', 'id']);
     const permission = this.props.sapiToken.getIn(['bucketPermissions', bucketId]);
@@ -163,11 +218,11 @@ export default React.createClass({
     return ['write', 'manage'].includes(permission);
   },
 
-  fetchSnapshots() {
+  fetchSnapshots(refetch = false) {
     const tableId = this.props.table.get('id');
     const params = {
       limit: this.state.pagingCount + 1,
-      offset: this.state.offset
+      offset: refetch ? 0 : this.state.offset
     };
 
     this.setState({ loading: true });
@@ -175,12 +230,26 @@ export default React.createClass({
       .then(data => {
         this.setState({
           hasMore: data.length > this.state.pagingCount,
-          snapshots: fromJS(this.state.snapshots.toArray().concat(data)),
+          snapshots: fromJS(refetch ? data : this.state.snapshots.toArray().concat(data)),
           offset: this.state.pagingCount + 1
         });
       })
       .finally(() => {
         this.setState({ loading: false });
       });
+  },
+
+  openRemoveSnapshotModal(snapshot) {
+    this.setState({
+      openRemoveSnapshotModal: true,
+      removeSnapshot: snapshot
+    });
+  },
+
+  closeRemoveSnapshotModal() {
+    this.setState({
+      openRemoveSnapshotModal: false,
+      removeSnapshot: null
+    });
   }
 });
