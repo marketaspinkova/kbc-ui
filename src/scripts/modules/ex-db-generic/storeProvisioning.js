@@ -7,6 +7,7 @@ import _ from 'underscore';
 import string from '../../utils/string';
 import getDefaultPort from './templates/defaultPorts';
 import {componentSupportsConfigRows} from './actionsProvisioning';
+import { getAllCustomFieldsNames } from './templates/customFields';
 
 const defaultSshPort = 22;
 
@@ -41,6 +42,12 @@ export function queryFromRow(row) {
   } else {
     query = query.set('table', rowConfig.get('table', null));
   }
+  // custom fields
+  getAllCustomFieldsNames().forEach((fieldName) => {
+    if (rowConfig.has(fieldName)) {
+      query = query.set(fieldName, rowConfig.get(fieldName));
+    }
+  });
   return query;
 }
 

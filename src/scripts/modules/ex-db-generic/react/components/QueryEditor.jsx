@@ -1,8 +1,7 @@
-
 import React from 'react';
 import Immutable from 'immutable';
 import _ from 'underscore';
-import {Alert} from 'react-bootstrap';
+import { Alert, FormGroup, HelpBlock, Checkbox, Col } from 'react-bootstrap';
 
 import CodeEditor from '../../../../react/common/CodeEditor';
 import Select from '../../../../react/common/Select';
@@ -15,6 +14,7 @@ import TableLoader from './TableLoaderQueryEditor';
 import {getQueryEditorPlaceholder, getQueryEditorHelpText} from '../../templates/helpAndHints';
 
 import editorMode from '../../templates/editorMode';
+import { getCustomFieldsForComponent } from '../../templates/customFields';
 
 export default React.createClass({
   propTypes: {
@@ -116,6 +116,10 @@ export default React.createClass({
         .set('name', event.target.value)
         .set('outputTable', !currentOutputTable ? this.props.getDefaultOutputTable(event.target.name) : currentOutputTable)
     );
+  },
+
+  handleCustomCheckboxChange(propName, event) {
+    return this.props.onChange(this.props.query.set(propName, event.target.checked));
   },
 
   sourceTableSelectOptions() {
@@ -350,12 +354,38 @@ export default React.createClass({
             </div>
           </div>
           {this.renderIncrementalLoadOption()}
+          {this.renderCustomFields()}
           <h3>Advanced Mode</h3>
           {this.renderQueryToggle()}
           {this.renderQueryEditor()}
         </div>
       </div>
     );
+  },
+
+  renderCustomFields() {
+    const isAdvancedMode = this.props.query.get('advancedMode');
+    return getCustomFieldsForComponent(this.props.componentId).reduce((customFields, field) => {
+      if ((field.showInAdvancedMode && isAdvancedMode) || !isAdvancedMode) {
+        if (field.type === 'checkbox') {
+          customFields.push(
+            <FormGroup key={`custom-field-${field.name}`}>
+              <Col mdOffset={3} md={9}>
+                <Checkbox
+                  checked={!!this.props.query.get(field.name)}
+                  disabled={this.props.disabled}
+                  onChange={event => this.handleCustomCheckboxChange(field.name, event)}
+                >
+                  {field.label}
+                </Checkbox>
+                <HelpBlock>{field.help}</HelpBlock>
+              </Col>
+            </FormGroup>
+          );
+        }
+      }
+      return customFields;
+    }, []);
   },
 
   renderIncrementalLoadOption() {
