@@ -48,7 +48,8 @@ export default React.createClass({
       graphJobs: jobs.filter(job => job.get('startTime') && job.get('endTime')),
       jobsLoading: OrchestrationJobsStore.isLoading(orchestrationId),
       pendingActions: OrchestrationStore.getPendingActionsForOrchestration(orchestrationId),
-      latestJobs: LatestJobsStore.getJobs('orchestration', orchestrationId)
+      latestJobs: LatestJobsStore.getJobs('orchestration', orchestrationId),
+      crontabRecord: OrchestrationStore.getCrontabRecord()
     };
   },
 
@@ -110,7 +111,7 @@ export default React.createClass({
                 </Link>
               </Col>
             </Row>
-            <CronRecord crontabRecord={this.state.orchestration.get('crontabRecord')}/>
+            <CronRecord crontabRecord={this.state.crontabRecord}/>
           </div>
           <div className="kbc-row">
             <Row>
