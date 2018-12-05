@@ -84,6 +84,8 @@ export default React.createClass({
     return (
       <FormControl
         type="number"
+        min="1"
+        max="100"
         value={this._getTolerance()}
         onChange={this._onToleranceChange}
         disabled={!notificationsCount}
