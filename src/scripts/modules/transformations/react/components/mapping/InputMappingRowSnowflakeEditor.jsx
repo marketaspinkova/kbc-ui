@@ -126,7 +126,7 @@ export default React.createClass({
     }
     return this.props.tables.find((table) => {
       return table.get('id') === this.props.value.get('source');
-    });
+    }, null, Map());
   },
 
   _getColumns() {
