@@ -366,10 +366,7 @@ export default React.createClass({
   renderCustomFields() {
     const isAdvancedMode = this.props.query.get('advancedMode');
     return getCustomFieldsForComponent(this.props.componentId).reduce((customFields, field) => {
-      if (
-        (field.showInAdvancedMode && isAdvancedMode)
-        || (!field.showInAdvancedMode && !isAdvancedMode)
-      ) {
+      if ((field.showInAdvancedMode && isAdvancedMode) || !isAdvancedMode) {
         if (field.type === 'checkbox') {
           customFields.push(
             <FormGroup key={`custom-field-${field.name}`}>
