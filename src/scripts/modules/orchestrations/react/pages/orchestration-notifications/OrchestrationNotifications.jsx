@@ -63,9 +63,5 @@ export default React.createClass({
 
   _handleCancel() {
     return OrchestrationActionCreators.cancelOrchestrationNotificationsEdit(this.state.orchestrationId);
-  },
-
-  _handleFilterChange(query) {
-    return OrchestrationActionCreators.setOrchestrationsFilter(query);
   }
 });
