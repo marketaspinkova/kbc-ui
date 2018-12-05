@@ -59,10 +59,6 @@ export default React.createClass({
     );
   },
 
-  componentWillMount() {
-    return OrchestrationsActionCreators.startOrchestrationScheduleEdit(this.state.orchestrationId);
-  },
-
   _handleRemoveSchedule() {
     this._handleCrontabChange(DEFAULT_CRONTABRECORD);
     this._handleSave();
