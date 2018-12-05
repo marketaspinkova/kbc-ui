@@ -7,6 +7,8 @@ import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
 import CronScheduler from '../../../../../react/common/CronScheduler';
 import OrchestrationsActionCreators from '../../../ActionCreators';
 
+const  DEFAULT_CRONTABRECORD = '0 0 * * *';
+
 export default React.createClass({
   mixins: [createStoreMixin(OrchestrationStore)],
 
@@ -19,7 +21,7 @@ export default React.createClass({
     if (isEditing) {
       crontabRecord = OrchestrationStore.getEditingValue(orchestrationId, 'schedule');
     } else {
-      crontabRecord =  OrchestrationStore.getCrontabRecord() || orchestration.get('crontabRecord') || '0 0 * * *';
+      crontabRecord =  OrchestrationStore.getCrontabRecord() || orchestration.get('crontabRecord') || DEFAULT_CRONTABRECORD;
     }
 
     return {
@@ -62,7 +64,7 @@ export default React.createClass({
   },
 
   _handleRemoveSchedule() {
-    this._handleCrontabChange('0 0 * * *');
+    this._handleCrontabChange(DEFAULT_CRONTABRECORD);
     this._handleSave();
   },
 
