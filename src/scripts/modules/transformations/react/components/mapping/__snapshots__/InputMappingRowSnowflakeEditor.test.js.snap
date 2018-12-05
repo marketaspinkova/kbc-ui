@@ -64,7 +64,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok 1`] = `
         componentClass={[Function]}
         sm={2}
       >
-        Columns
+        Load Type
       </Col>
       <Col
         bsClass="col"
@@ -73,67 +73,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok 1`] = `
       >
         <Select
           allowCreate={false}
-          delimiter=","
-          disabled={true}
-          emptyStrings={false}
-          ignoreCase={true}
-          labelKey="label"
-          matchProp="any"
-          multi={true}
-          name="columns"
-          onChange={[Function]}
-          options={Array []}
-          placeholder="All columns will be imported"
-          trimMultiCreatedValues={false}
-          value={Array []}
-          valueKey="value"
-        />
-        <HelpBlock
-          bsClass="help-block"
-        >
-          Import only specified columns
-        </HelpBlock>
-      </Col>
-    </FormGroup>
-    <FormGroup
-      bsClass="form-group"
-    >
-      <Col
-        bsClass="col"
-        componentClass={[Function]}
-        sm={2}
-      >
-        Changed in last
-      </Col>
-      <Col
-        bsClass="col"
-        componentClass="div"
-        sm={10}
-      >
-        <ChangedSinceInput
-          disabled={false}
-          onChange={[Function]}
-          value={null}
-        />
-      </Col>
-    </FormGroup>
-    <FormGroup
-      bsClass="form-group"
-    >
-      <Col
-        bsClass="col"
-        componentClass={[Function]}
-        sm={2}
-      >
-        Data filter
-      </Col>
-      <Col
-        bsClass="col"
-        componentClass="div"
-        sm={4}
-      >
-        <Select
-          allowCreate={false}
+          clearable={false}
           delimiter=","
           disabled={true}
           emptyStrings={false}
@@ -141,124 +81,243 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok 1`] = `
           labelKey="label"
           matchProp="any"
           multi={false}
-          name="whereColumn"
+          name="loadType"
           onChange={[Function]}
-          options={Array []}
-          placeholder="Select column"
+          options={
+            Array [
+              Object {
+                "label": "Copy Table (default)",
+                "value": "",
+              },
+              Object {
+                "disabled": true,
+                "label": "Clone Table",
+                "value": "clone",
+              },
+            ]
+          }
+          placeholder="Copy Table (default)"
+          searchable={false}
           trimMultiCreatedValues={false}
           value=""
           valueKey="value"
         />
-      </Col>
-      <Col
-        bsClass="col"
-        componentClass="div"
-        sm={2}
-      >
-        <Input
-          disabled={false}
-          name="whereOperator"
-          onChange={[Function]}
-          type="select"
+        <HelpBlock
+          bsClass="help-block"
         >
-          <option
-            value="eq"
-          >
-            in
-          </option>
-          <option
-            value="ne"
-          >
-            not in
-          </option>
-        </Input>
-      </Col>
-      <Col
-        bsClass="col"
-        componentClass="div"
-        sm={4}
-      >
-        <Select
-          allowCreate={true}
-          delimiter=","
-          disabled={false}
-          emptyStrings={true}
-          ignoreCase={true}
-          labelKey="label"
-          matchProp="any"
-          multi={true}
-          name="whereValues"
-          onChange={[Function]}
-          placeholder="Add a value..."
-          trimMultiCreatedValues={false}
-          value=""
-          valueKey="value"
-        />
+          Type of table load from Storage into a Workspace. 
+          <code>
+            Clone
+          </code>
+           load type can be applied only on Snowflake tables without any filtering parameters.
+        </HelpBlock>
       </Col>
     </FormGroup>
-    <ControlLabel
-      bsClass="control-label"
-      srOnly={false}
-    >
-      Data types
-    </ControlLabel>
-    <DatatypeForm
-      columns={Immutable.List []}
-      datatypes={Immutable.Map {}}
-      datatypesMap={
-        Immutable.Map {
-          "VARIANT": Immutable.Map {
-            "name": "VARIANT",
-            "size": false,
-          },
-          "TIMESTAMP_LTZ": Immutable.Map {
-            "name": "TIMESTAMP_LTZ",
-            "size": false,
-          },
-          "NUMBER": Immutable.Map {
-            "name": "NUMBER",
-            "basetype": "NUMERIC",
-            "size": true,
-          },
-          "TIMESTAMP_NTZ": Immutable.Map {
-            "name": "TIMESTAMP_NTZ",
-            "size": false,
-          },
-          "DATE": Immutable.Map {
-            "name": "DATE",
-            "basetype": "DATE",
-            "size": false,
-          },
-          "TIMESTAMP_TZ": Immutable.Map {
-            "name": "TIMESTAMP_TZ",
-            "size": false,
-          },
-          "TIMESTAMP": Immutable.Map {
-            "name": "TIMESTAMP",
-            "basetype": "TIMESTAMP",
-            "size": false,
-          },
-          "FLOAT": Immutable.Map {
-            "name": "FLOAT",
-            "basetype": "FLOAT",
-            "size": false,
-          },
-          "VARCHAR": Immutable.Map {
-            "name": "VARCHAR",
-            "basetype": "STRING",
-            "size": true,
-            "maxLength": 16777216,
-          },
-          "INTEGER": Immutable.Map {
-            "name": "INTEGER",
-            "basetype": "INTEGER",
-            "size": false,
-          },
+    <div>
+      <FormGroup
+        bsClass="form-group"
+      >
+        <Col
+          bsClass="col"
+          componentClass={[Function]}
+          sm={2}
+        >
+          Columns
+        </Col>
+        <Col
+          bsClass="col"
+          componentClass="div"
+          sm={10}
+        >
+          <Select
+            allowCreate={false}
+            delimiter=","
+            disabled={true}
+            emptyStrings={false}
+            ignoreCase={true}
+            labelKey="label"
+            matchProp="any"
+            multi={true}
+            name="columns"
+            onChange={[Function]}
+            options={Array []}
+            placeholder="All columns will be imported"
+            trimMultiCreatedValues={false}
+            value={Array []}
+            valueKey="value"
+          />
+          <HelpBlock
+            bsClass="help-block"
+          >
+            Import only specified columns
+          </HelpBlock>
+        </Col>
+      </FormGroup>
+      <FormGroup
+        bsClass="form-group"
+      >
+        <Col
+          bsClass="col"
+          componentClass={[Function]}
+          sm={2}
+        >
+          Changed in last
+        </Col>
+        <Col
+          bsClass="col"
+          componentClass="div"
+          sm={10}
+        >
+          <ChangedSinceInput
+            disabled={false}
+            onChange={[Function]}
+            value={null}
+          />
+        </Col>
+      </FormGroup>
+      <FormGroup
+        bsClass="form-group"
+      >
+        <Col
+          bsClass="col"
+          componentClass={[Function]}
+          sm={2}
+        >
+          Data filter
+        </Col>
+        <Col
+          bsClass="col"
+          componentClass="div"
+          sm={4}
+        >
+          <Select
+            allowCreate={false}
+            delimiter=","
+            disabled={true}
+            emptyStrings={false}
+            ignoreCase={true}
+            labelKey="label"
+            matchProp="any"
+            multi={false}
+            name="whereColumn"
+            onChange={[Function]}
+            options={Array []}
+            placeholder="Select column"
+            trimMultiCreatedValues={false}
+            value=""
+            valueKey="value"
+          />
+        </Col>
+        <Col
+          bsClass="col"
+          componentClass="div"
+          sm={2}
+        >
+          <Input
+            disabled={false}
+            name="whereOperator"
+            onChange={[Function]}
+            type="select"
+          >
+            <option
+              value="eq"
+            >
+              in
+            </option>
+            <option
+              value="ne"
+            >
+              not in
+            </option>
+          </Input>
+        </Col>
+        <Col
+          bsClass="col"
+          componentClass="div"
+          sm={4}
+        >
+          <Select
+            allowCreate={true}
+            delimiter=","
+            disabled={false}
+            emptyStrings={true}
+            ignoreCase={true}
+            labelKey="label"
+            matchProp="any"
+            multi={true}
+            name="whereValues"
+            onChange={[Function]}
+            placeholder="Add a value..."
+            trimMultiCreatedValues={false}
+            value=""
+            valueKey="value"
+          />
+        </Col>
+      </FormGroup>
+      <ControlLabel
+        bsClass="control-label"
+        srOnly={false}
+      >
+        Data types
+      </ControlLabel>
+      <DatatypeForm
+        columns={Immutable.List []}
+        datatypes={Immutable.Map {}}
+        datatypesMap={
+          Immutable.Map {
+            "VARIANT": Immutable.Map {
+              "name": "VARIANT",
+              "size": false,
+            },
+            "TIMESTAMP_LTZ": Immutable.Map {
+              "name": "TIMESTAMP_LTZ",
+              "size": false,
+            },
+            "NUMBER": Immutable.Map {
+              "name": "NUMBER",
+              "basetype": "NUMERIC",
+              "size": true,
+            },
+            "TIMESTAMP_NTZ": Immutable.Map {
+              "name": "TIMESTAMP_NTZ",
+              "size": false,
+            },
+            "DATE": Immutable.Map {
+              "name": "DATE",
+              "basetype": "DATE",
+              "size": false,
+            },
+            "TIMESTAMP_TZ": Immutable.Map {
+              "name": "TIMESTAMP_TZ",
+              "size": false,
+            },
+            "TIMESTAMP": Immutable.Map {
+              "name": "TIMESTAMP",
+              "basetype": "TIMESTAMP",
+              "size": false,
+            },
+            "FLOAT": Immutable.Map {
+              "name": "FLOAT",
+              "basetype": "FLOAT",
+              "size": false,
+            },
+            "VARCHAR": Immutable.Map {
+              "name": "VARCHAR",
+              "basetype": "STRING",
+              "size": true,
+              "maxLength": 16777216,
+            },
+            "INTEGER": Immutable.Map {
+              "name": "INTEGER",
+              "basetype": "INTEGER",
+              "size": false,
+            },
+          }
         }
-      }
-      disabled={true}
-      onChange={[Function]}
-    />
+        disabled={true}
+        onChange={[Function]}
+      />
+    </div>
   </PanelWithDetails>
 </Form>
 `;
@@ -328,7 +387,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source and des
         componentClass={[Function]}
         sm={2}
       >
-        Columns
+        Load Type
       </Col>
       <Col
         bsClass="col"
@@ -337,67 +396,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source and des
       >
         <Select
           allowCreate={false}
-          delimiter=","
-          disabled={false}
-          emptyStrings={false}
-          ignoreCase={true}
-          labelKey="label"
-          matchProp="any"
-          multi={true}
-          name="columns"
-          onChange={[Function]}
-          options={Array []}
-          placeholder="All columns will be imported"
-          trimMultiCreatedValues={false}
-          value={Array []}
-          valueKey="value"
-        />
-        <HelpBlock
-          bsClass="help-block"
-        >
-          Import only specified columns
-        </HelpBlock>
-      </Col>
-    </FormGroup>
-    <FormGroup
-      bsClass="form-group"
-    >
-      <Col
-        bsClass="col"
-        componentClass={[Function]}
-        sm={2}
-      >
-        Changed in last
-      </Col>
-      <Col
-        bsClass="col"
-        componentClass="div"
-        sm={10}
-      >
-        <ChangedSinceInput
-          disabled={false}
-          onChange={[Function]}
-          value={null}
-        />
-      </Col>
-    </FormGroup>
-    <FormGroup
-      bsClass="form-group"
-    >
-      <Col
-        bsClass="col"
-        componentClass={[Function]}
-        sm={2}
-      >
-        Data filter
-      </Col>
-      <Col
-        bsClass="col"
-        componentClass="div"
-        sm={4}
-      >
-        <Select
-          allowCreate={false}
+          clearable={false}
           delimiter=","
           disabled={false}
           emptyStrings={false}
@@ -405,124 +404,243 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source and des
           labelKey="label"
           matchProp="any"
           multi={false}
-          name="whereColumn"
+          name="loadType"
           onChange={[Function]}
-          options={Array []}
-          placeholder="Select column"
+          options={
+            Array [
+              Object {
+                "label": "Copy Table (default)",
+                "value": "",
+              },
+              Object {
+                "disabled": true,
+                "label": "Clone Table",
+                "value": "clone",
+              },
+            ]
+          }
+          placeholder="Copy Table (default)"
+          searchable={false}
           trimMultiCreatedValues={false}
           value=""
           valueKey="value"
         />
-      </Col>
-      <Col
-        bsClass="col"
-        componentClass="div"
-        sm={2}
-      >
-        <Input
-          disabled={false}
-          name="whereOperator"
-          onChange={[Function]}
-          type="select"
+        <HelpBlock
+          bsClass="help-block"
         >
-          <option
-            value="eq"
-          >
-            in
-          </option>
-          <option
-            value="ne"
-          >
-            not in
-          </option>
-        </Input>
-      </Col>
-      <Col
-        bsClass="col"
-        componentClass="div"
-        sm={4}
-      >
-        <Select
-          allowCreate={true}
-          delimiter=","
-          disabled={false}
-          emptyStrings={true}
-          ignoreCase={true}
-          labelKey="label"
-          matchProp="any"
-          multi={true}
-          name="whereValues"
-          onChange={[Function]}
-          placeholder="Add a value..."
-          trimMultiCreatedValues={false}
-          value=""
-          valueKey="value"
-        />
+          Type of table load from Storage into a Workspace. 
+          <code>
+            Clone
+          </code>
+           load type can be applied only on Snowflake tables without any filtering parameters.
+        </HelpBlock>
       </Col>
     </FormGroup>
-    <ControlLabel
-      bsClass="control-label"
-      srOnly={false}
-    >
-      Data types
-    </ControlLabel>
-    <DatatypeForm
-      columns={Immutable.List []}
-      datatypes={Immutable.Map {}}
-      datatypesMap={
-        Immutable.Map {
-          "VARIANT": Immutable.Map {
-            "name": "VARIANT",
-            "size": false,
-          },
-          "TIMESTAMP_LTZ": Immutable.Map {
-            "name": "TIMESTAMP_LTZ",
-            "size": false,
-          },
-          "NUMBER": Immutable.Map {
-            "name": "NUMBER",
-            "basetype": "NUMERIC",
-            "size": true,
-          },
-          "TIMESTAMP_NTZ": Immutable.Map {
-            "name": "TIMESTAMP_NTZ",
-            "size": false,
-          },
-          "DATE": Immutable.Map {
-            "name": "DATE",
-            "basetype": "DATE",
-            "size": false,
-          },
-          "TIMESTAMP_TZ": Immutable.Map {
-            "name": "TIMESTAMP_TZ",
-            "size": false,
-          },
-          "TIMESTAMP": Immutable.Map {
-            "name": "TIMESTAMP",
-            "basetype": "TIMESTAMP",
-            "size": false,
-          },
-          "FLOAT": Immutable.Map {
-            "name": "FLOAT",
-            "basetype": "FLOAT",
-            "size": false,
-          },
-          "VARCHAR": Immutable.Map {
-            "name": "VARCHAR",
-            "basetype": "STRING",
-            "size": true,
-            "maxLength": 16777216,
-          },
-          "INTEGER": Immutable.Map {
-            "name": "INTEGER",
-            "basetype": "INTEGER",
-            "size": false,
-          },
+    <div>
+      <FormGroup
+        bsClass="form-group"
+      >
+        <Col
+          bsClass="col"
+          componentClass={[Function]}
+          sm={2}
+        >
+          Columns
+        </Col>
+        <Col
+          bsClass="col"
+          componentClass="div"
+          sm={10}
+        >
+          <Select
+            allowCreate={false}
+            delimiter=","
+            disabled={false}
+            emptyStrings={false}
+            ignoreCase={true}
+            labelKey="label"
+            matchProp="any"
+            multi={true}
+            name="columns"
+            onChange={[Function]}
+            options={Array []}
+            placeholder="All columns will be imported"
+            trimMultiCreatedValues={false}
+            value={Array []}
+            valueKey="value"
+          />
+          <HelpBlock
+            bsClass="help-block"
+          >
+            Import only specified columns
+          </HelpBlock>
+        </Col>
+      </FormGroup>
+      <FormGroup
+        bsClass="form-group"
+      >
+        <Col
+          bsClass="col"
+          componentClass={[Function]}
+          sm={2}
+        >
+          Changed in last
+        </Col>
+        <Col
+          bsClass="col"
+          componentClass="div"
+          sm={10}
+        >
+          <ChangedSinceInput
+            disabled={false}
+            onChange={[Function]}
+            value={null}
+          />
+        </Col>
+      </FormGroup>
+      <FormGroup
+        bsClass="form-group"
+      >
+        <Col
+          bsClass="col"
+          componentClass={[Function]}
+          sm={2}
+        >
+          Data filter
+        </Col>
+        <Col
+          bsClass="col"
+          componentClass="div"
+          sm={4}
+        >
+          <Select
+            allowCreate={false}
+            delimiter=","
+            disabled={false}
+            emptyStrings={false}
+            ignoreCase={true}
+            labelKey="label"
+            matchProp="any"
+            multi={false}
+            name="whereColumn"
+            onChange={[Function]}
+            options={Array []}
+            placeholder="Select column"
+            trimMultiCreatedValues={false}
+            value=""
+            valueKey="value"
+          />
+        </Col>
+        <Col
+          bsClass="col"
+          componentClass="div"
+          sm={2}
+        >
+          <Input
+            disabled={false}
+            name="whereOperator"
+            onChange={[Function]}
+            type="select"
+          >
+            <option
+              value="eq"
+            >
+              in
+            </option>
+            <option
+              value="ne"
+            >
+              not in
+            </option>
+          </Input>
+        </Col>
+        <Col
+          bsClass="col"
+          componentClass="div"
+          sm={4}
+        >
+          <Select
+            allowCreate={true}
+            delimiter=","
+            disabled={false}
+            emptyStrings={true}
+            ignoreCase={true}
+            labelKey="label"
+            matchProp="any"
+            multi={true}
+            name="whereValues"
+            onChange={[Function]}
+            placeholder="Add a value..."
+            trimMultiCreatedValues={false}
+            value=""
+            valueKey="value"
+          />
+        </Col>
+      </FormGroup>
+      <ControlLabel
+        bsClass="control-label"
+        srOnly={false}
+      >
+        Data types
+      </ControlLabel>
+      <DatatypeForm
+        columns={Immutable.List []}
+        datatypes={Immutable.Map {}}
+        datatypesMap={
+          Immutable.Map {
+            "VARIANT": Immutable.Map {
+              "name": "VARIANT",
+              "size": false,
+            },
+            "TIMESTAMP_LTZ": Immutable.Map {
+              "name": "TIMESTAMP_LTZ",
+              "size": false,
+            },
+            "NUMBER": Immutable.Map {
+              "name": "NUMBER",
+              "basetype": "NUMERIC",
+              "size": true,
+            },
+            "TIMESTAMP_NTZ": Immutable.Map {
+              "name": "TIMESTAMP_NTZ",
+              "size": false,
+            },
+            "DATE": Immutable.Map {
+              "name": "DATE",
+              "basetype": "DATE",
+              "size": false,
+            },
+            "TIMESTAMP_TZ": Immutable.Map {
+              "name": "TIMESTAMP_TZ",
+              "size": false,
+            },
+            "TIMESTAMP": Immutable.Map {
+              "name": "TIMESTAMP",
+              "basetype": "TIMESTAMP",
+              "size": false,
+            },
+            "FLOAT": Immutable.Map {
+              "name": "FLOAT",
+              "basetype": "FLOAT",
+              "size": false,
+            },
+            "VARCHAR": Immutable.Map {
+              "name": "VARCHAR",
+              "basetype": "STRING",
+              "size": true,
+              "maxLength": 16777216,
+            },
+            "INTEGER": Immutable.Map {
+              "name": "INTEGER",
+              "basetype": "INTEGER",
+              "size": false,
+            },
+          }
         }
-      }
-      disabled={false}
-      onChange={[Function]}
-    />
+        disabled={false}
+        onChange={[Function]}
+      />
+    </div>
   </PanelWithDetails>
 </Form>
 `;
@@ -592,7 +710,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
         componentClass={[Function]}
         sm={2}
       >
-        Columns
+        Load Type
       </Col>
       <Col
         bsClass="col"
@@ -601,67 +719,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
       >
         <Select
           allowCreate={false}
-          delimiter=","
-          disabled={false}
-          emptyStrings={false}
-          ignoreCase={true}
-          labelKey="label"
-          matchProp="any"
-          multi={true}
-          name="columns"
-          onChange={[Function]}
-          options={Array []}
-          placeholder="All columns will be imported"
-          trimMultiCreatedValues={false}
-          value={Array []}
-          valueKey="value"
-        />
-        <HelpBlock
-          bsClass="help-block"
-        >
-          Import only specified columns
-        </HelpBlock>
-      </Col>
-    </FormGroup>
-    <FormGroup
-      bsClass="form-group"
-    >
-      <Col
-        bsClass="col"
-        componentClass={[Function]}
-        sm={2}
-      >
-        Changed in last
-      </Col>
-      <Col
-        bsClass="col"
-        componentClass="div"
-        sm={10}
-      >
-        <ChangedSinceInput
-          disabled={false}
-          onChange={[Function]}
-          value={null}
-        />
-      </Col>
-    </FormGroup>
-    <FormGroup
-      bsClass="form-group"
-    >
-      <Col
-        bsClass="col"
-        componentClass={[Function]}
-        sm={2}
-      >
-        Data filter
-      </Col>
-      <Col
-        bsClass="col"
-        componentClass="div"
-        sm={4}
-      >
-        <Select
-          allowCreate={false}
+          clearable={false}
           delimiter=","
           disabled={false}
           emptyStrings={false}
@@ -669,125 +727,244 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
           labelKey="label"
           matchProp="any"
           multi={false}
-          name="whereColumn"
+          name="loadType"
           onChange={[Function]}
-          options={Array []}
-          placeholder="Select column"
+          options={
+            Array [
+              Object {
+                "label": "Copy Table (default)",
+                "value": "",
+              },
+              Object {
+                "disabled": true,
+                "label": "Clone Table",
+                "value": "clone",
+              },
+            ]
+          }
+          placeholder="Copy Table (default)"
+          searchable={false}
           trimMultiCreatedValues={false}
           value=""
           valueKey="value"
         />
-      </Col>
-      <Col
-        bsClass="col"
-        componentClass="div"
-        sm={2}
-      >
-        <Input
-          disabled={false}
-          name="whereOperator"
-          onChange={[Function]}
-          type="select"
-          value="eq"
+        <HelpBlock
+          bsClass="help-block"
         >
-          <option
-            value="eq"
-          >
-            in
-          </option>
-          <option
-            value="ne"
-          >
-            not in
-          </option>
-        </Input>
-      </Col>
-      <Col
-        bsClass="col"
-        componentClass="div"
-        sm={4}
-      >
-        <Select
-          allowCreate={true}
-          delimiter=","
-          disabled={false}
-          emptyStrings={true}
-          ignoreCase={true}
-          labelKey="label"
-          matchProp="any"
-          multi={true}
-          name="whereValues"
-          onChange={[Function]}
-          placeholder="Add a value..."
-          trimMultiCreatedValues={false}
-          value={Immutable.List []}
-          valueKey="value"
-        />
+          Type of table load from Storage into a Workspace. 
+          <code>
+            Clone
+          </code>
+           load type can be applied only on Snowflake tables without any filtering parameters.
+        </HelpBlock>
       </Col>
     </FormGroup>
-    <ControlLabel
-      bsClass="control-label"
-      srOnly={false}
-    >
-      Data types
-    </ControlLabel>
-    <DatatypeForm
-      columns={Immutable.List []}
-      datatypes={Immutable.Map {}}
-      datatypesMap={
-        Immutable.Map {
-          "VARIANT": Immutable.Map {
-            "name": "VARIANT",
-            "size": false,
-          },
-          "TIMESTAMP_LTZ": Immutable.Map {
-            "name": "TIMESTAMP_LTZ",
-            "size": false,
-          },
-          "NUMBER": Immutable.Map {
-            "name": "NUMBER",
-            "basetype": "NUMERIC",
-            "size": true,
-          },
-          "TIMESTAMP_NTZ": Immutable.Map {
-            "name": "TIMESTAMP_NTZ",
-            "size": false,
-          },
-          "DATE": Immutable.Map {
-            "name": "DATE",
-            "basetype": "DATE",
-            "size": false,
-          },
-          "TIMESTAMP_TZ": Immutable.Map {
-            "name": "TIMESTAMP_TZ",
-            "size": false,
-          },
-          "TIMESTAMP": Immutable.Map {
-            "name": "TIMESTAMP",
-            "basetype": "TIMESTAMP",
-            "size": false,
-          },
-          "FLOAT": Immutable.Map {
-            "name": "FLOAT",
-            "basetype": "FLOAT",
-            "size": false,
-          },
-          "VARCHAR": Immutable.Map {
-            "name": "VARCHAR",
-            "basetype": "STRING",
-            "size": true,
-            "maxLength": 16777216,
-          },
-          "INTEGER": Immutable.Map {
-            "name": "INTEGER",
-            "basetype": "INTEGER",
-            "size": false,
-          },
+    <div>
+      <FormGroup
+        bsClass="form-group"
+      >
+        <Col
+          bsClass="col"
+          componentClass={[Function]}
+          sm={2}
+        >
+          Columns
+        </Col>
+        <Col
+          bsClass="col"
+          componentClass="div"
+          sm={10}
+        >
+          <Select
+            allowCreate={false}
+            delimiter=","
+            disabled={false}
+            emptyStrings={false}
+            ignoreCase={true}
+            labelKey="label"
+            matchProp="any"
+            multi={true}
+            name="columns"
+            onChange={[Function]}
+            options={Array []}
+            placeholder="All columns will be imported"
+            trimMultiCreatedValues={false}
+            value={Array []}
+            valueKey="value"
+          />
+          <HelpBlock
+            bsClass="help-block"
+          >
+            Import only specified columns
+          </HelpBlock>
+        </Col>
+      </FormGroup>
+      <FormGroup
+        bsClass="form-group"
+      >
+        <Col
+          bsClass="col"
+          componentClass={[Function]}
+          sm={2}
+        >
+          Changed in last
+        </Col>
+        <Col
+          bsClass="col"
+          componentClass="div"
+          sm={10}
+        >
+          <ChangedSinceInput
+            disabled={false}
+            onChange={[Function]}
+            value={null}
+          />
+        </Col>
+      </FormGroup>
+      <FormGroup
+        bsClass="form-group"
+      >
+        <Col
+          bsClass="col"
+          componentClass={[Function]}
+          sm={2}
+        >
+          Data filter
+        </Col>
+        <Col
+          bsClass="col"
+          componentClass="div"
+          sm={4}
+        >
+          <Select
+            allowCreate={false}
+            delimiter=","
+            disabled={false}
+            emptyStrings={false}
+            ignoreCase={true}
+            labelKey="label"
+            matchProp="any"
+            multi={false}
+            name="whereColumn"
+            onChange={[Function]}
+            options={Array []}
+            placeholder="Select column"
+            trimMultiCreatedValues={false}
+            value=""
+            valueKey="value"
+          />
+        </Col>
+        <Col
+          bsClass="col"
+          componentClass="div"
+          sm={2}
+        >
+          <Input
+            disabled={false}
+            name="whereOperator"
+            onChange={[Function]}
+            type="select"
+            value="eq"
+          >
+            <option
+              value="eq"
+            >
+              in
+            </option>
+            <option
+              value="ne"
+            >
+              not in
+            </option>
+          </Input>
+        </Col>
+        <Col
+          bsClass="col"
+          componentClass="div"
+          sm={4}
+        >
+          <Select
+            allowCreate={true}
+            delimiter=","
+            disabled={false}
+            emptyStrings={true}
+            ignoreCase={true}
+            labelKey="label"
+            matchProp="any"
+            multi={true}
+            name="whereValues"
+            onChange={[Function]}
+            placeholder="Add a value..."
+            trimMultiCreatedValues={false}
+            value={Immutable.List []}
+            valueKey="value"
+          />
+        </Col>
+      </FormGroup>
+      <ControlLabel
+        bsClass="control-label"
+        srOnly={false}
+      >
+        Data types
+      </ControlLabel>
+      <DatatypeForm
+        columns={Immutable.List []}
+        datatypes={Immutable.Map {}}
+        datatypesMap={
+          Immutable.Map {
+            "VARIANT": Immutable.Map {
+              "name": "VARIANT",
+              "size": false,
+            },
+            "TIMESTAMP_LTZ": Immutable.Map {
+              "name": "TIMESTAMP_LTZ",
+              "size": false,
+            },
+            "NUMBER": Immutable.Map {
+              "name": "NUMBER",
+              "basetype": "NUMERIC",
+              "size": true,
+            },
+            "TIMESTAMP_NTZ": Immutable.Map {
+              "name": "TIMESTAMP_NTZ",
+              "size": false,
+            },
+            "DATE": Immutable.Map {
+              "name": "DATE",
+              "basetype": "DATE",
+              "size": false,
+            },
+            "TIMESTAMP_TZ": Immutable.Map {
+              "name": "TIMESTAMP_TZ",
+              "size": false,
+            },
+            "TIMESTAMP": Immutable.Map {
+              "name": "TIMESTAMP",
+              "basetype": "TIMESTAMP",
+              "size": false,
+            },
+            "FLOAT": Immutable.Map {
+              "name": "FLOAT",
+              "basetype": "FLOAT",
+              "size": false,
+            },
+            "VARCHAR": Immutable.Map {
+              "name": "VARCHAR",
+              "basetype": "STRING",
+              "size": true,
+              "maxLength": 16777216,
+            },
+            "INTEGER": Immutable.Map {
+              "name": "INTEGER",
+              "basetype": "INTEGER",
+              "size": false,
+            },
+          }
         }
-      }
-      disabled={false}
-      onChange={[Function]}
-    />
+        disabled={false}
+        onChange={[Function]}
+      />
+    </div>
   </PanelWithDetails>
 </Form>
 `;
@@ -857,7 +1034,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
         componentClass={[Function]}
         sm={2}
       >
-        Columns
+        Load Type
       </Col>
       <Col
         bsClass="col"
@@ -866,86 +1043,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
       >
         <Select
           allowCreate={false}
-          delimiter=","
-          disabled={false}
-          emptyStrings={false}
-          ignoreCase={true}
-          labelKey="label"
-          matchProp="any"
-          multi={true}
-          name="columns"
-          onChange={[Function]}
-          options={
-            Array [
-              Object {
-                "label": "ProductID",
-                "value": "ProductID",
-              },
-              Object {
-                "label": "ProductName",
-                "value": "ProductName",
-              },
-              Object {
-                "label": "Price",
-                "value": "Price",
-              },
-              Object {
-                "label": "ProductDescription",
-                "value": "ProductDescription",
-              },
-            ]
-          }
-          placeholder="All columns will be imported"
-          trimMultiCreatedValues={false}
-          value={Array []}
-          valueKey="value"
-        />
-        <HelpBlock
-          bsClass="help-block"
-        >
-          Import only specified columns
-        </HelpBlock>
-      </Col>
-    </FormGroup>
-    <FormGroup
-      bsClass="form-group"
-    >
-      <Col
-        bsClass="col"
-        componentClass={[Function]}
-        sm={2}
-      >
-        Changed in last
-      </Col>
-      <Col
-        bsClass="col"
-        componentClass="div"
-        sm={10}
-      >
-        <ChangedSinceInput
-          disabled={false}
-          onChange={[Function]}
-          value={null}
-        />
-      </Col>
-    </FormGroup>
-    <FormGroup
-      bsClass="form-group"
-    >
-      <Col
-        bsClass="col"
-        componentClass={[Function]}
-        sm={2}
-      >
-        Data filter
-      </Col>
-      <Col
-        bsClass="col"
-        componentClass="div"
-        sm={4}
-      >
-        <Select
-          allowCreate={false}
+          clearable={false}
           delimiter=","
           disabled={false}
           emptyStrings={false}
@@ -953,178 +1051,316 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
           labelKey="label"
           matchProp="any"
           multi={false}
-          name="whereColumn"
+          name="loadType"
           onChange={[Function]}
           options={
             Array [
               Object {
-                "label": "ProductID",
-                "value": "ProductID",
+                "label": "Copy Table (default)",
+                "value": "",
               },
               Object {
-                "label": "ProductName",
-                "value": "ProductName",
-              },
-              Object {
-                "label": "Price",
-                "value": "Price",
-              },
-              Object {
-                "label": "ProductDescription",
-                "value": "ProductDescription",
+                "disabled": true,
+                "label": "Clone Table",
+                "value": "clone",
               },
             ]
           }
-          placeholder="Select column"
+          placeholder="Copy Table (default)"
+          searchable={false}
           trimMultiCreatedValues={false}
           value=""
           valueKey="value"
         />
-      </Col>
-      <Col
-        bsClass="col"
-        componentClass="div"
-        sm={2}
-      >
-        <Input
-          disabled={false}
-          name="whereOperator"
-          onChange={[Function]}
-          type="select"
-          value="eq"
+        <HelpBlock
+          bsClass="help-block"
         >
-          <option
-            value="eq"
-          >
-            in
-          </option>
-          <option
-            value="ne"
-          >
-            not in
-          </option>
-        </Input>
-      </Col>
-      <Col
-        bsClass="col"
-        componentClass="div"
-        sm={4}
-      >
-        <Select
-          allowCreate={true}
-          delimiter=","
-          disabled={false}
-          emptyStrings={true}
-          ignoreCase={true}
-          labelKey="label"
-          matchProp="any"
-          multi={true}
-          name="whereValues"
-          onChange={[Function]}
-          placeholder="Add a value..."
-          trimMultiCreatedValues={false}
-          value={Immutable.List []}
-          valueKey="value"
-        />
+          Type of table load from Storage into a Workspace. 
+          <code>
+            Clone
+          </code>
+           load type can be applied only on Snowflake tables without any filtering parameters.
+        </HelpBlock>
       </Col>
     </FormGroup>
-    <ControlLabel
-      bsClass="control-label"
-      srOnly={false}
-    >
-      Data types
-    </ControlLabel>
-    <DatatypeForm
-      columns={
-        Immutable.List [
-          "ProductID",
-          "ProductName",
-          "Price",
-          "ProductDescription",
-        ]
-      }
-      datatypes={
-        Immutable.Map {
-          "ProductID": Immutable.Map {
-            "column": "ProductID",
-            "type": "VARCHAR",
-            "length": null,
-            "convertEmptyValuesToNull": false,
-          },
-          "ProductName": Immutable.Map {
-            "column": "ProductName",
-            "type": "VARCHAR",
-            "length": null,
-            "convertEmptyValuesToNull": false,
-          },
-          "Price": Immutable.Map {
-            "column": "Price",
-            "type": "VARCHAR",
-            "length": null,
-            "convertEmptyValuesToNull": false,
-          },
-          "ProductDescription": Immutable.Map {
-            "column": "ProductDescription",
-            "type": "VARCHAR",
-            "length": null,
-            "convertEmptyValuesToNull": false,
-          },
+    <div>
+      <FormGroup
+        bsClass="form-group"
+      >
+        <Col
+          bsClass="col"
+          componentClass={[Function]}
+          sm={2}
+        >
+          Columns
+        </Col>
+        <Col
+          bsClass="col"
+          componentClass="div"
+          sm={10}
+        >
+          <Select
+            allowCreate={false}
+            delimiter=","
+            disabled={false}
+            emptyStrings={false}
+            ignoreCase={true}
+            labelKey="label"
+            matchProp="any"
+            multi={true}
+            name="columns"
+            onChange={[Function]}
+            options={
+              Array [
+                Object {
+                  "label": "ProductID",
+                  "value": "ProductID",
+                },
+                Object {
+                  "label": "ProductName",
+                  "value": "ProductName",
+                },
+                Object {
+                  "label": "Price",
+                  "value": "Price",
+                },
+                Object {
+                  "label": "ProductDescription",
+                  "value": "ProductDescription",
+                },
+              ]
+            }
+            placeholder="All columns will be imported"
+            trimMultiCreatedValues={false}
+            value={Array []}
+            valueKey="value"
+          />
+          <HelpBlock
+            bsClass="help-block"
+          >
+            Import only specified columns
+          </HelpBlock>
+        </Col>
+      </FormGroup>
+      <FormGroup
+        bsClass="form-group"
+      >
+        <Col
+          bsClass="col"
+          componentClass={[Function]}
+          sm={2}
+        >
+          Changed in last
+        </Col>
+        <Col
+          bsClass="col"
+          componentClass="div"
+          sm={10}
+        >
+          <ChangedSinceInput
+            disabled={false}
+            onChange={[Function]}
+            value={null}
+          />
+        </Col>
+      </FormGroup>
+      <FormGroup
+        bsClass="form-group"
+      >
+        <Col
+          bsClass="col"
+          componentClass={[Function]}
+          sm={2}
+        >
+          Data filter
+        </Col>
+        <Col
+          bsClass="col"
+          componentClass="div"
+          sm={4}
+        >
+          <Select
+            allowCreate={false}
+            delimiter=","
+            disabled={false}
+            emptyStrings={false}
+            ignoreCase={true}
+            labelKey="label"
+            matchProp="any"
+            multi={false}
+            name="whereColumn"
+            onChange={[Function]}
+            options={
+              Array [
+                Object {
+                  "label": "ProductID",
+                  "value": "ProductID",
+                },
+                Object {
+                  "label": "ProductName",
+                  "value": "ProductName",
+                },
+                Object {
+                  "label": "Price",
+                  "value": "Price",
+                },
+                Object {
+                  "label": "ProductDescription",
+                  "value": "ProductDescription",
+                },
+              ]
+            }
+            placeholder="Select column"
+            trimMultiCreatedValues={false}
+            value=""
+            valueKey="value"
+          />
+        </Col>
+        <Col
+          bsClass="col"
+          componentClass="div"
+          sm={2}
+        >
+          <Input
+            disabled={false}
+            name="whereOperator"
+            onChange={[Function]}
+            type="select"
+            value="eq"
+          >
+            <option
+              value="eq"
+            >
+              in
+            </option>
+            <option
+              value="ne"
+            >
+              not in
+            </option>
+          </Input>
+        </Col>
+        <Col
+          bsClass="col"
+          componentClass="div"
+          sm={4}
+        >
+          <Select
+            allowCreate={true}
+            delimiter=","
+            disabled={false}
+            emptyStrings={true}
+            ignoreCase={true}
+            labelKey="label"
+            matchProp="any"
+            multi={true}
+            name="whereValues"
+            onChange={[Function]}
+            placeholder="Add a value..."
+            trimMultiCreatedValues={false}
+            value={Immutable.List []}
+            valueKey="value"
+          />
+        </Col>
+      </FormGroup>
+      <ControlLabel
+        bsClass="control-label"
+        srOnly={false}
+      >
+        Data types
+      </ControlLabel>
+      <DatatypeForm
+        columns={
+          Immutable.List [
+            "ProductID",
+            "ProductName",
+            "Price",
+            "ProductDescription",
+          ]
         }
-      }
-      datatypesMap={
-        Immutable.Map {
-          "VARIANT": Immutable.Map {
-            "name": "VARIANT",
-            "size": false,
-          },
-          "TIMESTAMP_LTZ": Immutable.Map {
-            "name": "TIMESTAMP_LTZ",
-            "size": false,
-          },
-          "NUMBER": Immutable.Map {
-            "name": "NUMBER",
-            "basetype": "NUMERIC",
-            "size": true,
-          },
-          "TIMESTAMP_NTZ": Immutable.Map {
-            "name": "TIMESTAMP_NTZ",
-            "size": false,
-          },
-          "DATE": Immutable.Map {
-            "name": "DATE",
-            "basetype": "DATE",
-            "size": false,
-          },
-          "TIMESTAMP_TZ": Immutable.Map {
-            "name": "TIMESTAMP_TZ",
-            "size": false,
-          },
-          "TIMESTAMP": Immutable.Map {
-            "name": "TIMESTAMP",
-            "basetype": "TIMESTAMP",
-            "size": false,
-          },
-          "FLOAT": Immutable.Map {
-            "name": "FLOAT",
-            "basetype": "FLOAT",
-            "size": false,
-          },
-          "VARCHAR": Immutable.Map {
-            "name": "VARCHAR",
-            "basetype": "STRING",
-            "size": true,
-            "maxLength": 16777216,
-          },
-          "INTEGER": Immutable.Map {
-            "name": "INTEGER",
-            "basetype": "INTEGER",
-            "size": false,
-          },
+        datatypes={
+          Immutable.Map {
+            "ProductID": Immutable.Map {
+              "column": "ProductID",
+              "type": "VARCHAR",
+              "length": null,
+              "convertEmptyValuesToNull": false,
+            },
+            "ProductName": Immutable.Map {
+              "column": "ProductName",
+              "type": "VARCHAR",
+              "length": null,
+              "convertEmptyValuesToNull": false,
+            },
+            "Price": Immutable.Map {
+              "column": "Price",
+              "type": "VARCHAR",
+              "length": null,
+              "convertEmptyValuesToNull": false,
+            },
+            "ProductDescription": Immutable.Map {
+              "column": "ProductDescription",
+              "type": "VARCHAR",
+              "length": null,
+              "convertEmptyValuesToNull": false,
+            },
+          }
         }
-      }
-      disabled={false}
-      onChange={[Function]}
-    />
+        datatypesMap={
+          Immutable.Map {
+            "VARIANT": Immutable.Map {
+              "name": "VARIANT",
+              "size": false,
+            },
+            "TIMESTAMP_LTZ": Immutable.Map {
+              "name": "TIMESTAMP_LTZ",
+              "size": false,
+            },
+            "NUMBER": Immutable.Map {
+              "name": "NUMBER",
+              "basetype": "NUMERIC",
+              "size": true,
+            },
+            "TIMESTAMP_NTZ": Immutable.Map {
+              "name": "TIMESTAMP_NTZ",
+              "size": false,
+            },
+            "DATE": Immutable.Map {
+              "name": "DATE",
+              "basetype": "DATE",
+              "size": false,
+            },
+            "TIMESTAMP_TZ": Immutable.Map {
+              "name": "TIMESTAMP_TZ",
+              "size": false,
+            },
+            "TIMESTAMP": Immutable.Map {
+              "name": "TIMESTAMP",
+              "basetype": "TIMESTAMP",
+              "size": false,
+            },
+            "FLOAT": Immutable.Map {
+              "name": "FLOAT",
+              "basetype": "FLOAT",
+              "size": false,
+            },
+            "VARCHAR": Immutable.Map {
+              "name": "VARCHAR",
+              "basetype": "STRING",
+              "size": true,
+              "maxLength": 16777216,
+            },
+            "INTEGER": Immutable.Map {
+              "name": "INTEGER",
+              "basetype": "INTEGER",
+              "size": false,
+            },
+          }
+        }
+        disabled={false}
+        onChange={[Function]}
+      />
+    </div>
   </PanelWithDetails>
 </Form>
 `;
