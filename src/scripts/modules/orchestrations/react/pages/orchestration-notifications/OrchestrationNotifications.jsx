@@ -18,7 +18,7 @@ export default React.createClass({
       orchestrationId,
       orchestration,
       notifications: isEditing ? editingValues : orchestration.get('notifications'),
-      isEdited: !!(editingValues && !orchestration.get('notifications').equals(editingValues)),
+      isEditing,
       filter: OrchestrationStore.getFilter(),
       isSaving: OrchestrationStore.isSaving(orchestrationId, 'notifications'),
       filteredOrchestrations: OrchestrationStore.getFiltered()
@@ -32,7 +32,7 @@ export default React.createClass({
           <div className="kbc-block-with-padding">
             <Notifications
               notifications={this.state.notifications}
-              isEditing={this.state.isEdited}
+              isEditing={this.state.isEditing}
               isSaving={this.state.isSaving}
               onNotificationsChange={this._handleNotificationsChange}
               onSave={this._handleSave}
