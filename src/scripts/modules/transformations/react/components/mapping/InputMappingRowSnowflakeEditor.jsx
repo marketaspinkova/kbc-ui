@@ -281,6 +281,7 @@ export default React.createClass({
             <Col sm={10}>
               <Select
                 name="loadType"
+                searchable={false}
                 value={this.props.value.get('loadType', 'copy')}
                 disabled={this.props.disabled || !this.props.value.get('source')}
                 placeholder="Default input mapping"
