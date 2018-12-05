@@ -20,6 +20,7 @@ export default React.createClass({
           onCancel={this._handleCancel}
           onSave={this._handleSave}
           isDisabled={!this.props.isEditing}
+          showCancel={this.props.isEditing}
           className="text-right"
         >
           <Button
