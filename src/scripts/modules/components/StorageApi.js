@@ -120,6 +120,12 @@ var storageApi = {
     });
   },
 
+  loadTableSnapshots: function(tableId, params) {
+    return createRequest('GET', 'tables/' + tableId + '/snapshots').query(params).promise().then(function(response) {
+      return response.body;
+    });
+  },
+
   prepareFileUpload: function(params) {
     return createRequest('POST', 'files/prepare').type('form').send(params).promise().then(function(response) {
       return response.body;
