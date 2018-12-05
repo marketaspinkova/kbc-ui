@@ -2,12 +2,7 @@ import React from 'react';
 import OrchestrationStore from '../../../stores/OrchestrationsStore';
 import RoutesStore from '../../../../../stores/RoutesStore';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
-import {Button} from 'react-bootstrap';
-import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
-import CronScheduler from '../../../../../react/common/CronScheduler';
-import OrchestrationsActionCreators from '../../../ActionCreators';
-
-const  DEFAULT_CRONTABRECORD = '0 0 * * *';
+import Schedule from './Schedule';
 
 export default React.createClass({
   mixins: [createStoreMixin(OrchestrationStore)],
@@ -21,7 +16,7 @@ export default React.createClass({
     if (isEditing) {
       crontabRecord = OrchestrationStore.getEditingValue(orchestrationId, 'schedule');
     } else {
-      crontabRecord =  OrchestrationStore.getCrontabRecord() || orchestration.get('crontabRecord') || DEFAULT_CRONTABRECORD;
+      crontabRecord =  OrchestrationStore.getCrontabRecord() || orchestration.get('crontabRecord') || '0 0 * * *';
     }
 
     return {
@@ -36,46 +31,14 @@ export default React.createClass({
     return (
       <div className="container-fluid">
         <div className="kbc-main-content">
-          <div className="kbc-block-with-padding">
-            <ConfirmButtons
-              isSaving={this.state.isSaving}
-              onCancel={this._handleCancel}
-              onSave={this._handleSave}
-              isDisabled={!this.state.isEditing}
-              className="text-right"
-            >
-              <Button
-                bsStyle="danger"
-                onClick={this._handleRemoveSchedule}
-                disabled={this.state.isSaving}
-              >
-                Remove Schedule
-              </Button>
-            </ConfirmButtons>
-            <CronScheduler crontabRecord={this.state.crontabRecord} onChange={this._handleCrontabChange}/>
-          </div>
+          <Schedule
+            crontabRecord={this.state.crontabRecord}
+            orchestrationId={this.state.orchestrationId}
+            isSaving={this.state.isSaving}
+            isEditing={this.state.isEditing}
+          />
         </div>
       </div>
     );
-  },
-
-  _handleRemoveSchedule() {
-    this._handleCrontabChange(DEFAULT_CRONTABRECORD);
-    this._handleSave();
-  },
-
-  _handleCrontabChange(newSchedule) {
-    return OrchestrationsActionCreators.updateOrchestrationScheduleEdit(
-      this.state.orchestrationId,
-      newSchedule
-    );
-  },
-
-  _handleSave() {
-    return OrchestrationsActionCreators.saveOrchestrationScheduleEdit(this.state.orchestrationId);
-  },
-
-  _handleCancel() {
-    return OrchestrationsActionCreators.cancelOrchestrationScheduleEdit(this.state.orchestrationId);
   }
 });
