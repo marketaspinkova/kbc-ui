@@ -1,14 +1,17 @@
 import React from 'react';
-import { Map } from 'immutable';
-import SubscribersList from './SubscribersList';
+import { Map, List } from 'immutable';
 import Select from 'react-select';
-import { FormControl } from 'react-bootstrap';
+import {Col, ControlLabel, Form, FormControl, FormGroup, HelpBlock} from 'react-bootstrap';
+import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
 
 export default React.createClass({
   propTypes: {
     notifications: React.PropTypes.object.isRequired, // notifications in structure from API
     isEditing: React.PropTypes.bool.isRequired,
-    onNotificationsChange: React.PropTypes.func.isRequired
+    isSaving: React.PropTypes.bool.isRequired,
+    onNotificationsChange: React.PropTypes.func.isRequired,
+    onSave: React.PropTypes.func.isRequired,
+    onCancel: React.PropTypes.func.isRequired
   },
 
   render() {
@@ -17,59 +20,76 @@ export default React.createClass({
     const processingEmails = this._getNotificationsForChannel('processing');
 
     return (
-      <div className="kbc-block-with-padding">
-        <div>
-          <p>
-            {'Subscribe to receive notifications on some of the orchestration job '}
-            events that might require your attention.
-          </p>
-        </div>
-        <div>
-          <h2>Errors</h2>
-          <p>Get notified when the orchestration finishes with an error.</p>
-          {this.props.isEditing ? (
-            this._renderNotificationsEditor('error', errorEmails)
-          ) : (
-            <SubscribersList emails={errorEmails} />
-          )}
-          <h2>Warnings</h2>
-          <p>Get notified when the orchestration finishes with a warning.</p>
-          {this.props.isEditing ? (
-            this._renderNotificationsEditor('warning', warningEmails)
-          ) : (
-            <SubscribersList emails={warningEmails} />
-          )}
-        </div>
-        <div>
-          <h2>Processing</h2>
-          {this.props.isEditing && processingEmails.count() ? (
+      <Form horizontal>
+        <FormGroup>
+          <Col sm={12}>
+            <ConfirmButtons
+              isSaving={this.props.isSaving}
+              onCancel={this.props.onCancel}
+              onSave={this.props.onSave}
+              isDisabled={!this.props.isEditing}
+              showCancel={this.props.isEditing}
+              className="text-right"
+            />
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col sm={12}>
             <p>
-              {'Get notified when a job is processing '}
-              {this._renderToleranceInput()}
-              {' % longer than usual.'}
+              Subscribe to receive notifications on some of the orchestration job events that might require your
+              attention.
             </p>
-          ) : (
-            <p>
-              {'Get notified when a job is processing '}
-              {this._getTolerance()}% longer than usual.
-            </p>
-          )}
-          {this.props.isEditing ? (
-            this._renderNotificationsEditor('processing', processingEmails)
-          ) : (
-            <SubscribersList emails={processingEmails} />
-          )}
-        </div>
-      </div>
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col componentClass={ControlLabel} sm={2}>
+            Errors
+          </Col>
+          <Col sm={10}>
+            {this._renderNotificationsEditor('error', errorEmails)}
+            <HelpBlock>
+              Get notified when the orchestration finishes with an error.
+            </HelpBlock>
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col componentClass={ControlLabel} sm={2}>
+            Warnings
+          </Col>
+          <Col sm={10}>
+            {this._renderNotificationsEditor('warning', warningEmails)}
+            <HelpBlock>
+              Get notified when the orchestration finishes with an warning.
+            </HelpBlock>
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col componentClass={ControlLabel} sm={2}>
+            Processing
+          </Col>
+          <Col sm={10}>
+            {this._renderNotificationsEditor('processing', processingEmails)}
+            <HelpBlock>
+              Get notified when a job is processing {this._renderToleranceInput()} % longer than usual.
+            </HelpBlock>
+          </Col>
+        </FormGroup>
+      </Form>
     );
   },
 
   _renderToleranceInput() {
+    const notificationsCount = this._getNotificationsForChannel('processing').filter(notification =>
+      notification.hasIn(['parameters', 'tolerance'])
+    ).count();
     return (
       <FormControl
         type="number"
+        min="1"
+        max="100"
         value={this._getTolerance()}
         onChange={this._onToleranceChange}
+        disabled={!notificationsCount}
         style={{
           width: '80px',
           display: 'inline-block'
@@ -85,6 +105,7 @@ export default React.createClass({
         backspaceRemoves={false}
         deleteRemoves={false}
         value={this._enteredEmails(emails)}
+        options={this.getAllEnteredEmails()}
         noResultsText=""
         placeholder="Enter email"
         promptTextCreator={() => 'Add email'}
@@ -98,6 +119,19 @@ export default React.createClass({
       .map(email => ({
         value: email.get('email'),
         label: email.get('email')
+      }))
+      .toArray();
+  },
+
+  getAllEnteredEmails() {
+    return this.props.notifications
+      .reduce((emails, item) => {
+        return emails.push(item.get('email'));
+      }, List())
+      .toSet()
+      .map(email => ({
+        value: email,
+        label: email
       }))
       .toArray();
   },

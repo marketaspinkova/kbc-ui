@@ -16,7 +16,6 @@ import OrchestrationReloaderButton from './react/components/OrchestrationReloade
 import JobReloaderButton from './react/components/JobReloaderButton';
 import JobDetailButtons from './react/components/JobDetailButtons';
 import OrchestrationTasksButtons from './react/components/OrchestrationTasksButtons';
-import OrchestrationNotificationsButtons from './react/components/OrchestrationNotificationsButtons';
 import OrchestrationNameEdit from './react/components/OrchestrationNameEdit';
 
 // stores
@@ -99,8 +98,7 @@ const routes = {
           name: 'orchestrationNotifications',
           title: 'Notifications',
           path: 'notifications',
-          handler: OrchestrationNotifications,
-          headerButtonsHandler: OrchestrationNotificationsButtons
+          handler: OrchestrationNotifications
         },
         createVersionsPageRoute('orchestrator', 'orchestrationId', null, { readOnlyMode: true })
       ]
