@@ -52,13 +52,14 @@ export default React.createClass({
     // use only table name from the table identifier
     const destination = value ? value.substr(value.lastIndexOf('.') + 1) : '';
     const mutatedValue = this.props.value.withMutations((mapping) => {
-      let mutation = mapping.set('source', value);
-      mutation = mutation.set('destination', destination);
-      mutation = mutation.set('datatypes', this.getInitialDatatypes(value));
-      mutation = mutation.set('whereColumn', '');
-      mutation = mutation.set('whereValues', List());
-      mutation = mutation.set('whereOperator', 'eq');
-      return mutation.set('columns', List());
+      mapping.set('source', value);
+      mapping.set('destination', destination);
+      mapping.set('datatypes', this.getInitialDatatypes(value));
+      mapping.set('whereColumn', '');
+      mapping.set('loadType', 'copy');
+      mapping.set('whereValues', List());
+      mapping.set('whereOperator', 'eq');
+      mapping.set('columns', List());
     });
     return this.props.onChange(mutatedValue);
   },
