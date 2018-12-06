@@ -61,28 +61,6 @@ const OrchestrationTasks = React.createClass({
     return OrchestrationsActionCreators.updateOrchestrationsTasksEdit(this.state.orchestration.get('id'), newTasks);
   },
 
-  _handleTaskRun(task) {
-    let tasks;
-    if (this.state.tasks.count()) {
-      tasks = this.state.tasks.map(phase =>
-        phase.set(
-          'tasks',
-          phase.get('tasks').map(item => {
-            if (item.get('id') === task.get('id')) {
-              return item.set('active', true);
-            } else {
-              return item.set('active', false);
-            }
-          })
-        )
-      );
-    } else {
-      tasks = List();
-    }
-
-    return OrchestrationsActionCreators.runOrchestration(this.state.orchestration.get('id'), tasks, true);
-  },
-
   render() {
     return (
       <div className="container-fluid">
