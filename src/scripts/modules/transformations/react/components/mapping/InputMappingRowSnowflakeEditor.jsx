@@ -198,38 +198,41 @@ export default React.createClass({
   },
 
   getDefaultDatatypes() {
+    const filteredColumns = this._getFilteredColumns();
+    let datatypes = Map();
+
     if (this.state.hasMetadataDatatypes) {
       const metadataSet = this.state.tableColumnMetadata.filter((metadata, colname) => {
-        return this._getFilteredColumns().indexOf(colname) > -1;
+        return filteredColumns.indexOf(colname) > -1;
       });
-      return getMetadataDataTypes(metadataSet);
-    } else {
-      return fromJS(this._getFilteredColumns()).reduce((memo, column) => {
-        return memo.set(column, fromJS({
-          column: column,
-          type: 'VARCHAR',
-          length: this.isPrimaryKeyColumn(column) ? 255 : null,
-          convertEmptyValuesToNull: false
-        }));
-      }, Map());
+      datatypes = getMetadataDataTypes(metadataSet);
     }
+
+    return fromJS(filteredColumns).reduce((memo, column) => {
+      return memo.set(column, datatypes.get(column, this.getDefaultDatatype(column)));
+    }, Map());
+  },
+
+  getDefaultDatatype(column) {
+    return fromJS({
+      column: column,
+      type: 'VARCHAR',
+      length: this.isPrimaryKeyColumn(column) ? 255 : null,
+      convertEmptyValuesToNull: false
+    });
   },
 
   getInitialDatatypes(sourceTable) {
+    const selectedTable = this.props.tables.find(table => table.get('id') === sourceTable);
+    let datatypes = Map();
+
     if (MetadataStore.tableHasMetadataDatatypes(sourceTable)) {
-      return getMetadataDataTypes(MetadataStore.getTableColumnsMetadata(sourceTable));
-    } else {
-      return this.props.tables.find((table) => {
-        return table.get('id') === sourceTable;
-      }).get('columns').reduce((memo, column) => {
-        return memo.set(column, fromJS({
-          column: column,
-          type: 'VARCHAR',
-          length: this.isPrimaryKeyColumn(column) ? 255 : null,
-          convertEmptyValuesToNull: false
-        }));
-      }, Map());
+      datatypes = getMetadataDataTypes(MetadataStore.getTableColumnsMetadata(sourceTable));
     }
+
+    return selectedTable.get('columns').reduce((memo, column) => {
+      return memo.set(column, datatypes.get(column, this.getDefaultDatatype(column)));
+    }, Map());
   },
 
   getDatatypes() {
