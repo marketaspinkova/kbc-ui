@@ -293,7 +293,7 @@ export default React.createClass({
                 ]}
               />
               <HelpBlock>
-                Type of table load from Storage into a Workspace. <code>Clone</code> load type can be aplied only on snowflake tables without any filtering parameters.
+                Type of table load from Storage into a Workspace. <code>Clone</code> load type can be applied only on Snowflake tables without any filtering parameters.
               </HelpBlock>
             </Col>
           </FormGroup>
