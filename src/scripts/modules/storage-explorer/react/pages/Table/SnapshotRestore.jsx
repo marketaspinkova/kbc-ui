@@ -9,10 +9,13 @@ import ConfirmModal from '../../../../../react/common/ConfirmModal';
 import StorageApi from '../../../../components/StorageApi';
 import StorageActionCreators from '../../../../components/StorageActionCreators';
 
+import CreateSnapshotModal from '../../modals/CreateSnapshotModal';
+
 export default React.createClass({
   propTypes: {
     table: PropTypes.object.isRequired,
     sapiToken: PropTypes.object.isRequired,
+    creatingSnapshot: PropTypes.object.isRequired,
     deletingSnapshot: PropTypes.object.isRequired
   },
 
@@ -23,6 +26,7 @@ export default React.createClass({
       offset: 0,
       loading: false,
       hasMore: false,
+      openCreateSnapshotModal: false,
       openRemoveSnapshotModal: false,
       removeSnapshot: null
     };
@@ -63,6 +67,8 @@ export default React.createClass({
   },
 
   renderSnapshots() {
+    const creating = this.props.creatingSnapshot.get(this.props.table.get('id'), false);
+
     return (
       <div>
         <h3>Snapshots</h3>
@@ -71,9 +77,19 @@ export default React.createClass({
           <Well>
             <p>Create and restore tables from snapshots.</p>
 
-            <Button bsStyle="primary" onClick={() => null}>
-              <i className="fa fa-camera" /> Create snapshot
+            <Button bsStyle="primary" onClick={this.openCreateSnapshotModal} disabled={creating}>
+              {creating ? (
+                <span>
+                  <Loader /> Creating snapshot...
+                </span>
+              ) : (
+                <span>
+                  <i className="fa fa-camera" /> Create snapshot
+                </span>
+              )}
             </Button>
+
+            {this.state.openCreateSnapshotModal && this.renderCreateSnapshotModal()}
           </Well>
         )}
 
@@ -171,6 +187,10 @@ export default React.createClass({
     );
   },
 
+  renderCreateSnapshotModal() {
+    return <CreateSnapshotModal onConfirm={this.handleCreateSnapshot} onHide={this.closeCreateSnapshotModal} />;
+  },
+
   renderDeleteSnapshotModal() {
     const snapshot = this.state.removeSnapshot;
 
@@ -197,6 +217,15 @@ export default React.createClass({
         onHide={this.closeRemoveSnapshotModal}
       />
     );
+  },
+
+  handleCreateSnapshot(description) {
+    const tableId = this.props.table.get('id');
+    const params = { description };
+
+    return StorageActionCreators.createSnapshot(tableId, params).then(() => {
+      this.fetchSnapshots(true);
+    });
   },
 
   handleRemoveSnapshot() {
@@ -237,6 +266,18 @@ export default React.createClass({
       .finally(() => {
         this.setState({ loading: false });
       });
+  },
+
+  openCreateSnapshotModal() {
+    this.setState({
+      openCreateSnapshotModal: true
+    });
+  },
+
+  closeCreateSnapshotModal() {
+    this.setState({
+      openCreateSnapshotModal: false
+    });
   },
 
   openRemoveSnapshotModal(snapshot) {

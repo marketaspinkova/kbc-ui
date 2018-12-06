@@ -58,6 +58,10 @@ const StorageTablesStore = StoreUtils.createStore({
     return _store.getIn(['pendingTables', 'loading'], false);
   },
 
+  getIsCreatingSnapshot() {
+    return _store.getIn(['pendingTables', 'creatingSnapshot'], Map());
+  },
+
   getIsDeletingSnapshot() {
     return _store.getIn(['pendingTables', 'deletingSnapshot'], Map());
   },
