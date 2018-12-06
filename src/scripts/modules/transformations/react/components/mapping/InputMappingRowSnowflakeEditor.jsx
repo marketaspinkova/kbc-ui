@@ -288,7 +288,7 @@ export default React.createClass({
                 clearable={false}
                 onChange={this.handleChangeLoadType}
                 options={[
-                  {label: 'Copy Table', value: 'copy'},
+                  {label: 'Copy Table (default)', value: 'copy'},
                   {label: 'Clone Table', value: 'clone', disabled: !this.canCloneTable()}
                 ]}
               />
