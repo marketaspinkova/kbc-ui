@@ -301,7 +301,7 @@ Dispatcher.register(payload => {
 
     case ActionTypes.ORCHESTRATION_TASKS_EDIT_START:
       tasks = addEmptyPhase(OrchestrationStore.getOrchestrationTasks(action.orchestrationId));
-      _store = _store.setIn(['editing', action.orchestrationId, 'tasks'], tasks);
+      _store = _store.setIn(['orchestrationTasksById', action.orchestrationId], tasks);
 
       return OrchestrationStore.emitChange();
 
@@ -325,9 +325,10 @@ Dispatcher.register(payload => {
       return (_store = _store.deleteIn(['saving', action.orchestrationId, 'tasks'], OrchestrationStore.emitChange()));
 
     case ActionTypes.ORCHESTRATION_TASKS_SAVE_SUCCESS:
+      tasks = addEmptyPhase(fromJS(action.tasks));
       _store = _store.withMutations(store =>
         store
-          .setIn(['orchestrationTasksById', action.orchestrationId], fromJS(action.tasks))
+          .setIn(['orchestrationTasksById', action.orchestrationId], tasks)
           .deleteIn(['saving', action.orchestrationId, 'tasks'])
           .deleteIn(['editing', action.orchestrationId, 'tasks'])
       );
