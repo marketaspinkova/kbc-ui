@@ -25,16 +25,11 @@ const OrchestrationTasks = React.createClass({
   mixins: [createStoreMixin(OrchestrationStore, ComponentsStore, InstalledComponentsStore)],
 
   getStateFromStores() {
-    let tasks;
     const orchestrationId = RoutesStore.getCurrentRouteIntParam('orchestrationId');
     const localState = InstalledComponentsStore.getLocalState(componentId, orchestrationId);
-
     const isEditing = OrchestrationStore.isEditing(orchestrationId, 'tasks');
-    if (isEditing) {
-      tasks = OrchestrationStore.getEditingValue(orchestrationId, 'tasks');
-    } else {
-      tasks = OrchestrationStore.getOrchestrationTasks(orchestrationId);
-    }
+    const editingValues = OrchestrationStore.getEditingValue(orchestrationId, 'tasks');
+    const tasks = isEditing ? editingValues : OrchestrationStore.getOrchestrationTasks(orchestrationId);
     const tasksWithConfig = mergeTasksWithConfigurations(tasks, InstalledComponentsStore.getAll());
 
     return {
