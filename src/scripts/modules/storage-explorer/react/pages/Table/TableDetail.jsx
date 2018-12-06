@@ -74,12 +74,6 @@ export default React.createClass({
                 <MenuItem eventKey="load" onSelect={this.handleDropdownAction}>
                   Load
                 </MenuItem>
-                <MenuItem eventKey="restore" onSelect={this.handleDropdownAction}>
-                  Time Travel Restore
-                </MenuItem>
-                <MenuItem eventKey="snapshot" onSelect={this.handleDropdownAction}>
-                  Create snapshot
-                </MenuItem>
                 <MenuItem divider />
                 <MenuItem eventKey="truncate" onSelect={this.handleDropdownAction}>
                   Truncate table
@@ -145,8 +139,6 @@ export default React.createClass({
     switch (action) {
       case 'export':
       case 'load':
-      case 'restore':
-      case 'snapshot':
       case 'truncate':
       case 'delete':
         return null;
