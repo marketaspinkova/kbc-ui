@@ -298,7 +298,7 @@ export default React.createClass({
             </Col>
           </FormGroup>
           {!isCloneTable &&
-           <span>
+           <div>
              <FormGroup>
                <Col sm={2} componentClass={ControlLabel}>Columns</Col>
                <Col sm={10}>
@@ -371,7 +371,7 @@ export default React.createClass({
                disabled={this.props.disabled || !this.props.value.get('source')}
                onChange={this._handleChangeDataTypes}
              />
-           </span>
+           </div>
           }
         </PanelWithDetails>
       </Form>
