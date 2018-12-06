@@ -45,10 +45,6 @@ const OrchestrationTasks = React.createClass({
     };
   },
 
-  componentDidMount() {
-    return OrchestrationsActionCreators.startOrchestrationTasksEdit(this.state.orchestration.get('id'));
-  },
-
   componentWillReceiveProps() {
     return this.setState(this.getStateFromStores());
   },
