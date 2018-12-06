@@ -62,7 +62,7 @@ export default React.createClass({
     h: React.PropTypes.array.isRequired,
     m: React.PropTypes.array.isRequired,
     period: React.PropTypes.string.isRequired,
-    next: React.PropTypes.array.isRequired,
+    next: React.PropTypes.array,
     onChange: React.PropTypes.func.isRequired,
     onPeriodChange: React.PropTypes.func.isRequired
   },
@@ -75,17 +75,19 @@ export default React.createClass({
           <div>{this._periodSelect()}</div>
         </div>
         {this._renderCurrentPeriod()}
-        <div>
-          <h3>
-            {'Next Schedules '}
-            <small>(In your local time)</small>
-          </h3>
-          <ul>
-            {this.props.next.map(time => (
-              <li key={time}>{date.format(time)}</li>
-            ))}
-          </ul>
-        </div>
+        {!!this.props.next &&
+          <div>
+            <h3>
+              {'Next Schedules '}
+              <small>(In your local time)</small>
+            </h3>
+            <ul>
+              {this.props.next.map(time => (
+                <li key={time}>{date.format(time)}</li>
+              ))}
+            </ul>
+          </div>
+        }
       </div>
     );
   },

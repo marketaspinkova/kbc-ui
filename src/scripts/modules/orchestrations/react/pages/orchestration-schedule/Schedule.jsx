@@ -8,6 +8,7 @@ export default React.createClass({
   propTypes: {
     orchestrationId: React.PropTypes.number.isRequired,
     crontabRecord: React.PropTypes.string.isRequired,
+    defaultCrontabRecord: React.PropTypes.string.isRequired,
     isSaving: React.PropTypes.bool.isRequired,
     isEditing: React.PropTypes.bool.isRequired
   },
@@ -31,13 +32,17 @@ export default React.createClass({
             Remove Schedule
           </Button>
         </ConfirmButtons>
-        <CronScheduler crontabRecord={this.props.crontabRecord} onChange={this._handleCrontabChange}/>
+        <CronScheduler
+          crontabRecord={this.props.crontabRecord}
+          defaultCrontabRecord={this.props.defaultCrontabRecord}
+          onChange={this._handleCrontabChange}
+        />
       </div>
     );
   },
 
   _handleRemoveSchedule() {
-    this._handleCrontabChange('0 0 * * *');
+    this._handleCrontabChange(this.props.defaultCrontabRecord);
     this._handleSave();
   },
 

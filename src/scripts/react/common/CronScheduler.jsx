@@ -6,6 +6,7 @@ import Scheduler from './Scheduler';
 export default React.createClass({
   propTypes: {
     crontabRecord: React.PropTypes.string.isRequired,
+    defaultCrontabRecord: React.PropTypes.string.isRequired,
     onChange: React.PropTypes.func.isRequired
   },
 
@@ -106,7 +107,11 @@ export default React.createClass({
   },
 
   _getNext() {
-    return later.schedule(later.parse.cron(this.props.crontabRecord)).next(5);
+    if (this.props.crontabRecord !== this.props.defaultCrontabRecord) {
+      return later.schedule(later.parse.cron(this.props.crontabRecord)).next(5);
+    } else {
+      return null;
+    }
   },
 
   _scheduleToCron(schedule) {
