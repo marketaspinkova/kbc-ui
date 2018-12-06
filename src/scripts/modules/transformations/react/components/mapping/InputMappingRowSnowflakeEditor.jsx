@@ -199,18 +199,15 @@ export default React.createClass({
 
   getDefaultDatatypes() {
     const filteredColumns = this._getFilteredColumns();
-    let datatypes = Map();
 
     if (this.state.hasMetadataDatatypes) {
       const metadataSet = this.state.tableColumnMetadata.filter((metadata, colname) => {
         return filteredColumns.indexOf(colname) > -1;
       });
-      datatypes = getMetadataDataTypes(metadataSet);
+      return this.buildDatatypes(filteredColumns, getMetadataDataTypes(metadataSet));
     }
 
-    return filteredColumns.reduce((memo, column) => {
-      return memo.set(column, datatypes.get(column, this.getDefaultDatatype(column)));
-    }, Map());
+    return this.buildDatatypes(filteredColumns);
   },
 
   getDefaultDatatype(column) {
@@ -224,13 +221,17 @@ export default React.createClass({
 
   getInitialDatatypes(sourceTable) {
     const selectedTable = this.props.tables.find(table => table.get('id') === sourceTable);
-    let datatypes = Map();
 
     if (MetadataStore.tableHasMetadataDatatypes(sourceTable)) {
-      datatypes = getMetadataDataTypes(MetadataStore.getTableColumnsMetadata(sourceTable));
+      const datatypes = getMetadataDataTypes(MetadataStore.getTableColumnsMetadata(sourceTable));
+      return this.buildDatatypes(selectedTable.get('columns'), datatypes);
     }
 
-    return selectedTable.get('columns').reduce((memo, column) => {
+    return this.buildDatatypes(selectedTable.get('columns'));
+  },
+
+  buildDatatypes(columns, datatypes = Map()) {
+    return columns.reduce((memo, column) => {
       return memo.set(column, datatypes.get(column, this.getDefaultDatatype(column)));
     }, Map());
   },
