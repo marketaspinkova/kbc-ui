@@ -67,6 +67,7 @@ const OrchestrationTasks = React.createClass({
               onCancel={this._handleCancel}
               onSave={this._handleSave}
               isDisabled={!this.state.isEditing}
+              showCancel={this.state.isEditing}
               className="text-right"
             />
           </div>
