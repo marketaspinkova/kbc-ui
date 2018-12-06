@@ -98,7 +98,7 @@ export default React.createClass({
       return later.day.name;
     }
 
-    return later.hour.name;
+    return '';
   },
 
   _getSchedule() {

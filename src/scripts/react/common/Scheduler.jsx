@@ -136,13 +136,16 @@ export default React.createClass({
       case later.day.name:
         return <div key="day">{this._hoursAndMinutes()}</div>;
 
-      default:
+      case later.hour.name:
         return (
           <div className="form-group">
             <label>at</label>
             {this._minuteSelect()}
           </div>
         );
+
+      default:
+        return null;
     }
   },
 
@@ -179,6 +182,7 @@ export default React.createClass({
         value={this.props.period}
         onChange={this.props.onPeriodChange}
         clearable={false}
+        placeholder={'Select period'}
       />
     );
   },
