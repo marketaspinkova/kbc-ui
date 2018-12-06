@@ -10,16 +10,13 @@ export default React.createClass({
   mixins: [createStoreMixin(OrchestrationStore)],
 
   getStateFromStores() {
-    let crontabRecord;
     const orchestrationId = RoutesStore.getCurrentRouteIntParam('orchestrationId');
     const orchestration = OrchestrationStore.get(orchestrationId);
     const isEditing = OrchestrationStore.isEditing(orchestrationId, 'schedule');
-
-    if (isEditing) {
-      crontabRecord = OrchestrationStore.getEditingValue(orchestrationId, 'schedule');
-    } else {
-      crontabRecord =  OrchestrationStore.getCrontabRecord() || orchestration.get('crontabRecord') || DEFAULT_CRONTABRECORD;
-    }
+    const editingValues = OrchestrationStore.getEditingValue(orchestrationId, 'schedule');
+    const crontabRecord = isEditing ?
+      editingValues :
+      OrchestrationStore.getCrontabRecord() || orchestration.get('crontabRecord') || DEFAULT_CRONTABRECORD;
 
     return {
       orchestrationId,
