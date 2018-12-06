@@ -683,10 +683,10 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@keboola/indigo-ui@^7.3.0":
-  version "7.4.3"
-  resolved "https://registry.yarnpkg.com/@keboola/indigo-ui/-/indigo-ui-7.4.3.tgz#1fc454c45e3aba8a4c0d8afdd8ae00e0bfd35100"
-  integrity sha512-s0LE8gX2Nwk1lX8YXdedYde8kQRnWqsdD1NBOUXuaJ6WpyV6E7C/H2WLiBWdItigj4R25Zb9U7nXRpeblKDdBg==
+"@keboola/indigo-ui@^7.4.4":
+  version "7.4.4"
+  resolved "https://registry.yarnpkg.com/@keboola/indigo-ui/-/indigo-ui-7.4.4.tgz#648c8261f76ce9b532fc144cf7f6d9a64d1b60bd"
+  integrity sha512-a0Ffrhzf6CsgLPZjXpaNvEPDUEvB0QAbOY3oaULeCJdUQLnB1DpHSsblPbqGnPoLNfFIOKLFm79EX6zb1tzbpg==
   dependencies:
     bootstrap "^3.3.7"
     classnames "^2.1.0"
