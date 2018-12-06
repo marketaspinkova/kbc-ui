@@ -208,7 +208,7 @@ export default React.createClass({
       datatypes = getMetadataDataTypes(metadataSet);
     }
 
-    return fromJS(filteredColumns).reduce((memo, column) => {
+    return filteredColumns.reduce((memo, column) => {
       return memo.set(column, datatypes.get(column, this.getDefaultDatatype(column)));
     }, Map());
   },
