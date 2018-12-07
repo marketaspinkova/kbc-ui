@@ -14,7 +14,8 @@ export default React.createClass({
 
   propTypes: {
     orchestration: React.PropTypes.object,
-    pendingActions: React.PropTypes.object
+    pendingActions: React.PropTypes.object,
+    tasks: React.PropTypes.object
   },
 
   render() {
@@ -58,6 +59,7 @@ export default React.createClass({
             orchestration={this.props.orchestration}
             notify={true}
             tooltipPlacement="top"
+            tasks={this.props.tasks}
           />
         </span>
       </Link>
