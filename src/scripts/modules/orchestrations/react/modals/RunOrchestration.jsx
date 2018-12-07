@@ -17,7 +17,7 @@ export default React.createClass({
     onOpen: React.PropTypes.func,
     buttonLabel: React.PropTypes.string,
     buttonBlock: React.PropTypes.bool,
-    loadTasksFn: React.PropTypes.func.isRequired
+    loadTasksFn: React.PropTypes.func
   },
 
   getInitialState() {
@@ -40,7 +40,7 @@ export default React.createClass({
     if (this.props.onOpen) {
       this.props.onOpen();
     }
-    if (!this.props.tasks) {
+    if (!this.props.tasks && this.props.loadTasksFn) {
       this.props.loadTasksFn();
     }
     return this.setState({
