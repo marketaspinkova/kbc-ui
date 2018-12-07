@@ -164,7 +164,6 @@ export default React.createClass({
                 orchestration={this.state.orchestration}
                 notify={true}
                 tasks={this.state.tasksToRun}
-                key="run"
                 label="Run Orchestration"
                 mode="link"
               />
@@ -174,14 +173,12 @@ export default React.createClass({
                 orchestration={this.state.orchestration}
                 isPending={this.state.pendingActions.get('active', false)}
                 mode="link"
-                key="activate"
               />
             </li>
             <li>
               <OrchestrationDeleteButton
                 orchestration={this.state.orchestration}
                 isPending={this.state.pendingActions.get('delete', false)}
-                key="delete"
                 label="Move to Trash"
                 mode="link"
               />
