@@ -179,8 +179,8 @@ export default React.createClass({
               <OrchestrationDeleteButton
                 orchestration={this.state.orchestration}
                 isPending={this.state.pendingActions.get('delete', false)}
-                label="Move to Trash"
-                mode="link"
+                buttonLabel="Move to Trash"
+                buttonBlock
               />
             </li>
             <li>

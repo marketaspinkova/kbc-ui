@@ -25,6 +25,7 @@ export default React.createClass({
         orchestration={this.props.orchestration}
         isPending={this.props.pendingActions.get('delete', false)}
         key="delete"
+        tooltipPlacement="top"
       />
     );
 
