@@ -21,10 +21,6 @@ export default React.createClass({
     return { definition: Map() };
   },
 
-  _isSourceTableInRedshift() {
-    return this.props.tables.getIn([this.props.inputMapping.get('source'), 'bucket', 'backend']) === 'redshift';
-  },
-
   render() {
     return (
       <ListGroup className="clearfix">
