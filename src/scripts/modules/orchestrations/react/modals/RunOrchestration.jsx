@@ -6,8 +6,6 @@ import TaskSelectTable from '../components/TaskSelectTable';
 import { Loader, PanelWithDetails } from '@keboola/indigo-ui';
 import OrchestrationActionCreators from '../../ActionCreators';
 
-const MODE_BUTTON = 'button', MODE_LINK = 'link';
-
 export default React.createClass({
   propTypes: {
     orchestration: React.PropTypes.object.isRequired,
@@ -17,8 +15,8 @@ export default React.createClass({
     isLoading: React.PropTypes.bool.isRequired,
     tooltipPlacement: React.PropTypes.string,
     onOpen: React.PropTypes.func,
-    label: React.PropTypes.string,
-    mode: React.PropTypes.oneOf([MODE_BUTTON, MODE_LINK])
+    buttonLabel: React.PropTypes.string,
+    buttonBlock: React.PropTypes.bool
   },
 
   getInitialState() {
@@ -27,8 +25,7 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      label: '',
-      mode: MODE_BUTTON
+      buttonBlock: false
     };
   },
 
@@ -50,7 +47,7 @@ export default React.createClass({
   render() {
     return (
       <span>
-        {this.renderOpenElement()}
+        {this.renderOpenButton()}
         <Modal show={this.state.showModal} bsSize="large" onHide={this.close}>
           <Modal.Header closeButton={true}>
             <Modal.Title>{`Run orchestration ${this.props.orchestration.get('name')}`}</Modal.Title>
@@ -83,34 +80,33 @@ export default React.createClass({
     );
   },
 
-  renderOpenElement() {
-    if (this.props.mode === MODE_BUTTON) {
-      return this.renderOpenButton();
-    } else {
-      return this.renderOpenLink();
-    }
-  },
-
   renderOpenButton() {
-    return (
-      <Tooltip tooltip="Run" id="run" placement={this.props.tooltipPlacement}>
-        <Button onClick={this._handleOpenClick} bsStyle="link">
-          {this.props.isLoading ? (
-            <Loader className="fa-fw" />
-          ) : (
-            <span><i className="fa fa-fw fa-play" /> <span>{this.props.label}</span></span>
-          )}
-        </Button>
-      </Tooltip>
-    );
+    if (this.props.tooltipPlacement) {
+      return (
+        <Tooltip
+          tooltip="Run orchestration"
+          id="orchestrations-modals-run-orchestration"
+          placement={this.props.tooltipPlacement}
+        >
+          {this.renderButton()}
+        </Tooltip>
+      );
+    }
+    return this.renderButton();
   },
 
-  renderOpenLink() {
+  renderButton() {
     return (
-      <a onClick={this._handleOpenClick} disabled={this.props.isLoading}>
-        {this.props.isLoading ? <span><Loader className="fa-fw"/> {this.props.label}</span> :
-          <span><i className="fa fa-fw fa-play"/> {this.props.label}</span>}
-      </a>
+      <Button
+        onClick={this._handleOpenClick}
+        bsStyle="link"
+        block={this.props.buttonBlock}
+      >
+        {this.props.isLoading ? <Loader className="fa-fw" /> : <i className="fa fa-fw fa-play" />}
+        {this.props.buttonLabel && (
+          <span> {this.props.buttonLabel}</span>
+        )}
+      </Button>
     );
   },
 

@@ -36,7 +36,14 @@ export default React.createClass({
       />
     );
 
-    buttons.push(<OrchestrationRunButton orchestration={this.props.orchestration} notify={true} key="run" />);
+    buttons.push(
+      <OrchestrationRunButton
+        orchestration={this.props.orchestration}
+        notify={true}
+        key="run"
+        tooltipPlacement="top"
+      />
+    );
 
     return buttons;
   },

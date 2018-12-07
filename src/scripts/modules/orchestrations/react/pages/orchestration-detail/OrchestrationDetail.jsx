@@ -164,8 +164,8 @@ export default React.createClass({
                 orchestration={this.state.orchestration}
                 notify={true}
                 tasks={this.state.tasksToRun}
-                label="Run Orchestration"
-                mode="link"
+                buttonLabel="Run Orchestration"
+                buttonBlock
               />
             </li>
             <li>
