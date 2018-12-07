@@ -15,7 +15,8 @@ export default React.createClass({
     isLoading: React.PropTypes.bool.isRequired,
     tooltipPlacement: React.PropTypes.string,
     onOpen: React.PropTypes.func,
-    label: React.PropTypes.string
+    buttonLabel: React.PropTypes.string,
+    buttonBlock: React.PropTypes.bool
   },
 
   getInitialState() {
@@ -24,7 +25,7 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      label: ''
+      buttonBlock: false
     };
   },
 
@@ -80,20 +81,36 @@ export default React.createClass({
   },
 
   renderOpenButton() {
+    if (this.props.tooltipPlacement) {
+      return (
+        <Tooltip
+          tooltip="Run orchestration"
+          id="orchestrations-modals-run-orchestration"
+          placement={this.props.tooltipPlacement}
+        >
+          {this.renderButton()}
+        </Tooltip>
+      );
+    }
+    return this.renderButton();
+  },
+
+  renderButton() {
     return (
-      <Tooltip tooltip="Run" id="run" placement={this.props.tooltipPlacement}>
-        <Button onClick={this._handleOpenButtonClick} bsStyle="link">
-          {this.props.isLoading ? (
-            <Loader className="fa-fw" />
-          ) : (
-            <span><i className="fa fa-fw fa-play" /> <span>{this.props.label}</span></span>
-          )}
-        </Button>
-      </Tooltip>
+      <Button
+        onClick={this._handleOpenClick}
+        bsStyle="link"
+        block={this.props.buttonBlock}
+      >
+        {this.props.isLoading ? <Loader className="fa-fw" /> : <i className="fa fa-fw fa-play" />}
+        {this.props.buttonLabel && (
+          <span> {this.props.buttonLabel}</span>
+        )}
+      </Button>
     );
   },
 
-  _handleOpenButtonClick(e) {
+  _handleOpenClick(e) {
     e.preventDefault();
     e.stopPropagation();
     return this.open();

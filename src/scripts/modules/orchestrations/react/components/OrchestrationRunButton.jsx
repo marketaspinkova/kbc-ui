@@ -8,13 +8,13 @@ export default React.createClass({
     tasks: React.PropTypes.object,
     notify: React.PropTypes.bool,
     tooltipPlacement: React.PropTypes.string,
-    label: React.PropTypes.string
+    buttonLabel: React.PropTypes.string,
+    buttonBlock: React.PropTypes.bool
   },
 
   getDefaultProps() {
     return {
-      notify: false,
-      tooltipPlacement: 'top'
+      notify: false
     };
   },
 
@@ -35,7 +35,8 @@ export default React.createClass({
         isLoading={this.state.isLoading}
         tooltipPlacement={this.props.tooltipPlacement}
         onOpen={this.handleOnOpen}
-        label={this.props.label}
+        buttonLabel={this.props.buttonLabel}
+        buttonBlock={this.props.buttonBlock}
       />
     );
   },

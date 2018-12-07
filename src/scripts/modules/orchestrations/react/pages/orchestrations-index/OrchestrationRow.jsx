@@ -17,30 +17,6 @@ export default React.createClass({
     pendingActions: React.PropTypes.object
   },
 
-  buttons() {
-    const buttons = [];
-
-    buttons.push(
-      <OrchestrationDeleteButton
-        orchestration={this.props.orchestration}
-        isPending={this.props.pendingActions.get('delete', false)}
-        key="delete"
-      />
-    );
-
-    buttons.push(
-      <OrchestrationActiveButton
-        orchestration={this.props.orchestration}
-        isPending={this.props.pendingActions.get('active', false)}
-        key="activate"
-      />
-    );
-
-    buttons.push(<OrchestrationRunButton orchestration={this.props.orchestration} notify={true} key="run" />);
-
-    return buttons;
-  },
-
   render() {
     let duration;
     const lastExecutedJob = this.props.orchestration.get('lastExecutedJob');
@@ -68,7 +44,22 @@ export default React.createClass({
         <span className="td">
           <CronRecord crontabRecord={this.props.orchestration.get('crontabRecord')} />
         </span>
-        <span className="td text-right kbc-no-wrap">{this.buttons()}</span>
+        <span className="td text-right kbc-no-wrap">
+          <OrchestrationDeleteButton
+            orchestration={this.props.orchestration}
+            isPending={this.props.pendingActions.get('delete', false)}
+            tooltipPlacement="top"
+          />
+          <OrchestrationActiveButton
+            orchestration={this.props.orchestration}
+            isPending={this.props.pendingActions.get('active', false)}
+          />
+          <OrchestrationRunButton
+            orchestration={this.props.orchestration}
+            notify={true}
+            tooltipPlacement="top"
+          />
+        </span>
       </Link>
     );
   }

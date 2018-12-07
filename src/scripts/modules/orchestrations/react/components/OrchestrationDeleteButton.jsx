@@ -4,6 +4,7 @@ import Router from 'react-router';
 import Tooltip from '../../../../react/common/Tooltip';
 import Confirm from '../../../../react/common/Confirm';
 import { Loader } from '@keboola/indigo-ui';
+import classNames from 'classnames';
 
 export default React.createClass({
   mixins: [Router.Navigation],
@@ -12,23 +13,19 @@ export default React.createClass({
     orchestration: React.PropTypes.object.isRequired,
     isPending: React.PropTypes.bool.isRequired,
     tooltipPlacement: React.PropTypes.string,
-    label: React.PropTypes.string
+    buttonLabel: React.PropTypes.string,
+    buttonBlock: React.PropTypes.bool
   },
 
   getDefaultProps() {
     return {
-      tooltipPlacement: 'top',
-      label: ''
+      buttonBlock: false
     };
   },
 
   render() {
     if (this.props.isPending) {
-      return (
-        <span className="btn btn-link">
-          <Loader />
-        </span>
-      );
+      return this.renderButton();
     }
 
     return (
@@ -46,12 +43,37 @@ export default React.createClass({
         buttonLabel="Move to Trash"
         onConfirm={this._deleteOrchestration}
       >
-        <Tooltip tooltip="Move to Trash" id="delete" placement={this.props.tooltipPlacement}>
-          <button className="btn btn-link">
-            <i className="kbc-icon-cup" /> {this.props.label}
-          </button>
-        </Tooltip>
+        {this.renderOpenButton()}
       </Confirm>
+    );
+  },
+
+  renderOpenButton() {
+    if (this.props.tooltipPlacement) {
+      return (
+        <Tooltip
+          tooltip="Move to Trash"
+          id="orchestrations-delete-orchestration-confirm"
+          placement={this.props.tooltipPlacement}
+        >
+          {this.renderButton()}
+        </Tooltip>
+      );
+    }
+    return this.renderButton();
+  },
+
+  renderButton() {
+    return (
+      <span className={classNames('btn btn-link', {
+        'btn-block': this.props.buttonBlock
+      })}
+      >
+        {this.props.isPending ? <Loader className="fa-fw" /> : <i className="kbc-icon-cup fa fa-fw"/>}
+        {this.props.buttonLabel && (
+          <span> {this.props.buttonLabel}</span>
+        )}
+      </span>
     );
   },
 
