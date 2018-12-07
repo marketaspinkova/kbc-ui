@@ -52,8 +52,9 @@ export default React.createClass({
 
   _handleRemoveSchedule() {
     this._handleCrontabChange(this.props.defaultCrontabRecord);
-    this._handleSave();
-    this.redirectToDetail();
+    this._handleSave().then(() => {
+      this.redirectToDetail();
+    });
   },
 
   _handleCrontabChange(newSchedule) {
