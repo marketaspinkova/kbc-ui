@@ -98,6 +98,10 @@ export default React.createClass({
       return later.day.name;
     }
 
+    if (schedules.s) {
+      return later.hour.name;
+    }
+
     return '';
   },
 
