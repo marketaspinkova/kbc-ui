@@ -16,7 +16,8 @@ export default React.createClass({
     tooltipPlacement: React.PropTypes.string,
     onOpen: React.PropTypes.func,
     buttonLabel: React.PropTypes.string,
-    buttonBlock: React.PropTypes.bool
+    buttonBlock: React.PropTypes.bool,
+    loadTasksFn: React.PropTypes.func.isRequired
   },
 
   getInitialState() {
@@ -38,6 +39,9 @@ export default React.createClass({
   open() {
     if (this.props.onOpen) {
       this.props.onOpen();
+    }
+    if (!this.props.tasks) {
+      this.props.loadTasksFn();
     }
     return this.setState({
       showModal: true
