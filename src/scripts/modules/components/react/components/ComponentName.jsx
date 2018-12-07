@@ -1,5 +1,5 @@
 import React from 'react';
-import InlineEditTextInput from '../../../../react/common/InlineEditTextInput';
+import { InlineEditInput } from '@keboola/indigo-ui';
 import ComponentEditField from './ComponentEditField';
 
 export default React.createClass({
@@ -14,7 +14,7 @@ export default React.createClass({
         componentId={this.props.componentId}
         configId={this.props.configId}
         fieldName="name"
-        editElement={InlineEditTextInput}
+        editElement={InlineEditInput}
         placeholder="My Configuration"
         tooltipPlacement="bottom"
       />

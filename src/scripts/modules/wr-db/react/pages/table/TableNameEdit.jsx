@@ -1,5 +1,6 @@
 import React from 'react';
-import InlineEditText from '../../../../../react/common/InlineEditTextInput';
+import { InlineEditInput } from '@keboola/indigo-ui';
+
 import actionCreators from '../../../actionCreators';
 
 export default React.createClass({
@@ -47,7 +48,7 @@ export default React.createClass({
     const text = isEditing ? this.props.editingValue : this.props.currentValue;
 
     return (
-      <InlineEditText
+      <InlineEditInput
         text={text}
         editTooltip="edit database table name"
         placeholder="Table Name"

@@ -1,6 +1,8 @@
 import React from 'react';
 import _ from 'underscore';
 import {List, Map} from 'immutable';
+import { InlineEditInput } from '@keboola/indigo-ui';
+
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import InstalledComponentsStore from '../../components/stores/InstalledComponentsStore';
 import RoutesStore from '../../../stores/RoutesStore';
@@ -12,7 +14,6 @@ import ComponentDescription from '../../components/react/components/ComponentDes
 import ComponentMetadata from '../../components/react/components/ComponentMetadata';
 import RunComponentButton from '../../components/react/components/RunComponentButton';
 import DeleteConfigurationButton from '../../components/react/components/DeleteConfigurationButton';
-import InlineEditText from '../../../react/common/InlineEditTextInput';
 
 import InstalledComponentsActions from '../../components/InstalledComponentsActionCreators';
 
@@ -104,7 +105,7 @@ export default React.createClass({
 
 
     return (
-      <InlineEditText
+      <InlineEditInput
         text={isEditing ? editingValue : value}
         editTooltip={tooltip}
         placeholder={placeholder}

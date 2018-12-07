@@ -1,5 +1,5 @@
 import React from 'react';
-import InlineEditTextInput from '../../../../react/common/InlineEditTextInput';
+import { InlineEditInput } from '@keboola/indigo-ui';
 import ConfigurationRowEditField from '../../../components/react/components/ConfigurationRowEditField';
 
 export default React.createClass({
@@ -9,20 +9,24 @@ export default React.createClass({
     rowId: React.PropTypes.string.isRequired,
     placeholder: React.PropTypes.string
   },
-  getDefaultProps: function() {
+
+  getDefaultProps() {
     return {
       placeholder: 'My Configuration'
     };
   },
-  render: function() {
-    return React.createElement(ConfigurationRowEditField, {
-      componentId: this.props.componentId,
-      configId: this.props.configId,
-      rowId: this.props.rowId,
-      fieldName: 'name',
-      editElement: InlineEditTextInput,
-      placeholder: this.props.placeholder,
-      tooltipPlacement: 'bottom'
-    });
+
+  render() {
+    return (
+      <ConfigurationRowEditField
+        componentId={this.props.componentId}
+        configId={this.props.configId}
+        rowId={this.props.rowId}
+        fieldName="name"
+        editElement={InlineEditInput}
+        placeholder={this.props.placeholder}
+        tooltipPlacement="bottom"
+      />
+    );
   }
 });
