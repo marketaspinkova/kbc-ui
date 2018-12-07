@@ -56,7 +56,7 @@ export default React.createClass({
       mapping.set('destination', destination);
       mapping.set('datatypes', this.getInitialDatatypes(value));
       mapping.set('whereColumn', '');
-      mapping.set('loadType', 'copy');
+      mapping.delete('loadType');
       mapping.set('whereValues', List());
       mapping.set('whereOperator', 'eq');
       mapping.set('columns', List());
@@ -89,7 +89,11 @@ export default React.createClass({
 
   handleChangeLoadType(newValue) {
     const newMapping = this.props.value.withMutations(mapping => {
-      mapping.set('loadType', newValue);
+      if (newValue && newValue !== '') {
+        mapping.set('loadType', newValue);
+      } else {
+        mapping.delete('loadType');
+      }
       mapping.set('whereColumn', '');
       mapping.set('whereValues', List());
       mapping.set('whereOperator', 'eq');
@@ -282,13 +286,13 @@ export default React.createClass({
               <Select
                 name="loadType"
                 searchable={false}
-                value={this.props.value.get('loadType', 'copy')}
+                value={this.props.value.get('loadType', '')}
                 disabled={this.props.disabled || !this.props.value.get('source')}
-                placeholder="Default input mapping"
+                placeholder="Copy Table (default)"
                 clearable={false}
                 onChange={this.handleChangeLoadType}
                 options={[
-                  {label: 'Copy Table (default)', value: 'copy'},
+                  {label: 'Copy Table (default)', value: ''},
                   {label: 'Clone Table', value: 'clone', disabled: !this.canCloneTable()}
                 ]}
               />
