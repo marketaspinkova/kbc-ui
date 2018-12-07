@@ -2,15 +2,15 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { Table, Button } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
-import Promise from 'bluebird';
+
 import CreatedWithIcon from '../../../../../react/common/CreatedWithIcon';
 import Tooltip from '../../../../../react/common/Tooltip';
 import Hint from '../../../../../react/common/Hint';
 import FileSize from '../../../../../react/common/FileSize';
 import StorageActionCreators from '../../../../components/StorageActionCreators';
 
+import ConfirmModal from '../../../../../react/common/ConfirmModal';
 import CreatePrimaryKeyModal from '../../modals/CreatePrimaryKeyModal';
-import RemovePrimaryKeyModal from '../../modals/RemovePrimaryKeyModal';
 
 export default React.createClass({
   propTypes: {
@@ -19,7 +19,8 @@ export default React.createClass({
     tableAliases: PropTypes.array.isRequired,
     tableLinks: PropTypes.array.isRequired,
     sapiToken: PropTypes.object.isRequired,
-    creatingPrimaryKey: PropTypes.object.isRequired
+    creatingPrimaryKey: PropTypes.object.isRequired,
+    deletingPrimaryKey: PropTypes.object.isRequired
   },
 
   getInitialState() {
@@ -32,6 +33,7 @@ export default React.createClass({
   render() {
     const table = this.props.table;
     const creatingPrimaryKey = this.props.creatingPrimaryKey.get(table.get('id'), false);
+    const deletingPrimaryKey = this.props.deletingPrimaryKey.get(table.get('id'), false);
 
     return (
       <div>
@@ -53,8 +55,8 @@ export default React.createClass({
                 {this.renderPrimaryKeyInfo(table)}{' '}
                 {!table.get('isAlias') && table.get('primaryKey').count() > 0 && (
                   <Tooltip tooltip="Remove table primary key" placement="top">
-                    <Button onClick={this.openRemovePrimaryKeyModal}>
-                      <i className="fa fa-trash-o" />
+                    <Button onClick={this.openRemovePrimaryKeyModal} disabled={deletingPrimaryKey}>
+                      {deletingPrimaryKey ? <Loader /> : <i className="fa fa-trash-o" />}
                     </Button>
                   </Tooltip>
                 )}
@@ -228,8 +230,12 @@ export default React.createClass({
 
   renderRemovePrimaryKeyModal() {
     return (
-      <RemovePrimaryKeyModal
-        removing={false}
+      <ConfirmModal
+        show={true}
+        title="Remove primary key"
+        buttonType="danger"
+        buttonLabel="Remove"
+        text={<p>Do you really want to remove table primary key?</p>}
         onConfirm={this.handleRemovePrimaryKey}
         onHide={this.closeRemovePrimaryKeyModal}
       />
@@ -246,7 +252,9 @@ export default React.createClass({
   },
 
   handleRemovePrimaryKey() {
-    return Promise.resolve();
+    const tableId = this.props.table.get('id');
+
+    return StorageActionCreators.removeTablePrimaryKey(tableId);
   },
 
   openCreatePrimaryKeyModal() {
