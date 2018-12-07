@@ -8,7 +8,7 @@ export default React.createClass({
 
   propTypes: {
     columnName: React.PropTypes.string.isRequired,
-    tableData: React.PropTypes.array
+    tableData: React.PropTypes.object
   },
 
   render() {

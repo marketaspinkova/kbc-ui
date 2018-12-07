@@ -11,7 +11,7 @@ export default React.createClass({
     editColumnFn: React.PropTypes.func,
     dataTypes: React.PropTypes.array,
     isSaving: React.PropTypes.bool,
-    dataPreview: React.PropTypes.array,
+    dataPreview: React.PropTypes.object,
     isValid: React.PropTypes.bool,
     disabledFields: React.PropTypes.array
   },
