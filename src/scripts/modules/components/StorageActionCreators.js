@@ -339,6 +339,44 @@ module.exports = {
       });
   },
 
+  truncateTable: function(tableId) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.STORAGE_TRUNCATE_TABLE,
+      tableId: tableId
+    });
+    return storageApi.truncateTable(tableId).then(response => {
+      return jobPoller.poll(ApplicationStore.getSapiTokenString(), response.url).then(response2 => {
+        if (response2.status === 'error') {
+          dispatcher.handleViewAction({
+            type: constants.ActionTypes.STORAGE_TRUNCATE_TABLE_ERROR,
+            tableId: tableId,
+            errors: response2.error
+          });
+          throw response2.error.message;
+        }
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_TRUNCATE_TABLE_SUCCESS,
+          tableId: tableId,
+          response: response2
+        });
+        return this.loadTablesForce();
+      });
+    })
+      .catch(function(error) {
+        var message;
+        message = error;
+        if (error.message) {
+          message = error.message;
+        }
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_TABLE_LOAD_ERROR,
+          tableId: tableId,
+          errors: error
+        });
+        throw message;
+      });
+  },
+
   createAliasTable: function(bucketId, params) {
     dispatcher.handleViewAction({
       type: constants.ActionTypes.STORAGE_ALIAS_TABLE_CREATE,

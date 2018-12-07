@@ -34,6 +34,10 @@ const StorageTablesStore = StoreUtils.createStore({
     return _store.getIn(['pendingTables', 'creating'], false);
   },
 
+  getIsTruncatingTable(tableId) {
+    return _store.getIn(['pendingTables', 'truncatingTable', tableId], false);
+  },
+
   getAddingColumn() {
     return _store.getIn(['pendingTables', 'addingColumn'], Map());
   },
@@ -112,6 +116,15 @@ Dispatcher.register(function(payload) {
 
     case constants.ActionTypes.STORAGE_TABLE_CREATE_ERROR:
       _store = _store.setIn(['pendingTables', 'creating'], false);
+      return StorageTablesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_TRUNCATE_TABLE:
+      _store = _store.setIn(['pendingTables', 'truncatingTable', action.tableId], true);
+      return StorageTablesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_TRUNCATE_TABLE_SUCCESS:
+    case constants.ActionTypes.STORAGE_TRUNCATE_TABLE_ERROR:
+      _store = _store.deleteIn(['pendingTables', 'truncatingTable', action.tableId]);
       return StorageTablesStore.emitChange();
 
     case constants.ActionTypes.STORAGE_ADD_TABLE_COLUMN:
