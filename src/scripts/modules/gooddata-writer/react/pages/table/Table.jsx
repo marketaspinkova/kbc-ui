@@ -49,9 +49,9 @@ export default React.createClass({
       this._handleEditStart();
     }
     const component = this;
-    return storageApi.tableDataPreview(this.state.table.get('id'), { limit: 10 }).then((csv) =>
+    return storageApi.tableDataJsonPreview(this.state.table.get('id'), { limit: 10 }).then((json) =>
       component.setState({
-        dataPreview: csv
+        dataPreview: json
       })
     );
   },
