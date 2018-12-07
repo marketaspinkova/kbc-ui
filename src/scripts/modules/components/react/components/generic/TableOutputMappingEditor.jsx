@@ -260,7 +260,6 @@ the source file data will be loaded to - you can create a new table or use an ex
                       value={this.props.value.get('delete_where_operator')}
                       disabled={this.props.disabled}
                       onChange={this._handleChangeDeleteWhereOperator}
-                      groupClassName="no-bottom-margin"
                     >
                       <option value={whereOperatorConstants.EQ_VALUE}>{whereOperatorConstants.EQ_LABEL}</option>
                       <option value={whereOperatorConstants.NOT_EQ_VALUE}>
