@@ -41,8 +41,10 @@ export default React.createClass({
 
   getColumnValues() {
     const data = Immutable.fromJS(this.props.tableData);
-    const index = data.first().indexOf(this.props.columnName);
-    return data.shift().map(r => r.get(index));
+    const columnIndex = data.get('columns').indexOf(this.props.columnName);
+    return data.get('rows')
+      .map(row => row.get(columnIndex).get('value'))
+    ;
   }
 
 });
