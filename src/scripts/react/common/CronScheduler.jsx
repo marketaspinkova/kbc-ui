@@ -98,7 +98,7 @@ export default React.createClass({
       return later.day.name;
     }
 
-    if (schedules.s) {
+    if (schedules.s && this.props.crontabRecord !== this.props.defaultCrontabRecord) {
       return later.hour.name;
     }
 
