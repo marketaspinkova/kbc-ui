@@ -109,6 +109,7 @@ module.exports = {
     return InstalledComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, {isDisabled: 1}, changeDescription ? changeDescription : ('Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' disabled'))
       .then(function() {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
+        RowVersionsActionCreators.loadVersionsForce(componentId, configurationId, rowId);
         Dispatcher.handleViewAction({
           type: Constants.ActionTypes.CONFIGURATION_ROWS_DISABLE_SUCCESS,
           componentId: componentId,
@@ -138,6 +139,7 @@ module.exports = {
     return InstalledComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, {isDisabled: 0}, changeDescription ? changeDescription : ('Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' enabled'))
       .then(function() {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
+        RowVersionsActionCreators.loadVersionsForce(componentId, configurationId, rowId);
         Dispatcher.handleViewAction({
           type: Constants.ActionTypes.CONFIGURATION_ROWS_ENABLE_SUCCESS,
           componentId: componentId,
