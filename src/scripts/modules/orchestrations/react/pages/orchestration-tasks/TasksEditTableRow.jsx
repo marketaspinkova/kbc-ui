@@ -23,7 +23,7 @@ export default React.createClass({
   render() {
     return (
       <tr style={{ backgroundColor: this.props.color }}>
-        <td className="kb-orchestrator-task-drasg">
+        <td>
           <Tooltip tooltip="Select task to move between phases">
             <input
               type="checkbox"
