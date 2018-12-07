@@ -7,7 +7,7 @@ export default React.createClass({
   mixins: [PureRenderMixin],
   propTypes: {
     columnName: React.PropTypes.string.isRequired,
-    tableData: React.PropTypes.array
+    tableData: React.PropTypes.object
   },
 
   render() {

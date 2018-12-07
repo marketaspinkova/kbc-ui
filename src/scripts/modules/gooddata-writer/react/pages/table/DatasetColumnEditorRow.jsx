@@ -34,7 +34,7 @@ export default React.createClass({
     isValid: React.PropTypes.bool.isRequired,
     isSaving: React.PropTypes.bool.isRequired,
     onChange: React.PropTypes.func.isRequired,
-    dataPreview: React.PropTypes.array,
+    dataPreview: React.PropTypes.object,
     showIdentifier: React.PropTypes.bool.isRequired,
     isExported: React.PropTypes.bool.isRequired
   },
