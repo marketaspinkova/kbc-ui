@@ -3,6 +3,7 @@ import OrchestrationsActionCreators from '../../../ActionCreators';
 import CronScheduler from '../../../../../react/common/CronScheduler';
 import { Button } from 'react-bootstrap';
 import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
+import RoutesStore from '../../../../../stores/RoutesStore';
 
 export default React.createClass({
   propTypes: {
@@ -41,9 +42,18 @@ export default React.createClass({
     );
   },
 
+  redirectToDetail() {
+    const routerState = RoutesStore.getRouterState();
+    const currentPath = routerState.get('path') || '';
+    const parts = currentPath.split('/schedule');
+    const backPath = parts ? parts[0] : '/';
+    RoutesStore.getRouter().transitionTo(backPath || '/');
+  },
+
   _handleRemoveSchedule() {
     this._handleCrontabChange(this.props.defaultCrontabRecord);
     this._handleSave();
+    this.redirectToDetail();
   },
 
   _handleCrontabChange(newSchedule) {
