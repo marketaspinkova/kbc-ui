@@ -227,6 +227,7 @@ Dispatcher.register(payload => {
         removeOrchestrationFromLoading(store, action.orchestration.id)
           .setIn(['orchestrationsById', action.orchestration.id], fromJS(action.orchestration))
           .setIn(['orchestrationTasksById', action.orchestration.id], fromJS(action.orchestration.tasks))
+          .set('crontabRecord', action.crontabRecord)
       );
       return OrchestrationStore.emitChange();
 

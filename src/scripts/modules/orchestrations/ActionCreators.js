@@ -131,9 +131,11 @@ export default {
 
   receiveOrchestration(orchestration) {
     orchestration.tasks = rephaseTasks(orchestration.tasks);
+    const crontabRecord = orchestration.crontabRecord;
     return dispatcher.handleViewAction({
       type: constants.ActionTypes.ORCHESTRATION_LOAD_SUCCESS,
-      orchestration
+      orchestration,
+      crontabRecord
     });
   },
 

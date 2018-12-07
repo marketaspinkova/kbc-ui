@@ -4,19 +4,16 @@ import RoutesStore from '../../../../../stores/RoutesStore';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import Schedule from './Schedule';
 
-const DEFAULT_CRONTABRECORD = '* * * * *';
+const DEFAULT_CRONTABRECORD = '';
 
 export default React.createClass({
   mixins: [createStoreMixin(OrchestrationStore)],
 
   getStateFromStores() {
     const orchestrationId = RoutesStore.getCurrentRouteIntParam('orchestrationId');
-    const orchestration = OrchestrationStore.get(orchestrationId);
     const isEditing = OrchestrationStore.isEditing(orchestrationId, 'schedule');
     const editingValues = OrchestrationStore.getEditingValue(orchestrationId, 'schedule');
-    const crontabRecord = isEditing ?
-      editingValues :
-      OrchestrationStore.getCrontabRecord() || orchestration.get('crontabRecord') || DEFAULT_CRONTABRECORD;
+    const crontabRecord = isEditing ? editingValues : OrchestrationStore.getCrontabRecord() || DEFAULT_CRONTABRECORD;
 
     return {
       orchestrationId,
