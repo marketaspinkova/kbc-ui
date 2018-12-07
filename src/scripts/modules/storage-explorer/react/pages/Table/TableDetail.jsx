@@ -22,7 +22,8 @@ export default React.createClass({
       bucket: BucketsStore.getAll().find(item => item.get('id') === bucketId),
       table: TablesStore.getAll().find(item => {
         return item.getIn(['bucket', 'id']) === bucketId && item.get('name') === tableName;
-      })
+      }),
+      creatingPrimaryKey: TablesStore.getIsCreatingPrimaryKey()
     };
   },
 
@@ -90,6 +91,7 @@ export default React.createClass({
                   tableAliases={this.getTableAliases()}
                   tableLinks={this.getTableLinks()}
                   sapiToken={this.state.sapiToken}
+                  creatingPrimaryKey={this.state.creatingPrimaryKey}
                 />
               </Tab.Pane>
               <Tab.Pane eventKey="events">Events</Tab.Pane>

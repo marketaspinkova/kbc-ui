@@ -1,11 +1,13 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { Table, Button } from 'react-bootstrap';
+import { Loader } from '@keboola/indigo-ui';
 import Promise from 'bluebird';
 import CreatedWithIcon from '../../../../../react/common/CreatedWithIcon';
 import Tooltip from '../../../../../react/common/Tooltip';
 import Hint from '../../../../../react/common/Hint';
 import FileSize from '../../../../../react/common/FileSize';
+import StorageActionCreators from '../../../../components/StorageActionCreators';
 
 import CreatePrimaryKeyModal from '../../modals/CreatePrimaryKeyModal';
 import RemovePrimaryKeyModal from '../../modals/RemovePrimaryKeyModal';
@@ -16,7 +18,8 @@ export default React.createClass({
     tables: PropTypes.object.isRequired,
     tableAliases: PropTypes.array.isRequired,
     tableLinks: PropTypes.array.isRequired,
-    sapiToken: PropTypes.object.isRequired
+    sapiToken: PropTypes.object.isRequired,
+    creatingPrimaryKey: PropTypes.object.isRequired
   },
 
   getInitialState() {
@@ -28,6 +31,7 @@ export default React.createClass({
 
   render() {
     const table = this.props.table;
+    const creatingPrimaryKey = this.props.creatingPrimaryKey.get(table.get('id'), false);
 
     return (
       <div>
@@ -56,8 +60,8 @@ export default React.createClass({
                 )}
                 {!table.get('isAlias') && !table.get('primaryKey').count() > 0 && (
                   <Tooltip tooltip="Create table primary key" placement="top">
-                    <Button bsSize="small" onClick={this.openCreatePrimaryKeyModal}>
-                      <i className="fa fa-pencil-square-o" />
+                    <Button bsSize="small" onClick={this.openCreatePrimaryKeyModal} disabled={creatingPrimaryKey}>
+                      {creatingPrimaryKey ? <Loader /> : <i className="fa fa-pencil-square-o" />}
                     </Button>
                   </Tooltip>
                 )}
@@ -218,7 +222,6 @@ export default React.createClass({
         backend={this.props.table.getIn(['bucket', 'backend'])}
         onSubmit={this.handleCreatePrimaryKey}
         onHide={this.closeCreatePrimaryKeyModal}
-        isSaving={false}
       />
     );
   },
@@ -233,8 +236,13 @@ export default React.createClass({
     );
   },
 
-  handleCreatePrimaryKey() {
-    return Promise.resolve();
+  handleCreatePrimaryKey(primaryKeys) {
+    const tableId = this.props.table.get('id');
+    const params = {
+      columns: primaryKeys
+    };
+
+    return StorageActionCreators.createTablePrimaryKey(tableId, params);
   },
 
   handleRemovePrimaryKey() {

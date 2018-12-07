@@ -38,6 +38,10 @@ const StorageTablesStore = StoreUtils.createStore({
     return _store.getIn(['pendingTables', 'creatingAlias'], false);
   },
 
+  getIsCreatingPrimaryKey() {
+    return _store.getIn(['pendingTables', 'creatingPrimaryKey'], Map());
+  },
+
   getIsLoadingTable() {
     return _store.getIn(['pendingTables', 'loading'], false);
   },
@@ -92,6 +96,18 @@ Dispatcher.register(function(payload) {
 
     case constants.ActionTypes.STORAGE_ALIAS_TABLE_CREATE_ERROR:
       _store = _store.setIn(['pendingTables', 'creatingAlias'], false);
+      return StorageTablesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_TABLE_SET_PRIMARY_KEY:
+      _store = _store.setIn(['pendingTables', 'creatingPrimaryKey', action.tableId], true);
+      return StorageTablesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_TABLE_SET_PRIMARY_KEY_SUCCESS:
+      _store = _store.setIn(['pendingTables', 'creatingPrimaryKey', action.tableId], false);
+      return StorageTablesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_TABLE_SET_PRIMARY_KEY_ERROR:
+      _store = _store.setIn(['pendingTables', 'creatingPrimaryKey', action.tableId], false);
       return StorageTablesStore.emitChange();
 
     case constants.ActionTypes.STORAGE_TABLES_LOAD:

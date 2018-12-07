@@ -156,6 +156,12 @@ var storageApi = {
     });
   },
 
+  createTablePrimaryKey: function(tableId, params) {
+    return createRequest('POST', 'tables/' + tableId + '/primary-key').type('form').send(params).promise().then(function(response) {
+      return response.body;
+    });
+  },
+
   loadDataIntoWorkspace: function(workspaceId, params) {
     return createRequest('POST', 'workspaces/' + workspaceId + '/load').type('form').send(params).promise()
       .then(function(response) {

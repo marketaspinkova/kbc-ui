@@ -3,33 +3,28 @@ import { HelpBlock, Alert, Modal, Form, ControlLabel } from 'react-bootstrap';
 import Select from 'react-select';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
-const INITIAL_STATE = {
-  primaryKey: [],
-  error: null
-};
-
 export default React.createClass({
   propTypes: {
     columns: PropTypes.object.isRequired,
     backend: PropTypes.string.isRequired,
     onSubmit: PropTypes.func.isRequired,
-    onHide: PropTypes.func.isRequired,
-    isSaving: PropTypes.bool.isRequired
+    onHide: PropTypes.func.isRequired
   },
 
   getInitialState() {
-    return INITIAL_STATE;
+    return {
+      primaryKey: []
+    };
   },
 
   render() {
     return (
       <Modal show={true} onHide={this.onHide} enforceFocus={false}>
-        <Form horizontal>
+        <Form onSubmit={this.handleSubmit} horizontal>
           <Modal.Header closeButton>
             <Modal.Title>Create primary key</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {this.renderError()}
             {this.renderMysqlWarning()}
 
             <ControlLabel>Please check one or more columns</ControlLabel>
@@ -44,11 +39,11 @@ export default React.createClass({
           </Modal.Body>
           <Modal.Footer>
             <ConfirmButtons
-              isSaving={this.props.isSaving}
+              isSaving={false}
               isDisabled={this.isDisabled()}
               saveLabel="Create"
               onCancel={this.onHide}
-              onSave={this.onSubmit}
+              onSave={this.handleSubmit}
               saveButtonType="submit"
             />
           </Modal.Footer>
@@ -67,13 +62,6 @@ export default React.createClass({
         <Alert>Columns will be truncated to 255 characters</Alert>
       </HelpBlock>
     );
-  },
-
-  renderError() {
-    if (!this.state.error) {
-      return null;
-    }
-    return <div className="alert alert-danger">{this.state.error}</div>;
   },
 
   handlePrimaryKey(selected) {
@@ -96,26 +84,20 @@ export default React.createClass({
     this.resetState();
   },
 
-  onSubmit() {
+  handleSubmit() {
     const primaryKeys = this.state.primaryKey.map(column => column.value);
 
-    this.props.onSubmit(primaryKeys).then(
-      () => {
-        this.onHide();
-      },
-      message => {
-        this.setState({
-          error: message
-        });
-      }
-    );
+    this.props.onSubmit(primaryKeys);
+    this.onHide();
   },
 
   resetState() {
-    this.setState(INITIAL_STATE);
+    this.setState({
+      primaryKey: []
+    });
   },
 
   isDisabled() {
-    return this.props.isSaving || !this.state.primaryKey.length;
+    return !this.state.primaryKey.length;
   }
 });
