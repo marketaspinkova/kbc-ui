@@ -50,69 +50,69 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok 1`] = `
     type="text"
     wrapperClassName="col-sm-10"
   />
+  <FormGroup
+    bsClass="form-group"
+  >
+    <Col
+      bsClass="col"
+      componentClass={[Function]}
+      sm={2}
+    >
+      Load Type
+    </Col>
+    <Col
+      bsClass="col"
+      componentClass="div"
+      sm={10}
+    >
+      <Select
+        allowCreate={false}
+        clearable={false}
+        delimiter=","
+        disabled={true}
+        emptyStrings={false}
+        ignoreCase={true}
+        labelKey="label"
+        matchProp="any"
+        multi={false}
+        name="loadType"
+        onChange={[Function]}
+        options={
+          Array [
+            Object {
+              "label": "Copy Table (default)",
+              "value": "",
+            },
+            Object {
+              "disabled": true,
+              "label": "Clone Table",
+              "value": "clone",
+            },
+          ]
+        }
+        placeholder="Copy Table (default)"
+        searchable={false}
+        trimMultiCreatedValues={false}
+        value=""
+        valueKey="value"
+      />
+      <HelpBlock
+        bsClass="help-block"
+      >
+        Type of table load from Storage into a Workspace. 
+        <code>
+          Clone
+        </code>
+         load type can be applied only on Snowflake tables without any filtering parameters.
+      </HelpBlock>
+    </Col>
+  </FormGroup>
   <PanelWithDetails
     defaultExpanded={false}
     labelCollapse="Hide details"
     labelOpen="Show details"
     placement="top"
   >
-    <FormGroup
-      bsClass="form-group"
-    >
-      <Col
-        bsClass="col"
-        componentClass={[Function]}
-        sm={2}
-      >
-        Load Type
-      </Col>
-      <Col
-        bsClass="col"
-        componentClass="div"
-        sm={10}
-      >
-        <Select
-          allowCreate={false}
-          clearable={false}
-          delimiter=","
-          disabled={true}
-          emptyStrings={false}
-          ignoreCase={true}
-          labelKey="label"
-          matchProp="any"
-          multi={false}
-          name="loadType"
-          onChange={[Function]}
-          options={
-            Array [
-              Object {
-                "label": "Copy Table (default)",
-                "value": "",
-              },
-              Object {
-                "disabled": true,
-                "label": "Clone Table",
-                "value": "clone",
-              },
-            ]
-          }
-          placeholder="Copy Table (default)"
-          searchable={false}
-          trimMultiCreatedValues={false}
-          value=""
-          valueKey="value"
-        />
-        <HelpBlock
-          bsClass="help-block"
-        >
-          Type of table load from Storage into a Workspace. 
-          <code>
-            Clone
-          </code>
-           load type can be applied only on Snowflake tables without any filtering parameters.
-        </HelpBlock>
-      </Col>
-    </FormGroup>
     <div>
       <FormGroup
         bsClass="form-group"
@@ -373,69 +373,69 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source and des
     value="products"
     wrapperClassName="col-sm-10"
   />
+  <FormGroup
+    bsClass="form-group"
+  >
+    <Col
+      bsClass="col"
+      componentClass={[Function]}
+      sm={2}
+    >
+      Load Type
+    </Col>
+    <Col
+      bsClass="col"
+      componentClass="div"
+      sm={10}
+    >
+      <Select
+        allowCreate={false}
+        clearable={false}
+        delimiter=","
+        disabled={false}
+        emptyStrings={false}
+        ignoreCase={true}
+        labelKey="label"
+        matchProp="any"
+        multi={false}
+        name="loadType"
+        onChange={[Function]}
+        options={
+          Array [
+            Object {
+              "label": "Copy Table (default)",
+              "value": "",
+            },
+            Object {
+              "disabled": true,
+              "label": "Clone Table",
+              "value": "clone",
+            },
+          ]
+        }
+        placeholder="Copy Table (default)"
+        searchable={false}
+        trimMultiCreatedValues={false}
+        value=""
+        valueKey="value"
+      />
+      <HelpBlock
+        bsClass="help-block"
+      >
+        Type of table load from Storage into a Workspace. 
+        <code>
+          Clone
+        </code>
+         load type can be applied only on Snowflake tables without any filtering parameters.
+      </HelpBlock>
+    </Col>
+  </FormGroup>
   <PanelWithDetails
     defaultExpanded={false}
     labelCollapse="Hide details"
     labelOpen="Show details"
     placement="top"
   >
-    <FormGroup
-      bsClass="form-group"
-    >
-      <Col
-        bsClass="col"
-        componentClass={[Function]}
-        sm={2}
-      >
-        Load Type
-      </Col>
-      <Col
-        bsClass="col"
-        componentClass="div"
-        sm={10}
-      >
-        <Select
-          allowCreate={false}
-          clearable={false}
-          delimiter=","
-          disabled={false}
-          emptyStrings={false}
-          ignoreCase={true}
-          labelKey="label"
-          matchProp="any"
-          multi={false}
-          name="loadType"
-          onChange={[Function]}
-          options={
-            Array [
-              Object {
-                "label": "Copy Table (default)",
-                "value": "",
-              },
-              Object {
-                "disabled": true,
-                "label": "Clone Table",
-                "value": "clone",
-              },
-            ]
-          }
-          placeholder="Copy Table (default)"
-          searchable={false}
-          trimMultiCreatedValues={false}
-          value=""
-          valueKey="value"
-        />
-        <HelpBlock
-          bsClass="help-block"
-        >
-          Type of table load from Storage into a Workspace. 
-          <code>
-            Clone
-          </code>
-           load type can be applied only on Snowflake tables without any filtering parameters.
-        </HelpBlock>
-      </Col>
-    </FormGroup>
     <div>
       <FormGroup
         bsClass="form-group"
@@ -696,69 +696,69 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
     value="products"
     wrapperClassName="col-sm-10"
   />
+  <FormGroup
+    bsClass="form-group"
+  >
+    <Col
+      bsClass="col"
+      componentClass={[Function]}
+      sm={2}
+    >
+      Load Type
+    </Col>
+    <Col
+      bsClass="col"
+      componentClass="div"
+      sm={10}
+    >
+      <Select
+        allowCreate={false}
+        clearable={false}
+        delimiter=","
+        disabled={false}
+        emptyStrings={false}
+        ignoreCase={true}
+        labelKey="label"
+        matchProp="any"
+        multi={false}
+        name="loadType"
+        onChange={[Function]}
+        options={
+          Array [
+            Object {
+              "label": "Copy Table (default)",
+              "value": "",
+            },
+            Object {
+              "disabled": true,
+              "label": "Clone Table",
+              "value": "clone",
+            },
+          ]
+        }
+        placeholder="Copy Table (default)"
+        searchable={false}
+        trimMultiCreatedValues={false}
+        value=""
+        valueKey="value"
+      />
+      <HelpBlock
+        bsClass="help-block"
+      >
+        Type of table load from Storage into a Workspace. 
+        <code>
+          Clone
+        </code>
+         load type can be applied only on Snowflake tables without any filtering parameters.
+      </HelpBlock>
+    </Col>
+  </FormGroup>
   <PanelWithDetails
     defaultExpanded={false}
     labelCollapse="Hide details"
     labelOpen="Show details"
     placement="top"
   >
-    <FormGroup
-      bsClass="form-group"
-    >
-      <Col
-        bsClass="col"
-        componentClass={[Function]}
-        sm={2}
-      >
-        Load Type
-      </Col>
-      <Col
-        bsClass="col"
-        componentClass="div"
-        sm={10}
-      >
-        <Select
-          allowCreate={false}
-          clearable={false}
-          delimiter=","
-          disabled={false}
-          emptyStrings={false}
-          ignoreCase={true}
-          labelKey="label"
-          matchProp="any"
-          multi={false}
-          name="loadType"
-          onChange={[Function]}
-          options={
-            Array [
-              Object {
-                "label": "Copy Table (default)",
-                "value": "",
-              },
-              Object {
-                "disabled": true,
-                "label": "Clone Table",
-                "value": "clone",
-              },
-            ]
-          }
-          placeholder="Copy Table (default)"
-          searchable={false}
-          trimMultiCreatedValues={false}
-          value=""
-          valueKey="value"
-        />
-        <HelpBlock
-          bsClass="help-block"
-        >
-          Type of table load from Storage into a Workspace. 
-          <code>
-            Clone
-          </code>
-           load type can be applied only on Snowflake tables without any filtering parameters.
-        </HelpBlock>
-      </Col>
-    </FormGroup>
     <div>
       <FormGroup
         bsClass="form-group"
@@ -1020,69 +1020,69 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
     value="products"
     wrapperClassName="col-sm-10"
   />
+  <FormGroup
+    bsClass="form-group"
+  >
+    <Col
+      bsClass="col"
+      componentClass={[Function]}
+      sm={2}
+    >
+      Load Type
+    </Col>
+    <Col
+      bsClass="col"
+      componentClass="div"
+      sm={10}
+    >
+      <Select
+        allowCreate={false}
+        clearable={false}
+        delimiter=","
+        disabled={false}
+        emptyStrings={false}
+        ignoreCase={true}
+        labelKey="label"
+        matchProp="any"
+        multi={false}
+        name="loadType"
+        onChange={[Function]}
+        options={
+          Array [
+            Object {
+              "label": "Copy Table (default)",
+              "value": "",
+            },
+            Object {
+              "disabled": true,
+              "label": "Clone Table",
+              "value": "clone",
+            },
+          ]
+        }
+        placeholder="Copy Table (default)"
+        searchable={false}
+        trimMultiCreatedValues={false}
+        value=""
+        valueKey="value"
+      />
+      <HelpBlock
+        bsClass="help-block"
+      >
+        Type of table load from Storage into a Workspace. 
+        <code>
+          Clone
+        </code>
+         load type can be applied only on Snowflake tables without any filtering parameters.
+      </HelpBlock>
+    </Col>
+  </FormGroup>
   <PanelWithDetails
     defaultExpanded={false}
     labelCollapse="Hide details"
     labelOpen="Show details"
     placement="top"
   >
-    <FormGroup
-      bsClass="form-group"
-    >
-      <Col
-        bsClass="col"
-        componentClass={[Function]}
-        sm={2}
-      >
-        Load Type
-      </Col>
-      <Col
-        bsClass="col"
-        componentClass="div"
-        sm={10}
-      >
-        <Select
-          allowCreate={false}
-          clearable={false}
-          delimiter=","
-          disabled={false}
-          emptyStrings={false}
-          ignoreCase={true}
-          labelKey="label"
-          matchProp="any"
-          multi={false}
-          name="loadType"
-          onChange={[Function]}
-          options={
-            Array [
-              Object {
-                "label": "Copy Table (default)",
-                "value": "",
-              },
-              Object {
-                "disabled": true,
-                "label": "Clone Table",
-                "value": "clone",
-              },
-            ]
-          }
-          placeholder="Copy Table (default)"
-          searchable={false}
-          trimMultiCreatedValues={false}
-          value=""
-          valueKey="value"
-        />
-        <HelpBlock
-          bsClass="help-block"
-        >
-          Type of table load from Storage into a Workspace. 
-          <code>
-            Clone
-          </code>
-           load type can be applied only on Snowflake tables without any filtering parameters.
-        </HelpBlock>
-      </Col>
-    </FormGroup>
     <div>
       <FormGroup
         bsClass="form-group"
