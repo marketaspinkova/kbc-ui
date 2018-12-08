@@ -198,38 +198,42 @@ export default React.createClass({
   },
 
   getDefaultDatatypes() {
+    const filteredColumns = this._getFilteredColumns();
+
     if (this.state.hasMetadataDatatypes) {
       const metadataSet = this.state.tableColumnMetadata.filter((metadata, colname) => {
-        return this._getFilteredColumns().indexOf(colname) > -1;
+        return filteredColumns.indexOf(colname) > -1;
       });
-      return getMetadataDataTypes(metadataSet);
-    } else {
-      return fromJS(this._getFilteredColumns()).reduce((memo, column) => {
-        return memo.set(column, fromJS({
-          column: column,
-          type: 'VARCHAR',
-          length: this.isPrimaryKeyColumn(column) ? 255 : null,
-          convertEmptyValuesToNull: false
-        }));
-      }, Map());
+      return this.buildDatatypes(filteredColumns, getMetadataDataTypes(metadataSet));
     }
+
+    return this.buildDatatypes(filteredColumns);
+  },
+
+  getDefaultDatatype(column) {
+    return fromJS({
+      column: column,
+      type: 'VARCHAR',
+      length: this.isPrimaryKeyColumn(column) ? 255 : null,
+      convertEmptyValuesToNull: false
+    });
   },
 
   getInitialDatatypes(sourceTable) {
+    const selectedTable = this.props.tables.find(table => table.get('id') === sourceTable);
+
     if (MetadataStore.tableHasMetadataDatatypes(sourceTable)) {
-      return getMetadataDataTypes(MetadataStore.getTableColumnsMetadata(sourceTable));
-    } else {
-      return this.props.tables.find((table) => {
-        return table.get('id') === sourceTable;
-      }).get('columns').reduce((memo, column) => {
-        return memo.set(column, fromJS({
-          column: column,
-          type: 'VARCHAR',
-          length: this.isPrimaryKeyColumn(column) ? 255 : null,
-          convertEmptyValuesToNull: false
-        }));
-      }, Map());
+      const datatypes = getMetadataDataTypes(MetadataStore.getTableColumnsMetadata(sourceTable));
+      return this.buildDatatypes(selectedTable.get('columns'), datatypes);
     }
+
+    return this.buildDatatypes(selectedTable.get('columns'));
+  },
+
+  buildDatatypes(columns, datatypes = Map()) {
+    return columns.reduce((memo, column) => {
+      return memo.set(column, datatypes.get(column, this.getDefaultDatatype(column)));
+    }, Map());
   },
 
   getDatatypes() {
