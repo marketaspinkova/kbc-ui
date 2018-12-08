@@ -221,6 +221,9 @@ export default React.createClass({
 
   getInitialDatatypes(sourceTable) {
     const selectedTable = this.props.tables.find(table => table.get('id') === sourceTable);
+    if (!selectedTable) {
+      return Map();
+    }
 
     if (MetadataStore.tableHasMetadataDatatypes(sourceTable)) {
       const datatypes = getMetadataDataTypes(MetadataStore.getTableColumnsMetadata(sourceTable));
