@@ -171,7 +171,7 @@ export default React.createClass({
   handleCreate(e) {
     e.preventDefault();
     e.stopPropagation();
-    const newDimension = {...this.state.newDimension};
+    const newDimension = {...this.state.newDimension, includeTime: !!this.state.newDimension.includeTime};
     const name = this.state.newDimension.name;
     delete newDimension.name;
     const dimensionsToSave = {...this.props.value.dimensions, [name]: newDimension};
