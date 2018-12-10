@@ -235,7 +235,10 @@ export default React.createClass({
 
   buildDatatypes(columns, datatypes = Map()) {
     return columns.reduce((memo, column) => {
-      return memo.set(column, datatypes.get(column, this.getDefaultDatatype(column)));
+      if (!datatypes.get(column)) {
+        return memo.set(column, this.getDefaultDatatype(column));
+      }
+      return memo.set(column, datatypes.get(column));
     }, Map());
   },
 
