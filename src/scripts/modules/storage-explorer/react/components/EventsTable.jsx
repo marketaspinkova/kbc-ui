@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import ComponentsStore from '../../../components/stores/ComponentsStore';
 import { Table } from 'react-bootstrap';
-import { NewLineToBr } from '@keboola/indigo-ui';
 import { truncate } from 'underscore.string';
 import { format } from '../../../../utils/date';
 import ComponentName from '../../../../react/common/ComponentName';
@@ -58,9 +57,7 @@ export default React.createClass({
             <ComponentName component={component} showType={true} capitalize={true} />
           </span>
         </td>
-        <td>
-          <NewLineToBr text={truncate(event.get('message'), 60)} />
-        </td>
+        <td>{truncate(event.get('message'), 60)}</td>
         <td>{event.getIn(['token', 'name'])}</td>
       </tr>
     );
