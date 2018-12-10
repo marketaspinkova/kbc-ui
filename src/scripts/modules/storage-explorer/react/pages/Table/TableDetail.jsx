@@ -27,11 +27,13 @@ export default React.createClass({
       table,
       sapiToken: ApplicationStore.getSapiToken(),
       tables: TablesStore.getAll(),
+      buckets: BucketsStore.getAll(),
       bucket: BucketsStore.getAll().find(item => item.get('id') === bucketId),
       creatingPrimaryKey: TablesStore.getIsCreatingPrimaryKey(table.get('id')),
       deletingPrimaryKey: TablesStore.getIsDeletingPrimaryKey(table.get('id')),
       addingColumn: TablesStore.getAddingColumn(),
       deletingColumn: TablesStore.getDeletingColumn(),
+      creatingTable: TablesStore.getIsCreatingTable(),
       creatingSnapshot: TablesStore.getIsCreatingSnapshot(),
       deletingSnapshot: TablesStore.getIsDeletingSnapshot()
     };
@@ -114,7 +116,9 @@ export default React.createClass({
               <Tab.Pane eventKey="snapshot-and-restore">
                 <SnapshotRestore
                   table={this.state.table}
+                  buckets={this.state.buckets}
                   sapiToken={this.state.sapiToken}
+                  creatingTable={this.state.creatingTable}
                   creatingSnapshot={this.state.creatingSnapshot}
                   deletingSnapshot={this.state.deletingSnapshot}
                 />

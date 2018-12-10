@@ -10,11 +10,14 @@ import StorageApi from '../../../../components/StorageApi';
 import StorageActionCreators from '../../../../components/StorageActionCreators';
 
 import CreateSnapshotModal from '../../modals/CreateSnapshotModal';
+import TimeTravelModal from '../../modals/TimeTravelModal';
 
 export default React.createClass({
   propTypes: {
     table: PropTypes.object.isRequired,
+    buckets: PropTypes.object.isRequired,
     sapiToken: PropTypes.object.isRequired,
+    creatingTable: PropTypes.bool.isRequired,
     creatingSnapshot: PropTypes.object.isRequired,
     deletingSnapshot: PropTypes.object.isRequired
   },
@@ -27,6 +30,7 @@ export default React.createClass({
       loading: false,
       hasMore: false,
       openCreateSnapshotModal: false,
+      openTimeTravelModal: false,
       openRemoveSnapshotModal: false,
       removeSnapshot: null
     };
@@ -58,9 +62,19 @@ export default React.createClass({
             replicate data from up to <strong>{retentionLimit} days</strong> in past.
           </p>
 
-          <Button bsStyle="primary" onClick={() => null}>
-            <i className="fa fa-camera" /> Restore Table
+          <Button bsStyle="primary" onClick={this.openTimeTravelModal} disabled={this.props.creatingTable}>
+            {this.props.creatingTable ? (
+              <span>
+                <Loader /> Restoring Table...
+              </span>
+            ) : (
+              <span>
+                <i className="fa fa-camera" /> Restore Table
+              </span>
+            )}
           </Button>
+
+          {this.state.openTimeTravelModal && this.renderTimeTravelModal()}
         </Well>
       </div>
     );
@@ -187,6 +201,18 @@ export default React.createClass({
     );
   },
 
+  renderTimeTravelModal() {
+    return (
+      <TimeTravelModal
+        table={this.props.table}
+        buckets={this.props.buckets}
+        sapiToken={this.props.sapiToken}
+        onConfirm={this.handleTimeTravel}
+        onHide={this.closeTimeTravelModal}
+      />
+    );
+  },
+
   renderCreateSnapshotModal() {
     return <CreateSnapshotModal onConfirm={this.handleCreateSnapshot} onHide={this.closeCreateSnapshotModal} />;
   },
@@ -217,6 +243,16 @@ export default React.createClass({
         onHide={this.closeRemoveSnapshotModal}
       />
     );
+  },
+
+  handleTimeTravel(bucketId, tableName, timestamp) {
+    const params = {
+      sourceTableId: this.props.table.get('id'),
+      timestamp: timestamp.format('YYYY-MM-DD HH:mm:ss Z'),
+      name: tableName
+    };
+
+    return StorageActionCreators.createTable(bucketId, params);
   },
 
   handleCreateSnapshot(description) {
@@ -277,6 +313,18 @@ export default React.createClass({
   closeCreateSnapshotModal() {
     this.setState({
       openCreateSnapshotModal: false
+    });
+  },
+
+  openTimeTravelModal() {
+    this.setState({
+      openTimeTravelModal: true
+    });
+  },
+
+  closeTimeTravelModal() {
+    this.setState({
+      openTimeTravelModal: false
     });
   },
 
