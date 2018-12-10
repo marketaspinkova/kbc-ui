@@ -280,18 +280,16 @@ export default React.createClass({
               />
             </Col>
             <Col sm={2}>
-              <FormGroup className="no-bottom-margin">
-                <FormControl
-                  componentClass="select"
-                  name="deleteWhereOperator"
-                  value={this.props.value.get('deleteWhereOperator')}
-                  disabled={this.props.disabled}
-                  onChange={this._handleChangeDeleteWhereOperator}
-                >
-                  <option value={whereOperatorConstants.EQ_VALUE}>{whereOperatorConstants.EQ_LABEL}</option>
-                  <option value={whereOperatorConstants.NOT_EQ_VALUE}>{whereOperatorConstants.NOT_EQ_LABEL}</option>
-                </FormControl>
-              </FormGroup>
+              <FormControl
+                componentClass="select"
+                name="deleteWhereOperator"
+                value={this.props.value.get('deleteWhereOperator')}
+                disabled={this.props.disabled}
+                onChange={this._handleChangeDeleteWhereOperator}
+              >
+                <option value={whereOperatorConstants.EQ_VALUE}>{whereOperatorConstants.EQ_LABEL}</option>
+                <option value={whereOperatorConstants.NOT_EQ_VALUE}>{whereOperatorConstants.NOT_EQ_LABEL}</option>
+              </FormControl>
             </Col>
             <Col sm={4}>
               <Select
