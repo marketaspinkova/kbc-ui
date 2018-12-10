@@ -117,6 +117,10 @@ const OrchestrationStore = StoreUtils.createStore({
     return _store.getIn(['tasksToRun', orchestrationId]);
   },
 
+  getAllOrchestrationsTasksToRun() {
+    return _store.get('tasksToRun');
+  },
+
   /*
     Returns all orchestrations filtered by current filter value
   */
