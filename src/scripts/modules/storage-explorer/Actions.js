@@ -11,14 +11,18 @@ const errorNotification = (message) => {
 };
 
 const deleteBucket = (bucketId, forceDelete) => {
-  return StorageActionCreators
-    .deleteBucket(bucketId, forceDelete)
-    .then(() => {
-      RoutesStore.getRouter().transitionTo('storage-explorer');
-    });
+  return StorageActionCreators.deleteBucket(bucketId, forceDelete).then(() => {
+    RoutesStore.getRouter().transitionTo('storage-explorer');
+  });
 };
 
-const navigateToBucketDetail = (bucketId) => {
+const deleteTable = (bukcetId, tableId, forceDelete) => {
+  return StorageActionCreators.deleteTable(tableId, forceDelete).then(() => {
+    navigateToBucketDetail(bukcetId);
+  });
+};
+
+const navigateToBucketDetail = bucketId => {
   RoutesStore.getRouter().transitionTo('storage-explorer-bucket', {
     bucketId: bucketId
   });
@@ -89,6 +93,7 @@ const truncateTable = (tableId) => {
 
 export {
   deleteBucket,
+  deleteTable,
   navigateToBucketDetail,
   createTablePrimaryKey,
   removeTablePrimaryKey,

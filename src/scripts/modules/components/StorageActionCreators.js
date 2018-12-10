@@ -419,6 +419,28 @@ module.exports = {
       });
   },
 
+  deleteTable: function(tableId, force) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.STORAGE_DELETE_TABLE,
+      tableId: tableId
+    });
+    return storageApi.deleteTable(tableId, { force }).then(() => {
+      dispatcher.handleViewAction({
+        type: constants.ActionTypes.STORAGE_DELETE_TABLE_SUCCESS,
+        tableId: tableId
+      });
+      return this.loadTablesForce();
+    })
+      .catch(function(error) {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_DELETE_TABLE_ERROR,
+          tableId: tableId,
+          errors: error
+        });
+        throw error;
+      });
+  },
+
   createAliasTable: function(bucketId, params) {
     dispatcher.handleViewAction({
       type: constants.ActionTypes.STORAGE_ALIAS_TABLE_CREATE,
