@@ -34,6 +34,7 @@ export default React.createClass({
       addingColumn: TablesStore.getAddingColumn(),
       deletingColumn: TablesStore.getDeletingColumn(),
       creatingTable: TablesStore.getIsCreatingTable(),
+      restoringTable: TablesStore.getIsRestoringTable(),
       creatingSnapshot: TablesStore.getIsCreatingSnapshot(),
       creatingFromSnapshot: TablesStore.getIsCreatingFromSnapshot(),
       deletingSnapshot: TablesStore.getIsDeletingSnapshot()
@@ -119,7 +120,7 @@ export default React.createClass({
                   table={this.state.table}
                   buckets={this.state.buckets}
                   sapiToken={this.state.sapiToken}
-                  creatingTable={this.state.creatingTable}
+                  restoringTable={this.state.restoringTable}
                   creatingSnapshot={this.state.creatingSnapshot}
                   creatingFromSnapshot={this.state.creatingFromSnapshot}
                   deletingSnapshot={this.state.deletingSnapshot}

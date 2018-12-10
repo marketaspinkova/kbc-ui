@@ -18,7 +18,7 @@ export default React.createClass({
     table: PropTypes.object.isRequired,
     buckets: PropTypes.object.isRequired,
     sapiToken: PropTypes.object.isRequired,
-    creatingTable: PropTypes.bool.isRequired,
+    restoringTable: PropTypes.object.isRequired,
     creatingSnapshot: PropTypes.object.isRequired,
     creatingFromSnapshot: PropTypes.object.isRequired,
     deletingSnapshot: PropTypes.object.isRequired
@@ -54,6 +54,7 @@ export default React.createClass({
 
   renderRestore() {
     const retentionLimit = this.props.sapiToken.getIn(['owner', 'dataRetentionTimeInDays']);
+    const restoring = this.props.restoringTable.get(this.props.table.get('id'));
 
     return (
       <div>
@@ -65,8 +66,8 @@ export default React.createClass({
             replicate data from up to <strong>{retentionLimit} days</strong> in past.
           </p>
 
-          <Button bsStyle="primary" onClick={this.openTimeTravelModal} disabled={this.props.creatingTable}>
-            {this.props.creatingTable ? (
+          <Button bsStyle="primary" onClick={this.openTimeTravelModal} disabled={restoring}>
+            {restoring ? (
               <span>
                 <Loader /> Restoring Table...
               </span>
@@ -278,7 +279,7 @@ export default React.createClass({
       name: tableName
     };
 
-    return StorageActionCreators.createTable(bucketId, params);
+    return StorageActionCreators.restoreUsingTimeTravel(bucketId, params);
   },
 
   handleCreateSnapshot(description) {
