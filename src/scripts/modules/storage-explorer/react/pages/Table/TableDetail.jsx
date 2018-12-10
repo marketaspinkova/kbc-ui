@@ -35,6 +35,7 @@ export default React.createClass({
       deletingColumn: TablesStore.getDeletingColumn(),
       creatingTable: TablesStore.getIsCreatingTable(),
       creatingSnapshot: TablesStore.getIsCreatingSnapshot(),
+      creatingFromSnapshot: TablesStore.getIsCreatingFromSnapshot(),
       deletingSnapshot: TablesStore.getIsDeletingSnapshot()
     };
   },
@@ -120,6 +121,7 @@ export default React.createClass({
                   sapiToken={this.state.sapiToken}
                   creatingTable={this.state.creatingTable}
                   creatingSnapshot={this.state.creatingSnapshot}
+                  creatingFromSnapshot={this.state.creatingFromSnapshot}
                   deletingSnapshot={this.state.deletingSnapshot}
                 />
               </Tab.Pane>

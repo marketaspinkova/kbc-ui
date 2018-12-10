@@ -10,6 +10,7 @@ import StorageApi from '../../../../components/StorageApi';
 import StorageActionCreators from '../../../../components/StorageActionCreators';
 
 import CreateSnapshotModal from '../../modals/CreateSnapshotModal';
+import CreateTableFromSnapshotModal from '../../modals/CreateTableFromSnapshotModal';
 import TimeTravelModal from '../../modals/TimeTravelModal';
 
 export default React.createClass({
@@ -19,6 +20,7 @@ export default React.createClass({
     sapiToken: PropTypes.object.isRequired,
     creatingTable: PropTypes.bool.isRequired,
     creatingSnapshot: PropTypes.object.isRequired,
+    creatingFromSnapshot: PropTypes.object.isRequired,
     deletingSnapshot: PropTypes.object.isRequired
   },
 
@@ -31,8 +33,9 @@ export default React.createClass({
       hasMore: false,
       openCreateSnapshotModal: false,
       openTimeTravelModal: false,
+      openCreateTableFromSnapshotModal: false,
       openRemoveSnapshotModal: false,
-      removeSnapshot: null
+      selectedSnapshot: null
     };
   },
 
@@ -140,6 +143,7 @@ export default React.createClass({
           </thead>
           <tbody>
             {this.state.snapshots.map(snapshot => {
+              const creating = this.props.creatingFromSnapshot.get(snapshot.get('id'), false);
               const deleting = this.props.deletingSnapshot.get(snapshot.get('id'), false);
 
               return (
@@ -156,8 +160,12 @@ export default React.createClass({
                   </td>
                   <td className="text-right">
                     <Tooltip tooltip="Create new table from snapshot" placement="top">
-                      <Button className="btn btn-link" onClick={() => null}>
-                        <i className="fa fa-share" />
+                      <Button
+                        className="btn btn-link"
+                        onClick={() => this.openCreateTableFromSnapshotModal(snapshot)}
+                        disabled={creating}
+                      >
+                        {creating ? <Loader /> :  <i className="fa fa-share" />}
                       </Button>
                     </Tooltip>
                     <Tooltip tooltip="Delete snapshot" placement="top">
@@ -176,6 +184,7 @@ export default React.createClass({
           </tbody>
         </Table>
 
+        {this.renderCreateTableFromSnapshotModal()}
         {this.renderDeleteSnapshotModal()}
       </div>
     );
@@ -217,16 +226,33 @@ export default React.createClass({
     return <CreateSnapshotModal onConfirm={this.handleCreateSnapshot} onHide={this.closeCreateSnapshotModal} />;
   },
 
-  renderDeleteSnapshotModal() {
-    const snapshot = this.state.removeSnapshot;
+  renderCreateTableFromSnapshotModal() {
+    const snapshot = this.state.selectedSnapshot;
 
-    if (!snapshot) {
+    if (!snapshot || !this.state.openCreateTableFromSnapshotModal) {
+      return null;
+    }
+
+    return (
+      <CreateTableFromSnapshotModal
+        snapshot={snapshot}
+        buckets={this.props.buckets}
+        onConfirm={this.handleCreateTableFromSnapshot}
+        onHide={this.closeCreateTableFromSnapshotModal}
+      />
+    );
+  },
+
+  renderDeleteSnapshotModal() {
+    const snapshot = this.state.selectedSnapshot;
+
+    if (!snapshot || !this.state.openRemoveSnapshotModal) {
       return null;
     }
 
     return (
       <ConfirmModal
-        show={this.state.openRemoveSnapshotModal}
+        show={true}
         title="Delete snapshot"
         buttonType="danger"
         buttonLabel="Delete"
@@ -264,12 +290,21 @@ export default React.createClass({
     });
   },
 
+  handleCreateTableFromSnapshot(bucketId, tableName) {
+    const params = {
+      snapshotId: this.state.selectedSnapshot.get('id'),
+      name: tableName
+    };
+
+    return StorageActionCreators.createTableFromSnapshot(bucketId, params);
+  },
+
   handleRemoveSnapshot() {
-    const snapshotId = this.state.removeSnapshot.get('id');
+    const snapshotId = this.state.selectedSnapshot.get('id');
 
     return StorageActionCreators.deleteSnapshot(snapshotId).then(() => {
       this.setState({
-        removeSnapshot: null
+        selectedSnapshot: null
       });
 
       this.fetchSnapshots(true);
@@ -328,17 +363,31 @@ export default React.createClass({
     });
   },
 
+  openCreateTableFromSnapshotModal(snapshot) {
+    this.setState({
+      openCreateTableFromSnapshotModal: true,
+      selectedSnapshot: snapshot
+    });
+  },
+
+  closeCreateTableFromSnapshotModal() {
+    this.setState({
+      openCreateTableFromSnapshotModal: false,
+      selectedSnapshot: null
+    });
+  },
+
   openRemoveSnapshotModal(snapshot) {
     this.setState({
       openRemoveSnapshotModal: true,
-      removeSnapshot: snapshot
+      selectedSnapshot: snapshot
     });
   },
 
   closeRemoveSnapshotModal() {
     this.setState({
       openRemoveSnapshotModal: false,
-      removeSnapshot: null
+      selectedSnapshot: null
     });
   }
 });

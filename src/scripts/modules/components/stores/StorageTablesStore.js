@@ -62,6 +62,10 @@ const StorageTablesStore = StoreUtils.createStore({
     return _store.getIn(['pendingTables', 'creatingSnapshot'], Map());
   },
 
+  getIsCreatingFromSnapshot() {
+    return _store.getIn(['pendingTables', 'creatingFromSnapshot'], Map());
+  },
+
   getIsDeletingSnapshot() {
     return _store.getIn(['pendingTables', 'deletingSnapshot'], Map());
   },
@@ -179,6 +183,18 @@ Dispatcher.register(function(payload) {
     case constants.ActionTypes.STORAGE_TABLE_CREATE_FROM_SNOPSHOT_SUCCESS:
     case constants.ActionTypes.STORAGE_TABLE_CREATE_FROM_SNOPSHOT_ERROR:
       _store = _store.deleteIn(['pendingTables', 'creatingFromSnapshot', action.snapshotId]);
+      return StorageTablesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_TABLE_CREATE_FROM_SNOPSHOT:
+      _store = _store.setIn(['pendingTables', 'creatingFromSnapshot', action.snapshotId], true);
+      return StorageTablesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_TABLE_CREATE_FROM_SNOPSHOT_SUCCESS:
+      _store = _store.setIn(['pendingTables', 'creatingFromSnapshot', action.snapshotId], false);
+      return StorageTablesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_TABLE_CREATE_FROM_SNOPSHOT_ERROR:
+      _store = _store.setIn(['pendingTables', 'creatingFromSnapshot', action.snapshotId], false);
       return StorageTablesStore.emitChange();
 
     case constants.ActionTypes.STORAGE_TABLE_REMOVE_SNOPSHOT:
