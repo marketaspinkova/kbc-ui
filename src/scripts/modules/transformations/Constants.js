@@ -103,5 +103,10 @@ export const SnowflakeDataTypesMapping = fromJS({
   VARIANT: {
     name: 'VARIANT',
     size: false
+  },
+  BOOLEAN: {
+    name: 'BOOLEAN',
+    size: false,
+    basetype: 'BOOLEAN'
   }
 });
