@@ -14,7 +14,6 @@ import Promise from 'bluebird';
 import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
 import VersionsActionCreators from '../components/VersionsActionCreators';
 import InstalledComponentsActionCreators from '../components/InstalledComponentsActionCreators';
-/* eslint no-console: 0 */
 
 const rephaseTasks = tasks => {
   const isNullPhase = phase => phase === null || phase === 0 || typeof phase === 'undefined';
