@@ -58,13 +58,6 @@ export default React.createClass({
             <Modal.Title>{`Run orchestration ${this.props.orchestration.get('name')}`}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p>
-              {'You are about to run the orchestration '}
-              <strong>
-                {this.props.orchestration.get('name')}
-                {' manually and the notifications will be sent only to you.'}
-              </strong>
-            </p>
             {this.renderTasksTable()}
           </Modal.Body>
           <Modal.Footer>
@@ -112,9 +105,18 @@ export default React.createClass({
     }
 
     return (
-      <PanelWithDetails placement="top" labelCollapse="Hide Tasks" labelOpen="Show Tasks">
-        <TaskSelectTable tasks={this.props.tasks} onTaskUpdate={this._handleTaskUpdate} />
-      </PanelWithDetails>
+      <div>
+        <p>
+          {'You are about to run the orchestration '}
+          <strong>
+            {this.props.orchestration.get('name')}
+            {' manually and the notifications will be sent only to you.'}
+          </strong>
+        </p>
+        <PanelWithDetails placement="top" labelCollapse="Hide Tasks" labelOpen="Show Tasks">
+          <TaskSelectTable tasks={this.props.tasks} onTaskUpdate={this._handleTaskUpdate} />
+        </PanelWithDetails>
+      </div>
     );
   },
 
