@@ -21,15 +21,14 @@ const getMetadataDataTypes = (columnMetadata) => {
     const matchedDataType = SnowflakeDataTypesMapping.find((mappedDatatype) => {
       return mappedDatatype.get('basetype') === baseType.get('value');
     });
+    if (!matchedDataType) {
+      return null;
+    }
 
-    const dataTypeName = matchedDataType ? matchedDataType.get('name') : null;
-    let length = null;
-
-    if (matchedDataType) {
-      length = matchedDataType.get('size') ? dataTypeLength.get('value', null) : null;
-      if (matchedDataType.has('maxLength') && length > matchedDataType.get('maxLength')) {
-        length = matchedDataType.get('maxLength');
-      }
+    const dataTypeName = matchedDataType.get('name');
+    let length = matchedDataType.get('size') ? dataTypeLength.get('value', null) : null;
+    if (matchedDataType.has('maxLength') && length > matchedDataType.get('maxLength')) {
+      length = matchedDataType.get('maxLength');
     }
     return fromJS({
       column: colname,

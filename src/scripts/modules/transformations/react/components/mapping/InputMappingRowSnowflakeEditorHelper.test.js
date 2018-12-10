@@ -60,7 +60,7 @@ describe('getMetadataDataType', function() {
     }));
   });
 
-  it('should work with nonexistent KBC.datatype.basetype', function() {
+  it('should return null for nonexistent KBC.datatype.basetype', function() {
     assert.deepStrictEqual(getMetadataDataTypes(fromJS({
       Price: [
         {
@@ -72,12 +72,7 @@ describe('getMetadataDataType', function() {
         }
       ]
     })), fromJS({
-      Price: {
-        column: 'Price',
-        type: null,
-        length: null,
-        convertEmptyValuesToNull: false
-      }
+      Price: null
     }));
   });
 
