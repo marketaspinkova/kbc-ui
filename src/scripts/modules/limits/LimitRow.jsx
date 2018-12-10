@@ -33,19 +33,18 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="td kbc-limit" ref="limit">
-        <div className={classnames('kbc-limit-inner', { 'kbc-limit-alarm': this.props.limit.get('isAlarm') })}>
-          <div style={{ height: `${0.5 * this.state.elWidth}px`, position: 'relative' }}>
-            {this.renderVizualization()}
-          </div>
-          <div>
-            <h3>{this.props.limit.get('name')}</h3>
-          </div>
-          <div className="kbc-limit-values">
-            <h4>{this.limit()}</h4>
-          </div>
-          <div className="kbc-limit-action">{this.renderActionButton()}</div>
+      <div className={classnames('components-overview-item', {'kbc-limit-alarm': this.props.limit.get('isAlarm')})}
+        ref="limit">
+        <div style={{height: `${0.5 * this.state.elWidth}px`, position: 'relative'}}>
+          {this.renderVizualization()}
         </div>
+        <div>
+          <h3>{this.props.limit.get('name')}</h3>
+        </div>
+        <div className="kbc-limit-values">
+          <h4>{this.limit()}</h4>
+        </div>
+        <div className="kbc-limit-action">{this.renderActionButton()}</div>
       </div>
     );
   },

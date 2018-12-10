@@ -25,10 +25,8 @@ export default React.createClass({
             query={this.props.filter}
           />
         </div>
-        <div className="table kbc-table-border-vertical kbc-components-overview kbc-layout-table">
-          <div className="tbody">
-            {this.renderComponents()}
-          </div>
+        <div className="components-overview-grid">
+          {this.renderComponents()}
         </div>
         <div className="row">
           <div className="text-center">
@@ -49,20 +47,6 @@ export default React.createClass({
     return this.props.components
       .toIndexedSeq()
       .sortBy((component) => component.get('name').toLowerCase())
-      .groupBy((component, i) => Math.floor(i / 3))
-      .map(this.renderComponentsRow)
-      .toArray();
-  },
-
-  renderComponentsRow(components, index) {
-    return (
-      <div className="tr" key={index}>
-        {components.map((component) => {
-          return (
-            <ComponentBox component={component} key={component.get('id')} />
-          );
-        })}
-      </div>
-    );
+      .map((component) =>(<ComponentBox component={component} key={component.get('id')}/>));
   }
 });
