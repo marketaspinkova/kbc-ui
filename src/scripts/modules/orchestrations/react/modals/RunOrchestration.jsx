@@ -89,17 +89,17 @@ export default React.createClass({
 
     if (!this.hasTasks()) {
       return (
-        <Alert bsStyle="danger">
-          {'Orchestrations without '}
+        <Alert bsStyle="warning">
+          Orchestration cannot be run without tasks. Please{' '}
           <Link
             to="orchestrationTasks"
             params={{
               orchestrationId: this.props.orchestration.get('id')
             }}
           >
-            tasks
+            add tasks
           </Link>
-          {' can not be run.'}
+          {' '}and run orchestration again.
         </Alert>
       );
     }
