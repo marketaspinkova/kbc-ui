@@ -1,13 +1,26 @@
 import React, { PropTypes } from 'react';
-import { Table } from 'react-bootstrap';
+import { Map } from 'immutable';
+import { Table, Button } from 'react-bootstrap';
 import CreatedWithIcon from '../../../../../react/common/CreatedWithIcon';
 import Hint from '../../../../../react/common/Hint';
 import FileSize from '../../../../../react/common/FileSize';
+import Tooltip from '../../../../../react/common/Tooltip';
+import ConfirmModal from '../../../../../react/common/ConfirmModal';
+import StorageActionCreators from '../../../../components/StorageActionCreators';
+import ShareBucketModal from '../../modals/ShareBucketModal';
 
 export default React.createClass({
   propTypes: {
     bucket: PropTypes.object.isRequired,
-    sapiToken: PropTypes.object.isRequired
+    sapiToken: PropTypes.object.isRequired,
+    isSharing: PropTypes.bool.isRequired
+  },
+
+  getInitialState() {
+    return {
+      openShareModal: false,
+      openUnshareModal: false
+    };
   },
 
   render() {
@@ -72,7 +85,9 @@ export default React.createClass({
         <tr>
           <td>Sharing</td>
           <td>
-            <div className="kb-inline-edit kb-filter-edit">{this.bucketSharingInfo(bucket)}</div>
+            {this.sharingInfo(bucket)} {this.sharingButtons(bucket)}
+            {this.state.openShareModal && this.renderShareModal()}
+            {this.state.openUnshareModal && this.renderUnshareModal()}
           </td>
         </tr>
       );
@@ -121,7 +136,45 @@ export default React.createClass({
     );
   },
 
-  bucketSharingInfo(bucket) {
+  renderShareModal() {
+    return (
+      <ShareBucketModal
+        bucket={this.props.bucket}
+        isSharing={this.props.isSharing}
+        onConfirm={this.handleShareBucket}
+        onHide={this.closeShareModal}
+      />
+    );
+  },
+
+  renderUnshareModal() {
+    return (
+      <ConfirmModal
+        show={true}
+        buttonType="danger"
+        buttonLabel="Disable"
+        title="Bucket sharing"
+        text={<p>Do you really want to stop bucket sharing?</p>}
+        onConfirm={this.handleUnshareBucket}
+        onHide={this.closeUnshareModal}
+      />
+    );
+  },
+
+  handleShareBucket(sharingType) {
+    const bucketId = this.props.bucket.get('id');
+    const params = { sharing: sharingType };
+
+    return StorageActionCreators.shareBucket(bucketId, params);
+  },
+
+  handleUnshareBucket() {
+    const bucketId = this.props.bucket.get('id');
+
+    return StorageActionCreators.unshareBucket(bucketId);
+  },
+
+  sharingInfo(bucket) {
     if (bucket.get('sharing') === 'organization') {
       return 'Shared to organization. Only organization members are able to link the bucket to a project.';
     }
@@ -131,6 +184,66 @@ export default React.createClass({
     }
 
     return 'Disabled';
+  },
+
+  sharingButtons(bucket) {
+    const sharing = bucket.get('sharing');
+    const canShareBucket = this.isOrganizationMember();
+    const linked = bucket.get('linkedBy', Map());
+
+    if (!sharing && canShareBucket) {
+      return (
+        <Button bsSize="small" onClick={this.openShareModal}>
+          <i className="fa fa-share-square-o" /> Enable sharing
+        </Button>
+      );
+    }
+
+    if (sharing && canShareBucket && linked.count() === 0) {
+      return (
+        <Button bsSize="small" onClick={this.openUnshareModal}>
+          <i className="fa fa-ban" /> Disable sharing
+        </Button>
+      );
+    }
+
+    if (sharing && canShareBucket && linked.count() > 0) {
+      return (
+        <Button bsSize="small" onClick={() => null} disabled={true}>
+          <Tooltip tooltip="Please unlink first linked buckets" placement="top">
+            <span>
+              <i className="fa fa-ban" /> Disable sharing
+            </span>
+          </Tooltip>
+        </Button>
+      );
+    }
+
+    return null;
+  },
+
+  openShareModal() {
+    this.setState({
+      openShareModal: true
+    });
+  },
+
+  closeShareModal() {
+    this.setState({
+      openShareModal: false
+    });
+  },
+
+  openUnshareModal() {
+    this.setState({
+      openUnshareModal: true
+    });
+  },
+
+  closeUnshareModal() {
+    this.setState({
+      openUnshareModal: false
+    });
   },
 
   isOrganizationMember() {

@@ -59,6 +59,14 @@ const StorageBucketsStore = StoreUtils.createStore({
     return _store.getIn(['pendingCredentials', 'deleting'], false);
   },
 
+  isSharing(bucketId) {
+    return _store.getIn(['pendingCredentials', 'sharing', bucketId], false);
+  },
+
+  isUnsharing(bucketId) {
+    return _store.getIn(['pendingCredentials', 'unsharing', bucketId], false);
+  },
+
   getBucketMetadata(bucketId) {
     return _store.get('buckets').getIn(bucketId, 'metadata');
   }
@@ -152,6 +160,32 @@ Dispatcher.register(function(payload) {
 
     case constants.ActionTypes.STORAGE_BUCKET_DELETE_ERROR:
       _store = _store.removeIn(['pendingBuckets', 'deleting', action.bucketId]);
+      return StorageBucketsStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_BUCKET_SHARE:
+      _store = _store.setIn(['pendingBuckets', 'sharing', action.bucketId], true);
+      return StorageBucketsStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_BUCKET_SHARE_SUCCESS:
+      _store = _store.removeIn(['pendingBuckets', 'sharing', action.bucketId]);
+      _store = _store.removeIn(['buckets', action.bucketId]);
+      return StorageBucketsStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_BUCKET_SHARE_ERROR:
+      _store = _store.removeIn(['pendingBuckets', 'sharing', action.bucketId]);
+      return StorageBucketsStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_BUCKET_UNSHARE:
+      _store = _store.setIn(['pendingBuckets', 'unsharing', action.bucketId], true);
+      return StorageBucketsStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_BUCKET_UNSHARE_SUCCESS:
+      _store = _store.removeIn(['pendingBuckets', 'unsharing', action.bucketId]);
+      _store = _store.removeIn(['buckets', action.bucketId]);
+      return StorageBucketsStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_BUCKET_UNSHARE_ERROR:
+      _store = _store.removeIn(['pendingBuckets', 'unsharing', action.bucketId]);
       return StorageBucketsStore.emitChange();
 
     default:
