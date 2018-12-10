@@ -43,6 +43,12 @@ export default React.createClass({
     this.fetchSnapshots();
   },
 
+  componentDidUpdate(prevProps) {
+    if (this.props.table.get('id') !== prevProps.table.get('id')) {
+      this.refetchSnapshots();
+    }
+  },
+
   render() {
     return (
       <div>
@@ -166,7 +172,7 @@ export default React.createClass({
                         onClick={() => this.openCreateTableFromSnapshotModal(snapshot)}
                         disabled={creating}
                       >
-                        {creating ? <Loader /> :  <i className="fa fa-share" />}
+                        {creating ? <Loader /> : <i className="fa fa-share" />}
                       </Button>
                     </Tooltip>
                     <Tooltip tooltip="Delete snapshot" placement="top">
@@ -287,7 +293,7 @@ export default React.createClass({
     const params = { description };
 
     return StorageActionCreators.createSnapshot(tableId, params).then(() => {
-      this.fetchSnapshots(true);
+      this.refetchSnapshots();
     });
   },
 
@@ -308,7 +314,7 @@ export default React.createClass({
         selectedSnapshot: null
       });
 
-      this.fetchSnapshots(true);
+      this.refetchSnapshots();
     });
   },
 
@@ -317,6 +323,10 @@ export default React.createClass({
     const permission = this.props.sapiToken.getIn(['bucketPermissions', bucketId]);
 
     return ['write', 'manage'].includes(permission);
+  },
+
+  refetchSnapshots() {
+    this.fetchSnapshots(true);
   },
 
   fetchSnapshots(refetch = false) {
