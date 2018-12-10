@@ -17,6 +17,14 @@ export default {
       .then(response => response.body);
   },
 
+  listTableEvents(tableId, params) {
+    return createRequest('GET', 'tables/' + tableId + '/events')
+      .query(params)
+      .timeout(4000)
+      .promise()
+      .then(response => response.body);
+  },
+
   getEvent(id) {
     return createRequest('GET', `events/${id}`)
       .promise()
