@@ -429,7 +429,9 @@ module.exports = {
         type: constants.ActionTypes.STORAGE_DELETE_TABLE_SUCCESS,
         tableId: tableId
       });
-      return this.loadTablesForce();
+      return ApplicationActionCreators.sendNotification({
+        message: `Table ${tableId} has been removed`
+      });
     })
       .catch(function(error) {
         dispatcher.handleViewAction({
