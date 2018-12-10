@@ -21,8 +21,8 @@ export default React.createClass({
     return {
       totalOrchestrationsCount: OrchestrationStore.getAll().count(),
       orchestrations: OrchestrationStore.getFiltered(),
-      allOrchestrationTasks: OrchestrationStore.getAllOrchestrationsTasks(),
-      getTasksToRun: (orchestrationId) => OrchestrationStore.getTasksToRun(orchestrationId),
+      allTasks: OrchestrationStore.getAllOrchestrationsTasks(),
+      getTasksToRun: orchestrationId => OrchestrationStore.getTasksToRun(orchestrationId),
       pendingActions: OrchestrationStore.getPendingActions(),
       isLoading: OrchestrationStore.getIsLoading(),
       isLoaded: OrchestrationStore.getIsLoaded(),
@@ -76,7 +76,7 @@ export default React.createClass({
     const childs = this.state.orchestrations
       .map(orchestration => {
         const orchestrationId = orchestration.get('id');
-        const tasks = this.state.getTasksToRun(orchestrationId) || this.state.allOrchestrationTasks.get(orchestrationId);
+        const tasks = this.state.getTasksToRun(orchestrationId) || this.state.allTasks.get(orchestrationId);
 
         return (
           <OrchestrationRow
