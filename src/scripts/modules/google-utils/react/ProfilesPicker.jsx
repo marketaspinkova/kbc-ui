@@ -2,12 +2,11 @@ import React, {PropTypes} from 'react';
 import {fromJS} from 'immutable';
 import ProfilesLoader from './ProfilesLoader';
 import EmptyState from '../../components/react/components/ComponentEmptyState';
-import { Panel, Alert, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Panel, ListGroup, ListGroupItem } from 'react-bootstrap';
 
 export default React.createClass({
 
   propTypes: {
-    authorizedEmail: PropTypes.string,
     localStateProfiles: PropTypes.object.isRequired,
     localStatePickerData: PropTypes.object.isRequired,
     updateLocalStateProfiles: PropTypes.func.isRequired,
@@ -33,7 +32,6 @@ export default React.createClass({
         {profiles ?
           <span>
             <h3>Select Profiles of {email} </h3>
-            {this.renderWarning(email)}
             {this.renderLoadedProfiles(profiles)}
           </span>
           :
@@ -46,21 +44,6 @@ export default React.createClass({
         }
       </div>
     );
-  },
-
-
-  renderWarning(profilesEmail) {
-    const {authorizedEmail} = this.props;
-    if (authorizedEmail && profilesEmail && profilesEmail !== authorizedEmail) {
-      return (
-        <Alert bsStyle="warning">
-          <strong>Warning:</strong>
-          Selected account {profilesEmail} does not match account authorized for data extraction <strong>{authorizedEmail}</strong>.
-        </Alert>
-      );
-    } else {
-      return null;
-    }
   },
 
   renderLoadedProfiles(profiles) {

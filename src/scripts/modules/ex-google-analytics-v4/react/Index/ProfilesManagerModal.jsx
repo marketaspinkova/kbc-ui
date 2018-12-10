@@ -66,7 +66,6 @@ export default React.createClass({
   renderProfilesSelector() {
     return (
       <ProfilesPicker
-        authorizedEmail={this.props.authorizedEmail}
         localStateProfiles={this.getLocalProfiles()}
         localStatePickerData={this.getLocalStatePickerData()}
         updateLocalStateProfiles={this.updateLocalStateProfiles}
