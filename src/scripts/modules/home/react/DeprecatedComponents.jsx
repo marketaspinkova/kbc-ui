@@ -1,9 +1,11 @@
 import React, {PropTypes} from 'react';
+import Immutable from 'immutable';
+import moment from 'moment';
+import { AlertBlock } from '@keboola/indigo-ui';
+
 import StringUtils from '../../../utils/string';
 import ComponentDetailLink from '../../../react/common/ComponentDetailLink';
 import ComponentName from '../../../react/common/ComponentName';
-import Immutable from 'immutable';
-import {AlertBlock} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -42,6 +44,11 @@ export default React.createClass({
                           componentId={component.get('id')}
                         >
                           <ComponentName component={component} />
+                          {component.get('expiredOn') && (
+                            <span>
+                              {' '}(Deprecated in {moment(component.get('expiredOn')).format('MMM YYYY')})
+                            </span>
+                          )}
                         </ComponentDetailLink>
                       </li>
                     );
