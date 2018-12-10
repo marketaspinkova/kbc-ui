@@ -195,7 +195,7 @@ export default function(tableId) {
       return Map({
         eventService: es,
         events: List(),
-        dataPreview: List(),
+        dataPreview: null,
         dataPreviewError: null,
         loadingPreview: false,
         loadingProfilerData: false,
