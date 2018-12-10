@@ -37,8 +37,22 @@ export default React.createClass({
         onOpen={this.handleOnOpen}
         buttonLabel={this.props.buttonLabel}
         buttonBlock={this.props.buttonBlock}
+        loadTasksFn={this.handleLoadTasks}
       />
     );
+  },
+
+  handleLoadTasks() {
+    this.setState({
+      isLoading: true
+    });
+    ActionCreators
+      .loadOrchestration(this.props.orchestration.get('id'))
+      .finally(() => {
+        this.setState({
+          isLoading: false
+        });
+      });
   },
 
   handleOnOpen() {

@@ -21,6 +21,7 @@ export default React.createClass({
     return {
       totalOrchestrationsCount: OrchestrationStore.getAll().count(),
       orchestrations: OrchestrationStore.getFiltered(),
+      allOrchestrationTasks: OrchestrationStore.getAllOrchestrationsTasks(),
       pendingActions: OrchestrationStore.getPendingActions(),
       isLoading: OrchestrationStore.getIsLoading(),
       isLoaded: OrchestrationStore.getIsLoaded(),
@@ -78,6 +79,7 @@ export default React.createClass({
             orchestration={orchestration}
             pendingActions={this.state.pendingActions.get(orchestration.get('id'), Map())}
             key={orchestration.get('id')}
+            tasks={this.state.allOrchestrationTasks.get(orchestration.get('id'))}
           />
         );
       })

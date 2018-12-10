@@ -89,6 +89,10 @@ const OrchestrationStore = StoreUtils.createStore({
     return _store.get('orchestrationsById').has(id);
   },
 
+  getAllOrchestrationsTasks() {
+    return _store.get('orchestrationTasksById');
+  },
+
   getOrchestrationTasks(orchestrationId) {
     return _store.getIn(['orchestrationTasksById', orchestrationId]);
   },
