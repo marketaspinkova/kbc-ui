@@ -17,7 +17,6 @@ export default React.createClass({
   propTypes: {
     allProfiles: PropTypes.object.isRequired,
     query: PropTypes.object.isRequired,
-    divClassName: PropTypes.string.isRequired,
     outputBucket: PropTypes.string.isRequired,
     localState: PropTypes.object.isRequired,
     updateLocalState: PropTypes.func.isRequired,
@@ -120,7 +119,7 @@ export default React.createClass({
             isEditing={isEditing}
           />
           <GaMultiSelect
-            isLoadingMetadata={this.props.accountSegments.get('isLoading')}
+            isLoadingMetadata={this.props.accountSegments.get('isLoading', false)}
             metadata={this.props.accountSegments.get('data', List()).toJS()}
             name="Segments (optional)"
             onSelectValue={this.onSelectSegment}

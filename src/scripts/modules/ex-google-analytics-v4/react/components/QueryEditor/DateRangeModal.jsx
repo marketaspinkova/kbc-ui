@@ -41,8 +41,8 @@ const SUGGESTIONS = {
 
 export default React.createClass({
   propTypes: {
-    startDate: PropTypes.string.isRequired,
-    endDate: PropTypes.string.isRequired,
+    startDate: PropTypes.string,
+    endDate: PropTypes.string,
     onSet: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     show: PropTypes.bool.isRequired
@@ -54,6 +54,7 @@ export default React.createClass({
 
   getStateFromProps(props) {
     const rangeType = this.getDatePropsType(props);
+
     return {
       rangeType: rangeType,
       absoluteStart: rangeType === 'absolute' ? moment(props.startDate) : '',

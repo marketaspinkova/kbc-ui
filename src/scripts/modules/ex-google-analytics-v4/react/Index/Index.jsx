@@ -55,7 +55,7 @@ export default function(componentId) {
       return (
         <div className="container-fluid">
           <ProfilesManagerModal
-            show={this.state.localState.getIn(['ProfilesManagerModal', 'profiles'], false)}
+            show={!!this.state.localState.getIn(['ProfilesManagerModal', 'profiles'], false)}
             onHideFn={() => this.state.actions.updateLocalState('ProfilesManagerModal', Map())}
             profiles={this.state.store.profiles}
             isSaving={this.state.store.isSaving('profiles')}
@@ -191,7 +191,7 @@ export default function(componentId) {
               {this.hasProfiles() ?
                 <div className="form-control-static">
                   {profiles.take(showThreshold).map(
-                    (p) => <div><ProfileInfo profile={p} /></div>
+                    (p, index) => <div key={index}><ProfileInfo profile={p} /></div>
                   )}
                   <div>
                     {showMoreCount > 0 ?

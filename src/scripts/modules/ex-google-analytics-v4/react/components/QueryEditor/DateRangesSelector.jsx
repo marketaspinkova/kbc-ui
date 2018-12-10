@@ -66,7 +66,7 @@ export default React.createClass({
 
   renderRange(range, idx) {
     return (
-      <div className="tr">
+      <div className="tr" key={idx}>
         <div className="td" >
           {range.get('startDate')}
         </div>

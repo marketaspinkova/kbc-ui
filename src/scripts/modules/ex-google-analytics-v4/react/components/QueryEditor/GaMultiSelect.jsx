@@ -10,7 +10,7 @@ function simpleMatch(query, test) {
 
 export default React.createClass({
   propTypes: {
-    selectedValues: PropTypes.object.isRequired,
+    selectedValues: PropTypes.array.isRequired,
     onSelectValue: PropTypes.func.isRequired,
     name: PropTypes.string.isRequired,
     isEditing: PropTypes.bool.isRequired,

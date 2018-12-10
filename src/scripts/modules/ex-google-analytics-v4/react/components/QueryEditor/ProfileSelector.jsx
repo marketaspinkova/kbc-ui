@@ -5,7 +5,7 @@ import ProfileInfo from '../../ProfileInfo';
 export default React.createClass({
   propTypes: {
     allProfiles: PropTypes.object.isRequired,
-    selectedProfile: PropTypes.string.isRequired,
+    selectedProfile: PropTypes.string,
     labelClassName: PropTypes.string,
     wrapperClassName: PropTypes.string,
     label: PropTypes.string,
@@ -70,15 +70,15 @@ export default React.createClass({
   renderOptionsArray() {
     const groups = this.props.allProfiles.groupBy( (profile) =>
       profile.get('accountName') + '/ ' + profile.get('webPropertyName'));
-    const options = groups.map((group, groupName) =>
-      <optgroup label={groupName}>
-        {group.map((item) =>
-          <option value={item.get('id')}>
+    const options = groups.map((group, groupName, groupIndex) =>
+      <optgroup key={groupIndex} label={groupName}>
+        {group.map((item, optionIndex) =>
+          <option key={optionIndex} value={item.get('id')}>
             {item.get('name')}
           </option>
-        )}
+        ).toArray()}
       </optgroup>
-    );
+    ).toArray();
 
 
     return options;
