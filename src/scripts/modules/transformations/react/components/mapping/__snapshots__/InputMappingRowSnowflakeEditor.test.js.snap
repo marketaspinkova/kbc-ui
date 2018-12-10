@@ -269,6 +269,11 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok 1`] = `
               "name": "VARIANT",
               "size": false,
             },
+            "BOOLEAN": Immutable.Map {
+              "name": "BOOLEAN",
+              "size": false,
+              "basetype": "BOOLEAN",
+            },
             "TIMESTAMP_LTZ": Immutable.Map {
               "name": "TIMESTAMP_LTZ",
               "size": false,
@@ -591,6 +596,11 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source and des
             "VARIANT": Immutable.Map {
               "name": "VARIANT",
               "size": false,
+            },
+            "BOOLEAN": Immutable.Map {
+              "name": "BOOLEAN",
+              "size": false,
+              "basetype": "BOOLEAN",
             },
             "TIMESTAMP_LTZ": Immutable.Map {
               "name": "TIMESTAMP_LTZ",
@@ -915,6 +925,11 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
             "VARIANT": Immutable.Map {
               "name": "VARIANT",
               "size": false,
+            },
+            "BOOLEAN": Immutable.Map {
+              "name": "BOOLEAN",
+              "size": false,
+              "basetype": "BOOLEAN",
             },
             "TIMESTAMP_LTZ": Immutable.Map {
               "name": "TIMESTAMP_LTZ",
@@ -1311,6 +1326,11 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
             "VARIANT": Immutable.Map {
               "name": "VARIANT",
               "size": false,
+            },
+            "BOOLEAN": Immutable.Map {
+              "name": "BOOLEAN",
+              "size": false,
+              "basetype": "BOOLEAN",
             },
             "TIMESTAMP_LTZ": Immutable.Map {
               "name": "TIMESTAMP_LTZ",
