@@ -4,7 +4,7 @@ import { Loader } from '@keboola/indigo-ui';
 
 import Tooltip from '../../../../../react/common/Tooltip';
 import StorageActionCreators from '../../../../components/StorageActionCreators';
-import AddColumnModal from '../../modals/AddColumnModal';
+import CreateColumnModal from '../../modals/CreateColumnModal';
 import DeleteColumnModal from '../../modals/DeleteColumnModal';
 
 export default React.createClass({
@@ -22,7 +22,7 @@ export default React.createClass({
     return {
       deleteColumnName: '',
       deleteColumnModal: false,
-      addColumnModal: false
+      createColumnModal: false
     };
   },
 
@@ -31,20 +31,18 @@ export default React.createClass({
 
     return (
       <div>
-        <h2>
+        <h2 className="clearfix">
           {this.canAddColumn() && (
             <div className="kbc-buttons pull-right">
-              <Tooltip tooltip="Add column" placement="top">
-                <Button onClick={this.openAddColumnModal} disabled={addingColumn}>
-                  {addingColumn ? <Loader /> : <i className="fa fa-plus" />}
-                </Button>
-              </Tooltip>
+              <Button onClick={this.openCreateColumnModal} disabled={addingColumn}>
+                {addingColumn ? <Loader /> : <i className="fa fa-plus" />} Create column
+              </Button>
             </div>
           )}
           Columns
         </h2>
 
-        <Table striped>
+        <Table responsive striped>
           <tbody>
             {this.props.table
               .get('columns')
@@ -53,7 +51,7 @@ export default React.createClass({
           </tbody>
         </Table>
 
-        {this.state.addColumnModal && this.renderAddColumnModal()}
+        {this.state.createColumnModal && this.renderCreateColumnModal()}
         {this.state.deleteColumnModal && this.renderDeleteColumnModal()}
       </div>
     );
@@ -101,13 +99,13 @@ export default React.createClass({
     );
   },
 
-  renderAddColumnModal() {
+  renderCreateColumnModal() {
     return (
-      <AddColumnModal
+      <CreateColumnModal
         table={this.props.table}
         tables={this.props.tables}
-        onSubmit={this.handleAddColumn}
-        onHide={this.closeAddColumnModal}
+        onSubmit={this.handleCreateColumn}
+        onHide={this.closeCreateColumnModal}
       />
     );
   },
@@ -125,7 +123,7 @@ export default React.createClass({
     );
   },
 
-  handleAddColumn(columnName) {
+  handleCreateColumn(columnName) {
     const tableId = this.props.table.get('id');
     const params = { name: columnName };
     return StorageActionCreators.addTableColumn(tableId, params);
@@ -215,15 +213,15 @@ export default React.createClass({
     return foundAliases.length > 0;
   },
 
-  openAddColumnModal() {
+  openCreateColumnModal() {
     this.setState({
-      addColumnModal: true
+      createColumnModal: true
     });
   },
 
-  closeAddColumnModal() {
+  closeCreateColumnModal() {
     this.setState({
-      addColumnModal: false
+      createColumnModal: false
     });
   },
 
