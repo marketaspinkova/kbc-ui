@@ -1,6 +1,6 @@
 import React from 'react';
 import Immutable from 'immutable';
-import fuzzy from 'fuzzy';
+import matchByWords from '../../../../../utils/matchByWords';
 
 import TransformationBucketRow from './TransformationBucketRow';
 import TransformationsList from './TransformationsList';
@@ -105,13 +105,13 @@ export default React.createClass({
   _getFilteredBuckets() {
     let filtered = this.state.buckets;
     if (this.state.filter && this.state.filter !== '') {
-      const { filter } = this.state;
+      const filter = this.state.filter.toLowerCase();
       const component = this;
       filtered = this.state.buckets.filter(
         bucket =>
-          fuzzy.match(filter, bucket.get('name', '').toString()) ||
-          fuzzy.match(filter, bucket.get('id', '').toString()) ||
-          fuzzy.match(filter, bucket.get('description', '').toString()) ||
+          matchByWords(bucket.get('name', '').toLowerCase(), filter) ||
+          matchByWords(bucket.get('id', ''), filter) ||
+          matchByWords(bucket.get('description', '').toLowerCase(), filter) ||
           component._getFilteredTransformations(bucket.get('id')).count()
       );
     }
@@ -122,15 +122,15 @@ export default React.createClass({
   _getFilteredTransformations(bucketId) {
     let filtered = this.state.transformationsInBuckets.getIn([bucketId], Immutable.Map());
     if (this.state.filter && this.state.filter !== '') {
-      const { filter } = this.state;
+      const filter = this.state.filter.toLowerCase();
       filtered = this.state.transformationsInBuckets
         .getIn([bucketId], Immutable.Map())
         .filter(
           transformation =>
-            fuzzy.match(filter, transformation.get('name', '').toString()) ||
-            fuzzy.match(filter, transformation.get('description', '').toString()) ||
-            fuzzy.match(filter, transformation.get('fullId', '').toString()) ||
-            fuzzy.match(filter, transformation.get('id', '').toString())
+            matchByWords(transformation.get('name', '').toLowerCase(), filter) ||
+            matchByWords(transformation.get('description', '').toLowerCase(), filter) ||
+            matchByWords(transformation.get('fullId', '').toString(), filter) ||
+            matchByWords(transformation.get('id', ''), filter)
         );
     }
 
