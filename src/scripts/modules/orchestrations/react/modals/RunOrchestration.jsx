@@ -1,5 +1,6 @@
 import React from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Link } from 'react-router';
+import { Modal, Button, Alert } from 'react-bootstrap';
 import Tooltip from '../../../../react/common/Tooltip';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import TaskSelectTable from '../components/TaskSelectTable';
@@ -57,18 +58,7 @@ export default React.createClass({
             <Modal.Title>{`Run orchestration ${this.props.orchestration.get('name')}`}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <div>
-              {'You are about to run the orchestration '}
-              <strong>
-                {this.props.orchestration.get('name')}
-                {' manually and the notifications will be sent only to you.'}
-              </strong>
-              {this.props.tasks && (
-                <PanelWithDetails placement="top" labelCollapse="Hide Tasks" labelOpen="Show Tasks">
-                  <TaskSelectTable tasks={this.props.tasks} onTaskUpdate={this._handleTaskUpdate} />
-                </PanelWithDetails>
-              )}
-            </div>
+            {this.renderTasksTable()}
           </Modal.Body>
           <Modal.Footer>
             <ConfirmButtons
@@ -81,6 +71,52 @@ export default React.createClass({
           </Modal.Footer>
         </Modal>
       </span>
+    );
+  },
+
+  renderTasksTable() {
+    if (!this.state.showModal) {
+      return null;
+    }
+
+    if (this.props.isLoading && !this.hasTasks()) {
+      return (
+        <p>
+          <Loader /> Loading tasks...
+        </p>
+      );
+    }
+
+    if (!this.hasTasks()) {
+      return (
+        <Alert bsStyle="warning">
+          Orchestration cannot be run without tasks. Please{' '}
+          <Link
+            to="orchestrationTasks"
+            params={{
+              orchestrationId: this.props.orchestration.get('id')
+            }}
+          >
+            add tasks
+          </Link>
+          {' '}and run orchestration again.
+        </Alert>
+      );
+    }
+
+    return (
+      <div>
+        <p>
+          {'You are about to run the orchestration '}
+          <strong>
+            {this.props.orchestration.get('name')}
+            {' manually and the notifications will be sent only to you.'}
+          </strong>
+        </p>
+        <PanelWithDetails placement="top" labelCollapse="Hide Tasks" labelOpen="Show Tasks">
+          <TaskSelectTable tasks={this.props.tasks} onTaskUpdate={this._handleTaskUpdate} />
+        </PanelWithDetails>
+      </div>
     );
   },
 
@@ -101,17 +137,15 @@ export default React.createClass({
 
   renderButton() {
     return (
-      <Button
-        onClick={this._handleOpenClick}
-        bsStyle="link"
-        block={this.props.buttonBlock}
-      >
+      <Button onClick={this._handleOpenClick} bsStyle="link" block={this.props.buttonBlock}>
         {this.props.isLoading ? <Loader className="fa-fw" /> : <i className="fa fa-fw fa-play" />}
-        {this.props.buttonLabel && (
-          <span> {this.props.buttonLabel}</span>
-        )}
+        {this.props.buttonLabel && <span> {this.props.buttonLabel}</span>}
       </Button>
     );
+  },
+
+  hasTasks() {
+    return this.props.tasks && this.props.tasks.count() > 0;
   },
 
   _handleOpenClick(e) {
