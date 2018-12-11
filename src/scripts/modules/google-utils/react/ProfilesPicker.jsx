@@ -61,7 +61,7 @@ export default React.createClass({
 
   renderProfileGroup(profileGroup, profileGroupName) {
     const header = (
-      <span>
+      <span key={profileGroupName}>
         {profileGroupName}
       </span>);
 
@@ -79,7 +79,7 @@ export default React.createClass({
   renderProfilePanel(profile, profileName) {
     const first = profile.first();
     const header = (
-      <span>
+      <span key={profileName}>
         {profileName} ({first ? first.get('webPropertyId') : 'Empty'})
       </span>);
     return (
@@ -91,8 +91,9 @@ export default React.createClass({
         <div className="row">
           <ListGroup>
             {first ?
-              profile.map((pItem) =>
+              profile.map((pItem, idx) =>
                 <ListGroupItem
+                  key={idx}
                   active={this.isSelected(pItem)}
                   onClick={() => this.onProfileClick(pItem)}>
                   <div className="text-center">

@@ -159,7 +159,7 @@ export default React.createClass({
     const name = option ? option.attributes.uiName : '';
     const isLast = idx === this.props.selectedValues.length - 1;
     return (
-      <span>
+      <span key={idx}>
         <Tooltip tooltip={desc} placement="top">
           <span>
             {optionId}({name || 'n/a'})

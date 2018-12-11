@@ -53,19 +53,20 @@ export default React.createClass({
           </div>
         </div>
         <div className="tbody kbc-break-all kbc-break-word">
-          {this.props.queries.map((q) => this.renderQueryRow(q))}
+          {this.props.queries.map((q, idx) => this.renderQueryRow(q, idx))}
         </div>
       </div>
     );
   },
 
-  renderQueryRow(query) {
+  renderQueryRow(query, idx) {
     const propValue = (propName) => query.getIn([].concat(propName));
     const queryProfiles = propValue(['query', 'viewId']);
     const outTableId = this.props.outputBucket + '.' + propValue('outputTable');
 
     return (
       <Link
+        key={idx}
         to={this.props.componentId + '-query-detail'}
         params={{
           config: this.props.configId,
@@ -129,8 +130,8 @@ export default React.createClass({
     return (
       <span>
         <small>
-          {ranges.map((r) =>
-            <div>
+          {ranges.map((r, idx) =>
+            <div key={idx}>
               {r.get('startDate')} - {r.get('endDate')}
             </div>
           )}

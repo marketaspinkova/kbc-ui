@@ -175,7 +175,7 @@ export default function(componentId) {
         return 'No queries configured';
       }
 
-      return false;
+      return '';
     },
 
     renderProfiles() {
