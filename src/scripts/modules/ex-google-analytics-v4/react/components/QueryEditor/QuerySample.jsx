@@ -47,7 +47,7 @@ export default React.createClass({
     const header = csvMap.first().map((c, idx) => {
       if (c === 'id') idIdx = idx;
       return (
-        <th>
+        <th key={idx}>
           {c}
           {c === 'id' ?
             <button style={{paddingLeft: '2px', paddingBottom: 0, paddingTop: 0}}
@@ -61,13 +61,13 @@ export default React.createClass({
       );
     }).toArray();
 
-    const rows = csvMap.rest().map((row) => {
+    const rows = csvMap.rest().map((row, rowIdx) => {
       const cols = row.map( (c, idx) => {
-        return (<td>{ (idx === idIdx && !this.state.showIds) ? '...' : c}</td>);
+        return (<td key={idx}>{ (idx === idIdx && !this.state.showIds) ? '...' : c}</td>);
       });
 
       return (
-        <tr>
+        <tr key={rowIdx}>
           {cols}
         </tr>);
     });
