@@ -1,14 +1,11 @@
 import Dispatcher from '../../../Dispatcher';
-import { ActionTypes } from '../Constants';
-const constants = { ActionTypes };
-import Immutable from 'immutable';
-import fuzzy from 'fuzzy';
-const { Map } = Immutable;
-const { List } = Immutable;
-import StoreUtils from '../../../utils/StoreUtils';
+import * as constants from '../Constants';
+import { Map, List, fromJS } from 'immutable';
 import TemplatesStore from './TemplatesStore';
 import ComponentsStore from './ComponentsStore';
+import StoreUtils from '../../../utils/StoreUtils';
 import fromJSOrdered from '../../../utils/fromJSOrdered';
+import matchByWords from '../../../utils/matchByWords';
 
 let _store = Map({
   configData: Map(), // componentId #configId
@@ -85,16 +82,16 @@ var InstalledComponentsStore = StoreUtils.createStore({
   },
 
   getFilteredComponents(type) {
-    const filterQuery = this.getComponentFilter(type);
+    const filterQuery = this.getComponentFilter(type).toLowerCase();
 
     const filteredConfigurations = this.getAllForType(type)
       .map(component =>
         component.set(
           'configurations',
           component.get('configurations', Map()).filter(function(configuration) {
-            const description = configuration.get('description') ? configuration.get('description').toString() : '';
             return (
-              fuzzy.match(filterQuery, configuration.get('name').toString()) || fuzzy.match(filterQuery, description)
+              matchByWords(configuration.get('name').toLowerCase(), filterQuery) ||
+              matchByWords(configuration.get('description', '').toLowerCase(), filterQuery)
             );
           })
         )
@@ -102,7 +99,7 @@ var InstalledComponentsStore = StoreUtils.createStore({
       .filter(component => component.get('configurations').count() > 0);
 
     const filteredComponents = this.getAllForType(type).filter(component =>
-      fuzzy.match(filterQuery, component.get('name'))
+      matchByWords(component.get('name').toLowerCase(), filterQuery)
     );
     const filtered = filteredComponents.mergeDeep(filteredConfigurations);
 
@@ -118,7 +115,7 @@ var InstalledComponentsStore = StoreUtils.createStore({
   },
 
   getAllDeletedFiltered() {
-    const nameFilter = this.getTrashFilter('name');
+    const nameFilter = this.getTrashFilter('name').toLowerCase();
     const typeFilter = this.getTrashFilter('type');
     let components = this.getAllDeleted();
 
@@ -137,8 +134,8 @@ var InstalledComponentsStore = StoreUtils.createStore({
     } else {
       return components.filter(function(component) {
         return (
-          fuzzy.match(nameFilter, component.get('name').toString()) ||
-          fuzzy.match(nameFilter, component.get('id').toString()) ||
+          matchByWords(component.get('name').toLowerCase(), nameFilter) ||
+          matchByWords(component.get('id').toLowerCase(), nameFilter) ||
           this.getAllDeletedConfigurationsFiltered(component).count()
         );
       }, this);
@@ -146,18 +143,17 @@ var InstalledComponentsStore = StoreUtils.createStore({
   },
 
   getAllDeletedConfigurationsFiltered(component) {
-    const filter = this.getTrashFilter('name');
+    const filter = this.getTrashFilter('name').toLowerCase();
     const configurations = component.get('configurations', Map());
 
     if (!filter || filter === '') {
       return configurations;
     } else {
       return configurations.filter(function(configuration) {
-        const description = configuration.get('description') ? configuration.get('description').toString() : '';
         return (
-          fuzzy.match(filter, configuration.get('name').toString()) ||
-          fuzzy.match(filter, description) ||
-          fuzzy.match(filter, configuration.get('id').toString())
+          matchByWords(configuration.get('name').toLowerCase(), filter) ||
+          matchByWords(configuration.get('description', '').toLowerCase(), filter) ||
+          matchByWords(configuration.get('id').toLowerCase(), filter)
         );
       }, this);
     }
@@ -390,11 +386,11 @@ var InstalledComponentsStore = StoreUtils.createStore({
 
   // new
   getTemplatedConfigValueConfig(componentId, configId) {
-    return _store.getIn(['configData', componentId, configId, 'parameters', 'config'], Immutable.Map());
+    return _store.getIn(['configData', componentId, configId, 'parameters', 'config'], Map());
   },
 
   getTemplatedConfigValueUserParams(componentId, configId) {
-    let config = _store.getIn(['configData', componentId, configId, 'parameters', 'config'], Immutable.Map());
+    let config = _store.getIn(['configData', componentId, configId, 'parameters', 'config'], Map());
     // delete keys from template if template matches
     const template = TemplatesStore.getMatchingTemplate(componentId, config);
     if (!template.isEmpty()) {
@@ -407,11 +403,11 @@ var InstalledComponentsStore = StoreUtils.createStore({
   },
 
   getTemplatedConfigValueWithoutUserParams(componentId, configId) {
-    let config = _store.getIn(['configData', componentId, configId, 'parameters', 'config'], Immutable.Map());
+    let config = _store.getIn(['configData', componentId, configId, 'parameters', 'config'], Map());
     // delete schema keys from config
     ComponentsStore.getComponent(componentId)
-      .get('configurationSchema', Immutable.Map())
-      .getIn(['properties'], Immutable.Map())
+      .get('configurationSchema', Map())
+      .getIn(['properties'], Map())
       .keySeq()
       .forEach(key => (config = config.delete(key)));
     return config;
@@ -503,7 +499,7 @@ Dispatcher.register(function(payload) {
           );
           result = result.setIn(
             ['configRows', action.componentId, action.configId, action.data.rows[j].id],
-            Immutable.fromJS(action.data.rows[j])
+            fromJS(action.data.rows[j])
           );
           j++;
         }
@@ -541,7 +537,7 @@ Dispatcher.register(function(payload) {
               );
               storeResult = storeResult.setIn(
                 ['configRows', action.componentId, action.configData[i].id, action.configData[i].rows[j].id],
-                Immutable.fromJS(action.configData[i].rows[j])
+                fromJS(action.configData[i].rows[j])
               );
               j++;
             }
@@ -704,7 +700,7 @@ Dispatcher.register(function(payload) {
           .deleteIn(['deletedComponents', action.componentId, 'configurations', action.configurationId])
           .deleteIn(['restoringConfigurations', action.componentId, action.configurationId]);
 
-        if (!storeResult.getIn(['deletedComponents', action.componentId, 'configurations'], Immutable.Map()).count()) {
+        if (!storeResult.getIn(['deletedComponents', action.componentId, 'configurations'], Map()).count()) {
           return (storeResult = storeResult.deleteIn(['deletedComponents', action.componentId]));
         }
       });
