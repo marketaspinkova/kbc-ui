@@ -56,7 +56,8 @@ dispatcher.register(function(payload) {
     case constants.ActionTypes.DOCKER_RUNNER_SYNC_ACTION_RUN_SUCCESS:
       _store = _store.setIn(actionPath, Immutable.fromJS({
         status: 'success',
-        data: action.response
+        data: action.response,
+        request: action.requestBody
       }));
       DockerActionsStore.emitChange();
       break;

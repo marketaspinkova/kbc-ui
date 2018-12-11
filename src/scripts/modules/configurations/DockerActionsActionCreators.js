@@ -14,7 +14,8 @@ module.exports = {
       component: componentId,
       cache: cache,
       cacheId: body.hashCode(),
-      actionName: actionName
+      actionName: actionName,
+      requestBody: body
     });
     return unhandledRequest(componentId, actionName, body).then(function(response) {
       dispatcher.handleViewAction({
@@ -23,7 +24,8 @@ module.exports = {
         cache: cache,
         cacheId: body.hashCode(),
         actionName: actionName,
-        response: response
+        response: response,
+        requestBody: body
       });
       return response;
     }).catch(function(error) {
@@ -33,7 +35,8 @@ module.exports = {
         cache: cache,
         cacheId: body.hashCode(),
         actionName: actionName,
-        error: error.response.body.message
+        error: error.response.body.message,
+        requestBody: body
       });
       if (error.message !== 'User error') {
         throw error;
