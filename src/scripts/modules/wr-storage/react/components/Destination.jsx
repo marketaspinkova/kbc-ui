@@ -3,6 +3,7 @@ import immutableMixin from 'react-immutable-render-mixin';
 import { Form, FormControl, FormGroup, ControlLabel, HelpBlock, Col, Checkbox } from 'react-bootstrap';
 import SyncActionSimpleValue from '../../../configurations/react/components/SyncActionSimpleValue';
 import ExternalProjectLink from '../../../components/react/components/ExternalProjectLink';
+import ExternalBucketLink from '../../../components/react/components/ExternalBucketLink';
 
 
 export default React.createClass({
@@ -48,10 +49,16 @@ export default React.createClass({
           </Col>
           <Col sm={8}>
             <FormControl.Static>
-              <SyncActionSimpleValue
-                action={infoAction}
-                valueKey="bucket"
-              />
+              <ExternalBucketLink
+                stackUrl={infoAction.getIn(['request', 'configData', 'parameters', 'url'])}
+                projectId={infoAction.getIn(['data', 'projectId'])}
+                bucketId={infoAction.getIn(['data', 'bucket'])}
+              >
+                <SyncActionSimpleValue
+                  action={infoAction}
+                  valueKey="bucket"
+                />
+              </ExternalBucketLink>
             </FormControl.Static>
           </Col>
         </FormGroup>
