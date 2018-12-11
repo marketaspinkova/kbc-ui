@@ -7,7 +7,7 @@ export default React.createClass({
     componentId: PropTypes.string.isRequired,
     onChangeFn: PropTypes.func,
     infoText: PropTypes.string,
-    disabled: PropTypes.bool
+    disabled: PropTypes.bool.isRequired
   },
 
   render() {
