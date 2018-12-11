@@ -218,6 +218,7 @@ export default React.createClass({
   renderInstant() {
     return (
       <InstantAuthorizationFields
+        enabled={this.state.activeTab === 'instant'}
         authorizedFor={this.state.instant.authorizedFor}
         componentId={this.props.componentId}
         onChangeFn={this.setInstantState}

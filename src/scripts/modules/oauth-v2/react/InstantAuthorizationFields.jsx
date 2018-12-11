@@ -6,7 +6,8 @@ export default React.createClass({
     authorizedFor: PropTypes.string,
     componentId: PropTypes.string.isRequired,
     onChangeFn: PropTypes.func,
-    infoText: PropTypes.string
+    infoText: PropTypes.string,
+    disabled: PropTypes.bool
   },
 
   render() {
@@ -27,6 +28,7 @@ export default React.createClass({
               defaultValue={this.props.authorizedFor}
               onChange={(e) => this.props.onChangeFn('authorizedFor', e.target.value)}
               autoFocus={true}
+              disabled={this.props.disabled}
             />
             <p className="help-block">
               Describe this authorization, e.g. by the account name.
