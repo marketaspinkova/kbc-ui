@@ -42,12 +42,9 @@ export default React.createClass({
                 >
                   <span>
                     <strong>{configuration.get('name')}</strong>
-                    <br/>
-                    <small>
-                      {descriptionExcerpt(
-                        this.props.orchestratorConfigurations.getIn([configuration.get('id').toString(), 'description'])
-                      )}
-                    </small>
+                    {descriptionExcerpt(
+                      this.props.orchestratorConfigurations.getIn([configuration.get('id').toString(), 'description'])
+                    )}
                   </span>
                   <i className="fa fa-plus-circle pull-right" />
                 </a>

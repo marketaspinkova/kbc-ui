@@ -1,4 +1,5 @@
 import removeMarkdown from 'remove-markdown';
+import React from 'react';
 
 // remove markdown markup and trim to 100 characters
 export default function(description) {
@@ -9,5 +10,5 @@ export default function(description) {
   if (plainText.length > 75) {
     plainText = plainText.substring(0, 75) + '...';
   }
-  return plainText;
+  return (<div className="description description-small">{plainText}</div>);
 }

@@ -100,7 +100,7 @@ export default React.createClass({
           </span>
         )
         }
-        <div className="small">
+        <div className="description description-small">
           {createdInfo} by {creator}
         </div>
 

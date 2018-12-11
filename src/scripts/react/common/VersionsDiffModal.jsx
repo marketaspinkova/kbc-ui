@@ -94,10 +94,10 @@ export default React.createClass({
           <div className="row" style={{'padding': '4px', 'margin': '0'}}>
             <ul>
               <li>
-                <strong>{this.renderVersionInfo(this.props.referentialVersion)}</strong>
+                {this.renderVersionInfo(this.props.referentialVersion)}
               </li>
               <li>
-                <strong>{this.renderVersionInfo(this.props.compareVersion)}</strong>
+                {this.renderVersionInfo(this.props.compareVersion)}
               </li>
             </ul>
           </div>
@@ -146,11 +146,12 @@ export default React.createClass({
   renderVersionInfo(version) {
     return (
       <span>
-        {this.versionDescription(version)}
+        <strong>{this.versionDescription(version)}</strong>
         {' '}
-        <small>
-          <span title={date.format(version.get('created'))}><i className="fa fa-fw fa-calendar" />{moment(version.get('created')).fromNow()}</span> by {version.getIn(['creatorToken', 'description'], 'unknown')}
-        </small>
+        <span className="description description-small" title={date.format(version.get('created'))}>
+          <i className="fa fa-fw fa-calendar"/>
+          {moment(version.get('created')).fromNow()} by {version.getIn(['creatorToken', 'description'], 'unknown')}
+        </span>
       </span>
     );
   },

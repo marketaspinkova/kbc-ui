@@ -38,9 +38,9 @@ export default React.createClass({
             >
               {this.props.task.getIn(['config', 'name'])}
               <HelpBlock>
-                <small className="kbc-break-all">
+                <span className="kbc-break-all">
                   {descriptionExcerpt(this.props.task.getIn(['config', 'description']))}
-                </small>
+                </span>
               </HelpBlock>
             </ComponentConfigurationLink>
           ) : (

@@ -45,12 +45,14 @@ export default React.createClass({
         <div className="row kbc-header">
           <div className="kbc-title">
             {this.props.isProvisioning ? (
-              <h2>
-                Keboola provided database credentials
-                <div>
-                  <small>{provDescription}</small>
+              <span>
+                <h2>
+                  Keboola provided database credentials
+                </h2>
+                <div className="description description-small">
+                  {provDescription}
                 </div>
-              </h2>
+              </span>
             ) : (
               <h2>User specified database credentials</h2>
             )}

@@ -23,7 +23,7 @@ export default React.createClass({
           <h4>{this.props.bucket.get('name')}</h4>
         </span>
         <span className="td col-xs-5">
-          <small>{descriptionExcerpt(this.props.description) || <em>No description</em>}</small>
+          {descriptionExcerpt(this.props.description) || <em>No description</em>}
         </span>
         <span className="td col-xs-3 text-right kbc-no-wrap">{this._renderButtons()}</span>
       </span>

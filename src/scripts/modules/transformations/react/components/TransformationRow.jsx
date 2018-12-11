@@ -138,14 +138,12 @@ export default React.createClass({
         />
       </span>,
       <span className="td col-xs-7" key="col3">
-        <small>
-          {descriptionExcerpt(
-            TransformationStore.getTransformationDescription(
-              this.props.bucket.get('id'),
-              this.props.transformation.get('id')
-            )
-          ) || <em>No description</em>}
-        </small>
+        {descriptionExcerpt(
+          TransformationStore.getTransformationDescription(
+            this.props.bucket.get('id'),
+            this.props.transformation.get('id')
+          )
+        ) || <em>No description</em>}
       </span>
     ];
   },
@@ -167,14 +165,12 @@ export default React.createClass({
         />
       </span>,
       <span className="td col-xs-4" key="col3">
-        <small>
-          {descriptionExcerpt(
-            TransformationStore.getTransformationDescription(
-              this.props.bucket.get('id'),
-              this.props.transformation.get('id')
-            )
-          ) || <em>No description</em>}
-        </small>
+        {descriptionExcerpt(
+          TransformationStore.getTransformationDescription(
+            this.props.bucket.get('id'),
+            this.props.transformation.get('id')
+          )
+        ) || <em>No description</em>}
       </span>,
       <span className="td text-right col-xs-4" key="col4">
         {this.buttons()}

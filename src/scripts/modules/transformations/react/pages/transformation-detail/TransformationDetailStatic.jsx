@@ -9,7 +9,7 @@ import InputMappingRow from './InputMappingRow';
 import InputMappingDetail from './InputMappingDetail';
 import OutputMappingRow from './OutputMappingRow';
 import OutputMappingDetail from './OutputMappingDetail';
-import { Panel } from 'react-bootstrap';
+import { Panel, Col, Row } from 'react-bootstrap';
 import TransformationTypeLabel from '../../components/TransformationTypeLabel';
 import Requires from './Requires';
 import Packages from './Packages';
@@ -272,21 +272,28 @@ export default React.createClass({
         )}
         <div className="kbc-row">
           <div className="mapping">
-            <h2>
+            <Row>
+              <Col sm={6}>
+                <h2>
               Input Mapping
-              {!this._isOpenRefineTransformation() && !this._isMySqlTransformation() && (
-                <span className="pull-right add-mapping-button">
-                  {!this._getInputMappingValue().count() && <small className="empty-label">No input assigned</small>}
-                  <AddInputMapping
-                    tables={this.props.tables}
-                    transformation={this.props.transformation}
-                    bucket={this.props.bucket}
-                    mapping={this.props.editingFields.get('new-input-mapping', Map())}
-                    otherDestinations={this._inputMappingDestinations()}
-                  />
-                </span>
-              )}
-            </h2>
+                </h2>
+              </Col>
+              <Col sm={6}>
+                {!this._isOpenRefineTransformation() && !this._isMySqlTransformation() && (
+                  <span className="pull-right add-mapping-button">
+                    {!this._getInputMappingValue().count() &&
+                  <span className="description description-small empty-label">No input assigned</span>}
+                    <AddInputMapping
+                      tables={this.props.tables}
+                      transformation={this.props.transformation}
+                      bucket={this.props.bucket}
+                      mapping={this.props.editingFields.get('new-input-mapping', Map())}
+                      otherDestinations={this._inputMappingDestinations()}
+                    />
+                  </span>
+                )}
+              </Col>
+            </Row>
             {this._getInputMappingValue().count() ? (
               <div className="mapping-rows">
                 {this._getInputMappingValue()
@@ -341,21 +348,28 @@ export default React.createClass({
         </div>
         <div className="kbc-row">
           <div className="mapping">
-            <h2>
-              Output Mapping
-              {!this._isOpenRefineTransformation() && !this._isMySqlTransformation() && (
-                <span className="pull-right add-mapping-button">
-                  {!this._getOutputMappingValue().count() && <small className="empty-label">No output assigned</small>}
-                  <AddOutputMapping
-                    tables={this.props.tables}
-                    buckets={this.props.buckets}
-                    transformation={this.props.transformation}
-                    bucket={this.props.bucket}
-                    mapping={this.props.editingFields.get('new-output-mapping', Map())}
-                  />
-                </span>
-              )}
-            </h2>
+            <Row>
+              <Col sm={6}>
+                <h2>
+                  Output Mapping
+                </h2>
+              </Col>
+              <Col sm={6}>
+                {!this._isOpenRefineTransformation() && !this._isMySqlTransformation() && (
+                  <span className="pull-right add-mapping-button">
+                    {!this._getOutputMappingValue().count() &&
+                    <span className="description description-small empty-label">No output assigned</span>}
+                    <AddOutputMapping
+                      tables={this.props.tables}
+                      buckets={this.props.buckets}
+                      transformation={this.props.transformation}
+                      bucket={this.props.bucket}
+                      mapping={this.props.editingFields.get('new-output-mapping', Map())}
+                    />
+                  </span>
+                )}
+              </Col>
+            </Row>
             {this._getOutputMappingValue().count() ? (
               <div className="mapping-rows">
                 {this._getOutputMappingValue()

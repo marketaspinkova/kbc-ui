@@ -32,7 +32,7 @@ export default React.createClass({
           {this.description()}
         </span>
         <span className="td text-right kbc-component-buttons">
-          <span className="kbc-component-author">
+          <span className="kbc-component-author description description-small">
             Created by <strong>{this.props.config.getIn(['creatorToken', 'description'])}</strong>
             {' '}
             <CreatedWithIcon
@@ -74,7 +74,7 @@ export default React.createClass({
       return null;
     }
     return (
-      <div><small>{descriptionExcerpt(this.props.config.get('description'))}</small></div>
+      descriptionExcerpt(this.props.config.get('description'))
     );
   },
 

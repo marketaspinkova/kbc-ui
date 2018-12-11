@@ -41,8 +41,7 @@ export default React.createClass({
                 >
                   <span>
                     <strong>{configuration.get('name')}</strong>
-                    <br/>
-                    <small>{descriptionExcerpt(configuration.get('description'))}</small>
+                    {descriptionExcerpt(configuration.get('description'))}
                   </span>
                   <i className="fa fa-plus-circle"/>
                 </a>

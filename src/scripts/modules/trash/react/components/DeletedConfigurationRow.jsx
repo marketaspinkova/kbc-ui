@@ -27,7 +27,7 @@ export default React.createClass({
           {this.description()}
         </span>
         <span className="td text-right kbc-component-buttons">
-          <span className="kbc-component-author">
+          <span className="kbc-component-author description description-small">
             Removed by <strong>{this.props.config.getIn(['currentVersion', 'creatorToken', 'description'])}</strong>{' '}
             <Finished endTime={this.props.config.getIn(['currentVersion', 'created'])} />
           </span>

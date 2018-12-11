@@ -138,7 +138,7 @@ export default (componentId, driver, isProvisioning) => {
                 <span className="td">
                   <h4 className="list-group-item-heading">{`Own ${driverName} database`}</h4>
                   <p className="list-group-item-text">
-                    {`User has their own ${driverName} database and will provide its credentials`}
+                    <span className="description description-small">{`User has their own ${driverName} database and will provide its credentials`}</span>
                   </p>
                 </span>
               </a>
@@ -146,7 +146,7 @@ export default (componentId, driver, isProvisioning) => {
                 <span className="td">
                   <h4 className="list-group-item-heading">{`Keboola ${driverName} database`}</h4>
                   <p className="list-group-item-text">
-                    {`Keboola will provide and setup dedicated ${driverName} database. Any ${driverName} database previously provided for this configuration will be dropped.`}
+                    <span className="description description-small">{`Keboola will provide and setup dedicated ${driverName} database. Any ${driverName} database previously provided for this configuration will be dropped.`}</span>
                   </p>
                 </span>
               </a>

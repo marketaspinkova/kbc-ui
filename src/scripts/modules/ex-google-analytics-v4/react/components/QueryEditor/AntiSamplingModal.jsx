@@ -27,10 +27,11 @@ export default React.createClass({
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="text-muted">
-            <span>
-              Sampling in Analytics is the practice of selecting a subset of data from your traffic and reporting on the trends available in that sample set. If your API call covers a date range greater than the set session limits, it will return a sampled call. To avoid this and get more precise results, you can use one of the following algorithms.
-            </span>
+          <div className="description">
+            Sampling in Analytics is the practice of selecting a subset of data from your traffic and reporting on the
+            trends available in that sample set. If your API call covers a date range greater than the set session
+            limits, it will return a sampled call. To avoid this and get more precise results, you can use one of the
+            following algorithms.
           </div>
           <div className="form-horizontal clearfix">
             <div className="row">
