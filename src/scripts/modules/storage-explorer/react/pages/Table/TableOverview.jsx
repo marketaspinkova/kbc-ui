@@ -55,7 +55,7 @@ export default React.createClass({
                 {this.renderPrimaryKeyInfo(table)}{' '}
                 {!table.get('isAlias') && table.get('primaryKey').count() > 0 && (
                   <Tooltip tooltip="Remove table primary key" placement="top">
-                    <Button onClick={this.openRemovePrimaryKeyModal} disabled={deletingPrimaryKey}>
+                    <Button bsSize="small" onClick={this.openRemovePrimaryKeyModal} disabled={deletingPrimaryKey}>
                       {deletingPrimaryKey ? <Loader /> : <i className="fa fa-trash-o" />}
                     </Button>
                   </Tooltip>
