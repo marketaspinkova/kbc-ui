@@ -15,7 +15,8 @@ const queryEditorHelp = {
   'keboola.ex-db-mssql': <div>From Oct 1, 2018, DATETIME fields will be exported with milliseconds.<br/>
     If you'd like to export without milliseconds please cast your column as <code>CONVERT(DATETIME2(0), my_column)</code><br/>
     See the <ExternalLink href="https://help.keboola.com/extractors/database/sqldb/#ms-sql-server-advanced-mode">documentation</ExternalLink>
-    &nbsp;for further help.</div>
+    &nbsp;for further help.</div>,
+  'keboola.ex-db-pgsql': <span>Please use only block comments <code>/* */</code>. The copy command will fail on <code>--</code> inline comments</span>
 };
 
 export function getQueryEditorHelpText(componentId) {
