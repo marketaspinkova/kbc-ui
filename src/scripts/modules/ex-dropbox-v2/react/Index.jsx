@@ -292,7 +292,7 @@ export default React.createClass({
         };
       });
 
-      const oldState = this.state.configData.getIn(['parameters', 'config', 'dropboxFiles'], Map()).toJS();
+      const oldState = this.state.configData.getIn(['parameters', 'config', 'dropboxFiles'], List()).toJS();
       const mergedState = [...oldState, ...localState];
 
       // We need to dedup the state in case there has been selected the same combination of file + bucket.
