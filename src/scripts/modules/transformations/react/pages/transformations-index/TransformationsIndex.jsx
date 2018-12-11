@@ -106,17 +106,20 @@ export default React.createClass({
     let filtered = this.state.buckets;
     if (this.state.filter && this.state.filter !== '') {
       const filter = this.state.filter.toLowerCase();
-      const component = this;
       filtered = this.state.buckets.filter(
         bucket =>
           matchByWords(bucket.get('name', '').toLowerCase(), filter) ||
           matchByWords(bucket.get('id', ''), filter) ||
           matchByWords(bucket.get('description', '').toLowerCase(), filter) ||
-          component._getFilteredTransformations(bucket.get('id')).count()
+          this._getFilteredTransformations(bucket.get('id')).count()
       );
     }
 
     return filtered.sortBy(bucket => bucket.get('name').toLowerCase());
+  },
+
+  getTransformationDescription(bucketId, transformationId) {
+    return TransformationsStore.getTransformationDescription(bucketId, transformationId) || '';
   },
 
   _getFilteredTransformations(bucketId) {
@@ -128,7 +131,7 @@ export default React.createClass({
         .filter(
           transformation =>
             matchByWords(transformation.get('name', '').toLowerCase(), filter) ||
-            matchByWords(transformation.get('description', '').toLowerCase(), filter) ||
+            matchByWords(this.getTransformationDescription(bucketId, transformation.get('id')).toLowerCase(), filter) ||
             matchByWords(transformation.get('fullId', '').toString(), filter) ||
             matchByWords(transformation.get('id', ''), filter)
         );
