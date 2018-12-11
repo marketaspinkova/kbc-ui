@@ -126,6 +126,10 @@ const ApplicationStore = StoreUtils.createStore({
 
   getKbcVars() {
     return _store.getIn(['kbc']);
+  },
+
+  getProjectUrlTemplate() {
+    return _store.getIn(['kbc', 'urlTemplates', 'project']);
   }
 });
 

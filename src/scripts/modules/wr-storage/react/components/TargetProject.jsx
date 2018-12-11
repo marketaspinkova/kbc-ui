@@ -3,6 +3,7 @@ import React, { PropTypes } from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
 import {FormControl, FormGroup, ControlLabel, HelpBlock, Form, Col} from 'react-bootstrap';
 import SyncActionSimpleValue from '../../../configurations/react/components/SyncActionSimpleValue';
+import ExternalProjectLink from '../../../components/react/components/ExternalProjectLink';
 
 export default React.createClass({
   mixins: [immutableMixin],
@@ -66,10 +67,15 @@ export default React.createClass({
           </Col>
           <Col sm={8}>
             <FormControl.Static>
-              <SyncActionSimpleValue
-                action={infoAction}
-                valueKey="projectName"
-              />
+              <ExternalProjectLink
+                stackUrl={infoAction.getIn(['request', 'configData', 'parameters', 'url'])}
+                projectId={infoAction.getIn(['data', 'projectId'])}
+              >
+                <SyncActionSimpleValue
+                  action={infoAction}
+                  valueKey="projectName"
+                />
+              </ExternalProjectLink>
             </FormControl.Static>
           </Col>
         </FormGroup>
