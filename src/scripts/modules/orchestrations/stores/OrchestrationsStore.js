@@ -1,7 +1,7 @@
 import Dispatcher from '../../../Dispatcher';
 import { Map, List, fromJS } from 'immutable';
 import { ActionTypes } from '../Constants';
-import fuzzy from 'fuzzy';
+import matchByWords from '../../../utils/matchByWords';
 import StoreUtils from '../../../utils/StoreUtils';
 
 let _store = Map({
@@ -128,7 +128,7 @@ const OrchestrationStore = StoreUtils.createStore({
     const filter = this.getFilter();
     return this.getAll().filter(orchestration => {
       if (filter) {
-        return fuzzy.match(filter, orchestration.get('name'));
+        return matchByWords(orchestration.get('name').toLowerCase(), filter.toLowerCase());
       } else {
         return true;
       }
