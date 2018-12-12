@@ -20,7 +20,7 @@ export default React.createClass({
         <span className="raquo">&raquo;</span>
         <strong className="h2">Pending Invitations</strong><br/>
         <span className="small">
-            You have <strong>{this.props.invitationsCount}</strong> pending <strong>project{this.pluralText()} invitation{this.pluralText()}</strong>, <br/>waiting for your response.
+            You have <strong>{this.props.invitationsCount}</strong> pending <strong>invitation{this.pluralText()}</strong>, <br/>waiting for your response.
         </span>
       </a>
     );
