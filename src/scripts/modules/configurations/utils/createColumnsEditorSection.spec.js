@@ -158,6 +158,22 @@ describe('columns editor section', () => {
       }
     );
   });
+  it('test nonexisting table render', () => {
+    const editorSection = createColumnsEditorSection(editorSectionDefinition).toJS();
+    const nonExistingTableContext =  fromJS({
+      table: {
+        id: 'in.some.table'
+      }
+    });
+    const localState = editorSection.onLoad(configuration, nonExistingTableContext).toJS();
+    const EditorComponent = editorSection.render;
+    renderSnapshot(
+      <EditorComponent
+        value={localState}
+        onChange={() => null}
+        disabled={false}/>
+    );
+  });
   it('test render', () => {
     const editorSection = createColumnsEditorSection(editorSectionDefinition).toJS();
     const localState = editorSection.onLoad(configuration, sectionContext).toJS();
