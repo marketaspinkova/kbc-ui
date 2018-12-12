@@ -1,5 +1,5 @@
 import makeColumnDefinition from '../helpers/makeColumnDefinition';
-import { Map, fromJS } from 'immutable';
+import { Map, fromJS, List } from 'immutable';
 import getInitialShowAdvanced from '../helpers/getInitialShowAdvanced';
 import PreferencesHeader from '../react/components/PreferencesHeader';
 import PreferencesColumn from '../react/components/PreferencesColumn';
@@ -41,7 +41,7 @@ export default function(configProvisioning, tablesProvisioning, storageTable) {
   const { getEditingTable, setEditingTable, tables } = tablesProvisioning;
   const editing = getEditingTable(tableId);
 
-  const storageTableColumns = storageTable.get('columns');
+  const storageTableColumns = storageTable.get('columns', List());
   const configuredColumns = editing.tableParameters.get('columns', Map());
   const allColumnsList = prepareAllTableColumns(configuredColumns, storageTableColumns);
 

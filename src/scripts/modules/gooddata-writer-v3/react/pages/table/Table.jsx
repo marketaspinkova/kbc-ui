@@ -1,4 +1,5 @@
 import React from 'react';
+import {Map} from 'immutable';
 
 // stores
 import RoutesStore from '../../../../../stores/RoutesStore';
@@ -42,7 +43,7 @@ export default React.createClass({
     const table = tables.get(tableId);
     const configProvisioning = makeConfigProvisioning(configurationId);
     const {isSaving, isPendingFn} = configProvisioning;
-    const storageTable = TablesStore.getAll().get(tableId);
+    const storageTable = TablesStore.getAll().get(tableId) || Map({id: tableId});
     const isPendingToggleExport = isPendingFn([tableId, 'activate']);
     const loadOnly = tableLoadSettingsAdapter(configProvisioning).value.loadOnly;
 
@@ -57,7 +58,6 @@ export default React.createClass({
       columnsEditorSectionProps,
       loadTypeSectionProps,
       isPendingToggleExport,
-      storageTable,
       deleteTable,
       toggleTableExport,
       isSaving: isSaving && !isPendingToggleExport,
