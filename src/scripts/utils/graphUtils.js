@@ -34,5 +34,45 @@ export default {
     }
 
     return nodes;
+  },
+
+  styles() {
+    return {
+      'g.edgePath': {
+        fill: 'none',
+        stroke: 'grey',
+        'stroke-width': '1.5px'
+      },
+      'g.edgePath.alias': {
+        'stroke-dasharray': '5, 5'
+      },
+      'g.node text': {
+        color: '#ffffff',
+        fill: '#ffffff',
+        display: 'inline-block',
+        padding: '2px 4px',
+        'font-size': '12px',
+        'font-weight': 'bold',
+        'line-height': '14px',
+        'text-shadow': '0 -1px 0 rgba(0, 0, 0, 0.25)',
+        'white-space': 'nowrap',
+        'vertical-align': 'baseline'
+      },
+      '.node.transformation rect': {
+        fill: '#363636'
+      },
+      '.node.remote-transformation rect': {
+        fill: '#999999'
+      },
+      '.node.writer rect': {
+        fill: '#faa732'
+      },
+      '.node.input rect': {
+        fill: '#468847'
+      },
+      '.node.output rect': {
+        fill: '#3a87ad'
+      }
+    };
   }
 };
