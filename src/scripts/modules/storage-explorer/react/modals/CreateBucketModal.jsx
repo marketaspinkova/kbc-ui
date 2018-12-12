@@ -122,11 +122,8 @@ export default React.createClass({
     if (!this.state.error) {
       return null;
     }
-    return (
-      <div className="alert alert-danger">
-        {this.state.error}
-      </div>
-    );
+
+    return <Alert bsStyle="danger">{this.state.error}</Alert>;
   },
 
   handleName(event) {
@@ -160,14 +157,16 @@ export default React.createClass({
       backend: this.state.backend || this.props.defaultBackend
     };
 
-    this.props.onSubmit(newBucket)
-      .then(() => {
+    this.props.onSubmit(newBucket).then(
+      () => {
         this.onHide();
-      }, (message) => {
+      },
+      message => {
         this.setState({
           error: message
         });
-      });
+      }
+    );
   },
 
   resetState() {

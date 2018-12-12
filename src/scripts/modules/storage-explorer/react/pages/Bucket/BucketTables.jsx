@@ -1,9 +1,11 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import classnames from 'classnames';
-import { Table, Button } from 'react-bootstrap';
+import { Table, ButtonGroup, Button } from 'react-bootstrap';
 import CreatedWithIcon from '../../../../../react/common/CreatedWithIcon';
 import FileSize from '../../../../../react/common/FileSize';
+
+import CreateTableModal from '../../modals/CreateTableModal';
 import CreateAliasTableModal from '../../modals/CreateAliasTableModal';
 
 export default React.createClass({
@@ -11,12 +13,15 @@ export default React.createClass({
     bucket: PropTypes.object.isRequired,
     tables: PropTypes.object.isRequired,
     sapiToken: PropTypes.object.isRequired,
+    onCreateTable: PropTypes.func.isRequired,
     onCreateAliasTable: PropTypes.func.isRequired,
+    isCreatingTable: PropTypes.bool.isRequired,
     isCreatingAliasTable: PropTypes.bool.isRequired
   },
 
   getInitialState() {
     return {
+      openCreateTableModal: false,
       openCreateAliasTableModal: false
     };
   },
@@ -26,13 +31,18 @@ export default React.createClass({
       <div>
         <div className="clearfix">
           <div className="kbc-buttons pull-right">
-            <Button
-              bsStyle="success"
-              onClick={this.openCreateAliasTableModal}
-              disabled={this.props.isCreatingAliasTable}
-            >
-              Create table alias
-            </Button>
+            <ButtonGroup>
+              <Button bsStyle="success" onClick={this.openCreateTableModal} disabled={this.props.isCreatingTable}>
+                Create table
+              </Button>
+              <Button
+                bsStyle="success"
+                onClick={this.openCreateAliasTableModal}
+                disabled={this.props.isCreatingAliasTable}
+              >
+                Create table alias
+              </Button>
+            </ButtonGroup>
           </div>
         </div>
 
@@ -53,6 +63,7 @@ export default React.createClass({
           <p>No tables.</p>
         )}
 
+        {this.renderCreateTableModal()}
         {this.renderCreateAliasTableModal()}
       </div>
     );
@@ -84,6 +95,18 @@ export default React.createClass({
     );
   },
 
+  renderCreateTableModal() {
+    return (
+      <CreateTableModal
+        bucket={this.props.bucket}
+        openModal={this.state.openCreateTableModal}
+        onSubmit={this.props.onCreateTable}
+        onHide={this.closeCreateTableModal}
+        isSaving={this.props.isCreatingAliasTable}
+      />
+    );
+  },
+
   renderCreateAliasTableModal() {
     return (
       <CreateAliasTableModal
@@ -104,6 +127,18 @@ export default React.createClass({
     const bucketId = this.props.bucket.get('id');
     const permissions = this.props.sapiToken.getIn(['bucketPermissions', bucketId], '');
     return ['write', 'manage'].includes(permissions);
+  },
+
+  openCreateTableModal() {
+    this.setState({
+      openCreateTableModal: true
+    });
+  },
+
+  closeCreateTableModal() {
+    this.setState({
+      openCreateTableModal: false
+    });
   },
 
   openCreateAliasTableModal() {

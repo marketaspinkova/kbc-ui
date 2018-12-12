@@ -1,4 +1,5 @@
 import React from 'react';
+import Promise from 'bluebird';
 import { Tab, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 
 import ApplicationStore from '../../../../../stores/ApplicationStore';
@@ -25,9 +26,10 @@ export default React.createClass({
       sapiToken: ApplicationStore.getSapiToken(),
       tables: TablesStore.getAll().filter(table => table.getIn(['bucket', 'id']) === bucketId),
       deletingBuckets: BucketsStore.deletingBuckets().has(bucketId),
-      creatingAliasTable: TablesStore.getIsCreatingAliasTable(),
       isSharing: BucketsStore.isSharing(bucketId),
-      isUnsharing: BucketsStore.isUnsharing(bucketId)
+      isUnsharing: BucketsStore.isUnsharing(bucketId),
+      creatingTable: TablesStore.getIsCreatingTable(),
+      creatingAliasTable: TablesStore.getIsCreatingAliasTable()
     };
   },
 
@@ -80,7 +82,9 @@ export default React.createClass({
                   bucket={this.state.bucket}
                   tables={this.state.tables}
                   sapiToken={this.state.sapiToken}
+                  onCreateTable={this.handleCreateTable}
                   onCreateAliasTable={this.handleCreateAliasTable}
+                  isCreatingTable={this.state.creatingTable}
                   isCreatingAliasTable={this.state.creatingAliasTable}
                 />
               </Tab.Pane>
@@ -107,6 +111,11 @@ export default React.createClass({
         onHide={this.closeDeleteBucketModal}
       />
     );
+  },
+
+  handleCreateTable() {
+    return Promise.resolve();
+    // return StorageActionCreators.createTable(this.state.bucket.get('id'), params);
   },
 
   handleCreateAliasTable(params) {
