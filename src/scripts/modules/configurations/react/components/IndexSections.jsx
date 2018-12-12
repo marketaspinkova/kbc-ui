@@ -17,9 +17,11 @@ import sections from '../../utils/sections';
 import isParsableConfiguration from '../../utils/isParsableConfiguration';
 
 import JsonConfiguration from '../components/JsonConfiguration';
+import dockerActions from '../../DockerActionsActionCreators';
+import DockerActionsStore from '../../DockerActionsStore';
 
 export default React.createClass({
-  mixins: [createStoreMixin(InstalledComponentsStore, Store)],
+  mixins: [createStoreMixin(InstalledComponentsStore, Store, DockerActionsStore)],
 
   getStateFromStores() {
     const settings = RoutesStore.getRouteSettings();
@@ -52,6 +54,7 @@ export default React.createClass({
       settings: settings,
       component: component,
       configurationId: configurationId,
+      configuration: ConfigurationsStore.get(componentId, configurationId),
       createBySectionsFn,
       parseBySectionsFn,
       jsonConfigurationValue: Store.getEditingJsonConfigurationString(componentId, configurationId),
@@ -79,6 +82,10 @@ export default React.createClass({
     };
   },
 
+  componentDidMount() {
+    dockerActions.reloadIndexSyncActions(this.state.componentId, this.state.configurationId);
+  },
+
   onUpdateSection(sectionKey, diff) {
     const {configurationBySections, componentId, configurationId} = this.state;
     const newConfigurationBySections = configurationBySections.set(
@@ -103,7 +110,18 @@ export default React.createClass({
   renderSections() {
     const settingsSections = this.state.settings.getIn(['index', 'sections']);
     const {storedConfigurationSections} = this.state;
+    const state = this.state;
     const returnTrue = () => true;
+
+    let actionsData = Immutable.Map();
+    this.state.settings.getIn(['index', 'actions'], Immutable.List()).forEach((action) => {
+      actionsData = actionsData.set(action.get('name'), DockerActionsStore.get(
+        state.settings.get('componentId'),
+        action,
+        state.configuration.get('configuration')
+      ));
+    });
+
     return settingsSections.map((section, key) => {
       const SectionComponent = section.get('render');
       const onSectionSave = section.get('onSave');
@@ -117,6 +135,7 @@ export default React.createClass({
             onChange={(diff) => this.onUpdateSection(key, diff)}
             onSave={(diff) => this.onSaveSection(key, diff)}
             value={this.state.configurationBySections.get(key).toJS()}
+            actions={actionsData}
           />
         </div>
       );

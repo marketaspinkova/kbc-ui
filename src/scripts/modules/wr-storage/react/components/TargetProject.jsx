@@ -1,7 +1,10 @@
 import React, { PropTypes } from 'react';
+
 import immutableMixin from 'react-immutable-render-mixin';
-// import { Input } from './../../../../react/common/KbcBootstrap';
 import {FormControl, FormGroup, ControlLabel, HelpBlock, Form, Col} from 'react-bootstrap';
+import SyncActionSimpleValue from '../../../configurations/react/components/SyncActionSimpleValue';
+import ExternalProjectLink from '../../../components/react/components/ExternalProjectLink';
+import ExternalBucketLink from '../../../components/react/components/ExternalBucketLink';
 
 export default React.createClass({
   mixins: [immutableMixin],
@@ -12,10 +15,13 @@ export default React.createClass({
       token: PropTypes.string.isRequired
     }),
     onChange: PropTypes.func.isRequired,
-    disabled: PropTypes.bool.isRequired
+    disabled: PropTypes.bool.isRequired,
+    actions: PropTypes.object.isRequired
   },
 
+
   render() {
+    const infoAction = this.props.actions.get('info');
     const props = this.props;
     return (
       <Form horizontal>
@@ -54,6 +60,43 @@ export default React.createClass({
               disabled={this.props.disabled}
             />
             <HelpBlock>Use token with permissions limited only to write to a single target bucket.</HelpBlock>
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col componentClass={ControlLabel} sm={4}>
+            Project
+          </Col>
+          <Col sm={8}>
+            <FormControl.Static>
+              <ExternalProjectLink
+                stackUrl={infoAction.getIn(['request', 'configData', 'parameters', 'url'])}
+                projectId={infoAction.getIn(['data', 'projectId'])}
+              >
+                <SyncActionSimpleValue
+                  action={infoAction}
+                  valueKey="projectName"
+                />
+              </ExternalProjectLink>
+            </FormControl.Static>
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col componentClass={ControlLabel} sm={4}>
+            Bucket
+          </Col>
+          <Col sm={8}>
+            <FormControl.Static>
+              <ExternalBucketLink
+                stackUrl={infoAction.getIn(['request', 'configData', 'parameters', 'url'])}
+                projectId={infoAction.getIn(['data', 'projectId'])}
+                bucketId={infoAction.getIn(['data', 'bucket'])}
+              >
+                <SyncActionSimpleValue
+                  action={infoAction}
+                  valueKey="bucket"
+                />
+              </ExternalBucketLink>
+            </FormControl.Static>
           </Col>
         </FormGroup>
       </Form>

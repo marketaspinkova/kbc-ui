@@ -8,6 +8,7 @@ import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import ConfigurationsStore from '../../ConfigurationsStore';
 import TablesStore from '../../../components/stores/StorageTablesStore';
 import LatestJobsStore from '../../../jobs/stores/LatestJobsStore';
+import DockerActionsStore from '../../DockerActionsStore';
 
 // actions
 import Actions from '../../ConfigurationRowsActionCreators';
@@ -27,9 +28,10 @@ import LatestJobs from '../../../components/react/components/SidebarJobs';
 // adapters
 import isParsableConfiguration from '../../utils/isParsableConfiguration';
 import sections from '../../utils/sections';
+import dockerActions from '../../DockerActionsActionCreators';
 
 export default React.createClass({
-  mixins: [createStoreMixin(Store, TablesStore, LatestJobsStore)],
+  mixins: [createStoreMixin(Store, TablesStore, DockerActionsStore, LatestJobsStore)],
 
   getStateFromStores() {
     const settings = RoutesStore.getRouteSettings();
@@ -63,6 +65,7 @@ export default React.createClass({
       componentId: componentId,
       settings: settings,
       configurationId: configurationId,
+      configuration: ConfigurationsStore.get(componentId, configurationId),
       rowId: rowId,
       row: row,
 
@@ -103,6 +106,11 @@ export default React.createClass({
 
       latestJobs: LatestJobsStore.getRowJobs(componentId, configurationId, rowId)
     };
+  },
+
+  componentDidMount() {
+    dockerActions.reloadIndexSyncActions(this.state.componentId, this.state.configurationId);
+    dockerActions.reloadRowSyncActions(this.state.componentId, this.state.configurationId, this.state.rowId);
   },
 
   renderActions() {
@@ -249,9 +257,28 @@ export default React.createClass({
   },
 
   renderSections() {
+    const state = this.state;
     const settingsSections = this.state.settings.getIn(['row', 'sections']);
     const { storedConfigurationSections } = this.state;
     const returnTrue = () => true;
+
+    let actionsData = Immutable.Map();
+    this.state.settings.getIn(['index', 'actions'], Immutable.List()).forEach((action) => {
+      actionsData = actionsData.set(action.get('name'), DockerActionsStore.get(
+        state.settings.get('componentId'),
+        action,
+        state.configuration.get('configuration')
+      ));
+    });
+    this.state.settings.getIn(['row', 'actions'], Immutable.List()).forEach((action) => {
+      actionsData = actionsData.set(action.get('name'), DockerActionsStore.get(
+        state.settings.get('componentId'),
+        action,
+        state.configuration.get('configuration'),
+        state.row.get('configuration')
+      ));
+    });
+
     return settingsSections.map((section, key) => {
       const SectionComponent = section.get('render');
       const onSectionSave = section.get('onSave');
@@ -264,6 +291,7 @@ export default React.createClass({
             disabled={this.state.isSaving}
             onChange={diff => this.onUpdateSection(key, diff)}
             value={this.state.configurationBySections.get(key).toJS()}
+            actions={actionsData}
           />
         </div>
       );

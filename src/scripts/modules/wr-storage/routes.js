@@ -14,10 +14,20 @@ import targetProjectAdapter from './adapters/targetProject';
 import DestinationSection from './react/components/Destination';
 import destinationAdapter from './adapters/destination';
 
+import actions from './adapters/actions';
+
 const routeSettings = {
   componentId: 'keboola.wr-storage',
   componentType: 'writer',
   index: {
+    actions: [
+      {
+        name: 'info',
+        cache: true,
+        autoload: true,
+        getPayload: actions.info
+      }
+    ],
     sections: [
       {
         render: CollapsibleSection({

@@ -3,6 +3,7 @@ import Dispatcher from '../../Dispatcher';
 import Constants from './ConfigurationRowsConstants';
 import ConfigurationRowsStore from './ConfigurationRowsStore';
 import InstalledComponentsApi from '../components/InstalledComponentsApi';
+import InstalledComponentsActionCreators from '../components/InstalledComponentsActionCreators';
 import VersionActionCreators from '../components/VersionsActionCreators';
 import RowVersionsActionCreators from './RowVersionsActionCreators';
 import ApplicationStore from '../../stores/ApplicationStore';
@@ -11,6 +12,7 @@ import configurationRowDeleted from '../components/react/components/notification
 import Immutable from 'immutable';
 import preferEncryptedAttributes from '../components/utils/preferEncryptedAttributes';
 import stringUtils from '../../utils/string';
+import DockerActionsActionCreators from './DockerActionsActionCreators';
 const { webalize } = stringUtils;
 
 const storeEncodedConfigurationRow = function(componentId, configurationId, rowId, configuration, changeDescription) {
@@ -241,6 +243,9 @@ module.exports = {
       .then(function(response) {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
         RowVersionsActionCreators.loadVersionsForce(componentId, configurationId, rowId);
+        InstalledComponentsActionCreators.loadComponentConfigDataForce(componentId, configurationId).then(() => {
+          DockerActionsActionCreators.reloadRowSyncActions(componentId, configurationId, rowId);
+        });
         Dispatcher.handleViewAction({
           type: Constants.ActionTypes.CONFIGURATION_ROWS_SAVE_CONFIGURATION_SUCCESS,
           componentId: componentId,
