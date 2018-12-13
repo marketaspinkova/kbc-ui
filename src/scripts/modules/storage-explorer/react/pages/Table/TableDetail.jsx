@@ -245,11 +245,9 @@ export default React.createClass({
   },
 
   handleSelectTab(tab) {
-    if (['overview', 'description', 'events', 'data-sample', 'snapshot-and-restore', 'graph'].includes(tab)) {
-      this.setState({
-        activeTab: tab
-      });
-    }
+    this.setState({
+      activeTab: tab
+    });
   },
 
   handleDeleteTable(forceDelete) {
@@ -284,34 +282,10 @@ export default React.createClass({
   },
 
   handleDropdownAction(action) {
-    switch (action) {
-      case 'export':
-        return this.setState({
-          openActionModal: true,
-          actionModalType: 'export'
-        });
-
-      case 'load':
-        return this.setState({
-          openActionModal: true,
-          actionModalType: 'load'
-        });
-
-      case 'truncate':
-        return this.setState({
-          openActionModal: true,
-          actionModalType: 'truncate'
-        });
-
-      case 'delete':
-        return this.setState({
-          openActionModal: true,
-          actionModalType: 'delete'
-        });
-
-      default:
-        return null;
-    }
+    this.setState({
+      openActionModal: true,
+      actionModalType: action
+    });
   },
 
   closeActionModal() {
