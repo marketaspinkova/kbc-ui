@@ -52,6 +52,7 @@ const configuration = fromJS({
 });
 
 const sectionContext = fromJS({
+  tableId: 'in.some.table',
   table: {
     id: 'in.some.table',
     columns: ['age', 'person', 'otherColumn']
@@ -108,6 +109,7 @@ describe('columns editor section', () => {
             type: 'varchar'
           }
         ],
+        tableExist: true,
         tableId: 'in.some.table',
         columnsMappings: editorSectionDefinition.columnsMappings,
         context: {
@@ -161,9 +163,8 @@ describe('columns editor section', () => {
   it('test nonexisting table render', () => {
     const editorSection = createColumnsEditorSection(editorSectionDefinition).toJS();
     const nonExistingTableContext =  fromJS({
-      table: {
-        id: 'in.some.table'
-      }
+      table: null,
+      tableId: 'in.some.table'
     });
     const localState = editorSection.onLoad(configuration, nonExistingTableContext).toJS();
     const EditorComponent = editorSection.render;
