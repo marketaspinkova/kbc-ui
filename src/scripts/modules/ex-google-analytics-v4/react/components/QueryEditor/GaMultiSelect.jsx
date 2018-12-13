@@ -156,6 +156,7 @@ export default React.createClass({
   renderStaticOption(optionId, idx) {
     const option = this.props.metadata.find((op) => op.id === optionId);
     const desc = option ? option.attributes.description : '';
+    const name = option ? option.attributes.uiName : '';
     const isLast = idx === this.props.selectedValues.length - 1;
     return (
       <span key={idx}>
