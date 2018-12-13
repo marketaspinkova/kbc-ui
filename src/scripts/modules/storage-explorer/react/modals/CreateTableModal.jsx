@@ -47,8 +47,11 @@ export default React.createClass({
             <Modal.Title>Create table in {this.props.bucket.get('id')}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {this.state.error && this.renderError()}
-            {this.isSaving() ? this.renderProgress() : this.renderForm()}
+            {this.state.error ? this.renderError() : (
+              <div>
+                {this.isSaving() ? this.renderProgress() : this.renderForm()}
+              </div>
+            )}
           </Modal.Body>
           <Modal.Footer>
             <Button bsStyle="link" onClick={this.onHide}>
@@ -262,9 +265,7 @@ export default React.createClass({
       params.primaryKey = this.state.primaryKey;
     }
 
-    return this.props.onCreateFromCsv(this.state.file, params).then(this.onHide, message => {
-      this.setState({ error: message });
-    });
+    return this.props.onCreateFromCsv(this.state.file, params).then(this.onHide, this.handleError);
   },
 
   createTableFromString() {
@@ -277,9 +278,11 @@ export default React.createClass({
       params.primaryKey = this.state.primaryKey;
     }
 
-    return this.props.onCreateFromString(params).then(this.onHide, message => {
-      this.setState({ error: message });
-    });
+    return this.props.onCreateFromString(params).then(this.onHide, this.handleError);
+  },
+
+  handleError(message) {
+    this.setState({ error: message });
   },
 
   resetState() {
