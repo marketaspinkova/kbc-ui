@@ -7,6 +7,7 @@ import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../../../stores/RoutesStore';
 import BucketsStore from '../../../../components/stores/StorageBucketsStore';
 import TablesStore from '../../../../components/stores/StorageTablesStore';
+import FilesStore from '../../../../components/stores/StorageFilesStore';
 import StorageActionCreators from '../../../../components/StorageActionCreators';
 
 import DeleteBucketModal from '../../modals/DeleteBucketModal';
@@ -16,7 +17,7 @@ import BucketEvents from './BucketEvents';
 import { deleteBucket } from '../../../Actions';
 
 export default React.createClass({
-  mixins: [createStoreMixin(BucketsStore, ApplicationStore, TablesStore)],
+  mixins: [createStoreMixin(BucketsStore, ApplicationStore, TablesStore, FilesStore)],
 
   getStateFromStores() {
     const bucketId = RoutesStore.getCurrentRouteParam('bucketId');
@@ -29,7 +30,8 @@ export default React.createClass({
       isSharing: BucketsStore.isSharing(bucketId),
       isUnsharing: BucketsStore.isUnsharing(bucketId),
       creatingTable: TablesStore.getIsCreatingTable(),
-      creatingAliasTable: TablesStore.getIsCreatingAliasTable()
+      creatingAliasTable: TablesStore.getIsCreatingAliasTable(),
+      uploadingProgress: FilesStore.getUploadingProgress(bucketId) || 0
     };
   },
 
@@ -82,10 +84,12 @@ export default React.createClass({
                   bucket={this.state.bucket}
                   tables={this.state.tables}
                   sapiToken={this.state.sapiToken}
-                  onCreateTable={this.handleCreateTable}
+                  onCreateTableFromCsv={this.handleCreateTableFromCsv}
+                  onCreateTableFromString={this.handleCreateTableFromString}
                   onCreateAliasTable={this.handleCreateAliasTable}
                   isCreatingTable={this.state.creatingTable}
                   isCreatingAliasTable={this.state.creatingAliasTable}
+                  uploadingProgress={this.state.uploadingProgress}
                 />
               </Tab.Pane>
               <Tab.Pane eventKey="events">
@@ -113,8 +117,19 @@ export default React.createClass({
     );
   },
 
-  handleCreateTable() {
-    return Promise.resolve();
+  handleCreateTableFromCsv(file, params) {
+    const bucketId = this.state.bucket.get('id');
+
+    return StorageActionCreators.uploadFile(bucketId, file).then(fileId => {
+      return StorageActionCreators.createTable(bucketId, {
+        ...params,
+        dataFileId: fileId
+      });
+    });
+  },
+
+  handleCreateTableFromString(params) {
+    return Promise.resolve(params);
     // return StorageActionCreators.createTable(this.state.bucket.get('id'), params);
   },
 

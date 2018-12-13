@@ -13,10 +13,12 @@ export default React.createClass({
     bucket: PropTypes.object.isRequired,
     tables: PropTypes.object.isRequired,
     sapiToken: PropTypes.object.isRequired,
-    onCreateTable: PropTypes.func.isRequired,
+    onCreateTableFromCsv: PropTypes.func.isRequired,
+    onCreateTableFromString: PropTypes.func.isRequired,
     onCreateAliasTable: PropTypes.func.isRequired,
     isCreatingTable: PropTypes.bool.isRequired,
-    isCreatingAliasTable: PropTypes.bool.isRequired
+    isCreatingAliasTable: PropTypes.bool.isRequired,
+    uploadingProgress: PropTypes.number.isRequired
   },
 
   getInitialState() {
@@ -27,13 +29,15 @@ export default React.createClass({
   },
 
   render() {
+    const creatingTable = this.props.isCreatingTable || this.props.uploadingProgress > 0;
+
     return (
       <div>
         <div className="clearfix">
           <div className="kbc-buttons pull-right">
             <ButtonGroup>
-              <Button bsStyle="success" onClick={this.openCreateTableModal} disabled={this.props.isCreatingTable}>
-                Create table
+              <Button bsStyle="success" onClick={this.openCreateTableModal}>
+                {creatingTable ? 'Creating table...' : 'Create table'}
               </Button>
               <Button
                 bsStyle="success"
@@ -100,9 +104,11 @@ export default React.createClass({
       <CreateTableModal
         bucket={this.props.bucket}
         openModal={this.state.openCreateTableModal}
-        onSubmit={this.props.onCreateTable}
+        onCreateFromCsv={this.props.onCreateTableFromCsv}
+        onCreateFromString={this.props.onCreateTableFromString}
         onHide={this.closeCreateTableModal}
-        isSaving={this.props.isCreatingAliasTable}
+        isCreatingTable={this.props.isCreatingTable}
+        progress={this.props.uploadingProgress}
       />
     );
   },

@@ -1,4 +1,5 @@
 import Promise from 'bluebird';
+import _ from 'underscore';
 import ApplicationStore from '../../stores/ApplicationStore';
 import dispatcher from '../../Dispatcher';
 import * as constants from './Constants';
@@ -9,6 +10,10 @@ import StorageFilesStore from './stores/StorageFilesStore';
 import storageApi from './StorageApi';
 import jobPoller from '../../utils/jobPoller';
 import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
+
+// via https://github.com/aws/aws-sdk-js/issues/603#issuecomment-228233113
+import 'aws-sdk/dist/aws-sdk';
+const AWS = window.AWS;
 
 module.exports = {
 
@@ -653,8 +658,6 @@ module.exports = {
   },
 
   loadDataIntoWorkspace: function(workspaceId, configuration) {
-    // var self;
-    // self = this;
     dispatcher.handleViewAction({
       type: constants.ActionTypes.STORAGE_LOAD_DATA_INTO_WORKSPACE,
       configuration: configuration,
@@ -765,6 +768,75 @@ module.exports = {
         errors: error
       });
       throw message;
+    });
+  },
+
+  uploadFile: function(bucketId, file) {
+    const uploadParams = {
+      federationToken: true,
+      notify: false,
+      isEncrypted: true,
+      name: file.name,
+      sizeBytes: file.size
+    };
+
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.STORAGE_FILE_UPLOAD,
+      bucketId: bucketId,
+      progress: 1
+    });
+
+    return storageApi.prepareFileUpload(uploadParams).then(response => {
+      const fileId = response.id;
+
+      const awsParams = {
+        signatureVersion: 'v4',
+        maxRetries: 0,
+        region: response.region,
+        httpOptions: {
+          timeout: 0
+        }
+      };
+
+      const s3params = {
+        Key: response.uploadParams.key,
+        Bucket: response.uploadParams.bucket,
+        ACL: response.uploadParams.acl,
+        ServerSideEncryption: response.uploadParams['x-amz-server-side-encryption'],
+        Body: file
+      };
+
+      AWS.config.setPromisesDependency(Promise);
+      AWS.config.credentials = new AWS.Credentials({
+        accessKeyId: response.uploadParams.credentials.AccessKeyId,
+        secretAccessKey: response.uploadParams.credentials.SecretAccessKey,
+        sessionToken: response.uploadParams.credentials.SessionToken
+      });
+
+      const reportProgress = _.throttle((progress) => {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_FILE_UPLOAD,
+          bucketId: bucketId,
+          progress: Math.max(1, Math.round(100 * (progress.loaded / progress.total)))
+        });
+      }, 800);
+
+      return new AWS.S3(awsParams)
+        .putObject(s3params)
+        .on('httpUploadProgress', reportProgress)
+        .promise().then(() => {
+          dispatcher.handleViewAction({
+            type: constants.ActionTypes.STORAGE_FILE_UPLOAD_SUCCESS,
+            bucketId: bucketId
+          });
+          return fileId;
+        });
+    }).catch(error => {
+      dispatcher.handleViewAction({
+        type: constants.ActionTypes.STORAGE_FILE_UPLOAD_ERROR,
+        bucketId: bucketId
+      });
+      throw error;
     });
   }
 };

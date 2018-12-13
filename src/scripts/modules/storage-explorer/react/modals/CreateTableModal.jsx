@@ -13,25 +13,14 @@ import {
 } from 'react-bootstrap';
 import { Loader, PanelWithDetails } from '@keboola/indigo-ui';
 
-const INITIAL_PROGRESS = {
-  upload: {
-    value: 0,
-    active: false
-  },
-  create: {
-    value: 0,
-    active: false
-  }
-};
-
 const INITIAL_STATE = {
   name: '',
+  file: null,
   delimiter: ',',
   enclosure: '"',
   tableColumns: '',
   primaryKey: '',
   createFrom: 'csv',
-  progress: INITIAL_PROGRESS,
   error: null
 };
 
@@ -39,9 +28,11 @@ export default React.createClass({
   propTypes: {
     bucket: PropTypes.object.isRequired,
     openModal: PropTypes.bool.isRequired,
-    onSubmit: PropTypes.func.isRequired,
+    onCreateFromCsv: PropTypes.func.isRequired,
+    onCreateFromString: PropTypes.func.isRequired,
     onHide: PropTypes.func.isRequired,
-    isSaving: PropTypes.bool.isRequired
+    isCreatingTable: PropTypes.bool.isRequired,
+    progress: PropTypes.number.isRequired
   },
 
   getInitialState() {
@@ -55,7 +46,10 @@ export default React.createClass({
           <Modal.Header closeButton>
             <Modal.Title>Create table in {this.props.bucket.get('id')}</Modal.Title>
           </Modal.Header>
-          <Modal.Body>{this.state.error ? this.renderError() : this.renderForm()}</Modal.Body>
+          <Modal.Body>
+            {this.state.error && this.renderError()}
+            {this.isSaving() ? this.renderProgress() : this.renderForm()}
+          </Modal.Body>
           <Modal.Footer>
             <Button bsStyle="link" onClick={this.onHide}>
               Close
@@ -75,34 +69,6 @@ export default React.createClass({
   },
 
   renderForm() {
-    if (this.props.isSaving) {
-      const { progress } = this.state;
-
-      return (
-        <div>
-          <p>
-            <Loader /> {progress.upload.active ? 'Uploading data...' : 'Creating table...'}
-          </p>
-          <ProgressBar>
-            <ProgressBar
-              striped
-              bsStyle="info"
-              now={progress.upload.value / 2}
-              label={`${progress.upload.value}%`}
-              active={progress.upload.active}
-            />
-            <ProgressBar
-              striped
-              bsStyle="success"
-              now={progress.create.value / 2}
-              label={`${progress.create.value}%`}
-              active={progress.create.active}
-            />
-          </ProgressBar>
-        </div>
-      );
-    }
-
     return (
       <div>
         <FormGroup>
@@ -114,7 +80,7 @@ export default React.createClass({
           </Col>
         </FormGroup>
 
-        <FormGroup>
+        {/* <FormGroup>
           <Col sm={3} componentClass={ControlLabel}>
             Create from
           </Col>
@@ -124,18 +90,49 @@ export default React.createClass({
               <option value="text">Text input</option>
             </FormControl>
           </Col>
-        </FormGroup>
+        </FormGroup> */}
 
-        {this.state.createFrom === 'csv' ? this.renderCreateFromCSV() : this.renderCreateFromTextInput()}
+        {this.state.createFrom === 'csv' ? this.renderCreateFromCsv() : this.renderCreateFromTextInput()}
 
         {this.renderAdvancedOptions()}
       </div>
     );
   },
 
-  renderCreateFromCSV() {
+  renderProgress() {
+    const progress = this.props.isCreatingTable ? 100 : this.props.progress;
+
     return (
       <div>
+        <ProgressBar striped bsStyle="info" now={progress} active={progress < 100} />
+        {progress < 100 ? (
+          <p>
+            <Loader /> Uploading data...
+          </p>
+        ) : (
+          <div>
+            <p>File was successfully uploaded.</p>
+            <p>
+              <Loader /> Creating table...
+            </p>
+          </div>
+        )}
+      </div>
+    );
+  },
+
+  renderCreateFromCsv() {
+    return (
+      <div>
+        <FormGroup>
+          <Col sm={3} componentClass={ControlLabel}>
+            CSV file
+          </Col>
+          <Col sm={9}>
+            <FormControl type="file" onChange={this.handleFile} />
+            <HelpBlock>Table structure will be setup from CSV file.</HelpBlock>
+          </Col>
+        </FormGroup>
         <FormGroup>
           <Col sm={3} componentClass={ControlLabel}>
             Delimiter
@@ -209,6 +206,12 @@ export default React.createClass({
     });
   },
 
+  handleFile(event) {
+    this.setState({
+      file: event.target.files[0]
+    });
+  },
+
   handleDelimiter(event) {
     this.setState({
       delimiter: event.target.value
@@ -240,12 +243,42 @@ export default React.createClass({
 
   onSubmit(event) {
     event.preventDefault();
-    const params = {};
 
-    this.props.onSubmit(params).then(this.onHide, message => {
-      this.setState({
-        error: message
-      });
+    if (this.state.createFrom === 'csv') {
+      return this.createTableFromCsv();
+    }
+
+    return this.createTableFromString();
+  },
+
+  createTableFromCsv() {
+    const params = {
+      name: this.state.name,
+      delimiter: this.state.delimiter,
+      enclosure: this.state.enclosure
+    };
+
+    if (this.state.primaryKey) {
+      params.primaryKey = this.state.primaryKey;
+    }
+
+    return this.props.onCreateFromCsv(this.state.file, params).then(this.onHide, message => {
+      this.setState({ error: message });
+    });
+  },
+
+  createTableFromString() {
+    const params = {
+      name: this.state.name,
+      data: this.state.tableColumns
+    };
+
+    if (this.state.primaryKey) {
+      params.primaryKey = this.state.primaryKey;
+    }
+
+    return this.props.onCreateFromString(params).then(this.onHide, message => {
+      this.setState({ error: message });
     });
   },
 
@@ -253,27 +286,23 @@ export default React.createClass({
     this.setState(INITIAL_STATE);
   },
 
-  resetProgress() {
-    this.setState({
-      progress: INITIAL_PROGRESS
-    });
-  },
-
-  onUploadProgress(progress) {
-    const complete = progress.percentComplete;
-
-    this.setState({
-      progress: {
-        ...this.state.progress,
-        upload: {
-          value: complete,
-          active: complete > 0 && complete < 100
-        }
-      }
-    });
+  isSaving() {
+    return this.props.isCreatingTable || this.props.progress > 0;
   },
 
   isDisabled() {
-    return this.props.isSaving || this.state.error;
+    if (!this.state.name || this.isSaving() || this.state.error) {
+      return true;
+    }
+
+    if (this.state.createFrom === 'csv') {
+      if (!this.state.file || !this.state.delimiter || !this.state.enclosure) {
+        return true;
+      }
+    } else if (!this.state.tableColumns) {
+      return true;
+    }
+
+    return false;
   }
 });
