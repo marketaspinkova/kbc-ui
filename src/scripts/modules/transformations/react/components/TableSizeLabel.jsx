@@ -1,10 +1,10 @@
 import React from 'react';
 import FileSize from '../../../../react/common/FileSize';
 
-const TableSizeLabel = ({ size }) => (
-  <span className="label label-primary">
-    <FileSize size={size} />
-  </span>
+const TableSizeLabel = ({size}) => (
+  size ? (<span className="label label-primary">
+    <FileSize size={size}/>
+  </span>) : (<span/>)
 );
 
 TableSizeLabel.propTypes = {
