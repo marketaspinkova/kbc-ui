@@ -5,6 +5,7 @@ import { Table, Button } from 'react-bootstrap';
 import CreatedWithIcon from '../../../../../react/common/CreatedWithIcon';
 import FileSize from '../../../../../react/common/FileSize';
 import CreateAliasTableModal from '../../modals/CreateAliasTableModal';
+import {NotAvailable} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -66,7 +67,7 @@ export default React.createClass({
             {table.get('name')} {table.get('isAlias', false) && ' (Alias)'}
           </Link>
         </td>
-        <td>{table.get('rowsCount') || 'N/A'}</td>
+        <td>{table.get('rowsCount') || <NotAvailable/>}</td>
         <td>
           <FileSize size={table.get('dataSizeBytes')} />
         </td>

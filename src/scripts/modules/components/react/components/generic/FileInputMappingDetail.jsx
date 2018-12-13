@@ -2,6 +2,7 @@ import React from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { List } from 'immutable';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
+import {NotAvailable} from '@keboola/indigo-ui';
 
 export default React.createClass({
   mixins: [ImmutableRenderMixin],
@@ -31,7 +32,7 @@ export default React.createClass({
 
   renderQuery() {
     if (!this.props.value.get('query')) {
-      return 'N/A';
+      return <NotAvailable/>;
     }
 
     return <code>{this.props.value.get('query')}</code>;
@@ -39,7 +40,7 @@ export default React.createClass({
 
   renderTags() {
     if (!this.props.value.get('tags', List()).count()) {
-      return 'N/A';
+      return <NotAvailable/>;
     }
 
     return this.props.value
@@ -50,7 +51,7 @@ export default React.createClass({
 
   renderProcessedTags() {
     if (!this.props.value.get('processed_tags', List()).count()) {
-      return 'N/A';
+      return <NotAvailable/>;
     }
 
     return this.props.value

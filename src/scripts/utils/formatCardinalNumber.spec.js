@@ -1,11 +1,13 @@
+import React from 'react';
 import assert from 'assert';
 import formatCardinalNumber from './formatCardinalNumber';
+import {NotAvailable} from '@keboola/indigo-ui';
 
 describe('formatCardinalNumber', () =>{
   describe('invalid input', () => {
-    it('null should return N/A', () => assert.equal(formatCardinalNumber(null), 'N/A'));
-    it('empty string should return N/A', () => assert.equal(formatCardinalNumber(''), 'N/A'));
-    it('invalid number should return N/A', () => assert.equal(formatCardinalNumber('asdafa'), 'N/A'));
+    it('null should return N/A', () => assert.equal(formatCardinalNumber(null), <NotAvailable/>));
+    it('empty string should return N/A', () => assert.equal(formatCardinalNumber(''), <NotAvailable/>));
+    it('invalid number should return N/A', () => assert.equal(formatCardinalNumber('asdafa'), <NotAvailable/>));
   });
 
   describe('valid string input', () => {

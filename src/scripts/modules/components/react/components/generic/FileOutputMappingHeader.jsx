@@ -2,6 +2,7 @@ import React from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import DeleteButton from '../../../../../react/common/DeleteButton';
 import FileOutputMappingModal from './FileOutputMappingModal';
+import {NotAvailable} from '@keboola/indigo-ui';
 
 export default React.createClass({
   mixins: [ImmutableRenderMixin],
@@ -66,7 +67,7 @@ export default React.createClass({
 
   renderTags() {
     if (!this.props.value.get('tags').count()) {
-      return 'N/A';
+      return <NotAvailable/>;
     }
 
     return this.props.value

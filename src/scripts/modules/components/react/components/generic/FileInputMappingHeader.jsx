@@ -4,6 +4,7 @@ import { List } from 'immutable';
 import DeleteButton from '../../../../../react/common/DeleteButton';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import FileInputMappingModal from './FileInputMappingModal';
+import {NotAvailable} from '@keboola/indigo-ui';
 
 export default React.createClass({
 
@@ -94,7 +95,7 @@ export default React.createClass({
         );
       });
     } else {
-      return 'N/A';
+      return <NotAvailable/>;
     }
   }
 });

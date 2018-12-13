@@ -2,7 +2,7 @@ import React from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { List } from 'immutable';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
-import { Check } from '@keboola/indigo-ui';
+import { Check, NotAvailable } from '@keboola/indigo-ui';
 import TableLinkEx from '../StorageApiTableLinkEx';
 
 export default React.createClass({
@@ -36,7 +36,7 @@ export default React.createClass({
           <span className="col-md-6">
             {this.props.value.get('primary_key', List()).count()
               ? this.props.value.get('primary_key').join(', ')
-              : 'N/A'}
+              : <NotAvailable/>}
           </span>
         </ListGroupItem>
         <ListGroupItem className="row">
@@ -64,7 +64,7 @@ export default React.createClass({
                 </strong>
               </span>
             ) : (
-              'N/A'
+              <NotAvailable/>
             )}
           </span>
         </ListGroupItem>

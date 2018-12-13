@@ -7,7 +7,7 @@ import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivat
 import RunButton from '../../../components/react/components/RunComponentButton';
 import StorageTableLink from '../../../components/react/components/StorageApiTableLinkEx';
 import TablesByBucketsPanel from '../../../components/react/components/TablesByBucketsPanel';
-import {ExternalLink} from '@keboola/indigo-ui';
+import {ExternalLink, NotAvailable} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -145,7 +145,7 @@ export default React.createClass({
       return (t.get('id') === tableId);
     });
 
-    if (configTables.count() === 0) return 'n/a';
+    if (configTables.count() === 0) return <NotAvailable/>;
 
     return (
       <StorageTableLink
@@ -239,7 +239,7 @@ export default React.createClass({
 
   renderDriveLink(googleId, title) {
     if (!googleId || !title) {
-      return 'N/A';
+      return <NotAvailable/>;
     }
     const url = `https://drive.google.com/open?id=${googleId}`;
     return (

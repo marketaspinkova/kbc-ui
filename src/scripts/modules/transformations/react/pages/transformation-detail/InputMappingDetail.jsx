@@ -1,7 +1,7 @@
 import React from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import WhereOperator from '../../../../../react/common/WhereOperator';
-import { Check } from '@keboola/indigo-ui';
+import { Check, NotAvailable } from '@keboola/indigo-ui';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import TableLinkEx from '../../../../components/react/components/StorageApiTableLinkEx';
 import { Map, List } from 'immutable';
@@ -105,7 +105,7 @@ export default React.createClass({
             {this.props.inputMapping.get('days', 0) === 0 &&
               !this.props.inputMapping.get('changedSince') &&
               !this.props.inputMapping.get('whereColumn') &&
-              'N/A'}
+            <NotAvailable/>}
           </span>
         </ListGroupItem>
 
@@ -126,7 +126,7 @@ export default React.createClass({
                     this
                   )
                   .toArray()
-                : 'N/A'}
+                : <NotAvailable/>}
             </span>
           </ListGroupItem>
         )}

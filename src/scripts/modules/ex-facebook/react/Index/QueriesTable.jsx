@@ -5,7 +5,7 @@ import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivat
 import RunExtractionButton from '../../../components/react/components/RunComponentButton';
 
 import Tooltip from '../../../../react/common/Tooltip';
-import {Loader} from '@keboola/indigo-ui';
+import {Loader, NotAvailable} from '@keboola/indigo-ui';
 import Confirm from '../../../../react/common/Confirm';
 import StorageTableLink from '../../../components/react/components/StorageApiTableLinkEx';
 import {Table} from 'react-bootstrap';
@@ -120,7 +120,7 @@ export default React.createClass({
       return bestMatchQuery && bestMatchQuery.get('name') === queryName;
     }
     );
-    if (configTables.count() === 0) return 'n/a';
+    if (configTables.count() === 0) return <NotAvailable/>;
     return configTables.map((t) =>
       <div>
         <StorageTableLink

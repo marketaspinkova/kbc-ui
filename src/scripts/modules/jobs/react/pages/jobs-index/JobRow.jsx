@@ -6,6 +6,7 @@ import JobPartialRunLabel from '../../../../../react/common/JobPartialRunLabel';
 import ComponentIcon from '../../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../../react/common/ComponentName';
 import Duration from '../../../../../react/common/Duration';
+import {NotAvailable} from '@keboola/indigo-ui';
 
 import ComponentsStore from '../../../../components/stores/ComponentsStore';
 import InstalledComponentsStore from '../../../../components/stores/InstalledComponentsStore';
@@ -78,7 +79,7 @@ export default React.createClass({
     }
 
     return (
-      <span><em>N/A</em></span>
+      <NotAvailable/>
     );
   },
 

@@ -2,6 +2,8 @@ import React, {PropTypes} from 'react';
 import {Modal, Button} from 'react-bootstrap';
 import SapiTableSelector from '../../components/react/components/SapiTableSelector';
 import ConfirmButtons from '../../../react/common/ConfirmButtons';
+import {NotAvailable} from '@keboola/indigo-ui';
+
 export default React.createClass({
   propTypes: {
     selectBucketFn: PropTypes.func,
@@ -71,7 +73,7 @@ export default React.createClass({
               excludeTableFn= {this.filterRedshiftTables}
             />, '')
           }
-          {this.renderFormElement('Selected Bucket', this.props.localState.get('bucketId') || 'N/A')}
+          {this.renderFormElement('Selected Bucket', this.props.localState.get('bucketId') || <NotAvailable/>)}
         </div>
       </Modal.Body>
     );

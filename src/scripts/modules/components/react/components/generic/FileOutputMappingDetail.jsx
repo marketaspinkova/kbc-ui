@@ -1,6 +1,6 @@
 import React from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
-import { Check } from '@keboola/indigo-ui';
+import { Check, NotAvailable } from '@keboola/indigo-ui';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 
 export default React.createClass({
@@ -42,7 +42,7 @@ export default React.createClass({
 
   renderTags() {
     if (!this.props.value.get('tags').count()) {
-      return 'N/A';
+      return <NotAvailable/>;
     }
 
     return this.props.value

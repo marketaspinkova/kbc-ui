@@ -7,6 +7,7 @@ import ComponentIcon from '../../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../../react/common/ComponentName';
 import Tooltip from '../../../../../react/common/Tooltip';
 import descriptionExcerpt from '../../../../../utils/descriptionExcerpt';
+import {NotAvailable} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -58,7 +59,7 @@ export default React.createClass({
               </HelpBlock>
             </ComponentConfigurationLink>
           ) : (
-            'N/A'
+            <NotAvailable/>
           )}
         </td>
         <td>

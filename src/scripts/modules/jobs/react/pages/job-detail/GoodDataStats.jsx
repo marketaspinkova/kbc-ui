@@ -6,7 +6,7 @@ import { fromJS } from 'immutable';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { timeInWords } from '../../../../../utils/duration';
 import date from '../../../../../utils/date';
-import { Tree, ExternalLink } from '@keboola/indigo-ui';
+import { Tree, ExternalLink, NotAvailable } from '@keboola/indigo-ui';
 
 export default React.createClass({
   mixins: [ImmutableRenderMixin],
@@ -51,10 +51,10 @@ export default React.createClass({
   renderTasks() {
     return _.map(this.props.tasks, (task, taskId) => {
       const params = fromJS(task.params);
-      let started = 'N/A';
-      let duration = 'N/A';
-      let status = 'N/A';
-      let details = 'N/A';
+      let started = <NotAvailable/>;
+      let duration = <NotAvailable/>;
+      let status = <NotAvailable/>;
+      let details = <NotAvailable/>;
 
       if (task.event) {
         duration = task.event.performance.duration;
@@ -107,6 +107,6 @@ export default React.createClass({
   },
 
   renderCell(value) {
-    return <div className="td">{value || 'N/A'}</div>;
+    return <div className="td">{value || <NotAvailable/>}</div>;
   }
 });

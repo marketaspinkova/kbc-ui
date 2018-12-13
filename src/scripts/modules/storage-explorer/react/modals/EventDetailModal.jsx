@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Table, Button, Modal, Alert } from 'react-bootstrap';
-import { ExternalLink, Tree } from '@keboola/indigo-ui';
+import { ExternalLink, Tree, NotAvailable } from '@keboola/indigo-ui';
 import { format } from '../../../../utils/date';
 import FileLink from '../../../sapi-events/react/FileLink';
 
@@ -52,11 +52,11 @@ export default React.createClass({
           </tr>
           <tr>
             <td>Configuration ID</td>
-            <td>{this.props.event.get('configurationId') || 'N/A'}</td>
+            <td>{this.props.event.get('configurationId') || <NotAvailable/>}</td>
           </tr>
           <tr>
             <td>Run ID</td>
-            <td>{this.props.event.get('runId') || 'N/A'}</td>
+            <td>{this.props.event.get('runId') || <NotAvailable/>}</td>
           </tr>
         </tbody>
       </Table>

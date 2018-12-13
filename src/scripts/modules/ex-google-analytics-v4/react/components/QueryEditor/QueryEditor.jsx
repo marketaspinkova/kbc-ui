@@ -8,6 +8,7 @@ import SapiTableLinkEx from '../../../../components/react/components/StorageApiT
 import QuerySample from './QuerySample';
 import UrlParserModal from './UrlParserModal';
 import AntiSamplingModal from './AntiSamplingModal';
+import {NotAvailable} from '@keboola/indigo-ui';
 
 const PREFERED_METRICS = ['ga:sessions', 'ga:users', 'ga:transactions', 'ga:pageviews', 'ga:uniquePageviews', 'ga:sessionDuration', 'ga:newUsers', 'ga:impressions', 'ga:transactionRevenue', 'ga:adClicks', 'ga:adCost', 'ga:bounces', 'ga:bounceRate'];
 
@@ -140,7 +141,7 @@ export default React.createClass({
                   onChange={this.onChangeTextPropFn(['query', 'filtersExpression'])}/>
                 :
                 <p className="form-control-static">
-                  {query.getIn(['query', 'filtersExpression']) || 'N/A'}
+                  {query.getIn(['query', 'filtersExpression']) || <NotAvailable/>}
                 </p>
               }
 

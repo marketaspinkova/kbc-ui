@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import Select from 'react-select';
 import _ from 'underscore';
+import {NotAvailable} from '@keboola/indigo-ui';
 
 export default React.createClass({
 
@@ -62,7 +63,7 @@ export default React.createClass({
     return (
       <div className="SearchSuggestMatch" key={data.id}>
         <span className="SearchSuggestMatch-category">{data.group}</span>
-        <div className="SearchSuggestMatch-content">{data.id} ({data.name || 'n/a'})</div>
+        <div className="SearchSuggestMatch-content">{data.id} ({data.name || <NotAvailable/>})</div>
         <div className="SearchSuggestMatch-extra">{data.desc}</div>
       </div>
     );

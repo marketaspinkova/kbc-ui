@@ -1,4 +1,5 @@
 import React from 'react';
+import { NotAvailable } from '@keboola/indigo-ui';
 
 export function convertToCredits(nanoCredits, precision) {
   return Number(nanoCredits / (1000 * 1000 * 1000)).toFixed(precision);
@@ -32,9 +33,7 @@ export default React.createClass({
       }
     } else {
       return (
-        <span>
-          N/A
-        </span>
+        <NotAvailable/>
       );
     }
   }

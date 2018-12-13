@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {fromJS} from 'immutable';
 import {Button, Modal} from 'react-bootstrap';
-import {ExternalLink} from '@keboola/indigo-ui';
+import {ExternalLink, NotAvailable} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -48,7 +48,7 @@ export default React.createClass({
               <div className="col-sm-9  pre-scrollable">
                 {parsedQuery ?
                   this.renderParsedQuery()
-                  : <p className="form-control-static">n/a</p>
+                  : <p className="form-control-static"><NotAvailable/></p>
                 }
               </div>
             </div>
@@ -74,7 +74,7 @@ export default React.createClass({
   parseArray(name, item) {
     return (
       <li>
-        <strong>{name}:</strong>  {item ? item.join(', ') : 'n/a'}
+        <strong>{name}:</strong>  {item ? item.join(', ') : <NotAvailable/>}
       </li>
     );
   },
@@ -88,11 +88,11 @@ export default React.createClass({
           {this.parseArray('Metrics', parsedQuery.get('metrics'))}
           {this.parseArray('Dimensions', parsedQuery.get('dimensions'))}
           {this.parseArray('Segments', parsedQuery.get('segments'))}
-          <li><strong>Filter:</strong>  {parsedQuery.get('filtersExpression') || 'n/a'}</li>
+          <li><strong>Filter:</strong>  {parsedQuery.get('filtersExpression') || <NotAvailable/>}</li>
           <li><strong>Date Ranges:</strong>
             <ul>
-              <li>Start Date: {dates.get('startDate') || 'n/a'}</li>
-              <li>End Date: {dates.get('endDate') || 'n/a'}</li>
+              <li>Start Date: {dates.get('startDate') || <NotAvailable/>}</li>
+              <li>End Date: {dates.get('endDate') || <NotAvailable/>}</li>
             </ul>
           </li>
         </ul>

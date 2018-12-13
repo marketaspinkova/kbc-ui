@@ -30,7 +30,7 @@ import ComponentConfigurationRowLink from '../../../../components/react/componen
 import contactSupport from '../../../../../utils/contactSupport';
 
 import date from '../../../../../utils/date';
-import { Tree, NewLineToBr } from '@keboola/indigo-ui';
+import { Tree, NewLineToBr, NotAvailable } from '@keboola/indigo-ui';
 
 const APPLICATION_ERROR = 'application';
 
@@ -279,7 +279,7 @@ export default React.createClass({
       return <span>{job.getIn(['params', 'config'])}</span>;
     }
 
-    return <em>N/A</em>;
+    return <NotAvailable/>;
   },
 
   _renderConfigurationRowLink(job) {
@@ -331,7 +331,7 @@ export default React.createClass({
       if (pdate) {
         return date.format(pdate);
       } else {
-        return 'N/A';
+        return <NotAvailable/>;
       }
     };
 
@@ -380,7 +380,8 @@ export default React.createClass({
             <div className="row">
               <span className="col-md-3">Duration</span>
               <strong className="col-md-9">
-                {jobStarted() ? <Duration startTime={job.get('startTime')} endTime={job.get('endTime')} /> : 'N/A'}
+                {jobStarted() ? <Duration startTime={job.get('startTime')} endTime={job.get('endTime')} /> :
+                  <NotAvailable/>}
               </strong>
             </div>
           </div>

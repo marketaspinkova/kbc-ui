@@ -1,6 +1,7 @@
 import React from 'react';
 import { List } from 'immutable';
 import WhereOperator from '../../../../../react/common/WhereOperator';
+import {NotAvailable} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -58,7 +59,7 @@ export default React.createClass({
         {this.props.value.get('days', 0) === 0 &&
           !this.props.value.get('changed_since') &&
           !this.props.value.get('where_column') &&
-          'N/A'}
+        <NotAvailable/>}
       </span>
     );
   }

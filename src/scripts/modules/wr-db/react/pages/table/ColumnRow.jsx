@@ -3,6 +3,7 @@ import _ from 'underscore';
 import { Check } from '@keboola/indigo-ui';
 import { Input } from './../../../../../react/common/KbcBootstrap';
 import ColumnDataPreview from './ColumnDataPreview';
+import {NotAvailable} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -164,7 +165,7 @@ export default React.createClass({
   _renderDefault() {
     let val = this.props.column.get('default');
     if (this._isIgnored()) {
-      val = 'N/A';
+      val = <NotAvailable/>;
     }
     if (this.props.disabledFields.includes('default')) {
       val = '';
@@ -185,7 +186,7 @@ export default React.createClass({
     const isChecked = this.props.column.get('null') === '1';
     let nullVal = <Check isChecked={isChecked} />;
     if (this._isIgnored()) {
-      nullVal = 'N/A';
+      nullVal = <NotAvailable/>;
     }
     if (this.props.disabledFields.includes('nullable')) {
       nullVal = '';

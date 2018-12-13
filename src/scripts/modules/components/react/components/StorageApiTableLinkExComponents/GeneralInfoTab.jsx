@@ -9,6 +9,7 @@ import EmptyState from '../../../../components/react/components/ComponentEmptySt
 import filesize from 'filesize';
 import TableUpdatedByComponentInfo from '../../../../../react/common/TableUpdatedByComponentInfo';
 import formatCardinalNumber from '../../../../../utils/formatCardinalNumber';
+import {NotAvailable} from '@keboola/indigo-ui';
 
 export default React.createClass({
 
@@ -51,7 +52,7 @@ export default React.createClass({
           <tbody>
             {this.renderTableRow('Storage', (<span className="label label-info">{backend}</span>))}
             {this.renderTableRow('Created', this.renderTimefromNow(table.get('created')))}
-            {this.renderTableRow('Primary Key', _.isEmpty(primaryKey) ? 'N/A' : primaryKey.join(', '))}
+            {this.renderTableRow('Primary Key', _.isEmpty(primaryKey) ? <NotAvailable/> : primaryKey.join(', '))}
             {this.renderTableRow('Last Import', this.renderTimefromNow(table.get('lastImportDate')))}
             {this.renderTableRow('Last Change', this.renderTimefromNow(table.get('lastChangeDate')))}
             {this.renderTableRow('Last updated by', <TableUpdatedByComponentInfo table={table}/>)}
@@ -65,19 +66,19 @@ export default React.createClass({
   },
 
   renderRowsCount(value) {
-    return formatCardinalNumber(value) + ' rows';
+    return (<span>{formatCardinalNumber(value)} rows</span>);
   },
 
   renderDataSize(value) {
     if (value === null) {
-      return 'N/A';
+      return <NotAvailable/>;
     }
     return filesize(value);
   },
 
   renderTimefromNow(value) {
     if (value === null) {
-      return 'N/A';
+      return <NotAvailable/>;
     }
     const fromNow = moment(value).fromNow();
     return (

@@ -11,6 +11,8 @@ import {componentIoSummary} from './Index';
 import Loader from './Loader';
 import ApplicationStore from '../../../stores/ApplicationStore';
 import { compute as computeDatesForMonthlyUsage } from './datesForMonthlyUsage';
+import {NotAvailable} from '@keboola/indigo-ui';
+
 
 function getProjectCreationDate() {
   const project = ApplicationStore.getCurrentProject();
@@ -92,7 +94,7 @@ export default React.createClass({
             } else {
               return (
                 <Panel collapsible={true} header={this.daySummary(item)} key={item.get('dateFrom') + '-' + item.get('dateTo')}>
-                  N/A
+                  <NotAvailable/>
                 </Panel>
               );
             }

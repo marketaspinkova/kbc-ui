@@ -2,8 +2,7 @@ import React from 'react';
 import date from '../../../utils/date';
 import PureRendererMixin from 'react-immutable-render-mixin';
 import {Link} from 'react-router';
-import {NewLineToBr} from '@keboola/indigo-ui';
-import {Tree} from '@keboola/indigo-ui';
+import {Tree, NewLineToBr, NotAvailable} from '@keboola/indigo-ui';
 import FileLink  from './FileLink';
 
 const classMap = {
@@ -54,7 +53,7 @@ export default React.createClass({
             Configuration ID
           </div>
           <div className="col-md-9">
-            {event.get('configurationId') || 'N/A'}
+            {event.get('configurationId') || <NotAvailable/>}
           </div>
         </div>
         <div className="row">

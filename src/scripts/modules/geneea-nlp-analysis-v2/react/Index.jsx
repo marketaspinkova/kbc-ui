@@ -2,7 +2,7 @@ import React from 'react';
 import {List, Map} from 'immutable';
 import _ from 'underscore';
 import {FormControls} from './../../../react/common/KbcBootstrap';
-import {Check} from '@keboola/indigo-ui';
+import {Check, NotAvailable} from '@keboola/indigo-ui';
 import Select from 'react-select';
 import classnames from 'classnames';
 
@@ -548,7 +548,7 @@ export default React.createClass({
         wrapperClassName="col-sm-9">
         {isBetaCheckobx ? <Check
           isChecked={value}/>
-          : value || 'n/a'}
+          : value || <NotAvailable/>}
       </StaticText>
     );
   },

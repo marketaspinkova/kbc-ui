@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 // import fuzzy from 'fuzzy';
 import Select from 'react-select';
 import Tooltip from '../../../../../react/common/Tooltip';
-import {Loader} from '@keboola/indigo-ui';
+import {Loader, NotAvailable} from '@keboola/indigo-ui';
 
 function simpleMatch(query, test) {
   return test.toLocaleLowerCase().indexOf(query.toLowerCase()) >= 0;
@@ -65,7 +65,7 @@ export default React.createClass({
     const isNew = op.create;
 
     const data = {
-      group: isNew ? 'N/A' : op.attributes.group,
+      group: isNew ? <NotAvailable/> : op.attributes.group,
       name: isNew ? op.value : op.attributes.uiName,
       desc: isNew ? '' : op.attributes.description,
       id: isNew ? op.value : op.id
@@ -74,7 +74,7 @@ export default React.createClass({
     return (
       <div className="SearchSuggestMatch" key={data.id}>
         <span className="SearchSuggestMatch-category">{data.group}</span>
-        <div className="SearchSuggestMatch-content">{data.id} ({data.name || 'n/a'})</div>
+        <div className="SearchSuggestMatch-content">{data.id} ({data.name || <NotAvailable/>})</div>
         <div className="SearchSuggestMatch-extra">{data.desc}</div>
       </div>
     );
@@ -145,7 +145,7 @@ export default React.createClass({
           <p className="form-control-static">
             {(this.props.selectedValues.length > 0) ?
               this.props.selectedValues.map((val, idx) => this.renderStaticOption(val, idx))
-              : 'N/A'
+              : <NotAvailable/>
             }
           </p>
         </div>
@@ -156,13 +156,12 @@ export default React.createClass({
   renderStaticOption(optionId, idx) {
     const option = this.props.metadata.find((op) => op.id === optionId);
     const desc = option ? option.attributes.description : '';
-    const name = option ? option.attributes.uiName : '';
     const isLast = idx === this.props.selectedValues.length - 1;
     return (
       <span key={idx}>
         <Tooltip tooltip={desc} placement="top">
           <span>
-            {optionId}({name || 'n/a'})
+            {optionId}({name || <NotAvailable/>})
           </span>
         </Tooltip>
         {isLast ? '' : ', '}

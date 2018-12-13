@@ -21,7 +21,7 @@ import DeleteConfigurationButton from '../../../components/react/components/Dele
 import LatestJobs from '../../../components/react/components/SidebarJobs';
 import LatestVersions from '../../../components/react/components/SidebarVersionsWrapper';
 import SetupModal from './SetupModal';
-import { ExternalLink } from '@keboola/indigo-ui';
+import { ExternalLink, NotAvailable } from '@keboola/indigo-ui';
 
 import CodeMirror from 'react-code-mirror';
 /* global require */
@@ -180,7 +180,7 @@ export default React.createClass({
       <p className="form-control-static">
         {inputTableId ?
           <SapiTableLinkEx tableId={inputTableId} />
-          : 'N/A'
+          : <NotAvailable/>
         }
       </p>
     );

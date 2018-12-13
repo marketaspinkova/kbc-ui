@@ -24,6 +24,7 @@ import FiltersDescription from '../../../../components/react/components/generic/
 import IsDockerBasedFn from '../../../templates/dockerProxyApi';
 import IncrementalSetupModal from './IncrementalSetupModal';
 import {Alert} from 'react-bootstrap';
+import {NotAvailable} from '@keboola/indigo-ui';
 
 const defaultDataTypes = [
   'INT',
@@ -264,7 +265,7 @@ export default componentId => {
               disabled={!!this.state.editingColumns}
               onClick={this._showIncrementalSetupModal}
             >
-              {primaryKey.join(', ') || 'N/A'} <span className="kbc-icon-pencil" />
+              {primaryKey.join(', ') || <NotAvailable/>} <span className="kbc-icon-pencil" />
             </button>
           </div>
         </div>

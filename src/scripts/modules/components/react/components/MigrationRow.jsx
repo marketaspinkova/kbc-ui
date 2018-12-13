@@ -2,8 +2,7 @@ import React from 'react';
 import Promise from 'bluebird';
 import _ from 'underscore';
 import {Modal, Table, Tabs, Tab, Row, Col, Button} from 'react-bootstrap';
-import {AlertBlock} from '@keboola/indigo-ui';
-import {Check, Loader, RefreshIcon} from '@keboola/indigo-ui';
+import {AlertBlock, Check, Loader, RefreshIcon, NotAvailable} from '@keboola/indigo-ui';
 import {fromJS, List, Map} from 'immutable';
 import {Link} from 'react-router';
 import SapiTableLink from './StorageApiTableLink';
@@ -403,7 +402,7 @@ export default React.createClass({
       return (
         <div>
           <small>
-            Last Job: N/A
+            Last Job: <NotAvailable/>
           </small>
         </div>
       );

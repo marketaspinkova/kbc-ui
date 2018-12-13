@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {ExternalLink} from '@keboola/indigo-ui';
+import {ExternalLink, NotAvailable} from '@keboola/indigo-ui';
 
 const App = React.createClass({
   render() {
@@ -264,7 +264,7 @@ const App = React.createClass({
                             </td>
                             <td />
                             <td>
-                              <span className="text-muted">N/A</span>
+                              <NotAvailable/>
                             </td>
                             <td />
                             <td>
@@ -326,7 +326,7 @@ const App = React.createClass({
                             </td>
                             <td />
                             <td>
-                              <span className="text-muted">N/A</span>
+                              <span className="text-muted"><NotAvailable/></span>
                             </td>
                             <td />
                             <td>

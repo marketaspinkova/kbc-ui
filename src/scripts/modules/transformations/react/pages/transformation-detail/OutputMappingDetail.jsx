@@ -3,7 +3,7 @@ import { List } from 'immutable';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import WhereOperator from '../../../../../react/common/WhereOperator';
 import TableLinkEx from '../../../../components/react/components/StorageApiTableLinkEx';
-import { Check } from '@keboola/indigo-ui';
+import { Check, NotAvailable } from '@keboola/indigo-ui';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 
 export default React.createClass({
@@ -27,7 +27,7 @@ export default React.createClass({
           <span className="col-md-6">
             {this.props.outputMapping.get('primaryKey', List()).count()
               ? this.props.outputMapping.get('primaryKey').join(', ')
-              : 'N/A'}
+              : <NotAvailable/>}
           </span>
         </ListGroupItem>
         <ListGroupItem className="row" key="incremental">
@@ -60,7 +60,7 @@ export default React.createClass({
                 </strong>
               </span>
             ) : (
-              'N/A'
+              <NotAvailable/>
             )}
           </span>
         </ListGroupItem>

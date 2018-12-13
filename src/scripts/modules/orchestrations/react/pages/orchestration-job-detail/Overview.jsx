@@ -5,6 +5,7 @@ import Duration from '../../../../../react/common/Duration';
 import JobStatusLabel from '../../../../../react/common/JobStatusLabel';
 import JobRunId from '../../../../../react/common/JobRunId';
 import date from '../../../../../utils/date';
+import {NotAvailable} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -42,7 +43,7 @@ export default React.createClass({
               <div className="row">
                 <span className="col-md-4">End</span>
                 <strong className="col-md-8">
-                  {this.props.job.get('endTime') ? date.format(this.props.job.get('endTime')) : 'N/A'}
+                  {this.props.job.get('endTime') ? date.format(this.props.job.get('endTime')) : <NotAvailable/>}
                 </strong>
               </div>
               <div className="row">
@@ -77,7 +78,7 @@ export default React.createClass({
     if (this.props.job.get('startTime')) {
       return date.format(this.props.job.get('startTime'));
     } else {
-      return 'N/A';
+      return <NotAvailable/>;
     }
   }
 });

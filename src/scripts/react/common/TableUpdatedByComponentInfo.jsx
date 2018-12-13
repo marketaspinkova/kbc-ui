@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {fromJS} from 'immutable';
 import createStoreMixin from '../mixins/createStoreMixin';
-import {Loader} from '@keboola/indigo-ui';
+import {Loader, NotAvailable} from '@keboola/indigo-ui';
 
 import date from '../../utils/date';
 import moment from 'moment';
@@ -38,7 +38,7 @@ export default React.createClass({
     const component = componentId && ComponentsStore.getComponent(componentId);
 
     if (!component) {
-      return <span>N/A</span>;
+      return <NotAvailable/>;
     }
 
     if (this.state.isConfigsLoading) {
@@ -61,7 +61,7 @@ export default React.createClass({
 
   renderTimefromNow(value) {
     if (value === null) {
-      return 'N/A';
+      return <NotAvailable/>;
     }
     const fromNow = moment(value).fromNow();
     return (

@@ -5,7 +5,7 @@ import ComponentName from '../../../../../react/common/ComponentName';
 import ComponentConfigurationLink from '../../../../components/react/components/ComponentConfigurationLink';
 import TaskParametersEditModal from '../../modals/TaskParametersEdit';
 import OrchestrationTaskRunButton from '../../components/OrchestrationTaskRunButton';
-import { Check } from '@keboola/indigo-ui';
+import { Check, NotAvailable } from '@keboola/indigo-ui';
 import descriptionExcerpt from '../../../../../utils/descriptionExcerpt';
 
 export default React.createClass({
@@ -44,7 +44,7 @@ export default React.createClass({
               </HelpBlock>
             </ComponentConfigurationLink>
           ) : (
-            'N/A'
+            <NotAvailable/>
           )}
         </td>
         <td>

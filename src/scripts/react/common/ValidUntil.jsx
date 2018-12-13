@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import {NotAvailable} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -11,6 +12,6 @@ export default React.createClass({
       return <span>any time now</span>;
     }
 
-    return <span>{this.props.validUntil ? moment(this.props.validUntil).fromNow() : 'N/A'}</span>;
+    return this.props.validUntil ? <span>{moment(this.props.validUntil).fromNow()}</span> : <NotAvailable/>;
   }
 });

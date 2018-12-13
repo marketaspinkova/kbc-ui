@@ -1,5 +1,6 @@
 import React from 'react';
 import fileSize from 'filesize';
+import { NotAvailable } from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -8,9 +9,7 @@ export default React.createClass({
 
   render() {
     return (
-      <span>
-        {this.props.size ? fileSize(this.props.size) : 'N/A'}
-      </span>
+      this.props.size ? fileSize(this.props.size) : <NotAvailable/>
     );
   }
 

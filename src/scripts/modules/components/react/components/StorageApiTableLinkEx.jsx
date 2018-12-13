@@ -20,6 +20,8 @@ import {factory as eventsFactory} from '../../../sapi-events/EventsService';
 import RoutesStore from '../../../../stores/RoutesStore';
 import hiddenComponents from '../../utils/hiddenComponents';
 import formatCardinalNumber from '../../../../utils/formatCardinalNumber';
+import {NotAvailable} from '@keboola/indigo-ui';
+
 
 const  IMPORT_EXPORT_EVENTS = ['tableImportStarted', 'tableImportDone', 'tableImportError', 'tableExported'];
 
@@ -197,7 +199,7 @@ export default React.createClass({
           {moment(table.get('lastChangeDate')).fromNow()}
         </div>
         <div>
-          {filesize(table.get('dataSizeBytes', 'N/A'))}
+          {filesize(table.get('dataSizeBytes', <NotAvailable/>))}
         </div>
         <div>
           {formatCardinalNumber(table.get('rowsCount'))} rows
