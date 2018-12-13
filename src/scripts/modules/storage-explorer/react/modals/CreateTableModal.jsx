@@ -47,10 +47,10 @@ export default React.createClass({
             <Modal.Title>Create table in {this.props.bucket.get('id')}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {this.state.error ? this.renderError() : (
-              <div>
-                {this.isSaving() ? this.renderProgress() : this.renderForm()}
-              </div>
+            {this.state.error ? (
+              this.renderError()
+            ) : (
+              <div>{this.isSaving() ? this.renderProgress() : this.renderForm()}</div>
             )}
           </Modal.Body>
           <Modal.Footer>
@@ -83,7 +83,7 @@ export default React.createClass({
           </Col>
         </FormGroup>
 
-        {/* <FormGroup>
+        <FormGroup>
           <Col sm={3} componentClass={ControlLabel}>
             Create from
           </Col>
@@ -93,7 +93,7 @@ export default React.createClass({
               <option value="text">Text input</option>
             </FormControl>
           </Col>
-        </FormGroup> */}
+        </FormGroup>
 
         {this.state.createFrom === 'csv' ? this.renderCreateFromCsv() : this.renderCreateFromTextInput()}
 
