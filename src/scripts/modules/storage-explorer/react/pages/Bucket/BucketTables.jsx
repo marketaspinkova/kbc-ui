@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import classnames from 'classnames';
 import { Table, ButtonGroup, Button } from 'react-bootstrap';
+import { Loader } from '@keboola/indigo-ui';
 import CreatedWithIcon from '../../../../../react/common/CreatedWithIcon';
 import FileSize from '../../../../../react/common/FileSize';
 
@@ -37,7 +38,13 @@ export default React.createClass({
           <div className="kbc-buttons pull-right">
             <ButtonGroup>
               <Button bsStyle="success" onClick={this.openCreateTableModal}>
-                {creatingTable ? 'Creating table...' : 'Create table'}
+                {creatingTable ? (
+                  <span>
+                    <Loader /> Creating table...
+                  </span>
+                ) : (
+                  <span>Create table</span>
+                )}
               </Button>
               <Button
                 bsStyle="success"
