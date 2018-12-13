@@ -173,7 +173,8 @@ export default React.createClass({
     event.preventDefault();
     const params = {
       delimiter: this.state.delimiter,
-      enclosure: this.state.enclosure
+      enclosure: this.state.enclosure,
+      incremental: this.state.incremental ? 1 : 0
     };
 
     return this.props.onSubmit(this.state.file, params).then(this.onHide, this.handleError);
