@@ -107,7 +107,7 @@ export default React.createClass({
         <ProgressBar striped bsStyle="info" now={progress} active={progress < 100} />
         {progress < 100 ? (
           <p>
-            <Loader /> Uploading data...
+            <Loader /> Uploading file...
           </p>
         ) : (
           <div>
