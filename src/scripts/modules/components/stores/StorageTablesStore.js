@@ -95,6 +95,10 @@ Dispatcher.register(function(payload) {
   const { action } = payload;
 
   switch (action.type) {
+    case constants.ActionTypes.STORAGE_TABLES_LOAD:
+      _store = _store.set('isLoading', true);
+      return StorageTablesStore.emitChange();
+
     case constants.ActionTypes.STORAGE_TABLES_LOAD_SUCCESS:
       _store = _store.withMutations(function(store) {
         let storeResult = store.setIn(['tables'], Map());
@@ -224,17 +228,13 @@ Dispatcher.register(function(payload) {
       _store = _store.deleteIn(['pendingTables', 'deletingSnapshot', action.snapshotId]);
       return StorageTablesStore.emitChange();
 
-    case constants.ActionTypes.STORAGE_TABLES_LOAD:
-      _store = _store.set('isLoading', true);
+    case constants.ActionTypes.STORAGE_TABLE_LOAD:
       _store = _store.setIn(['pendingTables', 'loading'], true);
       return StorageTablesStore.emitChange();
 
     case constants.ActionTypes.STORAGE_TABLE_LOAD_SUCCESS:
-      _store = _store.setIn(['pendingTables', 'loading'], false);
-      return StorageTablesStore.emitChange();
-
     case constants.ActionTypes.STORAGE_TABLE_LOAD_ERROR:
-      _store = _store.setIn(['pendingTables', 'loading'], false);
+      _store = _store.deleteIn(['pendingTables', 'loading'], false);
       return StorageTablesStore.emitChange();
     default:
   }

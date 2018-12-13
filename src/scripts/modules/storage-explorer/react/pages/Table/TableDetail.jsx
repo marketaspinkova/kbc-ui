@@ -10,7 +10,10 @@ import TablesStore from '../../../../components/stores/StorageTablesStore';
 import DataSample from '../../components/DataSample';
 import TruncateTableModal from '../../modals/TruncateTableModal';
 import DeleteTableModal from '../../modals/DeleteTableModal';
+import LoadTableFromCsvModal from '../../modals/LoadTableFromCsvModal';
 import { deleteTable, truncateTable } from '../../../Actions';
+import FilesStore from '../../../../components/stores/StorageFilesStore';
+import StorageActionCreators from '../../../../components/StorageActionCreators';
 
 import TableOverview from './TableOverview';
 import TableColumn from './TableColumn';
@@ -20,7 +23,7 @@ import LatestImports from './LatestImports';
 import TableGraph from './TableGraph';
 
 export default React.createClass({
-  mixins: [createStoreMixin(TablesStore, BucketsStore, ApplicationStore)],
+  mixins: [createStoreMixin(TablesStore, BucketsStore, ApplicationStore, FilesStore)],
 
   getStateFromStores() {
     const bucketId = RoutesStore.getCurrentRouteParam('bucketId');
@@ -45,7 +48,9 @@ export default React.createClass({
       creatingFromSnapshot: TablesStore.getIsCreatingFromSnapshot(),
       deletingSnapshot: TablesStore.getIsDeletingSnapshot(),
       truncatingTable: TablesStore.getIsTruncatingTable(table.get('id')),
-      deletingTable: TablesStore.getIsDeletingTable()
+      deletingTable: TablesStore.getIsDeletingTable(),
+      loadingIntoTable: TablesStore.getIsLoadingTable(),
+      uploadingProgress: FilesStore.getUploadingProgress(bucketId) || 0
     };
   },
 
@@ -65,6 +70,8 @@ export default React.createClass({
         </div>
       );
     }
+
+    const loadingIntoTable = this.state.loadingIntoTable || this.state.uploadingProgress > 0;
 
     return (
       <div>
@@ -86,7 +93,13 @@ export default React.createClass({
                   Export
                 </MenuItem>
                 <MenuItem eventKey="load" onSelect={this.handleDropdownAction}>
-                  Load
+                  {loadingIntoTable ? (
+                    <span>
+                      <Loader /> Loading into table...
+                    </span>
+                  ) : (
+                    'Load'
+                  )}
                 </MenuItem>
                 <MenuItem divider />
                 {!this.state.table.get('isAlias') && this.canWriteTable() && (
@@ -163,6 +176,7 @@ export default React.createClass({
 
         {this.renderDeletingTableModal()}
         {!this.state.table.get('isAlias') && this.canWriteTable() && this.renderTruncateTableModal()}
+        {this.state.openActionModal && <div>{this.renderLoadTableModal()}</div>}
       </div>
     );
   },
@@ -193,6 +207,22 @@ export default React.createClass({
     );
   },
 
+  renderLoadTableModal() {
+    if (this.state.actionModalType !== 'load') {
+      return null;
+    }
+
+    return (
+      <LoadTableFromCsvModal
+        table={this.state.table}
+        onSubmit={this.handleLoadTable}
+        onHide={this.closeActionModal}
+        isLoading={this.state.loadingIntoTable}
+        progress={this.state.uploadingProgress}
+      />
+    );
+  },
+
   handleSelectTab(tab) {
     if (['overview', 'description', 'events', 'data-sample', 'snapshot-and-restore', 'graph'].includes(tab)) {
       this.setState({
@@ -214,11 +244,28 @@ export default React.createClass({
     return truncateTable(tableId);
   },
 
+  handleLoadTable(file, params) {
+    const bucketId = this.state.bucket.get('id');
+    const tableId = this.state.table.get('id');
+
+    return StorageActionCreators.uploadFile(bucketId, file).then(fileId => {
+      return StorageActionCreators.loadTable(tableId, {
+        ...params,
+        dataFileId: fileId
+      });
+    });
+  },
+
   handleDropdownAction(action) {
     switch (action) {
       case 'export':
-      case 'load':
         return null;
+
+      case 'load':
+        return this.setState({
+          openActionModal: true,
+          actionModalType: 'load'
+        });
 
       case 'truncate':
         return this.setState({
