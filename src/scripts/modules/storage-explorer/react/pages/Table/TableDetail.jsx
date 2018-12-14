@@ -281,10 +281,12 @@ export default React.createClass({
     const tableId = this.state.table.get('id');
 
     return exportTable(tableId).then(response => {
-      return storageApi.getFiles({
-        runId: response.runId,
-        'tags[]': ['storage-merged-export']
-      });
+      return storageApi
+        .getFiles({
+          runId: response.runId,
+          'tags[]': ['storage-merged-export']
+        })
+        .then(files => files[0]);
     });
   },
 

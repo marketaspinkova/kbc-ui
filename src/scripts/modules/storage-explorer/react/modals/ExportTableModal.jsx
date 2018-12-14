@@ -68,8 +68,8 @@ export default React.createClass({
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.onSubmit().then(files => {
-      this.setState({ url: files[0].url });
+    this.props.onSubmit().then(file => {
+      this.setState({ url: file.url });
     });
   },
 
