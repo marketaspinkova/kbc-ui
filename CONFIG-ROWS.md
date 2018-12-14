@@ -1,7 +1,3 @@
-# TODO
-
-- plete se `configuration` + `row` jako objekty a `configuration` a `row configuration` jako hodnoty konfigurací 
-
 # Config Rows UI
 
 Config Rows UI is a set of helpers to simply create a rich UI consistent with other components. All common features 
@@ -138,7 +134,7 @@ export default createRoute(routeSettings);
 
 ``` 
 
-#### Parameters
+#### Basic Parameters
 
 - `componentId` - eg `vendor.ex-mycomponent`
 - `componentType` - `extractor` or `writer`, `writer` will let the user select a table from Storage when creating a new row
@@ -257,18 +253,285 @@ export function isComplete(configuration) {
 
 ##### `onConform`
 
+In case you need to make changes in the UI or configuration, always try to make the changes backwards compatible. 
+In case this is not possible, `onConform` is a function, that can bring a small degree of flexibility to backwards 
+compatibility. `onConform` function is executed on the **configuration** before it is passed to the **onLoad** adapter,
+where it can mimic missing properties. Can be applied to both `index` and `row`
 
+Example
+
+```javascript
+onConform: (configuration) => {
+  const configDraft = fromJS({
+    storage: {
+      input: {
+        tables: [
+          {
+            changed_since: ''
+          }
+        ]
+      }
+    },
+    parameters: {
+      incremental: false
+    }
+  });
+  return configDraft.mergeDeep(configuration);
+}
+```
 
 ##### OAuth
 
+OAuth section can be added for components that have OAuth support turned on.
+
+Example
+
+```javascript
+import createOauthSection from '../configurations/utils/createOauthSection';
+// ...
+const routeSettings = {
+  index: {
+    sections: [
+      createOauthSection()
+      // ...
+    ]
+  }
+};
+
+```
+
 ### React Components
 
+The React component of each section are very simple. They get passed the result of the `onLoad` adapter 
+and can update it via a callback function.
+
+**Example**
+
+[Credentials.jsx](https://github.com/keboola/kbc-ui/blob/4b74daf9f5f8926d78ed9ce730007abb79b1a27b/src/scripts/modules/ex-http/react/components/Credentials.jsx)
+
+**Properties**
+
+- `onChange` - callback function that returns a key-value object for each changed property in the local state
+- `disabled` - boolean if the whole component is disabled (eg. is saving)
+- `value` - an object containing all local state props
+- `actions` - an object containing all sync actions, optional 
+
+#### `onChange`
+
+`onChange` callback propagates input changes back to the local state.
+
+**Example**
+
+```jsx
+<FormControl
+  type="text"
+  value={this.props.value.destination}
+  onChange={function(e) {
+    props.onChange({destination: e.target.value.trim()});
+  }}
+  placeholder="myfolder/file.csv"
+  disabled={this.props.disabled}
+/>
+```
+
+#### `actions`
+
+Actions allow the UI use sync action from the component. Actions can be defined for `index` and `row` pages, `index` 
+actions are also available in the `row` scope.  
+
+##### Format
+
+Action name serves as the key in the root object. 
+
+- `status` - status of the action, `pending`, `success` or `error`
+- `request` - body of the request
+- `data` - body of the response
+- `error` - error message from the response in case it is an user exception
+
+**Success Example**
+
+```javascript
+{ 
+  info: {
+    status: 'success'
+    request: {
+      configData: {
+        parameters: {
+          url: 'myurl',
+          '#token': '****'
+        }
+      }
+    },
+    data: {
+      projectId: '12345',
+      project: 'my project',
+      bucket: 'in.c-mybucket'    
+    }
+  }
+}
+```
+
+**Error Example**
+
+```javascript
+{ 
+  info: {
+    status: 'error',
+    error: 'my error message`
+  }
+}
+```
+
+**Pending Example**
+
+```javascript
+{ 
+  info: {
+    status: 'pending'
+  }
+}
+```
+
+##### Usage
+
+Actions is an Immutable.js map containing all current available information about all actions in the current scope.
+
+**Example** 
+
+Link to a Storage bucket in another project. The `SyncActionSimpleValue` takes care of any error or pending state that 
+gets passed through. 
+
+```jsx
+<FormGroup>
+  <Col componentClass={ControlLabel} sm={4}>
+    Bucket
+  </Col>
+  <Col sm={8}>
+    <FormControl.Static>
+      <ExternalBucketLink
+        stackUrl={this.props.actions.getIn(['info', 'request', 'configData', 'parameters', 'url'])}
+        projectId={this.props.actions.getIn(['info', 'data', 'projectId'])}
+        bucketId={this.props.actions.getIn(['info', 'data', 'bucket'])}
+      >
+        <SyncActionSimpleValue
+          action={this.props.actions.get('info')}
+          valueKey="bucket"
+        />
+      </ExternalBucketLink>
+    </FormControl.Static>
+  </Col>
+</FormGroup>
+```
+
+##### Definition
+
+Sync actions can be defined in `index` or `row` node.
+
+- `name` - name of the action, serves to identify the action in the `actions` property
+- `cache` - the results will be cached, cache id is derived from the request payload
+- `autoload` - autoload actions will load automatically on each page view 
+- `getPayload` - function that will generate the sync action payload
+
+**Example**
+
+```javascript
+    actions: [
+      {
+        name: 'info',
+        cache: true,
+        autoload: true,
+        getPayload: actions.info
+      }
+    ],
+```
+
+###### `getPayload`
+
+The function returns an Immutable.js object with the body payload or `false`, if the action should not be executed.
+
+- `index` actions have a single argument, `configuration` with the configuration
+- `row` actions have two arguments, `configuration` and `row` with the respective configurations 
+
+**Example**
+
+```javasript
+import Immutable from 'immutable';
+
+const infoAction = function(configuration) {
+  if (!configuration.hasIn(['parameters', '#token']) || !configuration.hasIn(['parameters', 'url'])) {
+    return false;
+  }
+  return Immutable.fromJS({
+    configData: {
+      parameters: {
+        '#token': configuration.getIn(['parameters', '#token'], ''),
+        url: configuration.getIn(['parameters', 'url'], '')
+      }
+    }
+  });
+};
+
+export default {
+  info: infoAction
+};
+```
+
+#### Helpers
+
+A simple list of available helpers
+
+- `SyncActionSimpleValue` - displays pending status of an action, error message or retrieved value
+- `ExternalProjectLink` - link to another project
+- `ExternalBucketLink` - link to a bucket in a different project
+- `CollapsibleSection` - dropdown section, can be collapsed by default when a condition is met
+- `createOauthSection` - creates a collapsible OAuth section
 
 ### Adapters
 
+Adapters serve to convert **configuration** to **local state** which is then passed to the React components, 
+React components then change the **local state** and during save the process is reversed. 
+
+Please note that except React components all other functions receive the **configuration**, not the **local state**.
+
+Each React component should have its own set of adapters. All arguments and return values are Immutable.js maps.
+
+**Example**
+
+```javascript
+export default {
+  // onSave
+  createConfiguration: function(localState) {
+    const config = Immutable.fromJS({
+      parameters: {
+        url: localState.get('url', ''),
+        '#token': localState.get('token', '')
+      }
+    });
+    return config;
+  },
+  // onLoad
+  parseConfiguration: function(configuration) {
+    return Immutable.fromJS({
+      url: configuration.getIn(['parameters', 'url'], ''),
+      token: configuration.getIn(['parameters', '#token'], '')
+    });
+  }
+}
+```
+
 #### `onSave`
 
+The function receives data from the **local state** and produces the **configuration** or its part.
+
+##### Merging
+
+Multiple `onSave` adapters can write into the same `configuration` or its node. Result of all `onSave` adapters are deep 
+merged in the order of their definition. 
+
 #### `onLoad`
+
+The function receives data from `configuration` or `row` and returns **local state** for the desired component, it is 
+a reverse function to `onSave`.
 
 #### `onCreate`
 
@@ -277,7 +540,7 @@ export function isComplete(configuration) {
   - `name`, `webalizedName` for extractors
   - `tableId` for writers
   
-**Extractor example**
+**Extractor Example**
 
 ```javascript
 import Immutable from 'immutable';
@@ -286,7 +549,7 @@ function createEmptyConfiguration(name, webalizedName) {
 }
 ``` 
 
-**Writer example**
+**Writer Example**
 
 ```javascript
 import Immutable from 'immutable';
@@ -295,4 +558,8 @@ export function createEmptyConfiguration(tableId) {
   return createConfiguration(Immutable.fromJS({source: tableId, destination: tableName + '.csv'}));
 }
 ```
+
+#### Testing
+
+All adapters MUST have tests and the tests must cover each possible state of the **local state**.
 
