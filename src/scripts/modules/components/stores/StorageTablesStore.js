@@ -103,11 +103,11 @@ Dispatcher.register(function(payload) {
       return StorageTablesStore.emitChange();
 
     case constants.ActionTypes.STORAGE_ADD_TABLE_COLUMN_SUCCESS:
-      _store = _store.setIn(['pendingTables', 'addingColumn', action.tableId], false);
+      _store = _store.deleteIn(['pendingTables', 'addingColumn', action.tableId]);
       return StorageTablesStore.emitChange();
 
     case constants.ActionTypes.STORAGE_ADD_TABLE_COLUMN_ERROR:
-      _store = _store.setIn(['pendingTables', 'addingColumn', action.tableId], false);
+      _store = _store.deleteIn(['pendingTables', 'addingColumn', action.tableId]);
       return StorageTablesStore.emitChange();
 
     case constants.ActionTypes.STORAGE_DELETE_TABLE_COLUMN:
@@ -115,11 +115,11 @@ Dispatcher.register(function(payload) {
       return StorageTablesStore.emitChange();
 
     case constants.ActionTypes.STORAGE_DELETE_TABLE_COLUMN_SUCCESS:
-      _store = _store.setIn(['pendingTables', 'deletingColumn', action.tableId, action.columnName], false);
+      _store = _store.deleteIn(['pendingTables', 'deletingColumn', action.tableId, action.columnName]);
       return StorageTablesStore.emitChange();
 
     case constants.ActionTypes.STORAGE_DELETE_TABLE_COLUMN_ERROR:
-      _store = _store.setIn(['pendingTables', 'deletingColumn', action.tableId, action.columnName], false);
+      _store = _store.deleteIn(['pendingTables', 'deletingColumn', action.tableId, action.columnName]);
       return StorageTablesStore.emitChange();
 
     case constants.ActionTypes.STORAGE_ALIAS_TABLE_CREATE:
