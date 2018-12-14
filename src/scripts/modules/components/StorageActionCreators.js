@@ -138,11 +138,10 @@ module.exports = {
       type: constants.ActionTypes.STORAGE_FILES_LOAD
     });
     return storageApi.getFiles(params).then(function(files) {
-      dispatcher.handleViewAction({
+      return dispatcher.handleViewAction({
         type: constants.ActionTypes.STORAGE_FILES_LOAD_SUCCESS,
         files: files
       });
-      return files;
     })
       .catch(function(error) {
         dispatcher.handleViewAction({

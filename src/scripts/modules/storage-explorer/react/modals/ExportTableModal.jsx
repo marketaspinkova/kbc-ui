@@ -42,8 +42,8 @@ export default React.createClass({
               <Button onClick={this.props.onHide} bsStyle="link">
                 Cancel
               </Button>
-              {this.state.file ? (
-                <ExternalLink className="btn btn-primary" href={this.state.file.url} title={this.state.file.name}>
+              {this.state.url ? (
+                <ExternalLink className="btn btn-primary" href={this.state.url} title={this.state.url}>
                   <i className="fa fa-download" /> Download
                 </ExternalLink>
               ) : (
@@ -69,7 +69,7 @@ export default React.createClass({
   handleSubmit(event) {
     event.preventDefault();
     this.props.onSubmit().then(files => {
-      this.setState({ file: files[0] });
+      this.setState({ url: files[0].url });
     });
   },
 
