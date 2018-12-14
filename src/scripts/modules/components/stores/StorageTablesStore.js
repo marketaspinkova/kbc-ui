@@ -155,7 +155,7 @@ Dispatcher.register(function(payload) {
 
     case constants.ActionTypes.STORAGE_DELETE_TABLE_SUCCESS:
     case constants.ActionTypes.STORAGE_DELETE_TABLE_ERROR:
-      _store = _store.setIn(['pendingTables', 'deleting'], false);
+      _store = _store.deleteIn(['pendingTables', 'deleting']);
       return StorageTablesStore.emitChange();
 
     case constants.ActionTypes.STORAGE_ALIAS_TABLE_CREATE:
