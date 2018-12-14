@@ -40,7 +40,7 @@ export default React.createClass({
       creatingSnapshot: TablesStore.getIsCreatingSnapshot(table.get('id')),
       creatingFromSnapshot: TablesStore.getIsCreatingFromSnapshot(),
       deletingSnapshot: TablesStore.getIsDeletingSnapshot(),
-      truncatingTable: TablesStore.getIsTruncatingTable()
+      truncatingTable: TablesStore.getIsTruncatingTable(table.get('id'))
     };
   },
 
@@ -60,8 +60,6 @@ export default React.createClass({
         </div>
       );
     }
-
-    const truncating = this.state.truncatingTable.get(this.state.table.get('id'), false);
 
     return (
       <div>
@@ -87,8 +85,12 @@ export default React.createClass({
                 </MenuItem>
                 <MenuItem divider />
                 {!this.state.table.get('isAlias') && this.canWriteTable() && (
-                  <MenuItem eventKey="truncate" onSelect={this.handleDropdownAction} disabled={truncating}>
-                    {truncating ? (
+                  <MenuItem
+                    eventKey="truncate"
+                    onSelect={this.handleDropdownAction}
+                    disabled={this.state.truncatingTable}
+                  >
+                    {this.state.truncatingTable ? (
                       <span>
                         <Loader /> Truncating table...
                       </span>
