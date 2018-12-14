@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import moment from 'moment';
 import { Modal, Col, Alert, Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import Select from 'react-select';
+import DatePicker from 'react-datepicker';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
 export default React.createClass({
@@ -47,11 +48,13 @@ export default React.createClass({
                 Replication Date
               </Col>
               <Col sm={8}>
-                <FormControl
-                  type="text"
-                  value={this.state.timestamp.format('YYYY-MM-DD HH:mm:ss')}
+                <DatePicker
+                  className="form-control"
+                  dateFormat="YYYY-MM-DD"
                   onChange={this.handleTimestamp}
-                  placeholder="YYYY-MM-DD HH:mm:ss"
+                  selected={this.state.timestamp}
+                  minDate={this.minRestoreDate()}
+                  maxDate={this.maxRestoreDate()}
                 />
               </Col>
             </FormGroup>
@@ -92,9 +95,9 @@ export default React.createClass({
     );
   },
 
-  handleTimestamp(event) {
+  handleTimestamp(timestamp) {
     this.setState({
-      timestamp: moment(event.target.value)
+      timestamp
     });
   },
 
@@ -122,6 +125,10 @@ export default React.createClass({
     const tableCreatedDate = moment(this.props.table.get('created'));
 
     return moment.max(projectRetentionMinDate, tableCreatedDate);
+  },
+
+  maxRestoreDate() {
+    return moment();
   },
 
   isDisabled() {
