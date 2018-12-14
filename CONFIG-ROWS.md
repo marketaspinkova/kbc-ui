@@ -377,7 +377,7 @@ Action name serves as the key in the root object.
 { 
   info: {
     status: 'error',
-    error: 'my error message`
+    error: 'my error message'
   }
 }
 ```
