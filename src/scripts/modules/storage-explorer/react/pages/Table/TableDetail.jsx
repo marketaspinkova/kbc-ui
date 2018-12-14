@@ -11,6 +11,7 @@ import DataSample from '../../components/DataSample';
 import { deleteTable, truncateTable } from '../../../Actions';
 import FilesStore from '../../../../components/stores/StorageFilesStore';
 import StorageActionCreators from '../../../../components/StorageActionCreators';
+import { exportTable } from '../../../Actions';
 
 import TruncateTableModal from '../../modals/TruncateTableModal';
 import DeleteTableModal from '../../modals/DeleteTableModal';
@@ -278,7 +279,14 @@ export default React.createClass({
   handleExportTable() {
     const tableId = this.state.table.get('id');
 
-    return StorageActionCreators.exportTable(tableId);
+    return exportTable(tableId).then(response => {
+      const params = {
+        runId: response.runId,
+        'tags[]': ['storage-merged-export']
+      };
+
+      return StorageActionCreators.loadFilesForce(params);
+    });
   },
 
   handleDropdownAction(action) {

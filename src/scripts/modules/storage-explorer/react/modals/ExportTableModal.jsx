@@ -7,12 +7,12 @@ export default React.createClass({
     table: PropTypes.object.isRequired,
     onSubmit: PropTypes.func.isRequired,
     onHide: PropTypes.func.isRequired,
-    isExporting: PropTypes.bool.isRequired,
-    url: PropTypes.string
+    isExporting: PropTypes.bool.isRequired
   },
 
   getInitialState() {
     return {
+      file: null,
       error: null
     };
   },
@@ -42,12 +42,12 @@ export default React.createClass({
               <Button onClick={this.props.onHide} bsStyle="link">
                 Cancel
               </Button>
-              {this.props.url ? (
-                <ExternalLink className="btn btn-success" href={this.props.url}>
-                  Download
+              {this.state.file ? (
+                <ExternalLink className="btn btn-primary" href={this.state.file.url} title={this.state.file.name}>
+                  <i className="fa fa-download" /> Download
                 </ExternalLink>
               ) : (
-                <Button type="submit" bsStyle="success" disabled={this.isDisabled()}>
+                <Button type="submit" bsStyle="success" disabled={this.props.isExporting}>
                   Export
                 </Button>
               )}
@@ -68,14 +68,12 @@ export default React.createClass({
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.onSubmit();
+    this.props.onSubmit().then(files => {
+      this.setState({ file: files[0] });
+    });
   },
 
   handleError(message) {
     this.setState({ error: message });
-  },
-
-  isDisabled() {
-    return this.props.isExporting || this.props.url;
   }
 });
