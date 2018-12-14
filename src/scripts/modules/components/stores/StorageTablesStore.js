@@ -246,11 +246,11 @@ Dispatcher.register(function(payload) {
       return StorageTablesStore.emitChange();
 
     case constants.ActionTypes.STORAGE_TABLE_EXPORT_SUCCESS:
-      _store = _store.setIn(['pendingTables', 'exporting', action.tableId], false);
+      _store = _store.deleteIn(['pendingTables', 'exporting', action.tableId]);
       return StorageTablesStore.emitChange();
 
     case constants.ActionTypes.STORAGE_TABLE_EXPORT_ERROR:
-      _store = _store.setIn(['pendingTables', 'exporting', action.tableId], false);
+      _store = _store.deleteIn(['pendingTables', 'exporting', action.tableId]);
       return StorageTablesStore.emitChange();
     default:
   }
