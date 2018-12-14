@@ -15,16 +15,17 @@ export default React.createClass({
   getStateFromStores() {
     const bucketId = RoutesStore.getCurrentRouteParam('bucketId');
     const tableName = RoutesStore.getCurrentRouteParam('tableName');
+    const table = TablesStore.getAll().find(item => {
+      return item.getIn(['bucket', 'id']) === bucketId && item.get('name') === tableName;
+    });
 
     return {
+      table,
       sapiToken: ApplicationStore.getSapiToken(),
       tables: TablesStore.getAll(),
       bucket: BucketsStore.getAll().find(item => item.get('id') === bucketId),
-      table: TablesStore.getAll().find(item => {
-        return item.getIn(['bucket', 'id']) === bucketId && item.get('name') === tableName;
-      }),
-      creatingPrimaryKey: TablesStore.getIsCreatingPrimaryKey(),
-      deletingPrimaryKey: TablesStore.getIsDeletingPrimaryKey()
+      creatingPrimaryKey: TablesStore.getIsCreatingPrimaryKey(table.get('id')),
+      deletingPrimaryKey: TablesStore.getIsDeletingPrimaryKey(table.get('id'))
     };
   },
 

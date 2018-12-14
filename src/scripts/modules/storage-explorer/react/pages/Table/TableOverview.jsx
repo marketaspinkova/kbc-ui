@@ -19,8 +19,8 @@ export default React.createClass({
     tableAliases: PropTypes.array.isRequired,
     tableLinks: PropTypes.array.isRequired,
     sapiToken: PropTypes.object.isRequired,
-    creatingPrimaryKey: PropTypes.object.isRequired,
-    deletingPrimaryKey: PropTypes.object.isRequired
+    creatingPrimaryKey: PropTypes.bool.isRequired,
+    deletingPrimaryKey: PropTypes.bool.isRequired
   },
 
   getInitialState() {
@@ -32,8 +32,6 @@ export default React.createClass({
 
   render() {
     const table = this.props.table;
-    const creatingPrimaryKey = this.props.creatingPrimaryKey.get(table.get('id'), false);
-    const deletingPrimaryKey = this.props.deletingPrimaryKey.get(table.get('id'), false);
 
     return (
       <div>
@@ -55,15 +53,23 @@ export default React.createClass({
                 {this.renderPrimaryKeyInfo(table)}{' '}
                 {!table.get('isAlias') && table.get('primaryKey').count() > 0 && (
                   <Tooltip tooltip="Remove table primary key" placement="top">
-                    <Button bsSize="small" onClick={this.openRemovePrimaryKeyModal} disabled={deletingPrimaryKey}>
-                      {deletingPrimaryKey ? <Loader /> : <i className="fa fa-trash-o" />}
+                    <Button
+                      bsSize="small"
+                      onClick={this.openRemovePrimaryKeyModal}
+                      disabled={this.props.deletingPrimaryKey}
+                    >
+                      {this.props.deletingPrimaryKey ? <Loader /> : <i className="fa fa-trash-o" />}
                     </Button>
                   </Tooltip>
                 )}
                 {!table.get('isAlias') && !table.get('primaryKey').count() > 0 && (
                   <Tooltip tooltip="Create table primary key" placement="top">
-                    <Button bsSize="small" onClick={this.openCreatePrimaryKeyModal} disabled={creatingPrimaryKey}>
-                      {creatingPrimaryKey ? <Loader /> : <i className="fa fa-pencil-square-o" />}
+                    <Button
+                      bsSize="small"
+                      onClick={this.openCreatePrimaryKeyModal}
+                      disabled={this.props.creatingPrimaryKey}
+                    >
+                      {this.props.creatingPrimaryKey ? <Loader /> : <i className="fa fa-pencil-square-o" />}
                     </Button>
                   </Tooltip>
                 )}

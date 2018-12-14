@@ -38,12 +38,12 @@ const StorageTablesStore = StoreUtils.createStore({
     return _store.getIn(['pendingTables', 'creatingAlias'], false);
   },
 
-  getIsCreatingPrimaryKey() {
-    return _store.getIn(['pendingTables', 'creatingPrimaryKey'], Map());
+  getIsCreatingPrimaryKey(tableId) {
+    return _store.getIn(['pendingTables', 'creatingPrimaryKey', tableId], false);
   },
 
-  getIsDeletingPrimaryKey() {
-    return _store.getIn(['pendingTables', 'deletingPrimaryKey'], Map());
+  getIsDeletingPrimaryKey(tableId) {
+    return _store.getIn(['pendingTables', 'deletingPrimaryKey', tableId], false);
   },
 
   getIsLoadingTable() {
