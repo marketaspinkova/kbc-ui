@@ -3,6 +3,10 @@ import { Col, Modal, Form, FormGroup, FormControl, ControlLabel, HelpBlock } fro
 import Select from 'react-select';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
+const INITIAL_STATE = {
+  name: ''
+};
+
 export default React.createClass({
   propTypes: {
     table: PropTypes.object.isRequired,
@@ -12,9 +16,7 @@ export default React.createClass({
   },
 
   getInitialState() {
-    return {
-      name: ''
-    };
+    return INITIAL_STATE;
   },
 
   render() {
@@ -85,6 +87,7 @@ export default React.createClass({
     const columns = this.props.table.get('columns');
     const sourceTableId = this.props.table.getIn(['sourceTable', 'id']);
     const sourceTable = this.props.tables.find(table => table.get('id') === sourceTableId);
+
     return sourceTable
       .get('columns')
       .filter(column => !columns.includes(column))
@@ -107,9 +110,7 @@ export default React.createClass({
   },
 
   resetState() {
-    this.setState({
-      name: ''
-    });
+    this.setState(INITIAL_STATE);
   },
 
   isDisabled() {
