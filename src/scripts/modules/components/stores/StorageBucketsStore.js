@@ -168,7 +168,6 @@ Dispatcher.register(function(payload) {
 
     case constants.ActionTypes.STORAGE_BUCKET_SHARE_SUCCESS:
       _store = _store.removeIn(['pendingBuckets', 'sharing', action.bucketId]);
-      _store = _store.removeIn(['buckets', action.bucketId]);
       return StorageBucketsStore.emitChange();
 
     case constants.ActionTypes.STORAGE_BUCKET_SHARE_ERROR:
@@ -181,7 +180,6 @@ Dispatcher.register(function(payload) {
 
     case constants.ActionTypes.STORAGE_BUCKET_UNSHARE_SUCCESS:
       _store = _store.removeIn(['pendingBuckets', 'unsharing', action.bucketId]);
-      _store = _store.removeIn(['buckets', action.bucketId]);
       return StorageBucketsStore.emitChange();
 
     case constants.ActionTypes.STORAGE_BUCKET_UNSHARE_ERROR:
