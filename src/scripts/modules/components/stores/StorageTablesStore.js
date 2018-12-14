@@ -58,12 +58,12 @@ const StorageTablesStore = StoreUtils.createStore({
     return _store.getIn(['pendingTables', 'loading'], false);
   },
 
-  getIsCreatingSnapshot() {
-    return _store.getIn(['pendingTables', 'creatingSnapshot'], Map());
+  getIsCreatingSnapshot(tableId) {
+    return _store.getIn(['pendingTables', 'creatingSnapshot', tableId], false);
   },
 
-  getIsRestoringTable() {
-    return _store.getIn(['pendingTables', 'restoring'], Map());
+  getIsRestoringTable(tableId) {
+    return _store.getIn(['pendingTables', 'restoring', tableId], false);
   },
 
   getIsCreatingFromSnapshot() {

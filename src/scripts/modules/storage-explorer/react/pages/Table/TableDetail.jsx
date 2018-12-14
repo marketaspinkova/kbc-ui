@@ -34,8 +34,8 @@ export default React.createClass({
       addingColumn: TablesStore.getAddingColumn(),
       deletingColumn: TablesStore.getDeletingColumn(),
       creatingTable: TablesStore.getIsCreatingTable(),
-      restoringTable: TablesStore.getIsRestoringTable(),
-      creatingSnapshot: TablesStore.getIsCreatingSnapshot(),
+      restoringTable: TablesStore.getIsRestoringTable(table.get('id')),
+      creatingSnapshot: TablesStore.getIsCreatingSnapshot(table.get('id')),
       creatingFromSnapshot: TablesStore.getIsCreatingFromSnapshot(),
       deletingSnapshot: TablesStore.getIsDeletingSnapshot()
     };

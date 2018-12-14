@@ -18,8 +18,8 @@ export default React.createClass({
     table: PropTypes.object.isRequired,
     buckets: PropTypes.object.isRequired,
     sapiToken: PropTypes.object.isRequired,
-    restoringTable: PropTypes.object.isRequired,
-    creatingSnapshot: PropTypes.object.isRequired,
+    restoringTable: PropTypes.bool.isRequired,
+    creatingSnapshot: PropTypes.bool.isRequired,
     creatingFromSnapshot: PropTypes.object.isRequired,
     deletingSnapshot: PropTypes.object.isRequired
   },
@@ -60,7 +60,6 @@ export default React.createClass({
 
   renderRestore() {
     const retentionLimit = this.props.sapiToken.getIn(['owner', 'dataRetentionTimeInDays']);
-    const restoring = this.props.restoringTable.get(this.props.table.get('id'));
 
     return (
       <div>
@@ -72,8 +71,8 @@ export default React.createClass({
             replicate data from up to <strong>{retentionLimit} days</strong> in past.
           </p>
 
-          <Button bsStyle="primary" onClick={this.openTimeTravelModal} disabled={restoring}>
-            {restoring ? (
+          <Button bsStyle="primary" onClick={this.openTimeTravelModal} disabled={this.props.restoringTable}>
+            {this.props.restoringTable ? (
               <span>
                 <Loader /> Restoring Table...
               </span>
@@ -91,8 +90,6 @@ export default React.createClass({
   },
 
   renderSnapshots() {
-    const creating = this.props.creatingSnapshot.get(this.props.table.get('id'), false);
-
     return (
       <div>
         <h3>Snapshots</h3>
@@ -101,8 +98,8 @@ export default React.createClass({
           <Well>
             <p>Create and restore tables from snapshots.</p>
 
-            <Button bsStyle="primary" onClick={this.openCreateSnapshotModal} disabled={creating}>
-              {creating ? (
+            <Button bsStyle="primary" onClick={this.openCreateSnapshotModal} disabled={this.props.creatingSnapshot}>
+              {this.props.creatingSnapshot ? (
                 <span>
                   <Loader /> Creating snapshot...
                 </span>
