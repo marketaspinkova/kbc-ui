@@ -38,9 +38,9 @@ export default React.createClass({
               <th>Uploaded</th>
               <th>Name</th>
               <th>Size</th>
-              <th>Public</th>
-              <th>Encrypted</th>
-              <th>Permanent</th>
+              <th className="text-center">Public</th>
+              <th className="text-center">Encrypted</th>
+              <th className="text-center">Permanent</th>
               <th>Creator</th>
               <th>Tags</th>
               <th>Action</th>
@@ -63,9 +63,13 @@ export default React.createClass({
         <td>
           <FileSize size={file.get('sizeBytes')} />
         </td>
-        <td>{file.get('isPublic') ? <i className="fa fa-check" /> : <i className="fa fa-times" />}</td>
-        <td>{file.get('isEncrypted') ? <i className="fa fa-check" /> : <i className="fa fa-times" />}</td>
-        <td>{this.expiration(file)}</td>
+        <td className="text-center">
+          {file.get('isPublic') ? <i className="fa fa-check" /> : <i className="fa fa-times" />}
+        </td>
+        <td className="text-center">
+          {file.get('isEncrypted') ? <i className="fa fa-check" /> : <i className="fa fa-times" />}
+        </td>
+        <td className="text-center">{this.expiration(file)}</td>
         <td>
           <span>{file.getIn(['creatorToken', 'description'])}</span>
         </td>
