@@ -31,8 +31,8 @@ export default React.createClass({
         <td className="kbc-break-all kbc-break-word">
           {this._renderConfiguration()}
         </td>
-        <td className="text-center">
-          <input type="checkbox" checked={this.props.task.get('active')} />
+        <td>
+          <input type="checkbox" checked={this.props.task.get('active')} readOnly />
         </td>
       </tr>
     );
