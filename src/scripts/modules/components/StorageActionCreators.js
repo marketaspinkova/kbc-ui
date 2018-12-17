@@ -861,5 +861,27 @@ module.exports = {
       });
       throw error;
     });
+  },
+
+  deleteFile: function(fileId) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.STORAGE_FILE_DELETE,
+      fileId: fileId
+    });
+    return storageApi.deleteFile(fileId).then(() => {
+      dispatcher.handleViewAction({
+        type: constants.ActionTypes.STORAGE_FILE_DELETE_SUCCESS,
+        fileId: fileId
+      });
+      ApplicationActionCreators.sendNotification({
+        message: 'File has been removed.'
+      });
+    }).catch(function(error) {
+      dispatcher.handleViewAction({
+        type: constants.ActionTypes.STORAGE_FILE_DELETE_ERROR,
+        fileId: fileId
+      });
+      throw error;
+    });
   }
 };

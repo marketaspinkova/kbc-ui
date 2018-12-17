@@ -92,6 +92,12 @@ var storageApi = {
     });
   },
 
+  deleteFile: function(fileId) {
+    return createRequest('DELETE', 'files/' + fileId).promise().then(function(response) {
+      return response.body;
+    });
+  },
+
   getRunIdStats: function(runId) {
     return createRequest('GET', 'stats').query({
       runId: runId

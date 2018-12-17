@@ -61,7 +61,12 @@ export default React.createClass({
             </p>
           ) : (
             <div>
-              <FilesTable files={this.state.files} onSearchById={this.searchById} onSearchByTag={this.searchByTag} />
+              <FilesTable
+                files={this.state.files}
+                onSearchById={this.searchById}
+                onSearchByTag={this.searchByTag}
+                onDeleteFile={this.handleDeleteFile}
+              />
               {this.renderMoreButton()}
             </div>
           )}
@@ -114,6 +119,14 @@ export default React.createClass({
 
     return Promise.resolve(params).finally(() => {
       this.setState({ isUploading: false });
+    });
+  },
+
+  handleDeleteFile(fileId) {
+    return StorageActionCreators.deleteFile(fileId).then(() => {
+      this.setState({
+        files: this.state.files.filter(file => file.get('id') !== fileId)
+      });
     });
   },
 

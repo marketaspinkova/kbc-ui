@@ -3,9 +3,10 @@ import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import moment from 'moment';
 import { Table, Button, Label } from 'react-bootstrap';
 import { format } from '../../../../utils/date';
-import Tooltip from '../../../../react/common/Tooltip';
+import Confirm from '../../../../react/common/Confirm';
 import Clipboard from '../../../../react/common/Clipboard';
 import FileSize from '../../../../react/common/FileSize';
+import Tooltip from '../../../../react/common/Tooltip';
 
 export default React.createClass({
   mixins: [ImmutableRenderMixin],
@@ -13,7 +14,8 @@ export default React.createClass({
   propTypes: {
     files: PropTypes.object.isRequired,
     onSearchById: PropTypes.func.isRequired,
-    onSearchByTag: PropTypes.func.isRequired
+    onSearchByTag: PropTypes.func.isRequired,
+    onDeleteFile: PropTypes.func.isRequired
   },
 
   getInitialState() {
@@ -76,8 +78,10 @@ export default React.createClass({
             </Button>
           ))}
         </td>
-        <td>
+        <td className="text-center">
           <Clipboard text={file.get('url')} tooltipPlacement="top" />
+          <br />
+          {this.renderDeleteFile(file)}
         </td>
       </tr>
     );
@@ -105,6 +109,25 @@ export default React.createClass({
       <Tooltip placement="right" tooltip={`Expired ${format(expiresOn, 'YYYY-MM-DD HH:mm')}`}>
         <Label bsStyle="danger">Expired</Label>
       </Tooltip>
+    );
+  },
+
+  renderDeleteFile(file) {
+    return (
+      <Confirm
+        title="Delete file"
+        text={
+          <p>
+            Do you really want to delete file {file.get('id')} ({file.get('name')})?
+          </p>
+        }
+        buttonLabel="Delete"
+        onConfirm={() => this.props.onDeleteFile(file.get('id'))}
+      >
+        <Tooltip placement="top" tooltip="Remove file">
+          <i className="fa fa-trash-o" />
+        </Tooltip>
+      </Confirm>
     );
   }
 });
