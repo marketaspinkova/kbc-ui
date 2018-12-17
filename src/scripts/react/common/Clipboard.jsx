@@ -6,11 +6,13 @@ export default React.createClass({
   propTypes: {
     text: React.PropTypes.string,
     label: React.PropTypes.string,
+    tooltipText: React.PropTypes.string,
     tooltipPlacement: React.PropTypes.string
   },
 
   getDefaultProps() {
     return {
+      tooltipText: 'Copy to clipboard',
       tooltipPlacement: 'right'
     };
   },
@@ -56,7 +58,7 @@ export default React.createClass({
 
   okTooltip() {
     if (this.props.text && this.props.text !== '') {
-      return this.state.isCopied ? 'Copied!' : 'Copy to clipboard';
+      return this.state.isCopied ? 'Copied!' : this.props.tooltipText;
     }
     return 'Nothing to copy';
   },

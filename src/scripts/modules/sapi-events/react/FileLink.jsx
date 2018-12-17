@@ -1,12 +1,12 @@
 import React from 'react';
 import filesize from 'filesize';
-import { ExternalLink } from '@keboola/indigo-ui';
 import ModalHandler from '../sliced-files-downloader/ModalHandler';
 
 export default React.createClass({
   propTypes: {
     file: React.PropTypes.object,
     showFilesize: React.PropTypes.bool,
+    linkClass: React.PropTypes.string,
     children: React.PropTypes.any
   },
 
@@ -27,7 +27,7 @@ export default React.createClass({
   renderSlicedFileDownloadModalTrigger() {
     return (
       <ModalHandler file={this.props.file}>
-        <span>
+        <span className={this.props.linkClass}>
           {this.renderBody()} {this.renderFilesize()}
         </span>
       </ModalHandler>
@@ -36,9 +36,9 @@ export default React.createClass({
 
   renderSimpleDownloadLink() {
     return (
-      <ExternalLink href={this.props.file.get('url')}>
+      <a href={this.props.file.get('url')} className={this.props.linkClass}>
         {this.renderBody()} {this.renderFilesize()}
-      </ExternalLink>
+      </a>
     );
   },
 

@@ -63,7 +63,6 @@ export default React.createClass({
             <div>
               <FilesTable
                 files={this.state.files}
-                onSearchById={this.searchById}
                 onSearchByTag={this.searchByTag}
                 onDeleteFile={this.handleDeleteFile}
               />
@@ -154,15 +153,6 @@ export default React.createClass({
 
   resetPagingAndLoadFiles() {
     this.setState(INITIAL_PAGING, this.loadFiles);
-  },
-
-  searchById(id) {
-    this.setState(
-      {
-        searchQuery: `id:${id}`
-      },
-      this.resetPagingAndLoadFiles
-    );
   },
 
   searchByTag(tag) {

@@ -14,7 +14,6 @@ export default React.createClass({
 
   propTypes: {
     files: PropTypes.object.isRequired,
-    onSearchById: PropTypes.func.isRequired,
     onSearchByTag: PropTypes.func.isRequired,
     onDeleteFile: PropTypes.func.isRequired
   },
@@ -44,7 +43,7 @@ export default React.createClass({
               <th>Permanent</th>
               <th>Creator</th>
               <th>Tags</th>
-              <th />
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>{this.props.files.map(this.renderRow).toArray()}</tbody>
@@ -56,14 +55,10 @@ export default React.createClass({
   renderRow(file) {
     return (
       <tr key={file.get('id')} className="kbc-cursor-pointer">
-        <td>
-          <Button className="btn btn-link" onClick={() => this.props.onSearchById(file.get('id'))}>
-            {file.get('id')}
-          </Button>
-        </td>
+        <td>{file.get('id')}</td>
         <td>{format(file.get('created'), 'YYYY-MM-DD HH:mm')}</td>
         <td>
-          <FileLink file={file} showFilesize={false} />
+          <FileLink file={file} showFilesize={false} /> {this.renderClipboard(file)}
         </td>
         <td>
           <FileSize size={file.get('sizeBytes')} />
@@ -76,17 +71,13 @@ export default React.createClass({
         </td>
         <td>
           {file.get('tags').map((tag, index) => (
-            <Button key={index} bsSize="sm" onClick={() => this.props.onSearchByTag(tag)}>
+            <Label key={index} bsStyle="default" onClick={() => this.props.onSearchByTag(tag)}>
               {tag}
-            </Button>
+            </Label>
           ))}
         </td>
-        <td className="text-center">
-          {this.renderClipboard(file)}
-          <br />
-          {this.renderFileDownload(file)}
-          <br />
-          {this.renderDeleteFile(file)}
+        <td>
+          {this.renderFileDownload(file)} {this.renderDeleteFile(file)}
         </td>
       </tr>
     );
@@ -129,12 +120,12 @@ export default React.createClass({
   },
 
   renderClipboard(file) {
-    return <Clipboard text={file.get('url')} tooltipPlacement="top" />;
+    return <Clipboard tooltipText="Copy file URL to clipboard" text={file.get('url')} />;
   },
 
   renderFileDownload(file) {
     return (
-      <FileLink file={file} showFilesize={false}>
+      <FileLink file={file} showFilesize={false} linkClass="btn btn-default">
         <Tooltip placement="top" tooltip="Download file">
           <i className="fa fa-arrow-circle-o-down" />
         </Tooltip>
@@ -153,8 +144,9 @@ export default React.createClass({
         }
         buttonLabel="Delete"
         onConfirm={() => this.props.onDeleteFile(file.get('id'))}
+        childrenRootElement={Button}
       >
-        <Tooltip placement="top" tooltip="Remove file">
+        <Tooltip placement="top" tooltip="Delete file">
           <i className="fa fa-trash-o" />
         </Tooltip>
       </Confirm>
