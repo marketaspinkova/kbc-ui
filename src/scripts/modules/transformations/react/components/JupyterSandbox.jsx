@@ -109,22 +109,22 @@ var JupyterSandbox = React.createClass({
 
   render: function() {
     return (
-      <div className="row">
-        <div className="col-xs-12">
-          <h4>
-            Jupyter{' '}
-            <span className="label label-info">
-              <a
-                style={{ color: '#fff' }}
-                href="http://status.keboola.com/call-for-testers-rstudio-and-jupyter-sandboxes"
-              >
-                BETA
-              </a>
-            </span>
-          </h4>
+      <div className="kbc-row">
+        <h4>
+          Jupyter{' '}
+          <span className="label label-info">
+            <a
+              style={{color: '#fff'}}
+              href="http://status.keboola.com/call-for-testers-rstudio-and-jupyter-sandboxes"
+            >
+              BETA
+            </a>
+          </span>
+        </h4>
+        <div className="row">
+          <div className="col-md-9">{this._renderCredentials()}</div>
+          <div className="col-md-3">{this._renderControlButtons()}</div>
         </div>
-        <div className="col-md-9">{this._renderCredentials()}</div>
-        <div className="col-md-3">{this._renderControlButtons()}</div>
       </div>
     );
   },

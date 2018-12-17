@@ -22,7 +22,7 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="processorControls col-md-12">
+      <div>
         <div className="form-group">
           <label className="control-label col-sm-4">
             Number of header rows

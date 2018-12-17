@@ -90,17 +90,15 @@ export default React.createClass({
         <Modal.Header closeButton>
           <Modal.Title>Compare</Modal.Title>
         </Modal.Header>
-        <Modal.Body style={{'padding': '0'}}>
-          <div className="row" style={{'padding': '4px', 'margin': '0'}}>
-            <ul>
-              <li>
-                <strong>{this.renderVersionInfo(this.props.referentialVersion)}</strong>
-              </li>
-              <li>
-                <strong>{this.renderVersionInfo(this.props.compareVersion)}</strong>
-              </li>
-            </ul>
-          </div>
+        <Modal.Body>
+          <ul>
+            <li>
+              <strong>{this.renderVersionInfo(this.props.referentialVersion)}</strong>
+            </li>
+            <li>
+              <strong>{this.renderVersionInfo(this.props.compareVersion)}</strong>
+            </li>
+          </ul>
           {this.renderFilterRow()}
           {this.renderDiff()}
         </Modal.Body>
@@ -117,18 +115,14 @@ export default React.createClass({
 
   renderFilterRow() {
     return (
-      <div className="row" style={{'padding': '2px 0 0px 8px' }}>
-        <div className="col-md-12">
-          <div className="checkbox" >
-            <label>
-              <input
-                checked={this.state.showChangedOnly}
-                type="checkbox"
-                onChange={this.toggleShowChanged}/>
-              Show changed parts only
-            </label>
-          </div>
-        </div>
+      <div className="checkbox">
+        <label>
+          <input
+            checked={this.state.showChangedOnly}
+            type="checkbox"
+            onChange={this.toggleShowChanged}/>
+          Show changed parts only
+        </label>
       </div>
     );
   },
@@ -169,7 +163,7 @@ export default React.createClass({
       return this.renderSimplePreDiff(part);
     });
     return (
-      <div className="pre-scrollable">
+      <div className="pre-scrollable" style={{margin: '0 -15px -15px -15px '}}>
         {parts}
       </div>
     );

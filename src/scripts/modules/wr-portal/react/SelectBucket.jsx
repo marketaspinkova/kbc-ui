@@ -61,7 +61,7 @@ export default React.createClass({
   renderModalBody() {
     return (
       <Modal.Body>
-        <div className="row">
+        <div className="form-horizontal">
           {this.renderFormElement(
             '',
             <SapiTableSelector
@@ -98,18 +98,17 @@ export default React.createClass({
             {element}
             <span className="help-block">{description}</span>
           </div>
-
         </div>
       );
     }
 
     return (
       <div className={errorClass}>
-        <label className="control-label col-sm-3">
+        <label className="control-label col-sm-4">
           {label}
         </label>
-        <div className="col-sm-9">
-          {element}
+        <div className="col-sm-8 ">
+          <p className="form-control-static">{element}</p>
           <span className="help-block">{description}</span>
         </div>
       </div>

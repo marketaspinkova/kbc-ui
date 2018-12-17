@@ -17,9 +17,9 @@ export default React.createClass({
 
   render() {
     return (
-      <div style={{paddingTop: '20px'}} className="form-group">
-        <div className="col-xs-12">
-          <label className="control-label col-xs-2">
+      <div>
+        <div className="form-group">
+          <label className="control-label col-xs-3">
             Token
           </label>
           <div className="col-xs-9">
@@ -36,8 +36,8 @@ export default React.createClass({
             </span>
           </div>
         </div>
-        <div className="col-xs-12">
-          <label className="control-label col-xs-2">
+        <div className="form-group">
+          <label className="control-label col-xs-3">
             Description
           </label>
           <div className="col-xs-9">

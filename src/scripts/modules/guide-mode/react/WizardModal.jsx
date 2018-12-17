@@ -80,21 +80,19 @@ export default React.createClass({
   getModalBody() {
     this.scrollBodyToTop();
     return (
-      <div key={this.props.step} className="row">
-        <div className="col-md-12">
-          {!this.isCongratulations() &&
-            <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
-          }
-          <div className="guide-media">
-            {this.renderMedia()}
-          </div>
-          {this.isCongratulations() &&
-          <span className="guide-congratulations">
-            <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
-          </span>
-          }
-          {this.isNavigationVisible() && this.renderNavigation()}
+      <div key={this.props.step}>
+        {!this.isCongratulations() &&
+        <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
+        }
+        <div className="guide-media">
+          {this.renderMedia()}
         </div>
+        {this.isCongratulations() &&
+        <span className="guide-congratulations">
+          <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
+        </span>
+        }
+        {this.isNavigationVisible() && this.renderNavigation()}
       </div>
     );
   },

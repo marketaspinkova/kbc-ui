@@ -31,32 +31,30 @@ export default React.createClass({
         };
       }).toList().toJS();
       return (
-        <div className="form-horizontal clearfix">
-          <div className="row col-md-12">
-            <div className="form-group">
-              <label className="col-xs-3 control-label">Select billable project</label>
-              <div className="col-xs-9">
-                <Select
-                  key="projectId"
-                  name="projectId"
-                  clearable={false}
-                  disabled={false}
-                  value={this.props.google.get('projectId', '').toString()}
-                  onChange= {({value: newValue}) => this.updateEditingValue('projectId', newValue)}
-                  options= {projectOptions}/>
-              </div>
+        <div className="form-horizontal">
+          <div className="form-group">
+            <label className="col-xs-3 control-label">Select billable project</label>
+            <div className="col-xs-9">
+              <Select
+                key="projectId"
+                name="projectId"
+                clearable={false}
+                disabled={false}
+                value={this.props.google.get('projectId', '').toString()}
+                onChange={({value: newValue}) => this.updateEditingValue('projectId', newValue)}
+                options={projectOptions}/>
             </div>
-            <div className="form-group">
-              <label className="col-xs-3 control-label">Cloud storage bucket</label>
-              <div className="col-xs-9">
-                <Input
-                  type="text"
-                  className="form-control"
-                  value={this.props.google.get('storage', '')}
-                  placeholder="gs://"
-                  onChange= {(e) => this.updateEditingValue('storage', e.target.value)}
-                />
-              </div>
+          </div>
+          <div className="form-group">
+            <label className="col-xs-3 control-label">Cloud storage bucket</label>
+            <div className="col-xs-9">
+              <Input
+                type="text"
+                className="form-control"
+                value={this.props.google.get('storage', '')}
+                placeholder="gs://"
+                onChange={(e) => this.updateEditingValue('storage', e.target.value)}
+              />
             </div>
           </div>
         </div>
@@ -108,26 +106,27 @@ export default React.createClass({
 
   renderForm() {
     return (
-      <div className="form-horizontal clearfix">
-        <div className="row col-md-12">
-          <div className="form-group">
-            <label className="col-xs-3 control-label">Select billable project</label>
-            <div className="col-xs-9">
-              { this.renderProjectSelect() }
-              <div className="help-block">BigQuery charges for data storage, streaming inserts, and for querying data.</div>
+      <div className="form-horizontal">
+        <div className="form-group">
+          <label className="col-xs-3 control-label">Select billable project</label>
+          <div className="col-xs-9">
+            {this.renderProjectSelect()}
+            <div className="help-block">BigQuery charges for data storage, streaming inserts, and for querying data.
             </div>
           </div>
-          <div className="form-group">
-            <label className="col-xs-3 control-label">Cloud Storage bucket</label>
-            <div className="col-xs-9">
-              <Input
-                type="text"
-                className="form-control"
-                value={this.props.google.get('storage', '')}
-                placeholder="gs://some-bucket-name"
-                onChange= {(e) => this.updateEditingValue('storage', e.target.value)}
-              />
-              <div className="help-block">Existing Google Cloud Storage bucket. There will be data temporarily exported, before load to KBC.</div>
+        </div>
+        <div className="form-group">
+          <label className="col-xs-3 control-label">Cloud Storage bucket</label>
+          <div className="col-xs-9">
+            <Input
+              type="text"
+              className="form-control"
+              value={this.props.google.get('storage', '')}
+              placeholder="gs://some-bucket-name"
+              onChange={(e) => this.updateEditingValue('storage', e.target.value)}
+            />
+            <div className="help-block">Existing Google Cloud Storage bucket. There will be data temporarily exported,
+              before load to KBC.
             </div>
           </div>
         </div>

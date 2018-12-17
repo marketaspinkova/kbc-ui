@@ -14,29 +14,27 @@ export default React.createClass({
   render() {
     return (
       <span>
-        <div className="row">
-          <span className="col-xs-12">
-            {!this.props.datatypes.count() ? (
-              <p>No data types set yet.</p>
-            ) : (
-              <ListGroup>
-                {this.props.datatypes
-                  .sort()
-                  .map((datatype, key) => (
-                    <ListGroupItem key={key}>
-                      <DatatypeLabel column={key.toString()} datatype={datatype} />
-                      <i
-                        className="kbc-icon-cup kbc-cursor-pointer pull-right"
-                        onClick={() => {
-                          return this.props.handleRemoveDataType(key);
-                        }}
-                      />
-                    </ListGroupItem>
-                  ))
-                  .toArray()}
-              </ListGroup>
-            )}
-          </span>
+        <div>
+          {!this.props.datatypes.count() ? (
+            <p>No data types set yet.</p>
+          ) : (
+            <ListGroup>
+              {this.props.datatypes
+                .sort()
+                .map((datatype, key) => (
+                  <ListGroupItem key={key}>
+                    <DatatypeLabel column={key.toString()} datatype={datatype}/>
+                    <i
+                      className="kbc-icon-cup kbc-cursor-pointer pull-right"
+                      onClick={() => {
+                        return this.props.handleRemoveDataType(key);
+                      }}
+                    />
+                  </ListGroupItem>
+                ))
+                .toArray()}
+            </ListGroup>
+          )}
         </div>
       </span>
     );

@@ -79,7 +79,7 @@ export default React.createClass({
     } else {
       return (
         <div className="container-fluid">
-          <div className="col-md-12 kbc-main-content">
+          <div className="kbc-main-content">
             <Wizard
               credentials={this.state.localState.get('credentials', Map({
                 username: this.state.parameters.getIn(['config', 'username'], ''),

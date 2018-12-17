@@ -123,16 +123,14 @@ export default React.createClass({
             </Button>
           </span>
         </div>
-        <div className="row" style={{ paddingTop: '10px' }}>
-          <div className="help-block col-xs-12">
-            <div>
-              <code>VARCHAR(255) ENCODE LZO</code>
-              default for primary key columns
-            </div>
-            <div>
-              <code>VARCHAR(65535) ENCODE LZO</code>
-              default for all other columns
-            </div>
+        <div className="help-block">
+          <div>
+            <code>VARCHAR(255) ENCODE LZO</code>
+            default for primary key columns
+          </div>
+          <div>
+            <code>VARCHAR(65535) ENCODE LZO</code>
+            default for all other columns
           </div>
         </div>
       </div>

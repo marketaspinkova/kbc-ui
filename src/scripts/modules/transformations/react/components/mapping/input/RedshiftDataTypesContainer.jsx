@@ -164,6 +164,7 @@ export default React.createClass({
     return (
       <span>
         <RedshiftDataTypesList datatypes={this.props.value} handleRemoveDataType={this._handleRemoveDataType} />
+        AAA
         <RedshiftDataTypesAddForm
           columnValue={this.state.column}
           datatypeValue={this.state.datatype}

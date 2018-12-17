@@ -66,76 +66,68 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="form-horizontal clearfix">
-        <div className="row col-md-12">
-          <div className="form-group">
-            <label className="col-xs-2 control-label">Source</label>
-            <div className="col-xs-10">
-              <SapiTableSelector
-                value={this.props.value.get('source')}
-                disabled={this.props.disabled}
-                placeholder="Source table"
-                onSelectTableFn={this._handleChangeSource}
-                autoFocus={true}
-              />
-            </div>
+      <div className="form-horizontal">
+        <div className="form-group">
+          <label className="col-xs-2 control-label">Source</label>
+          <div className="col-xs-10">
+            <SapiTableSelector
+              value={this.props.value.get('source')}
+              disabled={this.props.disabled}
+              placeholder="Source table"
+              onSelectTableFn={this._handleChangeSource}
+              autoFocus={true}
+            />
           </div>
         </div>
         {!this.props.definition.has('destination') && (
-          <div className="row col-md-12">
-            <Input
-              type="text"
-              label="File name"
-              value={this.props.value.get('destination')}
-              disabled={this.props.disabled}
-              placeholder="File name"
-              onChange={this._handleChangeDestination}
-              labelClassName="col-xs-2"
-              wrapperClassName="col-xs-10"
-              bsStyle={this.props.isDestinationDuplicate ? 'error' : null}
-              help={
-                this.props.isDestinationDuplicate ? (
-                  <small className="error">
-                    {'Duplicate destination '}
-                    <code>{this.props.value.get('destination')}</code>.
-                  </small>
-                ) : (
-                  <HelpBlock>
-                    {this.props.showFileHint && (
-                      <span>
+          <Input
+            type="text"
+            label="File name"
+            value={this.props.value.get('destination')}
+            disabled={this.props.disabled}
+            placeholder="File name"
+            onChange={this._handleChangeDestination}
+            labelClassName="col-xs-2"
+            wrapperClassName="col-xs-10"
+            bsStyle={this.props.isDestinationDuplicate ? 'error' : null}
+            help={
+              this.props.isDestinationDuplicate ? (
+                <small className="error">
+                  {'Duplicate destination '}
+                  <code>{this.props.value.get('destination')}</code>.
+                </small>
+              ) : (
+                <HelpBlock>
+                  {this.props.showFileHint && (
+                    <span>
                         File will be available at
-                        <code>{`/data/in/tables/${this._getFileName()}`}</code>
-                      </span>
-                    )}
-                  </HelpBlock>
-                )
-              }
-            />
-          </div>
+                      <code>{`/data/in/tables/${this._getFileName()}`}</code>
+                    </span>
+                  )}
+                </HelpBlock>
+              )
+            }
+          />
         )}
-        <div className="row col-md-12">
-          <PanelWithDetails defaultExpanded={this.props.initialShowDetails}>
-            <div className="form-horizontal clearfix">
-              <ColumnsSelectRow
-                value={this.props.value}
-                disabled={this.props.disabled}
-                onChange={this.props.onChange}
-                allTables={this.props.tables}
-              />
-              <ChangedSinceFilterInput
-                mapping={this.props.value}
-                disabled={this.props.disabled}
-                onChange={this.props.onChange}
-              />
-              <DataFilterRow
-                value={this.props.value}
-                disabled={this.props.disabled}
-                onChange={this.props.onChange}
-                allTables={this.props.tables}
-              />
-            </div>
-          </PanelWithDetails>
-        </div>
+        <PanelWithDetails defaultExpanded={this.props.initialShowDetails}>
+          <ColumnsSelectRow
+            value={this.props.value}
+            disabled={this.props.disabled}
+            onChange={this.props.onChange}
+            allTables={this.props.tables}
+          />
+          <ChangedSinceFilterInput
+            mapping={this.props.value}
+            disabled={this.props.disabled}
+            onChange={this.props.onChange}
+          />
+          <DataFilterRow
+            value={this.props.value}
+            disabled={this.props.disabled}
+            onChange={this.props.onChange}
+            allTables={this.props.tables}
+          />
+        </PanelWithDetails>
       </div>
     );
   }

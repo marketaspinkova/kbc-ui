@@ -73,56 +73,50 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="form-horizontal clearfix">
-        <div className="row col-md-12">
+      <div className="form-horizontal">
+        <div className="form-group">
+          <label className="col-xs-2 control-label">Tags</label>
+          <div className="col-xs-10">
+            <Select.Creatable
+              options={[]}
+              name="tags"
+              autoFocus={true}
+              value={this._getTags()}
+              disabled={this.props.disabled}
+              placeholder="Add tags"
+              multi={true}
+              onChange={this._handleChangeTags}
+            />
+          </div>
+        </div>
+        <PanelWithDetails defaultExpanded={this.props.initialShowDetails}>
+          <Input
+            type="text"
+            label="Query"
+            value={this.props.value.get('query')}
+            disabled={this.props.disabled}
+            placeholder="Search query"
+            onChange={this._handleChangeQuery}
+            labelClassName="col-xs-2"
+            wrapperClassName="col-xs-10"
+            help={<HelpBlock>Specify an Elasticsearch query to refine search</HelpBlock>}
+          />
           <div className="form-group">
             <label className="col-xs-2 control-label">Tags</label>
             <div className="col-xs-10">
               <Select.Creatable
                 options={[]}
-                name="tags"
-                autoFocus={true}
-                value={this._getTags()}
+                name="processed_tags"
+                value={this._getProcessedTags()}
                 disabled={this.props.disabled}
                 placeholder="Add tags"
                 multi={true}
                 onChange={this._handleChangeTags}
               />
+              <HelpBlock>Add these tags to files that were successfully processed</HelpBlock>
             </div>
           </div>
-        </div>
-        <div className="row col-md-12">
-          <PanelWithDetails defaultExpanded={this.props.initialShowDetails}>
-            <div className="form-horizontal clearfix">
-              <Input
-                type="text"
-                label="Query"
-                value={this.props.value.get('query')}
-                disabled={this.props.disabled}
-                placeholder="Search query"
-                onChange={this._handleChangeQuery}
-                labelClassName="col-xs-2"
-                wrapperClassName="col-xs-10"
-                help={<HelpBlock>Specify an Elasticsearch query to refine search</HelpBlock>}
-              />
-              <div className="form-group">
-                <label className="col-xs-2 control-label">Processed Tags</label>
-                <div className="col-xs-10">
-                  <Select.Creatable
-                    options={[]}
-                    name="processed_tags"
-                    value={this._getProcessedTags()}
-                    disabled={this.props.disabled}
-                    placeholder="Add tags"
-                    multi={true}
-                    onChange={this._handleChangeProcessedTags}
-                  />
-                  <HelpBlock>Add these tags to files that were successfully processed</HelpBlock>
-                </div>
-              </div>
-            </div>
-          </PanelWithDetails>
-        </div>
+        </PanelWithDetails>
       </div>
     );
   }
