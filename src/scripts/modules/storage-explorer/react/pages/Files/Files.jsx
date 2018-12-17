@@ -90,6 +90,7 @@ export default React.createClass({
     return (
       <UploadModal
         uploading={this.state.isUploading}
+        progress={0}
         onConfirm={this.handleUploadFile}
         onHide={this.closeUploadModal}
       />
