@@ -30,7 +30,7 @@ export default React.createClass({
       <div>
         {this.renderEventDetailModal()}
 
-        <Table responsive stripped hover>
+        <Table responsive striped hover>
           <thead>
             <tr>
               <th>Created</th>

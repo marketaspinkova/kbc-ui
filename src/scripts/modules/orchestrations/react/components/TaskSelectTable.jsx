@@ -22,7 +22,7 @@ export default React.createClass({
     const allActive = this.isAllActive();
 
     return (
-      <Table stripped responsive>
+      <Table striped responsive>
         <thead>
           <tr>
             <th style={{ width: '40%' }}>Component</th>
