@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import moment from 'moment';
 import { Table, Button, Label } from 'react-bootstrap';
+import FileLink from '../../../sapi-events/react/FileLink';
 import { format } from '../../../../utils/date';
 import Confirm from '../../../../react/common/Confirm';
 import Clipboard from '../../../../react/common/Clipboard';
@@ -61,7 +62,9 @@ export default React.createClass({
           </Button>
         </td>
         <td>{format(file.get('created'), 'YYYY-MM-DD HH:mm')}</td>
-        <td>{file.get('name')}</td>
+        <td>
+          <FileLink file={file} showFilesize={false} />
+        </td>
         <td>
           <FileSize size={file.get('sizeBytes')} />
         </td>
@@ -79,7 +82,9 @@ export default React.createClass({
           ))}
         </td>
         <td className="text-center">
-          <Clipboard text={file.get('url')} tooltipPlacement="top" />
+          {this.renderClipboard(file)}
+          <br />
+          {this.renderFileDownload(file)}
           <br />
           {this.renderDeleteFile(file)}
         </td>
@@ -120,6 +125,20 @@ export default React.createClass({
       <Tooltip placement="right" tooltip={`Expired ${format(expiresOn, 'YYYY-MM-DD HH:mm')}`}>
         <Label bsStyle="danger">Expired</Label>
       </Tooltip>
+    );
+  },
+
+  renderClipboard(file) {
+    return <Clipboard text={file.get('url')} tooltipPlacement="top" />;
+  },
+
+  renderFileDownload(file) {
+    return (
+      <FileLink file={file} showFilesize={false}>
+        <Tooltip placement="top" tooltip="Download file">
+          <i className="fa fa-arrow-circle-o-down" />
+        </Tooltip>
+      </FileLink>
     );
   },
 
