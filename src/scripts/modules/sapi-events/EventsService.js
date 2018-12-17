@@ -18,6 +18,7 @@ class EventsService {
 
   reset() {
     this._events = Map();
+    this._eventsDetails = Map();
     this._query = '';
     this._isLoading = false;
     this._loadingEvents = Map();
@@ -83,7 +84,7 @@ class EventsService {
 
   _loadEventSuccess(event) {
     this._loadingEvents = this._loadingEvents.delete(event.id);
-    this._appendEvents([event]);
+    this._eventsDetails = this._eventsDetails.merge(this._convertEvents([event]));
     this._emitChange();
   }
 
@@ -156,7 +157,11 @@ class EventsService {
   }
 
   getEvent(id) {
-    return this._events.get(parseInt(id, 10));
+    const eventId = parseInt(id, 10);
+    if (this._eventsDetails.has(eventId)) {
+      return this._eventsDetails.get(eventId);
+    }
+    return this._events.get(eventId);
   }
 
   getIsLoadingOlder() {
