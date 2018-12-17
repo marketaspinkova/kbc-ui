@@ -24,6 +24,7 @@ import TransformationEmptyInputImage from '../../components/TransformationEmptyI
 import TransformationEmptyOutputImage from '../../components/TransformationEmptyOutputImage';
 import ConfigurationRowEditField from '../../../../components/react/components/ConfigurationRowEditField';
 import contactSupport from '../../../../../utils/contactSupport';
+import parseDataType from '../../../utils/parseDataType';
 
 import {
   getInputMappingValue,
@@ -99,7 +100,11 @@ export default React.createClass({
     if (this._isOpenRefineTransformation()) {
       return getInputMappingValue(this.openRefine.inputMappingDefinitions, value);
     }
-    return value;
+    return value.map(inputMapping =>
+      inputMapping.update('datatypes', dataTypes =>
+        dataTypes.map(parseDataType)
+      )
+    );
   },
 
   _getOutputMappingValue() {
