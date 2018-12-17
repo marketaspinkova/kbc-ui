@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { HelpBlock, Alert, Modal, Form, ControlLabel } from 'react-bootstrap';
+import { Col, HelpBlock, Modal, Form, FormGroup, ControlLabel } from 'react-bootstrap';
 import Select from 'react-select';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
@@ -27,15 +27,21 @@ export default React.createClass({
           <Modal.Body>
             {this.renderMysqlWarning()}
 
-            <ControlLabel>Please check one or more columns</ControlLabel>
-            <Select
-              clearable={false}
-              multi={true}
-              placeholder="Columns"
-              value={this.state.primaryKey}
-              onChange={this.handlePrimaryKey}
-              options={this.columnsOptions()}
-            />
+            <FormGroup>
+              <Col sm={3} componentClass={ControlLabel}>
+                Columns
+              </Col>
+              <Col sm={9}>
+                <Select
+                  clearable={false}
+                  multi={true}
+                  placeholder="Check one or more columns"
+                  value={this.state.primaryKey}
+                  onChange={this.handlePrimaryKey}
+                  options={this.columnsOptions()}
+                />
+              </Col>
+            </FormGroup>
           </Modal.Body>
           <Modal.Footer>
             <ConfirmButtons
@@ -57,11 +63,7 @@ export default React.createClass({
       return null;
     }
 
-    return (
-      <HelpBlock>
-        <Alert>Columns will be truncated to 255 characters</Alert>
-      </HelpBlock>
-    );
+    return <HelpBlock>Columns will be truncated to 255 characters</HelpBlock>;
   },
 
   handlePrimaryKey(selected) {
