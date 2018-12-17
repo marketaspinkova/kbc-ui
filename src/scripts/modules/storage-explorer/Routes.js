@@ -1,4 +1,5 @@
 import Index from './react/pages/Index/Index';
+import Files from './react/pages/Files/Files';
 import Table from './react/pages/Table/Table';
 import Bucket from './react/pages/Bucket/Bucket';
 import StorageActions from '../components/StorageActionCreators';
@@ -10,6 +11,12 @@ export default {
   defaultRouteHandler: Index,
   requireData: [() => StorageActions.loadBuckets(), () => StorageActions.loadTables()],
   childRoutes: [
+    {
+      name: 'storage-explorer-files',
+      path: 'files',
+      defaultRouteHandler: Files,
+      title: 'Files'
+    },
     {
       name: 'storage-explorer-bucket',
       path: ':bucketId',
