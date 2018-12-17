@@ -36,6 +36,10 @@ import Processors from '../components/Processors';
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentStore, LatestJobsStore, StorageTablesStore, OauthStore, ComponentStore, VersionsStore)],
 
+  propTypes: {
+    migrationComponent: React.PropTypes.any
+  },
+
   getStateFromStores() {
     const configId = RoutesStore.getCurrentRouteParam('config'),
       componentId = RoutesStore.getCurrentRouteParam('component'),
@@ -191,8 +195,14 @@ export default React.createClass({
   },
 
   render() {
+    const MigrationComponent = this.props.migrationComponent;
     return (
       <div className="container-fluid">
+        {this.props.migrationComponent && (
+          <div className="kbc-overview-component-container">
+            <MigrationComponent />
+          </div>
+        )}
         <div className="col-md-9 kbc-main-content">
           <div className="row kbc-header">
             <ComponentDescription

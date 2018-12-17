@@ -32,10 +32,9 @@ export default React.createClass({
   render() {
     if (!this.state.settings.getIn(['legacyUI', 'isMigrated'])(this.state.configuration)) {
       return (
-        <div>
-          <LegacyUIMigration />
-          <GenericDockerDetail />
-        </div>
+        <GenericDockerDetail
+          migrationComponent={LegacyUIMigration}
+        />
       );
     }
     return (
