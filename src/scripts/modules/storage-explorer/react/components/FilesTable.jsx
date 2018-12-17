@@ -38,12 +38,13 @@ export default React.createClass({
               <th>Uploaded</th>
               <th>Name</th>
               <th>Size</th>
+              <th>URL</th>
               <th className="text-center">Public</th>
               <th className="text-center">Encrypted</th>
               <th className="text-center">Permanent</th>
               <th>Creator</th>
               <th>Tags</th>
-              <th>Action</th>
+              <th />
             </tr>
           </thead>
           <tbody>{this.props.files.map(this.renderRow).toArray()}</tbody>
@@ -58,11 +59,12 @@ export default React.createClass({
         <td>{file.get('id')}</td>
         <td>{format(file.get('created'), 'YYYY-MM-DD HH:mm')}</td>
         <td>
-          <FileLink file={file} showFilesize={false} /> {this.renderClipboard(file)}
+          <FileLink file={file} showFilesize={false} />
         </td>
         <td>
           <FileSize size={file.get('sizeBytes')} />
         </td>
+        <td>{this.renderClipboard(file)}</td>
         <td className="text-center">
           {file.get('isPublic') ? <i className="fa fa-check" /> : <i className="fa fa-times" />}
         </td>
