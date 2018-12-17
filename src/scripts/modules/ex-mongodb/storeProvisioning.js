@@ -172,7 +172,7 @@ export function createStore(componentId, configId) {
       const defaultNewQuery = fromJS({
         enabled: true,
         incremental: false,
-        mapping: '',
+        mode: 'raw',
         collection: '',
         id: queryId !== null ? queryId : generateId(ids)
       });
