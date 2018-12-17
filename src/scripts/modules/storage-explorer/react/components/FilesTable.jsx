@@ -1,7 +1,9 @@
 import React, { PropTypes } from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
-import { Table, Button } from 'react-bootstrap';
+import moment from 'moment';
+import { Table, Button, Label } from 'react-bootstrap';
 import { format } from '../../../../utils/date';
+import Tooltip from '../../../../react/common/Tooltip';
 import Clipboard from '../../../../react/common/Clipboard';
 import FileSize from '../../../../react/common/FileSize';
 
@@ -56,7 +58,7 @@ export default React.createClass({
             {file.get('id')}
           </Button>
         </td>
-        <td>{format(file.get('created'))}</td>
+        <td>{format(file.get('created'), 'YYYY-MM-DD HH:mm')}</td>
         <td>{file.get('name')}</td>
         <td>
           <FileSize size={file.get('sizeBytes')} />
@@ -81,7 +83,28 @@ export default React.createClass({
     );
   },
 
-  expiration() {
-    return 'N/A';
+  expiration(file) {
+    const maxAgeDays = file.get('maxAgeDays', null);
+
+    if (maxAgeDays === null) {
+      return <i className="fa fa-check" />;
+    }
+
+    const expiresOn = moment(file.get('created')).add(maxAgeDays, 'days');
+    const diff = expiresOn.diff(moment(), 'days', true);
+
+    if (diff > 0) {
+      return (
+        <Tooltip placement="right" tooltip={`Expires in ${diff} days`}>
+          <i className="fa fa-times" />
+        </Tooltip>
+      );
+    }
+
+    return (
+      <Tooltip placement="right" tooltip={`Expired ${format(expiresOn, 'YYYY-MM-DD HH:mm')}`}>
+        <Label bsStyle="danger">Expired</Label>
+      </Tooltip>
+    );
   }
 });

@@ -10,7 +10,7 @@ import StorageActionCreators from '../../../../components/StorageActionCreators'
 import UploadModal from '../../modals/UploadModal';
 
 const INITIAL_PAGING = {
-  count: 5,
+  count: 50,
   offset: 0
 };
 
