@@ -1,12 +1,17 @@
 import React from 'react';
+import { List } from 'immutable';
+import { Table } from 'react-bootstrap';
+import immutableMixin from 'react-immutable-render-mixin';
 import ComponentsStore from '../../../components/stores/ComponentsStore';
 import TaskSelectTableRow from './TaskSelectTableRow';
-import { List } from 'immutable';
 
 export default React.createClass({
+  mixins: [immutableMixin],
+
   propTypes: {
     tasks: React.PropTypes.object.isRequired,
-    onTaskUpdate: React.PropTypes.func.isRequired
+    onTaskUpdate: React.PropTypes.func.isRequired,
+    onTasksUpdate: React.PropTypes.func.isRequired
   },
 
   getInitialState() {
@@ -14,10 +19,42 @@ export default React.createClass({
   },
 
   render() {
+    const allActive = this.isAllActive();
+
+    return (
+      <Table stripped responsive>
+        <thead>
+          <tr>
+            <th style={{ width: '40%' }}>Component</th>
+            <th style={{ width: '15%' }}>Action</th>
+            <th style={{ width: '30%' }}>Parameters</th>
+            <th style={{ width: '15%' }}>
+              <div className="checkbox">
+                <label>
+                  <input type="checkbox" checked={allActive} onChange={() => this.handleActiveAll(allActive)} />
+                  Select All
+                </label>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>{this.renderTasks()}</tbody>
+      </Table>
+    );
+  },
+
+  handleActiveAll(active) {
+    const updatedTasks = this.props.tasks.map(phase => {
+      return phase.set('tasks', phase.get('tasks').map(task => task.set('active', !active)));
+    });
+
+    this.props.onTasksUpdate(updatedTasks);
+  },
+
+  renderTasks() {
     let tasks = List();
-    this.props.tasks.forEach((phase) => {
+    this.props.tasks.forEach(phase => {
       const phaseId = phase.get('id');
-      tasks = tasks.push(this.renderPhaseRow(phaseId));
       const tasksRows = phase.get('tasks').map((task, index) => {
         return (
           <TaskSelectTableRow
@@ -28,33 +65,20 @@ export default React.createClass({
           />
         );
       });
-      tasks = tasks.concat(tasksRows);
-      return tasks;
+      tasks = tasks.push(this.renderPhaseRow(phaseId)).concat(tasksRows);
     });
 
-    return (
-      <table className="table table-stripped kbc-table-layout-fixed">
-        <thead>
-          <tr>
-            <th>Component</th>
-            <th style={{ width: '22%' }}>Action</th>
-            <th style={{ width: '30%' }}>Parameters</th>
-            <th style={{ width: '8%' }}>Active</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tasks.count() ? (
-            tasks.toArray()
-          ) : (
-            <tr>
-              <td colSpan={4} className="text-muted">
-                There are no tasks assigned yet.
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-    );
+    if (!tasks.count()) {
+      return (
+        <tr>
+          <td colSpan={4} className="text-muted">
+            There are no tasks assigned yet.
+          </td>
+        </tr>
+      );
+    }
+
+    return tasks.toArray();
   },
 
   renderPhaseRow(phaseId) {
@@ -65,5 +89,19 @@ export default React.createClass({
         </td>
       </tr>
     );
+  },
+
+  isAllActive() {
+    let allActive = true;
+
+    this.props.tasks.forEach(phase => {
+      phase.get('tasks').forEach(task => {
+        if (allActive && !task.get('active')) {
+          allActive = false;
+        }
+      });
+    });
+
+    return allActive;
   }
 });

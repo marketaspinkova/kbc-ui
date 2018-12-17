@@ -7,7 +7,8 @@ import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 export default React.createClass({
   propTypes: {
     tasks: React.PropTypes.object.isRequired,
-    onChange: React.PropTypes.func.isRequired,
+    onTaskUpdate: React.PropTypes.func.isRequired,
+    onTasksUpdate: React.PropTypes.func.isRequired,
     onRun: React.PropTypes.func.isRequired,
     onOpen: React.PropTypes.func.isRequired,
     isSaving: React.PropTypes.bool.isRequired
@@ -41,7 +42,11 @@ export default React.createClass({
           <Modal.Body>
             <div>
               <p>You are about to run orchestration again</p>
-              <TaskSelectTable tasks={this.props.tasks} onTaskUpdate={this._handleTaskUpdate} />
+              <TaskSelectTable
+                tasks={this.props.tasks}
+                onTaskUpdate={this.props.onTaskUpdate}
+                onTasksUpdate={this.props.onTasksUpdate}
+              />
             </div>
           </Modal.Body>
           <Modal.Footer>
@@ -75,10 +80,6 @@ export default React.createClass({
   _handleRun() {
     this.props.onRun();
     return this.close();
-  },
-
-  _handleTaskUpdate(updatedTask) {
-    return this.props.onChange(updatedTask);
   },
 
   _isValid() {

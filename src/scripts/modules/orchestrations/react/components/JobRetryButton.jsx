@@ -69,7 +69,8 @@ export default React.createClass({
         <TaskSelectModal
           job={this.props.job}
           tasks={fromJS(JobActionCreators.rephaseTasks(editingTasks.toJS()))}
-          onChange={this._handleTaskChange}
+          onTaskUpdate={this._handleTaskChange}
+          onTasksUpdate={this._handleTasksChange}
           onRun={this._handleRun}
           onOpen={this._handleRetrySelectStart}
           isSaving={this.props.isSaving}
@@ -108,5 +109,15 @@ export default React.createClass({
         tasks.set(index, tasks.get(index).set('active', updatedTask.get('active')))
       );
     }
+  },
+
+  _handleTasksChange(updatedTasks) {
+    let tasks = List();
+
+    updatedTasks.forEach(phase => {
+      tasks = tasks.concat(phase.get('tasks'));
+    });
+
+    return JobActionCreators.updateJobRetryTasksEdit(this.props.job.get('id'), tasks);
   }
 });
