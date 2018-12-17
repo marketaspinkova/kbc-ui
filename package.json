@@ -4,7 +4,7 @@
   "description": "Keboola Connection UI",
   "author": "Martin Halamicek",
   "dependencies": {
-    "@keboola/indigo-ui": "^7.4.4",
+    "@keboola/indigo-ui": "^7.4.7",
     "aws-sdk": "^2.4.7",
     "bluebird": "~2.3.11",
     "byte-converter": "^0.1.4",

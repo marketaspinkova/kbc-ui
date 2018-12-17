@@ -683,10 +683,10 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@keboola/indigo-ui@^7.4.4":
-  version "7.4.4"
-  resolved "https://registry.yarnpkg.com/@keboola/indigo-ui/-/indigo-ui-7.4.4.tgz#648c8261f76ce9b532fc144cf7f6d9a64d1b60bd"
-  integrity sha512-a0Ffrhzf6CsgLPZjXpaNvEPDUEvB0QAbOY3oaULeCJdUQLnB1DpHSsblPbqGnPoLNfFIOKLFm79EX6zb1tzbpg==
+"@keboola/indigo-ui@^7.4.7":
+  version "7.4.7"
+  resolved "https://registry.yarnpkg.com/@keboola/indigo-ui/-/indigo-ui-7.4.7.tgz#49a983ea60bda9e18c39c8acc26e16d0afa95a97"
+  integrity sha512-gj5qp1H2KtsjVchAuGaaLxoOCZGz9pi6r4cGDtnmLl2dZmVYRaRm8ew12UFjnr6weu5im1LdlCuS9vG3yyq37w==
   dependencies:
     bootstrap "^3.3.7"
     classnames "^2.1.0"
@@ -1470,9 +1470,9 @@ boolbase@^1.0.0, boolbase@~1.0.0:
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
 
 bootstrap@^3.3.7:
-  version "3.3.7"
-  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-3.3.7.tgz#5a389394549f23330875a3b150656574f8a9eb71"
-  integrity sha1-WjiTlFSfIzMIdaOxUGVldPip63E=
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-3.4.0.tgz#f8d77540dd3062283d2ae7687e21c1e691961640"
+  integrity sha512-F1yTDO9OHKH0xjl03DsOe8Nu1OWBIeAugGMhy3UTIYDdbbIPesQIhCEbj+HEr6wqlwweGAlP8F3OBC6kEuhFuw==
 
 brace-expansion@^1.0.0:
   version "1.1.6"
