@@ -5,6 +5,7 @@ import Select from 'react-select';
 export default React.createClass({
 
   propTypes: {
+    columnName: React.PropTypes.string.isRequired,
     datatype: React.PropTypes.object.isRequired,
     datatypesMap: React.PropTypes.object.isRequired,
     disabled: React.PropTypes.bool.isRequired,
@@ -88,11 +89,11 @@ export default React.createClass({
     return (
       <tr onMouseEnter={this.setHoveredTrue} onMouseLeave={this.setHoveredFalse} >
         <td>
-          <strong>{this.props.datatype.get('column')}</strong>
+          <strong>{this.props.columnName}</strong>
         </td>
         <td>
           <Select
-            name={this.props.datatype.get('column') + '_datatype'}
+            name={this.props.columnName + '_datatype'}
             value={this.props.datatype.get('type')}
             options={this.getTypeOptions()}
             onChange={this.handleTypeChange}
@@ -104,7 +105,7 @@ export default React.createClass({
         <td>
           {this.lengthEnabled() && (
             <FormControl
-              name={this.props.datatype.get('column') + '_length'}
+              name={this.props.columnName + '_length'}
               type="text"
               size={15}
               value={this.props.datatype.get('length')}
@@ -116,7 +117,7 @@ export default React.createClass({
         </td>
         <td>
           <Checkbox
-            name={this.props.datatype.get('column') + '_nullable'}
+            name={this.props.columnName + '_nullable'}
             checked={this.props.datatype.get('convertEmptyValuesToNull')}
             onChange={this.handleNullableChange}
           >
