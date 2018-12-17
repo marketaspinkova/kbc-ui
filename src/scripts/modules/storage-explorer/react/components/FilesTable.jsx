@@ -94,12 +94,23 @@ export default React.createClass({
       return <i className="fa fa-check" />;
     }
 
+    const now = moment();
     const expiresOn = moment(file.get('created')).add(maxAgeDays, 'days');
-    const diff = expiresOn.diff(moment(), 'days', true);
+    const diffDays = expiresOn.diff(now, 'days');
 
-    if (diff > 0) {
+    if (diffDays > 0) {
       return (
-        <Tooltip placement="right" tooltip={`Expires in ${diff} days`}>
+        <Tooltip placement="right" tooltip={`Expires in ${diffDays} days`}>
+          <i className="fa fa-times" />
+        </Tooltip>
+      );
+    }
+
+    const diffMinutes = expiresOn.diff(now, 'minutes');
+
+    if (diffMinutes > 0) {
+      return (
+        <Tooltip placement="right" tooltip={`Expires in ${diffMinutes} minutes`}>
           <i className="fa fa-times" />
         </Tooltip>
       );
