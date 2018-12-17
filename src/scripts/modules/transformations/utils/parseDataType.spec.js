@@ -40,9 +40,7 @@ describe('parseDataType()', () => {
       length: '',
       column: 'name'
     }, parseDataType('DATE', 'name').toJS());
-
   });
-
   it('should parse string defined data types with length', () => {
     assert.deepEqual({
       type: 'VARCHAR',
@@ -55,7 +53,5 @@ describe('parseDataType()', () => {
       length: '12,2',
       column: 'name'
     }, parseDataType('NUMBER (12,2)', 'name').toJS());
-
-  })
-
+  });
 });
