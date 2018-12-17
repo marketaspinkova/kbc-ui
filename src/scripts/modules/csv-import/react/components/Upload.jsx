@@ -79,17 +79,7 @@ export default React.createClass({
           <label className="control-label col-xs-4">
             <span>Select file</span>
           </label>
-          <div className="col-xs-8">
-            <span className="pull-right upload-button">
-              <button
-                className="btn btn-success"
-                title="Upload"
-                onClick={this.props.onStartUpload}
-                disabled={!this.props.isValid || this.props.disabled || this.props.isUploading}
-              >
-                {this.uploadButtonCaption()}
-              </button>
-            </span>
+          <div className="col-xs-4">
             <input
               className="form-control-static"
               type="file"
@@ -98,6 +88,15 @@ export default React.createClass({
               disabled={this.props.isUploading}
             />
             {this.fileInputHelp()}
+          </div>
+          <div className="col-xs-4">
+            <button
+              className="btn btn-success pull-right"
+              onClick={this.props.onStartUpload}
+              disabled={!this.props.isValid || this.props.disabled || this.props.isUploading}
+            >
+              {this.uploadButtonCaption()}
+            </button>
           </div>
         </div>
         {this.uploadStatus()}
