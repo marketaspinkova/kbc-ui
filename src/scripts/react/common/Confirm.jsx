@@ -29,7 +29,7 @@ export default React.createClass({
     this.setState({ showModal: false });
   },
 
-  onButtonClick(e) {
+  onWrapperClick(e) {
     e.preventDefault();
     e.stopPropagation();
     this.setState({ showModal: true });
@@ -39,7 +39,7 @@ export default React.createClass({
     const Wrapper = this.props.childrenRootElement;
 
     return (
-      <Wrapper onClick={this.onButtonClick}>
+      <Wrapper onClick={this.onWrapperClick}>
         {this.props.children}
         <ConfirmModal show={this.state.showModal} onHide={this.closeModal} {...this.props} key="modal" />
       </Wrapper>

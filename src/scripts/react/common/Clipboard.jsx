@@ -30,8 +30,8 @@ export default React.createClass({
         <OverlayTrigger placement={this.props.tooltipPlacement} overlay={this.tooltip()} ref="overlay">
           <span>
             <ClipboardButton
-              style={{ cursor: 'pointer' }}
               component="span"
+              className="kbc-cursor-pointer"
               data-clipboard-text={this.props.text}
               onError={this.handleError}
               onSuccess={this.handleAfterCopy}
