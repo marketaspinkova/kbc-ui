@@ -30,19 +30,16 @@ export default React.createClass({
   },
 
   renderColumn(column) {
-    let columnDataType = this.props.datatypes.find((type, columnName) => {
+    const columnDataType = this.props.datatypes.find((type, columnName) => {
       const computedName = typeof type === 'string' ? columnName : type.get('column');
       return computedName === column;
     });
-    const isOldFormat = typeof columnDataType === 'string';
-    if (isOldFormat) {
-      columnDataType = parseDataType(columnDataType, column);
-    }
+    const parsedColumnDataType = parseDataType(columnDataType, column);
     return (
       <DatatypeFormRow
         key={column}
         columnName={column}
-        datatype={columnDataType}
+        datatype={parsedColumnDataType}
         datatypesMap={this.props.datatypesMap}
         onChange={this.handleDatatypeChange}
         disabled={this.props.disabled}
