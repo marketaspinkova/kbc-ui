@@ -21,10 +21,6 @@ export default React.createClass({
     return { definition: Map() };
   },
 
-  _isSourceTableInRedshift() {
-    return this.props.tables.getIn([this.props.inputMapping.get('source'), 'bucket', 'backend']) === 'redshift';
-  },
-
   render() {
     return (
       <ListGroup className="clearfix">
@@ -39,6 +35,19 @@ export default React.createClass({
           </span>
         </ListGroupItem>
 
+        {this.props.transformationBackend === 'snowflake' && (
+          <ListGroupItem className="row" key="load-type">
+            <strong className="col-md-4">Load Type</strong>
+            <span className="col-md-6">
+              {this.props.inputMapping.get('loadType') === 'clone' ? (
+                'Clone Table'
+              ) : (
+                'Copy Table (default)'
+              )}
+            </span>
+          </ListGroupItem>
+        )}
+
         {(this.props.transformationBackend === 'mysql' || this.props.transformationBackend === 'redshift') && (
           <ListGroupItem className="row" key="optional">
             <strong className="col-md-4">Optional</strong>
@@ -48,66 +57,67 @@ export default React.createClass({
           </ListGroupItem>
         )}
 
-        <ListGroupItem className="row" key="columns">
-          <strong className="col-md-4">Columns</strong>
-          <span className="col-md-6">
-            {this.props.inputMapping.get('columns', List()).count()
-              ? this.props.inputMapping.get('columns').join(', ')
-              : 'Use all columns'}
-          </span>
-        </ListGroupItem>
-
-        <ListGroupItem className="row" key="whereColumn">
-          <strong className="col-md-4">Filters</strong>
-          <span className="col-md-6">
-            {this.props.inputMapping.get('whereColumn') &&
-              this.props.inputMapping.get('whereValues') && (
-              <span>
-                {'Where '}
-                <strong>{this.props.inputMapping.get('whereColumn')}</strong>{' '}
-                <WhereOperator backendOperator={this.props.inputMapping.get('whereOperator')} />{' '}
-                <strong>
-                  {this.props.inputMapping
-                    .get('whereValues')
-                    .map(value => {
-                      if (value === '') {
-                        return '[empty string]';
-                      }
-                      if (value === ' ') {
-                        return '[space character]';
-                      }
-                      return value;
-                    })
-                    .join(', ')}
-                </strong>
-              </span>
-            )}
-            {(this.props.inputMapping.get('days', 0) !== 0 || this.props.inputMapping.get('changedSince')) &&
-              this.props.inputMapping.get('whereColumn') &&
-              ' and '}
-            {this.props.inputMapping.get('changedSince') && (
-              <span>
-                {this.props.inputMapping.get('whereColumn') && this.props.inputMapping.get('whereValues')
-                  ? 'changed in last '
-                  : 'Changed in last '}
-                {this.props.inputMapping.get('changedSince').replace('-', '')}
-              </span>
-            )}
-            {this.props.inputMapping.get('days', 0) !== 0 && (
-              <span>
-                {this.props.inputMapping.get('whereColumn') && this.props.inputMapping.get('whereValues')
-                  ? 'changed in last '
-                  : 'Changed in last '}
-                {this.props.inputMapping.get('days')}
-                {' days'}
-              </span>
-            )}
-            {this.props.inputMapping.get('days', 0) === 0 &&
-              !this.props.inputMapping.get('changedSince') &&
-              !this.props.inputMapping.get('whereColumn') &&
-              'N/A'}
-          </span>
-        </ListGroupItem>
+        {this.props.inputMapping.get('loadType') !== 'clone' && [
+          <ListGroupItem className="row" key="columns">
+            <strong className="col-md-4">Columns</strong>
+            <span className="col-md-6">
+              {this.props.inputMapping.get('columns', List()).count()
+                ? this.props.inputMapping.get('columns').join(', ')
+                : 'Use all columns'}
+            </span>
+          </ListGroupItem>,
+          <ListGroupItem className="row" key="whereColumn">
+            <strong className="col-md-4">Filters</strong>
+            <span className="col-md-6">
+              {this.props.inputMapping.get('whereColumn') &&
+                this.props.inputMapping.get('whereValues') && (
+                <span>
+                  {'Where '}
+                  <strong>{this.props.inputMapping.get('whereColumn')}</strong>{' '}
+                  <WhereOperator backendOperator={this.props.inputMapping.get('whereOperator')} />{' '}
+                  <strong>
+                    {this.props.inputMapping
+                      .get('whereValues')
+                      .map(value => {
+                        if (value === '') {
+                          return '[empty string]';
+                        }
+                        if (value === ' ') {
+                          return '[space character]';
+                        }
+                        return value;
+                      })
+                      .join(', ')}
+                  </strong>
+                </span>
+              )}
+              {(this.props.inputMapping.get('days', 0) !== 0 || this.props.inputMapping.get('changedSince')) &&
+                this.props.inputMapping.get('whereColumn') &&
+                ' and '}
+              {this.props.inputMapping.get('changedSince') && (
+                <span>
+                  {this.props.inputMapping.get('whereColumn') && this.props.inputMapping.get('whereValues')
+                    ? 'changed in last '
+                    : 'Changed in last '}
+                  {this.props.inputMapping.get('changedSince').replace('-', '')}
+                </span>
+              )}
+              {this.props.inputMapping.get('days', 0) !== 0 && (
+                <span>
+                  {this.props.inputMapping.get('whereColumn') && this.props.inputMapping.get('whereValues')
+                    ? 'changed in last '
+                    : 'Changed in last '}
+                  {this.props.inputMapping.get('days')}
+                  {' days'}
+                </span>
+              )}
+              {this.props.inputMapping.get('days', 0) === 0 &&
+                !this.props.inputMapping.get('changedSince') &&
+                !this.props.inputMapping.get('whereColumn') &&
+                'N/A'}
+            </span>
+          </ListGroupItem>
+        ]}
 
         {this.props.transformationBackend === 'mysql' && (
           <ListGroupItem className="row" key="indexes">
@@ -133,7 +143,8 @@ export default React.createClass({
 
         {(this.props.transformationBackend === 'mysql' ||
           this.props.transformationBackend === 'redshift' ||
-          this.props.transformationBackend === 'snowflake') && (
+          this.props.transformationBackend === 'snowflake')
+        && this.props.inputMapping.get('loadType') !== 'clone' && (
           <ListGroupItem className="row" key="datatypes">
             <div className="clearfix">
               <strong className="col-md-4">Data types</strong>
