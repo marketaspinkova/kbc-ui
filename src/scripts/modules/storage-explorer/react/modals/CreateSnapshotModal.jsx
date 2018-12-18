@@ -4,6 +4,7 @@ import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
 export default React.createClass({
   propTypes: {
+    show: PropTypes.bool.isRequired,
     onConfirm: PropTypes.func.isRequired,
     onHide: PropTypes.func.isRequired
   },
@@ -16,7 +17,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Modal onHide={this.props.onHide} show={true}>
+      <Modal show={this.props.show} onHide={this.props.onHide}>
         <Form onSubmit={this.handleSubmit} horizontal>
           <Modal.Header closeButton>
             <Modal.Title>Create snapshot</Modal.Title>

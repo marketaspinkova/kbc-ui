@@ -10,6 +10,7 @@ const INITIAL_STATE = {
 
 export default React.createClass({
   propTypes: {
+    show: PropTypes.bool.isRequired,
     snapshot: PropTypes.object.isRequired,
     buckets: PropTypes.object.isRequired,
     onConfirm: PropTypes.func.isRequired,
@@ -28,7 +29,7 @@ export default React.createClass({
       .toArray();
 
     return (
-      <Modal onHide={this.onHide} show={true}>
+      <Modal show={this.props.show} onHide={this.onHide}>
         <Form onSubmit={this.handleSubmit} horizontal>
           <Modal.Header closeButton>
             <Modal.Title>Create table from snapshot {this.props.snapshot.get('id')}</Modal.Title>

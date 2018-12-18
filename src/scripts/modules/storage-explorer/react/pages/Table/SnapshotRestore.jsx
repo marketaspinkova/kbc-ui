@@ -83,7 +83,7 @@ export default React.createClass({
             )}
           </Button>
 
-          {this.state.openTimeTravelModal && this.renderTimeTravelModal()}
+          {this.renderTimeTravelModal()}
         </Well>
       </div>
     );
@@ -110,7 +110,7 @@ export default React.createClass({
               )}
             </Button>
 
-            {this.state.openCreateSnapshotModal && this.renderCreateSnapshotModal()}
+            {this.renderCreateSnapshotModal()}
           </Well>
         )}
 
@@ -217,6 +217,7 @@ export default React.createClass({
   renderTimeTravelModal() {
     return (
       <TimeTravelModal
+        show={this.state.openTimeTravelModal}
         table={this.props.table}
         buckets={this.props.buckets}
         sapiToken={this.props.sapiToken}
@@ -227,18 +228,25 @@ export default React.createClass({
   },
 
   renderCreateSnapshotModal() {
-    return <CreateSnapshotModal onConfirm={this.handleCreateSnapshot} onHide={this.closeCreateSnapshotModal} />;
+    return (
+      <CreateSnapshotModal
+        show={this.state.openCreateSnapshotModal}
+        onConfirm={this.handleCreateSnapshot}
+        onHide={this.closeCreateSnapshotModal}
+      />
+    );
   },
 
   renderCreateTableFromSnapshotModal() {
     const snapshot = this.state.selectedSnapshot;
 
-    if (!snapshot || !this.state.openCreateTableFromSnapshotModal) {
+    if (!snapshot) {
       return null;
     }
 
     return (
       <CreateTableFromSnapshotModal
+        show={this.state.openCreateTableFromSnapshotModal}
         snapshot={snapshot}
         buckets={this.props.buckets}
         onConfirm={this.handleCreateTableFromSnapshot}
@@ -250,13 +258,13 @@ export default React.createClass({
   renderDeleteSnapshotModal() {
     const snapshot = this.state.selectedSnapshot;
 
-    if (!snapshot || !this.state.openRemoveSnapshotModal) {
+    if (!snapshot) {
       return null;
     }
 
     return (
       <ConfirmModal
-        show={true}
+        show={this.state.openRemoveSnapshotModal}
         title="Delete snapshot"
         buttonType="danger"
         buttonLabel="Delete"
