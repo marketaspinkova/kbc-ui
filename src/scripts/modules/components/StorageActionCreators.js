@@ -164,7 +164,7 @@ module.exports = {
       type: constants.ActionTypes.STORAGE_FILES_LOAD_MORE
     });
     return storageApi.getFiles(params).then(function(files) {
-      return dispatcher.handleViewAction({
+      dispatcher.handleViewAction({
         type: constants.ActionTypes.STORAGE_FILES_LOAD_MORE_SUCCESS,
         files: files
       });
