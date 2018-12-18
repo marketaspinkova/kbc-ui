@@ -25,8 +25,8 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      removePrimaryKeyModal: false
       showCreatePrimaryKeyModal: false,
+      showRemovePrimaryKeyModal: false
     };
   },
 
@@ -130,8 +130,8 @@ export default React.createClass({
           </tbody>
         </Table>
 
-        {this.state.removePrimaryKeyModal && this.renderRemovePrimaryKeyModal()}
         {this.renderCreatePrimaryKeyModal()}
+        {this.renderRemovePrimaryKeyModal()}
       </div>
     );
   },
@@ -238,7 +238,7 @@ export default React.createClass({
   renderRemovePrimaryKeyModal() {
     return (
       <ConfirmModal
-        show={true}
+        show={this.state.showRemovePrimaryKeyModal}
         title="Remove primary key"
         buttonType="danger"
         buttonLabel="Remove"
@@ -278,13 +278,13 @@ export default React.createClass({
 
   openRemovePrimaryKeyModal() {
     this.setState({
-      removePrimaryKeyModal: true
+      showRemovePrimaryKeyModal: true
     });
   },
 
   closeRemovePrimaryKeyModal() {
     this.setState({
-      removePrimaryKeyModal: false
+      showRemovePrimaryKeyModal: false
     });
   }
 });
