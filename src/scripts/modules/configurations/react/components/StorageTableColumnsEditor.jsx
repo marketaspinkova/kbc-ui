@@ -1,10 +1,11 @@
 import React, {PropTypes} from 'react';
-import {Table} from 'react-bootstrap';
+import {Alert, Table} from 'react-bootstrap';
 import storageApi from '../../../components/StorageApi';
 import {fromJS} from 'immutable';
 import ColumnDataPreview from './ColumnDataPreview';
 import classnames from 'classnames';
 require('./StorageTableColumnsEditor.less');
+
 
 export default React.createClass({
   propTypes: {
@@ -79,9 +80,10 @@ export default React.createClass({
     return (
       <div>
         { !this.props.value.tableExist &&
-          <div className="component-empty-state text-center">
-            <p> Table <code>{this.props.value.tableId}</code> does not exist </p>
-          </div>
+          <Alert bsStyle="warning">
+            <strong>Table Missing</strong>
+            <div> Table <code>{this.props.value.tableId}</code> used in this configuration is missing in Storage. Running this configuration will fail. </div>
+          </Alert>
         }
         { this.props.value.columns.length > 0 &&
           <div>
