@@ -575,3 +575,14 @@ export function createEmptyConfiguration(tableId) {
 
 All adapters MUST have tests and the tests must cover each possible state of the **local state**.
 
+## Integration
+
+To make your component appear in the UI you need to
+
+- have the component registered in [Developer Portal](https://components.keboola.com/)
+- use the same component id for both Developer Portal and kbc-ui
+- register the component in [`/src/scripts/modules/components/Routes.js`](/src/scripts/modules/components/Routes.js), 
+it's easy, just follow examples
+
+The component may or may not be visible in the list first, but you can easily point the browser in the right 
+direction manually, eg. `/extractors/mycomponent`.
