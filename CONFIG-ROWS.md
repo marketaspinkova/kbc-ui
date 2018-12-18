@@ -10,7 +10,7 @@ configuration has any number of rows. The end user is allowed to run the whole c
 a single row. 
 
 This all is a logical wrapper - imagine a **configuration** being a database you want to connect to and a **row** a single 
-table to be downloaded.  
+table to be downloaded. 
 
 ### Structure
 
@@ -480,11 +480,6 @@ export default {
 
 A simple list of available helpers
 
-- [`SyncActionSimpleValue`](./src/scripts/modules/configurations/react/components/SyncActionSimpleValue.jsx) - displays pending status of an action, error message or retrieved value
-- [`ExternalProjectLink`](./src/scripts/modules/components/react/components/ExternalProjectLink.jsx) - link to another project
-- [`ExternalBucketLink`](./src/scripts/modules/components/react/components/ExternalBucketLink.jsx) - link to a bucket in a different project
-- [`CollapsibleSection`](./src/scripts/modules/configurations/utils/createCollapsibleSection.jsx) - dropdown section, can be collapsed by default when a condition is met
-- [`createOauthSection`](./src/scripts/modules/configurations/utils/createOauthSection.js) - creates a collapsible OAuth section
 
 ### Adapters
 
