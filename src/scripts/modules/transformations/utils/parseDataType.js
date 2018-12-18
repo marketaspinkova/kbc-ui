@@ -5,15 +5,12 @@ export function isDataTypeAsString(dataTypeDefinition) {
 }
 
 export function parseDataTypeFromString(dataTypeDefinition, columnName) {
-  const parts = dataTypeDefinition.trim().split(' ');
+  const parts = dataTypeDefinition.trim().split('(');
   const type = parts[0];
-  let typeLength = parts.length > 1 ? parts[1] : '';
-  if (typeLength.startsWith('(') && typeLength.endsWith(')')) {
-    typeLength = typeLength.slice(1, typeLength.length - 1);
-  }
+  const typeLength = parts.length > 1 ? parts[1].slice(0, parts[1].length - 1) : '';
   return Map({
     column: columnName,
-    type: type,
+    type: type.trim(),
     length: typeLength
   });
 }

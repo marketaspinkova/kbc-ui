@@ -1,6 +1,5 @@
-import {parseDataTypeFromString} from './parseDataTypeFromString';
+import {parseDataTypeFromString} from './parseDataType';
 import assert from 'assert';
-import {Map} from 'immutable';
 
 describe('parseDataTypeFromString()', () => {
   it('should parse empty string', () => {
