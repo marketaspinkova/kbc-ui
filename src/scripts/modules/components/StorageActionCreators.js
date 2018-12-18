@@ -349,7 +349,7 @@ module.exports = {
           message = error.message;
         }
         dispatcher.handleViewAction({
-          type: constants.ActionTypes.STORAGE_TABLE_LOAD_ERROR,
+          type: constants.ActionTypes.STORAGE_TABLE_SET_PRIMARY_KEY_ERROR,
           tableId: tableId,
           errors: error
         });
@@ -387,7 +387,7 @@ module.exports = {
           message = error.message;
         }
         dispatcher.handleViewAction({
-          type: constants.ActionTypes.STORAGE_TABLE_LOAD_ERROR,
+          type: constants.ActionTypes.STORAGE_TABLE_DELETE_PRIMARY_KEY_ERROR,
           tableId: tableId,
           errors: error
         });
