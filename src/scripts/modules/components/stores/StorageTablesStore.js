@@ -103,9 +103,6 @@ Dispatcher.register(function(payload) {
       return StorageTablesStore.emitChange();
 
     case constants.ActionTypes.STORAGE_ADD_TABLE_COLUMN_SUCCESS:
-      _store = _store.deleteIn(['pendingTables', 'addingColumn', action.tableId]);
-      return StorageTablesStore.emitChange();
-
     case constants.ActionTypes.STORAGE_ADD_TABLE_COLUMN_ERROR:
       _store = _store.deleteIn(['pendingTables', 'addingColumn', action.tableId]);
       return StorageTablesStore.emitChange();
@@ -115,9 +112,6 @@ Dispatcher.register(function(payload) {
       return StorageTablesStore.emitChange();
 
     case constants.ActionTypes.STORAGE_DELETE_TABLE_COLUMN_SUCCESS:
-      _store = _store.deleteIn(['pendingTables', 'deletingColumn', action.tableId, action.columnName]);
-      return StorageTablesStore.emitChange();
-
     case constants.ActionTypes.STORAGE_DELETE_TABLE_COLUMN_ERROR:
       _store = _store.deleteIn(['pendingTables', 'deletingColumn', action.tableId, action.columnName]);
       return StorageTablesStore.emitChange();
