@@ -79,7 +79,12 @@ export default React.createClass({
         </td>
         <td>
           {file.get('tags').map((tag, index) => (
-            <Label key={index} bsStyle="default" onClick={() => this.props.onSearchByTag(tag)}>
+            <Label
+              key={index}
+              className="kbc-cursor-pointer"
+              bsStyle="default"
+              onClick={() => this.props.onSearchByTag(tag)}
+            >
               {tag}
             </Label>
           ))}
