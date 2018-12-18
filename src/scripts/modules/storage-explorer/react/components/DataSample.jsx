@@ -36,68 +36,56 @@ export default React.createClass({
 
   renderSearchForm() {
     return (
-      <div className="kbc-inner-padding">
-        <Form onSubmit={this.handleSearch} horizontal>
-          <FormGroup>
-            <Col sm={4}>
-              <Select
-                clearable={false}
-                disabled={false}
-                placeholder="Filter by column"
-                value={this.state.filterColumn}
-                onChange={this.handleSearchColumn}
-                options={this.tableColumns()}
-              />
-            </Col>
-            <Col sm={4}>
-              <FormControl
-                type="text"
-                placeholder="Value"
-                value={this.state.filterValue}
-                onChange={this.handleSearchValue}
-              />
-            </Col>
-            <Col sm={4}>
-              <ButtonGroup>
-                <Button bsStyle="success" type="submit" disabled={!this.state.filterColumn || !this.state.filterValue}>
-                  Search
-                </Button>
-                <Button onClick={this.resetSearchForm} disabled={!this.state.filtered}>
-                  Reset
-                </Button>
-              </ButtonGroup>
-            </Col>
-          </FormGroup>
-        </Form>
-      </div>
+      <Form onSubmit={this.handleSearch} horizontal>
+        <FormGroup>
+          <Col sm={4}>
+            <Select
+              clearable={false}
+              disabled={false}
+              placeholder="Filter by column"
+              value={this.state.filterColumn}
+              onChange={this.handleSearchColumn}
+              options={this.tableColumns()}
+            />
+          </Col>
+          <Col sm={4}>
+            <FormControl
+              type="text"
+              placeholder="Value"
+              value={this.state.filterValue}
+              onChange={this.handleSearchValue}
+            />
+          </Col>
+          <Col sm={4}>
+            <ButtonGroup>
+              <Button className="btn btn-link" onClick={this.resetSearchForm} disabled={!this.state.filtered}>
+                Reset
+              </Button>
+              <Button bsStyle="success" type="submit" disabled={!this.state.filterColumn || !this.state.filterValue}>
+                Search
+              </Button>
+            </ButtonGroup>
+          </Col>
+        </FormGroup>
+      </Form>
     );
   },
 
   renderTable() {
     if (this.state.loading) {
       return (
-        <div className="kbc-inner-padding">
-          <p>
-            Loading data.. <Loader />
-          </p>
-        </div>
+        <p>
+          Loading data.. <Loader />
+        </p>
       );
     }
 
     if (this.state.data.count() < 2) {
-      return (
-        <div className="kbc-inner-padding">
-          <p>{this.state.filtered ? 'No data found.' : 'Table is empty.'}</p>
-        </div>
-      );
+      return <p>{this.state.filtered ? 'No data found.' : 'Table is empty.'}</p>;
     }
 
     if (this.state.error) {
-      return (
-        <div className="kbc-inner-padding">
-          <Alert bsStyle="danger">{this.state.error}</Alert>
-        </div>
-      );
+      return <Alert bsStyle="danger">{this.state.error}</Alert>;
     }
 
     return (
@@ -144,7 +132,7 @@ export default React.createClass({
       'whereValues[]': [this.state.filterValue]
     };
 
-    return this.fetchDataPreview(params).finally(() => {
+    this.fetchDataPreview(params).finally(() => {
       this.setState({ filtered: true });
     });
   },
