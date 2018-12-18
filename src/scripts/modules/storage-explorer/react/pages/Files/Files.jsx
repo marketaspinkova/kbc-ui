@@ -70,7 +70,7 @@ export default React.createClass({
           )}
         </div>
 
-        {this.state.openUploadModal && this.renderUploadModal()}
+        {this.renderUploadModal()}
       </div>
     );
   },
@@ -92,6 +92,7 @@ export default React.createClass({
   renderUploadModal() {
     return (
       <UploadModal
+        show={this.state.openUploadModal}
         uploading={this.state.isUploading}
         progress={0}
         onConfirm={this.handleUploadFile}

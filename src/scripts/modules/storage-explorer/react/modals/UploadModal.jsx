@@ -26,6 +26,7 @@ const INITIAL_STATE = {
 
 export default React.createClass({
   propTypes: {
+    show: PropTypes.bool.isRequired,
     uploading: PropTypes.bool.isRequired,
     progress: PropTypes.number.isRequired,
     onConfirm: PropTypes.func.isRequired,
@@ -38,7 +39,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Modal onHide={this.onHide} show={true}>
+      <Modal show={this.props.show} onHide={this.onHide}>
         <Form onSubmit={this.handleSubmit} horizontal>
           <Modal.Header closeButton>
             <Modal.Title>Upload a new file</Modal.Title>
