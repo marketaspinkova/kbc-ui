@@ -26,10 +26,7 @@ export default React.createClass({
   },
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.table.get('id') !== prevProps.table.get('id')) {
-      this.checkDefaultTableDirection();
-      this.loadData();
-    } else if (this.state.direction !== prevState.direction) {
+    if (this.state.direction !== prevState.direction) {
       this.loadData();
     }
 
