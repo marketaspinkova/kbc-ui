@@ -11,6 +11,7 @@ import StorageActionCreators from '../../../../components/StorageActionCreators'
 import DeleteBucketModal from '../../modals/DeleteBucketModal';
 import BucketOverview from './BucketOverview';
 import BucketTables from './BucketTables';
+import BucketEvents from './BucketEvents';
 import { deleteBucket } from '../../../Actions';
 
 export default React.createClass({
@@ -80,7 +81,9 @@ export default React.createClass({
                   isCreatingAliasTable={this.state.creatingAliasTable}
                 />
               </Tab.Pane>
-              <Tab.Pane eventKey="events">Events</Tab.Pane>
+              <Tab.Pane eventKey="events">
+                <BucketEvents bucket={this.state.bucket} />
+              </Tab.Pane>
             </Tab.Content>
           </div>
         </Tab.Container>

@@ -21,5 +21,13 @@ export default {
     return createRequest('GET', `events/${id}`)
       .promise()
       .then(response => response.body);
+  },
+
+  listBucketEvents(buckedId, params) {
+    return createRequest('GET', 'buckets/' + buckedId + '/events')
+      .query(params)
+      .timeout(4000)
+      .promise()
+      .then(response => response.body);
   }
 };
