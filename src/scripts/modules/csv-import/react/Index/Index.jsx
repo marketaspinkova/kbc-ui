@@ -86,37 +86,33 @@ export default React.createClass({
     return (
       <div>
         {this.renderUploadResult()}
-        <div className="subform">
-          <Upload
-            onStartUpload={this.state.actions.startUpload}
-            onChange={this.state.actions.setFile}
-            isValid={this.state.isUploaderValid}
-            isFileTooBig={this.state.isUploaderFileTooBig}
-            isFileInvalidFormat={this.state.isUploaderFileInvalidFormat}
-            isUploading={this.state.localState.get('isUploading', false)}
-            uploadingMessage={this.state.localState.get('uploadingMessage', '')}
-            uploadingProgress={this.state.localState.get('uploadingProgress', 0)}
-            key={this.state.localState.get('fileInputKey', 0)}
-            disabled={this.state.localState.get('isChanged', false)}
-          />
-        </div>
+        <Upload
+          onStartUpload={this.state.actions.startUpload}
+          onChange={this.state.actions.setFile}
+          isValid={this.state.isUploaderValid}
+          isFileTooBig={this.state.isUploaderFileTooBig}
+          isFileInvalidFormat={this.state.isUploaderFileInvalidFormat}
+          isUploading={this.state.localState.get('isUploading', false)}
+          uploadingMessage={this.state.localState.get('uploadingMessage', '')}
+          uploadingProgress={this.state.localState.get('uploadingProgress', 0)}
+          key={this.state.localState.get('fileInputKey', 0)}
+          disabled={this.state.localState.get('isChanged', false)}
+        />
       </div>
     );
   },
 
   renderSettings() {
     return (
-      <div className="subform">
-        <Settings
-          settings={this.state.settings}
-          onChange={this.state.actions.editChange}
-          tables={this.state.tables}
-          defaultTable={getDefaultTable(this.state.configId)}
-          disabled={this.state.localState.get('isSaving', false)}
-          destinationEditing={this.state.localState.get('isDestinationEditing', false)}
-          onDestinationEdit={this.state.actions.destinationEdit}
-        />
-      </div>
+      <Settings
+        settings={this.state.settings}
+        onChange={this.state.actions.editChange}
+        tables={this.state.tables}
+        defaultTable={getDefaultTable(this.state.configId)}
+        disabled={this.state.localState.get('isSaving', false)}
+        destinationEditing={this.state.localState.get('isDestinationEditing', false)}
+        onDestinationEdit={this.state.actions.destinationEdit}
+      />
     );
   },
 
