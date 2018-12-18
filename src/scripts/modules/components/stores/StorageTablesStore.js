@@ -107,9 +107,6 @@ Dispatcher.register(function(payload) {
       return StorageTablesStore.emitChange();
 
     case constants.ActionTypes.STORAGE_TABLE_SET_PRIMARY_KEY_SUCCESS:
-      _store = _store.deleteIn(['pendingTables', 'creatingPrimaryKey', action.tableId]);
-      return StorageTablesStore.emitChange();
-
     case constants.ActionTypes.STORAGE_TABLE_SET_PRIMARY_KEY_ERROR:
       _store = _store.deleteIn(['pendingTables', 'creatingPrimaryKey', action.tableId]);
       return StorageTablesStore.emitChange();
@@ -119,9 +116,6 @@ Dispatcher.register(function(payload) {
       return StorageTablesStore.emitChange();
 
     case constants.ActionTypes.STORAGE_TABLE_DELETE_PRIMARY_KEY_SUCCESS:
-      _store = _store.deleteIn(['pendingTables', 'deletingPrimaryKey', action.tableId]);
-      return StorageTablesStore.emitChange();
-
     case constants.ActionTypes.STORAGE_TABLE_DELETE_PRIMARY_KEY_ERROR:
       _store = _store.deleteIn(['pendingTables', 'deletingPrimaryKey', action.tableId]);
       return StorageTablesStore.emitChange();
