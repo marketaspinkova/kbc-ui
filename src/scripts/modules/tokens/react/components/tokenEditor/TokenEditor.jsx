@@ -1,9 +1,8 @@
 import React, {PropTypes} from 'react';
 import {Link} from 'react-router';
-import { Check } from '@keboola/indigo-ui';
+import { Check, CreatedWithIcon } from '@keboola/indigo-ui';
 import {List, Map} from 'immutable';
 
-import CreatedWithIcon from '../../../../../react/common/CreatedWithIcon';
 import ComponentsStore from '../../../../components/stores/ComponentsStore';
 import ComponentsSelector from './ComponentsSelector';
 import BucketsSelector from './BucketsSelector.jsx';

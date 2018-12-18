@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Table } from 'react-bootstrap';
-import CreatedWithIcon from '../../../../../react/common/CreatedWithIcon';
+import { CreatedWithIcon } from '@keboola/indigo-ui';
 import Hint from '../../../../../react/common/Hint';
 import FileSize from '../../../../../react/common/FileSize';
 

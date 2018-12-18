@@ -6,7 +6,7 @@ import DeleteButton from '../../../../react/common/DeleteButton';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
 import descriptionExcerpt from '../../../../utils/descriptionExcerpt';
 import {isObsoleteComponent} from '../../../../modules/trash/utils';
-import CreatedWithIcon from '../../../../react/common/CreatedWithIcon';
+import { CreatedWithIcon } from '@keboola/indigo-ui';
 import componentNameAsString from '../../../../react/common/componentNameAsString';
 
 export default React.createClass({

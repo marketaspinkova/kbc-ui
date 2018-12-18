@@ -1,5 +1,5 @@
 import React from 'react';
-import CreatedWithIcon from '../../../../react/common/CreatedWithIcon';
+import { CreatedWithIcon } from '@keboola/indigo-ui';
 import ImmutableRendererMixin from 'react-immutable-render-mixin';
 import VersionIcon from './VersionIcon';
 

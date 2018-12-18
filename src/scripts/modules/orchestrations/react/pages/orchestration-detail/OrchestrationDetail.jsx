@@ -19,11 +19,10 @@ import { Link } from 'react-router';
 import TasksSummary from './TasksSummary';
 import CronRecord from '../../components/CronRecord';
 import ScheduleModal from '../../modals/Schedule';
-import CreatedWithIcon from '../../../../../react/common/CreatedWithIcon';
 import OrchestrationRunButton from '../../components/OrchestrationRunButton';
 import OrchestrationDeleteButton from '../../components/OrchestrationDeleteButton';
 import OrchestrationActiveButton from '../../components/OrchestrationActiveButton';
-import {ExternalLink} from '@keboola/indigo-ui';
+import {ExternalLink, CreatedWithIcon} from '@keboola/indigo-ui';
 import {Row, Col} from 'react-bootstrap';
 
 export default React.createClass({

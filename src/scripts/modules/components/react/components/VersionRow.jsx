@@ -1,5 +1,5 @@
 import React from 'react';
-import CreatedWithIcon from '../../../../react/common/CreatedWithIcon';
+import { CreatedWithIcon } from '@keboola/indigo-ui';
 import RollbackVersionButton from '../../../../react/common/RollbackVersionButton';
 import DiffVersionButton from '../../../../react/common/DiffVersionButton';
 import CopyVersionButton from '../../../../react/common/CopyVersionButton';

@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import classnames from 'classnames';
 import { Table, Button } from 'react-bootstrap';
-import CreatedWithIcon from '../../../../../react/common/CreatedWithIcon';
+import { CreatedWithIcon } from '@keboola/indigo-ui';
 import FileSize from '../../../../../react/common/FileSize';
 import CreateAliasTableModal from '../../modals/CreateAliasTableModal';
 
