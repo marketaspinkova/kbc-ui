@@ -32,22 +32,31 @@ There is a common hierarchy and a fixed set of pages available
 Only the **Configuration detail** and **Row detail** pages are customizable.
  
 ### Sections
+
+![Index page](./index.png)
+
+![Row page](./row.png) 
  
-Each of the detail pages can contain multiple sections. Each section is a logical and visual container for a form 
+Both index and row pages can contain multiple sections. Each section is a logical and visual container for a form 
 or other ways of visualising a part of the component configuration.
- 
+
 ### Adapters
  
 The UI usually needs to display configuration in a different way than it is finally stored in Storage (eg. a set 
 of processors triggered in a single checkbox). 
+
 Adapters allow you to create a mapping between the physical storage and the best way to display the configuration.
 This mapping is 2 way - so any change in the configuration will result in a change in the UI and vice versa.
+
+![Adapters Flow](./adapters_flow.png)
 
 The raw configuration (stored in Storage) is referred to as **configuration**, 
 the mapped configuration is referred to as **local state**.
 
 In case the user wants to modify the configuration further than the UI allows, the form can be switched to a JSON input 
-without any constraints. Configurations, that cannot be mapped successfully to the local state, will remain as JSON. 
+without any constraints. Configurations, that cannot be mapped successfully to the local state, will remain as JSON.
+
+![Validation](./validation.png) 
  
 
 ## Implementation
@@ -586,3 +595,7 @@ it's easy, just follow examples
 
 The component may or may not be visible in the list first, but you can easily point the browser in the right 
 direction manually, eg. `/extractors/mycomponent`.
+
+## Sources
+
+- [Images on Google Drive](https://drive.google.com/drive/folders/1sbFNicLDL35c7n3xlBOMiZUGepfnLxID?usp=sharing)
