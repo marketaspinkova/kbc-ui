@@ -24,12 +24,6 @@ export default React.createClass({
     this.loadEvents();
   },
 
-  componentDidUpdate(prevProps) {
-    if (this.props.table.get('id') !== prevProps.table.get('id')) {
-      this.reloadEventsService();
-    }
-  },
-
   componentWillUnmount() {
     this.destroyEventsService();
   },
@@ -66,12 +60,6 @@ export default React.createClass({
 
   destroyEventsService() {
     this._events.reset();
-  },
-
-  reloadEventsService() {
-    this.destroyEventsService();
-    this.createEventsService();
-    this.loadEvents();
   },
 
   loadEvents() {
