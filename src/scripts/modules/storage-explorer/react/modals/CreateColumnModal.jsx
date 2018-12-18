@@ -9,6 +9,7 @@ const INITIAL_STATE = {
 
 export default React.createClass({
   propTypes: {
+    show: PropTypes.bool.isRequired,
     table: PropTypes.object.isRequired,
     tables: PropTypes.object.isRequired,
     onSubmit: PropTypes.func.isRequired,
@@ -21,7 +22,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Modal show={true} onHide={this.onHide} enforceFocus={false}>
+      <Modal show={this.props.show} onHide={this.onHide}>
         <Form onSubmit={this.onSubmit} horizontal>
           <Modal.Header closeButton>
             <Modal.Title>Create column</Modal.Title>

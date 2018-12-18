@@ -51,8 +51,8 @@ export default React.createClass({
           </tbody>
         </Table>
 
-        {this.state.createColumnModal && this.renderCreateColumnModal()}
-        {this.state.deleteColumnModal && this.renderDeleteColumnModal()}
+        {this.renderCreateColumnModal()}
+        {this.renderDeleteColumnModal()}
       </div>
     );
   },
@@ -102,6 +102,7 @@ export default React.createClass({
   renderCreateColumnModal() {
     return (
       <CreateColumnModal
+        show={this.state.createColumnModal}
         table={this.props.table}
         tables={this.props.tables}
         onSubmit={this.handleCreateColumn}
@@ -113,6 +114,7 @@ export default React.createClass({
   renderDeleteColumnModal() {
     return (
       <DeleteColumnModal
+        show={this.state.deleteColumnModal}
         column={this.state.deleteColumnName}
         tableAliases={this.props.tableAliases}
         tableLinks={this.props.tableLinks}

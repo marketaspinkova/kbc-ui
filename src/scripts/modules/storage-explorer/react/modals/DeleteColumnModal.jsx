@@ -9,6 +9,7 @@ const INITIAL_STATE = {
 
 export default React.createClass({
   propTypes: {
+    show: PropTypes.bool.isRequired,
     column: PropTypes.string.isRequired,
     tableAliases: PropTypes.array.isRequired,
     tableLinks: PropTypes.array.isRequired,
@@ -23,7 +24,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Modal onHide={this.onHide} show={true}>
+      <Modal show={this.props.show} onHide={this.onHide}>
         <Form onSubmit={this.handleSubmit}>
           <Modal.Header closeButton>
             <Modal.Title>Delete column</Modal.Title>
