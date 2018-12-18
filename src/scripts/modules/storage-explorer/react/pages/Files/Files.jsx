@@ -2,7 +2,7 @@ import React from 'react';
 import Promise from 'bluebird';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { Button } from 'react-bootstrap';
-import { SearchBar, Loader } from '@keboola/indigo-ui';
+import { SearchBar } from '@keboola/indigo-ui';
 
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import FilesStore from '../../../../components/stores/StorageFilesStore';
@@ -21,7 +21,6 @@ export default React.createClass({
       files: FilesStore.getAll(),
       hasMore: FilesStore.hasMoreFiles(),
       searchQuery: LocalStore.getSearchQuery(),
-      isLoading: FilesStore.getIsLoading(),
       isLoadingMore: FilesStore.getIsLoadingMore(),
       isDeleting: FilesStore.getIsDeleting()
     };
@@ -56,10 +55,8 @@ export default React.createClass({
             />
           </div>
 
-          {this.state.isLoading ? (
-            <p className="kbc-inner-padding">
-              <Loader /> loading...
-            </p>
+          {this.state.files.count() === 0 ? (
+            <p className="kbc-inner-padding">No files.</p>
           ) : (
             <div>
               <FilesTable
