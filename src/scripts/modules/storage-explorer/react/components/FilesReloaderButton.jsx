@@ -3,7 +3,7 @@ import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import StorageActionCreators from '../../../components/StorageActionCreators';
 import FilesStore from '../../../components/stores/StorageFilesStore';
 import LocalStore from '../../LocalStore';
-import { searchLimit } from '../../Constants';
+import { filesLimit } from '../../Constants';
 import { RefreshIcon } from '@keboola/indigo-ui';
 
 export default React.createClass({
@@ -18,7 +18,7 @@ export default React.createClass({
 
   handleRefreshClick() {
     const params = {
-      limit: searchLimit
+      limit: filesLimit
     };
 
     if (this.state.searchQuery) {

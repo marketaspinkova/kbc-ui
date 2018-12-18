@@ -11,7 +11,7 @@ import StorageActionCreators from '../../../../components/StorageActionCreators'
 import FilesTable from '../../components/FilesTable';
 import UploadModal from '../../modals/UploadModal';
 import { updateSearchQuery, resetSearchQuery } from '../../../Actions';
-import { searchLimit } from '../../../Constants';
+import { filesLimit } from '../../../Constants';
 
 export default React.createClass({
   mixins: [ImmutableRenderMixin, createStoreMixin(FilesStore, LocalStore)],
@@ -137,7 +137,7 @@ export default React.createClass({
 
   getParams(offset) {
     const params = {
-      limit: searchLimit,
+      limit: filesLimit,
       offset
     };
 
