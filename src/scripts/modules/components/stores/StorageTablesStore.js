@@ -38,6 +38,14 @@ const StorageTablesStore = StoreUtils.createStore({
     return _store.getIn(['pendingTables', 'creatingAlias'], false);
   },
 
+  getIsCreatingPrimaryKey(tableId) {
+    return _store.getIn(['pendingTables', 'creatingPrimaryKey', tableId], false);
+  },
+
+  getIsDeletingPrimaryKey(tableId) {
+    return _store.getIn(['pendingTables', 'deletingPrimaryKey', tableId], false);
+  },
+
   getIsLoadingTable() {
     return _store.getIn(['pendingTables', 'loading'], false);
   },
@@ -92,6 +100,24 @@ Dispatcher.register(function(payload) {
 
     case constants.ActionTypes.STORAGE_ALIAS_TABLE_CREATE_ERROR:
       _store = _store.setIn(['pendingTables', 'creatingAlias'], false);
+      return StorageTablesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_TABLE_SET_PRIMARY_KEY:
+      _store = _store.setIn(['pendingTables', 'creatingPrimaryKey', action.tableId], true);
+      return StorageTablesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_TABLE_SET_PRIMARY_KEY_SUCCESS:
+    case constants.ActionTypes.STORAGE_TABLE_SET_PRIMARY_KEY_ERROR:
+      _store = _store.deleteIn(['pendingTables', 'creatingPrimaryKey', action.tableId]);
+      return StorageTablesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_TABLE_DELETE_PRIMARY_KEY:
+      _store = _store.setIn(['pendingTables', 'deletingPrimaryKey', action.tableId], true);
+      return StorageTablesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_TABLE_DELETE_PRIMARY_KEY_SUCCESS:
+    case constants.ActionTypes.STORAGE_TABLE_DELETE_PRIMARY_KEY_ERROR:
+      _store = _store.deleteIn(['pendingTables', 'deletingPrimaryKey', action.tableId]);
       return StorageTablesStore.emitChange();
 
     case constants.ActionTypes.STORAGE_TABLES_LOAD:

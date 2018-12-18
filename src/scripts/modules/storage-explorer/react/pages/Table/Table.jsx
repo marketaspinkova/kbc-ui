@@ -22,7 +22,9 @@ export default React.createClass({
           <Buckets />
         </Col>
         <Col sm={9} className="kbc-main-content">
-          <TableDetail key={`${this.state.bucketId}-${this.state.tableName}`} />
+          {this.state.tableName && (
+            <TableDetail key={`${this.state.bucketId}-${this.state.tableName}`} />
+          )}
         </Col>
       </div>
     );

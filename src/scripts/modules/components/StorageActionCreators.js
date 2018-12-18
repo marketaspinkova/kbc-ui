@@ -318,6 +318,83 @@ module.exports = {
       });
   },
 
+  createTablePrimaryKey: function(tableId, params) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.STORAGE_TABLE_SET_PRIMARY_KEY,
+      params: params,
+      tableId: tableId
+    });
+    return storageApi.createTablePrimaryKey(tableId, params).then(response => {
+      return jobPoller.poll(ApplicationStore.getSapiTokenString(), response.url).then(response2 => {
+        if (response2.status === 'error') {
+          dispatcher.handleViewAction({
+            type: constants.ActionTypes.STORAGE_TABLE_SET_PRIMARY_KEY_ERROR,
+            tableId: tableId,
+            errors: response2.error
+          });
+          throw response2.error.message;
+        }
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_TABLE_SET_PRIMARY_KEY_SUCCESS,
+          tableId: tableId,
+          response: response2
+        });
+        return this.loadTablesForce();
+      });
+    })
+      .catch(function(error) {
+        var message;
+        message = error;
+        if (error.message) {
+          message = error.message;
+        }
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_TABLE_SET_PRIMARY_KEY_ERROR,
+          tableId: tableId,
+          errors: error
+        });
+        throw message;
+      });
+  },
+
+  removeTablePrimaryKey: function(tableId) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.STORAGE_TABLE_DELETE_PRIMARY_KEY,
+      tableId: tableId
+    });
+    return storageApi.removeTablePrimaryKey(tableId).then(response => {
+      return jobPoller.poll(ApplicationStore.getSapiTokenString(), response.url).then(response2 => {
+        if (response2.status === 'error') {
+          dispatcher.handleViewAction({
+            type: constants.ActionTypes.STORAGE_TABLE_DELETE_PRIMARY_KEY_ERROR,
+            tableId: tableId,
+            errors: response2.error
+          });
+          throw response2.error.message;
+        }
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_TABLE_DELETE_PRIMARY_KEY_SUCCESS,
+          tableId: tableId,
+          response: response2
+        });
+        return this.loadTablesForce();
+      });
+    })
+      .catch(function(error) {
+        var message;
+        message = error;
+        if (error.message) {
+          message = error.message;
+        }
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_TABLE_DELETE_PRIMARY_KEY_ERROR,
+          tableId: tableId,
+          errors: error
+        });
+        throw message;
+      });
+  },
+
   loadDataIntoWorkspace: function(workspaceId, configuration) {
     // var self;
     // self = this;
