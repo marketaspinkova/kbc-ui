@@ -24,6 +24,7 @@ const INITIAL_STATE = {
 
 export default React.createClass({
   propTypes: {
+    show: PropTypes.bool.isRequired,
     table: PropTypes.object.isRequired,
     onSubmit: PropTypes.func.isRequired,
     onHide: PropTypes.func.isRequired,
@@ -37,7 +38,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Modal show={true} onHide={this.onHide}>
+      <Modal show={this.props.show} onHide={this.onHide}>
         <Form onSubmit={this.onSubmit} horizontal>
           <Modal.Header closeButton>
             <Modal.Title>Import CSV into table {this.props.table.get('name')}</Modal.Title>

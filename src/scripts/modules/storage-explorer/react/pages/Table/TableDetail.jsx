@@ -208,12 +208,9 @@ export default React.createClass({
   },
 
   renderLoadTableModal() {
-    if (this.state.actionModalType !== 'load') {
-      return null;
-    }
-
     return (
       <LoadTableFromCsvModal
+        show={this.state.actionModalType === 'load'}
         table={this.state.table}
         onSubmit={this.handleLoadTable}
         onHide={this.closeActionModal}
