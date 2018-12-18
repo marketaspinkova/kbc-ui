@@ -5,6 +5,7 @@ import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
 export default React.createClass({
   propTypes: {
+    show: PropTypes.bool.isRequired,
     columns: PropTypes.object.isRequired,
     backend: PropTypes.string.isRequired,
     onSubmit: PropTypes.func.isRequired,
@@ -19,7 +20,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Modal show={true} onHide={this.onHide} enforceFocus={false}>
+      <Modal show={this.props.show} onHide={this.onHide} enforceFocus={false}>
         <Form onSubmit={this.handleSubmit} horizontal>
           <Modal.Header closeButton>
             <Modal.Title>Create primary key</Modal.Title>

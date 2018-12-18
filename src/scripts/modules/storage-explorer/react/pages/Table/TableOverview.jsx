@@ -25,8 +25,8 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      createPrimaryKeyModal: false,
       removePrimaryKeyModal: false
+      showCreatePrimaryKeyModal: false,
     };
   },
 
@@ -130,8 +130,8 @@ export default React.createClass({
           </tbody>
         </Table>
 
-        {this.state.createPrimaryKeyModal && this.renderCreatePrimaryKeyModal()}
         {this.state.removePrimaryKeyModal && this.renderRemovePrimaryKeyModal()}
+        {this.renderCreatePrimaryKeyModal()}
       </div>
     );
   },
@@ -226,6 +226,7 @@ export default React.createClass({
   renderCreatePrimaryKeyModal() {
     return (
       <CreatePrimaryKeyModal
+        show={this.state.showCreatePrimaryKeyModal}
         columns={this.props.table.get('columns')}
         backend={this.props.table.getIn(['bucket', 'backend'])}
         onSubmit={this.handleCreatePrimaryKey}
@@ -265,13 +266,13 @@ export default React.createClass({
 
   openCreatePrimaryKeyModal() {
     this.setState({
-      createPrimaryKeyModal: true
+      showCreatePrimaryKeyModal: true
     });
   },
 
   closeCreatePrimaryKeyModal() {
     this.setState({
-      createPrimaryKeyModal: false
+      showCreatePrimaryKeyModal: false
     });
   },
 
