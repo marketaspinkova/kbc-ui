@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Alert, Table} from 'react-bootstrap';
+import {Table} from 'react-bootstrap';
 import storageApi from '../../../components/StorageApi';
 import {fromJS} from 'immutable';
 import ColumnDataPreview from './ColumnDataPreview';
@@ -80,10 +80,14 @@ export default React.createClass({
     return (
       <div>
         { !this.props.value.tableExist &&
-          <Alert bsStyle="warning">
-            <strong>Table Missing</strong>
-            <div> Table <code>{this.props.value.tableId}</code> used in this configuration is missing in Storage. Running this configuration will fail. </div>
-          </Alert>
+          <div className="alert alert-warning">
+            <h3>Table Missing</h3>
+            <div className="help-block">
+              <span>
+                Table <code>{this.props.value.tableId}</code> used in this configuration is missing in Storage. Running this configuration will fail.
+              </span>
+            </div>
+          </div>
         }
         { this.props.value.columns.length > 0 &&
           <div>
