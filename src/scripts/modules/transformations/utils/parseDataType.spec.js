@@ -40,6 +40,12 @@ describe('parseDataType()', () => {
       length: '',
       column: 'name'
     }, parseDataType('DATE', 'name').toJS());
+
+    assert.deepEqual({
+      type: 'BIGINT UNSIGNED',
+      length: '',
+      column: 'name'
+    }, parseDataType('BIGINT UNSIGNED', 'name').toJS());
   });
   it('should parse string defined data types with length', () => {
     assert.deepEqual({
@@ -49,9 +55,21 @@ describe('parseDataType()', () => {
     }, parseDataType('VARCHAR (255)', 'name').toJS());
 
     assert.deepEqual({
+      type: 'VARCHAR',
+      length: '255',
+      column: 'name'
+    }, parseDataType('VARCHAR(255)', 'name').toJS());
+
+    assert.deepEqual({
       type: 'NUMBER',
       length: '12,2',
       column: 'name'
     }, parseDataType('NUMBER (12,2)', 'name').toJS());
+
+    assert.deepEqual({
+      type: 'NUMBER',
+      length: '12,2',
+      column: 'name'
+    }, parseDataType('NUMBER(12,2)', 'name').toJS());
   });
 });
