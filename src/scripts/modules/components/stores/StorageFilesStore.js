@@ -2,7 +2,7 @@ import Dispatcher from '../../../Dispatcher';
 import * as constants from '../Constants';
 import { Map, List, fromJS } from 'immutable';
 import StoreUtils from '../../../utils/StoreUtils';
-import { searchLimit } from '../../storage-explorer/Constants';
+import { filesLimit } from '../../storage-explorer/Constants';
 
 let _store = Map({
   files: List(),
@@ -56,7 +56,7 @@ Dispatcher.register(function(payload) {
       _store = _store.withMutations(store =>
         store
           .set('files', fromJS(action.files))
-          .set('hasMoreFiles', action.files.length === searchLimit)
+          .set('hasMoreFiles', action.files.length === filesLimit)
           .set('isLoading', false)
           .set('isLoaded', true)
       );
@@ -83,7 +83,7 @@ Dispatcher.register(function(payload) {
       _store = _store.withMutations(store =>
         store
           .set('files', _store.get('files').concat(fromJS(action.files)))
-          .set('hasMoreFiles', action.files.length === searchLimit)
+          .set('hasMoreFiles', action.files.length === filesLimit)
           .set('isLoadingMore', false)
       );
       return StorageFilesStore.emitChange();
