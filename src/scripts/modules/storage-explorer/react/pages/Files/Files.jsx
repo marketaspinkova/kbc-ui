@@ -128,7 +128,8 @@ export default React.createClass({
   },
 
   searchByTag(tag) {
-    this.setState({ searchQuery: `tags:${tag}` }, this.fetchFiles);
+    updateSearchQuery(`tags:${tag}`);
+    setTimeout(this.fetchFiles, 50);
   },
 
   handleDeleteFile(fileId) {
