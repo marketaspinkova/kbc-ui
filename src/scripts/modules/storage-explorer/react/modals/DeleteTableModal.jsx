@@ -5,6 +5,7 @@ import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
 export default React.createClass({
   propTypes: {
+    show: PropTypes.bool.isRequired,
     table: PropTypes.object.isRequired,
     sapiToken: PropTypes.object.isRequired,
     tableAliases: PropTypes.array.isRequired,
@@ -25,7 +26,7 @@ export default React.createClass({
     const isOrganizationMember = this.props.sapiToken.getIn(['admin', 'isOrganizationMember']);
 
     return (
-      <Modal onHide={this.props.onHide} show={true}>
+      <Modal show={this.props.show} onHide={this.props.onHide}>
         <Modal.Header closeButton>
           <Modal.Title>Delete table</Modal.Title>
         </Modal.Header>
