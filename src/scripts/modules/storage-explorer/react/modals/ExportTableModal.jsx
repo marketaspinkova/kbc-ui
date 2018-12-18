@@ -4,6 +4,7 @@ import { Loader, ExternalLink } from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
+    show: PropTypes.bool.isRequired,
     table: PropTypes.object.isRequired,
     onSubmit: PropTypes.func.isRequired,
     onHide: PropTypes.func.isRequired,
@@ -19,7 +20,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Modal onHide={this.props.onHide} show={true}>
+      <Modal show={this.props.show} onHide={this.props.onHide}>
         <Form onSubmit={this.handleSubmit}>
           <Modal.Header closeButton>
             <Modal.Title>Export table {this.props.table.get('id')}</Modal.Title>

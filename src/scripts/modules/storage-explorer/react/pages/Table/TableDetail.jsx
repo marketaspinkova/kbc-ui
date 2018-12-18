@@ -232,12 +232,9 @@ export default React.createClass({
   },
 
   renderExportTableModal() {
-    if (this.state.actionModalType !== 'export') {
-      return null;
-    }
-
     return (
       <ExportTableModal
+        show={!!(this.state.openActionModal && this.state.actionModalType === 'export')}
         table={this.state.table}
         onSubmit={this.handleExportTable}
         onHide={this.closeActionModal}
