@@ -19,6 +19,7 @@ export default React.createClass({
   getStateFromStores() {
     return {
       files: FilesStore.getAll(),
+      hasMore: FilesStore.hasMoreFiles(),
       searchQuery: LocalStore.getSearchQuery(),
       isLoading: FilesStore.getIsLoading(),
       isLoadingMore: FilesStore.getIsLoadingMore(),
@@ -33,8 +34,7 @@ export default React.createClass({
   getInitialState() {
     return {
       openUploadModal: false,
-      isUploading: false,
-      hasMore: true
+      isUploading: false
     };
   },
 
@@ -85,7 +85,7 @@ export default React.createClass({
 
     return (
       <div className="kbc-block-with-padding">
-        <Button onClick={this.handleLoadMore} disabled={this.state.isLoadingMore}>
+        <Button onClick={this.fetchMoreFiles} disabled={this.state.isLoadingMore}>
           {this.state.isLoadingMore ? 'Loading ...' : 'Load more'}
         </Button>
       </div>
@@ -133,15 +133,6 @@ export default React.createClass({
 
   handleDeleteFile(fileId) {
     return StorageActionCreators.deleteFile(fileId);
-  },
-
-  handleLoadMore() {
-    this.fetchMoreFiles().then(files => {
-      this.setState({
-        hasMore: files.length === this.state.count,
-        offset: this.state.offset + this.state.count
-      });
-    });
   },
 
   getParams(offset) {

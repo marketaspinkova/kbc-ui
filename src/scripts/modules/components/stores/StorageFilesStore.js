@@ -2,9 +2,11 @@ import Dispatcher from '../../../Dispatcher';
 import * as constants from '../Constants';
 import { Map, List, fromJS } from 'immutable';
 import StoreUtils from '../../../utils/StoreUtils';
+import { searchLimit } from '../../storage-explorer/Constants';
 
 let _store = Map({
   files: List(),
+  hasMoreFiles: true,
   isLoaded: false,
   isLoading: false,
   uploadingProgress: Map(),
@@ -15,6 +17,10 @@ let _store = Map({
 const StorageFilesStore = StoreUtils.createStore({
   getAll() {
     return _store.get('files');
+  },
+
+  hasMoreFiles() {
+    return _store.get('hasMoreFiles');
   },
 
   getIsLoading() {
@@ -50,6 +56,7 @@ Dispatcher.register(function(payload) {
       _store = _store.withMutations(store =>
         store
           .set('files', fromJS(action.files))
+          .set('hasMoreFiles', action.files.length === searchLimit)
           .set('isLoading', false)
           .set('isLoaded', true)
       );
@@ -74,7 +81,10 @@ Dispatcher.register(function(payload) {
 
     case constants.ActionTypes.STORAGE_FILES_LOAD_MORE_SUCCESS:
       _store = _store.withMutations(store =>
-        store.set('files', _store.get('files').concat(fromJS(action.files))).set('isLoadingMore', false)
+        store
+          .set('files', _store.get('files').concat(fromJS(action.files)))
+          .set('hasMoreFiles', action.files.length === searchLimit)
+          .set('isLoadingMore', false)
       );
       return StorageFilesStore.emitChange();
 
