@@ -195,14 +195,9 @@ export default React.createClass({
   },
 
   render() {
-    const MigrationComponent = this.props.migrationComponent;
     return (
       <div className="container-fluid">
-        {this.props.migrationComponent && (
-          <div className="kbc-overview-component-container">
-            <MigrationComponent />
-          </div>
-        )}
+        {this.props.migrationComponent && this.renderMigrationComponent()}
         <div className="col-md-9 kbc-main-content">
           <div className="row kbc-header">
             <ComponentDescription
@@ -285,6 +280,15 @@ export default React.createClass({
             limit={3}
           />
         </div>
+      </div>
+    );
+  },
+
+  renderMigrationComponent() {
+    const MigrationComponent = this.props.migrationComponent;
+    return (
+      <div className="kbc-overview-component-container">
+        <MigrationComponent />
       </div>
     );
   },
