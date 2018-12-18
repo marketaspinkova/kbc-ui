@@ -117,16 +117,18 @@ export default React.createClass({
             </div>
           </div>
           <div className="form-group">
-            <label className="col-md-12 control-label">SQL query</label>
-            <div className="col-md-12">
-              <CodeEditor
-                readOnly={false}
-                placeholder="e.g. SELECT `id`, `name` FROM `myTable`"
-                value={this.props.query.get('query')}
-                mode={editorMode(this.props.componentId)}
-                onChange={this._handleQueryChange}
-                style={{ width: '100%' }}
-              />
+            <label className="col-md-2 control-label">SQL query</label>
+            <div className="col-md-10 ">
+              <div className="form-control-static">
+                <CodeEditor
+                  readOnly={false}
+                  placeholder="e.g. SELECT `id`, `name` FROM `myTable`"
+                  value={this.props.query.get('query')}
+                  mode={editorMode(this.props.componentId)}
+                  onChange={this._handleQueryChange}
+                  style={{width: '100%'}}
+                />
+              </div>
             </div>
           </div>
         </div>

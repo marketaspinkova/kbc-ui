@@ -56,7 +56,7 @@ export default React.createClass({
 
   renderButtons() {
     return (
-      <div className="o">
+      <div className="form-group">
         <div className="col-xs-12">
           <div className="text-right">
             <SaveButtons
