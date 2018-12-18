@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
-import { Map } from 'immutable';
+import { List } from 'immutable';
 import { Loader } from '@keboola/indigo-ui';
 import { factory as eventsFactory } from '../../../../sapi-events/TableEventsService';
 import LatestImportGraph from '../../components/LatestImportGraph';
@@ -14,14 +14,14 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      events: Map(),
-      loading: false
+      events: List(),
+      isLoading: false
     };
   },
 
   componentDidMount() {
     this.createEventsService();
-    this.loadEvents();
+    this._events.load();
   },
 
   componentWillUnmount() {
@@ -38,7 +38,7 @@ export default React.createClass({
   },
 
   renderImportsTableGraph() {
-    if (this.state.loading) {
+    if (this.state.isLoading) {
       return (
         <p>
           <Loader /> loading...
@@ -56,22 +56,20 @@ export default React.createClass({
   createEventsService() {
     this._events = eventsFactory(this.props.table.get('id'), { component: 'storage' });
     this._events.setQuery('event:storage.tableImportDone');
+    this._events.addChangeListener(this.handleChange);
   },
 
   destroyEventsService() {
+    this._events.removeChangeListener(this.handleChange);
     this._events.reset();
   },
 
-  loadEvents() {
-    this.setState({ loading: true });
-
-    this._events
-      .load()
-      .then(() => {
-        this.setState({ events: this._events.getEvents() });
-      })
-      .finally(() => {
-        this.setState({ loading: false });
+  handleChange() {
+    if (this.isMounted()) {
+      this.setState({
+        events: this._events.getEvents(),
+        isLoading: this._events.getIsLoading()
       });
+    }
   }
 });
