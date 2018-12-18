@@ -2,22 +2,152 @@
 
 exports[`columns editor section test nonexisting table render 1`] = `
 <div>
-  <h3>
-    Columns
-  </h3>
   <div
-    class="storage-table-columns-editor-wrapper"
+    class="component-empty-state text-center"
   >
+    <p>
+       Table 
+      <code>
+        in.some.table
+      </code>
+       does not exist 
+    </p>
+  </div>
+  <div>
+    <h3>
+      Columns
+    </h3>
     <div
-      class="component-empty-state text-center"
+      class="storage-table-columns-editor-wrapper"
     >
-      <p>
-         Table 
-        <code>
-          in.some.table
-        </code>
-         does not exist 
-      </p>
+      <table
+        class="storage-table-columns-editor table table-striped"
+      >
+        <thead>
+          <tr>
+            <th
+              class="col-md-2"
+            >
+              Column Name
+            </th>
+            <th>
+              Column Setup
+            </th>
+            <th
+              class="col-md-1"
+            >
+              Preview
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            class=""
+          >
+            <td
+              class="column-name"
+            >
+              age
+            </td>
+            <td>
+              <span>
+                <div>
+                  age
+                </div>
+                <div>
+                  number
+                </div>
+                <div />
+                <div>
+                  3
+                </div>
+                <span>
+                   ignore column
+                </span>
+              </span>
+            </td>
+            <td>
+              <button
+                class="btn btn-link"
+              >
+                <span
+                  class="fa fa-eye"
+                />
+              </button>
+            </td>
+          </tr>
+          <tr
+            class=""
+          >
+            <td
+              class="column-name"
+            >
+              person
+            </td>
+            <td>
+              <span>
+                <div>
+                  person
+                </div>
+                <div>
+                  varchar
+                </div>
+                <div />
+                <div>
+                  3
+                </div>
+                <span>
+                   ignore column
+                </span>
+              </span>
+            </td>
+            <td>
+              <button
+                class="btn btn-link"
+              >
+                <span
+                  class="fa fa-eye"
+                />
+              </button>
+            </td>
+          </tr>
+          <tr
+            class=""
+          >
+            <td
+              class="column-name"
+            >
+              deletedColumn
+            </td>
+            <td>
+              <span>
+                <div>
+                  deletedColumn
+                </div>
+                <div>
+                  varchar
+                </div>
+                <div />
+                <div>
+                  3
+                </div>
+                <span>
+                   ignore column
+                </span>
+              </span>
+            </td>
+            <td>
+              <button
+                class="btn btn-link"
+              >
+                <span
+                  class="fa fa-eye"
+                />
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
@@ -25,183 +155,185 @@ exports[`columns editor section test nonexisting table render 1`] = `
 
 exports[`columns editor section test render 1`] = `
 <div>
-  <h3>
-    Columns
-  </h3>
-  <div
-    class="storage-table-columns-editor-wrapper"
-  >
-    <table
-      class="storage-table-columns-editor table table-striped"
+  <div>
+    <h3>
+      Columns
+    </h3>
+    <div
+      class="storage-table-columns-editor-wrapper"
     >
-      <thead>
-        <tr>
-          <th
-            class="col-md-2"
-          >
-            Column Name
-          </th>
-          <th>
-            Column Setup
-          </th>
-          <th
-            class="col-md-1"
-          >
-            Preview
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          class=""
-        >
-          <td
-            class="column-name"
-          >
-            age
-          </td>
-          <td>
-            <span>
-              <div>
-                age
-              </div>
-              <div>
-                number
-              </div>
-              <div>
-                in.some.table
-              </div>
-              <div>
-                4
-              </div>
-              <span>
-                 ignore column
-              </span>
-            </span>
-          </td>
-          <td>
-            <button
-              class="btn btn-link"
+      <table
+        class="storage-table-columns-editor table table-striped"
+      >
+        <thead>
+          <tr>
+            <th
+              class="col-md-2"
             >
-              <span
-                class="fa fa-eye"
-              />
-            </button>
-          </td>
-        </tr>
-        <tr
-          class=""
-        >
-          <td
-            class="column-name"
-          >
-            person
-          </td>
-          <td>
-            <span>
-              <div>
-                person
-              </div>
-              <div>
-                varchar
-              </div>
-              <div>
-                in.some.table
-              </div>
-              <div>
-                4
-              </div>
-              <span>
-                 ignore column
-              </span>
-            </span>
-          </td>
-          <td>
-            <button
-              class="btn btn-link"
+              Column Name
+            </th>
+            <th>
+              Column Setup
+            </th>
+            <th
+              class="col-md-1"
             >
-              <span
-                class="fa fa-eye"
-              />
-            </button>
-          </td>
-        </tr>
-        <tr
-          class="danger"
-        >
-          <td
-            class="column-name"
+              Preview
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            class=""
           >
-            otherColumn
-          </td>
-          <td>
-            <span>
-              <div>
-                otherColumn
-              </div>
-              <div>
-                ignore
-              </div>
-              <div>
-                in.some.table
-              </div>
-              <div>
-                4
-              </div>
-              <span>
-                 ignore column
-              </span>
-            </span>
-          </td>
-          <td>
-            <button
-              class="btn btn-link"
+            <td
+              class="column-name"
             >
-              <span
-                class="fa fa-eye"
-              />
-            </button>
-          </td>
-        </tr>
-        <tr
-          class=""
-        >
-          <td
-            class="column-name"
+              age
+            </td>
+            <td>
+              <span>
+                <div>
+                  age
+                </div>
+                <div>
+                  number
+                </div>
+                <div>
+                  in.some.table
+                </div>
+                <div>
+                  4
+                </div>
+                <span>
+                   ignore column
+                </span>
+              </span>
+            </td>
+            <td>
+              <button
+                class="btn btn-link"
+              >
+                <span
+                  class="fa fa-eye"
+                />
+              </button>
+            </td>
+          </tr>
+          <tr
+            class=""
           >
-            deletedColumn
-          </td>
-          <td>
-            <span>
-              <div>
-                deletedColumn
-              </div>
-              <div>
-                varchar
-              </div>
-              <div>
-                in.some.table
-              </div>
-              <div>
-                4
-              </div>
-              <span>
-                 ignore column
-              </span>
-            </span>
-          </td>
-          <td>
-            <button
-              class="btn btn-link"
+            <td
+              class="column-name"
             >
-              <span
-                class="fa fa-eye"
-              />
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+              person
+            </td>
+            <td>
+              <span>
+                <div>
+                  person
+                </div>
+                <div>
+                  varchar
+                </div>
+                <div>
+                  in.some.table
+                </div>
+                <div>
+                  4
+                </div>
+                <span>
+                   ignore column
+                </span>
+              </span>
+            </td>
+            <td>
+              <button
+                class="btn btn-link"
+              >
+                <span
+                  class="fa fa-eye"
+                />
+              </button>
+            </td>
+          </tr>
+          <tr
+            class="danger"
+          >
+            <td
+              class="column-name"
+            >
+              otherColumn
+            </td>
+            <td>
+              <span>
+                <div>
+                  otherColumn
+                </div>
+                <div>
+                  ignore
+                </div>
+                <div>
+                  in.some.table
+                </div>
+                <div>
+                  4
+                </div>
+                <span>
+                   ignore column
+                </span>
+              </span>
+            </td>
+            <td>
+              <button
+                class="btn btn-link"
+              >
+                <span
+                  class="fa fa-eye"
+                />
+              </button>
+            </td>
+          </tr>
+          <tr
+            class=""
+          >
+            <td
+              class="column-name"
+            >
+              deletedColumn
+            </td>
+            <td>
+              <span>
+                <div>
+                  deletedColumn
+                </div>
+                <div>
+                  varchar
+                </div>
+                <div>
+                  in.some.table
+                </div>
+                <div>
+                  4
+                </div>
+                <span>
+                   ignore column
+                </span>
+              </span>
+            </td>
+            <td>
+              <button
+                class="btn btn-link"
+              >
+                <span
+                  class="fa fa-eye"
+                />
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 `;

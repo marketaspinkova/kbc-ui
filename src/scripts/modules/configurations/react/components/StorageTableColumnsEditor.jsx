@@ -78,25 +78,29 @@ export default React.createClass({
     let headers = this.props.value.columnsMappings.map(mapping => mapping.title);
     return (
       <div>
-        <h3>Columns</h3>
-        <div className="storage-table-columns-editor-wrapper">
-          {this.props.value.tableExist ?
-            <Table striped className="storage-table-columns-editor">
-              <thead>
-                <tr>
-                  <th className="col-md-2">Column Name</th>
-                  {headers.map((title, index) => <th key={index}>{typeof title === 'string' ? title : this.renderHeaderCell(title)}</th>)}
-                  <th className="col-md-1">Preview</th>
-                </tr>
-              </thead>
-              {this.renderBody()}
-            </Table>
-            :
-            <div className="component-empty-state text-center">
-              <p> Table <code>{this.props.value.tableId}</code> does not exist </p>
+        { !this.props.value.tableExist &&
+          <div className="component-empty-state text-center">
+            <p> Table <code>{this.props.value.tableId}</code> does not exist </p>
+          </div>
+        }
+        { this.props.value.columns.length > 0 &&
+          <div>
+            <h3>Columns</h3>
+            <div className="storage-table-columns-editor-wrapper">
+
+              <Table striped className="storage-table-columns-editor">
+                <thead>
+                  <tr>
+                    <th className="col-md-2">Column Name</th>
+                    {headers.map((title, index) => <th key={index}>{typeof title === 'string' ? title : this.renderHeaderCell(title)}</th>)}
+                    <th className="col-md-1">Preview</th>
+                  </tr>
+                </thead>
+                {this.renderBody()}
+              </Table>
             </div>
-          }
-        </div>
+          </div>
+        }
       </div>
     );
   },
