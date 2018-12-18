@@ -88,7 +88,7 @@ export default React.createClass({
           </div>
         </Tab.Container>
 
-        {this.state.openDeleteBucketModal && this.renderDeleteBucketModal()}
+        {this.renderDeleteBucketModal()}
       </div>
     );
   },
@@ -96,6 +96,7 @@ export default React.createClass({
   renderDeleteBucketModal() {
     return (
       <DeleteBucketModal
+        show={this.state.openDeleteBucketModal}
         bucket={this.state.bucket}
         tables={this.state.tables}
         deleting={this.state.deletingBuckets}

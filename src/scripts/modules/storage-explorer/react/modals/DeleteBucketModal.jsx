@@ -3,6 +3,7 @@ import { Modal, ButtonToolbar, Button } from 'react-bootstrap';
 
 export default React.createClass({
   propTypes: {
+    show: PropTypes.bool.isRequired,
     bucket: PropTypes.object.isRequired,
     tables: PropTypes.object.isRequired,
     deleting: PropTypes.bool.isRequired,
@@ -12,7 +13,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Modal onHide={this.props.onHide} show={true}>
+      <Modal show={this.props.show} onHide={this.props.onHide}>
         <Modal.Header closeButton>
           <Modal.Title>Delete bucket</Modal.Title>
         </Modal.Header>
