@@ -7,6 +7,7 @@ import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
 export default React.createClass({
   propTypes: {
+    show: PropTypes.bool.isRequired,
     bucket: PropTypes.object.isRequired,
     isSharing: PropTypes.bool.isRequired,
     onConfirm: PropTypes.func.isRequired,
@@ -21,7 +22,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Modal onHide={this.onHide} show={true}>
+      <Modal show={this.props.show} onHide={this.onHide}>
         <Form onSubmit={this.handleSubmit} horizontal>
           <Modal.Header closeButton>
             <Modal.Title>Share Bucket</Modal.Title>

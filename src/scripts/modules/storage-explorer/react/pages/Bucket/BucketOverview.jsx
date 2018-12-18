@@ -86,8 +86,8 @@ export default React.createClass({
           <td>Sharing</td>
           <td>
             {this.sharingInfo(bucket)} {this.sharingButtons(bucket)}
-            {this.state.openShareModal && this.renderShareModal()}
-            {this.state.openUnshareModal && this.renderUnshareModal()}
+            {this.renderShareModal()}
+            {this.renderUnshareModal()}
           </td>
         </tr>
       );
@@ -139,6 +139,7 @@ export default React.createClass({
   renderShareModal() {
     return (
       <ShareBucketModal
+        show={this.state.openShareModal}
         bucket={this.props.bucket}
         isSharing={this.props.isSharing}
         onConfirm={this.handleShareBucket}
@@ -150,7 +151,7 @@ export default React.createClass({
   renderUnshareModal() {
     return (
       <ConfirmModal
-        show={true}
+        show={this.state.openUnshareModal}
         buttonType="danger"
         buttonLabel="Disable"
         title="Bucket sharing"
