@@ -3,6 +3,13 @@
 Config Rows UI is a set of helpers to simply create a rich UI consistent with other components. All common features 
 are taken care of, you only need to develop what's unique for your component. 
 
+## Working Examples
+
+You can use these components as great working examples. You can copy the whole component and start from there.
+
+- [`keboola.ex-storage`](./src/scripts/modules/ex-storage)
+- [`keboola.wr-storage`](./src/scripts/modules/wr-storage)
+
 ## Basic Principles
 
 Config Rows UI employs hierarchical configurations. Each component can have any number of configurations and each 
