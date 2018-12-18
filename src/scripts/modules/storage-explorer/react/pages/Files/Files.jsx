@@ -1,37 +1,41 @@
 import React from 'react';
 import Promise from 'bluebird';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
-import { List, fromJS } from 'immutable';
 import { Button } from 'react-bootstrap';
-import { RefreshIcon, SearchBar, Loader } from '@keboola/indigo-ui';
-import FilesTable from '../../components/FilesTable';
+import { SearchBar, Loader } from '@keboola/indigo-ui';
+
+import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
+import FilesStore from '../../../../components/stores/StorageFilesStore';
+import LocalStore from '../../../LocalStore';
 import StorageActionCreators from '../../../../components/StorageActionCreators';
-
+import FilesTable from '../../components/FilesTable';
 import UploadModal from '../../modals/UploadModal';
-
-const INITIAL_PAGING = {
-  count: 50,
-  offset: 0
-};
+import { updateSearchQuery, resetSearchQuery } from '../../../Actions';
+import { searchLimit } from '../../../Constants';
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin],
+  mixins: [ImmutableRenderMixin, createStoreMixin(FilesStore, LocalStore)],
 
-  getInitialState() {
+  getStateFromStores() {
     return {
-      files: List(),
-      openUploadModal: false,
-      isUploading: false,
-      isLoadingMore: false,
-      isLoading: false,
-      hasMore: true,
-      searchQuery: '',
-      ...INITIAL_PAGING
+      files: FilesStore.getAll(),
+      searchQuery: LocalStore.getSearchQuery(),
+      isLoading: FilesStore.getIsLoading(),
+      isLoadingMore: FilesStore.getIsLoadingMore(),
+      isDeleting: FilesStore.getIsDeleting()
     };
   },
 
-  componentDidMount() {
-    this.loadFiles();
+  componentWillUnmount() {
+    resetSearchQuery();
+  },
+
+  getInitialState() {
+    return {
+      openUploadModal: false,
+      isUploading: false,
+      hasMore: true
+    };
   },
 
   render() {
@@ -39,19 +43,16 @@ export default React.createClass({
       <div className="container-fluid">
         <div className="kbc-main-content">
           <div className="kbc-inner-padding">
-            <h2>
-              Files <RefreshIcon onClick={this.resetPagingAndLoadFiles} isLoading={this.state.isLoading} />
-              <div className="pull-right">
-                <Button bsStyle="primary" onClick={this.openUploadModal}>
-                  <i className="fa fa-arrow-circle-o-up" /> Upload File
-                </Button>
-              </div>
-            </h2>
             <SearchBar
               placeholder="Search: tags:tag"
               query={this.state.searchQuery}
               onChange={this.handleQueryChange}
-              onSubmit={this.resetPagingAndLoadFiles}
+              onSubmit={this.fetchFiles}
+              additionalActions={
+                <Button bsStyle="primary" onClick={this.openUploadModal}>
+                  <i className="fa fa-arrow-circle-o-up" /> Upload File
+                </Button>
+              }
             />
           </div>
 
@@ -65,6 +66,7 @@ export default React.createClass({
                 files={this.state.files}
                 onSearchByTag={this.searchByTag}
                 onDeleteFile={this.handleDeleteFile}
+                isDeleting={this.state.isDeleting}
               />
               {this.renderMoreButton()}
             </div>
@@ -101,6 +103,10 @@ export default React.createClass({
     );
   },
 
+  handleQueryChange(query) {
+    updateSearchQuery(query);
+  },
+
   openUploadModal() {
     this.setState({
       openUploadModal: true
@@ -121,75 +127,42 @@ export default React.createClass({
     });
   },
 
-  handleDeleteFile(fileId) {
-    return StorageActionCreators.deleteFile(fileId).then(() => {
-      this.setState({
-        files: this.state.files.filter(file => file.get('id') !== fileId)
-      });
-    });
-  },
-
-  handleQueryChange(query) {
-    this.setState({
-      searchQuery: query
-    });
-  },
-
-  loadFiles() {
-    this.setState({ isLoading: true });
-
-    this.fetchFiles()
-      .then(files => {
-        this.setState({
-          files: fromJS(files),
-          hasMore: files.length === this.state.count,
-          offset: this.state.offset + this.state.count
-        });
-      })
-      .finally(() => {
-        this.setState({ isLoading: false });
-      });
-  },
-
-  resetPagingAndLoadFiles() {
-    this.setState(INITIAL_PAGING, this.loadFiles);
-  },
-
   searchByTag(tag) {
-    this.setState(
-      {
-        searchQuery: `tags:${tag}`
-      },
-      this.resetPagingAndLoadFiles
-    );
+    this.setState({ searchQuery: `tags:${tag}` }, this.fetchFiles);
+  },
+
+  handleDeleteFile(fileId) {
+    return StorageActionCreators.deleteFile(fileId);
   },
 
   handleLoadMore() {
-    this.setState({ isLoadingMore: true });
-
-    this.fetchFiles()
-      .then(files => {
-        this.setState({
-          files: this.state.files.concat(fromJS(files)),
-          hasMore: files.length === this.state.count,
-          offset: this.state.offset + this.state.count
-        });
-      })
-      .finally(() => {
-        this.setState({ isLoadingMore: false });
+    this.fetchMoreFiles().then(files => {
+      this.setState({
+        hasMore: files.length === this.state.count,
+        offset: this.state.offset + this.state.count
       });
+    });
   },
 
-  fetchFiles() {
+  getParams(offset) {
     const params = {
-      limit: this.state.count,
-      offset: this.state.offset
+      limit: searchLimit,
+      offset
     };
 
     if (this.state.searchQuery) {
       params.q = this.state.searchQuery;
     }
 
-    return StorageActionCreators.loadFilesForce(params);
+    return params;
+  },
+
+  fetchFiles(offset = 0) {
+    StorageActionCreators.loadFilesForce(this.getParams(offset));
+  },
+
+  fetchMoreFiles() {
+    const offset = this.state.files.count();
+    return StorageActionCreators.loadMoreFiles(this.getParams(offset));
   }
 });

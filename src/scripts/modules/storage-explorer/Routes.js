@@ -2,8 +2,10 @@ import Index from './react/pages/Index/Index';
 import Files from './react/pages/Files/Files';
 import Table from './react/pages/Table/Table';
 import Bucket from './react/pages/Bucket/Bucket';
+import FilesReloaderButton from './react/components/FilesReloaderButton';
 import StorageActions from '../components/StorageActionCreators';
 import TablesStore from '../components/stores/StorageTablesStore';
+import { searchLimit } from './Constants';
 
 export default {
   name: 'storage-explorer',
@@ -15,7 +17,9 @@ export default {
       name: 'storage-explorer-files',
       path: 'files',
       defaultRouteHandler: Files,
-      title: 'Files'
+      reloaderHandler: FilesReloaderButton,
+      title: 'Files',
+      requireData: [() => StorageActions.loadFilesForce({ limit: searchLimit })]
     },
     {
       name: 'storage-explorer-bucket',

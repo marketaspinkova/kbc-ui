@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import moment from 'moment';
 import { Table, Button, Label } from 'react-bootstrap';
+import { Loader } from '@keboola/indigo-ui';
 import FileLink from '../../../sapi-events/react/FileLink';
 import { format } from '../../../../utils/date';
 import Confirm from '../../../../react/common/Confirm';
@@ -15,7 +16,8 @@ export default React.createClass({
   propTypes: {
     files: PropTypes.object.isRequired,
     onSearchByTag: PropTypes.func.isRequired,
-    onDeleteFile: PropTypes.func.isRequired
+    onDeleteFile: PropTypes.func.isRequired,
+    isDeleting: PropTypes.object.isRequired
   },
 
   getInitialState() {
@@ -55,7 +57,7 @@ export default React.createClass({
 
   renderRow(file) {
     return (
-      <tr key={file.get('id')} className="kbc-cursor-pointer">
+      <tr key={file.get('id')}>
         <td>{file.get('id')}</td>
         <td>{format(file.get('created'), 'YYYY-MM-DD HH:mm')}</td>
         <td>
@@ -140,6 +142,16 @@ export default React.createClass({
   },
 
   renderDeleteFile(file) {
+    const isDeleting = this.props.isDeleting.get(file.get('id'), false);
+
+    if (isDeleting) {
+      return (
+        <Button disabled>
+          <Loader />
+        </Button>
+      );
+    }
+
     return (
       <Confirm
         title="Delete file"

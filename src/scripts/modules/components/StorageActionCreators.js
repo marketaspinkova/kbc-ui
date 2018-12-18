@@ -138,11 +138,10 @@ module.exports = {
       type: constants.ActionTypes.STORAGE_FILES_LOAD
     });
     return storageApi.getFiles(params).then(function(files) {
-      dispatcher.handleViewAction({
+      return dispatcher.handleViewAction({
         type: constants.ActionTypes.STORAGE_FILES_LOAD_SUCCESS,
         files: files
       });
-      return files;
     })
       .catch(function(error) {
         dispatcher.handleViewAction({
@@ -158,6 +157,26 @@ module.exports = {
       return Promise.resolve();
     }
     return this.loadFilesForce(params);
+  },
+
+  loadMoreFiles: function(params) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.STORAGE_FILES_LOAD_MORE
+    });
+    return storageApi.getFiles(params).then(function(files) {
+      dispatcher.handleViewAction({
+        type: constants.ActionTypes.STORAGE_FILES_LOAD_MORE_SUCCESS,
+        files: files
+      });
+      return files;
+    })
+      .catch(function(error) {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_FILES_LOAD_MORE_ERROR,
+          errors: error
+        });
+        throw error;
+      });
   },
 
   createBucket: function(params) {
