@@ -1,11 +1,10 @@
 import {Map} from 'immutable';
 
-export default function(dataTypeDefinition, columnName) {
-  if (typeof dataTypeDefinition !== 'string') {
-    return dataTypeDefinition;
-  }
+export function isDataTypeAsString(dataTypeDefinition) {
+  return typeof dataTypeDefinition === 'string';
+}
 
-  // dataTypeDefinition is string so we parse it to object
+export function parseDataTypeFromString(dataTypeDefinition, columnName) {
   const parts = dataTypeDefinition.trim().split(' ');
   const type = parts[0];
   let typeLength = parts.length > 1 ? parts[1] : '';

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Table, HelpBlock, Checkbox} from 'react-bootstrap';
 import DatatypeFormRow from './DatatypeFormRow';
-import parseDataType from '../../../../utils/parseDataType';
+import {parseDataTypeFromString, isDataTypeAsString} from '../../../../utils/parseDataType';
 
 export default React.createClass({
   propTypes: {
@@ -30,16 +30,18 @@ export default React.createClass({
   },
 
   renderColumn(column) {
-    const columnDataType = this.props.datatypes.find((type, columnName) => {
+    let columnDataType = this.props.datatypes.find((type, columnName) => {
       const computedName = typeof type === 'string' ? columnName : type.get('column');
       return computedName === column;
     });
-    const parsedColumnDataType = parseDataType(columnDataType, column);
+    if (isDataTypeAsString(columnDataType)) {
+      columnDataType = parseDataTypeFromString(columnDataType, column);
+    }
     return (
       <DatatypeFormRow
         key={column}
         columnName={column}
-        datatype={parsedColumnDataType}
+        datatype={columnDataType}
         datatypesMap={this.props.datatypesMap}
         onChange={this.handleDatatypeChange}
         disabled={this.props.disabled}
