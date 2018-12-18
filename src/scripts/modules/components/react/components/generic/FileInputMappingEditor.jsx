@@ -102,7 +102,7 @@ export default React.createClass({
             help={<HelpBlock>Specify an Elasticsearch query to refine search</HelpBlock>}
           />
           <div className="form-group">
-            <label className="col-xs-2 control-label">Tags</label>
+            <label className="col-xs-2 control-label">Processed Tags</label>
             <div className="col-xs-10">
               <Select.Creatable
                 options={[]}
@@ -111,7 +111,7 @@ export default React.createClass({
                 disabled={this.props.disabled}
                 placeholder="Add tags"
                 multi={true}
-                onChange={this._handleChangeTags}
+                onChange={this._handleChangeProcessedTags}
               />
               <HelpBlock>Add these tags to files that were successfully processed</HelpBlock>
             </div>
