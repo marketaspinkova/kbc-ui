@@ -7,7 +7,7 @@ describe('parseDataTypeFromString()', () => {
     const expected = {
       column: 'columnName',
       type: '',
-      length: ''
+      length: null
     };
     assert.deepEqual(test, expected);
   });
@@ -15,25 +15,25 @@ describe('parseDataTypeFromString()', () => {
   it('should parse string defined data types', () => {
     assert.deepEqual({
       type: 'VARCHAR',
-      length: '',
+      length: null,
       column: 'name'
     }, parseDataTypeFromString('VARCHAR', 'name').toJS());
 
     assert.deepEqual({
       type: 'NUMBER',
-      length: '',
+      length: null,
       column: 'name'
     }, parseDataTypeFromString('NUMBER', 'name').toJS());
 
     assert.deepEqual({
       type: 'DATE',
-      length: '',
+      length: null,
       column: 'name'
     }, parseDataTypeFromString('DATE', 'name').toJS());
 
     assert.deepEqual({
       type: 'BIGINT UNSIGNED',
-      length: '',
+      length: null,
       column: 'name'
     }, parseDataTypeFromString('BIGINT UNSIGNED', 'name').toJS());
   });

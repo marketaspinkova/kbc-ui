@@ -7,7 +7,7 @@ export function isDataTypeAsString(dataTypeDefinition) {
 export function parseDataTypeFromString(dataTypeDefinition, columnName) {
   const parts = dataTypeDefinition.trim().split('(');
   const type = parts[0];
-  const typeLength = parts.length > 1 ? parts[1].slice(0, parts[1].length - 1) : '';
+  const typeLength = parts.length > 1 ? parts[1].slice(0, parts[1].length - 1) : null;
   return Map({
     column: columnName,
     type: type.trim(),
