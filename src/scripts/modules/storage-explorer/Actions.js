@@ -1,5 +1,13 @@
 import StorageActionCreators from '../components/StorageActionCreators';
 import RoutesStore from '../../stores/RoutesStore';
+import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
+
+const errorNotification = (message) => {
+  ApplicationActionCreators.sendNotification({
+    type: 'error',
+    message: message
+  });
+};
 
 const deleteBucket = (bucketId, forceDelete) => {
   return StorageActionCreators
