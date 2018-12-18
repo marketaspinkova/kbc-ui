@@ -23,7 +23,22 @@ const navigateToBucketDetail = (bucketId) => {
   });
 };
 
+const createTablePrimaryKey = (tableId, params) => {
+  return StorageActionCreators
+    .createTablePrimaryKey(tableId, params)
+    .catch(errorNotification);
+};
+
+const removeTablePrimaryKey = (tableId) => {
+  return StorageActionCreators
+    .removeTablePrimaryKey(tableId)
+    .catch(errorNotification);
+};
+
+
 export {
   deleteBucket,
-  navigateToBucketDetail
+  navigateToBucketDetail,
+  createTablePrimaryKey,
+  removeTablePrimaryKey
 };

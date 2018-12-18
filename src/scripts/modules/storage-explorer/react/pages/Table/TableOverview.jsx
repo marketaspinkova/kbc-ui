@@ -7,7 +7,7 @@ import CreatedWithIcon from '../../../../../react/common/CreatedWithIcon';
 import Tooltip from '../../../../../react/common/Tooltip';
 import Hint from '../../../../../react/common/Hint';
 import FileSize from '../../../../../react/common/FileSize';
-import StorageActionCreators from '../../../../components/StorageActionCreators';
+import { createTablePrimaryKey, removeTablePrimaryKey } from '../../../Actions';
 
 import ConfirmModal from '../../../../../react/common/ConfirmModal';
 import CreatePrimaryKeyModal from '../../modals/CreatePrimaryKeyModal';
@@ -254,13 +254,13 @@ export default React.createClass({
       columns: primaryKeys
     };
 
-    return StorageActionCreators.createTablePrimaryKey(tableId, params);
+    return createTablePrimaryKey(tableId, params);
   },
 
   handleRemovePrimaryKey() {
     const tableId = this.props.table.get('id');
 
-    return StorageActionCreators.removeTablePrimaryKey(tableId);
+    return removeTablePrimaryKey(tableId);
   },
 
   openCreatePrimaryKeyModal() {
