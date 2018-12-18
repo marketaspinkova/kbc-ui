@@ -148,19 +148,15 @@ export default React.createClass({
           </div>
         </Tab.Container>
 
-        {this.state.openActionModal && <div>{this.renderTruncateTableModal()}</div>}
+        {this.renderTruncateTableModal()}
       </div>
     );
   },
 
   renderTruncateTableModal() {
-    if (this.state.actionModalType !== 'truncate') {
-      return null;
-    }
-
     return (
       <ConfirmModal
-        show={true}
+        show={!!(this.state.openActionModal && this.state.actionModalType === 'truncate')}
         title="Truncate table"
         buttonType="danger"
         buttonLabel="Delete"
