@@ -480,11 +480,11 @@ export default {
 
 A simple list of available helpers
 
-- `SyncActionSimpleValue` - displays pending status of an action, error message or retrieved value
-- `ExternalProjectLink` - link to another project
-- `ExternalBucketLink` - link to a bucket in a different project
-- `CollapsibleSection` - dropdown section, can be collapsed by default when a condition is met
-- `createOauthSection` - creates a collapsible OAuth section
+- [`SyncActionSimpleValue`](./src/scripts/modules/configurations/react/components/SyncActionSimpleValue.jsx) - displays pending status of an action, error message or retrieved value
+- [`ExternalProjectLink`](./src/scripts/modules/components/react/components/ExternalProjectLink.jsx) - link to another project
+- [`ExternalBucketLink`](./src/scripts/modules/components/react/components/ExternalBucketLink.jsx) - link to a bucket in a different project
+- [`CollapsibleSection`](./src/scripts/modules/configurations/utils/createCollapsibleSection.jsx) - dropdown section, can be collapsed by default when a condition is met
+- [`createOauthSection`](./src/scripts/modules/configurations/utils/createOauthSection.js) - creates a collapsible OAuth section
 
 ### Adapters
 
