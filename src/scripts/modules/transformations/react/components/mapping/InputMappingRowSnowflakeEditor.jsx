@@ -244,8 +244,9 @@ export default React.createClass({
 
   getDatatypes() {
     return this.getDefaultDatatypes().map((defaultType) => {
-      const existingTypeFilter = this.props.value.get('datatypes', Map()).filter((existingType) => {
-        return existingType.get('column') === defaultType.get('column');
+      const existingTypeFilter = this.props.value.get('datatypes', Map()).filter((existingType, columnName) => {
+        const column = Map.isMap(existingType) ? existingType.get('column') : columnName;
+        return column === defaultType.get('column');
       });
       if (existingTypeFilter.count() > 0) {
         return existingTypeFilter.get(defaultType.get('column'));
