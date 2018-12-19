@@ -214,6 +214,9 @@ export default createReactClass({
         onHide={() => {
           return this.props.updateLocalState(['newTask'], Map());
         }}
+        clear={() => {
+          return this.props.updateLocalState(['newTask', 'searchQuery'], '');
+        }}
         onChangeSearchQuery={query => {
           return this.props.updateLocalState(['newTask', 'searchQuery'], query);
         }}

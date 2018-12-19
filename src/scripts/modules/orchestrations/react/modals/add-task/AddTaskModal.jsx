@@ -26,7 +26,8 @@ export default createReactClass({
     show: PropTypes.bool,
     phaseId: PropTypes.string,
     searchQuery: PropTypes.string,
-    onChangeSearchQuery: PropTypes.func.isRequired
+    onChangeSearchQuery: PropTypes.func.isRequired,
+    clear: PropTypes.func,
   },
 
   mixins: [createStoreMixin(InstalledComponentsStore, OrchestrationStore), immutableMixin],
@@ -70,6 +71,10 @@ export default createReactClass({
     return this.props.onHide();
   },
 
+  _handleClear() {
+    return this.props.clear();
+  },
+
   render() {
     return (
       <Modal onHide={this._handleOnHide} show={this.props.show}>
@@ -109,11 +114,16 @@ export default createReactClass({
 
       case STEP_CONFIGURATION_SELECT:
         return (
-          <div className="orchestration-task-modal-body">
+          <div>
+            <SearchBar
+              query={this.props.searchQuery}
+              onChange={this.props.onChangeSearchQuery}
+            />
             <ConfigurationSelect
               component={this.state.selectedComponent}
               onReset={this._handleComponentReset}
               onConfigurationSelect={this._handleConfigurationSelect}
+              query={this.props.searchQuery}
             />
           </div>
         );
@@ -137,6 +147,7 @@ export default createReactClass({
   },
 
   _handleComponentSelect(component) {
+    this._handleClear();
     return this.setState({
       selectedComponent: component,
       currentStep:
