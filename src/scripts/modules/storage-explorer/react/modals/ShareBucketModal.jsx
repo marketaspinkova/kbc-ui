@@ -5,6 +5,10 @@ import { RadioGroup } from 'react-radio-group';
 import RadioGroupInput from '../../../../react/common/RadioGroupInput';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
+const INITIAL_STATE = {
+  sharing: ''
+};
+
 export default React.createClass({
   propTypes: {
     show: PropTypes.bool.isRequired,
@@ -15,9 +19,7 @@ export default React.createClass({
   },
 
   getInitialState() {
-    return {
-      sharing: ''
-    };
+    return INITIAL_STATE;
   },
 
   render() {
@@ -77,9 +79,7 @@ export default React.createClass({
   },
 
   onHide() {
-    this.setState({
-      sharing: ''
-    });
+    this.setState(INITIAL_STATE);
     this.props.onHide();
   },
 
