@@ -11,6 +11,8 @@ import DataSample from '../../components/DataSample';
 import TableOverview from './TableOverview';
 import TableColumn from './TableColumn';
 
+import SnapshotRestore from './SnapshotRestore';
+
 export default React.createClass({
   mixins: [createStoreMixin(TablesStore, BucketsStore, ApplicationStore)],
 
@@ -25,11 +27,17 @@ export default React.createClass({
       table,
       sapiToken: ApplicationStore.getSapiToken(),
       tables: TablesStore.getAll(),
+      buckets: BucketsStore.getAll(),
       bucket: BucketsStore.getAll().find(item => item.get('id') === bucketId),
       creatingPrimaryKey: TablesStore.getIsCreatingPrimaryKey(table.get('id')),
       deletingPrimaryKey: TablesStore.getIsDeletingPrimaryKey(table.get('id')),
       addingColumn: TablesStore.getAddingColumn(),
-      deletingColumn: TablesStore.getDeletingColumn()
+      deletingColumn: TablesStore.getDeletingColumn(),
+      creatingTable: TablesStore.getIsCreatingTable(),
+      restoringTable: TablesStore.getIsRestoringTable(table.get('id')),
+      creatingSnapshot: TablesStore.getIsCreatingSnapshot(table.get('id')),
+      creatingFromSnapshot: TablesStore.getIsCreatingFromSnapshot(),
+      deletingSnapshot: TablesStore.getIsDeletingSnapshot()
     };
   },
 
@@ -70,12 +78,6 @@ export default React.createClass({
                 <MenuItem eventKey="load" onSelect={this.handleDropdownAction}>
                   Load
                 </MenuItem>
-                <MenuItem eventKey="restore" onSelect={this.handleDropdownAction}>
-                  Time Travel Restore
-                </MenuItem>
-                <MenuItem eventKey="snapshot" onSelect={this.handleDropdownAction}>
-                  Create snapshot
-                </MenuItem>
                 <MenuItem divider />
                 <MenuItem eventKey="truncate" onSelect={this.handleDropdownAction}>
                   Truncate table
@@ -113,7 +115,17 @@ export default React.createClass({
               <Tab.Pane eventKey="data-sample">
                 <DataSample table={this.state.table} />
               </Tab.Pane>
-              <Tab.Pane eventKey="snapshot-and-restore">Snapshot and Restore</Tab.Pane>
+              <Tab.Pane eventKey="snapshot-and-restore">
+                <SnapshotRestore
+                  table={this.state.table}
+                  buckets={this.state.buckets}
+                  sapiToken={this.state.sapiToken}
+                  restoringTable={this.state.restoringTable}
+                  creatingSnapshot={this.state.creatingSnapshot}
+                  creatingFromSnapshot={this.state.creatingFromSnapshot}
+                  deletingSnapshot={this.state.deletingSnapshot}
+                />
+              </Tab.Pane>
               <Tab.Pane eventKey="graph">Graph</Tab.Pane>
             </Tab.Content>
           </div>
@@ -134,8 +146,6 @@ export default React.createClass({
     switch (action) {
       case 'export':
       case 'load':
-      case 'restore':
-      case 'snapshot':
       case 'truncate':
       case 'delete':
         return null;

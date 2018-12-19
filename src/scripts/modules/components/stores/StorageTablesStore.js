@@ -58,6 +58,22 @@ const StorageTablesStore = StoreUtils.createStore({
     return _store.getIn(['pendingTables', 'loading'], false);
   },
 
+  getIsCreatingSnapshot(tableId) {
+    return _store.getIn(['pendingTables', 'creatingSnapshot', tableId], false);
+  },
+
+  getIsRestoringTable(tableId) {
+    return _store.getIn(['pendingTables', 'restoring', tableId], false);
+  },
+
+  getIsCreatingFromSnapshot() {
+    return _store.getIn(['pendingTables', 'creatingFromSnapshot'], Map());
+  },
+
+  getIsDeletingSnapshot() {
+    return _store.getIn(['pendingTables', 'deletingSnapshot'], Map());
+  },
+
   getTableMetadata(tableId) {
     return _store.get('tables').getIn(tableId, 'metadata');
   },
@@ -144,6 +160,42 @@ Dispatcher.register(function(payload) {
     case constants.ActionTypes.STORAGE_TABLE_DELETE_PRIMARY_KEY_SUCCESS:
     case constants.ActionTypes.STORAGE_TABLE_DELETE_PRIMARY_KEY_ERROR:
       _store = _store.deleteIn(['pendingTables', 'deletingPrimaryKey', action.tableId]);
+      return StorageTablesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_TABLE_CREATE_SNOPSHOT:
+      _store = _store.setIn(['pendingTables', 'creatingSnapshot', action.tableId], true);
+      return StorageTablesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_TABLE_CREATE_SNOPSHOT_SUCCESS:
+    case constants.ActionTypes.STORAGE_TABLE_CREATE_SNOPSHOT_ERROR:
+      _store = _store.deleteIn(['pendingTables', 'creatingSnapshot', action.tableId]);
+      return StorageTablesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_RESTORE_TIME_TRAVEL:
+      _store = _store.setIn(['pendingTables', 'restoring', action.tableId], true);
+      return StorageTablesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_RESTORE_TIME_TRAVEL_SUCCESS:
+    case constants.ActionTypes.STORAGE_RESTORE_TIME_TRAVEL_ERROR:
+      _store = _store.deleteIn(['pendingTables', 'restoring', action.tableId]);
+      return StorageTablesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_TABLE_CREATE_FROM_SNOPSHOT:
+      _store = _store.setIn(['pendingTables', 'creatingFromSnapshot', action.snapshotId], true);
+      return StorageTablesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_TABLE_CREATE_FROM_SNOPSHOT_SUCCESS:
+    case constants.ActionTypes.STORAGE_TABLE_CREATE_FROM_SNOPSHOT_ERROR:
+      _store = _store.deleteIn(['pendingTables', 'creatingFromSnapshot', action.snapshotId]);
+      return StorageTablesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_TABLE_REMOVE_SNOPSHOT:
+      _store = _store.setIn(['pendingTables', 'deletingSnapshot', action.snapshotId], true);
+      return StorageTablesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_TABLE_REMOVE_SNOPSHOT_SUCCESS:
+    case constants.ActionTypes.STORAGE_TABLE_REMOVE_SNOPSHOT_ERROR:
+      _store = _store.deleteIn(['pendingTables', 'deletingSnapshot', action.snapshotId]);
       return StorageTablesStore.emitChange();
 
     case constants.ActionTypes.STORAGE_TABLES_LOAD:

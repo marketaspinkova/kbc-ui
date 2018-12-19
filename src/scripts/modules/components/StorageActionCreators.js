@@ -249,6 +249,96 @@ module.exports = {
       });
   },
 
+  restoreUsingTimeTravel: function(bucketId, params) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.STORAGE_RESTORE_TIME_TRAVEL,
+      bucketId: bucketId,
+      tableId: params.sourceTableId,
+      params: params
+    });
+    return storageApi.createTable(bucketId, params).then(response => {
+      return jobPoller.poll(ApplicationStore.getSapiTokenString(), response.url).then(response2 => {
+        if (response2.status === 'error') {
+          dispatcher.handleViewAction({
+            type: constants.ActionTypes.STORAGE_RESTORE_TIME_TRAVEL_ERROR,
+            bucketId: bucketId,
+            tableId: params.sourceTableId,
+            params: params,
+            errors: response2.error
+          });
+          throw response2.error.message;
+        }
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_RESTORE_TIME_TRAVEL_SUCCESS,
+          bucketId: bucketId,
+          tableId: params.sourceTableId,
+          params: params
+        });
+        return this.loadTablesForce();
+      });
+    })
+      .catch(function(error) {
+        var message;
+        message = error;
+        if (error.message) {
+          message = error.message;
+        }
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_RESTORE_TIME_TRAVEL_ERROR,
+          bucketId: bucketId,
+          tableId: params.sourceTableId,
+          params: params,
+          errors: error
+        });
+        throw message;
+      });
+  },
+
+  createTableFromSnapshot: function(bucketId, params) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.STORAGE_TABLE_CREATE_FROM_SNOPSHOT,
+      bucketId: bucketId,
+      snapshotId: params.snapshotId,
+      params: params
+    });
+    return storageApi.createTable(bucketId, params).then(response => {
+      return jobPoller.poll(ApplicationStore.getSapiTokenString(), response.url).then(response2 => {
+        if (response2.status === 'error') {
+          dispatcher.handleViewAction({
+            type: constants.ActionTypes.STORAGE_TABLE_CREATE_FROM_SNOPSHOT_ERROR,
+            bucketId: bucketId,
+            snapshotId: params.snapshotId,
+            params: params,
+            errors: response2.error
+          });
+          throw response2.error.message;
+        }
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_TABLE_CREATE_FROM_SNOPSHOT_SUCCESS,
+          bucketId: bucketId,
+          snapshotId: params.snapshotId,
+          params: params
+        });
+        return this.loadTablesForce();
+      });
+    })
+      .catch(function(error) {
+        var message;
+        message = error;
+        if (error.message) {
+          message = error.message;
+        }
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_TABLE_CREATE_FROM_SNOPSHOT_ERROR,
+          bucketId: bucketId,
+          snapshotId: params.snapshotId,
+          params: params,
+          errors: error
+        });
+        throw message;
+      });
+  },
+
   createAliasTable: function(bucketId, params) {
     dispatcher.handleViewAction({
       type: constants.ActionTypes.STORAGE_ALIAS_TABLE_CREATE,
@@ -393,6 +483,69 @@ module.exports = {
         });
         throw message;
       });
+  },
+
+  createSnapshot: function(tableId, params) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.STORAGE_TABLE_CREATE_SNOPSHOT,
+      tableId: tableId,
+      params: params
+    });
+    return storageApi.createSnapshot(tableId, params).then(function(response) {
+      return jobPoller.poll(ApplicationStore.getSapiTokenString(), response.url).then(function(response2) {
+        if (response2.status === 'error') {
+          ApplicationActionCreators.sendNotification({
+            message: response2.error.message,
+            type: 'error',
+            id: response2.error.exceptionId
+          });
+          throw response2.error.message;
+        }
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_TABLE_CREATE_SNOPSHOT_SUCCESS,
+          tableId: tableId,
+          params: params,
+          response: response2
+        });
+      });
+    }).catch(function(error) {
+      dispatcher.handleViewAction({
+        type: constants.ActionTypes.STORAGE_TABLE_CREATE_SNOPSHOT_ERROR,
+        tableId: tableId,
+        params: params
+      });
+      throw error;
+    });
+  },
+
+  deleteSnapshot: function(snapshotId) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.STORAGE_TABLE_REMOVE_SNOPSHOT,
+      snapshotId: snapshotId
+    });
+    return storageApi.deleteSnapshot(snapshotId).then(function(response) {
+      return jobPoller.poll(ApplicationStore.getSapiTokenString(), response.url).then(function(response2) {
+        if (response2.status === 'error') {
+          ApplicationActionCreators.sendNotification({
+            message: response2.error.message,
+            type: 'error',
+            id: response2.error.exceptionId
+          });
+          throw response2.error.message;
+        }
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_TABLE_REMOVE_SNOPSHOT_SUCCESS,
+          snapshotId: snapshotId,
+          response: response2
+        });
+      });
+    }).catch(function(error) {
+      dispatcher.handleViewAction({
+        type: constants.ActionTypes.STORAGE_TABLE_REMOVE_SNOPSHOT_ERROR,
+        snapshotId: snapshotId
+      });
+      throw error;
+    });
   },
 
   loadDataIntoWorkspace: function(workspaceId, configuration) {

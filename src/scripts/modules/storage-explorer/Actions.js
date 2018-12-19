@@ -64,6 +64,18 @@ const dataPreview = (tableId, params) => {
     });
 };
 
+const createTableFromSnapshot = (bucketId, params) => {
+  return StorageActionCreators
+    .createTableFromSnapshot(bucketId, params)
+    .catch(errorNotification);
+};
+
+const restoreUsingTimeTravel = (bucketId, params) => {
+  return StorageActionCreators
+    .restoreUsingTimeTravel(bucketId, params)
+    .catch(errorNotification);
+};
+
 export {
   deleteBucket,
   navigateToBucketDetail,
@@ -71,5 +83,7 @@ export {
   removeTablePrimaryKey,
   deleteTableColumn,
   addTableColumn,
-  dataPreview
+  dataPreview,
+  createTableFromSnapshot,
+  restoreUsingTimeTravel
 };

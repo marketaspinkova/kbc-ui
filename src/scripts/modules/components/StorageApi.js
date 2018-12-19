@@ -120,6 +120,12 @@ var storageApi = {
     });
   },
 
+  loadTableSnapshots: function(tableId, params) {
+    return createRequest('GET', 'tables/' + tableId + '/snapshots').query(params).promise().then(function(response) {
+      return response.body;
+    });
+  },
+
   prepareFileUpload: function(params) {
     return createRequest('POST', 'files/prepare').type('form').send(params).promise().then(function(response) {
       return response.body;
@@ -164,6 +170,18 @@ var storageApi = {
 
   removeTablePrimaryKey: function(tableId) {
     return createRequest('DELETE', 'tables/' + tableId + '/primary-key').type('form').promise().then(function(response) {
+      return response.body;
+    });
+  },
+
+  createSnapshot: function(tableId, params) {
+    return createRequest('POST', 'tables/' + tableId + '/snapshots').type('form').send(params).promise().then(function(response) {
+      return response.body;
+    });
+  },
+
+  deleteSnapshot: function(snapshotId) {
+    return createRequest('DELETE', 'snapshots/' + snapshotId).type('form').promise().then(function(response) {
       return response.body;
     });
   },

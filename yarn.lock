@@ -6674,13 +6674,15 @@ react-code-mirror@~3.0.4:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/react-code-mirror/-/react-code-mirror-3.0.6.tgz#65e95abb479165e1678e3ee9837fb4d0438868f1"
 
-react-datepicker@^0.43.0:
-  version "0.43.0"
-  resolved "https://registry.yarnpkg.com/react-datepicker/-/react-datepicker-0.43.0.tgz#a648ab9df13eb2daa2fbcc150c8cdf983f09a31c"
+react-datepicker@^0.48.0:
+  version "0.48.0"
+  resolved "https://registry.yarnpkg.com/react-datepicker/-/react-datepicker-0.48.0.tgz#bf8ea4283e3f8e0737be3ceb808a94a8d4231d49"
+  integrity sha1-v46kKD4/jgc3vjzrgIqUqNQjHUk=
   dependencies:
     classnames "^2.2.5"
     moment "^2.17.1"
-    react-onclickoutside "^5.9.0"
+    prop-types "^15.5.8"
+    react-onclickoutside "^6.1.1"
     tether "^1.4.0"
 
 react-dnd-html5-backend@~2.2.0:
@@ -6741,9 +6743,10 @@ react-is@^16.5.2:
   version "16.6.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.6.1.tgz#f77b1c3d901be300abe8d58645b7a59e794e5982"
 
-react-onclickoutside@^5.9.0:
-  version "5.10.0"
-  resolved "https://registry.yarnpkg.com/react-onclickoutside/-/react-onclickoutside-5.10.0.tgz#6831f1bd8683ce75f3f4f9821aa012919e907684"
+react-onclickoutside@^6.1.1:
+  version "6.7.1"
+  resolved "https://registry.yarnpkg.com/react-onclickoutside/-/react-onclickoutside-6.7.1.tgz#6a5b5b8b4eae6b776259712c89c8a2b36b17be93"
+  integrity sha512-p84kBqGaMoa7VYT0vZ/aOYRfJB+gw34yjpda1Z5KeLflg70HipZOT+MXQenEhdkPAABuE2Astq4zEPdMqUQxcg==
 
 react-overlays@^0.7.4:
   version "0.7.4"
@@ -7837,8 +7840,9 @@ test-exclude@^4.2.1:
     require-main-filename "^1.0.1"
 
 tether@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/tether/-/tether-1.4.0.tgz#0f9fa171f75bf58485d8149e94799d7ae74d1c1a"
+  version "1.4.5"
+  resolved "https://registry.yarnpkg.com/tether/-/tether-1.4.5.tgz#8efd7b35572767ba502259ba9b1cc167fcf6f2c1"
+  integrity sha512-fysT1Gug2wbRi7a6waeu39yVDwiNtvwj5m9eRD+qZDSHKNghLo6KqP/U3yM2ap6TNUL2skjXGJaJJTJqoC31vw==
 
 text-table@^0.2.0:
   version "0.2.0"
