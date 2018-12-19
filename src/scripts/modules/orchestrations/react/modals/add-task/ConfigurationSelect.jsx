@@ -11,8 +11,8 @@ export default createReactClass({
     component: PropTypes.object.isRequired,
     onReset: PropTypes.func.isRequired,
     onConfigurationSelect: PropTypes.func.isRequired,
-    query: PropTypes.string,
-    searchBar: PropTypes.object
+    query: PropTypes.string.isRequired,
+    searchBar: PropTypes.object.isRequired
   },
 
   componentDidMount() {
@@ -63,6 +63,7 @@ export default createReactClass({
   },
 
   _handleBack() {
+    this.props.searchBar.focus();
     return this.props.onReset();
   },
 

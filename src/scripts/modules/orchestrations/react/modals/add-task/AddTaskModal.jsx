@@ -27,7 +27,7 @@ export default createReactClass({
     phaseId: PropTypes.string,
     searchQuery: PropTypes.string,
     onChangeSearchQuery: PropTypes.func.isRequired,
-    clear: PropTypes.func,
+    clearSearch: PropTypes.func.isRequired
   },
 
   mixins: [createStoreMixin(InstalledComponentsStore, OrchestrationStore), immutableMixin],
@@ -71,8 +71,8 @@ export default createReactClass({
     return this.props.onHide();
   },
 
-  _handleClear() {
-    return this.props.clear();
+  _handleClearSearch() {
+    return this.props.clearSearch();
   },
 
   render() {
@@ -160,7 +160,7 @@ export default createReactClass({
   },
 
   _handleComponentSelect(component) {
-    this._handleClear();
+    this._handleClearSearch();
     return this.setState({
       selectedComponent: component,
       currentStep:
@@ -169,6 +169,7 @@ export default createReactClass({
   },
 
   _handleComponentReset() {
+    this._handleClearSearch();
     return this.setState({
       selectedComponent: null,
       currentStep: STEP_COMPONENT_SELECT
