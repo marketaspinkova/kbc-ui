@@ -6,6 +6,7 @@ import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../../../stores/RoutesStore';
 import BucketsStore from '../../../../components/stores/StorageBucketsStore';
 import TablesStore from '../../../../components/stores/StorageTablesStore';
+import DataSample from '../../components/DataSample';
 
 import TableOverview from './TableOverview';
 import TableColumn from './TableColumn';
@@ -109,7 +110,9 @@ export default React.createClass({
                 />
               </Tab.Pane>
               <Tab.Pane eventKey="events">Events</Tab.Pane>
-              <Tab.Pane eventKey="data-sample">Data sample</Tab.Pane>
+              <Tab.Pane eventKey="data-sample">
+                <DataSample table={this.state.table} />
+              </Tab.Pane>
               <Tab.Pane eventKey="snapshot-and-restore">Snapshot and Restore</Tab.Pane>
               <Tab.Pane eventKey="graph">Graph</Tab.Pane>
             </Tab.Content>
