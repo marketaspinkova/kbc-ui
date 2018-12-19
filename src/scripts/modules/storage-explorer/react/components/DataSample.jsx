@@ -100,10 +100,10 @@ export default React.createClass({
           </tr>
         </thead>
         <tbody>
-          {this.state.data.shift().map((row, index) => (
-            <tr key={index}>
-              {row.map((item, itemIndex) => (
-                <td key={`${index}-${itemIndex}`}>{item}</td>
+          {this.state.data.shift().map((row, rowIndex) => (
+            <tr key={rowIndex}>
+              {row.map((column, columnIndex) => (
+                <td key={`${rowIndex}-${columnIndex}`}>{column}</td>
               ))}
             </tr>
           ))}
