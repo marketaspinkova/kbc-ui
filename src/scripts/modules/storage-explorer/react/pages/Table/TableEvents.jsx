@@ -76,16 +76,10 @@ export default React.createClass({
       this.setState({
         searchQuery: this._events.getQuery(),
         events: this._events.getEvents(),
-        isLoading: this._events.getIsLoading(),
         isLoadingMore: this._events.getIsLoadingOlder(),
-        hasMore: this._events.getHasMore(),
-        errorMessage: this._events.getErrorMessage()
+        hasMore: this._events.getHasMore()
       });
     }
-  },
-
-  handleRefresh() {
-    this._events.load();
   },
 
   handleLoadMore() {
