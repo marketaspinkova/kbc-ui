@@ -132,7 +132,7 @@ export default React.createClass({
       'whereValues[]': [this.state.filterValue]
     };
 
-    this.fetchDataPreview(params).than(() => {
+    this.fetchDataPreview(params).then(() => {
       this.setState({ filtered: true });
     });
   },
@@ -162,7 +162,7 @@ export default React.createClass({
   fetchDataPreview(params = {}) {
     this.setState({ loading: true });
 
-    dataPreview(this.props.table.get('id'), params)
+    return dataPreview(this.props.table.get('id'), params)
       .then(csv => {
         this.setState({ data: fromJS(csv) });
       })
