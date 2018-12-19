@@ -116,7 +116,10 @@ export default React.createClass({
                 props.onChange({privateKey: e.target.value});
               }}
             />
-            <div className="help-block">Only to use with SFTP connection type.</div>
+            <div className="help-block">
+              Only to use with SFTP connection type. <br />
+              You can paste private key with or without <code> --- BEGIN/END PRIVATE KEY ---</code> block.
+            </div>
           </Col>
         </FormGroup>
       </Form>
