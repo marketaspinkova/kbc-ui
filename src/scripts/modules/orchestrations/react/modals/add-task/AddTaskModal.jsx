@@ -118,12 +118,16 @@ export default createReactClass({
             <SearchBar
               query={this.props.searchQuery}
               onChange={this.props.onChangeSearchQuery}
+              inputRef={(input) => {
+                this.searchInput = input;
+              }}
             />
             <ConfigurationSelect
               component={this.state.selectedComponent}
               onReset={this._handleComponentReset}
               onConfigurationSelect={this._handleConfigurationSelect}
               query={this.props.searchQuery}
+              searchBar={this.searchInput}
             />
           </div>
         );

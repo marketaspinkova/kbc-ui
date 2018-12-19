@@ -11,7 +11,12 @@ export default createReactClass({
     component: PropTypes.object.isRequired,
     onReset: PropTypes.func.isRequired,
     onConfigurationSelect: PropTypes.func.isRequired,
-    query: PropTypes.string
+    query: PropTypes.string,
+    searchBar: PropTypes.object
+  },
+
+  componentDidMount() {
+    this.props.searchBar.focus();
   },
 
   render() {
