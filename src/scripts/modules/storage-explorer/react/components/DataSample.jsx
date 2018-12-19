@@ -3,7 +3,7 @@ import { Map, fromJS } from 'immutable';
 import { Alert, Form, FormGroup, FormControl, Col, ButtonGroup, Button, Table } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 import Select from 'react-select';
-import StorageApi from '../../../components/StorageApi';
+import { dataPreview } from '../../Actions';
 
 export default React.createClass({
   propTypes: {
@@ -75,7 +75,7 @@ export default React.createClass({
     if (this.state.loading) {
       return (
         <p>
-          Loading data.. <Loader />
+          <Loader /> Loading data..
         </p>
       );
     }
@@ -132,7 +132,7 @@ export default React.createClass({
       'whereValues[]': [this.state.filterValue]
     };
 
-    this.fetchDataPreview(params).finally(() => {
+    this.fetchDataPreview(params).than(() => {
       this.setState({ filtered: true });
     });
   },
@@ -161,31 +161,16 @@ export default React.createClass({
 
   fetchDataPreview(params = {}) {
     this.setState({ loading: true });
-    return StorageApi.tableDataPreview(this.props.table.get('id'), { limit: 20, ...params })
+
+    return dataPreview(this.props.table.get('id'), params)
       .then(csv => {
-        this.setState({
-          loading: false,
-          data: fromJS(csv)
-        });
+        this.setState({ data: fromJS(csv) });
       })
-      .catch(error => {
-        let errorMessage = null;
-
-        if (error.response && error.response.body) {
-          if (error.response.body.code === 'storage.maxNumberOfColumnsExceed') {
-            errorMessage = 'Data sample cannot be displayed. Too many columns.';
-          } else {
-            errorMessage = error.response.body.message;
-          }
-        } else {
-          throw new Error(JSON.stringify(error));
-        }
-
-        this.setState({
-          loading: false,
-          dataPreview: Map(),
-          error: errorMessage
-        });
+      .catch(errorMessage => {
+        this.setState({ dataPreview: Map(), error: errorMessage });
+      })
+      .finally(() => {
+        this.setState({ loading: false });
       });
   }
 });

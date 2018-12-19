@@ -1,4 +1,5 @@
 import StorageActionCreators from '../components/StorageActionCreators';
+import StorageApi from '../components/StorageApi';
 import RoutesStore from '../../stores/RoutesStore';
 import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
 
@@ -47,6 +48,21 @@ const addTableColumn = (tableId, params) => {
     .catch(errorNotification);
 };
 
+const dataPreview = (tableId, params) => {
+  return StorageApi
+    .tableDataPreview(tableId, { limit: 20, ...params })
+    .catch(error => {
+      if (!error.response && !error.response.body) {
+        throw new Error(JSON.stringify(error));
+      }
+
+      if (error.response.body.code === 'storage.maxNumberOfColumnsExceed') {
+        return 'Data sample cannot be displayed. Too many columns.';
+      }
+
+      return error.response.body.message;
+    });
+};
 
 export {
   deleteBucket,
@@ -54,5 +70,6 @@ export {
   createTablePrimaryKey,
   removeTablePrimaryKey,
   deleteTableColumn,
-  addTableColumn
+  addTableColumn,
+  dataPreview
 };
