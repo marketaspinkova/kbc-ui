@@ -4,11 +4,11 @@ import { Loader } from '@keboola/indigo-ui';
 
 import ApplicationStore from '../../../../../stores/ApplicationStore';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
-import ConfirmModal from '../../../../../react/common/ConfirmModal';
 import RoutesStore from '../../../../../stores/RoutesStore';
 import BucketsStore from '../../../../components/stores/StorageBucketsStore';
 import TablesStore from '../../../../components/stores/StorageTablesStore';
 import DataSample from '../../components/DataSample';
+import TruncateTableModal from '../../modals/TruncateTableModal';
 import { truncateTable } from '../../../Actions';
 
 import TableOverview from './TableOverview';
@@ -155,18 +155,11 @@ export default React.createClass({
 
   renderTruncateTableModal() {
     return (
-      <ConfirmModal
+      <TruncateTableModal
         show={!!(this.state.openActionModal && this.state.actionModalType === 'truncate')}
-        title="Truncate table"
-        buttonType="danger"
-        buttonLabel="Delete"
-        text={
-          <p>
-            Do you really want to truncate table <strong>{this.state.table.get('id')}</strong>?
-          </p>
-        }
         onConfirm={this.handleTruncateTable}
         onHide={this.closeActionModal}
+        tableId={this.state.table.get('id')}
       />
     );
   },
