@@ -52,7 +52,7 @@ const dataPreview = (tableId, params) => {
   return StorageApi
     .tableDataPreview(tableId, { limit: 20, ...params })
     .catch(error => {
-      if (!error.response && !error.response.body) {
+      if (!error.response || !error.response.body) {
         throw new Error(JSON.stringify(error));
       }
 
