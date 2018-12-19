@@ -76,6 +76,17 @@ const restoreUsingTimeTravel = (bucketId, params) => {
     .catch(errorNotification);
 };
 
+const truncateTable = (tableId) => {
+  return StorageActionCreators
+    .truncateTable(tableId)
+    .then(() => {
+      ApplicationActionCreators.sendNotification({
+        message: `Table ${tableId} has been truncated.`
+      });
+    })
+    .catch(errorNotification);
+};
+
 export {
   deleteBucket,
   navigateToBucketDetail,
@@ -85,5 +96,6 @@ export {
   addTableColumn,
   dataPreview,
   createTableFromSnapshot,
-  restoreUsingTimeTravel
+  restoreUsingTimeTravel,
+  truncateTable
 };

@@ -150,6 +150,12 @@ var storageApi = {
     });
   },
 
+  truncateTable: function(tableId) {
+    return createRequest('DELETE', 'tables/' + tableId + '/rows').type('form').promise().then(function(response) {
+      return response.body;
+    });
+  },
+
   createAliasTable: function(bucketId, params) {
     return createRequest('POST', 'buckets/' + bucketId + '/table-aliases').type('form').send(params).promise().then(function(response) {
       return response.body;
