@@ -28,7 +28,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        {this.renderSearchForm()}
+        {(this.state.data.count() > 1 || this.state.filtered) && this.renderSearchForm()}
         {this.renderTable()}
       </div>
     );
