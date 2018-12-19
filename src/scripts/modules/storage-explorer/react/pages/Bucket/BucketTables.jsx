@@ -77,7 +77,7 @@ export default React.createClass({
         )}
 
         {this.renderCreateTableModal()}
-        {this.renderCreateAliasTableModal()}
+        {this.canCreateAliasTable() && this.renderCreateAliasTableModal()}
       </div>
     );
   },
@@ -123,10 +123,6 @@ export default React.createClass({
   },
 
   renderCreateAliasTableModal() {
-    if (!this.canCreateAliasTable()) {
-      return null;
-    }
-
     return (
       <CreateAliasTableModal
         bucket={this.props.bucket}
