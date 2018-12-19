@@ -101,7 +101,12 @@ export default createReactClass({
       case STEP_COMPONENT_SELECT:
         return (
           <div>
-            <SearchBar query={this.props.searchQuery} onChange={this.props.onChangeSearchQuery} />
+            <SearchBar
+              query={this.props.searchQuery}
+              onChange={this.props.onChangeSearchQuery}
+              inputRef={(input) => {
+                this.searchInput = input;
+              }}/>
             <div className="orchestration-task-modal-body">
               <ComponentSelect
                 orchestrations={this._getFilteredOrchestrations()}
