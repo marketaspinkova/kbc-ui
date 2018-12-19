@@ -49,6 +49,7 @@ export default React.createClass({
                     value={this.state.name}
                     onChange={this.handleName}
                     placeholder="Column name"
+                    autoFocus
                   />
                   <HelpBlock>
                     <p>Only alphanumeric characters, dash and underscore are allowed.</p>
