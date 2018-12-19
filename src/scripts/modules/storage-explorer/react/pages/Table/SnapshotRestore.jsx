@@ -12,6 +12,7 @@ import StorageActionCreators from '../../../../components/StorageActionCreators'
 import CreateSnapshotModal from '../../modals/CreateSnapshotModal';
 import CreateTableFromSnapshotModal from '../../modals/CreateTableFromSnapshotModal';
 import TimeTravelModal from '../../modals/TimeTravelModal';
+import { createTableFromSnapshot, restoreUsingTimeTravel } from '../../../Actions';
 
 export default React.createClass({
   propTypes: {
@@ -291,7 +292,7 @@ export default React.createClass({
       name: tableName
     };
 
-    return StorageActionCreators.restoreUsingTimeTravel(bucketId, params);
+    return restoreUsingTimeTravel(bucketId, params);
   },
 
   handleCreateSnapshot(description) {
@@ -309,7 +310,7 @@ export default React.createClass({
       name: tableName
     };
 
-    return StorageActionCreators.createTableFromSnapshot(bucketId, params);
+    return createTableFromSnapshot(bucketId, params);
   },
 
   handleRemoveSnapshot() {
