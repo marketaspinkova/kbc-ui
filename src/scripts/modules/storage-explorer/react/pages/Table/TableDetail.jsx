@@ -1,6 +1,5 @@
 import React from 'react';
 import { Tab, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
-import { Loader } from '@keboola/indigo-ui';
 
 import ApplicationStore from '../../../../../stores/ApplicationStore';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
@@ -90,13 +89,7 @@ export default React.createClass({
                     onSelect={this.handleDropdownAction}
                     disabled={this.state.truncatingTable}
                   >
-                    {this.state.truncatingTable ? (
-                      <span>
-                        <Loader /> Truncating table...
-                      </span>
-                    ) : (
-                      'Truncate table'
-                    )}
+                    Truncate table
                   </MenuItem>
                 )}
                 <MenuItem eventKey="delete" onSelect={this.handleDropdownAction}>
