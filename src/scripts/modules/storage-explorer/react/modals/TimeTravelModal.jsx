@@ -16,6 +16,10 @@ export default React.createClass({
   },
 
   getInitialState() {
+    return this.defaultInitialState();
+  },
+
+  defaultInitialState() {
     return {
       timestamp: moment(this.minRestoreDate()).add(1, 'minute'),
       tableName: this.props.table.get('name') + '_' + moment().format('YYYYMMDDHHmmss'),
@@ -32,7 +36,7 @@ export default React.createClass({
       .toArray();
 
     return (
-      <Modal show={this.props.show} onHide={this.props.onHide}>
+      <Modal show={this.props.show} onHide={this.onHide}>
         <Form onSubmit={this.handleSubmit} horizontal>
           <Modal.Header closeButton>
             <Modal.Title>Restore table using time travel</Modal.Title>
@@ -86,7 +90,7 @@ export default React.createClass({
               isSaving={false}
               isDisabled={this.isDisabled()}
               saveLabel="Create"
-              onCancel={this.props.onHide}
+              onCancel={this.onHide}
               onSave={this.handleSubmit}
               saveButtonType="submit"
             />
@@ -117,6 +121,11 @@ export default React.createClass({
   handleSubmit(event) {
     event.preventDefault();
     this.props.onConfirm(this.state.destinationBucket, this.state.tableName, this.state.timestamp);
+    this.onHide();
+  },
+
+  onHide() {
+    this.setState(this.defaultInitialState());
     this.props.onHide();
   },
 

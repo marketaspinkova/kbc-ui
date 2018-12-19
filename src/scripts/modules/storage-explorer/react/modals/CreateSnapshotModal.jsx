@@ -2,6 +2,10 @@ import React, { PropTypes } from 'react';
 import { Modal, Col, Alert, Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
+const INITIAL_STATE = {
+  description: ''
+};
+
 export default React.createClass({
   propTypes: {
     show: PropTypes.bool.isRequired,
@@ -10,14 +14,12 @@ export default React.createClass({
   },
 
   getInitialState() {
-    return {
-      description: ''
-    };
+    return INITIAL_STATE;
   },
 
   render() {
     return (
-      <Modal show={this.props.show} onHide={this.props.onHide}>
+      <Modal show={this.props.show} onHide={this.onHide}>
         <Form onSubmit={this.handleSubmit} horizontal>
           <Modal.Header closeButton>
             <Modal.Title>Create snapshot</Modal.Title>
@@ -42,7 +44,7 @@ export default React.createClass({
               isSaving={false}
               isDisabled={false}
               saveLabel="Create"
-              onCancel={this.props.onHide}
+              onCancel={this.onHide}
               onSave={this.handleSubmit}
               saveButtonType="submit"
             />
@@ -61,6 +63,11 @@ export default React.createClass({
   handleSubmit(event) {
     event.preventDefault();
     this.props.onConfirm(this.state.description);
+    this.onHide();
+  },
+
+  onHide() {
+    this.setState(INITIAL_STATE);
     this.props.onHide();
   }
 });
