@@ -50,7 +50,7 @@ export default React.createClass({
             </FormGroup>
             <FormGroup>
               <Col sm={4} componentClass={ControlLabel}>
-                Destination Bucket
+                Table Name
               </Col>
               <Col sm={8}>
                 <FormControl type="text" value={this.state.name} onChange={this.handleName} />
