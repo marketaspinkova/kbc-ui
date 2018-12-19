@@ -162,7 +162,7 @@ export default React.createClass({
   fetchDataPreview(params = {}) {
     this.setState({ loading: true });
 
-    return dataPreview(this.props.table.get('id'), params)
+    dataPreview(this.props.table.get('id'), params)
       .then(csv => {
         this.setState({ data: fromJS(csv) });
       })
