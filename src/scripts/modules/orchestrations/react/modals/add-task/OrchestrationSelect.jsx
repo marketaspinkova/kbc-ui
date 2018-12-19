@@ -86,7 +86,7 @@ export default createReactClass({
     }
 
     const filteredOrchestrations = orchestrations.filter(
-      orchestration => fuzzy.match(filter, orchestration.get('name', '') || fuzzy.match(filter, orchestration.get('id', '')))
+      orchestration => fuzzy.match(filter, orchestration.get('name', ''))
     );
     return filteredOrchestrations;
   }
