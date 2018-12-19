@@ -429,5 +429,85 @@ module.exports = {
       });
       throw error;
     });
+  },
+
+  addTableColumn: function(tableId, params) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.STORAGE_ADD_TABLE_COLUMN,
+      tableId: tableId,
+      params: params
+    });
+    return storageApi.addTableColumn(tableId, params).then(response => {
+      return jobPoller.poll(ApplicationStore.getSapiTokenString(), response.url).then(response2 => {
+        if (response2.status === 'error') {
+          dispatcher.handleViewAction({
+            type: constants.ActionTypes.STORAGE_ADD_TABLE_COLUMN_ERROR,
+            tableId: tableId
+          });
+          throw response2.error.message;
+        }
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_ADD_TABLE_COLUMN_SUCCESS,
+          tableId: tableId,
+          params: params,
+          response: response2
+        });
+        return this.loadTablesForce();
+      });
+    }).catch(function(error) {
+      var message;
+      message = error;
+      if (error.message) {
+        message = error.message;
+      }
+      dispatcher.handleViewAction({
+        type: constants.ActionTypes.STORAGE_ADD_TABLE_COLUMN_ERROR,
+        tableId: tableId,
+        params: params,
+        errors: error
+      });
+      throw message;
+    });
+  },
+
+  deleteTableColumn: function(tableId, columnName, params) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.STORAGE_DELETE_TABLE_COLUMN,
+      tableId: tableId,
+      columnName: columnName,
+      params: params
+    });
+    return storageApi.deleteTableColumn(tableId, columnName, params).then(response => {
+      return jobPoller.poll(ApplicationStore.getSapiTokenString(), response.url).then(response2 => {
+        if (response2.status === 'error') {
+          dispatcher.handleViewAction({
+            type: constants.ActionTypes.STORAGE_DELETE_TABLE_COLUMN_ERROR,
+            tableId: tableId,
+            columnName: columnName
+          });
+          throw response2.error.message;
+        }
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_DELETE_TABLE_COLUMN_SUCCESS,
+          tableId: tableId,
+          columnName: columnName,
+          response: response2
+        });
+        return this.loadTablesForce();
+      });
+    }).catch(function(error) {
+      var message;
+      message = error;
+      if (error.message) {
+        message = error.message;
+      }
+      dispatcher.handleViewAction({
+        type: constants.ActionTypes.STORAGE_DELETE_TABLE_COLUMN_ERROR,
+        tableId: tableId,
+        columnName: columnName,
+        errors: error
+      });
+      throw message;
+    });
   }
 };

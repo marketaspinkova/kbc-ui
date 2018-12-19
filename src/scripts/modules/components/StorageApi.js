@@ -175,6 +175,20 @@ var storageApi = {
       });
   },
 
+  addTableColumn: function(tableId, params) {
+    return createRequest('POST', 'tables/' + tableId + '/columns').type('form').send(params).promise()
+      .then(function(response) {
+        return response.body;
+      });
+  },
+
+  deleteTableColumn: function(tableId, column, params) {
+    return createRequest('DELETE', 'tables/' + tableId + '/columns/' + column).type('form').send(params).promise()
+      .then(function(response) {
+        return response.body;
+      });
+  },
+
   saveBucketMetadata: function(bucketId, data, provider) {
     var payload = this.prepareMetadataPayload(data, provider);
     return createRequest('POST', 'buckets/' + bucketId + '/metadata').type('form').send(payload).promise()
