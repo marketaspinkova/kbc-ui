@@ -8,8 +8,8 @@ import ConfirmModal from '../../../../../react/common/ConfirmModal';
 import RoutesStore from '../../../../../stores/RoutesStore';
 import BucketsStore from '../../../../components/stores/StorageBucketsStore';
 import TablesStore from '../../../../components/stores/StorageTablesStore';
-import StorageActionCreators from '../../../../components/StorageActionCreators';
 import DataSample from '../../components/DataSample';
+import { truncateTable } from '../../../Actions';
 
 import TableOverview from './TableOverview';
 import TableColumn from './TableColumn';
@@ -182,7 +182,7 @@ export default React.createClass({
   handleTruncateTable() {
     const tableId = this.state.table.get('id');
 
-    return StorageActionCreators.truncateTable(tableId);
+    return truncateTable(tableId);
   },
 
   handleDropdownAction(action) {
