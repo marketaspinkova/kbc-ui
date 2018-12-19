@@ -70,6 +70,8 @@ export default React.createClass({
               <Col sm={8}>
                 <Select
                   clearable={false}
+                  backspaceRemoves={false}
+                  deleteRemoves={false}
                   value={this.state.destinationBucket}
                   onChange={this.handleDestinationBucket}
                   options={bucketsOptions}
