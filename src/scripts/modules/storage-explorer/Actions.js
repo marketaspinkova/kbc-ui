@@ -35,10 +35,24 @@ const removeTablePrimaryKey = (tableId) => {
     .catch(errorNotification);
 };
 
+const deleteTableColumn = (tableId, columnName, params) => {
+  return StorageActionCreators
+    .deleteTableColumn(tableId, columnName, params)
+    .catch(errorNotification);
+};
+
+const addTableColumn = (tableId, params) => {
+  return StorageActionCreators
+    .addTableColumn(tableId, params)
+    .catch(errorNotification);
+};
+
 
 export {
   deleteBucket,
   navigateToBucketDetail,
   createTablePrimaryKey,
-  removeTablePrimaryKey
+  removeTablePrimaryKey,
+  deleteTableColumn,
+  addTableColumn
 };

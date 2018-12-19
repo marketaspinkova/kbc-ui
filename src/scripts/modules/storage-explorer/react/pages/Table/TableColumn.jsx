@@ -3,9 +3,9 @@ import { Table, Button } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 
 import Tooltip from '../../../../../react/common/Tooltip';
-import StorageActionCreators from '../../../../components/StorageActionCreators';
 import CreateColumnModal from '../../modals/CreateColumnModal';
 import DeleteColumnModal from '../../modals/DeleteColumnModal';
+import { deleteTableColumn, addTableColumn } from '../../../Actions';
 
 export default React.createClass({
   propTypes: {
@@ -128,13 +128,13 @@ export default React.createClass({
   handleCreateColumn(columnName) {
     const tableId = this.props.table.get('id');
     const params = { name: columnName };
-    return StorageActionCreators.addTableColumn(tableId, params);
+    return addTableColumn(tableId, params);
   },
 
   handleDeleteColumn(columnName, forceDelete) {
     const tableId = this.props.table.get('id');
     const params = { force: forceDelete };
-    return StorageActionCreators.deleteTableColumn(tableId, columnName, params);
+    return deleteTableColumn(tableId, columnName, params);
   },
 
   isColumnInPrimaryKey(column) {

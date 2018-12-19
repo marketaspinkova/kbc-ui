@@ -440,10 +440,9 @@ module.exports = {
     return storageApi.addTableColumn(tableId, params).then(response => {
       return jobPoller.poll(ApplicationStore.getSapiTokenString(), response.url).then(response2 => {
         if (response2.status === 'error') {
-          ApplicationActionCreators.sendNotification({
-            message: response2.error.message,
-            type: 'error',
-            id: response2.error.exceptionId
+          dispatcher.handleViewAction({
+            type: constants.ActionTypes.STORAGE_ADD_TABLE_COLUMN_ERROR,
+            tableId: tableId
           });
           throw response2.error.message;
         }
@@ -481,10 +480,10 @@ module.exports = {
     return storageApi.deleteTableColumn(tableId, columnName, params).then(response => {
       return jobPoller.poll(ApplicationStore.getSapiTokenString(), response.url).then(response2 => {
         if (response2.status === 'error') {
-          ApplicationActionCreators.sendNotification({
-            message: response2.error.message,
-            type: 'error',
-            id: response2.error.exceptionId
+          dispatcher.handleViewAction({
+            type: constants.ActionTypes.STORAGE_DELETE_TABLE_COLUMN_ERROR,
+            tableId: tableId,
+            columnName: columnName
           });
           throw response2.error.message;
         }
