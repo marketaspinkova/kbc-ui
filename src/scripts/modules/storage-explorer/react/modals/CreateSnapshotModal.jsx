@@ -35,7 +35,12 @@ export default React.createClass({
                 Description
               </Col>
               <Col sm={9}>
-                <FormControl type="text" value={this.state.description} onChange={this.handleDescription} />
+                <FormControl
+                  type="text"
+                  value={this.state.description}
+                  onChange={this.handleDescription}
+                  autoFocus
+                />
               </Col>
             </FormGroup>
           </Modal.Body>
