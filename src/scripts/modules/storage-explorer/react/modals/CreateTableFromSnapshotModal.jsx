@@ -13,12 +13,16 @@ export default React.createClass({
     show: PropTypes.bool.isRequired,
     snapshot: PropTypes.object.isRequired,
     buckets: PropTypes.object.isRequired,
+    tableName: PropTypes.string.isRequired,
     onConfirm: PropTypes.func.isRequired,
     onHide: PropTypes.func.isRequired
   },
 
   getInitialState() {
-    return INITIAL_STATE;
+    return {
+      ...INITIAL_STATE,
+      name: this.props.tableName
+    };
   },
 
   render() {

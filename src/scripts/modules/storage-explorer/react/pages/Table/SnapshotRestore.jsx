@@ -246,6 +246,7 @@ export default React.createClass({
 
     return (
       <CreateTableFromSnapshotModal
+        tableName={this.props.table.get('name')}
         show={this.state.openCreateTableFromSnapshotModal}
         snapshot={snapshot}
         buckets={this.props.buckets}
