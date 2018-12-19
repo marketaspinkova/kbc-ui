@@ -112,7 +112,6 @@ export default React.createClass({
 
   renderAbsolute() {
     const startDateProps = {
-      onChange: (val) => this.setState({absoluteStart: val}),
       onChange: val => this.setState({ absoluteStart: val }),
       selected: this.state.absoluteStart
       // isValidDate: (current) => current.isAfter(this.state.absoluteEnd)
