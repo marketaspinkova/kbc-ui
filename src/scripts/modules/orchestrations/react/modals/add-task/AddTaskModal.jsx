@@ -134,13 +134,22 @@ export default createReactClass({
 
       case STEP_ORCHESTRATOR_CONFIGURATION_SELECT:
         return (
-          <div className="orchestration-task-modal-body">
+          <div>
+            <SearchBar
+              query={this.props.searchQuery}
+              onChange={this.props.onChangeSearchQuery}
+              inputRef={(input) => {
+                this.searchInput = input;
+              }}
+            />
             <OrchestrationSelect
               component={this.state.selectedComponent}
               orchestrations={this.state.orchestrations}
               onReset={this._handleComponentReset}
               onConfigurationSelect={this._handleConfigurationSelect}
-              orchestratorConfigurations={this._getFilteredComponents().getIn(['orchestrator', 'configurations'])}
+              orchestratorConfigurations={this.state.components.getIn(['orchestrator', 'configurations'])}
+              query={this.props.searchQuery}
+              searchBar={this.searchInput}
             />
           </div>
         );

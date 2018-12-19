@@ -4,6 +4,7 @@ import createReactClass from 'create-react-class';
 import ComponentIcon from '../../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../../react/common/ComponentName';
 import descriptionExcerpt from '../../../../../utils/descriptionExcerpt';
+import fuzzy from 'fuzzy';
 
 export default createReactClass({
   propTypes: {
@@ -11,12 +12,18 @@ export default createReactClass({
     orchestrations: PropTypes.object.isRequired,
     orchestratorConfigurations: PropTypes.object.isRequired,
     onReset: PropTypes.func.isRequired,
-    onConfigurationSelect: PropTypes.func.isRequired
+    onConfigurationSelect: PropTypes.func.isRequired,
+    query: PropTypes.string,
+    searchBar: PropTypes.object
   },
+
+  // componentDidMount() {
+  //   this.props.searchBar.focus();
+  // },
 
   render() {
     return (
-      <div>
+      <div className="orchestration-task-modal-body">
         <div className="table configuration-select-header">
           <div className="tr">
             <div className="td">
@@ -34,7 +41,7 @@ export default createReactClass({
           </div>
         </div>
         <div className="list-group">
-          {this.props.orchestrations
+          {this._getFilteredOrchestrations()
             .map(configuration => {
               return (
                 <a
@@ -67,5 +74,19 @@ export default createReactClass({
 
   _handleSelect(configuration) {
     return this.props.onConfigurationSelect(configuration);
+  },
+
+  _getFilteredOrchestrations() {
+    const filter = this.props.query;
+    const orchestrations = this.props.orchestrations;
+
+    if (!filter) {
+      return orchestrations;
+    }
+
+    const filteredOrchestrations = orchestrations.filter(
+      orchestration => fuzzy.match(filter, orchestration.get('name', '') || fuzzy.match(filter, orchestration.get('id', '')))
+    );
+    return filteredOrchestrations;
   }
 });
