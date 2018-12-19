@@ -80,6 +80,8 @@ export default React.createClass({
               <Col sm={3}>
                 <Select
                   clearable={false}
+                  backspaceRemoves={false}
+                  deleteRemoves={false}
                   placeholder="Column..."
                   value={this.state.newTableAlias.getIn(['aliasFilter', 'column'])}
                   onChange={this.handleAliasFilterColumn}

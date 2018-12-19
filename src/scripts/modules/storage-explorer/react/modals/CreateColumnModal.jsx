@@ -36,6 +36,8 @@ export default React.createClass({
                 <Col sm={9}>
                   <Select
                     clearable={false}
+                    backspaceRemoves={false}
+                    deleteRemoves={false}
                     placeholder="Column name"
                     value={this.state.name}
                     onChange={this.handleSelectedName}
