@@ -63,7 +63,7 @@ export default React.createClass({
 
     return (
       <div>
-        <h3>Time Travel Restore</h3>
+        <h2>Time Travel Restore</h2>
 
         <Well>
           <p>
@@ -92,7 +92,7 @@ export default React.createClass({
   renderSnapshots() {
     return (
       <div>
-        <h3>Snapshots</h3>
+        <h2>Snapshots</h2>
 
         {this.canWriteTable() && (
           <Well>
