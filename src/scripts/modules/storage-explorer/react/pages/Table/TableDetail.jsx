@@ -148,7 +148,7 @@ export default React.createClass({
           </div>
         </Tab.Container>
 
-        {this.renderTruncateTableModal()}
+        {!this.state.table.get('isAlias') && this.canWriteTable() && this.renderTruncateTableModal()}
       </div>
     );
   },
