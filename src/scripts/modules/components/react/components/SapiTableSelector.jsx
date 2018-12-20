@@ -49,6 +49,8 @@ export default React.createClass({
         disabled={this.props.disabled}
         name="source"
         clearable={this.props.clearable}
+        backspaceRemoves={this.props.clearable}
+        deleteRemoves={this.props.clearable}
         autoFocus={this.props.autoFocus}
         value={this.props.value}
         isLoading={this.state.isTablesLoading}
