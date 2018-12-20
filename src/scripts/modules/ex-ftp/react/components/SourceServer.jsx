@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
-import {FormControl, FormGroup, ControlLabel, Form, Col} from 'react-bootstrap';
+import {FormControl, FormGroup, ControlLabel, Form, Col, HelpBlock} from 'react-bootstrap';
 
 export default React.createClass({
   mixins: [immutableMixin],
@@ -116,10 +116,10 @@ export default React.createClass({
                 props.onChange({privateKey: e.target.value});
               }}
             />
-            <div className="help-block">
+            <HelpBlock>
               Only to use with SFTP connection type. <br />
               You can paste private key with or without <code> --- BEGIN/END PRIVATE KEY ---</code> block.
-            </div>
+            </HelpBlock>
           </Col>
         </FormGroup>
       </Form>
