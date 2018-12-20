@@ -3,6 +3,7 @@ import React, {PropTypes} from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
 import EmptyState from '../../../../components/react/components/ComponentEmptyState';
 import {Table} from 'react-bootstrap';
+import DataPreviewItem from '../../../../../react/common/DataPreviewItem';
 
 export default React.createClass({
   propTypes: {
@@ -40,7 +41,7 @@ export default React.createClass({
     });
     const rows = dataPreview.rows.map( (row) => {
       const cols = row.map( (c) => {
-        return (<td> {c.isTruncated && <strong>[Truncated] </strong>} {c.value} </td>);
+        return (<td> <DataPreviewItem isTruncated={c.isTruncated} value={c.value} /> </td>);
       });
 
       return (

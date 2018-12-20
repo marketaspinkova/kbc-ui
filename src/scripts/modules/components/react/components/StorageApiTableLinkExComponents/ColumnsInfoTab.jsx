@@ -5,6 +5,7 @@ import EmptyState from '../../../../components/react/components/ComponentEmptySt
 import immutableMixin from 'react-immutable-render-mixin';
 
 import Tooltip from '../../../../../react/common/Tooltip';
+import DataPreviewItem from '../../../../../react/common/DataPreviewItem';
 import enhancedColumnsTemplate from './EnhancedComlumnsTemplate';
 import EnhancedAnalysisRunControl from './EnhancedAnalysisRunControl';
 import {Table} from 'react-bootstrap';
@@ -213,7 +214,7 @@ export default React.createClass({
           {columnNameCell}
         </td>
         <td>
-          {values.map( (item, key) => <span>{key !== 0 && ', '}{item.isTruncated && <strong>[Truncated] </strong>}{item.value}</span>)}
+          {values.map( (item, key) => <span>{key !== 0 && ', '}<DataPreviewItem isTruncated={item.isTruncated} value={item.value} /></span>)}
         </td>
         {enhancedCells}
       </tr>
