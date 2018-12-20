@@ -104,6 +104,7 @@ export default createReactClass({
             <SearchBar
               query={this.props.searchQuery}
               onChange={this.props.onChangeSearchQuery}
+              placeholder="Search component"
               inputRef={(input) => {
                 this.searchInput = input;
               }}/>
@@ -123,6 +124,7 @@ export default createReactClass({
             <SearchBar
               query={this.props.searchQuery}
               onChange={this.props.onChangeSearchQuery}
+              placeholder="Search configuration"
               inputRef={(input) => {
                 this.searchInput = input;
               }}
@@ -143,6 +145,7 @@ export default createReactClass({
             <SearchBar
               query={this.props.searchQuery}
               onChange={this.props.onChangeSearchQuery}
+              placeholder="Search orchestration"
               inputRef={(input) => {
                 this.searchInput = input;
               }}
