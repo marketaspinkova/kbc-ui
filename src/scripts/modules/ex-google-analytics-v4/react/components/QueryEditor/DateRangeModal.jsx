@@ -111,22 +111,19 @@ export default React.createClass({
   },
 
   renderAbsolute() {
+    const isStartValid = moment(this.state.absoluteStart).isValid();
+    const isEndValid = moment(this.state.absoluteEnd).isValid();
+
     const startDateProps = {
-      onChange: val => this.setState({ absoluteStart: val }),
       value: this.state.absoluteStart,
-      isValidDate: (current) => {
-        const isValid = moment(this.state.absoluteEnd).isValid();
-        return !isValid || current.isBefore(this.state.absoluteEnd);
-      }
+      onChange: val => this.setState({ absoluteStart: val }),
+      isValidDate: current => !isEndValid || current.isBefore(this.state.absoluteEnd)
     };
 
     const endDateProps = {
-      onChange: val => this.setState({ absoluteEnd: val }),
       value: this.state.absoluteEnd,
-      isValidDate: (current) => {
-        const isValid = moment(this.state.absoluteStart).isValid();
-        return !isValid || current.isAfter(this.state.absoluteStart);
-      }
+      onChange: val => this.setState({ absoluteEnd: val }),
+      isValidDate: current => !isStartValid || current.isAfter(this.state.absoluteStart)
     };
 
     return (
@@ -145,7 +142,7 @@ export default React.createClass({
           {name}
         </label>
         <div className="col-sm-6">
-          <DateTime name={name} dateFormat={DATE_FORMAT} timeFormat={false} {...extraProps} />
+          <DateTime name={name} closeOnSelect dateFormat={DATE_FORMAT} timeFormat={false} {...extraProps} />
         </div>
       </div>
     );
