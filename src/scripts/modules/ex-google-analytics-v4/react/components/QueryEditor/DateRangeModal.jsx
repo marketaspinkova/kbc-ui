@@ -113,14 +113,20 @@ export default React.createClass({
   renderAbsolute() {
     const startDateProps = {
       onChange: val => this.setState({ absoluteStart: val }),
-      value: this.state.absoluteStart
-      // isValidDate: (current) => current.isBefore(this.state.absoluteEnd)
+      value: this.state.absoluteStart,
+      isValidDate: (current) => {
+        const isValid = moment(this.state.absoluteEnd).isValid();
+        return !isValid || current.isBefore(this.state.absoluteEnd);
+      }
     };
 
     const endDateProps = {
       onChange: val => this.setState({ absoluteEnd: val }),
-      value: this.state.absoluteEnd
-      // isValidDate: (current) => current.isAfter(this.state.absoluteStart)
+      value: this.state.absoluteEnd,
+      isValidDate: (current) => {
+        const isValid = moment(this.state.absoluteStart).isValid();
+        return !isValid || current.isAfter(this.state.absoluteStart);
+      }
     };
 
     return (
