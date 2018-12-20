@@ -83,7 +83,7 @@ export default React.createClass({
 
       return (
         <Tooltip tooltip="Delete column" placement="top">
-          <Button className="btn btn-link" onClick={() => this.openDeleteColumnModal(column)} disabled={deleting}>
+          <Button bsStyle="link" onClick={() => this.openDeleteColumnModal(column)} disabled={deleting}>
             {deleting ? <Loader /> : <i className="fa fa-trash-o" />}
           </Button>
         </Tooltip>
@@ -92,7 +92,7 @@ export default React.createClass({
 
     return (
       <Tooltip tooltip="Column is used in an alias filter or in alias without synchronized columns" placement="top">
-        <Button className="btn btn-link" disabled={false}>
+        <Button bsStyle="link" disabled={false}>
           <i className="fa fa-ban" />
         </Button>
       </Tooltip>

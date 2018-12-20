@@ -58,7 +58,7 @@ export default React.createClass({
           </Col>
           <Col sm={4}>
             <ButtonGroup>
-              <Button className="btn btn-link" onClick={this.resetSearchForm} disabled={!this.state.filtered}>
+              <Button bsStyle="link" onClick={this.resetSearchForm} disabled={!this.state.filtered}>
                 Reset
               </Button>
               <Button bsStyle="success" type="submit" disabled={!this.state.filterColumn || !this.state.filterValue}>

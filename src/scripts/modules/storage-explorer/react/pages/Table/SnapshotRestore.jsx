@@ -166,7 +166,7 @@ export default React.createClass({
                   <td className="text-right">
                     <Tooltip tooltip="Create new table from snapshot" placement="top">
                       <Button
-                        className="btn btn-link"
+                        bsStyle="link"
                         onClick={() => this.openCreateTableFromSnapshotModal(snapshot)}
                         disabled={creating}
                       >
@@ -175,7 +175,7 @@ export default React.createClass({
                     </Tooltip>
                     <Tooltip tooltip="Delete snapshot" placement="top">
                       <Button
-                        className="btn btn-link"
+                        bsStyle="link"
                         onClick={() => this.openRemoveSnapshotModal(snapshot)}
                         disabled={deleting}
                       >
