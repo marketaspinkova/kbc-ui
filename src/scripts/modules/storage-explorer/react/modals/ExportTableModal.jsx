@@ -14,6 +14,7 @@ export default React.createClass({
   getInitialState() {
     return {
       file: null,
+      url: '',
       error: null
     };
   },
@@ -71,7 +72,7 @@ export default React.createClass({
     event.preventDefault();
     this.props.onSubmit().then(file => {
       this.setState({ url: file.url });
-    });
+    }, this.handleError);
   },
 
   handleError(message) {
