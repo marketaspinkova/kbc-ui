@@ -54,6 +54,7 @@ export default React.createClass({
               </Col>
               <Col sm={8}>
                 <DateTime
+                  closeOnSelect
                   value={this.state.timestamp}
                   dateFormat="YYYY-MM-DD"
                   timeFormat="HH:mm:ss"
