@@ -448,6 +448,28 @@ module.exports = {
       });
   },
 
+  createTableSync: function(bucketId, params) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.STORAGE_TABLE_CREATE,
+      bucketId: bucketId
+    });
+    return storageApi.createTableSync(bucketId, params).then(() => {
+      dispatcher.handleViewAction({
+        type: constants.ActionTypes.STORAGE_TABLE_CREATE_SUCCESS,
+        bucketId: bucketId
+      });
+      return this.loadTablesForce();
+    })
+      .catch(error => {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_TABLE_CREATE_ERROR,
+          bucketId: bucketId,
+          errors: error
+        });
+        throw error;
+      });
+  },
+
   createAliasTable: function(bucketId, params) {
     dispatcher.handleViewAction({
       type: constants.ActionTypes.STORAGE_ALIAS_TABLE_CREATE,

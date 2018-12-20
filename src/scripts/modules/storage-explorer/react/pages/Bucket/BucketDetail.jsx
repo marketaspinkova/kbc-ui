@@ -1,5 +1,4 @@
 import React from 'react';
-import Promise from 'bluebird';
 import { Tab, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 
 import ApplicationStore from '../../../../../stores/ApplicationStore';
@@ -119,7 +118,6 @@ export default React.createClass({
 
   handleCreateTableFromCsv(file, params) {
     const bucketId = this.state.bucket.get('id');
-
     return StorageActionCreators.uploadFile(bucketId, file).then(fileId => {
       return StorageActionCreators.createTable(bucketId, {
         ...params,
@@ -129,12 +127,13 @@ export default React.createClass({
   },
 
   handleCreateTableFromString(params) {
-    return Promise.resolve(params);
-    // return StorageActionCreators.createTable(this.state.bucket.get('id'), params);
+    const bucketId = this.state.bucket.get('id');
+    return StorageActionCreators.createTableSync(bucketId, params);
   },
 
   handleCreateAliasTable(params) {
-    return StorageActionCreators.createAliasTable(this.state.bucket.get('id'), params);
+    const bucketId = this.state.bucket.get('id');
+    return StorageActionCreators.createAliasTable(bucketId, params);
   },
 
   handleDeleteBucket() {

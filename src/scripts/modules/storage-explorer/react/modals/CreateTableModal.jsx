@@ -271,7 +271,7 @@ export default React.createClass({
   createTableFromString() {
     const params = {
       name: this.state.name,
-      data: this.state.tableColumns
+      dataString: this.state.tableColumns
     };
 
     if (this.state.primaryKey) {

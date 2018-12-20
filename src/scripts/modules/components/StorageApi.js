@@ -168,6 +168,12 @@ var storageApi = {
     });
   },
 
+  createTableSync: function(bucketId, params) {
+    return createRequest('POST', 'buckets/' + bucketId + '/tables').type('form').send(params).promise().then(function(response) {
+      return response.body;
+    });
+  },
+
   createAliasTable: function(bucketId, params) {
     return createRequest('POST', 'buckets/' + bucketId + '/table-aliases').type('form').send(params).promise().then(function(response) {
       return response.body;
