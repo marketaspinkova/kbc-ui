@@ -12,13 +12,14 @@ import {
   HelpBlock
 } from 'react-bootstrap';
 import { Loader, PanelWithDetails } from '@keboola/indigo-ui';
+import Select from 'react-select';
 
 const INITIAL_STATE = {
   name: '',
   file: null,
   delimiter: ',',
   enclosure: '"',
-  tableColumns: '',
+  tableColumns: [],
   primaryKey: '',
   createFrom: 'csv',
   error: null
@@ -163,8 +164,15 @@ export default React.createClass({
           Table columns
         </Col>
         <Col sm={9}>
-          <FormControl type="text" value={this.state.tableColumns} onChange={this.handleTableColumns} />
-          <HelpBlock>Please enter names of columns separated by comma.</HelpBlock>
+          <Select.Creatable
+            multi
+            placeholder="Add columns..."
+            noResultsText=""
+            promptTextCreator={column => `Add column ${column}`}
+            value={this.state.tableColumns}
+            onChange={this.handleTableColumns}
+            options={[]}
+          />
         </Col>
       </FormGroup>
     );
@@ -227,9 +235,9 @@ export default React.createClass({
     });
   },
 
-  handleTableColumns(event) {
+  handleTableColumns(columns) {
     this.setState({
-      tableColumns: event.target.value
+      tableColumns: columns
     });
   },
 
@@ -271,7 +279,7 @@ export default React.createClass({
   createTableFromString() {
     const params = {
       name: this.state.name,
-      dataString: this.state.tableColumns
+      dataString: this.state.tableColumns.map(column => column.value).join(',')
     };
 
     if (this.state.primaryKey) {
@@ -302,7 +310,7 @@ export default React.createClass({
       if (!this.state.file || !this.state.delimiter || !this.state.enclosure) {
         return true;
       }
-    } else if (!this.state.tableColumns) {
+    } else if (!this.state.tableColumns.length) {
       return true;
     }
 
