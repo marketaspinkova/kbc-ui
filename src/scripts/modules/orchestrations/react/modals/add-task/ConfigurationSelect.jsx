@@ -38,26 +38,30 @@ export default createReactClass({
             </div>
           </div>
         </div>
-        <div className="list-group">
-          {this._getFilteredConfigurations()
-            .map(configuration => {
-              return (
-                <a
-                  className="list-group-item configuration-select-list-group-item"
-                  key={configuration.get('id')}
-                  onClick={this._handleSelect.bind(this, configuration)}
-                >
-                  <span>
-                    <strong>{configuration.get('name')}</strong>
-                    <br/>
-                    <small>{descriptionExcerpt(configuration.get('description'))}</small>
-                  </span>
-                  <i className="fa fa-plus-circle"/>
-                </a>
-              );
-            }, this)
-            .toArray()}
-        </div>
+        {this._getFilteredConfigurations().count() > 0 ? (
+          <div className="list-group">
+            {this._getFilteredConfigurations()
+              .map(configuration => {
+                return (
+                  <a
+                    className="list-group-item configuration-select-list-group-item"
+                    key={configuration.get('id')}
+                    onClick={this._handleSelect.bind(this, configuration)}
+                  >
+                    <span>
+                      <strong>{configuration.get('name')}</strong>
+                      <br/>
+                      <small>{descriptionExcerpt(configuration.get('description'))}</small>
+                    </span>
+                    <i className="fa fa-plus-circle"/>
+                  </a>
+                );
+              }, this)
+              .toArray()}
+          </div>
+        ) : (
+          <p style={{padding: '0px 20px'}}>No configuration found.</p>
+        )}
       </div>
     );
   },

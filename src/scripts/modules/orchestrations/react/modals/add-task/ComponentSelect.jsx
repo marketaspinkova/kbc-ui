@@ -12,18 +12,21 @@ export default createReactClass({
   },
 
   render() {
-    return (
-      <div>
-        {this._renderSection('Extractors', this._getComponentsForType('extractor'))}
-        {this._renderSection('Transformations', this._getComponentsForType('transformation'))}
-        {this._renderSection('Writers', this._getComponentsForType('writer'))}
-        {this._renderSection('Applications', this._getComponentsForType('application'))}
-        {this._renderOrchestratorSection(
-          'Orchestrations',
-          this.props.components.filter(c => c.get('id') === 'orchestrator')
-        )}
-      </div>
-    );
+    if (this.props.components.count() > 0 || this.props.orchestrations.count() > 0) {
+      return (
+        <div>
+          {this._renderSection('Extractors', this._getComponentsForType('extractor'))}
+          {this._renderSection('Transformations', this._getComponentsForType('transformation'))}
+          {this._renderSection('Writers', this._getComponentsForType('writer'))}
+          {this._renderSection('Applications', this._getComponentsForType('application'))}
+          {this._renderOrchestratorSection(
+            'Orchestrations',
+            this.props.components.filter(c => c.get('id') === 'orchestrator')
+          )}
+        </div>
+      );
+    }
+    return (<p style={{padding: '20px 20px 0'}}>No component found.</p>);
   },
 
   _renderSection(title, section) {

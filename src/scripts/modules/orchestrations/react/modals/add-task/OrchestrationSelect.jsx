@@ -28,8 +28,8 @@ export default createReactClass({
           <div className="tr">
             <div className="td">
               <h2>
-                <ComponentIcon component={this.props.component} />{' '}
-                <ComponentName component={this.props.component} showType={true} />
+                <ComponentIcon component={this.props.component}/>{' '}
+                <ComponentName component={this.props.component} showType={true}/>
               </h2>
             </div>
             <div className="td">
@@ -40,30 +40,34 @@ export default createReactClass({
             </div>
           </div>
         </div>
-        <div className="list-group">
-          {this._getFilteredOrchestrations()
-            .map(configuration => {
-              return (
-                <a
-                  className="list-group-item  configuration-select-list-group-item"
-                  key={configuration.get('id')}
-                  onClick={this._handleSelect.bind(this, configuration)}
-                >
-                  <span>
-                    <strong>{configuration.get('name')}</strong>
-                    <br/>
-                    <small>
-                      {descriptionExcerpt(
-                        this.props.orchestratorConfigurations.getIn([configuration.get('id').toString(), 'description'])
-                      )}
-                    </small>
-                  </span>
-                  <i className="fa fa-plus-circle pull-right" />
-                </a>
-              );
-            })
-            .toArray()}
-        </div>
+        {this._getFilteredOrchestrations().count() > 0 ? (
+          <div className="list-group">
+            {this._getFilteredOrchestrations()
+              .map(configuration => {
+                return (
+                  <a
+                    className="list-group-item  configuration-select-list-group-item"
+                    key={configuration.get('id')}
+                    onClick={this._handleSelect.bind(this, configuration)}
+                  >
+                    <span>
+                      <strong>{configuration.get('name')}</strong>
+                      <br/>
+                      <small>
+                        {descriptionExcerpt(
+                          this.props.orchestratorConfigurations.getIn([configuration.get('id').toString(), 'description'])
+                        )}
+                      </small>
+                    </span>
+                    <i className="fa fa-plus-circle pull-right"/>
+                  </a>
+                );
+              })
+              .toArray()}
+          </div>
+        ) : (
+          <p style={{padding: '0px 20px'}}>No orchestration found.</p>
+        )}
       </div>
     );
   },
