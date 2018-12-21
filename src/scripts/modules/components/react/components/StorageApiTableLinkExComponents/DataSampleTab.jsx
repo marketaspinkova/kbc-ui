@@ -40,8 +40,8 @@ export default React.createClass({
       );
     });
     const rows = dataPreview.rows.map( (row) => {
-      const cols = row.map( (c) => {
-        return (<td> <StorageTableDataPreviewItem item={c.item} /> </td>);
+      const cols = row.map( (item) => {
+        return (<td> <StorageTableDataPreviewItem item={item} /> </td>);
       });
 
       return (
