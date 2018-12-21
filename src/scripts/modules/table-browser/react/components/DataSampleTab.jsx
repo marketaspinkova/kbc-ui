@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 
 import immutableMixin from 'react-immutable-render-mixin';
 import EmptyState from '../../../components/react/components/ComponentEmptyState';
+import StorageTableDataPreviewItem from '../../../../react/common/StorageTableDataPreviewItem';
 import {Table} from 'react-bootstrap';
 
 export default React.createClass({
@@ -39,8 +40,8 @@ export default React.createClass({
       );
     });
     const rows = dataPreview.rows.map( (row, ridx) => {
-      const cols = row.map( (c) => {
-        return (<td> {c.isTruncated && <strong>[Truncated] </strong>} {c.value} </td>);
+      const cols = row.map( (item) => {
+        return (<td> <StorageTableDataPreviewItem item={item} /> </td>);
       });
       return (
         <tr key={ridx}>

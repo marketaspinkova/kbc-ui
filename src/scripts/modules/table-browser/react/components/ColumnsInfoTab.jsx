@@ -5,6 +5,7 @@ import EmptyState from '../../../components/react/components/ComponentEmptyState
 import immutableMixin from 'react-immutable-render-mixin';
 
 import Tooltip from '../../../../react/common/Tooltip';
+import StorageTableDataPreviewItem from '../../../../react/common/StorageTableDataPreviewItem';
 import enhancedColumnsTemplate from './EnhancedAnalysis/EnhancedComlumnsTemplate';
 import EnhancedAnalysisRunControl from './EnhancedAnalysis/EnhancedAnalysisRunControl';
 import {Table} from 'react-bootstrap';
@@ -173,7 +174,7 @@ export default React.createClass({
                 {columnNameCell}
               </td>
               <td>
-                {values.map( (item, key) => <span>{key !== 0 && ', '}{item.isTruncated && <strong>[Truncated] </strong>}{item.value}</span>)}
+                {values.map( (item, key) => <span>{key !== 0 && ', '}<StorageTableDataPreviewItem item={item}/></span>)}
               </td>
             </tr>
           );
@@ -212,7 +213,7 @@ export default React.createClass({
           {columnNameCell}
         </td>
         <td>
-          {values.map( (item, key) => <span>{key !== 0 && ', '}{item.isTruncated && <strong>[Truncated] </strong>}{item.value}</span>)}
+          {values.map( (item, key) => <span>{key !== 0 && ', '}<StorageTableDataPreviewItem item={item}/></span>)}
         </td>
         {enhancedCells}
       </tr>
