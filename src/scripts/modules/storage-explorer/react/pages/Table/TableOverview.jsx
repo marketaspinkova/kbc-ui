@@ -9,6 +9,8 @@ import Hint from '../../../../../react/common/Hint';
 import FileSize from '../../../../../react/common/FileSize';
 import { createTablePrimaryKey, removeTablePrimaryKey } from '../../../Actions';
 
+import MetadataEditField from '../../../../components/react/components/MetadataEditField';
+import InlineEditArea from '../../../../../react/common/InlineEditArea';
 import ConfirmModal from '../../../../../react/common/ConfirmModal';
 import CreatePrimaryKeyModal from '../../modals/CreatePrimaryKeyModal';
 
@@ -35,6 +37,8 @@ export default React.createClass({
 
     return (
       <div>
+        {this.renderDescription()}
+
         <Table responsive striped>
           <tbody>
             <tr>
@@ -133,6 +137,18 @@ export default React.createClass({
         {this.renderCreatePrimaryKeyModal()}
         {this.renderRemovePrimaryKeyModal()}
       </div>
+    );
+  },
+
+  renderDescription() {
+    return (
+      <MetadataEditField
+        objectType="table"
+        metadataKey="KBC.description"
+        placeholder="Describe table"
+        objectId={this.props.table.get('id')}
+        editElement={InlineEditArea}
+      />
     );
   },
 
