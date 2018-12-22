@@ -166,12 +166,13 @@ export default React.createClass({
         <Col sm={9}>
           <Select.Creatable
             multi
+            backspaceRemoves={false}
+            deleteRemoves={false}
             placeholder="Add columns..."
             noResultsText=""
             promptTextCreator={column => `Add column ${column}`}
             value={this.state.tableColumns}
             onChange={this.handleTableColumns}
-            options={[]}
           />
         </Col>
       </FormGroup>
