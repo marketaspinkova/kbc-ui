@@ -6,13 +6,14 @@ import FileLink from '../../../sapi-events/react/FileLink';
 
 export default React.createClass({
   propTypes: {
-    event: PropTypes.object.isRequired,
-    onHide: PropTypes.func.isRequired
+    show: PropTypes.bool.isRequired,
+    onHide: PropTypes.func.isRequired,
+    event: PropTypes.object.isRequired
   },
 
   render() {
     return (
-      <Modal show={true} onHide={this.props.onHide} enforceFocus={false}>
+      <Modal bsSize="large" show={this.props.show} onHide={this.props.onHide}>
         <Modal.Header closeButton>
           <Modal.Title>Event detail</Modal.Title>
         </Modal.Header>
@@ -28,7 +29,9 @@ export default React.createClass({
           {this.renderTreeData('Context', 'context')}
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={this.props.onHide}>Close</Button>
+          <Button bsStyle="link" onClick={this.props.onHide}>
+            Close
+          </Button>
         </Modal.Footer>
       </Modal>
     );
@@ -36,7 +39,7 @@ export default React.createClass({
 
   renderDetail() {
     return (
-      <Table>
+      <Table responsive striped>
         <tbody>
           <tr>
             <td>ID</td>
