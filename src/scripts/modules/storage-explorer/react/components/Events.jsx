@@ -4,6 +4,7 @@ import { List } from 'immutable';
 import { Button } from 'react-bootstrap';
 import { RefreshIcon, SearchBar } from '@keboola/indigo-ui';
 import { factory as eventsFactory } from '../../../sapi-events/EventsService';
+import Tooltip from '../../../../react/common/Tooltip';
 import EventsTable from './EventsTable';
 
 export default React.createClass({
@@ -32,13 +33,18 @@ export default React.createClass({
     return (
       <div>
         <div className="kbc-inner-padding">
-          <h2>
-            Events <RefreshIcon onClick={this.handleRefresh} isLoading={this.state.isLoading} />
-          </h2>
           <SearchBar
+            placeholder="Search event"
             query={this.state.searchQuery}
             onChange={this.handleQueryChange}
             onSubmit={this.handleSearchSubmit}
+            additionalActions={
+              <Tooltip tooltip="Refresh events" placement="top">
+                <Button onClick={this.handleRefresh}>
+                  <RefreshIcon isLoading={this.state.isLoading} title="" />
+                </Button>
+              </Tooltip>
+            }
           />
         </div>
         <EventsTable events={this.state.events} />
