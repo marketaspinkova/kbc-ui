@@ -221,22 +221,20 @@ export default React.createClass({
   renderPrefillFromTemplate() {
     return (
       <div>
-        <p>
-          <Button
-            bsStyle="link"
-            onClick={this.openTemplateModal}
-          >
-            <span className="fa fa-folder-open"/> Configure from template
-          </Button>
-          <TemplateModal
-            show={this.state.showTemplateModal}
-            template={this.state.localState.get('template', '')}
-            templates={this.templatesOptions()}
-            onChange={this.onTemplateChange}
-            onSubmit={this.onPrefillFromTemplate}
-            onHide={this.closeTemplateModal}
-          />
-        </p>
+        <Button
+          bsStyle="link"
+          onClick={this.openTemplateModal}
+        >
+          <span className="fa fa-folder-open"/> Configure from template
+        </Button>
+        <TemplateModal
+          show={this.state.showTemplateModal}
+          template={this.state.localState.get('template', '')}
+          templates={this.templatesOptions()}
+          onChange={this.onTemplateChange}
+          onSubmit={this.onPrefillFromTemplate}
+          onHide={this.closeTemplateModal}
+        />
       </div>
     );
   },
