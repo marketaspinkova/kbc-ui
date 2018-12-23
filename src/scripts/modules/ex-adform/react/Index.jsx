@@ -116,6 +116,7 @@ export default React.createClass({
             {this.renderHelp()}
             <Configuration
               data={this.getJobsData()}
+              isChanged={this.state.isEditingJobs}
               isEditing={this.state.isEditingJobs}
               isSaving={this.state.isSaving}
               onEditStart={this.onJobsEditStart}
@@ -218,30 +219,26 @@ export default React.createClass({
   },
 
   renderPrefillFromTemplate() {
-    if (this.state.isEditingJobs) {
-      return (
-        <div>
-          <p>
-            <Button
-              bsStyle="link"
-              onClick={this.openTemplateModal}
-            >
-              <span className="fa fa-folder-open"/> Configure from template
-            </Button>
-            <TemplateModal
-              show={this.state.showTemplateModal}
-              template={this.state.localState.get('template', '')}
-              templates={this.templatesOptions()}
-              onChange={this.onTemplateChange}
-              onSubmit={this.onPrefillFromTemplate}
-              onHide={this.closeTemplateModal}
-            />
-          </p>
-        </div>
-      );
-    } else {
-      return null;
-    }
+    return (
+      <div>
+        <p>
+          <Button
+            bsStyle="link"
+            onClick={this.openTemplateModal}
+          >
+            <span className="fa fa-folder-open"/> Configure from template
+          </Button>
+          <TemplateModal
+            show={this.state.showTemplateModal}
+            template={this.state.localState.get('template', '')}
+            templates={this.templatesOptions()}
+            onChange={this.onTemplateChange}
+            onSubmit={this.onPrefillFromTemplate}
+            onHide={this.closeTemplateModal}
+          />
+        </p>
+      </div>
+    );
   },
 
   templatesOptions() {
