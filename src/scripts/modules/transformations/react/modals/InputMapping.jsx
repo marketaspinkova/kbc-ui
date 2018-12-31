@@ -167,11 +167,11 @@ export default createReactClass({
   checkValidColumns() {
     if (this.state.showModal && this.props.mode === MODE_EDIT && this.props.tables.count()) {
       const columns = this.props.tables.find(table => table.id === this.props.mapping.source).get('columns');
+      const updatedValue = this.props.mapping.update('datatypes', datatypes => {
+        return datatypes.filter(datatype => columns.indexOf(datatype.get('column')) !== -1);
+      });
 
-      if (columns.count() !== this.props.mapping.get('datatypes').count()) {
-        const updatedValue = this.props.mapping.update('datatypes', datatypes => {
-          return datatypes.filter(datatype => columns.indexOf(datatype.get('column')) !== -1);
-        });
+      if (!updatedValue.get('datatypes').equals(this.props.mapping.get('datatypes'))) {
         this.props.onChange(updatedValue);
       }
     }
