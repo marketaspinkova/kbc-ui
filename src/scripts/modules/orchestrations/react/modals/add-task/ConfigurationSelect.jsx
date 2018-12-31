@@ -78,11 +78,7 @@ export default createReactClass({
   _getFilteredConfigurations() {
     const filter = this.props.query;
 
-    const configs = this.props.component
-      .get('configurations')
-      .map(configuration => {
-        return configuration;
-      });
+    const configs = this.props.component.get('configurations');
 
     if (!filter) {
       return configs;
