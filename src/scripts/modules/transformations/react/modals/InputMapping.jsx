@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
-import { Map } from 'immutable';
+import { Map, List } from 'immutable';
 import {Button, Modal} from 'react-bootstrap';
 import Tooltip from './../../../../react/common/Tooltip';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
@@ -165,14 +165,16 @@ export default createReactClass({
   },
 
   checkValidColumns() {
-    if (this.state.showModal && this.props.mode === MODE_EDIT && this.props.tables.count()) {
-      const columns = this.props.tables.find(table => table.id === this.props.mapping.source).get('columns');
-      const updatedValue = this.props.mapping.update('datatypes', datatypes => {
-        return datatypes.filter(datatype => columns.indexOf(datatype.get('column')) !== -1);
+    const { mode, tables, mapping, onChange } = this.props;
+
+    if (mode === MODE_EDIT && this.state.showModal && tables.count() && mapping.has('datatypes')) {
+      const columns = tables.find(table => table.id === mapping.source).get('columns', List());
+      const updatedValue = mapping.update('datatypes', datatypes => {
+        return datatypes.filter(type => columns.indexOf(type.get('column')) !== -1);
       });
 
-      if (!updatedValue.get('datatypes').equals(this.props.mapping.get('datatypes'))) {
-        this.props.onChange(updatedValue);
+      if (!updatedValue.get('datatypes').equals(mapping.get('datatypes'))) {
+        onChange(updatedValue);
       }
     }
   }
