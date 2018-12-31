@@ -2129,7 +2129,7 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-create-react-class@^15.5.2:
+create-react-class@^15.5.2, create-react-class@^15.5.x:
   version "15.6.3"
   resolved "https://registry.yarnpkg.com/create-react-class/-/create-react-class-15.6.3.tgz#2d73237fb3f970ae6ebe011a9e66f46dbca80036"
   integrity sha512-M+/3Q6E6DLO6Yx3OwrWjwHBnvfXXYA7W+dFjt/ZDBemHO1DDZhsalX/NUtnTYclN6GfnBDRh4qRHjcDHmlJBJg==
@@ -6683,15 +6683,15 @@ react-code-mirror@~3.0.4:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/react-code-mirror/-/react-code-mirror-3.0.6.tgz#65e95abb479165e1678e3ee9837fb4d0438868f1"
 
-react-datetime@^2.16.3:
-  version "2.16.3"
-  resolved "https://registry.yarnpkg.com/react-datetime/-/react-datetime-2.16.3.tgz#7f9ac7d4014a939c11c761d0c22d1fb506cb505e"
-  integrity sha512-amWfb5iGEiyqjLmqCLlPpu2oN415jK8wX1qoTq7qn6EYiU7qQgbNHglww014PT4O/3G5eo/3kbJu/M/IxxTyGw==
+react-datetime@2.10.2:
+  version "2.10.2"
+  resolved "https://registry.yarnpkg.com/react-datetime/-/react-datetime-2.10.2.tgz#0a91819c8068f6f3f24bbc687c0039820145a43e"
+  integrity sha512-tErw6Yp6fGRX6BQ1vTgSqDabWLpCovxLoMaohWB41yv5K1umf8JrxAZLt1JjKVDYdU0aBC+nH1/K9x4CLEq7rA==
   dependencies:
     create-react-class "^15.5.2"
     object-assign "^3.0.0"
     prop-types "^15.5.7"
-    react-onclickoutside "^6.5.0"
+    react-onclickoutside "^5.9.0"
 
 react-dnd-html5-backend@~2.2.0:
   version "2.2.3"
@@ -6751,10 +6751,12 @@ react-is@^16.5.2:
   version "16.6.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.6.1.tgz#f77b1c3d901be300abe8d58645b7a59e794e5982"
 
-react-onclickoutside@^6.5.0:
-  version "6.7.1"
-  resolved "https://registry.yarnpkg.com/react-onclickoutside/-/react-onclickoutside-6.7.1.tgz#6a5b5b8b4eae6b776259712c89c8a2b36b17be93"
-  integrity sha512-p84kBqGaMoa7VYT0vZ/aOYRfJB+gw34yjpda1Z5KeLflg70HipZOT+MXQenEhdkPAABuE2Astq4zEPdMqUQxcg==
+react-onclickoutside@^5.9.0:
+  version "5.11.1"
+  resolved "https://registry.yarnpkg.com/react-onclickoutside/-/react-onclickoutside-5.11.1.tgz#00314e52567cf55faba94cabbacd119619070623"
+  integrity sha1-ADFOUlZ89V+rqUyrus0RlhkHBiM=
+  dependencies:
+    create-react-class "^15.5.x"
 
 react-overlays@^0.7.4:
   version "0.7.4"
