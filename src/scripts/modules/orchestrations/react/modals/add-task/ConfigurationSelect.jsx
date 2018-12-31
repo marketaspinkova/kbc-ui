@@ -5,6 +5,7 @@ import ComponentIcon from '../../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../../react/common/ComponentName';
 import descriptionExcerpt from '../../../../../utils/descriptionExcerpt';
 import fuzzy from 'fuzzy';
+import {Button} from 'react-bootstrap';
 
 export default createReactClass({
   propTypes: {
@@ -31,10 +32,10 @@ export default createReactClass({
               </h2>
             </div>
             <div className="td text-right">
-              <a onClick={this._handleBack}>
-                <span className="fa fa-chevron-left">{null}</span>
+              <Button bsStyle="link" className="btn-link-inline" onClick={this._handleBack}>
+                <i className="fa fa-chevron-left" />
                 {' Back'}
-              </a>
+              </Button>
             </div>
           </div>
         </div>
