@@ -21,6 +21,7 @@ export default createReactClass({
   },
 
   render() {
+    const filteredConfigurations = this._getFilteredConfigurations();
     return (
       <div className="orchestration-task-modal-body">
         <div className="table configuration-select-header">
@@ -39,9 +40,9 @@ export default createReactClass({
             </div>
           </div>
         </div>
-        {this._getFilteredConfigurations().count() > 0 ? (
+        {filteredConfigurations.count() > 0 ? (
           <div className="list-group">
-            {this._getFilteredConfigurations()
+            {filteredConfigurations
               .map(configuration => {
                 return (
                   <a
