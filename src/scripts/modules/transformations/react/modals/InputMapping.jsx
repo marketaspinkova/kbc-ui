@@ -1,6 +1,7 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
+import { Map } from 'immutable';
 import {Button, Modal} from 'react-bootstrap';
 import Tooltip from './../../../../react/common/Tooltip';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
@@ -8,7 +9,6 @@ import InputMappingRowDockerEditor from '../components/mapping/InputMappingRowDo
 import InputMappingRowRedshiftEditor from '../components/mapping/InputMappingRowRedshiftEditor';
 import InputMappingRowSnowflakeEditor from '../components/mapping/InputMappingRowSnowflakeEditor';
 import resolveInputShowDetails from './resolveInputShowDetails';
-import Immutable from 'immutable';
 
 const MODE_CREATE = 'create', MODE_EDIT = 'edit';
 
@@ -29,7 +29,7 @@ export default createReactClass({
 
   getDefaultProps() {
     return {
-      definition: Immutable.Map(),
+      definition: Map(),
       disabled: false
     };
   },
@@ -44,6 +44,10 @@ export default createReactClass({
       isSaving: false,
       showModal: false
     };
+  },
+
+  componentDidUpdate() {
+    this.checkValidColumns();
   },
 
   open() {
@@ -158,6 +162,18 @@ export default createReactClass({
         });
         throw e;
       });
-  }
+  },
 
+  checkValidColumns() {
+    if (this.state.showModal && this.props.mode === MODE_EDIT && this.props.tables.count()) {
+      const columns = this.props.tables.find(table => table.id === this.props.mapping.source).get('columns');
+
+      if (columns.count() !== this.props.mapping.get('datatypes').count()) {
+        const updatedValue = this.props.mapping.update('datatypes', datatypes => {
+          return datatypes.filter(datatype => columns.indexOf(datatype.get('column')) !== -1);
+        });
+        this.props.onChange(updatedValue);
+      }
+    }
+  }
 });
