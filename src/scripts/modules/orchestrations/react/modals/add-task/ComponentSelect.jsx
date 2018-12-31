@@ -40,7 +40,7 @@ export default createReactClass({
           <tr key={index}>
             <td>
               <a onClick={this._handleSelect.bind(this, component)}>
-                <ComponentIcon component={component} /> <ComponentName component={component} />{' '}
+                <ComponentIcon component={component} /> <ComponentName component={component} />
                 <span className="kbc-icon-arrow-right pull-right" />
               </a>
             </td>
@@ -70,7 +70,7 @@ export default createReactClass({
           <tr key={index}>
             <td>
               <a onClick={this._handleSelect.bind(this, component)}>
-                <ComponentIcon component={component} /> <ComponentName component={component} />{' '}
+                <ComponentIcon component={component} /> <ComponentName component={component} />
                 <span className="kbc-icon-arrow-right pull-right" />
               </a>
             </td>

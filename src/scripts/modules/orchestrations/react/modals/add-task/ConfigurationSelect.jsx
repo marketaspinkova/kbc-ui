@@ -28,7 +28,7 @@ export default createReactClass({
           <div className="tr">
             <div className="td">
               <h2>
-                <ComponentIcon component={this.props.component}/>{' '}
+                <ComponentIcon component={this.props.component}/>
                 <ComponentName component={this.props.component} showType={true}/>
               </h2>
             </div>
