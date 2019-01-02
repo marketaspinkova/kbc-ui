@@ -4,14 +4,12 @@ import _ from 'underscore';
 import Promise from 'bluebird';
 import moment from 'moment';
 import filesize from 'filesize';
-import later from 'later';
 
 import storageActions from '../../StorageActionCreators';
 import storageApi from '../../StorageApi';
 import tablesStore from '../../stores/StorageTablesStore';
 
 import TableLinkModalDialog from './StorageApiTableLinkExComponents/ModalDialog';
-import {startDataProfilerJob, getDataProfilerJob, fetchProfilerData} from './StorageApiTableLinkExComponents/DataProfilerUtils';
 
 import Tooltip from '../../../../react/common/Tooltip';
 
@@ -63,10 +61,8 @@ export default React.createClass({
     let newState = _.clone(this.prepareStateFromProps({tableId: newTableId}));
     const initDataState = {
       detailEventId: null,
-      isCallingRunAnalysis: false,
       profilerData: Map(),
       loadingPreview: false,
-      loadingProfilerData: false,
       dataPreview: null,
       dataPreviewError: null,
       events: Immutable.List()
@@ -97,11 +93,9 @@ export default React.createClass({
       dataPreview: null,
       dataPreviewError: null,
       loadingPreview: false,
-      loadingProfilerData: false,
       omitFetches: omitFetches,
       omitExports: omitExports,
       filterIOEvents: filterIOEvents,
-      isCallingRunAnalysis: false,
       detailEventId: null,
       profilerData: Map()
     });
@@ -113,48 +107,6 @@ export default React.createClass({
 
   componentWilUnmount() {
     this.stopEventService();
-    this.stopPollingDataProfilerJob();
-  },
-
-  pollDataProfilerJob() {
-    const schedule = later.parse.recur().every(5).second();
-    this.stopPollingDataProfilerJob();
-    this.timeout = later.setInterval(this.getDataProfilerJobResult, schedule);
-  },
-
-  getDataProfilerJobResult() {
-    const jobId = this.state.profilerData.getIn(['runningJob', 'id']);
-    getDataProfilerJob(jobId).then( (runningJob) => {
-      if (runningJob.isFinished) {
-        this.stopPollingDataProfilerJob();
-        this.findEnhancedJob();
-      }
-    });
-  },
-
-  stopPollingDataProfilerJob() {
-    if (this.timeout) {
-      this.timeout.clear();
-    }
-  },
-
-  findEnhancedJob() {
-    // do the enhanced analysis only for redshift tables
-    if (!this.isRedshift()) {
-      return;
-    }
-    this.setState({loadingProfilerData: true});
-    const tableId = this.getTableId();
-    const component = this;
-    fetchProfilerData(tableId).then( (result) =>{
-      component.setState({
-        profilerData: Immutable.fromJS(result),
-        loadingProfilerData: false
-      });
-      if (result && result.runningJob) {
-        this.pollDataProfilerJob();
-      }
-    });
   },
 
   render() {
@@ -224,11 +176,6 @@ export default React.createClass({
         onOmitExportsFn={this.onOmitExports}
         onOmitFetchesFn={this.onOmitFetches}
         events={this.state.events}
-        enhancedAnalysis={this.state.profilerData}
-        onRunAnalysis={this.onRunEnhancedAnalysis}
-        isCallingRunAnalysis={this.state.isCallingRunAnalysis}
-        loadingProfilerData={this.state.loadingProfilerData}
-        isRedshift={this.isRedshift()}
         onChangeTable={this.changeTable}
         filterIOEvents={this.state.filterIOEvents}
         onFilterIOEvents={this.onFilterIOEvents}
@@ -236,15 +183,6 @@ export default React.createClass({
         detailEventId={this.state.detailEventId}
       />
     );
-  },
-
-  onRunEnhancedAnalysis() {
-    this.setState({isCallingRunAnalysis: true});
-    startDataProfilerJob(this.getTableId())
-      .then( () => {
-        this.findEnhancedJob().then(() => this.setState({isCallingRunAnalysis: false}));
-      })
-      .catch(() => this.setState({isCallingRunAnalysis: false}));
   },
 
   onOmitExports(e) {
@@ -301,13 +239,12 @@ export default React.createClass({
   onHide() {
     this.setState({show: false});
     this.changeTable(this.props.tableId, true);
-    this.stopPollingDataProfilerJob();
     this.stopEventService();
   },
 
   reload() {
     Promise.props( {
-      'loadAllTablesFore': storageActions.loadTablesForce().then(() => this.findEnhancedJob()),
+      'loadAllTablesFore': storageActions.loadTablesForce(),
       'exportData': this.exportDataSample(),
       'loadEvents': this.state.eventService.load()
     });
@@ -317,7 +254,6 @@ export default React.createClass({
     if (hiddenComponents.hasCurrentUserDevelPreview()) return this.redirectToTablePage();
     this.exportDataSample();
     this.startEventService();
-    this.findEnhancedJob();
     this.setState({show: true});
   },
 
@@ -391,10 +327,5 @@ export default React.createClass({
 
   tableExists() {
     return !_.isEmpty(this.state.table.toJS());
-  },
-
-  isRedshift() {
-    return this.tableExists() && this.state.table.getIn(['bucket', 'backend']) === 'redshift';
   }
-
 });
