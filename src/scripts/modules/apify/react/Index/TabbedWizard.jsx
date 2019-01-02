@@ -5,15 +5,12 @@ import RadioGroupInput from '../../../../react/common/RadioGroupInput';
 import SapiTableSelector from '../../../components/react/components/SapiTableSelector';
 import ApifyObjectSelector from './ApifyObjectSelector';
 import { ExternalLink } from '@keboola/indigo-ui';
+import CodeMirror from 'react-code-mirror';
+import '../../../../utils/codemirror/json-lint';
 
 export const CRAWLER_KEY = 1;
 export const AUTH_KEY = 2;
 export const OPTIONS_KEY = 3;
-
-import CodeMirror from 'react-code-mirror';
-/* global require */
-require('codemirror/addon/lint/lint');
-require('../../../../utils/codemirror/json-lint');
 
 const inputTableHelpText = {
   'crawler': 'Optional parameter. Data from the input table will be pushed to crawler, where you can access them through the Key-value store. The ID of the Key-value store will be saved to the customData attribute of the crawler execution.',

@@ -1,8 +1,6 @@
 import React, {PropTypes} from 'react';
 import CodeMirror from 'react-code-mirror';
-/* global require */
-require('codemirror/addon/lint/lint');
-require('../../../utils/codemirror/json-lint');
+import '../../../utils/codemirror/json-lint';
 
 export default React.createClass({
   propTypes: {

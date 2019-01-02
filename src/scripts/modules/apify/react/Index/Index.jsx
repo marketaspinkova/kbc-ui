@@ -22,14 +22,8 @@ import LatestJobs from '../../../components/react/components/SidebarJobs';
 import LatestVersions from '../../../components/react/components/SidebarVersionsWrapper';
 import SetupModal from './SetupModal';
 import { ExternalLink } from '@keboola/indigo-ui';
-
 import CodeMirror from 'react-code-mirror';
-/* global require */
-require('codemirror/addon/lint/lint');
-require('../../../../utils/codemirror/json-lint');
-
-
-// import {Button} from 'react-bootstrap';
+import '../../../../utils/codemirror/json-lint';
 
 const COMPONENT_ID = 'apify.apify';
 

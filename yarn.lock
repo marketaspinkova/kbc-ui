@@ -1807,9 +1807,10 @@ code-point-at@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
 
-codemirror@~5.8:
-  version "5.8.0"
-  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.8.0.tgz#c62b7ea25863926144990dc24f5f94090575d90a"
+codemirror@^5.42.2:
+  version "5.43.0"
+  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.43.0.tgz#2454b5e0f7005dc9945ab7b0d9594ccf233da040"
+  integrity sha512-mljwQWUaWIf85I7QwTBryF2ASaIvmYAL4s5UCanCJFfKeXOKhrqdHWdHiZWAMNT+hjLTCnVx2S/SYTORIgxsgA==
 
 collection-visit@^1.0.0:
   version "1.0.0"
@@ -6729,9 +6730,10 @@ react-clipboard.js@^0.1.5:
   dependencies:
     clipboard "^1.4.0"
 
-react-code-mirror@~3.0.4:
-  version "3.0.6"
-  resolved "https://registry.yarnpkg.com/react-code-mirror/-/react-code-mirror-3.0.6.tgz#65e95abb479165e1678e3ee9837fb4d0438868f1"
+react-code-mirror@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/react-code-mirror/-/react-code-mirror-3.1.0.tgz#d1e34a417dc9555dddbd63528f9fa6370d46fc44"
+  integrity sha1-0eNKQX3JVV3dvWNSj5+mNw1G/EQ=
 
 "react-datetime@git+https://git@github.com/keboola/react-datetime.git#v2.10.3-fix":
   version "2.10.3-fix"

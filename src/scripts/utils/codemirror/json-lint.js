@@ -1,26 +1,23 @@
-// CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: http://codemirror.net/LICENSE
-
-// Depends on jsonlint.js from https://github.com/zaach/jsonlint
-
-/* eslint no-empty:0 */
-/* eslint new-cap:0 */
-
 import CodeMirror from 'codemirror';
-import parser from './parser';
+import 'codemirror/addon/lint/lint';
+import jsonlint from 'jsonlint-mod';
 
-CodeMirror.registerHelper('lint', 'json', function(text) {
-  var found = [];
-  parser.parser.parseError = function(str, hash) {
-    var loc = hash.loc;
-    found.push({from: CodeMirror.Pos(loc.first_line - 1, loc.first_column),
-      to: CodeMirror.Pos(loc.last_line - 1, loc.last_column),
-      message: str});
+CodeMirror.registerHelper('lint', 'json', text => {
+  const found = [];
+
+  jsonlint.parser.parseError = (str, hash) => {
+    found.push({
+      from: CodeMirror.Pos(hash.loc.first_line - 1, hash.loc.first_column),
+      to: CodeMirror.Pos(hash.loc.last_line - 1, hash.loc.last_column),
+      message: str
+    });
   };
+
   try {
-    parser.parse(text);
+    jsonlint.parse(text);
   } catch (e) {
-    // Do nothing
+    // it is handled with code above
   }
+
   return found;
 });
