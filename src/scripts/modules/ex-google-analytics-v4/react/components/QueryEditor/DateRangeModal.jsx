@@ -1,11 +1,11 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import moment from 'moment';
-import {Button, Modal, Tabs, Tab} from 'react-bootstrap';
+import { Button, Modal, Tabs, Tab, Form, FormGroup, FormControl, ControlLabel, Col } from 'react-bootstrap';
 import DateTime from 'react-datetime';
 
 const DATE_FORMAT = 'YYYY-MM-DD';
 const SUGGESTIONS = {
-  'Today': {
+  Today: {
     start: 'today',
     end: 'tomorrow -1 second'
   },
@@ -69,11 +69,10 @@ export default React.createClass({
   },
 
   getDatePropsType(props) {
-    const {startDate, endDate} = props;
+    const { startDate, endDate } = props;
     const startValid = moment(startDate).isValid();
     const endValid = moment(endDate).isValid();
-    const result = (startValid && endValid) ? 'absolute' : 'relative';
-    return result;
+    return startValid && endValid ? 'absolute' : 'relative';
   },
 
   render() {
@@ -83,26 +82,26 @@ export default React.createClass({
           <Modal.Title>Change Date Range</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Tabs className="tabs-inside-modal" activeKey={this.state.rangeType} onSelect={this.onSelectTab} animation={false} id="daterangemodaltab">
-            <Tab eventKey="relative" title="Relative">
+          <Tabs
+            className="tabs-inside-modal"
+            activeKey={this.state.rangeType}
+            onSelect={this.onSelectTab}
+            animation={false}
+            id="daterangemodaltab"
+          >
+            <Tab eventKey="relative" title="Relative date range">
               {this.renderRelative()}
             </Tab>
-            <Tab eventKey="absolute" title="Absolute">
+            <Tab eventKey="absolute" title="Absolute date range">
               {this.renderAbsolute()}
             </Tab>
           </Tabs>
-
         </Modal.Body>
         <Modal.Footer>
-          <Button
-            bsStyle="link"
-            onClick={this.props.onCancel}>
+          <Button bsStyle="link" onClick={this.props.onCancel}>
             Close
           </Button>
-          <Button
-            bsStyle="primary"
-            disabled={!this.isValid()}
-            onClick={this.setAndClose}>
+          <Button bsStyle="primary" disabled={!this.isValid()} onClick={this.setAndClose}>
             Change
           </Button>
         </Modal.Footer>
@@ -114,37 +113,39 @@ export default React.createClass({
     const isStartValid = moment(this.state.absoluteStart).isValid();
     const isEndValid = moment(this.state.absoluteEnd).isValid();
 
-    const startDateProps = {
-      value: this.state.absoluteStart,
-      onChange: val => this.setState({ absoluteStart: val }),
-      isValidDate: current => !isEndValid || current.isBefore(this.state.absoluteEnd)
-    };
-
-    const endDateProps = {
-      value: this.state.absoluteEnd,
-      onChange: val => this.setState({ absoluteEnd: val }),
-      isValidDate: current => !isStartValid || current.isAfter(this.state.absoluteStart)
-    };
-
     return (
-      <form className="form-horizontal">
-        <h4> Specify absolute date range </h4>
-        {this.renderPicker('Since', startDateProps)}
-        {this.renderPicker('Until', endDateProps)}
-      </form>
-    );
-  },
-
-  renderPicker(name, extraProps) {
-    return (
-      <div className="form-group form-group-sm">
-        <label className="col-sm-3 control-label">
-          {name}
-        </label>
-        <div className="col-sm-6">
-          <DateTime name={name} closeOnSelect dateFormat={DATE_FORMAT} timeFormat={false} {...extraProps} />
-        </div>
-      </div>
+      <Form horizontal>
+        <FormGroup>
+          <Col sm={3} componentClass={ControlLabel}>
+            Since
+          </Col>
+          <Col sm={9}>
+            <DateTime
+              closeOnSelect
+              dateFormat={DATE_FORMAT}
+              timeFormat={false}
+              value={this.state.absoluteStart}
+              onChange={val => this.setState({ absoluteStart: val })}
+              isValidDate={current => !isEndValid || current.isBefore(this.state.absoluteEnd)}
+            />
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col sm={3} componentClass={ControlLabel}>
+            Until
+          </Col>
+          <Col sm={9}>
+            <DateTime
+              closeOnSelect
+              dateFormat={DATE_FORMAT}
+              timeFormat={false}
+              value={this.state.absoluteEnd}
+              onChange={val => this.setState({ absoluteEnd: val })}
+              isValidDate={current => !isStartValid || current.isAfter(this.state.absoluteStart)}
+            />
+          </Col>
+        </FormGroup>
+      </Form>
     );
   },
 
@@ -157,69 +158,59 @@ export default React.createClass({
   },
 
   renderRelative() {
-    const startDateProps = {
-      onChange: (e) => this.setState({relativeStart: e.target.value}),
-      value: this.state.relativeStart
-    };
-
-    const endDateProps = {
-      onChange: (e) => this.setState({relativeEnd: e.target.value}),
-      value: this.state.relativeEnd
-    };
-
     return (
-      <form className="form-horizontal">
-        <div>
-          <p>Specify relative date range </p>
-          <div className="form-group form-group-sm">
-            <div className="col-sm-6 col-sm-offset-3">
-              <select
-                className="form-control"
-                defaultValue=""
-                onChange={this.selectSuggestion}
-              >
-                {[].concat('').concat(Object.keys(SUGGESTIONS)).map((op) =>
-                  (<option
-                    disabled={op === ''}
-                    key={op}
-                    value={op} >
-                    {op === '' ? 'Choose from suggestions' : op}
-                  </option>)
-                )}
-              </select>
-            </div>
-          </div>
-        </div>
-        {this.renderRelativeInput('Since', startDateProps)}
-        {this.renderRelativeInput('Until', endDateProps)}
-      </form>
-    );
-  },
-
-  renderRelativeInput(name, extraProps) {
-    return (
-      <div className="form-group form-group-sm">
-        <label className="col-sm-3 control-label">
-          {name}
-        </label>
-        <div className="col-sm-6">
-          <input
-            type="text"
-            className="form-control"
-            name={name}
-            {...extraProps}
-          />
-        </div>
-      </div>
+      <Form horizontal>
+        <FormGroup>
+          <Col sm={3} componentClass={ControlLabel}>
+            Suggestions
+          </Col>
+          <Col sm={9}>
+            <FormControl componentClass="select" defaultValue="" onChange={this.selectSuggestion}>
+              {[]
+                .concat('')
+                .concat(Object.keys(SUGGESTIONS))
+                .map(op => (
+                  <option disabled={op === ''} key={op} value={op}>
+                    {op === '' ? 'Choose...' : op}
+                  </option>
+                ))}
+            </FormControl>
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col sm={3} componentClass={ControlLabel}>
+            Since
+          </Col>
+          <Col sm={9}>
+            <FormControl
+              type="text"
+              onChange={e => this.setState({ relativeStart: e.target.value })}
+              value={this.state.relativeStart}
+            />
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col sm={3} componentClass={ControlLabel}>
+            Until
+          </Col>
+          <Col sm={9}>
+            <FormControl
+              type="text"
+              onChange={e => this.setState({ relativeEnd: e.target.value })}
+              value={this.state.relativeEnd}
+            />
+          </Col>
+        </FormGroup>
+      </Form>
     );
   },
 
   onSelectTab(selectedTab) {
-    this.setState({rangeType: selectedTab});
+    this.setState({ rangeType: selectedTab });
   },
 
   setAndClose() {
-    const {rangeType, absoluteStart, absoluteEnd, relativeStart, relativeEnd} = this.state;
+    const { rangeType, absoluteStart, absoluteEnd, relativeStart, relativeEnd } = this.state;
     const start = rangeType === 'relative' ? relativeStart : absoluteStart.format(DATE_FORMAT);
     const end = rangeType === 'relative' ? relativeEnd : absoluteEnd.format(DATE_FORMAT);
     this.props.onSet(start, end);
@@ -228,12 +219,12 @@ export default React.createClass({
 
   isValid() {
     if (this.state.rangeType === 'absolute') {
-      const {absoluteStart, absoluteEnd} = this.state;
+      const { absoluteStart, absoluteEnd } = this.state;
       const startValid = absoluteStart && moment(absoluteStart).isValid();
       const endValid = absoluteEnd && moment(absoluteEnd).isValid();
       return startValid && endValid;
     }
-    const {relativeStart, relativeEnd} = this.state;
+    const { relativeStart, relativeEnd } = this.state;
     return relativeStart !== '' && relativeEnd !== '';
   }
 });
