@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import moment from 'moment';
 import {Button, Modal, Tabs, Tab} from 'react-bootstrap';
-import DatePicker from 'react-datepicker';
+import DateTime from 'react-datetime';
 
 const DATE_FORMAT = 'YYYY-MM-DD';
 const SUGGESTIONS = {
@@ -111,16 +111,19 @@ export default React.createClass({
   },
 
   renderAbsolute() {
+    const isStartValid = moment(this.state.absoluteStart).isValid();
+    const isEndValid = moment(this.state.absoluteEnd).isValid();
+
     const startDateProps = {
-      onChange: (val) => this.setState({absoluteStart: val}),
-      selected: this.state.absoluteStart,
-      maxDate: this.state.absoluteEnd
+      value: this.state.absoluteStart,
+      onChange: val => this.setState({ absoluteStart: val }),
+      isValidDate: current => !isEndValid || current.isBefore(this.state.absoluteEnd)
     };
 
     const endDateProps = {
-      onChange: (val) => this.setState({absoluteEnd: val}),
-      selected: this.state.absoluteEnd,
-      minDate: this.state.absoluteStart
+      value: this.state.absoluteEnd,
+      onChange: val => this.setState({ absoluteEnd: val }),
+      isValidDate: current => !isStartValid || current.isAfter(this.state.absoluteStart)
     };
 
     return (
@@ -139,12 +142,7 @@ export default React.createClass({
           {name}
         </label>
         <div className="col-sm-6">
-          <DatePicker
-            className="form-control"
-            name={name}
-            dateFormat={DATE_FORMAT}
-            {...extraProps}
-          />
+          <DateTime name={name} closeOnSelect dateFormat={DATE_FORMAT} timeFormat={false} {...extraProps} />
         </div>
       </div>
     );
@@ -172,7 +170,7 @@ export default React.createClass({
     return (
       <form className="form-horizontal">
         <div>
-          <p>Specify relative date range {' '}</p>
+          <p>Specify relative date range </p>
           <div className="form-group form-group-sm">
             <div className="col-sm-6 col-sm-offset-3">
               <select

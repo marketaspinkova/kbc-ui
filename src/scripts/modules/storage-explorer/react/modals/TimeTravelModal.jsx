@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import moment from 'moment';
 import { Modal, Col, Alert, Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import Select from 'react-select';
-import DatePicker from 'react-datepicker';
+import DateTime from 'react-datetime';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
 export default React.createClass({
@@ -53,13 +53,13 @@ export default React.createClass({
                 Replication Date
               </Col>
               <Col sm={8}>
-                <DatePicker
-                  className="form-control"
+                <DateTime
+                  closeOnSelect
+                  value={this.state.timestamp}
                   dateFormat="YYYY-MM-DD"
+                  timeFormat="HH:mm:ss"
                   onChange={this.handleTimestamp}
-                  selected={this.state.timestamp}
-                  minDate={this.minRestoreDate()}
-                  maxDate={this.maxRestoreDate()}
+                  isValidDate={this.isValidDate}
                 />
               </Col>
             </FormGroup>
@@ -131,16 +131,19 @@ export default React.createClass({
     this.props.onHide();
   },
 
+  isValidDate(current) {
+    const min = this.minRestoreDate();
+    const max = moment();
+
+    return current.isAfter(min) && current.isBefore(max);
+  },
+
   minRestoreDate() {
     const dataRetentionTimeInDays = this.props.sapiToken.getIn(['owner', 'dataRetentionTimeInDays']);
     const projectRetentionMinDate = moment().subtract(dataRetentionTimeInDays, 'days');
     const tableCreatedDate = moment(this.props.table.get('created'));
 
     return moment.max(projectRetentionMinDate, tableCreatedDate);
-  },
-
-  maxRestoreDate() {
-    return moment();
   },
 
   isDisabled() {
