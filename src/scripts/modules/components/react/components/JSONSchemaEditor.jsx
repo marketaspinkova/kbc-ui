@@ -1,11 +1,11 @@
-import React, {PropTypes} from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
-import Immutable from 'immutable';
-
-require('json-editor');
+import React, { PropTypes } from 'react';
+import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import { Map, fromJS } from 'immutable';
+import JSONEditor from '@json-editor/json-editor';
 
 export default React.createClass({
-  mixins: [PureRenderMixin],
+  mixins: [ImmutableRenderMixin],
+
   propTypes: {
     value: PropTypes.object.isRequired,
     schema: PropTypes.object.isRequired,
@@ -25,7 +25,7 @@ export default React.createClass({
   getDefaultProps() {
     return {
       readOnly: false,
-      schema: Immutable.Map(),
+      schema: Map(),
       disableProperties: false,
       disableCollapse: false
     };
@@ -39,8 +39,9 @@ export default React.createClass({
     const resetReadOnly = this.props.readOnly !== nextProps.readOnly;
     const nextReadOnly = resetReadOnly ? nextProps.readOnly : this.props.readOnly;
     const nextValue = resetValue ? nextProps.value || this.props.value : this.props.value;
+
     if (!this.props.schema.equals(nextProps.schema) || resetValue || resetReadOnly) {
-      this.setState({blockOnChangeOnce: true});
+      this.setState({ blockOnChangeOnce: true });
       this.initJsonEditor(nextValue, nextReadOnly);
     }
   },
@@ -49,37 +50,25 @@ export default React.createClass({
     if (this.jsoneditor) {
       this.jsoneditor.destroy();
     }
-    var options =       {
+
+    let options = {
       schema: this.props.schema.toJS(),
       startval: nextValue.toJS(),
       theme: 'bootstrap3',
       iconlib: 'fontawesome4',
       custom_validators: [],
-      ajax: false,
-      disable_array_add: false,
-      disable_array_delete: false,
       disable_array_delete_last_row: true,
       disable_array_reorder: true,
       disable_collapse: this.props.disableCollapse,
       disable_edit_json: true,
       disable_properties: this.props.disableProperties,
-      no_additional_properties: false,
       object_layout: 'normal',
-      required_by_default: false,
-      show_errors: 'interaction'
+      show_errors: 'always',
+      prompt_before_delete: false
     };
 
-    if (nextReadOnly) {
-      options.disable_array_add = true;
-      options.disable_collapse = true;
-      options.disable_edit_json = true;
-      options.disable_properties = true;
-      options.disable_array_delete = true;
-    }
-
-    // Custom validators must return an array of errors or an empty array if valid
-    options.custom_validators.push(function(schema, value, path) {
-      var errors = [];
+    options.custom_validators.push((schema, value, path) => {
+      let errors = [];
       if (schema.type === 'string' && schema.template) {
         if (schema.template !== value) {
           errors.push({
@@ -92,27 +81,41 @@ export default React.createClass({
       return errors;
     });
 
-    var jsoneditor = new window.JSONEditor(
-      this.refs.jsoneditor,
-      options
-    );
-    this.jsoneditor = jsoneditor;
-    var props = this.props;
-    const self = this;
+    if (nextReadOnly) {
+      options.disable_array_add = true;
+      options.disable_array_delete = true;
+      options.disable_collapse = true;
+      options.disable_properties = true;
+    }
+
+    this.jsoneditor = new JSONEditor(this.refs.jsoneditor, options);
 
     // When the value of the editor changes, update the JSON output and TODO validation message
-    jsoneditor.on('change', function() {
-      var json = jsoneditor.getValue();
+    this.jsoneditor.on('change', () => {
       // editor calls onChange after its init causing isChanged = true without any user input. This will prevent calling onChange after editors init
-      if (self.state.blockOnChangeOnce) {
-        self.setState({blockOnChangeOnce: false});
+      if (this.state.blockOnChangeOnce) {
+        this.setState({ blockOnChangeOnce: false });
       } else {
-        props.onChange(Immutable.fromJS(json));
+        const json = this.jsoneditor.getValue();
+        this.props.onChange(fromJS(json));
       }
     });
 
+    for (let key in this.jsoneditor.editors) {
+      if (this.jsoneditor.editors.hasOwnProperty(key) && key !== 'root') {
+        const el = this.jsoneditor.getEditor(key);
+
+        if (el && el.input) {
+          el.input.addEventListener('input', () => {
+            el.refreshValue();
+            el.onChange(true);
+          });
+        }
+      }
+    }
+
     if (nextReadOnly) {
-      jsoneditor.disable();
+      this.jsoneditor.disable();
     }
   },
 
@@ -121,7 +124,7 @@ export default React.createClass({
   },
 
   getCurrentValue() {
-    return Immutable.fromJS(this.jsoneditor.getValue());
+    return fromJS(this.jsoneditor.getValue());
   },
 
   render() {
@@ -131,5 +134,4 @@ export default React.createClass({
       </form>
     );
   }
-
 });
