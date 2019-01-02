@@ -15,8 +15,6 @@ import {RefreshIcon} from '@keboola/indigo-ui';
 
 export default React.createClass({
 
-  displayName: 'TableBrowserModalDialog',
-
   propTypes: {
     moreTables: React.PropTypes.array,
     tableId: PropTypes.string.isRequired,
@@ -26,22 +24,17 @@ export default React.createClass({
     events: PropTypes.object.isRequired,
     omitExports: PropTypes.bool,
     isLoading: PropTypes.bool,
-    loadingProfilerData: PropTypes.bool,
     table: PropTypes.object,
     dataPreview: PropTypes.object,
     dataPreviewError: PropTypes.string,
-    enhancedAnalysis: PropTypes.object,
     onOmitFetchesFn: PropTypes.func,
     onOmitExportsFn: PropTypes.func,
     onHideFn: PropTypes.func,
-    isRedshift: PropTypes.bool,
-    onRunAnalysis: PropTypes.func,
     onChangeTable: PropTypes.func,
     filterIOEvents: PropTypes.bool,
     onFilterIOEvents: PropTypes.func,
     onShowEventDetail: PropTypes.func,
-    detailEventId: PropTypes.number,
-    isCallingRunAnalysis: PropTypes.bool
+    detailEventId: PropTypes.number
   },
 
   mixins: [immutableMixin],
@@ -206,11 +199,6 @@ export default React.createClass({
         table={this.props.table}
         dataPreview={this.props.dataPreview}
         dataPreviewError={this.props.dataPreviewError}
-        isRedshift={this.props.isRedshift}
-        isCallingRunAnalysis={this.props.isCallingRunAnalysis}
-        onRunAnalysis={this.props.onRunAnalysis}
-        loadingProfilerData={this.props.loadingProfilerData}
-        enhancedAnalysis={this.props.enhancedAnalysis}
       />
     );
   }
