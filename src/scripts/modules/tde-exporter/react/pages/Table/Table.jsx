@@ -39,11 +39,13 @@ export default React.createClass({
       this._updateLocalState(['editing', tableId], columns);
     }
 
-    storageApi.tableDataPreview(tableId, { limit: 10 }).then(csv =>
-      this.setState({
-        dataPreview: csv
-      })
-    );
+    storageApi
+      .tableDataJsonPreview(tableId, { limit: 10 })
+      .then((json) => {
+        this.setState({
+          dataPreview: json
+        });
+      });
   },
 
   getStateFromStores() {
