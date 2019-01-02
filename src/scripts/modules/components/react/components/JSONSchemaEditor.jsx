@@ -63,7 +63,8 @@ export default React.createClass({
       disable_edit_json: true,
       disable_properties: this.props.disableProperties,
       object_layout: 'normal',
-      show_errors: 'always'
+      show_errors: 'always',
+      prompt_before_delete: false
     };
 
     options.custom_validators.push((schema, value, path) => {
