@@ -56,14 +56,29 @@ export default React.createClass({
       startval: nextValue.toJS(),
       theme: 'bootstrap3',
       iconlib: 'fontawesome4',
+      custom_validators: [],
       disable_array_delete_last_row: true,
       disable_array_reorder: true,
       disable_collapse: this.props.disableCollapse,
       disable_edit_json: true,
       disable_properties: this.props.disableProperties,
       object_layout: 'normal',
-      show_errors: 'interaction'
+      show_errors: 'always'
     };
+
+    options.custom_validators.push((schema, value, path) => {
+      let errors = [];
+      if (schema.type === 'string' && schema.template) {
+        if (schema.template !== value) {
+          errors.push({
+            path: path,
+            property: 'value',
+            message: 'Value does not match schema template'
+          });
+        }
+      }
+      return errors;
+    });
 
     if (nextReadOnly) {
       options.disable_array_add = true;
