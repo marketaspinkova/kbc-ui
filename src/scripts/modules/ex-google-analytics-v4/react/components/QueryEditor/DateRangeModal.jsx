@@ -89,10 +89,10 @@ export default React.createClass({
             animation={false}
             id="daterangemodaltab"
           >
-            <Tab eventKey="relative" title="Relative data range">
+            <Tab eventKey="relative" title="Relative date range">
               {this.renderRelative()}
             </Tab>
-            <Tab eventKey="absolute" title="Absolute data range">
+            <Tab eventKey="absolute" title="Absolute date range">
               {this.renderAbsolute()}
             </Tab>
           </Tabs>
