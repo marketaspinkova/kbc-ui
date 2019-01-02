@@ -1,5 +1,5 @@
 import makeColumnDefinition from '../helpers/makeColumnDefinition';
-import { Map, fromJS } from 'immutable';
+import { Map, fromJS, List } from 'immutable';
 import getInitialShowAdvanced from '../helpers/getInitialShowAdvanced';
 import PreferencesHeader from '../react/components/PreferencesHeader';
 import PreferencesColumn from '../react/components/PreferencesColumn';
@@ -35,13 +35,12 @@ function prepareAllTableColumns(configuredColumns, storageTableColumns) {
   return allColumnsList;
 }
 
-export default function(configProvisioning, tablesProvisioning, storageTable) {
-  const tableId = storageTable.get('id');
+export default function(configProvisioning, tablesProvisioning, storageTable, tableId) {
   const { isSaving, parameters } = configProvisioning;
   const { getEditingTable, setEditingTable, tables } = tablesProvisioning;
   const editing = getEditingTable(tableId);
-
-  const storageTableColumns = storageTable.get('columns');
+  const tableExist = !!storageTable;
+  const storageTableColumns = tableExist ? storageTable.get('columns', List()) : List();
   const configuredColumns = editing.tableParameters.get('columns', Map());
   const allColumnsList = prepareAllTableColumns(configuredColumns, storageTableColumns);
 
@@ -60,6 +59,7 @@ export default function(configProvisioning, tablesProvisioning, storageTable) {
   const context = prepareColumnContext(parameters, tables, tableId, allColumnsList);
 
   const value = Map({
+    tableExist,
     columns: allColumnsList,
     tableId,
     columnsMappings: [

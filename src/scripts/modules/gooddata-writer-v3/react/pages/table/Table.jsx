@@ -48,7 +48,7 @@ export default React.createClass({
 
     // section props adapters
     const titleSectionProps = titleAdapter(configProvisioning, tablesProvisioning, tableId);
-    const columnsEditorSectionProps = columnsEditorAdapter(configProvisioning, tablesProvisioning, storageTable);
+    const columnsEditorSectionProps = columnsEditorAdapter(configProvisioning, tablesProvisioning, storageTable, tableId);
 
     const loadTypeSectionProps = loadTypeAdater(configProvisioning, tablesProvisioning, tableId);
 
@@ -57,7 +57,6 @@ export default React.createClass({
       columnsEditorSectionProps,
       loadTypeSectionProps,
       isPendingToggleExport,
-      storageTable,
       deleteTable,
       toggleTableExport,
       isSaving: isSaving && !isPendingToggleExport,

@@ -1,4 +1,4 @@
-import {fromJS} from 'immutable';
+import {fromJS, List} from 'immutable';
 import StorageTableColumnsEditor from '../react/components/StorageTableColumnsEditor';
 
 export default (params) => {
@@ -40,8 +40,9 @@ export default (params) => {
     onLoad(configuration, sectionContext) {
       const configColumns = onLoadColumns(configuration);
       const storageTable = sectionContext.get('table');
-      const tableId = storageTable.get('id');
-      const storageTableColumns = storageTable.get('columns');
+      const tableExist = !!storageTable;
+      const tableId = sectionContext.get('tableId');
+      const storageTableColumns = tableExist ? storageTable.get('columns') : List();
       const deletedColumns = configColumns
         .map(configColumn => configColumn.get(matchColumnKey))
         .filter(configColumnName =>
@@ -57,6 +58,7 @@ export default (params) => {
       const columnContext = prepareColumnContext(sectionContext, columnsList);
 
       return fromJS({
+        tableExist,
         columns: columnsList,
         tableId: tableId,
         columnsMappings,

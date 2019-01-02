@@ -6,9 +6,11 @@ import ColumnDataPreview from './ColumnDataPreview';
 import classnames from 'classnames';
 require('./StorageTableColumnsEditor.less');
 
+
 export default React.createClass({
   propTypes: {
     value: PropTypes.shape({
+      tableExist: PropTypes.bool,
       matchColumnKey: PropTypes.string,
       tableId: PropTypes.string,
       columns: PropTypes.any,
@@ -69,7 +71,8 @@ export default React.createClass({
     return (
       <Element
         showAdvanced={this.state.showAdvanced}
-        onChangeShowAdvanced={(newValue) => this.setState({showAdvanced: newValue})} />
+        onChangeShowAdvanced={(newValue) => this.setState({showAdvanced: newValue})}
+      />
     );
   },
 
@@ -77,19 +80,33 @@ export default React.createClass({
     let headers = this.props.value.columnsMappings.map(mapping => mapping.title);
     return (
       <div>
-        <h3>Columns</h3>
-        <div className="storage-table-columns-editor-wrapper">
-          <Table striped className="storage-table-columns-editor">
-            <thead>
-              <tr>
-                <th className="col-md-2">Column Name</th>
-                {headers.map((title, index) => <th key={index}>{typeof title === 'string' ? title : this.renderHeaderCell(title)}</th>)}
-                <th className="col-md-1">Preview</th>
-              </tr>
-            </thead>
-            {this.renderBody()}
-          </Table>
-        </div>
+        {!this.props.value.tableExist && (
+          <div className="alert alert-warning">
+            <h3>Table Missing</h3>
+            <div className="help-block">
+              <span>
+                Table <code>{this.props.value.tableId}</code> used in this configuration is missing in Storage. Running this configuration will fail.
+              </span>
+            </div>
+          </div>
+        )}
+        {this.props.value.columns.length > 0 && (
+          <div>
+            <h3>Columns</h3>
+            <div className="storage-table-columns-editor-wrapper">
+              <Table striped className="storage-table-columns-editor">
+                <thead>
+                  <tr>
+                    <th className="col-md-2">Column Name</th>
+                    {headers.map((title, index) => <th key={index}>{typeof title === 'string' ? title : this.renderHeaderCell(title)}</th>)}
+                    <th className="col-md-1">Preview</th>
+                  </tr>
+                </thead>
+                {this.renderBody()}
+              </Table>
+            </div>
+          </div>
+        )}
       </div>
     );
   },
