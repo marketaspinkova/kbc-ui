@@ -4,6 +4,7 @@
   "description": "Keboola Connection UI",
   "author": "Martin Halamicek",
   "dependencies": {
+    "@json-editor/json-editor": "^1.2.1",
     "@keboola/indigo-ui": "^7.4.7",
     "aws-sdk": "^2.4.7",
     "bluebird": "~2.3.11",
@@ -24,7 +25,6 @@
     "immutable": "~3.7.3",
     "intl": "^0.1.4",
     "intl-messageformat": "^1.1.0",
-    "json-editor": "git+https://git@github.com/keboola/json-editor.git#58d676add027f42a13ed91db37bcf040a62a4780",
     "keen-js": "^3.4.0",
     "later": "~1.1.6",
     "moment": "^2.22.2",
