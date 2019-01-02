@@ -6,7 +6,7 @@ import DirectTokenInsertFields from './DirectTokenInsertFields';
 import CustomAuthorizationFields from './CustomAuthorizationFields';
 import * as oauthUtils from '../OauthUtils';
 import {Loader, ExternalLink} from '@keboola/indigo-ui';
-import { Button, ButtonToolbar, Modal, Tabs, Tab } from 'react-bootstrap';
+import { Alert, Button, ButtonToolbar, Modal, Tabs, Tab } from 'react-bootstrap';
 
 const DIRECT_TOKEN_COMPONENTS = ['keboola.ex-facebook', 'keboola.ex-facebook-ads', 'keboola.ex-instagram'];
 
@@ -121,7 +121,7 @@ export default React.createClass({
     return (
       <div>
         {!!this.getLimitsInfo() && (
-          <div className="alert alert-warning">{this.getLimitsInfo()}</div>
+          <Alert bsStyle="warning">{this.getLimitsInfo()}</Alert>
         )}
         <p>
           To authorize an account from a non-Keboola Connection user, generate a link to the external authorization app and send it to the user you want to have the authorized account for. The generated link is valid for <strong>48</strong> hours and will not be stored anywhere.

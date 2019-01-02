@@ -1,4 +1,5 @@
 import React from 'react';
+import { Alert } from 'react-bootstrap';
 import InvalidQuery from './InvalidQuery';
 import InvalidInput from './InvalidInput';
 import InvalidOutput from './InvalidOutput';
@@ -14,7 +15,7 @@ export default React.createClass({
   render() {
     if (this.props.result.count() > 0) {
       return (
-        <div className="alert alert-danger">
+        <Alert bsStyle="danger">
           <h4>Following errors found</h4>
           {this.props.result.map((error, index) => {
             switch (error.getIn(['object', 'type'])) {
@@ -62,7 +63,7 @@ export default React.createClass({
             Not an error?
             Please <a onClick={() => contactSupport({type: 'project'})}>contact us</a>.
           </p>
-        </div>);
+        </Alert>);
     } else {
       return (
         <span>SQL is valid.</span>

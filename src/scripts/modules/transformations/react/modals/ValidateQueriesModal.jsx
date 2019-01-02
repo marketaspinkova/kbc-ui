@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
-import { ButtonToolbar, Button } from 'react-bootstrap';
+import { Alert, ButtonToolbar, Button } from 'react-bootstrap';
 import SqlDepAnalyzerApi from '../../../sqldep-analyzer/Api';
 import { ExternalLink } from '@keboola/indigo-ui';
 import Result from '../components/validation/Result';
@@ -95,7 +95,7 @@ export default React.createClass({
   renderNotSavedWarning() {
     if (!this.props.isSaved) {
       return (
-        <p className="alert alert-warning">You have unsaved changes. Validation will only apply to the last version.</p>
+        <Alert bsStyle="warning">You have unsaved changes. Validation will only apply to the last version.</Alert>
       );
     }
   },

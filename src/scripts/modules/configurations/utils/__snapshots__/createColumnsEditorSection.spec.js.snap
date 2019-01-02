@@ -4,21 +4,18 @@ exports[`columns editor section test nonexisting table render 1`] = `
 <div>
   <div
     class="alert alert-warning"
+    role="alert"
   >
-    <h3>
+    <h4>
       Table Missing
-    </h3>
-    <div
-      class="help-block"
-    >
-      <span>
-        Table 
-        <code>
-          in.some.table
-        </code>
-         used in this configuration is missing in Storage. Running this configuration will fail.
-      </span>
-    </div>
+    </h4>
+    <p>
+      Table 
+      <code>
+        in.some.table
+      </code>
+       used in this configuration is missing in Storage. Running this configuration will fail.
+    </p>
   </div>
   <div>
     <h3>

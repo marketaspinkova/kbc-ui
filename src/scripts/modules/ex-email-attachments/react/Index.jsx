@@ -23,7 +23,7 @@ import StorageBucketsStore from '../../components/stores/StorageBucketsStore';
 import ClipboardButton from '../../../react/common/Clipboard';
 import SapiTableLinkEx from '../../components/react/components/StorageApiTableLinkEx';
 import getDefaultBucket from '../../../utils/getDefaultBucket';
-import {FormGroup, FormControl, Form, ControlLabel, Col, InputGroup, Button, HelpBlock} from 'react-bootstrap';
+import {Alert, FormGroup, FormControl, Form, ControlLabel, Col, InputGroup, Button, HelpBlock} from 'react-bootstrap';
 import Processors from '../../components/react/components/Processors';
 
 
@@ -203,12 +203,10 @@ export default React.createClass({
     }
 
     return (
-      <div className="alert alert-danger">
-        Error: {message}
-        <div>
-          {code >= 500 ? error.get('exceptionId') : null}
-        </div>
-      </div>
+      <Alert bsStyle="danger">
+        <p>Error: {message}</p>
+        {code >= 500 ? <div>{error.get('exceptionId')}</div> : null}
+      </Alert>
     );
   },
 

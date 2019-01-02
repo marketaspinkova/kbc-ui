@@ -4,13 +4,14 @@ import PureRendererMixin from 'react-immutable-render-mixin';
 import {Link} from 'react-router';
 import {NewLineToBr} from '@keboola/indigo-ui';
 import {Tree} from '@keboola/indigo-ui';
+import {Alert} from 'react-bootstrap';
 import FileLink  from './FileLink';
 
 const classMap = {
-  error: 'alert alert-danger',
-  warn: 'alert alert-warning',
-  success: 'alert alert-success',
-  info: 'well'
+  error: 'danger',
+  warn: 'warning',
+  success: 'success',
+  info: 'info'
 };
 
 export default React.createClass({
@@ -29,10 +30,10 @@ export default React.createClass({
         <h2>
           Event {event.get('id')}
         </h2>
-        <div className={this._eventClass()}>
+        <Alert bsStyle={this._eventStyle()}>
           <NewLineToBr text={event.get('message')} />
           {event.get('description') ? <p className="well">{event.get('description')}</p> : null }
-        </div>
+        </Alert>
         <div className="row">
           <div className="col-md-3">
             Created
@@ -123,7 +124,7 @@ export default React.createClass({
     );
   },
 
-  _eventClass() {
+  _eventStyle() {
     return classMap[this.props.event.get('type')];
   }
 });

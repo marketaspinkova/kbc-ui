@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Modal} from 'react-bootstrap';
+import {Alert, Modal} from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import TokenString from '../components/TokenString';
 
@@ -60,9 +60,9 @@ export default React.createClass({
   renderRefreshed() {
     return (
       <div>
-        <p className="alert alert-success">
+        <Alert bsStyle="success">
           Token has been refreshed. Make sure to copy it. You won't be able to see it again.
-        </p>
+        </Alert>
         <TokenString token={this.state.newToken} />
       </div>
     );

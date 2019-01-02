@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import {List, Map} from 'immutable';
-import {Modal} from 'react-bootstrap';
+import {Modal, Alert} from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import {Loader} from '@keboola/indigo-ui';
 import {SearchBar} from '@keboola/indigo-ui';
@@ -113,12 +113,10 @@ export default React.createClass({
     }
 
     return (
-      <div className="alert alert-danger">
-        Error: {message}
-        <div>
-          {code >= 500 ? error.get('exceptionId') : null}
-        </div>
-      </div>
+      <Alert bsStyle="danger">
+        <p>Error: {message}</p>
+        {code >= 500 ? <div>{error.get('exceptionId')}</div> : null}
+      </Alert>
     );
   },
 

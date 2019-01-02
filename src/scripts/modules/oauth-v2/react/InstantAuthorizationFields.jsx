@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import {Alert} from 'react-bootstrap';
 
 export default React.createClass({
 
@@ -14,7 +15,7 @@ export default React.createClass({
     return (
       <div>
         {!!this.props.infoText && (
-          <div className="alert alert-warning">{this.props.infoText}</div>
+          <Alert bsStyle="warning">{this.props.infoText}</Alert>
         )}
         <div className="form-group">
           <label className="control-label col-sm-3">

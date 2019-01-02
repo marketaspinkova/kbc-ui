@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Modal} from 'react-bootstrap';
+import {Alert, Modal} from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
 export default React.createClass({
@@ -92,9 +92,9 @@ export default React.createClass({
   renderInfo() {
     return (
       <div>
-        <p className="alert alert-info">
+        <Alert bsStyle="info">
           The recipient will receive an email with a link to retrieve the token. The link will expire in 24 hours.
-        </p>
+        </Alert>
       </div>
     );
   },
