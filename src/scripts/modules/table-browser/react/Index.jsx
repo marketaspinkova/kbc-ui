@@ -41,7 +41,6 @@ export default React.createClass({
 
   componentWilUnmount() {
     this.state.actions.stopEventService();
-    this.state.actions.stopPollingDataProfilerJob();
   },
 
   render() {
@@ -69,11 +68,6 @@ export default React.createClass({
         onOmitExportsFn={this.state.actions.setEventsFilter('omitExports')}
         onOmitFetchesFn={this.state.actions.setEventsFilter('omitFetches')}
         events={this.getLocalState('events')}
-        enhancedAnalysis={this.getLocalState('profilerData')}
-        onRunAnalysis={this.state.actions.onRunEnhancedAnalysis}
-        isCallingRunAnalysis={this.getLocalState('isCallingRunAnalysis')}
-        loadingProfilerData={this.getLocalState('loadingProfilerData')}
-        isRedshift={this.state.store.isRedshift()}
         onChangeTable={this.changeTable}
         filterIOEvents={this.getLocalState('filterIOEvents')}
         onFilterIOEvents={this.state.actions.setEventsFilter('filterIOEvents')}
@@ -92,14 +86,13 @@ export default React.createClass({
   },
 
   onHide() {
-    this.state.actions.stopPollingDataProfilerJob();
     this.state.actions.stopEventService();
     this.redirectBack();
   },
 
   reload() {
     Promise.props( {
-      'loadAllTablesFore': storageActions.loadTablesForce().then(() => this.state.actions.findEnhancedJob()),
+      'loadAllTablesFore': storageActions.loadTablesForce(),
       'exportData': this.state.actions.exportDataSample(),
       'loadEvents': this.state.store.eventService.load()
     });
@@ -108,7 +101,6 @@ export default React.createClass({
   loadAll() {
     this.state.actions.exportDataSample();
     this.state.actions.startEventService();
-    this.state.actions.findEnhancedJob();
   },
 
   changeTable(newTableId, dontLoadAll) {

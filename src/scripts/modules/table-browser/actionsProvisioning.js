@@ -2,10 +2,8 @@ import storeProvisioning from './storeProvisioning';
 import tableBrowserActions from './flux/actions';
 // import storageActions from '../components/StorageActionCreators';
 import storageApi from '../components/StorageApi';
-import {startDataProfilerJob, getDataProfilerJob, fetchProfilerData} from './react/components/EnhancedAnalysis/DataProfilerUtils';
-import {fromJS, List, Map} from 'immutable';
+import { List, Map } from 'immutable';
 import { factory as EventsServiceFactory} from '../sapi-events/EventsService';
-import later from 'later';
 import _ from 'underscore';
 
 const  IMPORT_EXPORT_EVENTS = ['tableImportStarted', 'tableImportDone', 'tableImportError', 'tableExported'];
@@ -63,57 +61,6 @@ export default function(tableId) {
     });
     return runExportDataSample(tableId, onSucceed, onFail);
   };
-
-  // ----START-- redhift tables enhanced lg analysis functions-------
-  const findEnhancedJob = () => {
-    // do the enhanced analysis only for redshift tables
-    if (!getStore().isRedshift()) {
-      return;
-    }
-    setLocalState({loadingProfilerData: true});
-    fetchProfilerData(tableId).then( (result) =>{
-      setLocalState({
-        profilerData: fromJS(result),
-        loadingProfilerData: false
-      });
-      if (result && result.runningJob) {
-        pollDataProfilerJob();
-      }
-    });
-  };
-
-  const stopPollingDataProfilerJob = () => {
-    if (getLocalState('timeout')) {
-      getLocalState('timeout').clear();
-    }
-  };
-
-  const getDataProfilerJobResult = () => {
-    const jobId = getLocalState(['profilerData', 'runningJob', 'id']);
-    getDataProfilerJob(jobId).then( (runningJob) => {
-      if (runningJob.isFinished) {
-        stopPollingDataProfilerJob();
-        findEnhancedJob();
-      }
-    });
-  };
-
-  const pollDataProfilerJob = () => {
-    const schedule = later.parse.recur().every(5).second();
-    stopPollingDataProfilerJob();
-    const timeout = later.setInterval(getDataProfilerJobResult, schedule);
-    setLocalState('timeout', timeout);
-  };
-
-  const onRunEnhancedAnalysis = () => {
-    setLocalState({isCallingRunAnalysis: true});
-    startDataProfilerJob(tableId)
-      .then( () => {
-        findEnhancedJob().then(() => setLocalState({isCallingRunAnalysis: false}));
-      })
-      .catch(() => setLocalState({isCallingRunAnalysis: false}));
-  };
-  // ----END-- redhift tables enhanced lg analysis functions-------
 
   // Events service provisioning
   const handleEventsChange = () => {
@@ -176,15 +123,11 @@ export default function(tableId) {
 
     exportDataSample: exportDataSample,
 
-    stopPollingDataProfilerJob: stopPollingDataProfilerJob,
-    findEnhancedJob: findEnhancedJob,
-    onRunEnhancedAnalysis: onRunEnhancedAnalysis,
     setEventsFilter: setEventsFilter,
 
     loadAll: () => {
       exportDataSample();
       startEventService();
-      findEnhancedJob();
     },
 
     initLocalState: () => {
@@ -198,13 +141,10 @@ export default function(tableId) {
         dataPreview: null,
         dataPreviewError: null,
         loadingPreview: false,
-        loadingProfilerData: false,
         omitFetches: eventOptions.omitFetches,
         omitExports: eventOptions.omitExports,
         filterIOEvents: eventOptions.filterIOEvents,
-        isCallingRunAnalysis: false,
-        detailEventId: null,
-        profilerData: Map()
+        detailEventId: null
       });
     }
   };
