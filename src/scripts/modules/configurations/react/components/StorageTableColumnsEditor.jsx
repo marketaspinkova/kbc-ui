@@ -71,7 +71,8 @@ export default React.createClass({
     return (
       <Element
         showAdvanced={this.state.showAdvanced}
-        onChangeShowAdvanced={(newValue) => this.setState({showAdvanced: newValue})} />
+        onChangeShowAdvanced={(newValue) => this.setState({showAdvanced: newValue})}
+      />
     );
   },
 
@@ -79,7 +80,7 @@ export default React.createClass({
     let headers = this.props.value.columnsMappings.map(mapping => mapping.title);
     return (
       <div>
-        { !this.props.value.tableExist &&
+        {!this.props.value.tableExist && (
           <div className="alert alert-warning">
             <h3>Table Missing</h3>
             <div className="help-block">
@@ -88,12 +89,11 @@ export default React.createClass({
               </span>
             </div>
           </div>
-        }
-        { this.props.value.columns.length > 0 &&
+        )}
+        {this.props.value.columns.length > 0 && (
           <div>
             <h3>Columns</h3>
             <div className="storage-table-columns-editor-wrapper">
-
               <Table striped className="storage-table-columns-editor">
                 <thead>
                   <tr>
@@ -106,7 +106,7 @@ export default React.createClass({
               </Table>
             </div>
           </div>
-        }
+        )}
       </div>
     );
   },
