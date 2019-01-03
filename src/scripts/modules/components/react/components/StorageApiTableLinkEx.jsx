@@ -61,7 +61,6 @@ export default React.createClass({
     let newState = _.clone(this.prepareStateFromProps({tableId: newTableId}));
     const initDataState = {
       detailEventId: null,
-      profilerData: Map(),
       loadingPreview: false,
       dataPreview: null,
       dataPreviewError: null,
@@ -96,8 +95,7 @@ export default React.createClass({
       omitFetches: omitFetches,
       omitExports: omitExports,
       filterIOEvents: filterIOEvents,
-      detailEventId: null,
-      profilerData: Map()
+      detailEventId: null
     });
   },
 

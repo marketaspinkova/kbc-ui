@@ -106,10 +106,7 @@ export default React.createClass({
   changeTable(newTableId, dontLoadAll) {
     const initLocalState = fromJS({
       detailEventId: null,
-      isCallingRunAnalysis: false,
-      profilerData: Map(),
       loadingPreview: false,
-      loadingProfilerData: false,
       dataPreview: Immutable.List(),
       dataPreviewError: null,
       events: Immutable.List()
