@@ -1,5 +1,4 @@
 import request from '../../utils/request';
-import parse from '../../utils/parseCsv';
 import ApplicationStore from '../../stores/ApplicationStore';
 
 var createUrl = function(path) {
@@ -104,19 +103,6 @@ var storageApi = {
   getKeenCredentials: function() {
     return createRequest('GET', 'tokens/keen').promise().then(function(response) {
       return response.body;
-    });
-  },
-
-  /*
-   Returns parsed CSV info plain arrays
-   [
-   [] - row 1
-   [] - row 2
-   ]
-   */
-  tableDataPreview: function(tableId, params) {
-    return createRequest('GET', 'tables/' + tableId + '/data-preview').query(params).promise().then(function(response) {
-      return parse(response.text);
     });
   },
 
