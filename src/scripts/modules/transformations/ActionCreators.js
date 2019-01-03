@@ -281,6 +281,42 @@ module.exports = {
       throw error;
     });
   },
+  deleteTransformationProperty: function(bucketId, transformationId, propertyName, changeDescription) {
+    let finalChangeDescription = changeDescription;
+    const pendingAction = 'save-' + propertyName;
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.TRANSFORMATION_EDIT_SAVE_START,
+      transformationId: transformationId,
+      bucketId: bucketId,
+      pendingAction: pendingAction
+    });
+    let transformation = TransformationsStore.getTransformation(bucketId, transformationId);
+    transformation = transformation.delete(propertyName);
+    if (!changeDescription) {
+      finalChangeDescription = 'Delete ' + StringUtils.capitalize(propertyName) + ' in ' + transformation.get('name');
+    }
+    return transformationsApi.saveTransformation(bucketId, transformationId, transformation.toJS(), finalChangeDescription).then(function(response) {
+      dispatcher.handleViewAction({
+        type: constants.ActionTypes.TRANSFORMATION_EDIT_SAVE_SUCCESS,
+        transformationId: transformationId,
+        bucketId: bucketId,
+        editingId: propertyName,
+        pendingAction: pendingAction,
+        data: response
+      });
+      return reloadVersions(bucketId, transformationId);
+    }).catch(function(error) {
+      dispatcher.handleViewAction({
+        type: constants.ActionTypes.TRANSFORMATION_EDIT_SAVE_ERROR,
+        transformationId: transformationId,
+        bucketId: bucketId,
+        editingId: propertyName,
+        pendingAction: pendingAction,
+        error: error
+      });
+      throw error;
+    });
+  },
   setTransformationBucketsFilter: function(query) {
     return dispatcher.handleViewAction({
       type: constants.ActionTypes.TRANSFORMATION_BUCKETS_FILTER_CHANGE,
