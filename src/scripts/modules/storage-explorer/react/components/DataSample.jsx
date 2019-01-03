@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
-import { Map, fromJS } from 'immutable';
 import { Alert, Form, FormGroup, FormControl, Col, ButtonGroup, Button, Table } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 import Select from 'react-select';
+import StorageTableDataPreviewItem from '../../../../react/common/StorageTableDataPreviewItem';
 import { dataPreview } from '../../Actions';
 
 export default React.createClass({
@@ -12,7 +12,7 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      data: Map(),
+      data: [],
       error: null,
       loading: false,
       filtered: false,
@@ -28,7 +28,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        {(this.state.data.count() > 1 || this.state.filtered) && this.renderSearchForm()}
+        {(this.state.filtered || this.haveDataRows()) && this.renderSearchForm()}
         {this.renderTable()}
       </div>
     );
@@ -80,7 +80,7 @@ export default React.createClass({
       );
     }
 
-    if (this.state.data.count() < 2) {
+    if (!this.haveDataRows()) {
       return <p>{this.state.filtered ? 'No data found.' : 'Table is empty.'}</p>;
     }
 
@@ -92,7 +92,7 @@ export default React.createClass({
       <Table responsive striped hover>
         <thead>
           <tr>
-            {this.state.data.first().map((header, index) => (
+            {this.state.data.columns.map((header, index) => (
               <th key={index}>
                 <strong>{header}</strong>
               </th>
@@ -100,10 +100,12 @@ export default React.createClass({
           </tr>
         </thead>
         <tbody>
-          {this.state.data.shift().map((row, rowIndex) => (
+          {this.state.data.rows.map((row, rowIndex) => (
             <tr key={rowIndex}>
               {row.map((column, columnIndex) => (
-                <td key={`${rowIndex}-${columnIndex}`}>{column}</td>
+                <td key={`${rowIndex}-${columnIndex}`}>
+                  <StorageTableDataPreviewItem item={column} />
+                </td>
               ))}
             </tr>
           ))}
@@ -149,6 +151,10 @@ export default React.createClass({
     });
   },
 
+  haveDataRows() {
+    return this.state.data.rows && this.state.data.rows.length > 0;
+  },
+
   tableColumns() {
     return this.props.table
       .get('columns')
@@ -163,11 +169,11 @@ export default React.createClass({
     this.setState({ loading: true });
 
     return dataPreview(this.props.table.get('id'), params)
-      .then(csv => {
-        this.setState({ data: fromJS(csv) });
+      .then(json => {
+        this.setState({ data: json });
       })
       .catch(errorMessage => {
-        this.setState({ dataPreview: Map(), error: errorMessage });
+        this.setState({ data: [], error: errorMessage });
       })
       .finally(() => {
         this.setState({ loading: false });
