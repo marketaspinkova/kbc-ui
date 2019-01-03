@@ -27,13 +27,13 @@ const versions = {
 
 const hasVersions = (backendType) => {
   return versions[backendType].filter((version) => {
-    return version.until && moment(version.until).unix() > moment().unix();
+    return version.version !== '' && moment(version.until).unix() > moment().unix();
   }).length > 0;
 };
 
 const getVersions = (backendType) => {
   return versions[backendType].filter((version) => {
-    return !version.until || moment(version.until).unix() > moment().unix();
+    return version.version === '' || moment(version.until).unix() > moment().unix();
   });
 };
 
