@@ -209,7 +209,7 @@ export default React.createClass({
     );
   },
 
-  canSetImageTag() {
+  canSetBackendVersion() {
     return this.props.transformation.get('backend') === 'docker'
       && (this.props.transformation.get('type') === 'r' || this.props.transformation.get('type') === 'python');
   },
@@ -228,14 +228,14 @@ export default React.createClass({
               backend={this.props.transformation.get('backend')}
               type={this.props.transformation.get('type')}
             />
-            {this.canSetImageTag() && (this.props.transformation.has('imageTag') || hasVersions(this.props.transformation.get('type'))) && (
+            {this.canSetBackendVersion() && (this.props.transformation.has('imageTag') || hasVersions(this.props.transformation.get('type'))) && (
               <BackendVersionLabel
                 bucketId={this.props.bucketId}
                 transformation={this.props.transformation}
               />
             )}
           </p>
-          {this.canSetImageTag() && this.props.transformation.has('imageTag') && (
+          {this.canSetBackendVersion() && this.props.transformation.has('imageTag') && (
             <BackendVersionWarning />
           )}
           {this._isOpenRefineTransformation() && [
