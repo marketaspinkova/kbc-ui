@@ -132,7 +132,7 @@ export default {
       table
     });
     return api(componentId)
-      .postTable(configId, tableId, table, sapiTable.get('columns'))
+      .postTable(configId, tableId, table, sapiTable)
       .then(() => {
         return this.loadTableConfig(componentId, configId, tableId).then(() =>
           dispatcher.handleViewAction({

@@ -16,6 +16,7 @@ import Promise from 'bluebird';
 
 import InstalledComponentsActions from '../../components/InstalledComponentsActionCreators';
 import InstalledComponentsStore from '../../components/stores/InstalledComponentsStore';
+import * as snowflakeMetadataUtils from '../../transformations/react/components/mapping/InputMappingRowSnowflakeEditorHelper';
 
 import DataTypes from './dataTypes';
 
@@ -68,18 +69,38 @@ export default function(componentId) {
     return null;
   }
 
-  function prepareColumnsDefaultTypes(tableColumns) {
+  function prepareColumnsTypes(table) {
     const dataTypes = DataTypes[componentId] || {};
-    if (!dataTypes.default) return List();
+
+    if (!dataTypes.default) {
+      return List();
+    }
+    
     const defaultType = fromJS(dataTypes.default);
-    return tableColumns.map((c) =>
-      Map({
-        'name': c,
-        'dbName': c,
-        'nullable': false,
-        'default': '',
-        'size': ''
-      }).merge(defaultType));
+    const backend = table.getIn(['bucket', 'backend']);
+    const columnMetadata = table.get('columnMetadata', List());
+
+    if (backend === 'snowflake' && columnMetadata.count()) {
+      const metadata = snowflakeMetadataUtils.getMetadataDataTypes(columnMetadata);
+      return table.get('columns').map(column => {
+        return fromJS({
+          name: column,
+          dbName: column,
+          type: metadata.getIn([column, 'type'], defaultType.get('type')).toLowerCase(),
+          nullable: metadata.getIn([column, 'convertEmptyValuesToNull'], false),
+          size: metadata.getIn([column, 'length'], defaultType.get('size', '')),
+          default: ''
+        });
+      });
+    }
+
+    return table.get('columns').map(column => Map({
+      name: column,
+      dbName: column,
+      nullable: false,
+      default: '',
+      size: ''
+    }).merge(defaultType));
   }
 
   return {
@@ -231,13 +252,13 @@ export default function(componentId) {
     },
 
     // ######## POST TABLE
-    postTable(configId, tableId, table, tableColumns) {
+    postTable(configId, tableId, table, sapiTable) {
       const tableToSave = fromJS({
         dbName: table.dbName,
         export: table.export,
         tableId: tableId,
         items: []
-      }).set('items', prepareColumnsDefaultTypes(tableColumns));
+      }).set('items', prepareColumnsTypes(sapiTable));
 
       return this.loadConfigData(configId).then(
         (data) => {
