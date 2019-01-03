@@ -9,7 +9,7 @@ export default React.createClass({
     table: React.PropTypes.object.isRequired,
     columnsTypes: React.PropTypes.object.isRequired,
     isSaving: React.PropTypes.bool.isRequired,
-    dataPreview: React.PropTypes.array,
+    dataPreview: React.PropTypes.object,
     editingData: React.PropTypes.object,
     onChange: React.PropTypes.func,
     hideIgnored: React.PropTypes.bool

@@ -17,7 +17,7 @@ export default React.createClass({
     isSaving: React.PropTypes.bool.isRequired,
     onColumnChange: React.PropTypes.func.isRequired,
     configurationId: React.PropTypes.string.isRequired,
-    dataPreview: React.PropTypes.array,
+    dataPreview: React.PropTypes.object,
     showIdentifier: React.PropTypes.bool.isRequired,
     isExported: React.PropTypes.bool.isRequired
   },

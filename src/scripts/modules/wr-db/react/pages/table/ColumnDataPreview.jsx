@@ -8,7 +8,7 @@ export default React.createClass({
 
   propTypes: {
     columnName: React.PropTypes.string.isRequired,
-    tableData: React.PropTypes.array
+    tableData: React.PropTypes.object
   },
 
   render() {
@@ -39,11 +39,11 @@ export default React.createClass({
 
   _getColumnValues() {
     const data = Immutable.fromJS(this.props.tableData);
-    const columnIndex = data.first().indexOf(this.props.columnName);
+    const columnIndex = data.get('columns').indexOf(this.props.columnName);
 
     return data
-      .shift()
-      .map(row => row.get(columnIndex))
+      .get('rows')
+      .map(row => row.get(columnIndex).get('value'))
       .toArray();
   }
 });

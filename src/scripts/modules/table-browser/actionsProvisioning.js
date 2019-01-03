@@ -12,7 +12,7 @@ const  IMPORT_EXPORT_EVENTS = ['tableImportStarted', 'tableImportDone', 'tableIm
 
 function runExportDataSample(tableId, onSucceed, onFail) {
   return storageApi
-    .tableDataPreview(tableId, {limit: 10})
+    .tableDataJsonPreview(tableId, {limit: 10})
     .then(onSucceed)
     .catch((error) => {
       let dataPreviewError = null;
@@ -47,10 +47,10 @@ export default function(tableId) {
   };
 
   const exportDataSample = () => {
-    const onSucceed = (csv) =>
+    const onSucceed = (json) =>
       setLocalState({
         loadingPreview: false,
-        dataPreview: fromJS(csv)
+        dataPreview: json
       });
 
     const onFail = (dataPreviewError) => setLocalState({
@@ -195,7 +195,7 @@ export default function(tableId) {
       return Map({
         eventService: es,
         events: List(),
-        dataPreview: List(),
+        dataPreview: null,
         dataPreviewError: null,
         loadingPreview: false,
         loadingProfilerData: false,

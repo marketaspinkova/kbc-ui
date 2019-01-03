@@ -29,7 +29,7 @@ export default React.createClass({
     column: React.PropTypes.string,
     tdeType: React.PropTypes.object,
     editing: React.PropTypes.object,
-    dataPreview: React.PropTypes.array,
+    dataPreview: React.PropTypes.object,
     onChange: React.PropTypes.func
   },
 

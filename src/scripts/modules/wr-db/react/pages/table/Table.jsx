@@ -109,9 +109,9 @@ export default componentId => {
       //   @_handleEditColumnsStart()
       const tableId = RoutesStore.getCurrentRouteParam('tableId');
       const component = this;
-      return storageApi.tableDataPreview(tableId, { limit: 10 }).then(csv =>
+      return storageApi.tableDataJsonPreview(tableId, { limit: 10 }).then(json =>
         component.setState({
-          dataPreview: csv
+          dataPreview: json
         })
       );
     },

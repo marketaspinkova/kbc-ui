@@ -41,11 +41,11 @@ export default React.createClass({
       loadingPreview: true
     });
     return storageApi
-      .tableDataPreview(this.props.value.tableId, { limit: 10 })
-      .then(csv => {
+      .tableDataJsonPreview(this.props.value.tableId, { limit: 10 })
+      .then(json => {
         this.setState({
           loadingPreview: false,
-          dataPreview: fromJS(csv)
+          dataPreview: fromJS(json)
         });
       })
       .catch(error => {

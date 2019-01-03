@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 
 import immutableMixin from 'react-immutable-render-mixin';
 import EmptyState from '../../../components/react/components/ComponentEmptyState';
+import StorageTableDataPreviewItem from '../../../../react/common/StorageTableDataPreviewItem';
 import {Table} from 'react-bootstrap';
 
 export default React.createClass({
@@ -23,7 +24,7 @@ export default React.createClass({
       );
     }
 
-    if (dataPreview.count() === 0) {
+    if (dataPreview === null || dataPreview.rows.length === 0) {
       return (
         <EmptyState>
           No Data.
@@ -31,18 +32,17 @@ export default React.createClass({
       );
     }
 
-    const header = dataPreview.first().map( (c, idx) => {
+    const header = dataPreview.columns.map( (c, idx) => {
       return (
         <th key={idx}>
           {c}
         </th>
       );
-    }).toArray();
-    const rows = dataPreview.rest().map( (row, ridx) => {
-      const cols = row.map( (c, cidx) => {
-        return (<td key={cidx}> {c} </td>);
+    });
+    const rows = dataPreview.rows.map( (row, ridx) => {
+      const cols = row.map( (item) => {
+        return (<td> <StorageTableDataPreviewItem item={item} /> </td>);
       });
-
       return (
         <tr key={ridx}>
           {cols}

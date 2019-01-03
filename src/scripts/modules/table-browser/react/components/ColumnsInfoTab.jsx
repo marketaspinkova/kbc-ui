@@ -5,6 +5,7 @@ import EmptyState from '../../../components/react/components/ComponentEmptyState
 import immutableMixin from 'react-immutable-render-mixin';
 
 import Tooltip from '../../../../react/common/Tooltip';
+import StorageTableDataPreviewItem from '../../../../react/common/StorageTableDataPreviewItem';
 import enhancedColumnsTemplate from './EnhancedAnalysis/EnhancedComlumnsTemplate';
 import EnhancedAnalysisRunControl from './EnhancedAnalysis/EnhancedAnalysisRunControl';
 import {Table} from 'react-bootstrap';
@@ -42,14 +43,13 @@ export default React.createClass({
         </EmptyState>
       );
     }
-    const {table} = this.props;
-    const columns = table.get('columns');
 
+    const columns = this.props.dataPreview.columns;
     const headerRow = this.renderHeaderRow();
 
     const columnsRows = columns.map((c, idx) => {
       const values = this.getColumnValues(c);
-      let result = values.filter((val) => val !== '').join(', ');
+      let result = values.filter((item) => item.value !== '');
       return this.renderBodyRow(c, this.renderNameColumnCell(c), result, idx);
     });
 
@@ -157,7 +157,7 @@ export default React.createClass({
   },
 
 
-  renderBodyRow(columnName, columnNameCell, value, idx) {
+  renderBodyRow(columnName, columnNameCell, values, idx) {
     let enhancedCells = null;
     if (this.props.isRedshift) {
       if (this.hasEnhancedData()) {
@@ -174,7 +174,7 @@ export default React.createClass({
                 {columnNameCell}
               </td>
               <td>
-                {value}
+                {values.map( (item, key) => <span>{key !== 0 && ', '}<StorageTableDataPreviewItem item={item}/></span>)}
               </td>
             </tr>
           );
@@ -213,7 +213,7 @@ export default React.createClass({
           {columnNameCell}
         </td>
         <td>
-          {value}
+          {values.map( (item, key) => <span>{key !== 0 && ', '}<StorageTableDataPreviewItem item={item}/></span>)}
         </td>
         {enhancedCells}
       </tr>
@@ -222,17 +222,17 @@ export default React.createClass({
 
   getColumnValues(columnName) {
     const data = this.props.dataPreview;
-    const columnIndex = data.first().indexOf(columnName);
-    const result = data
-      .shift()
+    const columnIndex = data.columns.indexOf(columnName);
+    const result = data.rows
       .map( (row) => {
-        return row.get(columnIndex);
+        return row[columnIndex];
       });
     return result;
   },
 
+
   isDataPreview() {
-    return !_.isEmpty(this.props.dataPreview.toJS());
+    return !_.isEmpty(this.props.dataPreview);
   },
 
   hasEnhancedAnalysis() {
