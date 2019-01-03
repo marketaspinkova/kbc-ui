@@ -32,6 +32,7 @@ const PERMANENT_MIGRATION_COMPONENTS = [
 const MIGRATION_COMPONENT_ID = 'keboola.config-migration-tool';
 
 const componentNameMap = Map({
+  'gooddata-writer': 'keboola.gooddata-writer',
   'ex-gooddata': 'keboola.ex-gooddata',
   'ex-google-analytics': 'keboola.ex-google-analytics',
   'ex-google-drive': 'keboola.ex-google-drive',

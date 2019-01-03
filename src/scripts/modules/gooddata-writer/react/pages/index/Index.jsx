@@ -24,6 +24,7 @@ import AddNewTableButton from '../../components/AddNewTableButton';
 import TableRow from './TableRow';
 import goodDataWriterStore from '../../../store';
 import actionCreators from '../../../actionCreators';
+import MigrationRow from '../../../../components/react/components/MigrationRow';
 
 export default React.createClass({
   mixins: [
@@ -94,6 +95,10 @@ export default React.createClass({
     const writer = this.state.writer.get('config');
     return (
       <div className="container-fluid">
+        <MigrationRow
+          componentId="gooddata-writer"
+          replacementAppId="keboola.gooddata-writer"
+        />
         <div className="col-md-9 kbc-main-content">
           <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
             <ComponentDescription componentId="gooddata-writer" configId={writer.get('id')} />
