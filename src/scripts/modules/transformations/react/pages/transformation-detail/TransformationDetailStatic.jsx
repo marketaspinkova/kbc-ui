@@ -17,6 +17,9 @@ import SavedFiles from './SavedFiles';
 import Queries from './Queries';
 import Scripts from './Scripts';
 import Phase from './Phase';
+import BackendVersionLabel from './backend-version/Label';
+import BackendVersionWarning from './backend-version/Warning';
+import { hasVersions } from './backend-version/versions';
 import AddOutputMapping from './AddOutputMapping';
 import AddInputMapping from './AddInputMapping';
 import InlineEditArea from '../../../../../react/common/InlineEditArea';
@@ -206,6 +209,11 @@ export default React.createClass({
     );
   },
 
+  canSetImageTag() {
+    return this.props.transformation.get('backend') === 'docker'
+      && (this.props.transformation.get('type') === 'r' || this.props.transformation.get('type') === 'python');
+  },
+
   _renderDetail() {
     return (
       <span>
@@ -220,7 +228,16 @@ export default React.createClass({
               backend={this.props.transformation.get('backend')}
               type={this.props.transformation.get('type')}
             />
+            {this.canSetImageTag() && (this.props.transformation.has('imageTag') || hasVersions(this.props.transformation.get('type'))) && (
+              <BackendVersionLabel
+                bucketId={this.props.bucketId}
+                transformation={this.props.transformation}
+              />
+            )}
           </p>
+          {this.canSetImageTag() && this.props.transformation.has('imageTag') && (
+            <BackendVersionWarning />
+          )}
           {this._isOpenRefineTransformation() && [
             <h2>OpenRefine Beta Warning</h2>,
 
