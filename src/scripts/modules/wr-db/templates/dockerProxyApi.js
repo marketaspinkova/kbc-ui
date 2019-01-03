@@ -75,7 +75,7 @@ export default function(componentId) {
     if (!dataTypes.default) {
       return List();
     }
-    
+
     const defaultType = fromJS(dataTypes.default);
     const backend = table.getIn(['bucket', 'backend']);
     const columnMetadata = table.get('columnMetadata', List());
