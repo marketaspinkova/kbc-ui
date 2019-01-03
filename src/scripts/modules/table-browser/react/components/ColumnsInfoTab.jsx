@@ -41,7 +41,7 @@ export default React.createClass({
     const columnsRows = columns.map((c, idx) => {
       const values = this.getColumnValues(c);
       let result = values.filter((item) => item.value !== '');
-      return this.renderBodyRow(c, this.renderNameColumnCell(c), result, idx);
+      return this.renderBodyRow(this.renderNameColumnCell(c), result, idx);
     });
 
     return (
@@ -84,7 +84,7 @@ export default React.createClass({
     );
   },
 
-  renderBodyRow(columnName, columnNameCell, values, idx) {
+  renderBodyRow(columnNameCell, values, idx) {
     return (
       <tr key={idx}>
         <td>
