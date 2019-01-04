@@ -383,6 +383,7 @@ export default React.createClass({
                 datatypes={this.getDatatypes()}
                 columns={this._getFilteredColumns()}
                 datatypesMap={SnowflakeDataTypesMapping}
+                sourceTable={this.props.value.get('source', '')}
                 disabled={this.props.disabled || !this.props.value.get('source')}
                 onChange={this._handleChangeDataTypes}
               />
