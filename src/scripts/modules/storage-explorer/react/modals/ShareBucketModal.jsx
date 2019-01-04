@@ -5,8 +5,11 @@ import { RadioGroup } from 'react-radio-group';
 import RadioGroupInput from '../../../../react/common/RadioGroupInput';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
+const SHARING_TYPE_ORGANIZATION_MEMBERS = 'organization';
+const SHARING_TYPE_ORGANIZATION_PROJECT_MEMBERS = 'organization-project';
+
 const INITIAL_STATE = {
-  sharing: ''
+  sharing: SHARING_TYPE_ORGANIZATION_MEMBERS
 };
 
 export default React.createClass({
@@ -41,12 +44,12 @@ export default React.createClass({
                   <RadioGroupInput
                     label="Organization Members"
                     help="Only organization members are able to link the shared bucket to a project."
-                    value="organization"
+                    value={SHARING_TYPE_ORGANIZATION_MEMBERS}
                   />
                   <RadioGroupInput
                     label="Project Members"
                     help="Every project member is able to link the shared bucket to a project."
-                    value="organization-project"
+                    value={SHARING_TYPE_ORGANIZATION_PROJECT_MEMBERS}
                   />
                 </RadioGroup>
               </Col>
