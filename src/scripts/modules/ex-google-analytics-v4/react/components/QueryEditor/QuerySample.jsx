@@ -31,11 +31,11 @@ export default React.createClass({
   },
 
   renderSamplesTable() {
-    const csvMap = this.getSampleDataInfo('data', null);
-    if (!csvMap ) {
+    const sampleData = this.getSampleDataInfo('data', null);
+    if (!sampleData ) {
       return null;
     }
-    if (csvMap.count() === 0) {
+    if (sampleData.count() === 0) {
       return (
         <EmptyState>
           Query returned empty result
@@ -43,13 +43,11 @@ export default React.createClass({
       );
     }
 
-    let idIdx = 0;
-    const header = csvMap.first().map((c, idx) => {
-      if (c === 'id') idIdx = idx;
+    const header = sampleData.first().map((c, idx) => {
       return (
         <th key={idx}>
-          {c}
-          {c === 'id' ?
+          {idx}
+          {idx === 'id' ?
             <button style={{paddingLeft: '2px', paddingBottom: 0, paddingTop: 0}}
               onClick={() => this.setState({showIds: !this.state.showIds})}
               className="btn btn-link btn-sm">
@@ -61,16 +59,17 @@ export default React.createClass({
       );
     }).toArray();
 
-    const rows = csvMap.rest().map((row, rowIdx) => {
+    const rows = sampleData.map((row, rowIdx) => {
       const cols = row.map( (c, idx) => {
-        return (<td key={idx}>{ (idx === idIdx && !this.state.showIds) ? '...' : c}</td>);
-      });
+        return (<td key={idx}>{ (idx === 'id' && !this.state.showIds) ? '...' : c}</td>);
+      }).toArray();
 
       return (
         <tr key={rowIdx}>
           {cols}
         </tr>);
-    });
+    }).toArray();
+
     return (
       <Table responsive className="table table-striped">
         <thead>
