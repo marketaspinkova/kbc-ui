@@ -4,7 +4,6 @@ import * as common from './common';
 import componentsActions from '../components/InstalledComponentsActionCreators';
 import callDockerAction from '../components/DockerActionsApi';
 import _ from 'underscore';
-import Promise from 'bluebird';
 
 export default function(configId, componentId) {
   const store = storeProvisioning(configId, componentId);
@@ -174,9 +173,9 @@ export default function(configId, componentId) {
             throw result;
           }
           if (result && result.data.length === 0) {
-            return Promise.resolve([]);
+            return [];
           }
-          return Promise.resolve(result.data);
+          return result.data;
         })
         .then((jsonData) =>
           updateLocalState(path, fromJS({
