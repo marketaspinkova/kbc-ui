@@ -1,3 +1,10 @@
+import Promise from 'bluebird';
+import {List, Map, fromJS} from 'immutable';
+import InstalledComponentsActions from '../../components/InstalledComponentsActionCreators';
+import InstalledComponentsStore from '../../components/stores/InstalledComponentsStore';
+import * as columnsMetadata from '../columnsMetadata';
+
+const tablesPath = ['storage', 'input', 'tables'];
 const dockerComponents = [
   'wr-db-mssql',
   'keboola.wr-db-mssql-v2',
@@ -11,19 +18,10 @@ const dockerComponents = [
   'keboola.wr-looker',
   'keboola.wr-thoughtspot'
 ];
-import {List, Map, fromJS} from 'immutable';
-import Promise from 'bluebird';
-
-import InstalledComponentsActions from '../../components/InstalledComponentsActionCreators';
-import InstalledComponentsStore from '../../components/stores/InstalledComponentsStore';
-import * as snowflakeMetadataUtils from '../../transformations/react/components/mapping/InputMappingRowSnowflakeEditorHelper';
-
-import DataTypes from './dataTypes';
 
 function isDockerBasedWriter(componentId) {
   return dockerComponents.indexOf(componentId) >= 0;
 }
-const tablesPath = ['storage', 'input', 'tables'];
 
 function updateTablesMapping(data, table) {
   const tableId = table.get('tableId');
@@ -67,40 +65,6 @@ function generateInputMapping(paramsTables, inputMappingTables) {
 export default function(componentId) {
   if (!isDockerBasedWriter(componentId)) {
     return null;
-  }
-
-  function prepareColumnsTypes(table) {
-    const dataTypes = DataTypes[componentId] || {};
-
-    if (!dataTypes.default) {
-      return List();
-    }
-
-    const defaultType = fromJS(dataTypes.default);
-    const backend = table.getIn(['bucket', 'backend']);
-    const columnMetadata = table.get('columnMetadata', List());
-
-    if (backend === 'snowflake' && columnMetadata.count()) {
-      const metadata = snowflakeMetadataUtils.getMetadataDataTypes(columnMetadata);
-      return table.get('columns').map(column => {
-        return fromJS({
-          name: column,
-          dbName: column,
-          type: metadata.getIn([column, 'type'], defaultType.get('type')).toLowerCase(),
-          nullable: metadata.getIn([column, 'convertEmptyValuesToNull'], false),
-          size: metadata.getIn([column, 'length'], defaultType.get('size', '')),
-          default: ''
-        });
-      });
-    }
-
-    return table.get('columns').map(column => Map({
-      name: column,
-      dbName: column,
-      nullable: false,
-      default: '',
-      size: ''
-    }).merge(defaultType));
   }
 
   return {
@@ -258,7 +222,7 @@ export default function(componentId) {
         export: table.export,
         tableId: tableId,
         items: []
-      }).set('items', prepareColumnsTypes(sapiTable));
+      }).set('items', columnsMetadata.prepareColumnsTypes(componentId, sapiTable));
 
       return this.loadConfigData(configId).then(
         (data) => {
