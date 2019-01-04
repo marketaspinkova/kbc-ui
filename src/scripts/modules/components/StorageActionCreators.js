@@ -186,7 +186,7 @@ module.exports = {
       });
   },
 
-  deleteBucket: (bucketId, force) => {
+  deleteBucket: function(bucketId, force) {
     dispatcher.handleViewAction({
       type: constants.ActionTypes.STORAGE_BUCKET_DELETE,
       bucketId: bucketId
