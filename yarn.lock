@@ -2355,10 +2355,6 @@ cssstyle@^1.0.0:
   dependencies:
     cssom "0.3.x"
 
-csv-parse@0.0.9:
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/csv-parse/-/csv-parse-0.0.9.tgz#d0e2519c5ea4ed9c74efb6872747c6abe95ac090"
-
 cyclist@~0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/cyclist/-/cyclist-0.2.2.tgz#1b33792e11e914a2fd6d6ed6447464444e5fa640"
