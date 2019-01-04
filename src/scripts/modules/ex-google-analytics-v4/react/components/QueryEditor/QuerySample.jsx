@@ -31,11 +31,11 @@ export default React.createClass({
   },
 
   renderSamplesTable() {
-    const csvMap = this.getSampleDataInfo('data', null);
-    if (!csvMap ) {
+    const sampleData = this.getSampleDataInfo('data', null);
+    if (!sampleData ) {
       return null;
     }
-    if (csvMap.count() === 0) {
+    if (sampleData.count() === 0) {
       return (
         <EmptyState>
           Query returned empty result
@@ -43,46 +43,52 @@ export default React.createClass({
       );
     }
 
-    let idIdx = 0;
-    const header = csvMap.first().map((c, idx) => {
-      if (c === 'id') idIdx = idx;
-      return (
-        <th key={idx}>
-          {c}
-          {c === 'id' ?
-            <button style={{paddingLeft: '2px', paddingBottom: 0, paddingTop: 0}}
-              onClick={() => this.setState({showIds: !this.state.showIds})}
-              className="btn btn-link btn-sm">
-              {this.state.showIds ? 'Hide' : 'Show'}
-            </button>
-            : null}
-
-        </th>
-      );
-    }).toArray();
-
-    const rows = csvMap.rest().map((row, rowIdx) => {
-      const cols = row.map( (c, idx) => {
-        return (<td key={idx}>{ (idx === idIdx && !this.state.showIds) ? '...' : c}</td>);
-      });
-
-      return (
-        <tr key={rowIdx}>
-          {cols}
-        </tr>);
-    });
     return (
       <Table responsive className="table table-striped">
         <thead>
           <tr>
-            {header}
+            {this.renderHeader(sampleData.first())}
           </tr>
         </thead>
         <tbody>
-          {rows}
+          {this.renderRows(sampleData)}
         </tbody>
       </Table>
     );
+  },
+
+  renderHeader(firstRow) {
+    return firstRow.map((value, columnName) => {
+      return (
+        <th key={columnName}>
+          {columnName}
+          {columnName === 'id' && (
+            <button
+              style={{paddingLeft: '2px', paddingBottom: 0, paddingTop: 0}}
+              onClick={() => this.setState({showIds: !this.state.showIds})}
+              className="btn btn-link btn-sm"
+            >
+              {this.state.showIds ? 'Hide' : 'Show'}
+            </button>
+          )}
+        </th>
+      );
+    }).toArray();
+  },
+
+  renderRows(rows) {
+    return rows.map((row, rowIndex) => {
+      return (
+        <tr key={rowIndex}>
+          {row.map((value, columnName) => {
+            return (
+              <td key={columnName}>
+                {(columnName === 'id' && !this.state.showIds) ? '...' : value}
+              </td>
+            );
+          }).toArray()}
+        </tr>);
+    }).toArray();
   },
 
   renderError(error) {

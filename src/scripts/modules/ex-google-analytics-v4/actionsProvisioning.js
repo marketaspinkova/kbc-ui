@@ -1,11 +1,9 @@
 import storeProvisioning from './storeProvisioning';
 import {Map, fromJS} from 'immutable';
-import parseCsv from '../../utils/parseCsv';
 import * as common from './common';
 import componentsActions from '../components/InstalledComponentsActionCreators';
 import callDockerAction from '../components/DockerActionsApi';
 import _ from 'underscore';
-import Promise from 'bluebird';
 
 export default function(configId, componentId) {
   const store = storeProvisioning(configId, componentId);
@@ -169,22 +167,22 @@ export default function(configId, componentId) {
       };
 
       updateLocalState(path.concat('isLoading'), true);
-      return callDockerAction(componentId, 'sample', params)
+      return callDockerAction(componentId, 'sampleJson', params)
         .then((result) => {
           if (result.status !== 'success') {
             throw result;
           }
           if (result && result.data.length === 0) {
-            return Promise.resolve([]);
+            return [];
           }
-          return parseCsv(result.data);
+          return result.data;
         })
-        .then((parsedCsvData) =>
+        .then((jsonData) =>
           updateLocalState(path, fromJS({
             isLoading: false,
             isError: false,
             error: null,
-            data: parsedCsvData
+            data: jsonData
           })))
         .catch((error) =>
           updateLocalState(path, fromJS({
