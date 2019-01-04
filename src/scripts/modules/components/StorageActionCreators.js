@@ -209,7 +209,7 @@ module.exports = {
       });
   },
 
-  shareBucket: (bucketId, params) => {
+  shareBucket: function(bucketId, params) {
     dispatcher.handleViewAction({
       type: constants.ActionTypes.STORAGE_BUCKET_SHARE,
       bucketId: bucketId
@@ -230,7 +230,7 @@ module.exports = {
       });
   },
 
-  unshareBucket: (bucketId) => {
+  unshareBucket: function(bucketId) {
     dispatcher.handleViewAction({
       type: constants.ActionTypes.STORAGE_BUCKET_UNSHARE,
       bucketId: bucketId
