@@ -43,11 +43,11 @@ export default React.createClass({
       );
     }
 
-    const header = sampleData.first().map((c, idx) => {
+    const header = sampleData.first().map((value, columnName) => {
       return (
-        <th key={idx}>
-          {idx}
-          {idx === 'id' ?
+        <th key={columnName}>
+          {columnName}
+          {columnName === 'id' ?
             <button style={{paddingLeft: '2px', paddingBottom: 0, paddingTop: 0}}
               onClick={() => this.setState({showIds: !this.state.showIds})}
               className="btn btn-link btn-sm">
@@ -59,14 +59,18 @@ export default React.createClass({
       );
     }).toArray();
 
-    const rows = sampleData.map((row, rowIdx) => {
-      const cols = row.map( (c, idx) => {
-        return (<td key={idx}>{ (idx === 'id' && !this.state.showIds) ? '...' : c}</td>);
+    const rows = sampleData.map((row, rowIndex) => {
+      const columns = row.map((value, columnName) => {
+        return (
+          <td key={columnName}>
+            {(columnName === 'id' && !this.state.showIds) ? '...' : value}
+          </td>
+        );
       }).toArray();
 
       return (
-        <tr key={rowIdx}>
-          {cols}
+        <tr key={rowIndex}>
+          {columns}
         </tr>);
     }).toArray();
 
