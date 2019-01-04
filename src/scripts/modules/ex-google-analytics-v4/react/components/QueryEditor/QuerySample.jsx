@@ -43,49 +43,52 @@ export default React.createClass({
       );
     }
 
-    const header = sampleData.first().map((value, columnName) => {
-      return (
-        <th key={columnName}>
-          {columnName}
-          {columnName === 'id' ?
-            <button style={{paddingLeft: '2px', paddingBottom: 0, paddingTop: 0}}
-              onClick={() => this.setState({showIds: !this.state.showIds})}
-              className="btn btn-link btn-sm">
-              {this.state.showIds ? 'Hide' : 'Show'}
-            </button>
-            : null}
-
-        </th>
-      );
-    }).toArray();
-
-    const rows = sampleData.map((row, rowIndex) => {
-      const columns = row.map((value, columnName) => {
-        return (
-          <td key={columnName}>
-            {(columnName === 'id' && !this.state.showIds) ? '...' : value}
-          </td>
-        );
-      }).toArray();
-
-      return (
-        <tr key={rowIndex}>
-          {columns}
-        </tr>);
-    }).toArray();
-
     return (
       <Table responsive className="table table-striped">
         <thead>
           <tr>
-            {header}
+            {this.renderHeader(sampleData.first())}
           </tr>
         </thead>
         <tbody>
-          {rows}
+          {this.renderRows(sampleData)}
         </tbody>
       </Table>
     );
+  },
+
+  renderHeader(firstRow) {
+    return firstRow.map((value, columnName) => {
+      return (
+        <th key={columnName}>
+          {columnName}
+          {columnName === 'id' && (
+            <button
+              style={{paddingLeft: '2px', paddingBottom: 0, paddingTop: 0}}
+              onClick={() => this.setState({showIds: !this.state.showIds})}
+              className="btn btn-link btn-sm"
+            >
+              {this.state.showIds ? 'Hide' : 'Show'}
+            </button>
+          )}
+        </th>
+      );
+    }).toArray();
+  },
+
+  renderRows(rows) {
+    return rows.map((row, rowIndex) => {
+      return (
+        <tr key={rowIndex}>
+          {row.map((value, columnName) => {
+            return (
+              <td key={columnName}>
+                {(columnName === 'id' && !this.state.showIds) ? '...' : value}
+              </td>
+            );
+          }).toArray()}
+        </tr>);
+    }).toArray();
   },
 
   renderError(error) {
