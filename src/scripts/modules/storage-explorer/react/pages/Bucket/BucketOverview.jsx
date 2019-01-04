@@ -13,7 +13,8 @@ export default React.createClass({
   propTypes: {
     bucket: PropTypes.object.isRequired,
     sapiToken: PropTypes.object.isRequired,
-    isSharing: PropTypes.bool.isRequired
+    isSharing: PropTypes.bool.isRequired,
+    isUnsharing: PropTypes.bool.isRequired
   },
 
   getInitialState() {
@@ -158,6 +159,7 @@ export default React.createClass({
         text={<p>Do you really want to stop bucket sharing?</p>}
         onConfirm={this.handleUnshareBucket}
         onHide={this.closeUnshareModal}
+        isLoading={this.props.isUnsharing}
       />
     );
   },

@@ -26,7 +26,8 @@ export default React.createClass({
       tables: TablesStore.getAll().filter(table => table.getIn(['bucket', 'id']) === bucketId),
       deletingBuckets: BucketsStore.deletingBuckets().has(bucketId),
       creatingAliasTable: TablesStore.getIsCreatingAliasTable(),
-      isSharing: BucketsStore.isSharing(bucketId)
+      isSharing: BucketsStore.isSharing(bucketId),
+      isUnsharing: BucketsStore.isUnsharing(bucketId)
     };
   },
 
@@ -71,6 +72,7 @@ export default React.createClass({
                   bucket={this.state.bucket}
                   sapiToken={this.state.sapiToken}
                   isSharing={this.state.isSharing}
+                  isUnsharing={this.state.isUnsharing}
                 />
               </Tab.Pane>
               <Tab.Pane eventKey="tables">
