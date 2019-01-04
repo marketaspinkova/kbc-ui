@@ -3,7 +3,7 @@ import { fromJS } from 'immutable';
 import { prepareColumnsTypes } from './columnsMetadata';
 
 const SnowflakeComponentId = 'keboola.wr-db-snowflake';
-const snowFlakeTable = fromJS({
+const table = fromJS({
   bucket: {
     backend: 'snowflake'
   },
@@ -27,63 +27,62 @@ function snowflakeDefault(column) {
 }
 
 describe('prepareColumnsTypes', function() {
-  it('only table with snowflake backend can read metadata, default values is returned for others backend', () => {
-    const fakeMysqlTable = snowFlakeTable.setIn(['bucket', 'backend'], 'mysql');
-
-    assert.deepStrictEqual(
-      prepareColumnsTypes(SnowflakeComponentId, fakeMysqlTable),
-      fromJS([snowflakeDefault('country'), snowflakeDefault('cars')])
-    );
-  });
-
   it('snowflake backend can read metadata, default values is returned for columns without metadata', () => {
-    assert.deepStrictEqual(
-      prepareColumnsTypes(SnowflakeComponentId, snowFlakeTable),
-      fromJS([defaultCountryTypesFromMetadata(), snowflakeDefault('cars')])
-    );
+    const expected = fromJS([defaultCountryTypesFromMetadata(), snowflakeDefault('cars')]);
+
+    assert.strictEqual(prepareColumnsTypes(SnowflakeComponentId, table).equals(expected), true);
   });
 
   it('if metadata has no basetype, default values are returned', () => {
-    const withoutMetadataBasetype = snowFlakeTable.deleteIn(['columnMetadata', 'country', 0]);
+    const withoutMetadataBasetype = table.deleteIn(['columnMetadata', 'country', 0]);
+    const expected = fromJS([snowflakeDefault('country'), snowflakeDefault('cars')]);
 
-    assert.deepStrictEqual(
-      prepareColumnsTypes(SnowflakeComponentId, withoutMetadataBasetype),
-      fromJS([snowflakeDefault('country'), snowflakeDefault('cars')])
-    );
+    assert.strictEqual(prepareColumnsTypes(SnowflakeComponentId, withoutMetadataBasetype).equals(expected), true);
   });
 
   it('if metadata has unknown basetype, default values are returned', () => {
-    const uknownMetadataBasetype = snowFlakeTable.setIn(['columnMetadata', 'country', 0, 'value'], 'UNKNOWN');
+    const uknownMetadataBasetype = table.setIn(['columnMetadata', 'country', 0, 'value'], 'UNKNOWN');
+    const expected = fromJS([snowflakeDefault('country'), snowflakeDefault('cars')]);
 
-    assert.deepStrictEqual(
-      prepareColumnsTypes(SnowflakeComponentId, uknownMetadataBasetype),
-      fromJS([snowflakeDefault('country'), snowflakeDefault('cars')])
-    );
+    assert.strictEqual(prepareColumnsTypes(SnowflakeComponentId, uknownMetadataBasetype).equals(expected), true);
   });
 
   it('if length from metadata is bigger than allowed, default size is used', () => {
-    const updatedTable = snowFlakeTable.setIn(['columnMetadata', 'country', 3, 'value'], 26777216);
+    const updatedTable = table.setIn(['columnMetadata', 'country', 3, 'value'], 26777216);
+    const expected = fromJS([defaultCountryTypesFromMetadata(), snowflakeDefault('cars')]);
 
-    assert.deepStrictEqual(
-      prepareColumnsTypes(SnowflakeComponentId, updatedTable),
-      fromJS([defaultCountryTypesFromMetadata(), snowflakeDefault('cars')])
-    );
+    assert.strictEqual(prepareColumnsTypes(SnowflakeComponentId, updatedTable).equals(expected), true);
+  });
+
+  it('disabled fields should be excluded', () => {
+    const expectedCountry = defaultCountryTypesFromMetadata();
+    delete expectedCountry.nullable;
+    delete expectedCountry.default;
+
+    const expectedCars = {
+      ...snowflakeDefault('cars'),
+      type: 'varchar'
+    };
+    delete expectedCars.nullable;
+    delete expectedCars.default;
+
+    const expected = fromJS([expectedCountry, expectedCars]);
+
+    assert.strictEqual(prepareColumnsTypes('keboola.wr-thoughtspot', table).equals(expected), true);
   });
 
   it('can read default value from metadata', () => {
-    const updatedTable = snowFlakeTable.updateIn(['columnMetadata', 'country'], metadata => {
+    const updatedTable = table.updateIn(['columnMetadata', 'country'], metadata => {
       return metadata.push(fromJS({ key: 'KBC.datatype.default', value: 'default value' }));
     });
+    const expected = fromJS([
+      {
+        ...defaultCountryTypesFromMetadata(),
+        default: 'default value'
+      },
+      snowflakeDefault('cars')
+    ]);
 
-    assert.deepStrictEqual(
-      prepareColumnsTypes(SnowflakeComponentId, updatedTable),
-      fromJS([
-        {
-          ...defaultCountryTypesFromMetadata(),
-          default: 'default value'
-        },
-        snowflakeDefault('cars')
-      ])
-    );
+    assert.strictEqual(prepareColumnsTypes(SnowflakeComponentId, updatedTable).equals(expected), true);
   });
 });
