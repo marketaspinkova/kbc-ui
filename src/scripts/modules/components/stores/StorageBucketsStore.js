@@ -60,11 +60,11 @@ const StorageBucketsStore = StoreUtils.createStore({
   },
 
   isSharing(bucketId) {
-    return _store.getIn(['pendingCredentials', 'sharing', bucketId], false);
+    return _store.getIn(['pendingBuckets', 'sharing', bucketId], false);
   },
 
   isUnsharing(bucketId) {
-    return _store.getIn(['pendingCredentials', 'unsharing', bucketId], false);
+    return _store.getIn(['pendingBuckets', 'unsharing', bucketId], false);
   },
 
   getBucketMetadata(bucketId) {
