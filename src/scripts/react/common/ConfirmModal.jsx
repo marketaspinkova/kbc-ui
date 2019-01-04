@@ -1,5 +1,6 @@
 import React from 'react';
 import {Modal, ButtonToolbar, Button} from 'react-bootstrap';
+import { Loader } from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -9,7 +10,14 @@ export default React.createClass({
     title: React.PropTypes.string.isRequired,
     onConfirm: React.PropTypes.func.isRequired,
     onHide: React.PropTypes.func.isRequired,
-    show: React.PropTypes.bool.isRequired
+    show: React.PropTypes.bool.isRequired,
+    isLoading: React.PropTypes.bool
+  },
+
+  getDefaultProps() {
+    return {
+      isLoading: false
+    };
   },
 
   render() {
@@ -25,6 +33,9 @@ export default React.createClass({
         </Modal.Body>
         <Modal.Footer>
           <ButtonToolbar>
+            {this.props.isLoading && (
+              <Loader />
+            )}
             <Button onClick={this.props.onHide} bsStyle="link">
               Cancel
             </Button>

@@ -209,6 +209,48 @@ module.exports = {
       });
   },
 
+  shareBucket: function(bucketId, params) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.STORAGE_BUCKET_SHARE,
+      bucketId: bucketId
+    });
+    return storageApi.shareBucket(bucketId, params).then(() => {
+      dispatcher.handleViewAction({
+        type: constants.ActionTypes.STORAGE_BUCKET_SHARE_SUCCESS,
+        bucketId: bucketId
+      });
+      return this.loadBucketsForce();
+    })
+      .catch(error => {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_BUCKET_SHARE_ERROR,
+          bucketId: bucketId
+        });
+        throw error;
+      });
+  },
+
+  unshareBucket: function(bucketId) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.STORAGE_BUCKET_UNSHARE,
+      bucketId: bucketId
+    });
+    return storageApi.unshareBucket(bucketId).then(() => {
+      dispatcher.handleViewAction({
+        type: constants.ActionTypes.STORAGE_BUCKET_UNSHARE_SUCCESS,
+        bucketId: bucketId
+      });
+      return this.loadBucketsForce();
+    })
+      .catch(error => {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_BUCKET_UNSHARE_ERROR,
+          bucketId: bucketId
+        });
+        throw error;
+      });
+  },
+
   createTable: function(bucketId, params) {
     var self;
     self = this;
