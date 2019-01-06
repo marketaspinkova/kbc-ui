@@ -12,6 +12,7 @@ export default React.createClass({
     configId: PropTypes.string.isRequired,
     editingValue: PropTypes.object.isRequired,
     value: PropTypes.object.isRequired,
+    hideDestinationInfo: PropTypes.bool.isRequired,
     pendingActions: PropTypes.object.isRequired,
     openMappings: PropTypes.object.isRequired
   },
@@ -87,6 +88,7 @@ export default React.createClass({
                   editingValue: component.props.editingValue.get(key, Immutable.Map()),
                   mappingIndex: key,
                   pendingActions: component.props.pendingActions,
+                  hideDestinationInfo: component.props.hideDestinationInfo,
                   onEditStart: function() {
                     return component.onEditStart(key);
                   },

@@ -33,6 +33,8 @@ import Immutable from 'immutable';
 import LatestVersions from '../components/SidebarVersionsWrapper';
 import Processors from '../components/Processors';
 
+const excludeDestinationInfo = ['keboola.wr-dropbox-v2'];
+
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentStore, LatestJobsStore, StorageTablesStore, OauthStore, ComponentStore, VersionsStore)],
 
@@ -103,6 +105,7 @@ export default React.createClass({
           tables={this.state.tables}
           pendingActions={this.state.pendingActions}
           openMappings={this.state.openMappings}
+          hideDestinationInfo={excludeDestinationInfo.includes(this.state.componentId)}
         />
       );
     } else {
@@ -120,6 +123,7 @@ export default React.createClass({
           editingValue={this.state.editingConfigData.getIn(['storage', 'input', 'files'], List())}
           pendingActions={this.state.pendingActions}
           openMappings={this.state.openMappings}
+          hideDestinationInfo={excludeDestinationInfo.includes(this.state.componentId)}
         />
       );
     } else {
