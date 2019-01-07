@@ -46,7 +46,7 @@ export default React.createClass({
   },
 
   render() {
-    const backendName = this._resolveBackendName();
+    const backendName = this.resolveBackendName();
     if (!backendName) {
       return null;
     }
@@ -60,7 +60,7 @@ export default React.createClass({
         />
         {this.canSetBackendVersion()
           ? this.renderBackendLabelAndVersion(backendName)
-          : this._renderBackendLabel(backendName)
+          : this.renderBackendLabel(backendName)
         }
       </span>
     );
@@ -108,7 +108,7 @@ export default React.createClass({
     );
   },
 
-  _renderBackendLabel(backendName) {
+  renderBackendLabel(backendName) {
     return (
       <Label className="label-backend">
         {transformationLabels[backendName]}
@@ -116,7 +116,7 @@ export default React.createClass({
     );
   },
 
-  _resolveBackendName() {
+  resolveBackendName() {
     if (this.props.transformation.get('backend') === transformationBackend.DOCKER) {
       return this.props.transformation.get('type');
     } else {
