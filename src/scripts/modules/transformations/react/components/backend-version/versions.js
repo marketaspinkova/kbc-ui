@@ -25,13 +25,15 @@ const versions = {
   ]
 };
 
+const dateFormat = 'YYYY-MM-DD';
+
 const hasVersions = (backendType, date = null) => {
   if (!versions[backendType]) {
     return false;
   }
-  const unixTimestamp = date ? moment(date).unix() : moment().unix();
+  const unixTimestamp = date ? moment(date, dateFormat).unix() : moment().unix();
   return versions[backendType].filter((version) => {
-    return version.version !== '' && moment(version.until).unix() > unixTimestamp;
+    return version.version !== '' && moment(version.until, dateFormat).unix() > unixTimestamp;
   }).length > 0;
 };
 
@@ -39,9 +41,9 @@ const getVersions = (backendType, date = null) => {
   if (!versions[backendType]) {
     return [];
   }
-  const unixTimestamp = date ? moment(date).unix() : moment().unix();
+  const unixTimestamp = date ? moment(date, dateFormat).unix() : moment().unix();
   return versions[backendType].filter((version) => {
-    return version.version === '' || moment(version.until).unix() > unixTimestamp;
+    return version.version === '' || moment(version.until, dateFormat).unix() > unixTimestamp;
   });
 };
 
