@@ -3,6 +3,7 @@ import { Modal } from 'react-bootstrap';
 import { RadioGroup } from 'react-radio-group';
 import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
 import RadioGroupInput from '../../../../../react/common/RadioGroupInput';
+import contactSupport from '../../../../../utils/contactSupport';
 
 export default React.createClass({
   propTypes: {
@@ -31,7 +32,13 @@ export default React.createClass({
             Most of the time there's no need to change version of the transformation backend.
           </p>
           <p>
-            Change the version only if you have problems with the <code>Latest</code> version. And please let us know.
+            Change the version only if you have problems with the <code>Latest</code> version. And{' '}
+            <button
+              className="btn btn-link btn-link-inline"
+              onClick={contactSupport}
+            >
+              let us know
+            </button> please.
           </p>
           <RadioGroup
             name="imageTag"
