@@ -11,6 +11,7 @@ import backendLogoSnowflake from '../../../../../images/backend-logo-snowflake.s
 import backendLogoRedshift from '../../../../../images/backend-logo-redshift.svg';
 
 import actionCreators from '../../ActionCreators';
+import { transformationBackend, transformationType, transformationLabels } from '../../Constants';
 import {getVersions, hasVersions} from './backend-version/versions';
 import BackendVersionModal from './backend-version/Modal';
 
@@ -21,15 +22,6 @@ const paths = {
   openrefine: backendLogoOpenRefine,
   snowflake: backendLogoSnowflake,
   redshift: backendLogoRedshift
-};
-
-const backendNames = {
-  r: 'R',
-  mysql: 'MySQL',
-  python: 'Python',
-  openrefine: 'OpenRefine (beta)',
-  snowflake: 'Snowflake',
-  redshift: 'Redshift'
 };
 
 export default React.createClass({
@@ -71,8 +63,8 @@ export default React.createClass({
 
   canSetBackendVersion() {
     return this.props.showVersion
-      && this.props.transformation.get('backend') === 'docker'
-      && ['r', 'python'].includes(this.props.transformation.get('type'))
+      && this.props.transformation.get('backend') === transformationBackend.DOCKER
+      && [transformationType.PYTHON, transformationType.R].includes(this.props.transformation.get('type'))
       && (
         this.props.transformation.has('imageTag')
         || hasVersions(this.props.transformation.get('type'))
@@ -89,7 +81,7 @@ export default React.createClass({
       return (
         <span>
           <Label className="label-backend" style={{cursor: 'pointer'}} onClick={this.showModal}>
-            {backendNames[backendName]}
+            {transformationLabels[backendName]}
             {this.props.transformation.has('imageTag') && (
               <span>: {this.props.transformation.get('imageTag')}</span>
             )}
@@ -108,7 +100,7 @@ export default React.createClass({
     }
     return (
       <Label className="label-backend">
-        {backendNames[backendName]}
+        {transformationLabels[backendName]}
         {this.props.transformation.has('imageTag') && (
           <span>: {this.props.transformation.get('imageTag')}</span>
         )}
@@ -119,13 +111,13 @@ export default React.createClass({
   _renderBackendLabel(backendName) {
     return (
       <Label className="label-backend">
-        {backendNames[backendName]}
+        {transformationLabels[backendName]}
       </Label>
     );
   },
 
   _resolveBackendName() {
-    if (this.props.transformation.get('backend') === 'docker') {
+    if (this.props.transformation.get('backend') === transformationBackend.DOCKER) {
       return this.props.transformation.get('type');
     } else {
       return this.props.transformation.get('backend');

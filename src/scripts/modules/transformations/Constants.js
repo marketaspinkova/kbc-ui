@@ -56,6 +56,29 @@ const ActionTypes = keyMirror({
   TRANSFORMATION_UPDATE_PARSE_QUERIES_ERROR: null
 });
 
+const transformationBackend = {
+  MYSQL: 'mysql',
+  REDSHIFT: 'redshift',
+  SNOWFLAKE: 'snowflake',
+  DOCKER: 'docker'
+};
+
+const transformationType = {
+  PYTHON: 'python',
+  R: 'r',
+  OPENREFINE: 'openrefine'
+};
+
+const transformationLabels = {
+  mysql: 'MySQL',
+  redshift: 'Redshift',
+  snowflake: 'Snowflake',
+  docker: 'Docker',
+  python: 'Python',
+  r: 'R',
+  openrefine: 'OpenRefine (beta)'
+};
+
 const SnowflakeDataTypesMapping = fromJS({
   NUMBER: {
     name: 'NUMBER',
@@ -113,5 +136,8 @@ const SnowflakeDataTypesMapping = fromJS({
 
 export {
   ActionTypes,
-  SnowflakeDataTypesMapping
+  SnowflakeDataTypesMapping,
+  transformationBackend,
+  transformationType,
+  transformationLabels
 };
