@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import moment from 'moment';
 
 import ApplicationStore from '../../../../stores/ApplicationStore';
 import { Image, Label } from 'react-bootstrap';
@@ -73,7 +72,7 @@ export default React.createClass({
       && [transformationType.PYTHON, transformationType.R].includes(this.props.transformation.get('type'))
       && (
         this.props.transformation.has('imageTag')
-        || hasVersions(this.props.transformation.get('type'), moment().unix())
+        || hasVersions(this.props.transformation.get('type'))
       );
   },
 
@@ -90,7 +89,7 @@ export default React.createClass({
           </Label>
           <BackendVersionModal
             show={this.state.showModal}
-            availableVersions={getVersions(this.props.transformation.get('type'), moment().unix())}
+            availableVersions={getVersions(this.props.transformation.get('type'))}
             onClose={this.hideModal}
             onSave={this.saveImageTag}
             imageTag={this.props.transformation.has('imageTag') ? this.props.transformation.get('imageTag') : ''}
