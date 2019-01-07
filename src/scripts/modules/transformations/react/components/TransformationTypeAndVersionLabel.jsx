@@ -47,23 +47,23 @@ export default React.createClass({
 
   render() {
     const backendName = this._resolveBackendName();
-    if (backendName !== '') {
-      return (
-        <span className="label-backend-wrap">
-          <Image
-            src={ApplicationStore.getScriptsBasePath() + paths[backendName]}
-            width="19px"
-            height="19px"
-            className="label-backend-image"
-          />
-          {this.canSetBackendVersion()
-            ? this.renderBackendLabelAndVersion(backendName)
-            : this._renderBackendLabel(backendName)
-          }
-        </span>
-      );
+    if (!backendName) {
+      return null;
     }
-    return null;
+    return (
+      <span className="label-backend-wrap">
+        <Image
+          src={ApplicationStore.getScriptsBasePath() + paths[backendName]}
+          width="19px"
+          height="19px"
+          className="label-backend-image"
+        />
+        {this.canSetBackendVersion()
+          ? this.renderBackendLabelAndVersion(backendName)
+          : this._renderBackendLabel(backendName)
+        }
+      </span>
+    );
   },
 
   canSetBackendVersion() {
