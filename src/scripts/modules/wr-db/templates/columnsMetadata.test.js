@@ -13,13 +13,14 @@ const table = fromJS({
       { key: 'KBC.datatype.basetype', value: 'STRING' },
       { key: 'KBC.datatype.type', value: 'TEXT' },
       { key: 'KBC.datatype.nullable', value: '1' },
-      { key: 'KBC.datatype.length', value: '16777216' }
+      { key: 'KBC.datatype.length', value: '16777216' },
+      { key: 'KBC.datatype.default', value: 'value' }
     ]
   }
 });
 
 function metadataType(column) {
-  return { name: column, dbName: column, type: 'varchar', nullable: true, default: '', size: 16777216 };
+  return { name: column, dbName: column, type: 'varchar', nullable: true, default: 'value', size: 16777216 };
 }
 
 function defaultType(column) {
@@ -59,21 +60,6 @@ describe('prepareColumnsTypes', function() {
   it('if length value from metadata is bigger than allowed, default size is used', () => {
     const updatedTable = table.setIn(['columnMetadata', 'country', 3, 'value'], 26777216);
     const expected = fromJS([metadataType('country'), defaultType('cars')]);
-
-    assert.deepStrictEqual(prepareColumnsTypes(SnowflakeComponentId, updatedTable), expected);
-  });
-
-  it('can read and set default value from metadata', () => {
-    const updatedTable = table.updateIn(['columnMetadata', 'country'], metadata => {
-      return metadata.push(fromJS({ key: 'KBC.datatype.default', value: 'default value' }));
-    });
-    const expected = fromJS([
-      {
-        ...metadataType('country'),
-        default: 'default value'
-      },
-      defaultType('cars')
-    ]);
 
     assert.deepStrictEqual(prepareColumnsTypes(SnowflakeComponentId, updatedTable), expected);
   });
