@@ -10,7 +10,7 @@ import InputMappingDetail from './InputMappingDetail';
 import OutputMappingRow from './OutputMappingRow';
 import OutputMappingDetail from './OutputMappingDetail';
 import { Panel } from 'react-bootstrap';
-import TransformationTypeLabel from '../../components/TransformationTypeLabel';
+import TransformationTypeAndVersionLabel from '../../components/TransformationTypeAndVersionLabel';
 import Requires from './Requires';
 import Packages from './Packages';
 import SavedFiles from './SavedFiles';
@@ -224,7 +224,7 @@ export default React.createClass({
               transformation={this.props.transformation}
               disabled={this._isMySqlTransformation()}
             />{' '}
-            <TransformationTypeLabel
+            <TransformationTypeAndVersionLabel
               backend={this.props.transformation.get('backend')}
               type={this.props.transformation.get('type')}
             />

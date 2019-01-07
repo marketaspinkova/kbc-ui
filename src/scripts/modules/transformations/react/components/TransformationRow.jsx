@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import RunComponentButton from '../../../components/react/components/RunComponentButton';
-import TransformationTypeLabel from './TransformationTypeLabel';
+import TransformationTypeAndVersionLabel from './TransformationTypeAndVersionLabel';
 import DeleteButton from '../../../../react/common/DeleteButton';
 import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
 import CreateSandboxButton from './CreateSandboxButton';
@@ -132,7 +132,7 @@ export default React.createClass({
         </h4>
       </span>,
       <span className="td col-xs-1" key="col2">
-        <TransformationTypeLabel
+        <TransformationTypeAndVersionLabel
           backend={this.props.transformation.get('backend')}
           type={this.props.transformation.get('type')}
         />
@@ -161,7 +161,7 @@ export default React.createClass({
         </h4>
       </span>,
       <span className="td col-xs-1" key="col2">
-        <TransformationTypeLabel
+        <TransformationTypeAndVersionLabel
           backend={this.props.transformation.get('backend')}
           type={this.props.transformation.get('type')}
         />
