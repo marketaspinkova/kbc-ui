@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import RunComponentButton from '../../../components/react/components/RunComponentButton';
-import TransformationTypeLabel from './TransformationTypeLabel';
+import TransformationTypeAndVersionLabel from './TransformationTypeAndVersionLabel';
 import DeleteButton from '../../../../react/common/DeleteButton';
 import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
 import CreateSandboxButton from './CreateSandboxButton';
@@ -132,9 +132,10 @@ export default React.createClass({
         </h4>
       </span>,
       <span className="td col-xs-1" key="col2">
-        <TransformationTypeLabel
-          backend={this.props.transformation.get('backend')}
-          type={this.props.transformation.get('type')}
+        <TransformationTypeAndVersionLabel
+          transformation={this.props.transformation}
+          bucketId={this.props.bucket.get('id')}
+          showVersion
         />
       </span>,
       <span className="td col-xs-7" key="col3">
@@ -161,9 +162,10 @@ export default React.createClass({
         </h4>
       </span>,
       <span className="td col-xs-1" key="col2">
-        <TransformationTypeLabel
-          backend={this.props.transformation.get('backend')}
-          type={this.props.transformation.get('type')}
+        <TransformationTypeAndVersionLabel
+          transformation={this.props.transformation}
+          bucketId={this.props.bucket.get('id')}
+          showVersion
         />
       </span>,
       <span className="td col-xs-4" key="col3">

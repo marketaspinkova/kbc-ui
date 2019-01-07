@@ -1,7 +1,7 @@
 import keyMirror from 'fbjs/lib/keyMirror';
 import { fromJS } from 'immutable';
 
-export const ActionTypes = keyMirror({
+const ActionTypes = keyMirror({
   TRANSFORMATION_BUCKET_CREATE: null,
   TRANSFORMATION_BUCKET_CREATE_SUCCESS: null,
   TRANSFORMATION_BUCKET_CREATE_ERROR: null,
@@ -56,7 +56,30 @@ export const ActionTypes = keyMirror({
   TRANSFORMATION_UPDATE_PARSE_QUERIES_ERROR: null
 });
 
-export const SnowflakeDataTypesMapping = fromJS({
+const transformationBackend = {
+  MYSQL: 'mysql',
+  REDSHIFT: 'redshift',
+  SNOWFLAKE: 'snowflake',
+  DOCKER: 'docker'
+};
+
+const transformationType = {
+  PYTHON: 'python',
+  R: 'r',
+  OPENREFINE: 'openrefine'
+};
+
+const transformationLabels = {
+  mysql: 'MySQL',
+  redshift: 'Redshift',
+  snowflake: 'Snowflake',
+  docker: 'Docker',
+  python: 'Python',
+  r: 'R',
+  openrefine: 'OpenRefine (beta)'
+};
+
+const SnowflakeDataTypesMapping = fromJS({
   NUMBER: {
     name: 'NUMBER',
     basetype: 'NUMERIC',
@@ -110,3 +133,11 @@ export const SnowflakeDataTypesMapping = fromJS({
     basetype: 'BOOLEAN'
   }
 });
+
+export {
+  ActionTypes,
+  SnowflakeDataTypesMapping,
+  transformationBackend,
+  transformationType,
+  transformationLabels
+};

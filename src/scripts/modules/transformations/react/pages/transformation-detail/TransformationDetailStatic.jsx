@@ -10,13 +10,14 @@ import InputMappingDetail from './InputMappingDetail';
 import OutputMappingRow from './OutputMappingRow';
 import OutputMappingDetail from './OutputMappingDetail';
 import { Panel } from 'react-bootstrap';
-import TransformationTypeLabel from '../../components/TransformationTypeLabel';
+import TransformationTypeAndVersionLabel from '../../components/TransformationTypeAndVersionLabel';
 import Requires from './Requires';
 import Packages from './Packages';
 import SavedFiles from './SavedFiles';
 import Queries from './Queries';
 import Scripts from './Scripts';
 import Phase from './Phase';
+import BackendVersionWarning from '../../components/backend-version/Warning';
 import AddOutputMapping from './AddOutputMapping';
 import AddInputMapping from './AddInputMapping';
 import InlineEditArea from '../../../../../react/common/InlineEditArea';
@@ -216,11 +217,16 @@ export default React.createClass({
               transformation={this.props.transformation}
               disabled={this._isMySqlTransformation()}
             />{' '}
-            <TransformationTypeLabel
-              backend={this.props.transformation.get('backend')}
-              type={this.props.transformation.get('type')}
+            <TransformationTypeAndVersionLabel
+              transformation={this.props.transformation}
+              bucketId={this.props.bucketId}
+              showVersion
+              showVersionEditButton
             />
           </p>
+          {this.props.transformation.has('imageTag') && (
+            <BackendVersionWarning />
+          )}
           {this._isOpenRefineTransformation() && [
             <h2>OpenRefine Beta Warning</h2>,
 
