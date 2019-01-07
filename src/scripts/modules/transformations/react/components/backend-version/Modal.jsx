@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
 import { Modal } from 'react-bootstrap';
 import { RadioGroup } from 'react-radio-group';
-import ConfirmButtons from '../../../../../../react/common/ConfirmButtons';
-import RadioGroupInput from '../../../../../../react/common/RadioGroupInput';
+import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
+import RadioGroupInput from '../../../../../react/common/RadioGroupInput';
 
 export default React.createClass({
   propTypes: {

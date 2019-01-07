@@ -133,8 +133,9 @@ export default React.createClass({
       </span>,
       <span className="td col-xs-1" key="col2">
         <TransformationTypeAndVersionLabel
-          backend={this.props.transformation.get('backend')}
-          type={this.props.transformation.get('type')}
+          transformation={this.props.transformation}
+          bucketId={this.props.bucket.get('id')}
+          showVersion
         />
       </span>,
       <span className="td col-xs-7" key="col3">
@@ -162,8 +163,9 @@ export default React.createClass({
       </span>,
       <span className="td col-xs-1" key="col2">
         <TransformationTypeAndVersionLabel
-          backend={this.props.transformation.get('backend')}
-          type={this.props.transformation.get('type')}
+          transformation={this.props.transformation}
+          bucketId={this.props.bucket.get('id')}
+          showVersion
         />
       </span>,
       <span className="td col-xs-4" key="col3">
