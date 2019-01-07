@@ -23,7 +23,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Modal onHide={this.onClose} show={this.props.show}>
+      <Modal onHide={this.props.onClose} show={this.props.show}>
         <Modal.Header>
           <Modal.Title>Transformation Backend Version</Modal.Title>
         </Modal.Header>
@@ -63,7 +63,7 @@ export default React.createClass({
         <Modal.Footer>
           <ConfirmButtons
             saveButtonType="submit"
-            onCancel={this.onClose}
+            onCancel={this.props.onClose}
             onSave={this.onSave}
             isSaving={this.state.isSaving}
             isDisabled={this.props.imageTag === this.state.imageTag}
@@ -71,10 +71,6 @@ export default React.createClass({
         </Modal.Footer>
       </Modal>
     );
-  },
-
-  onClose() {
-    this.props.onClose();
   },
 
   onSave() {
