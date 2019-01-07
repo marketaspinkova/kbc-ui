@@ -25,15 +25,15 @@ const versions = {
   ]
 };
 
-const hasVersions = (backendType) => {
+const hasVersions = (backendType, unixTimestamp) => {
   return versions[backendType].filter((version) => {
-    return version.version !== '' && moment(version.until).unix() > moment().unix();
+    return version.version !== '' && moment(version.until).unix() > unixTimestamp;
   }).length > 0;
 };
 
-const getVersions = (backendType) => {
+const getVersions = (backendType, unixTimestamp) => {
   return versions[backendType].filter((version) => {
-    return version.version === '' || moment(version.until).unix() > moment().unix();
+    return version.version === '' || moment(version.until).unix() > unixTimestamp;
   });
 };
 
