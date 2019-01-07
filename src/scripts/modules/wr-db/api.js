@@ -70,8 +70,8 @@ export default function(componentId) {
       );
     },
 
-    postTable(configId, tableId, table, tableColumns) {
-      const proxyPromise = proxyApi ? proxyApi.postTable(configId, tableId, table, tableColumns) : false;
+    postTable(configId, tableId, table, sapiTable) {
+      const proxyPromise = proxyApi ? proxyApi.postTable(configId, tableId, table, sapiTable) : false;
       const path = `tables/${tableId}`;
       return (
         proxyPromise ||
