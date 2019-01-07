@@ -50,7 +50,12 @@ export default React.createClass({
     if (backendName !== '') {
       return (
         <span className="label-backend-wrap">
-          {this._renderBackendLogo(backendName)}
+          <Image
+            src={ApplicationStore.getScriptsBasePath() + paths[backendName]}
+            width="19px"
+            height="19px"
+            className="label-backend-image"
+          />
           {this.canSetBackendVersion()
             ? this.renderBackendLabelAndVersion(backendName)
             : this._renderBackendLabel(backendName)
@@ -69,11 +74,6 @@ export default React.createClass({
         this.props.transformation.has('imageTag')
         || hasVersions(this.props.transformation.get('type'))
       );
-  },
-
-  _renderBackendLogo(backendName) {
-    const imgPath = ApplicationStore.getScriptsBasePath() + paths[backendName];
-    return <Image src={imgPath} width="19px" height="19px" className="label-backend-image" />;
   },
 
   renderBackendLabelAndVersion(backendName) {
