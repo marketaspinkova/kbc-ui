@@ -7,7 +7,7 @@ describe('hasVersions', () => {
   it('should return true for date before until', () => {
     assert.strictEqual(true, hasVersions(transformationType.R, moment('2018-12-31').unix()));
   });
-  it('should return true for date after until', () => {
+  it('should return false for date after until', () => {
     assert.strictEqual(false, hasVersions(transformationType.R, moment('2019-01-02').unix()));
   });
   it('should return false unknown backend', () => {
