@@ -1,4 +1,5 @@
 import React from 'react';
+import classnames from 'classnames';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { Map } from 'immutable';
 import DeleteButton from '../../../../../react/common/DeleteButton';
@@ -50,15 +51,22 @@ export default React.createClass({
                 <span className="td col-xs-3" key="icons">
                   <TableSizeLabel size={this.props.tables.getIn([this.props.value.get('source'), 'dataSizeBytes'])} />{' '}
                 </span>,
-                <span className="td col-xs-4" key="source">
+                <span className={classnames('td', {
+                  'col-xs-4': !this.props.hideDestination,
+                  'col-xs-8': this.props.hideDestination
+                })} key="source">
                   {this.props.value.get('source')}
                 </span>,
-                <span className="td col-xs-1" key="arrow">
-                  {!this.props.hideDestination && <span className="fa fa-chevron-right fa-fw" />}
-                </span>,
-                <span className="td col-xs-3" key="destination">
-                  {!this.props.hideDestination && `in/tables/${this.props.value.get('destination', this.props.value.get('source'))}`}
-                </span>
+                !this.props.hideDestination && (
+                  <span className="td col-xs-3" key="destination">
+                    `in/tables/${this.props.value.get('destination', this.props.value.get('source'))}`
+                  </span>
+                ),
+                !this.props.hideDestination && (
+                  <span className="td col-xs-1" key="arrow">
+                    <span className="fa fa-chevron-right fa-fw" />
+                  </span>
+                )
               ]}
             <span className="td col-xs-1 text-right kbc-no-wrap">
               {this.props.value.get('source') !== '' && (

@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import classnames from 'classnames';
 import { List } from 'immutable';
 
 import DeleteButton from '../../../../../react/common/DeleteButton';
@@ -30,19 +31,26 @@ export default React.createClass({
             <span className="td col-xs-3">
               {this.renderTags()}
             </span>
-            <span className="td col-xs-4">
+            <span className={classnames('td', {
+              'col-xs-4': !this.props.hideDestination,
+              'col-xs-8': this.props.hideDestination
+            })}>
               {this.props.value.get('query', '') !== '' && (
                 <code>
                   {this.props.value.get('query')}
                 </code>
               )}
             </span>
-            <span className="td col-xs-1">
-              {!this.props.hideDestination && <span className="fa fa-chevron-right fa-fw" />}
-            </span>
-            <span className="td col-xs-3">
-              {!this.props.hideDestination && 'in/files/*'}
-            </span>
+            {!this.props.hideDestination && (
+              <span className="td col-xs-1">
+                <span className="fa fa-chevron-right fa-fw" />
+              </span>
+            )}
+            {!this.props.hideDestination && (
+              <span className="td col-xs-3">
+                'in/files/*'
+              </span>
+            )}
             <span className="td col-xs-1 text-right kbc-no-wrap">
               <DeleteButton
                 tooltip="Delete Input"
