@@ -1,5 +1,4 @@
 import React from 'react';
-import classnames from 'classnames';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { Map } from 'immutable';
 import DeleteButton from '../../../../../react/common/DeleteButton';
@@ -14,7 +13,6 @@ export default React.createClass({
     editingValue: React.PropTypes.object.isRequired,
     tables: React.PropTypes.object.isRequired,
     mappingIndex: React.PropTypes.number.isRequired,
-    hideDestination: React.PropTypes.bool.isRequired,
     onChange: React.PropTypes.func.isRequired,
     onSave: React.PropTypes.func.isRequired,
     onCancel: React.PropTypes.func.isRequired,
@@ -51,22 +49,15 @@ export default React.createClass({
                 <span className="td col-xs-3" key="icons">
                   <TableSizeLabel size={this.props.tables.getIn([this.props.value.get('source'), 'dataSizeBytes'])} />{' '}
                 </span>,
-                <span className={classnames('td', {
-                  'col-xs-4': !this.props.hideDestination,
-                  'col-xs-8': this.props.hideDestination
-                })} key="source">
+                <span className="td col-xs-4" key="source">
                   {this.props.value.get('source')}
                 </span>,
-                !this.props.hideDestination && (
-                  <span className="td col-xs-3" key="destination">
-                    `in/tables/${this.props.value.get('destination', this.props.value.get('source'))}`
-                  </span>
-                ),
-                !this.props.hideDestination && (
-                  <span className="td col-xs-1" key="arrow">
-                    <span className="fa fa-chevron-right fa-fw" />
-                  </span>
-                )
+                <span className="td col-xs-1" key="arrow">
+                  <span className="fa fa-chevron-right fa-fw" />
+                </span>,
+                <span className="td col-xs-3" key="destination">
+                  {`in/tables/${this.props.value.get('destination', this.props.value.get('source'))}`}
+                </span>
               ]}
             <span className="td col-xs-1 text-right kbc-no-wrap">
               {this.props.value.get('source') !== '' && (
