@@ -3,11 +3,11 @@ import DataTypes from './dataTypes';
 import { SnowflakeDataTypesMapping } from '../../transformations/Constants';
 
 export function prepareColumnsTypes(componentId, table) {
-  if (!DataTypes[componentId] || !DataTypes[componentId].default) {
+  if (!DataTypes[componentId]) {
     return null;
   }
 
-  const defaultType = fromJS(DataTypes[componentId].default);
+  const defaultType = fromJS(DataTypes[componentId].default || {});
   const columnMetadata = table.get('columnMetadata', List());
 
   if (componentId === 'keboola.wr-db-snowflake' && columnMetadata.count()) {
