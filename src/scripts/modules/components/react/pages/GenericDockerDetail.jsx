@@ -93,9 +93,7 @@ export default React.createClass({
   },
 
   tableInputMapping() {
-    const flags = this.state.component.get('flags');
-
-    if (flags.includes('genericDockerUI-tableInput')) {
+    if (this.state.component.get('flags').includes('genericDockerUI-tableInput')) {
       return (
         <TableInputMapping
           componentId={this.state.componentId}
@@ -105,7 +103,6 @@ export default React.createClass({
           tables={this.state.tables}
           pendingActions={this.state.pendingActions}
           openMappings={this.state.openMappings}
-          hideDestination={flags.includes('genericDockerUI-tableInput-hideDestination')}
         />
       );
     } else {
@@ -114,9 +111,7 @@ export default React.createClass({
   },
 
   fileInputMapping() {
-    const flags = this.state.component.get('flags');
-
-    if (flags.includes('genericDockerUI-fileInput')) {
+    if (this.state.component.get('flags').includes('genericDockerUI-fileInput')) {
       return (
         <FileInputMapping
           componentId={this.state.componentId}
@@ -125,7 +120,6 @@ export default React.createClass({
           editingValue={this.state.editingConfigData.getIn(['storage', 'input', 'files'], List())}
           pendingActions={this.state.pendingActions}
           openMappings={this.state.openMappings}
-          hideDestination={flags.includes('genericDockerUI-fileInput-hideDestination')}
         />
       );
     } else {
