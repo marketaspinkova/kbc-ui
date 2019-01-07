@@ -3,13 +3,15 @@ import DataTypes from './dataTypes';
 import { SnowflakeDataTypesMapping } from '../../transformations/Constants';
 
 export function prepareColumnsTypes(componentId, table) {
-  const dataTypes = DataTypes[componentId] || List();
-  const defaultType = fromJS(dataTypes.default);
-  const backend = table.getIn(['bucket', 'backend']);
+  if (!DataTypes[componentId] || !DataTypes[componentId].default) {
+    return null;
+  }
+
+  const defaultType = fromJS(DataTypes[componentId].default);
   const columnMetadata = table.get('columnMetadata', List());
 
-  if (backend === 'snowflake' && columnMetadata.count()) {
-    const metadata = getMetadataDataTypes(columnMetadata);
+  if (componentId === 'keboola.wr-db-snowflake' && columnMetadata.count()) {
+    const metadata = getSnowflakeMetadataDataTypes(columnMetadata);
 
     return table.get('columns').map(column => {
       return fromJS({
@@ -35,7 +37,7 @@ export function prepareColumnsTypes(componentId, table) {
   });
 }
 
-function getMetadataDataTypes(columnMetadata) {
+function getSnowflakeMetadataDataTypes(columnMetadata) {
   return columnMetadata.map((data, column) => {
     const baseType = data.find(entry => entry.get('key') === 'KBC.datatype.basetype');
 
