@@ -1,17 +1,12 @@
 import React from 'react';
 import fileSize from 'filesize';
 
-export default React.createClass({
-  propTypes: {
-    size: React.PropTypes.number
-  },
+const FileSize = ({ size }) => {
+  return <span>{size ? fileSize(size) : 'N/A'}</span>;
+};
 
-  render() {
-    return (
-      <span>
-        {this.props.size ? fileSize(this.props.size) : 'N/A'}
-      </span>
-    );
-  }
+FileSize.propTypes = {
+  size: React.PropTypes.number
+};
 
-});
+export default FileSize;
