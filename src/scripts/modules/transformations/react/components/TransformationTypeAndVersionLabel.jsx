@@ -81,7 +81,7 @@ export default React.createClass({
     if (this.props.showVersionEditButton) {
       return (
         <span>
-          <Label className="label-backend" style={{cursor: 'pointer'}} onClick={this.showModal}>
+          <Label className="label-backend kbc-cursor-pointer" onClick={this.showModal}>
             {transformationLabels[backendName]}
             {this.props.transformation.has('imageTag') && (
               <span>: {this.props.transformation.get('imageTag')}</span>
