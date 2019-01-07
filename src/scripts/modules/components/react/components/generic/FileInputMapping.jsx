@@ -35,8 +35,13 @@ export default React.createClass({
         <h2>File Input Mapping
           {addButton}
         </h2>
-        <small className="help-block">Multiple files may match the given criteria. All files will be stored in <code>/data/in/files/</code> with their IDs as file names.
-          <br />All metadata will be stored in a manifest file.</small>
+        {!this.props.hideDestination && (
+          <small className="help-block">
+            Multiple files may match the given criteria. All files will be stored in
+            {' '}<code>/data/in/files/</code> with their IDs as file names.
+            <br />All metadata will be stored in a manifest file.
+          </small>
+        )}
         {this.content()}
       </div>
     );
