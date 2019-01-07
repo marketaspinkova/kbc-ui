@@ -13,7 +13,7 @@ export default React.createClass({
     value: PropTypes.object.isRequired,
     editingValue: PropTypes.object.isRequired,
     mappingIndex: PropTypes.number.isRequired,
-    hideDestinationInfo: PropTypes.bool.isRequired,
+    hideDestination: PropTypes.bool.isRequired,
     onChange: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
@@ -38,10 +38,10 @@ export default React.createClass({
               )}
             </span>
             <span className="td col-xs-1">
-              {!this.props.hideDestinationInfo && <span className="fa fa-chevron-right fa-fw" />}
+              {!this.props.hideDestination && <span className="fa fa-chevron-right fa-fw" />}
             </span>
             <span className="td col-xs-3">
-              {!this.props.hideDestinationInfo && 'in/files/*'}
+              {!this.props.hideDestination && 'in/files/*'}
             </span>
             <span className="td col-xs-1 text-right kbc-no-wrap">
               <DeleteButton

@@ -13,7 +13,7 @@ export default React.createClass({
     editingValue: React.PropTypes.object.isRequired,
     tables: React.PropTypes.object.isRequired,
     mappingIndex: React.PropTypes.number.isRequired,
-    hideDestinationInfo: React.PropTypes.bool.isRequired,
+    hideDestination: React.PropTypes.bool.isRequired,
     onChange: React.PropTypes.func.isRequired,
     onSave: React.PropTypes.func.isRequired,
     onCancel: React.PropTypes.func.isRequired,
@@ -54,10 +54,10 @@ export default React.createClass({
                   {this.props.value.get('source')}
                 </span>,
                 <span className="td col-xs-1" key="arrow">
-                  {!this.props.hideDestinationInfo && <span className="fa fa-chevron-right fa-fw" />}
+                  {!this.props.hideDestination && <span className="fa fa-chevron-right fa-fw" />}
                 </span>,
                 <span className="td col-xs-3" key="destination">
-                  {!this.props.hideDestinationInfo && `in/tables/${this.props.value.get('destination', this.props.value.get('source'))}`}
+                  {!this.props.hideDestination && `in/tables/${this.props.value.get('destination', this.props.value.get('source'))}`}
                 </span>
               ]}
             <span className="td col-xs-1 text-right kbc-no-wrap">

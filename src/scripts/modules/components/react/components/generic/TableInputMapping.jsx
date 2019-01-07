@@ -16,7 +16,7 @@ export default React.createClass({
     tables: PropTypes.object.isRequired,
     pendingActions: PropTypes.object.isRequired,
     openMappings: PropTypes.object.isRequired,
-    hideDestinationInfo: PropTypes.bool.isRequired,
+    hideDestination: PropTypes.bool.isRequired,
     definitions: PropTypes.object
   },
 
@@ -116,7 +116,7 @@ export default React.createClass({
                   mappingIndex: key,
                   pendingActions: component.props.pendingActions,
                   otherDestinations: component.inputMappingDestinations(key),
-                  hideDestinationInfo: component.props.hideDestinationInfo,
+                  hideDestination: component.props.hideDestination,
                   definition: definition,
                   onEditStart: function() {
                     return component.onEditStart(key);
