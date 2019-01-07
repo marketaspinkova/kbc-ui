@@ -82,13 +82,10 @@ export default React.createClass({
       isSaving: true
     });
     this.props.onSave(this.state.imageTag)
-      .then(() => {
-        this.props.onClose();
-      })
       .finally(() => {
         this.setState({
           isSaving: false
-        });
+        }, this.props.onClose);
       });
   }
 });

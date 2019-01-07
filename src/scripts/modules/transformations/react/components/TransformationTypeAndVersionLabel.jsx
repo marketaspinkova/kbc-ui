@@ -62,6 +62,13 @@ export default React.createClass({
           ? this.renderBackendLabelAndVersion(backendName)
           : this.renderBackendLabel(backendName)
         }
+        <BackendVersionModal
+          show={this.state.showModal}
+          availableVersions={getVersions(this.props.transformation.get('type'))}
+          onClose={this.hideModal}
+          onSave={this.saveImageTag}
+          imageTag={this.props.transformation.has('imageTag') ? this.props.transformation.get('imageTag') : ''}
+        />
       </span>
     );
   },
@@ -79,23 +86,13 @@ export default React.createClass({
   renderBackendLabelAndVersion(backendName) {
     if (this.props.showVersionEditButton) {
       return (
-        <span>
-          <Label className="label-backend kbc-cursor-pointer" onClick={this.showModal}>
-            {transformationLabels[backendName]}
-            {this.props.transformation.has('imageTag') && (
-              <span>: {this.props.transformation.get('imageTag')}</span>
-            )}
-            {' '}<i className="fa fa-pencil" />
-          </Label>
-          <BackendVersionModal
-            show={this.state.showModal}
-            availableVersions={getVersions(this.props.transformation.get('type'))}
-            onClose={this.hideModal}
-            onSave={this.saveImageTag}
-            imageTag={this.props.transformation.has('imageTag') ? this.props.transformation.get('imageTag') : ''}
-          />
-        </span>
-
+        <Label className="label-backend kbc-cursor-pointer" onClick={this.showModal}>
+          {transformationLabels[backendName]}
+          {this.props.transformation.has('imageTag') && (
+            <span>: {this.props.transformation.get('imageTag')}</span>
+          )}
+          {' '}<i className="fa fa-pencil" />
+        </Label>
       );
     }
     return (
