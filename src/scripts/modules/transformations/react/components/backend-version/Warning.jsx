@@ -5,7 +5,7 @@ export default () => {
   return (
     <Alert bsStyle="warning">
       You're not using latest version of transformation backend.
-      {' '}Please set Backend Version to <code>Latest</code> version to keep environment up to date.
+      {' '}Please set the backend version to <code>Latest</code> to keep environment up to date.
     </Alert>
   );
 };

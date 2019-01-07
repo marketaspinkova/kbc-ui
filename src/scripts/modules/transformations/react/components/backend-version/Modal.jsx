@@ -31,7 +31,7 @@ export default React.createClass({
             Most of the time there's no need to change version of the transformation backend.
           </p>
           <p>
-            Change version only if you have problems with <code>Latest</code> version. And please let us know.
+            Change the version only if you have problems with the <code>Latest</code> version. And please let us know.
           </p>
           <RadioGroup
             name="imageTag"
