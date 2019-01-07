@@ -1,8 +1,8 @@
 import Promise from 'bluebird';
 import {List, Map, fromJS} from 'immutable';
+import * as columnsMetadata from './columnsMetadata';
 import InstalledComponentsActions from '../../components/InstalledComponentsActionCreators';
 import InstalledComponentsStore from '../../components/stores/InstalledComponentsStore';
-import * as columnsMetadata from '../columnsMetadata';
 
 const tablesPath = ['storage', 'input', 'tables'];
 const dockerComponents = [

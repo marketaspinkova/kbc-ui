@@ -1,51 +1,37 @@
 import { List, Map, fromJS } from 'immutable';
-import DataTypes from './templates/dataTypes';
-import { SnowflakeDataTypesMapping } from '../transformations/Constants';
-
-const uppercasedTypes = ['wr-db-redshift', 'keboola.wr-redshift-v2', 'keboola.wr-db-mysql'];
+import DataTypes from './dataTypes';
+import { SnowflakeDataTypesMapping } from '../../transformations/Constants';
 
 export function prepareColumnsTypes(componentId, table) {
   const dataTypes = DataTypes[componentId] || List();
-  const defaultType = fromJS(dataTypes);
+  const defaultType = fromJS(dataTypes.default);
+  const backend = table.getIn(['bucket', 'backend']);
   const columnMetadata = table.get('columnMetadata', List());
-  const disabledFields = defaultType.get('disabledFields', List());
 
-  if (columnMetadata.count()) {
+  if (backend === 'snowflake' && columnMetadata.count()) {
     const metadata = getMetadataDataTypes(columnMetadata);
 
     return table.get('columns').map(column => {
-      let type = metadata.getIn([column, 'type'], defaultType.getIn(['default', 'type']));
-
-      if (!uppercasedTypes.includes(componentId)) {
-        type = type.toLowerCase();
-      }
-
-      return excludeDisabledFields(
-        disabledFields,
-        fromJS({
-          name: column,
-          dbName: column,
-          type,
-          nullable: metadata.getIn([column, 'nullable'], false),
-          default: metadata.getIn([column, 'defaultValue'], ''),
-          size: metadata.getIn([column, 'size'], defaultType.getIn(['default', 'size'], ''))
-        })
-      );
+      return fromJS({
+        name: column,
+        dbName: column,
+        type: metadata.getIn([column, 'type'], defaultType.get('type')).toLowerCase(),
+        nullable: metadata.getIn([column, 'nullable'], false),
+        default: metadata.getIn([column, 'defaultValue'], ''),
+        size: metadata.getIn([column, 'size'], defaultType.get('size', ''))
+      });
     });
   }
 
   return table.get('columns').map(column => {
-    return excludeDisabledFields(
-      disabledFields,
-      fromJS({
-        name: column,
-        dbName: column,
-        type: defaultType.getIn(['default', 'type'], ''),
-        nullable: defaultType.getIn(['default', 'nullable'], false),
-        default: defaultType.getIn(['default', 'default'], ''),
-        size: defaultType.getIn(['default', 'size'], '')
-      })
-    );
+    return fromJS({
+      name: column,
+      dbName: column,
+      type: defaultType.get('type', ''),
+      nullable: defaultType.get('nullable', false),
+      default: defaultType.get('default', ''),
+      size: defaultType.get('size', '')
+    });
   });
 }
 
@@ -80,14 +66,4 @@ function getMetadataDataTypes(columnMetadata) {
       nullable: !!parseInt(nullable.get('value', 0), 10)
     });
   });
-}
-
-function excludeDisabledFields(disabledFields, data) {
-  let editedData = data;
-
-  disabledFields.map(field => {
-    editedData = editedData.delete(field);
-  });
-
-  return editedData;
 }
