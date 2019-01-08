@@ -1,5 +1,5 @@
 import React from 'react';
-import {Modal, ResponsiveEmbed, ListGroupItem, ListGroup, Button} from 'react-bootstrap';
+import {Modal, ListGroupItem, ListGroup, Button} from 'react-bootstrap';
 import RoutesStore from '../../../stores/RoutesStore';
 import { hideWizardModalFn, showWizardModalFn } from '../stores/ActionCreators.js';
 import GuideModeImage from './GuideModeImage';
@@ -175,25 +175,14 @@ export default React.createClass({
   },
   renderMedia() {
     if (this.getStepMediaType() === 'img') {
-      return this.getImageLink();
-    } else if (this.getStepMediaType() === 'video') {
-      return this.getVideoEmbed();
+      return (
+        <GuideModeImage
+          scriptsBasePath={this.props.scriptsBasePath}
+          imageName={this.getStepMedia()}
+        />
+      );
     }
-  },
-  getImageLink() {
-    return (
-      <GuideModeImage
-        scriptsBasePath={this.props.scriptsBasePath}
-        imageName={this.getStepMedia()}
-      />
-    );
-  },
-  getVideoEmbed() {
-    return (
-      <ResponsiveEmbed a16by9>
-        <iframe width="100%" height="100%" src={this.getStepMedia()} allowFullScreen />
-      </ResponsiveEmbed>
-    );
+    return null;
   },
   getStepState(step) {
     let stepState = '';
@@ -310,7 +299,7 @@ export default React.createClass({
         e.preventDefault();
         showWizardModalFn(this.getLessonId() + 1);
       }}>
-          Lesson {this.getLessonId() + 1}
+        Lesson {this.getLessonId() + 1}
       </Button>
     );
   },
