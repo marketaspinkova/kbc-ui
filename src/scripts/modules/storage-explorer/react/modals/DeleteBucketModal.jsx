@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
-import { Modal, ButtonToolbar, Button } from 'react-bootstrap';
+import { Modal, Form, Alert } from 'react-bootstrap';
+import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
 export default React.createClass({
   propTypes: {
@@ -14,30 +15,35 @@ export default React.createClass({
   render() {
     return (
       <Modal show={this.props.show} onHide={this.props.onHide}>
-        <Modal.Header closeButton>
-          <Modal.Title>Delete bucket</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <span>
+        <Form onSubmit={this.onSubmit}>
+          <Modal.Header closeButton>
+            <Modal.Title>Delete bucket</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
             <p>Do you really want to delete bucket {this.props.bucket.get('id')}?</p>
-            {this.props.tables.count() > 0 && <p>Bucket is not empty. All tables will be also deleted!</p>}
-          </span>
-        </Modal.Body>
-        <Modal.Footer>
-          <ButtonToolbar>
-            <Button onClick={this.props.onHide} bsStyle="link">
-              Cancel
-            </Button>
-            <Button onClick={this.handleConfirm} disabled={this.props.deleting} bsStyle="danger">
-              {this.props.deleting ? 'Deleting...' : 'Delete'}
-            </Button>
-          </ButtonToolbar>
-        </Modal.Footer>
+            {this.props.tables.count() > 0 && (
+              <Alert bsStyle="warning">Bucket is not empty. All tables will be also deleted!</Alert>
+            )}
+          </Modal.Body>
+          <Modal.Footer>
+            <ConfirmButtons
+              isSaving={this.props.deleting}
+              isDisabled={this.props.deleting}
+              saveLabel={this.props.deleting ? 'Deleting...' : 'Delete'}
+              onCancel={this.props.onHide}
+              onSave={this.onSubmit}
+              saveStyle="danger"
+              saveButtonType="submit"
+            />
+          </Modal.Footer>
+        </Form>
       </Modal>
     );
   },
 
-  handleConfirm() {
+  onSubmit(event) {
+    event.preventDefault();
+
     this.props.onConfirm().then(this.props.onHide);
   }
 });
