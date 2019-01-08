@@ -9,7 +9,7 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    const svg = dimple.newSvg(this.refs.graph, '100%', 300);
+    const svg = dimple.newSvg(this.refs.graph, '100%', 600);
     const chart = new dimple.chart(svg, this.prepareData());
 
     const xAxis = chart.addTimeAxis('x', 'date', null, '%Y-%m-%d %H:%M');
@@ -28,6 +28,15 @@ export default React.createClass({
     chart.draw();
 
     this.chart = chart;
+  },
+
+  componentDidUpdate() {
+    this.refreshGraph();
+  },
+
+  refreshGraph() {
+    this.chart.data = this.prepareData();
+    this.chart.draw();
   },
 
   prepareData() {
