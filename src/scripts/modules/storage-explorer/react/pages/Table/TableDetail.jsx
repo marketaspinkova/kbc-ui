@@ -15,6 +15,7 @@ import { deleteTable, truncateTable } from '../../../Actions';
 import TableOverview from './TableOverview';
 import TableColumn from './TableColumn';
 import SnapshotRestore from './SnapshotRestore';
+import TableEvents from './TableEvents';
 
 export default React.createClass({
   mixins: [createStoreMixin(TablesStore, BucketsStore, ApplicationStore)],
@@ -132,7 +133,9 @@ export default React.createClass({
                   deletingColumn={this.state.deletingColumn}
                 />
               </Tab.Pane>
-              <Tab.Pane eventKey="events">Events</Tab.Pane>
+              <Tab.Pane eventKey="events">
+                <TableEvents table={this.state.table} />
+              </Tab.Pane>
               <Tab.Pane eventKey="data-sample">
                 <DataSample table={this.state.table} />
               </Tab.Pane>
