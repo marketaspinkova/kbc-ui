@@ -122,6 +122,8 @@ export default React.createClass({
                   deletingPrimaryKey={this.state.deletingPrimaryKey}
                 />
 
+                <LatestImports table={this.state.table} />
+
                 <TableColumn
                   table={this.state.table}
                   tables={this.state.tables}
@@ -151,9 +153,7 @@ export default React.createClass({
                   deletingSnapshot={this.state.deletingSnapshot}
                 />
               </Tab.Pane>
-              <Tab.Pane eventKey="graph">
-                <LatestImports table={this.state.table} />
-              </Tab.Pane>
+              <Tab.Pane eventKey="graph">Events</Tab.Pane>
             </Tab.Content>
           </div>
         </Tab.Container>

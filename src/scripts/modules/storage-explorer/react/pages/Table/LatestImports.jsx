@@ -41,7 +41,7 @@ export default React.createClass({
     if (this.state.isLoading) {
       return (
         <p>
-          <Loader /> loading...
+          <Loader /> loading graph...
         </p>
       );
     }
