@@ -1,9 +1,9 @@
-import {Map, fromJS} from 'immutable';
+import { Map, fromJS } from 'immutable';
 import React from 'react';
 
-import createRoute  from '../configurations/utils/createRoute';
-import columnTypes  from '../configurations/utils/columnTypeConstants';
-import {CollapsibleSection} from '../configurations/utils/renderHelpers';
+import createRoute from '../configurations/utils/createRoute';
+import columnTypes from '../configurations/utils/columnTypeConstants';
+import { CollapsibleSection } from '../configurations/utils/renderHelpers';
 
 import InputMappingSection from './react/components/InputMapping';
 import inputMappingAdapter from './adapters/inputMapping';
@@ -42,7 +42,13 @@ const routeSettings = {
     ]
   },
   row: {
-    onConform: (configuration) => {
+    onConform: configuration => {
+      const incremental = configuration.getIn(['parameters', 'incremental'], false);
+      const mode = configuration.getIn(['parameters', 'mode'], incremental ? 'update' : 'replace');
+      const updatedConfiguration = configuration
+        .setIn(['parameters', 'mode'], mode)
+        .deleteIn(['parameters', 'incremental']);
+
       const configDraft = fromJS({
         storage: {
           input: {
@@ -54,10 +60,10 @@ const routeSettings = {
           }
         },
         parameters: {
-          incremental: false
+          mode: 'replace'
         }
       });
-      return configDraft.mergeDeep(configuration);
+      return configDraft.mergeDeep(updatedConfiguration);
     },
     hasState: false,
     sections: [
@@ -102,11 +108,7 @@ const routeSettings = {
         name: 'Description',
         type: columnTypes.VALUE,
         value: function(row) {
-          return (
-            <small>
-              {row.get('description') !== '' ? row.get('description') : 'No description'}
-            </small>
-          );
+          return <small>{row.get('description') !== '' ? row.get('description') : 'No description'}</small>;
         }
       }
     ]

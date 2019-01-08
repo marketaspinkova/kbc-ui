@@ -18,8 +18,8 @@ export default React.createClass({
   },
 
   render() {
-    const props = this.props;
     const panelExpanded = this.props.value.changedSince !== '';
+
     return (
       <Form horizontal>
         <h3>Source</h3>
@@ -29,9 +29,7 @@ export default React.createClass({
           </Col>
           <Col sm={8}>
             <FormControl.Static>
-              <StorageApiLink
-                tableId={this.props.value.source}
-              >
+              <StorageApiLink tableId={this.props.value.source}>
                 {this.props.value.source}
               </StorageApiLink>
             </FormControl.Static>
@@ -50,9 +48,7 @@ export default React.createClass({
             <Col sm={8}>
               <ChangedSinceInput
                 value={this.props.value.changedSince}
-                onChange={function(value) {
-                  props.onChange({changedSince: value});
-                }}
+                onChange={value => this.props.onChange({changedSince: value})}
                 disabled={this.props.disabled}
               />
             </Col>

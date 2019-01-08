@@ -2,7 +2,7 @@ export const cases = {
   emptyWithDefaults: {
     localState: {
       destination: '',
-      incremental: false
+      mode: 'replace'
     },
     configuration: {
       storage: {
@@ -15,7 +15,7 @@ export const cases = {
         }
       },
       parameters: {
-        incremental: false
+        mode: 'replace'
       }
     }
   },
@@ -23,7 +23,7 @@ export const cases = {
   simple: {
     localState: {
       destination: 'test',
-      incremental: true
+      mode: 'update'
     },
     configuration: {
       storage: {
@@ -36,9 +36,80 @@ export const cases = {
         }
       },
       parameters: {
-        incremental: true
+        mode: 'update'
       }
     }
   }
 };
 
+export const casesWithIncrement = {
+  disable: {
+    localState: {
+      destination: 'Test',
+      mode: 'replace'
+    },
+    oldConfiguration: {
+      storage: {
+        input: {
+          tables: [
+            {
+              destination: 'Test'
+            }
+          ]
+        }
+      },
+      parameters: {
+        incremental: false
+      }
+    },
+    newConfiguration: {
+      storage: {
+        input: {
+          tables: [
+            {
+              destination: 'Test'
+            }
+          ]
+        }
+      },
+      parameters: {
+        mode: 'replace'
+      }
+    }
+  },
+
+  enable: {
+    localState: {
+      destination: 'Test',
+      mode: 'update'
+    },
+    oldConfiguration: {
+      storage: {
+        input: {
+          tables: [
+            {
+              destination: 'Test'
+            }
+          ]
+        }
+      },
+      parameters: {
+        incremental: true
+      }
+    },
+    newConfiguration: {
+      storage: {
+        input: {
+          tables: [
+            {
+              destination: 'Test'
+            }
+          ]
+        }
+      },
+      parameters: {
+        mode: 'update'
+      }
+    }
+  }
+};

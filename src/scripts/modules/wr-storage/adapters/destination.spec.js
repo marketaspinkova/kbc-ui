@@ -1,7 +1,7 @@
 import assert from 'assert';
 import Immutable from 'immutable';
 import adapter from './destination';
-import { cases } from './destination.spec.def';
+import { cases, casesWithIncrement } from './destination.spec.def';
 
 describe('destination', function() {
   describe('createConfiguration()', function() {
@@ -13,6 +13,12 @@ describe('destination', function() {
         assert.deepEqual(cases[key].configuration, adapter.createConfiguration(Immutable.fromJS(cases[key].localState)).toJS());
       });
     });
+    it('should return a valid config for a old local state with incremental set to false', function() {
+      assert.deepEqual(casesWithIncrement.disable.newConfiguration, adapter.createConfiguration(Immutable.fromJS(casesWithIncrement.disable.localState)).toJS());
+    });
+    it('should return a valid config for a old local state with incremental set to true', function() {
+      assert.deepEqual(casesWithIncrement.enable.newConfiguration, adapter.createConfiguration(Immutable.fromJS(casesWithIncrement.enable.localState)).toJS());
+    });
   });
 
   describe('parseConfiguration()', function() {
@@ -23,6 +29,12 @@ describe('destination', function() {
       it('should return a correct localState with ' + key + ' configuration', function() {
         assert.deepEqual(cases[key].localState, adapter.parseConfiguration(Immutable.fromJS(cases[key].configuration)).toJS());
       });
+    });
+    it('should return a correct localState with old configuration format with incremental set to false', function() {
+      assert.deepEqual(casesWithIncrement.disable.localState, adapter.parseConfiguration(Immutable.fromJS(casesWithIncrement.disable.oldConfiguration)).toJS());
+    });
+    it('should return a correct localState with old configuration format with incremental set to true', function() {
+      assert.deepEqual(casesWithIncrement.enable.localState, adapter.parseConfiguration(Immutable.fromJS(casesWithIncrement.enable.oldConfiguration)).toJS());
     });
   });
 
