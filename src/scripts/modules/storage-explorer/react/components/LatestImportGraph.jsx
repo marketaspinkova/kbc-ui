@@ -28,10 +28,16 @@ export default React.createClass({
     chart.draw();
 
     this.chart = chart;
+
+    window.addEventListener('resize', this.refreshGraph);
   },
 
   componentDidUpdate() {
     this.refreshGraph();
+  },
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.refreshGraph);
   },
 
   refreshGraph() {
