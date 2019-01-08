@@ -154,12 +154,12 @@ Dispatcher.register(function(payload) {
       return StorageBucketsStore.emitChange();
 
     case constants.ActionTypes.STORAGE_BUCKET_DELETE_SUCCESS:
-      _store = _store.removeIn(['pendingBuckets', 'deleting', action.bucketId]);
-      _store = _store.removeIn(['buckets', action.bucketId]);
+      _store = _store.deleteIn(['pendingBuckets', 'deleting', action.bucketId]);
+      _store = _store.deleteIn(['buckets', action.bucketId]);
       return StorageBucketsStore.emitChange();
 
     case constants.ActionTypes.STORAGE_BUCKET_DELETE_ERROR:
-      _store = _store.removeIn(['pendingBuckets', 'deleting', action.bucketId]);
+      _store = _store.deleteIn(['pendingBuckets', 'deleting', action.bucketId]);
       return StorageBucketsStore.emitChange();
 
     case constants.ActionTypes.STORAGE_BUCKET_SHARE:

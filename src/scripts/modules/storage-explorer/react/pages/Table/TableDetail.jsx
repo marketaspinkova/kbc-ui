@@ -1,5 +1,6 @@
 import React from 'react';
 import { Tab, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+import { Loader } from '@keboola/indigo-ui';
 
 import ApplicationStore from '../../../../../stores/ApplicationStore';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
@@ -8,7 +9,8 @@ import BucketsStore from '../../../../components/stores/StorageBucketsStore';
 import TablesStore from '../../../../components/stores/StorageTablesStore';
 import DataSample from '../../components/DataSample';
 import TruncateTableModal from '../../modals/TruncateTableModal';
-import { truncateTable } from '../../../Actions';
+import DeleteTableModal from '../../modals/DeleteTableModal';
+import { deleteTable, truncateTable } from '../../../Actions';
 
 import TableOverview from './TableOverview';
 import TableColumn from './TableColumn';
@@ -39,7 +41,8 @@ export default React.createClass({
       creatingSnapshot: TablesStore.getIsCreatingSnapshot(table.get('id')),
       creatingFromSnapshot: TablesStore.getIsCreatingFromSnapshot(),
       deletingSnapshot: TablesStore.getIsDeletingSnapshot(),
-      truncatingTable: TablesStore.getIsTruncatingTable(table.get('id'))
+      truncatingTable: TablesStore.getIsTruncatingTable(table.get('id')),
+      deletingTable: TablesStore.getIsDeletingTable()
     };
   },
 
@@ -92,9 +95,17 @@ export default React.createClass({
                     Truncate table
                   </MenuItem>
                 )}
-                <MenuItem eventKey="delete" onSelect={this.handleDropdownAction}>
-                  Delete table
-                </MenuItem>
+                {this.canWriteTable() && (
+                  <MenuItem eventKey="delete" onSelect={this.handleDropdownAction} disabled={this.state.deletingTable}>
+                    {this.state.deletingTable ? (
+                      <span>
+                        <Loader /> Deleting table...
+                      </span>
+                    ) : (
+                      'Delete table'
+                    )}
+                  </MenuItem>
+                )}
               </NavDropdown>
             </Nav>
             <Tab.Content animation={false}>
@@ -141,8 +152,24 @@ export default React.createClass({
           </div>
         </Tab.Container>
 
+        {this.renderDeletingTableModal()}
         {!this.state.table.get('isAlias') && this.canWriteTable() && this.renderTruncateTableModal()}
       </div>
+    );
+  },
+
+  renderDeletingTableModal() {
+    return (
+      <DeleteTableModal
+        show={!!(this.state.openActionModal && this.state.actionModalType === 'delete')}
+        table={this.state.table}
+        sapiToken={this.state.sapiToken}
+        tableAliases={this.getTableAliases()}
+        tableLinks={this.getTableLinks()}
+        deleting={this.state.deletingTable}
+        onConfirm={this.handleDeleteTable}
+        onHide={this.closeActionModal}
+      />
     );
   },
 
@@ -165,6 +192,13 @@ export default React.createClass({
     }
   },
 
+  handleDeleteTable(forceDelete) {
+    const bucketId = this.state.bucket.get('id');
+    const tableId = this.state.table.get('id');
+
+    return deleteTable(bucketId, tableId, forceDelete);
+  },
+
   handleTruncateTable() {
     const tableId = this.state.table.get('id');
 
@@ -184,11 +218,34 @@ export default React.createClass({
         });
 
       case 'delete':
-        return null;
+        return this.setState({
+          openActionModal: true,
+          actionModalType: 'delete'
+        });
 
       default:
         return null;
     }
+  },
+
+  openActionModal(type) {
+    this.setState({
+      openActionModal: true,
+      actionModalType: type
+    });
+  },
+
+  closeActionModal() {
+    this.setState({
+      openActionModal: false,
+      actionModalType: null
+    });
+  },
+
+  canWriteTable() {
+    const bucketId = this.state.table.getIn(['bucket', 'id']);
+    const permission = this.state.sapiToken.getIn(['bucketPermissions', bucketId]);
+    return ['write', 'manage'].includes(permission);
   },
 
   getTableAliases() {
@@ -226,27 +283,6 @@ export default React.createClass({
     });
 
     return foundLinks;
-  },
-
-  openActionModal(type) {
-    this.setState({
-      openActionModal: true,
-      actionModalType: type
-    });
-  },
-
-  closeActionModal() {
-    this.setState({
-      openActionModal: false,
-      actionModalType: null
-    });
-  },
-
-  canWriteTable() {
-    const bucketId = this.state.table.getIn(['bucket', 'id']);
-    const permission = this.state.sapiToken.getIn(['bucketPermissions', bucketId]);
-
-    return ['write', 'manage'].includes(permission);
   },
 
   generateTabId(eventKey, type) {

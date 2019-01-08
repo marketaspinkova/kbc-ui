@@ -162,6 +162,12 @@ var storageApi = {
     });
   },
 
+  deleteTable: function(tableId, params) {
+    return createRequest('DELETE', 'tables/' + tableId).type('form').send(params).promise().then(function(response) {
+      return response.body;
+    });
+  },
+
   createAliasTable: function(bucketId, params) {
     return createRequest('POST', 'buckets/' + bucketId + '/table-aliases').type('form').send(params).promise().then(function(response) {
       return response.body;
