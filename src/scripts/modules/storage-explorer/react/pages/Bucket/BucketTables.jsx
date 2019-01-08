@@ -36,18 +36,22 @@ export default React.createClass({
           </div>
         </div>
 
-        <Table responsive striped hover>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Rows count</th>
-              <th>Data size</th>
-              <th>Created</th>
-              <th>Last change</th>
-            </tr>
-          </thead>
-          <tbody>{this.props.tables.map(this.renderTableRow).toArray()}</tbody>
-        </Table>
+        {this.props.tables.count() > 0 ? (
+          <Table responsive striped hover>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Rows count</th>
+                <th>Data size</th>
+                <th>Created</th>
+                <th>Last change</th>
+              </tr>
+            </thead>
+            <tbody>{this.props.tables.map(this.renderTableRow).toArray()}</tbody>
+          </Table>
+        ) : (
+          <p>No tables.</p>
+        )}
 
         {this.renderCreateAliasTableModal()}
       </div>
