@@ -196,7 +196,8 @@ export default React.createClass({
         parts.push(
           <p key="apperror">
             {'Something is broken. '}
-            Our developers were notified about this error and will let you know what went wrong.
+            {'Our developers were notified about this error. '}
+            Feel free to contact support to request more information.
           </p>
         );
       }
