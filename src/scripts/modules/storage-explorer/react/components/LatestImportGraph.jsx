@@ -25,7 +25,7 @@ export default React.createClass({
     ];
 
     chart.setMargins('40px', '10px', '30px', '20px');
-    chart.draw();
+    chart.draw(200);
 
     this.chart = chart;
 
@@ -42,7 +42,7 @@ export default React.createClass({
 
   refreshGraph() {
     this.chart.data = this.prepareData();
-    this.chart.draw();
+    this.chart.draw(200);
   },
 
   prepareData() {
