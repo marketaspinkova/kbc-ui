@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
 import {Loader, ExternalLink} from '@keboola/indigo-ui';
-import ResetProjectModal from './ResetProjectModal';
 import CreateProjectModal from './CreateProjectModal';
 import ComponentsStore from '../../../components/stores/ComponentsStore';
 
@@ -20,14 +19,12 @@ export default React.createClass({
     }),
     disabled: PropTypes.bool.isRequired,
     onHandleCreate: PropTypes.func.isRequired,
-    onToggleEnableAcess: PropTypes.func.isRequired,
-    onHandleResetProject: PropTypes.func.isRequired
+    onToggleEnableAcess: PropTypes.func.isRequired
   },
 
   getInitialState() {
     return {
-      showCreateProjectModal: false,
-      showResetProjectModal: false
+      showCreateProjectModal: false
     };
   },
 
@@ -41,28 +38,9 @@ export default React.createClass({
     this.props.onHandleCreate(newProject).then(this.closeCreateProjectModal);
   },
 
-
-  closeResetProjectModal() {
-    if (!this.props.disabled && !this.props.provisioning.isDeleting) {
-      this.setState({showResetProjectModal: false});
-    }
-  },
-
-  handleResetProject(deleteProject) {
-    return this.props.onHandleResetProject(deleteProject).then(this.closeResetProjectModal);
-  },
-
   render() {
     return (
       <div>
-        <ResetProjectModal
-          isReseting={this.props.provisioning.isDeleting}
-          show={this.state.showResetProjectModal}
-          pid={this.props.config.pid}
-          onHide={() => this.setState({showResetProjectModal: false})}
-          onConfirm={this.handleResetProject}
-          disabled={this.props.disabled}
-        />
         <CreateProjectModal
           isCreating={this.props.provisioning.isCreating}
           show={this.state.showCreateProjectModal}
@@ -144,7 +122,6 @@ export default React.createClass({
         }
         {!isProvisioned && this.renderGoToProjectLink()}
 
-        {isProvisioned && this.renderResetProjectButton()}
         {isProvisioned && !hasSso && this.renderEnableAccessButton()}
         {isProvisioned &&  hasSso && this.renderDisableAccessButton()}
         {isProvisioned &&  hasSso && this.renderLoginToProjectLink()}
@@ -163,17 +140,6 @@ export default React.createClass({
 
   isSsoEnabled() {
     return this.isKeboolaProvisioned() && !!this.props.provisioning.data.get('sso');
-  },
-
-
-  renderResetProjectButton() {
-    return (
-      <button type="button"
-        onClick={() => this.setState({showResetProjectModal: true})}
-        className="btn btn-danger pull-right">
-        Disconnect
-      </button>
-    );
   },
 
   renderGoToProjectLink() {
