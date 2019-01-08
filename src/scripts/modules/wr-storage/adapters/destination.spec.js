@@ -14,10 +14,10 @@ describe('destination', function() {
       });
     });
     it('should return a valid config for a old local state with incremental set to false', function() {
-      assert.deepEqual(casesWithIncrement.disable.newConfiguration, adapter.createConfiguration(Immutable.fromJS(casesWithIncrement.disable.localState)).toJS());
+      assert.deepEqual(casesWithIncrement.disable.newConfiguration, adapter.createConfiguration(Immutable.fromJS(casesWithIncrement.disable.oldLocalState)).toJS());
     });
     it('should return a valid config for a old local state with incremental set to true', function() {
-      assert.deepEqual(casesWithIncrement.enable.newConfiguration, adapter.createConfiguration(Immutable.fromJS(casesWithIncrement.enable.localState)).toJS());
+      assert.deepEqual(casesWithIncrement.enable.newConfiguration, adapter.createConfiguration(Immutable.fromJS(casesWithIncrement.enable.oldLocalState)).toJS());
     });
   });
 
@@ -31,10 +31,10 @@ describe('destination', function() {
       });
     });
     it('should return a correct localState with old configuration format with incremental set to false', function() {
-      assert.deepEqual(casesWithIncrement.disable.localState, adapter.parseConfiguration(Immutable.fromJS(casesWithIncrement.disable.oldConfiguration)).toJS());
+      assert.deepEqual(casesWithIncrement.disable.newLocalState, adapter.parseConfiguration(Immutable.fromJS(casesWithIncrement.disable.oldConfiguration)).toJS());
     });
     it('should return a correct localState with old configuration format with incremental set to true', function() {
-      assert.deepEqual(casesWithIncrement.enable.localState, adapter.parseConfiguration(Immutable.fromJS(casesWithIncrement.enable.oldConfiguration)).toJS());
+      assert.deepEqual(casesWithIncrement.enable.newLocalState, adapter.parseConfiguration(Immutable.fromJS(casesWithIncrement.enable.oldConfiguration)).toJS());
     });
   });
 

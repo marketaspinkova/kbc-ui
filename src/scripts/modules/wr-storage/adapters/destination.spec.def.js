@@ -44,7 +44,11 @@ export const cases = {
 
 export const casesWithIncrement = {
   disable: {
-    localState: {
+    oldLocalState: {
+      destination: 'Test',
+      incremental: false
+    },
+    newLocalState: {
       destination: 'Test',
       mode: 'replace'
     },
@@ -79,7 +83,11 @@ export const casesWithIncrement = {
   },
 
   enable: {
-    localState: {
+    oldLocalState: {
+      destination: 'Test',
+      incremental: true
+    },
+    newLocalState: {
       destination: 'Test',
       mode: 'update'
     },
