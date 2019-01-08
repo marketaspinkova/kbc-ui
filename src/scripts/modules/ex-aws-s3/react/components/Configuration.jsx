@@ -107,6 +107,8 @@ export default React.createClass({
         <PanelWithDetails
           defaultExpanded={this.props.value.newFilesOnly || this.props.value.wildcard || this.props.value.subfolders}
           placement="bottom"
+          labelOpen="Show additional source settings"
+          labelCollapse="Hide additional source settings"
         >
           <Input
             type="checkbox"
@@ -249,6 +251,8 @@ export default React.createClass({
         <PanelWithDetails
           defaultExpanded={this.props.value.addFilenameColumn || this.props.value.addRowNumberColumn}
           placement="bottom"
+          labelOpen="Show additional processing settings"
+          labelCollapse="Hide additional processing settings"
         >
           <Input
             type="checkbox"
