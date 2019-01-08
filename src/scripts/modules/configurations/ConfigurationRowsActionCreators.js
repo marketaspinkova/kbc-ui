@@ -192,6 +192,7 @@ module.exports = {
     return storeEncodedConfigurationRow(componentId, configurationId, rowId, configuration.toJS(), changeDescription ? changeDescription : ('Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' parameters edited manually'))
       .then(function(storedConfiguration) {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
+        RowVersionsActionCreators.loadVersionsForce(componentId, configurationId, rowId);
         Dispatcher.handleViewAction({
           type: Constants.ActionTypes.CONFIGURATION_ROWS_SAVE_JSON_CONFIGURATION_SUCCESS,
           componentId: componentId,
