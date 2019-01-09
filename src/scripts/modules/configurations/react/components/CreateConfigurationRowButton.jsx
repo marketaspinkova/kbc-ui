@@ -86,8 +86,7 @@ export default React.createClass({
             <Col sm={9}>
               <FormControl
                 autoFocus
-                componentClass="textarea"
-                rows={3}
+                type="text"
                 value={this.state.form.get('name')}
                 onChange={this.handleChange.bind(this, 'name')}
               />
