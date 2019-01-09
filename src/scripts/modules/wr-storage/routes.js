@@ -15,7 +15,7 @@ import DestinationSection from './react/components/Destination';
 import destinationAdapter from './adapters/destination';
 
 import actions from './adapters/actions';
-import { onConform } from './utils/onConform';
+import { conform } from './adapters/conform';
 
 const routeSettings = {
   componentId: 'keboola.wr-storage',
@@ -43,7 +43,7 @@ const routeSettings = {
     ]
   },
   row: {
-    onConform,
+    onConform: conform,
     hasState: false,
     sections: [
       {

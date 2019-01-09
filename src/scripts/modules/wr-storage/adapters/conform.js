@@ -15,7 +15,7 @@ export const configDraft = fromJS({
   }
 });
 
-export function onConform(configuration) {
+export function conform(configuration) {
   const incremental = configuration.getIn(['parameters', 'incremental'], false);
   const mode = configuration.getIn(['parameters', 'mode'], incremental ? 'update' : 'replace');
   const updatedConfiguration = configuration
