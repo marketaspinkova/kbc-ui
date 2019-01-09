@@ -2,6 +2,7 @@ import React from 'react';
 import PureRenderMixin from 'react-immutable-render-mixin';
 import { fromJS } from 'immutable';
 import { Button, OverlayTrigger, Popover } from 'react-bootstrap';
+import { truncate } from 'underscore.string';
 
 export default React.createClass({
   mixins: [PureRenderMixin],
@@ -34,7 +35,7 @@ export default React.createClass({
         ) : (
           <ul className="container-fluid">
             {this.getColumnValues()
-              .map((value, index) => <li key={index}>{value}</li>)
+              .map((value, index) => <li key={index}>{truncate(value, 100)}</li>)
               .toArray()}
           </ul>
         )}
