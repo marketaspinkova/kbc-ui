@@ -193,7 +193,7 @@ export default React.createClass({
               onChange={this.handlePrimaryKey}
             />
             <HelpBlock>
-              Primay key is useful for incremental imports - rows that already exists in table are updated.
+              Primary key is useful for incremental imports - rows that already exists in table are updated.
             </HelpBlock>
           </Col>
         </FormGroup>
