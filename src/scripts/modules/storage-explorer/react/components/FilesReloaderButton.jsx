@@ -2,16 +2,16 @@ import React from 'react';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import StorageActionCreators from '../../../components/StorageActionCreators';
 import FilesStore from '../../../components/stores/StorageFilesStore';
-import LocalStore from '../../LocalStore';
+import FilesLocalStore from '../../FilesLocalStore';
 import { filesLimit } from '../../Constants';
 import { RefreshIcon } from '@keboola/indigo-ui';
 
 export default React.createClass({
-  mixins: [createStoreMixin(FilesStore, LocalStore)],
+  mixins: [createStoreMixin(FilesStore, FilesLocalStore)],
 
   getStateFromStores() {
     return {
-      searchQuery: LocalStore.getSearchQuery(),
+      searchQuery: FilesLocalStore.getSearchQuery(),
       isLoading: FilesStore.getIsLoading()
     };
   },

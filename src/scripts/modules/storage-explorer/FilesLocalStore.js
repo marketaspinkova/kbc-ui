@@ -7,7 +7,7 @@ let _store = Map({
   searchQuery: ''
 });
 
-const LocalStore = StoreUtils.createStore({
+const FilesLocalStore = StoreUtils.createStore({
   getSearchQuery() {
     return _store.get('searchQuery', '');
   }
@@ -19,11 +19,11 @@ dispatcher.register(payload => {
   switch (action.type) {
     case constants.ActionTypes.UPDATE_SEARCH_QUERY:
       _store = _store.set('searchQuery', action.query);
-      return LocalStore.emitChange();
+      return FilesLocalStore.emitChange();
 
     default:
       break;
   }
 });
 
-export default LocalStore;
+export default FilesLocalStore;

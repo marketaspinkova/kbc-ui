@@ -6,7 +6,7 @@ import { SearchBar } from '@keboola/indigo-ui';
 
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import FilesStore from '../../../../components/stores/StorageFilesStore';
-import LocalStore from '../../../LocalStore';
+import FilesLocalStore from '../../../FilesLocalStore';
 import StorageActionCreators from '../../../../components/StorageActionCreators';
 import FilesTable from '../../components/FilesTable';
 import UploadModal from '../../modals/UploadModal';
@@ -14,13 +14,13 @@ import { updateSearchQuery, resetSearchQuery } from '../../../Actions';
 import { filesLimit } from '../../../Constants';
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin, createStoreMixin(FilesStore, LocalStore)],
+  mixins: [ImmutableRenderMixin, createStoreMixin(FilesStore, FilesLocalStore)],
 
   getStateFromStores() {
     return {
       files: FilesStore.getAll(),
       hasMore: FilesStore.hasMoreFiles(),
-      searchQuery: LocalStore.getSearchQuery(),
+      searchQuery: FilesLocalStore.getSearchQuery(),
       isLoadingMore: FilesStore.getIsLoadingMore(),
       isDeleting: FilesStore.getIsDeleting()
     };
