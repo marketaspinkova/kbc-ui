@@ -13,7 +13,7 @@ import DeleteBucketModal from '../../modals/DeleteBucketModal';
 import BucketOverview from './BucketOverview';
 import BucketTables from './BucketTables';
 import BucketEvents from './BucketEvents';
-import { deleteBucket } from '../../../Actions';
+import { deleteBucket, createTableFromTextInput } from '../../../Actions';
 
 export default React.createClass({
   mixins: [createStoreMixin(BucketsStore, ApplicationStore, TablesStore, FilesStore)],
@@ -128,7 +128,7 @@ export default React.createClass({
 
   handleCreateTableFromString(params) {
     const bucketId = this.state.bucket.get('id');
-    return StorageActionCreators.createTableSync(bucketId, params);
+    return createTableFromTextInput(bucketId, params);
   },
 
   handleCreateAliasTable(params) {

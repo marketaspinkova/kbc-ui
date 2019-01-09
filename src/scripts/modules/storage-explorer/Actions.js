@@ -2,6 +2,7 @@ import StorageActionCreators from '../components/StorageActionCreators';
 import StorageApi from '../components/StorageApi';
 import RoutesStore from '../../stores/RoutesStore';
 import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
+import HttpError from '../../utils/HttpError';
 
 const errorNotification = (message) => {
   ApplicationActionCreators.sendNotification({
@@ -74,6 +75,14 @@ const createTableFromSnapshot = (bucketId, params) => {
     .catch(errorNotification);
 };
 
+const createTableFromTextInput = (bucketId, params) => {
+  return StorageActionCreators
+    .createTableSync(bucketId, params)
+    .catch(HttpError, (error) => {
+      throw error.message;
+    });
+};
+
 const restoreUsingTimeTravel = (bucketId, params) => {
   return StorageActionCreators
     .restoreUsingTimeTravel(bucketId, params)
@@ -102,5 +111,6 @@ export {
   dataPreview,
   createTableFromSnapshot,
   restoreUsingTimeTravel,
-  truncateTable
+  truncateTable,
+  createTableFromTextInput
 };
