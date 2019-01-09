@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { fromJS } from 'immutable';
-import { Col, Modal, Form, FormGroup, FormControl, ControlLabel, Checkbox } from 'react-bootstrap';
+import { Alert, Col, Modal, Form, FormGroup, FormControl, ControlLabel, Checkbox } from 'react-bootstrap';
 import Select from 'react-select';
 import SapiTableSelector from '../../../components/react/components/SapiTableSelector';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
@@ -162,7 +162,7 @@ export default React.createClass({
       return null;
     }
 
-    return <div className="alert alert-danger">{this.state.error}</div>;
+    return <Alert bsStyle="danger">{this.state.error}</Alert>;
   },
 
   handleSourceTable(tableId, table) {

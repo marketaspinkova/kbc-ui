@@ -6,16 +6,17 @@ import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../../../stores/RoutesStore';
 import BucketsStore from '../../../../components/stores/StorageBucketsStore';
 import TablesStore from '../../../../components/stores/StorageTablesStore';
+import FilesStore from '../../../../components/stores/StorageFilesStore';
 import StorageActionCreators from '../../../../components/StorageActionCreators';
 
 import DeleteBucketModal from '../../modals/DeleteBucketModal';
 import BucketOverview from './BucketOverview';
 import BucketTables from './BucketTables';
 import BucketEvents from './BucketEvents';
-import { deleteBucket } from '../../../Actions';
+import { deleteBucket, createTableFromTextInput } from '../../../Actions';
 
 export default React.createClass({
-  mixins: [createStoreMixin(BucketsStore, ApplicationStore, TablesStore)],
+  mixins: [createStoreMixin(BucketsStore, ApplicationStore, TablesStore, FilesStore)],
 
   getStateFromStores() {
     const bucketId = RoutesStore.getCurrentRouteParam('bucketId');
@@ -25,9 +26,11 @@ export default React.createClass({
       sapiToken: ApplicationStore.getSapiToken(),
       tables: TablesStore.getAll().filter(table => table.getIn(['bucket', 'id']) === bucketId),
       deletingBuckets: BucketsStore.deletingBuckets().has(bucketId),
-      creatingAliasTable: TablesStore.getIsCreatingAliasTable(),
       isSharing: BucketsStore.isSharing(bucketId),
-      isUnsharing: BucketsStore.isUnsharing(bucketId)
+      isUnsharing: BucketsStore.isUnsharing(bucketId),
+      creatingTable: TablesStore.getIsCreatingTable(),
+      creatingAliasTable: TablesStore.getIsCreatingAliasTable(),
+      uploadingProgress: FilesStore.getUploadingProgress(bucketId) || 0
     };
   },
 
@@ -80,8 +83,12 @@ export default React.createClass({
                   bucket={this.state.bucket}
                   tables={this.state.tables}
                   sapiToken={this.state.sapiToken}
+                  onCreateTableFromCsv={this.handleCreateTableFromCsv}
+                  onCreateTableFromString={this.handleCreateTableFromString}
                   onCreateAliasTable={this.handleCreateAliasTable}
+                  isCreatingTable={this.state.creatingTable}
                   isCreatingAliasTable={this.state.creatingAliasTable}
+                  uploadingProgress={this.state.uploadingProgress}
                 />
               </Tab.Pane>
               <Tab.Pane eventKey="events">
@@ -109,8 +116,24 @@ export default React.createClass({
     );
   },
 
+  handleCreateTableFromCsv(file, params) {
+    const bucketId = this.state.bucket.get('id');
+    return StorageActionCreators.uploadFile(bucketId, file).then(fileId => {
+      return StorageActionCreators.createTable(bucketId, {
+        ...params,
+        dataFileId: fileId
+      });
+    });
+  },
+
+  handleCreateTableFromString(params) {
+    const bucketId = this.state.bucket.get('id');
+    return createTableFromTextInput(bucketId, params);
+  },
+
   handleCreateAliasTable(params) {
-    return StorageActionCreators.createAliasTable(this.state.bucket.get('id'), params);
+    const bucketId = this.state.bucket.get('id');
+    return StorageActionCreators.createAliasTable(bucketId, params);
   },
 
   handleDeleteBucket() {

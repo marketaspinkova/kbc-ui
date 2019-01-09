@@ -1,14 +1,13 @@
 import Dispatcher from '../../../Dispatcher';
-import { ActionTypes } from '../Constants';
-const constants = { ActionTypes };
-import Immutable from 'immutable';
-const { Map, List } = Immutable;
+import * as constants from '../Constants';
+import { Map, List, fromJS } from 'immutable';
 import StoreUtils from '../../../utils/StoreUtils';
 
 let _store = Map({
   files: List(),
   isLoaded: false,
-  isLoading: false
+  isLoading: false,
+  uploadingProgress: Map()
 });
 
 const StorageFilesStore = StoreUtils.createStore({
@@ -22,6 +21,10 @@ const StorageFilesStore = StoreUtils.createStore({
 
   getIsLoaded() {
     return _store.get('isLoaded');
+  },
+
+  getUploadingProgress(bucketId) {
+    return _store.getIn(['uploadingProgress', bucketId]);
   }
 });
 
@@ -36,7 +39,7 @@ Dispatcher.register(function(payload) {
     case constants.ActionTypes.STORAGE_FILES_LOAD_SUCCESS:
       _store = _store.withMutations(store =>
         store
-          .set('files', Immutable.fromJS(action.files))
+          .set('files', fromJS(action.files))
           .set('isLoading', false)
           .set('isLoaded', true)
       );
@@ -45,6 +48,16 @@ Dispatcher.register(function(payload) {
     case constants.ActionTypes.STORAGE_FILES_LOAD_ERROR:
       _store = _store.set('isLoading', false);
       return StorageFilesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_FILE_UPLOAD:
+      _store = _store.setIn(['uploadingProgress', action.bucketId], action.progress);
+      return StorageFilesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_FILE_UPLOAD_SUCCESS:
+    case constants.ActionTypes.STORAGE_FILE_UPLOAD_ERROR:
+      _store = _store.deleteIn(['uploadingProgress', action.bucketId]);
+      return StorageFilesStore.emitChange();
+
     default:
   }
 });
