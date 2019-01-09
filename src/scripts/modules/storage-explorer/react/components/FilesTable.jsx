@@ -20,12 +20,6 @@ export default React.createClass({
     isDeleting: PropTypes.object.isRequired
   },
 
-  getInitialState() {
-    return {
-      fileDetail: null
-    };
-  },
-
   render() {
     if (!this.props.files.count()) {
       return null;
