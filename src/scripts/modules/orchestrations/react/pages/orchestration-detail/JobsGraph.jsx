@@ -2,10 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
 import numeral from 'numeral';
-import date from '../../../../../utils/date';
 import { Map } from 'immutable';
-
-import dimple from 'dimple/dist/dimple.v2.1.3.js'; // TODO move this require to utils and than require utils/dimple
+import date from '../../../../../utils/date';
+import dimple from '../../../../../utils/dimple';
 
 export default React.createClass({
   propTypes: {

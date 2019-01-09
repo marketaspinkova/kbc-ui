@@ -16,6 +16,7 @@ import TableOverview from './TableOverview';
 import TableColumn from './TableColumn';
 import SnapshotRestore from './SnapshotRestore';
 import TableEvents from './TableEvents';
+import LatestImports from './LatestImports';
 
 export default React.createClass({
   mixins: [createStoreMixin(TablesStore, BucketsStore, ApplicationStore)],
@@ -121,6 +122,8 @@ export default React.createClass({
                   deletingPrimaryKey={this.state.deletingPrimaryKey}
                 />
 
+                <LatestImports table={this.state.table} />
+
                 <TableColumn
                   table={this.state.table}
                   tables={this.state.tables}
@@ -150,7 +153,7 @@ export default React.createClass({
                   deletingSnapshot={this.state.deletingSnapshot}
                 />
               </Tab.Pane>
-              <Tab.Pane eventKey="graph">Graph</Tab.Pane>
+              <Tab.Pane eventKey="graph">Events</Tab.Pane>
             </Tab.Content>
           </div>
         </Tab.Container>
