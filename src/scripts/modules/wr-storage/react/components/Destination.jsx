@@ -1,10 +1,11 @@
 import React, { PropTypes } from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
-import { Form, FormControl, FormGroup, ControlLabel, HelpBlock, Col, Checkbox } from 'react-bootstrap';
+import { Form, FormControl, FormGroup, ControlLabel, HelpBlock, Col } from 'react-bootstrap';
+import { RadioGroup } from 'react-radio-group';
+import RadioGroupInput from '../../../../react/common/RadioGroupInput';
 import SyncActionSimpleValue from '../../../configurations/react/components/SyncActionSimpleValue';
 import ExternalProjectLink from '../../../components/react/components/ExternalProjectLink';
 import ExternalBucketLink from '../../../components/react/components/ExternalBucketLink';
-
 
 export default React.createClass({
   mixins: [immutableMixin],
@@ -12,7 +13,7 @@ export default React.createClass({
   propTypes: {
     value: PropTypes.shape({
       destination: PropTypes.string.isRequired,
-      incremental: PropTypes.bool.isRequired
+      mode: PropTypes.string.isRequired
     }),
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired,
@@ -21,7 +22,7 @@ export default React.createClass({
 
   render() {
     const infoAction = this.props.actions.get('info');
-    const props = this.props;
+
     return (
       <Form horizontal>
         <h3>Destination</h3>
@@ -70,9 +71,7 @@ export default React.createClass({
             <FormControl
               type="text"
               value={this.props.value.destination}
-              onChange={function(e) {
-                props.onChange({destination: e.target.value.trim()});
-              }}
+              onChange={event => this.props.onChange({destination: event.target.value.trim()})}
               placeholder="mytable"
               disabled={this.props.disabled}
             />
@@ -82,16 +81,33 @@ export default React.createClass({
           </Col>
         </FormGroup>
         <FormGroup>
-          <Col smOffset={4} sm={8}>
-            <Checkbox
-              checked={this.props.value.incremental}
-              onChange={function(e) {
-                props.onChange({incremental: e.target.checked});
-              }}
-            >Incremental</Checkbox>
-            <HelpBlock>
-              The table will be imported incrementally into the target project. Primary keys will be kept.
-            </HelpBlock>
+          <Col componentClass={ControlLabel} sm={4}>
+            Mode
+          </Col>
+          <Col sm={8}>
+            <RadioGroup
+              selectedValue={this.props.value.mode}
+              onChange={value => this.props.onChange({ mode: value })}
+            >
+              <RadioGroupInput
+                wrapperClassName="col-xs-12"
+                label="Update"
+                help="Use incremental loading on the target table."
+                value="update"
+              />
+              <RadioGroupInput
+                wrapperClassName="col-xs-12"
+                label="Replace"
+                help="Replace data in the target table. If the structures of the source and destination tables do not match, an error will be reported."
+                value="replace"
+              />
+              <RadioGroupInput
+                wrapperClassName="col-xs-12"
+                label="Recreate"
+                help="Drop and create the target table. This will make sure that the structure of the destination table matches that of the source table."
+                value="recreate"
+              />
+            </RadioGroup>
           </Col>
         </FormGroup>
       </Form>

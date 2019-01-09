@@ -12,7 +12,7 @@ const createConfiguration = function(localState) {
       }
     },
     parameters: {
-      incremental: localState.get('incremental', false)
+      mode: localState.get('mode', 'replace')
     }
   });
   return config;
@@ -21,13 +21,13 @@ const createConfiguration = function(localState) {
 const parseConfiguration = function(configuration) {
   return Immutable.fromJS({
     destination: configuration.getIn(['storage', 'input', 'tables', 0, 'destination'], ''),
-    incremental: configuration.getIn(['parameters', 'incremental'], false)
+    mode: configuration.getIn(['parameters', 'mode'], 'replace')
   });
 };
 
 const createEmptyConfiguration = function(tableId) {
   const tableName = tableId.substr(tableId.lastIndexOf('.') + 1);
-  return createConfiguration(Immutable.fromJS({destination: tableName}));
+  return createConfiguration(Immutable.fromJS({ destination: tableName }));
 };
 
 export default {

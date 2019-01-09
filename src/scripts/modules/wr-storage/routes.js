@@ -1,9 +1,9 @@
-import {Map, fromJS} from 'immutable';
+import { Map } from 'immutable';
 import React from 'react';
 
-import createRoute  from '../configurations/utils/createRoute';
-import columnTypes  from '../configurations/utils/columnTypeConstants';
-import {CollapsibleSection} from '../configurations/utils/renderHelpers';
+import createRoute from '../configurations/utils/createRoute';
+import columnTypes from '../configurations/utils/columnTypeConstants';
+import { CollapsibleSection } from '../configurations/utils/renderHelpers';
 
 import InputMappingSection from './react/components/InputMapping';
 import inputMappingAdapter from './adapters/inputMapping';
@@ -15,6 +15,7 @@ import DestinationSection from './react/components/Destination';
 import destinationAdapter from './adapters/destination';
 
 import actions from './adapters/actions';
+import { conform } from './adapters/conform';
 
 const routeSettings = {
   componentId: 'keboola.wr-storage',
@@ -42,23 +43,7 @@ const routeSettings = {
     ]
   },
   row: {
-    onConform: (configuration) => {
-      const configDraft = fromJS({
-        storage: {
-          input: {
-            tables: [
-              {
-                changed_since: ''
-              }
-            ]
-          }
-        },
-        parameters: {
-          incremental: false
-        }
-      });
-      return configDraft.mergeDeep(configuration);
-    },
+    onConform: conform,
     hasState: false,
     sections: [
       {
@@ -102,11 +87,7 @@ const routeSettings = {
         name: 'Description',
         type: columnTypes.VALUE,
         value: function(row) {
-          return (
-            <small>
-              {row.get('description') !== '' ? row.get('description') : 'No description'}
-            </small>
-          );
+          return <small>{row.get('description') !== '' ? row.get('description') : 'No description'}</small>;
         }
       }
     ]
