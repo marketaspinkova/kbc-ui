@@ -217,6 +217,14 @@ const ActionTypes = keyMirror({
   STORAGE_FILE_UPLOAD: null,
   STORAGE_FILE_UPLOAD_SUCCESS: null,
   STORAGE_FILE_UPLOAD_ERROR: null
+
+  STORAGE_JOBS_LOAD: null,
+  STORAGE_JOBS_LOAD_SUCCESS: null,
+  STORAGE_JOBS_LOAD_ERROR: null,
+
+  STORAGE_JOBS_LOAD_MORE: null,
+  STORAGE_JOBS_LOAD_MORE_SUCCESS: null,
+  STORAGE_JOBS_LOAD_MORE_ERROR: null
 });
 
 const GoodDataWriterModes = keyMirror({

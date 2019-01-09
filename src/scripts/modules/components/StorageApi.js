@@ -276,6 +276,12 @@ var storageApi = {
       });
   },
 
+  getJobs: function(params) {
+    return createRequest('GET', 'jobs').send(params).promise().then(function(response) {
+      return response.body;
+    });
+  },
+
   getMetadataSaveUrl: function(objectType, objectId) {
     switch (objectType) {
       case 'bucket':

@@ -906,5 +906,43 @@ module.exports = {
       });
       throw error;
     });
-  }
+  },
+
+  loadJobsForce: function(params) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.STORAGE_JOBS_LOAD
+    });
+    return storageApi.getJobs(params).then(function(jobs) {
+      return dispatcher.handleViewAction({
+        type: constants.ActionTypes.STORAGE_JOBS_LOAD_SUCCESS,
+        jobs: jobs
+      });
+    })
+      .catch(function(error) {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_JOBS_LOAD_ERROR,
+          errors: error
+        });
+        throw error;
+      });
+  },
+
+  loadMoreJobs: function(params) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.STORAGE_JOBS_LOAD_MORE
+    });
+    return storageApi.getJobs(params).then(function(jobs) {
+      dispatcher.handleViewAction({
+        type: constants.ActionTypes.STORAGE_JOBS_LOAD_MORE_SUCCESS,
+        jobs: jobs
+      });
+    })
+      .catch(function(error) {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_JOBS_LOAD_MORE_ERROR,
+          errors: error
+        });
+        throw error;
+      });
+  },
 };
