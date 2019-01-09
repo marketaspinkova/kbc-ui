@@ -1,8 +1,6 @@
 import Immutable from 'immutable';
 
 const createConfiguration = function(localState) {
-  const incremental = localState.get('incremental', false);
-  const mode = localState.get('mode', incremental ? 'update' : 'replace');
   const config = Immutable.fromJS({
     storage: {
       input: {
@@ -14,19 +12,16 @@ const createConfiguration = function(localState) {
       }
     },
     parameters: {
-      mode
+      mode: localState.get('mode', 'replace')
     }
   });
   return config;
 };
 
 const parseConfiguration = function(configuration) {
-  const incremental = configuration.getIn(['parameters', 'incremental'], false);
-  const mode = configuration.getIn(['parameters', 'mode'], incremental ? 'update' : 'replace');
-
   return Immutable.fromJS({
     destination: configuration.getIn(['storage', 'input', 'tables', 0, 'destination'], ''),
-    mode
+    mode: configuration.getIn(['parameters', 'mode'], 'replace')
   });
 };
 

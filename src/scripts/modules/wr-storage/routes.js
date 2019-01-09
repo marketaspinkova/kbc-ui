@@ -1,4 +1,4 @@
-import { Map, fromJS } from 'immutable';
+import { Map } from 'immutable';
 import React from 'react';
 
 import createRoute from '../configurations/utils/createRoute';
@@ -15,6 +15,7 @@ import DestinationSection from './react/components/Destination';
 import destinationAdapter from './adapters/destination';
 
 import actions from './adapters/actions';
+import { onConform } from './utils/onConform';
 
 const routeSettings = {
   componentId: 'keboola.wr-storage',
@@ -42,29 +43,7 @@ const routeSettings = {
     ]
   },
   row: {
-    onConform: configuration => {
-      const incremental = configuration.getIn(['parameters', 'incremental'], false);
-      const mode = configuration.getIn(['parameters', 'mode'], incremental ? 'update' : 'replace');
-      const updatedConfiguration = configuration
-        .setIn(['parameters', 'mode'], mode)
-        .deleteIn(['parameters', 'incremental']);
-
-      const configDraft = fromJS({
-        storage: {
-          input: {
-            tables: [
-              {
-                changed_since: ''
-              }
-            ]
-          }
-        },
-        parameters: {
-          mode: 'replace'
-        }
-      });
-      return configDraft.mergeDeep(updatedConfiguration);
-    },
+    onConform,
     hasState: false,
     sections: [
       {
