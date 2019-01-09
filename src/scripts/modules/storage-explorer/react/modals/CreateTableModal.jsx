@@ -14,6 +14,9 @@ import {
 import { Loader, PanelWithDetails } from '@keboola/indigo-ui';
 import Select from 'react-select';
 
+const CREATE_TABLE_FROM_CSV_FILE = 'csv';
+const CREATE_TABLE_FROM_TEXT = 'text';
+
 const INITIAL_STATE = {
   name: '',
   file: null,
@@ -21,7 +24,7 @@ const INITIAL_STATE = {
   enclosure: '"',
   tableColumns: [],
   primaryKey: '',
-  createFrom: 'csv',
+  createFrom: CREATE_TABLE_FROM_CSV_FILE,
   error: null
 };
 
@@ -90,13 +93,16 @@ export default React.createClass({
           </Col>
           <Col sm={9}>
             <FormControl componentClass="select" value={this.state.createFrom} onChange={this.handleCreateFrom}>
-              <option value="csv">CSV file upload</option>
-              <option value="text">Text input</option>
+              <option value={CREATE_TABLE_FROM_CSV_FILE}>CSV file upload</option>
+              <option value={CREATE_TABLE_FROM_TEXT}>Text input</option>
             </FormControl>
           </Col>
         </FormGroup>
 
-        {this.state.createFrom === 'csv' ? this.renderCreateFromCsv() : this.renderCreateFromTextInput()}
+        {this.state.createFrom === CREATE_TABLE_FROM_CSV_FILE
+          ? this.renderCreateFromCsv()
+          : this.renderCreateFromTextInput()
+        }
 
         {this.renderAdvancedOptions()}
       </div>
@@ -255,7 +261,7 @@ export default React.createClass({
   onSubmit(event) {
     event.preventDefault();
 
-    if (this.state.createFrom === 'csv') {
+    if (this.state.createFrom === CREATE_TABLE_FROM_CSV_FILE) {
       return this.createTableFromCsv();
     }
 
@@ -306,7 +312,7 @@ export default React.createClass({
       return true;
     }
 
-    if (this.state.createFrom === 'csv') {
+    if (this.state.createFrom === CREATE_TABLE_FROM_CSV_FILE) {
       if (!this.state.file || !this.state.delimiter || !this.state.enclosure) {
         return true;
       }
