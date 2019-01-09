@@ -1,13 +1,10 @@
 import React, { PropTypes } from 'react';
-import { Modal, Button } from 'react-bootstrap';
-import Immutable from 'immutable';
+import immutableMixin from 'react-immutable-render-mixin';
+import { fromJS } from 'immutable';
+import { Button, Col, ControlLabel, Form, FormControl, FormGroup, Modal } from 'react-bootstrap';
 import SapiTableSelector from '../../../components/react/components/SapiTableSelector';
-
-import { Input } from '../../../../react/common/KbcBootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import ConfigurationRowsActions from '../../ConfigurationRowsActionCreators';
-
-import immutableMixin from 'react-immutable-render-mixin';
 
 export default React.createClass({
   mixins: [immutableMixin],
@@ -21,53 +18,38 @@ export default React.createClass({
     objectName: PropTypes.string.isRequired
   },
 
-  label() {
-    return 'Add ' + this.props.objectName;
-  },
-
-  createChangeDescription(name) {
-    return this.props.objectName + ' ' + name + ' added';
-  },
-
   getInitialState() {
     return {
       isSaving: false,
       showModal: false,
-      form: Immutable.fromJS({
+      form: fromJS({
         name: '',
         description: ''
       })
     };
   },
 
-  open() {
-    this.setState({showModal: true});
-  },
-
-  close() {
-    this.setState(this.getInitialState());
-  },
-
-  onRowCreated(rowId) {
-    this.close();
-    this.props.onRowCreated(rowId);
+  render() {
+    return (
+      <Button onClick={this.handleOpenButtonClick} bsStyle="success">
+        <i className="kbc-icon-plus" /> {this.label()}
+        {this.renderModal()}
+      </Button>
+    );
   },
 
   renderModal() {
     return (
       <Modal onHide={this.close} show={this.state.showModal}>
-        <Modal.Header closeButton={true}>
-          <Modal.Title>
-            {this.label()}
-          </Modal.Title>
+        <Modal.Header closeButton>
+          <Modal.Title>{this.label()}</Modal.Title>
         </Modal.Header>
 
-        <Modal.Body>
-          {this.form()}
-        </Modal.Body>
+        <Modal.Body>{this.form()}</Modal.Body>
 
         <Modal.Footer>
           <ConfirmButtons
+            saveButtonType="submit"
             isSaving={this.state.isSaving}
             isDisabled={!this.isValid()}
             saveLabel="Create"
@@ -79,71 +61,80 @@ export default React.createClass({
     );
   },
 
-  render() {
+  form() {
     return (
-      <Button onClick={this.handleOpenButtonClick} bsStyle="success">
-        <i className="kbc-icon-plus" />{' '}{this.label()}
-        {this.renderModal()}
-      </Button>
+      <Form horizontal onSubmit={this.handleSubmit}>
+        {this.props.componentType === 'writer' ? (
+          <FormGroup>
+            <Col sm={3} componentClass={ControlLabel}>
+              Table
+            </Col>
+            <Col sm={9}>
+              <SapiTableSelector
+                autoFocus
+                placeholder="Select..."
+                value={this.state.form.get('name')}
+                onSelectTableFn={this.setSelectedTable}
+              />
+            </Col>
+          </FormGroup>
+        ) : (
+          <FormGroup>
+            <Col sm={3} componentClass={ControlLabel}>
+              Name
+            </Col>
+            <Col sm={9}>
+              <FormControl
+                autoFocus
+                type="text"
+                value={this.state.form.get('name')}
+                onChange={this.handleChange.bind(this, 'name')}
+              />
+            </Col>
+          </FormGroup>
+        )}
+        <FormGroup>
+          <Col sm={3} componentClass={ControlLabel}>
+            Description
+          </Col>
+          <Col sm={9}>
+            <FormControl
+              componentClass="textarea"
+              rows={3}
+              value={this.state.form.get('description')}
+              onChange={this.handleChange.bind(this, 'description')}
+            />
+          </Col>
+        </FormGroup>
+      </Form>
     );
   },
 
-  handleOpenButtonClick(e) {
-    e.preventDefault();
-    this.open();
+  label() {
+    return 'Add ' + this.props.objectName;
   },
 
-  renderTableSelector() {
-    return (
-      <div className="form-group">
-        <label className="col-sm-4 control-label">
-          Table
-        </label>
-        <div className="col-sm-6">
-          <SapiTableSelector
-            placeholder="Select..."
-            value={this.state.form.get('name')}
-            onSelectTableFn= {this.setSelectedTable}
-            excludeTableFn= { () => false}/>
-        </div>
-      </div>
+  createChangeDescription(name) {
+    return this.props.objectName + ' ' + name + ' added';
+  },
 
-    );
+  open() {
+    this.setState({ showModal: true });
+  },
+
+  close() {
+    this.setState(this.getInitialState());
+  },
+
+  onRowCreated(rowId) {
+    this.close();
+    this.props.onRowCreated(rowId);
   },
 
   setSelectedTable(newTableId) {
     this.setState({
       form: this.state.form.set('name', newTableId)
     });
-  },
-
-  form() {
-    return (
-      <form className="form-horizontal" onSubmit={this.handleSubmit}>
-        {this.props.componentType === 'writer' ?
-          this.renderTableSelector()
-          :
-          <Input
-            type="text"
-            value={this.state.form.get('name')}
-            autoFocus={true}
-            onChange={this.handleChange.bind(this, 'name')}
-            placeholder="Name"
-            label="Name"
-            ref="name"
-            labelClassName="col-sm-4"
-            wrapperClassName="col-sm-6"/>
-        }
-        <Input
-          type="textarea"
-          value={this.state.form.get('description')}
-          onChange={this.handleChange.bind(this, 'description')}
-          placeholder="Description"
-          label="Description"
-          labelClassName="col-sm-4"
-          wrapperClassName="col-sm-6"/>
-      </form>
-    );
   },
 
   isValid() {
@@ -156,6 +147,11 @@ export default React.createClass({
     });
   },
 
+  handleOpenButtonClick(e) {
+    e.preventDefault();
+    this.open();
+  },
+
   handleSubmit(e) {
     e.preventDefault();
     if (this.isValid()) {
@@ -163,9 +159,8 @@ export default React.createClass({
     }
   },
 
-
   handleCreate() {
-    this.setState({isSaving: true});
+    this.setState({ isSaving: true });
     let friendlyName = this.state.form.get('name');
     if (this.props.componentType === 'writer') {
       friendlyName = friendlyName.substr(friendlyName.lastIndexOf('.') + 1);
@@ -180,7 +175,7 @@ export default React.createClass({
       this.onRowCreated,
       this.createChangeDescription(friendlyName)
     ).catch(() => {
-      this.setState({isSaving: false});
+      this.setState({ isSaving: false });
     });
   }
 });
