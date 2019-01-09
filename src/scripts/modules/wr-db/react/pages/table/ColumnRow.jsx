@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'underscore';
 import { Check } from '@keboola/indigo-ui';
 import { Input } from './../../../../../react/common/KbcBootstrap';
-import ColumnDataPreview from './ColumnDataPreview';
+import ColumnDataPreview from '../../../../components/react/components/ColumnDataPreview';
 
 export default React.createClass({
   propTypes: {

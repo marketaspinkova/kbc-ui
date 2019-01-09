@@ -1,11 +1,10 @@
 import React, {PropTypes} from 'react';
-import {Table} from 'react-bootstrap';
-import storageApi from '../../../components/StorageApi';
 import {fromJS} from 'immutable';
-import ColumnDataPreview from './ColumnDataPreview';
+import {Table} from 'react-bootstrap';
 import classnames from 'classnames';
+import storageApi from '../../../components/StorageApi';
+import ColumnDataPreview from '../../../components/react/components/ColumnDataPreview';
 require('./StorageTableColumnsEditor.less');
-
 
 export default React.createClass({
   propTypes: {

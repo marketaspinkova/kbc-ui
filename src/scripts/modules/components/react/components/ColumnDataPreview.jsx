@@ -1,34 +1,39 @@
 import React from 'react';
-import { fromJS } from 'immutable';
 import PureRenderMixin from 'react-immutable-render-mixin';
-import { OverlayTrigger, Popover } from 'react-bootstrap';
+import { fromJS } from 'immutable';
+import { Button, OverlayTrigger, Popover } from 'react-bootstrap';
 
 export default React.createClass({
   mixins: [PureRenderMixin],
 
   propTypes: {
     columnName: React.PropTypes.string.isRequired,
-    tableData: React.PropTypes.object
+    tableData: React.PropTypes.object,
+    error: React.PropTypes.string
   },
 
   render() {
     return (
-      <OverlayTrigger placement="left" overlay={this._renderPopover()}>
-        <button className="btn btn-link">
-          <span className="fa fa-eye" />
-        </button>
+      <OverlayTrigger placement="left" overlay={this.renderPopover()}>
+        <Button bsStyle="link">
+          <i className="fa fa-eye" />
+        </Button>
       </OverlayTrigger>
     );
   },
 
-  _renderPopover() {
+  renderPopover() {
     return (
-      <Popover id="preview_popover" title={`Preview - ${this.props.columnName}`}>
+      <Popover
+        id={`data-preview-${this.props.columnName}`}
+        title={`Preview - ${this.props.columnName}`}
+        className="kbc-overflow-break-word"
+      >
         {!this.props.tableData ? (
-          'Loading data ...'
+          <p>{this.props.error ? this.props.error : 'Loading data...'}</p>
         ) : (
-          <ul>
-            {this._getColumnValues()
+          <ul className="container-fluid">
+            {this.getColumnValues()
               .map((value, index) => <li key={index}>{value}</li>)
               .toArray()}
           </ul>
@@ -37,10 +42,9 @@ export default React.createClass({
     );
   },
 
-  _getColumnValues() {
+  getColumnValues() {
     const data = fromJS(this.props.tableData);
     const columnIndex = data.get('columns').indexOf(this.props.columnName);
-
     return data.get('rows').map(row => row.get(columnIndex).get('value'));
   }
 });

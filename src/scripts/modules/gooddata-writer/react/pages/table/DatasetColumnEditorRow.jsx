@@ -7,8 +7,8 @@ import { FormControl, InputGroup, FormGroup } from 'react-bootstrap';
 import { Input, FormControls } from './../../../../../react/common/KbcBootstrap';
 const StaticText = FormControls.Static;
 
+import ColumnDataPreview from '../../../../components/react/components/ColumnDataPreview';
 import DateDimensionModal from './DateDimensionSelectModal';
-import ColumnDataPreview from './ColumnDataPreview';
 import DateFormatHint from './DateFormatHint';
 import { ColumnTypes, DataTypes, SortOrderOptions } from '../../../constants';
 
