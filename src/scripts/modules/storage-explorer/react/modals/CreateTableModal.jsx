@@ -110,6 +110,14 @@ export default React.createClass({
   },
 
   renderProgress() {
+    if (this.state.createFrom === CREATE_TABLE_FROM_TEXT) {
+      return (
+        <p>
+          <Loader /> Creating table...
+        </p>
+      );
+    }
+
     const progress = this.props.isCreatingTable ? 100 : this.props.progress;
 
     return (
