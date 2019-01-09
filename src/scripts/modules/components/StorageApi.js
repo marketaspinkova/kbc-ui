@@ -277,7 +277,7 @@ var storageApi = {
   },
 
   getJobs: function(params) {
-    return createRequest('GET', 'jobs').send(params).promise().then(function(response) {
+    return createRequest('GET', 'jobs').query(params).promise().then(function(response) {
       return response.body;
     });
   },

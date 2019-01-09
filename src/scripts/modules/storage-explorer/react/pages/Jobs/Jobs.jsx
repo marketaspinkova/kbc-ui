@@ -14,7 +14,7 @@ export default React.createClass({
   getStateFromStores() {
     return {
       jobs: JobsStore.getAll(),
-      hasMore: JobsStore.hasMoreFiles(),
+      hasMore: JobsStore.hasMore(),
       isLoadingMore: JobsStore.getIsLoadingMore()
     };
   },
@@ -24,7 +24,7 @@ export default React.createClass({
       <div className="container-fluid">
         <div className="kbc-main-content">
           {this.state.jobs.count() === 0 ? (
-            <p className="kbc-inner-padding">No jobs.</p>
+            <p className="kbc-inner-padding">No jobs were uploaded yet.</p>
           ) : (
             <div>
               <JobsTable jobs={this.state.jobs} />
@@ -37,7 +37,7 @@ export default React.createClass({
   },
 
   renderMoreButton() {
-    if (!this.state.jobs || !this.state.hasMore) {
+    if (!this.state.jobs.count() || !this.state.hasMore) {
       return null;
     }
 

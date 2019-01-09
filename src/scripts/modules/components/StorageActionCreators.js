@@ -908,7 +908,7 @@ module.exports = {
     });
   },
 
-  loadJobsForce: function(params) {
+  loadJobs: function(params) {
     dispatcher.handleViewAction({
       type: constants.ActionTypes.STORAGE_JOBS_LOAD
     });
@@ -944,5 +944,5 @@ module.exports = {
         });
         throw error;
       });
-  },
+  }
 };

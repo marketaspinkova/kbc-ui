@@ -33,11 +33,11 @@ Dispatcher.register(function(payload) {
   const { action } = payload;
 
   switch (action.type) {
-    case constants.ActionTypes.STORAGE_FILES_LOAD:
+    case constants.ActionTypes.STORAGE_JOBS_LOAD:
       _store = _store.set('isLoading', true);
       return StorageJobsStore.emitChange();
 
-    case constants.ActionTypes.STORAGE_FILES_LOAD_SUCCESS:
+    case constants.ActionTypes.STORAGE_JOBS_LOAD_SUCCESS:
       _store = _store.withMutations(store =>
         store
           .set('jobs', fromJS(action.jobs))
@@ -46,15 +46,15 @@ Dispatcher.register(function(payload) {
       );
       return StorageJobsStore.emitChange();
 
-    case constants.ActionTypes.STORAGE_FILES_LOAD_ERROR:
+    case constants.ActionTypes.STORAGE_JOBS_LOAD_ERROR:
       _store = _store.set('isLoading', false);
       return StorageJobsStore.emitChange();
 
-    case constants.ActionTypes.STORAGE_FILES_LOAD_MORE:
+    case constants.ActionTypes.STORAGE_JOBS_LOAD_MORE:
       _store = _store.set('isLoadingMore', true);
       return StorageJobsStore.emitChange();
 
-    case constants.ActionTypes.STORAGE_FILES_LOAD_MORE_SUCCESS:
+    case constants.ActionTypes.STORAGE_JOBS_LOAD_MORE_SUCCESS:
       _store = _store.withMutations(store =>
         store
           .set('jobs', _store.get('jobs').concat(fromJS(action.jobs)))
@@ -63,7 +63,7 @@ Dispatcher.register(function(payload) {
       );
       return StorageJobsStore.emitChange();
 
-    case constants.ActionTypes.STORAGE_FILES_LOAD_MORE_ERROR:
+    case constants.ActionTypes.STORAGE_JOBS_LOAD_MORE_ERROR:
       _store = _store.set('isLoadingMore', false);
       return StorageJobsStore.emitChange();
 

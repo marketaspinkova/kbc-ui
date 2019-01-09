@@ -4,6 +4,7 @@ import Jobs from './react/pages/Jobs/Jobs';
 import Table from './react/pages/Table/Table';
 import Bucket from './react/pages/Bucket/Bucket';
 import FilesReloaderButton from './react/components/FilesReloaderButton';
+import JobsReloaderButton from './react/components/JobsReloaderButton';
 import StorageActions from '../components/StorageActionCreators';
 import TablesStore from '../components/stores/StorageTablesStore';
 import { filesLimit } from './Constants';
@@ -27,8 +28,9 @@ export default {
       name: 'storage-explorer-jobs',
       path: 'jobs',
       defaultRouteHandler: Jobs,
+      reloaderHandler: JobsReloaderButton,
       title: 'Jobs',
-      requireData: [() => StorageActions.loadJobsForce({ limit: jobsLimit })]
+      requireData: [() => StorageActions.loadJobs({ limit: jobsLimit })]
     },
     {
       name: 'storage-explorer-bucket',
