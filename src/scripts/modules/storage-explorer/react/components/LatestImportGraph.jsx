@@ -9,10 +9,10 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    const svg = dimple.newSvg(this.refs.graph, '100%', 300);
+    const svg = dimple.newSvg(this.refs.graph, '100%', 360);
     const chart = new dimple.chart(svg, this.prepareData());
 
-    const xAxis = chart.addTimeAxis('x', 'date', null, '%Y-%m-%d %H:%M');
+    const xAxis = chart.addTimeAxis('x', 'date', null, '%Y-%m-%d');
     xAxis.title = '';
 
     const yAxis = chart.addMeasureAxis('y', 'duration');
@@ -24,7 +24,7 @@ export default React.createClass({
       `Duration:  ${numeral(e.yValueList[0]).format('0.0')} Seconds`
     ];
 
-    chart.setMargins('40px', '10px', '30px', '20px');
+    chart.setMargins(50, 50, 50, 100);
     chart.draw(200);
 
     this.chart = chart;
