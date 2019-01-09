@@ -122,18 +122,14 @@ export default React.createClass({
 
     return (
       <div>
+        <p>
+          {progress < 100 ? 'Uploading file...' : 'File was successfully uploaded'}
+        </p>
         <ProgressBar striped bsStyle="info" now={progress} active={progress < 100} />
-        {progress < 100 ? (
+        {this.props.isCreatingTable && (
           <p>
-            <Loader /> Uploading file...
+            <Loader /> Creating table...
           </p>
-        ) : (
-          <div>
-            <p>File was successfully uploaded.</p>
-            <p>
-              <Loader /> Creating table...
-            </p>
-          </div>
         )}
       </div>
     );
