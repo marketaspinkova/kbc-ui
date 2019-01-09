@@ -9,10 +9,11 @@ import TablesStore from '../../../../components/stores/StorageTablesStore';
 import FilesStore from '../../../../components/stores/StorageFilesStore';
 import StorageActionCreators from '../../../../components/StorageActionCreators';
 
+import { factory as eventsFactory } from '../../../../sapi-events/BucketEventsService';
+import BucketEvents from '../../components/Events';
 import DeleteBucketModal from '../../modals/DeleteBucketModal';
 import BucketOverview from './BucketOverview';
 import BucketTables from './BucketTables';
-import BucketEvents from './BucketEvents';
 import { deleteBucket, createTableFromTextInput } from '../../../Actions';
 
 export default React.createClass({
@@ -92,7 +93,7 @@ export default React.createClass({
                 />
               </Tab.Pane>
               <Tab.Pane eventKey="events">
-                <BucketEvents bucket={this.state.bucket} />
+                <BucketEvents eventsFactory={eventsFactory(this.state.bucket.get('id'))} />
               </Tab.Pane>
             </Tab.Content>
           </div>

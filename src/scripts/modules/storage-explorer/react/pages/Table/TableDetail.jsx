@@ -18,10 +18,11 @@ import TruncateTableModal from '../../modals/TruncateTableModal';
 import DeleteTableModal from '../../modals/DeleteTableModal';
 import LoadTableFromCsvModal from '../../modals/LoadTableFromCsvModal';
 import ExportTableModal from '../../modals/ExportTableModal';
+import { factory as eventsFactory } from '../../../../sapi-events/TableEventsService';
+import TableEvents from '../../components/Events';
 import TableOverview from './TableOverview';
 import TableColumn from './TableColumn';
 import SnapshotRestore from './SnapshotRestore';
-import TableEvents from './TableEvents';
 import LatestImports from './LatestImports';
 import TableGraph from './TableGraph';
 
@@ -161,7 +162,7 @@ export default React.createClass({
                 />
               </Tab.Pane>
               <Tab.Pane eventKey="events">
-                <TableEvents table={this.state.table} />
+                <TableEvents eventsFactory={eventsFactory(this.state.table.get('id'))} />
               </Tab.Pane>
               <Tab.Pane eventKey="data-sample">
                 <DataSample table={this.state.table} />
