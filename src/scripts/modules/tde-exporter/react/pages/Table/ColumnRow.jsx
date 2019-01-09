@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'underscore';
-import ColumnDataPreview from './ColumnDataPreview';
 import { FormControl, InputGroup, FormGroup } from 'react-bootstrap';
+import ColumnDataPreview from '../../../../components/react/components/ColumnDataPreview';
 import DateFormatHint from './DateFormatHint';
 
 const columnTdeTypes = ['string', 'boolean', 'number', 'decimal', 'date', 'datetime'];
