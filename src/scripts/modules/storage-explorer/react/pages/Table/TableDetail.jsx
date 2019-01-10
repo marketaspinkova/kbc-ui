@@ -244,9 +244,11 @@ export default React.createClass({
   },
 
   handleSelectTab(tab) {
-    this.setState({
-      activeTab: tab
-    });
+    if (['overview', 'description', 'events', 'data-sample', 'snapshot-and-restore', 'graph'].includes(tab)) {
+      this.setState({
+        activeTab: tab
+      });
+    }
   },
 
   handleDeleteTable(forceDelete) {
