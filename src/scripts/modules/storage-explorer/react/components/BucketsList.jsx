@@ -39,7 +39,7 @@ export default React.createClass({
           <h4>{bucket.get('id')}</h4>
           <Tooltip tooltip="Bucket detail" placement="top">
             <Button
-              className="btn btn-link"
+              bsStyle="link"
               bsSize="sm"
               onClick={e => {
                 e.preventDefault();
