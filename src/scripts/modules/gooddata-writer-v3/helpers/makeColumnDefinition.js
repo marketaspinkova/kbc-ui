@@ -60,15 +60,11 @@ function prepareFields(column) {
         return newColumn;
       }
     },
-    hyperlink: {
-      show: type === Types.HYPERLINK,
-      invalidReason: checkEmpty(column.hyperlink, 'Display Label Attribute')
-    },
-    label: {
-      show: type === Types.LABEL,
-      invalidReason: checkEmpty(column.label, 'Source Attribute')
-    },
     reference: {
+      show: [Types.HYPERLINK, Types.LABEL].includes(type),
+      invalidReason: checkEmpty(column.reference, 'Reference')
+    },
+    schemaReference: {
       show: type === Types.REFERENCE
     },
     sortLabel: {

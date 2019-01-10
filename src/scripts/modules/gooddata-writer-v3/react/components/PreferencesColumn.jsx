@@ -38,27 +38,21 @@ export default React.createClass({
          )}
         {fields.dateDimension.show &&
          this.renderSelectGroup(
-           'Date Dimension',
+           'Date Dimensions',
            'dateDimension',
            this.props.context.dimensions
          )}
         {fields.format.show && this.renderInputGroupWithAddon('Date format', 'format', <DateFormatHint />)}
-        {fields.reference.show &&
+        {fields.schemaReference.show &&
          this.renderSelectGroup(
-           'Source Connection Point',
-           'reference',
+           'Reference',
+           'schemaReference',
            this.props.context.referencableTables
          )}
-        {fields.hyperlink.show &&
+        {fields.reference.show &&
          this.renderSelectGroup(
-           'Display Label Attribute',
-           'hyperlink',
-           this.props.context.referencableColumns
-         )}
-        {fields.label.show &&
-         this.renderSelectGroup(
-           'Source Attribute',
-           'label',
+           'Reference',
+           'reference',
            this.props.context.referencableColumns
          )}
         {fields.sortLabel.show && this.props.context.sortLabelsColumns[column.id] &&
