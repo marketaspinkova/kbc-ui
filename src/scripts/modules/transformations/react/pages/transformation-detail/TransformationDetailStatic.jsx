@@ -18,6 +18,7 @@ import Queries from './Queries';
 import Scripts from './Scripts';
 import Phase from './Phase';
 import BackendVersionWarning from '../../components/backend-version/Warning';
+import DupliciteOutputMappingWarning from '../../components/duplicite-output-mapping/Warning';
 import AddOutputMapping from './AddOutputMapping';
 import AddInputMapping from './AddInputMapping';
 import InlineEditArea from '../../../../../react/common/InlineEditArea';
@@ -227,6 +228,11 @@ export default React.createClass({
           {this.props.transformation.has('imageTag') && (
             <BackendVersionWarning />
           )}
+          <DupliciteOutputMappingWarning
+            transformation={this.props.transformation}
+            transformations={this.props.transformations}
+            bucketId={this.props.bucketId}
+          />
           {this._isOpenRefineTransformation() && [
             <h2>OpenRefine Beta Warning</h2>,
 
