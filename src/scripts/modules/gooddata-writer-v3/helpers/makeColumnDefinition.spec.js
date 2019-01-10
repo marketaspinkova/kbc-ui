@@ -91,19 +91,39 @@ describe('makeColumnDefinition', () => {
   });
 
 
-  it('test schema reference setup', () => {
+  it('test reference setup', () => {
     const definition = makeColumnDefinition({
       id: 'reference',
       type: Types.REFERENCE,
-      schemaReference: 'tableId'
+      reference: 'tableId'
     });
     assert.deepEqual(definition.fields.type, {
       show: true,
       invalidReason: false,
       defaultValue: 'IGNORE'
     });
-    assert.deepEqual(definition.fields.schemaReference, {
+    assert.deepEqual(definition.fields.reference, {
       show: true
+    });
+  });
+
+  it('test label setup', () => {
+    const definition = makeColumnDefinition({
+      id: 'label',
+      type: Types.LABEL,
+      label: 'tableId'
+    });
+    const definitionWithoutValue = makeColumnDefinition({
+      id: 'label',
+      type: Types.LABEL
+    });
+    assert.deepEqual(definition.fields.label, {
+      show: true,
+      invalidReason: false
+    });
+    assert.deepEqual(definitionWithoutValue.fields.label, {
+      show: true,
+      invalidReason: 'Source Attribute can not be empty'
     });
   });
 });
