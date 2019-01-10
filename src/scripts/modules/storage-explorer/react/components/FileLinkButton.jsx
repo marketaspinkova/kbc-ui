@@ -20,7 +20,7 @@ export default React.createClass({
     return (
       <ModalHandler file={this.props.file}>
         <Tooltip placement="top" tooltip="Download file">
-          <Button>
+          <Button bsStyle="link">
             <i className="fa fa-arrow-circle-o-down" />
           </Button>
         </Tooltip>
@@ -31,7 +31,7 @@ export default React.createClass({
   renderSimpleDownloadLink() {
     return (
       <Tooltip placement="top" tooltip="Download file">
-        <a className="btn btn-default" href={this.props.file.get('url')}>
+        <a className="btn btn-link" href={this.props.file.get('url')}>
           <i className="fa fa-arrow-circle-o-down" />
         </a>
       </Tooltip>

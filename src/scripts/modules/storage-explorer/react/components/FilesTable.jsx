@@ -86,7 +86,7 @@ export default React.createClass({
             <Label
               key={index}
               className="kbc-cursor-pointer"
-              bsStyle="default"
+              bsStyle="success"
               onClick={() => this.props.onSearchByTag(tag)}
             >
               {tag}
@@ -165,21 +165,12 @@ export default React.createClass({
     return <Clipboard tooltipText="Copy file URL to clipboard" text={file.get('url')} />;
   },
 
-  renderFileDownload(file) {
-    return (
-      <FileLink file={file} showFilesize={false} linkClass="btn btn-default">
-        <Tooltip placement="top" tooltip="Download file">
-          <i className="fa fa-arrow-circle-o-down" />
-        </Tooltip>
-      </FileLink>
-    );
-  },
   renderDeleteFile(file) {
     const isDeleting = this.props.isDeleting.get(file.get('id'), false);
 
     if (isDeleting) {
       return (
-        <Button disabled>
+        <Button bsStyle="link" disabled>
           <Loader />
         </Button>
       );
@@ -187,7 +178,7 @@ export default React.createClass({
 
     return (
       <Tooltip placement="top" tooltip="Delete file">
-        <Button onClick={() => this.openDeleteModal(file)}>
+        <Button bsStyle="link" onClick={() => this.openDeleteModal(file)}>
           <i className="fa fa-trash-o" />
         </Button>
       </Tooltip>
