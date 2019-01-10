@@ -1,21 +1,21 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import ConfirmModal from './ConfirmModal';
 
 export default React.createClass({
   propTypes: {
-    title: PropTypes.string.isRequired,
-    text: PropTypes.node.isRequired,
-    onConfirm: PropTypes.func.isRequired,
-    buttonLabel: PropTypes.string.isRequired,
-    buttonType: PropTypes.string,
-    children: PropTypes.any,
-    childrenRootElement: PropTypes.any
+    title: React.PropTypes.string.isRequired,
+    text: React.PropTypes.node.isRequired,
+    onConfirm: React.PropTypes.func.isRequired,
+    buttonLabel: React.PropTypes.string.isRequired,
+    buttonType: React.PropTypes.string,
+    children: React.PropTypes.any,
+    childrenRootElement: React.PropTypes.any
   },
 
   getDefaultProps() {
     return {
       buttonType: 'danger',
-      childrenRootElement: 'span'
+      childrenRootElement: React.DOM.span
     };
   },
 
@@ -26,23 +26,17 @@ export default React.createClass({
   },
 
   closeModal() {
-    this.setState({ showModal: false });
+    this.setState({showModal: false});
   },
 
-  onWrapperClick(e) {
+  onButtonClick(e) {
     e.preventDefault();
     e.stopPropagation();
-    this.setState({ showModal: true });
+    this.setState({showModal: true});
   },
 
   render() {
-    const Wrapper = this.props.childrenRootElement;
-
-    return (
-      <Wrapper onClick={this.onWrapperClick}>
-        {this.props.children}
-        <ConfirmModal show={this.state.showModal} onHide={this.closeModal} {...this.props} key="modal" />
-      </Wrapper>
-    );
+    const modal = <ConfirmModal show={this.state.showModal} onHide={this.closeModal} {...this.props} key="modal"/>;
+    return this.props.childrenRootElement({onClick: this.onButtonClick}, [this.props.children, modal]);
   }
 });
