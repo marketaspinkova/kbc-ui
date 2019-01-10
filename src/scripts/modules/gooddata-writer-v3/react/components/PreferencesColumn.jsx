@@ -38,20 +38,20 @@ export default React.createClass({
          )}
         {fields.dateDimension.show &&
          this.renderSelectGroup(
-           'Date Dimensions',
+           'Date Dimension',
            'dateDimension',
            this.props.context.dimensions
          )}
         {fields.format.show && this.renderInputGroupWithAddon('Date format', 'format', <DateFormatHint />)}
         {fields.schemaReference.show &&
          this.renderSelectGroup(
-           'Reference',
+           'Source Connection Point',
            'schemaReference',
            this.props.context.referencableTables
          )}
         {fields.reference.show &&
          this.renderSelectGroup(
-           'Reference',
+           column.type === Types.LABEL ? 'Source Attribute' : 'Display Label Attribute',
            'reference',
            this.props.context.referencableColumns
          )}
