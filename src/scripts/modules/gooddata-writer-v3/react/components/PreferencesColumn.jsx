@@ -51,7 +51,7 @@ export default React.createClass({
          )}
         {fields.reference.show &&
          this.renderSelectGroup(
-           column.type === Types.LABEL ? 'Source Attribute' : 'Display Label Attribute',
+           this.referenceLabel(column),
            'reference',
            this.props.context.referencableColumns
          )}
@@ -173,5 +173,17 @@ export default React.createClass({
       .updateColumn(property, value)
       .column;
     this.props.onChange(newColumn);
+  },
+
+  referenceLabel(column) {
+    if (column.type === Types.LABEL) {
+      return 'Source Attribute';
+    }
+
+    if (column.type === Types.HYPERLINK) {
+      return 'Display Label Attribute';
+    }
+
+    return 'Reference';
   }
 });
