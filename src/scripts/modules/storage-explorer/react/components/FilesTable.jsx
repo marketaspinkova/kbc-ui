@@ -3,12 +3,13 @@ import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import moment from 'moment';
 import { Table, Button, Label } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
-import FileLink from '../../../sapi-events/react/FileLink';
 import { format } from '../../../../utils/date';
-import Confirm from '../../../../react/common/Confirm';
+import ConfirmModal from '../../../../react/common/ConfirmModal';
 import Clipboard from '../../../../react/common/Clipboard';
 import FileSize from '../../../../react/common/FileSize';
 import Tooltip from '../../../../react/common/Tooltip';
+import FileLink from '../../../sapi-events/react/FileLink';
+import FileLinkButton from './FileLinkButton';
 
 export default React.createClass({
   mixins: [ImmutableRenderMixin],
@@ -20,6 +21,13 @@ export default React.createClass({
     isDeleting: PropTypes.object.isRequired
   },
 
+  getInitialState() {
+    return {
+      showDeleteModal: false,
+      deleteFile: null
+    };
+  },
+
   render() {
     if (!this.props.files.count()) {
       return null;
@@ -27,6 +35,8 @@ export default React.createClass({
 
     return (
       <div>
+        {this.renderDeleteModal()}
+
         <Table responsive striped hover>
           <thead>
             <tr>
@@ -84,9 +94,34 @@ export default React.createClass({
           ))}
         </td>
         <td>
-          {this.renderFileDownload(file)} {this.renderDeleteFile(file)}
+          <FileLinkButton file={file} />
+          {this.renderDeleteFile(file)}
         </td>
       </tr>
+    );
+  },
+
+  renderDeleteModal() {
+    const file = this.state.deleteFile;
+
+    if (!file) {
+      return null;
+    }
+
+    return (
+      <ConfirmModal
+        show={this.state.showDeleteModal}
+        onHide={this.closeDeleteModal}
+        title="Delete file"
+        text={
+          <p>
+            Do you really want to delete file {file.get('id')} ({file.get('name')})?
+          </p>
+        }
+        buttonLabel="Delete"
+        buttonType="danger"
+        onConfirm={() => this.props.onDeleteFile(file.get('id'))}
+      />
     );
   },
 
@@ -139,7 +174,6 @@ export default React.createClass({
       </FileLink>
     );
   },
-
   renderDeleteFile(file) {
     const isDeleting = this.props.isDeleting.get(file.get('id'), false);
 
@@ -152,21 +186,25 @@ export default React.createClass({
     }
 
     return (
-      <Confirm
-        title="Delete file"
-        text={
-          <p>
-            Do you really want to delete file {file.get('id')} ({file.get('name')})?
-          </p>
-        }
-        buttonLabel="Delete"
-        onConfirm={() => this.props.onDeleteFile(file.get('id'))}
-        childrenRootElement={Button}
-      >
-        <Tooltip placement="top" tooltip="Delete file">
+      <Tooltip placement="top" tooltip="Delete file">
+        <Button onClick={() => this.openDeleteModal(file)}>
           <i className="fa fa-trash-o" />
-        </Tooltip>
-      </Confirm>
+        </Button>
+      </Tooltip>
     );
+  },
+
+  openDeleteModal(file) {
+    this.setState({
+      showDeleteModal: true,
+      deleteFile: file
+    });
+  },
+
+  closeDeleteModal() {
+    this.setState({
+      showDeleteModal: false,
+      deleteFile: null
+    });
   }
 });
