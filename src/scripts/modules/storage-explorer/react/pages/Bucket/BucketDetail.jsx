@@ -64,7 +64,7 @@ export default React.createClass({
               <NavItem eventKey="tables">Tables</NavItem>
               <NavItem eventKey="events">Events</NavItem>
               <NavDropdown title="Actions">
-                <MenuItem eventKey="delete" onSelect={this.handleDropdownAction}>
+                <MenuItem eventKey="delete" onSelect={this.openDeleteBucketModal}>
                   Delete bucket
                 </MenuItem>
               </NavDropdown>
@@ -146,16 +146,6 @@ export default React.createClass({
       this.setState({
         activeTab: tab
       });
-    }
-  },
-
-  handleDropdownAction(action) {
-    switch (action) {
-      case 'delete':
-        return this.openDeleteBucketModal();
-
-      default:
-        return null;
     }
   },
 
