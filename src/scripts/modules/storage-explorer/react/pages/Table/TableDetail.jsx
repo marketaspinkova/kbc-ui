@@ -290,10 +290,12 @@ export default React.createClass({
   },
 
   handleDropdownAction(action) {
-    this.setState({
-      openActionModal: true,
-      actionModalType: action
-    });
+    if (['export', 'load', 'truncate', 'delete'].includes(action)) {
+      this.setState({
+        openActionModal: true,
+        actionModalType: action
+      });
+    }
   },
 
   closeActionModal() {
