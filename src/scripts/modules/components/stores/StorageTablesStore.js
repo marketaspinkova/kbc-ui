@@ -234,7 +234,7 @@ Dispatcher.register(function(payload) {
 
     case constants.ActionTypes.STORAGE_TABLE_LOAD_SUCCESS:
     case constants.ActionTypes.STORAGE_TABLE_LOAD_ERROR:
-      _store = _store.deleteIn(['pendingTables', 'loading'], false);
+      _store = _store.deleteIn(['pendingTables', 'loading']);
       return StorageTablesStore.emitChange();
     default:
   }
