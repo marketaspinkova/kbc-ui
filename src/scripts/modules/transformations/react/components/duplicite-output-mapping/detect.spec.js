@@ -1,6 +1,6 @@
 import assert from 'assert';
 import Immutable from 'immutable';
-import {getConflicts} from './detect';
+import getConflicts from './detect';
 
 const t1 = {
   'output': [
@@ -106,6 +106,35 @@ const t1b = {
   'description': ''
 };
 
+const t3 = {
+  'output': [
+    {
+      'destination': 'out.c-duplicite-output-mapping.conflict',
+      'source': 'conflict'
+    },
+    {
+      'destination': 'out.c-duplicite-output-mapping.conflict',
+      'source': 'conflict2'
+    },
+    {
+      'destination': 'out.c-duplicite-output-mapping.conflict',
+      'source': 'conflict'
+    }
+  ],
+  'queries': [''],
+  'input': [],
+  'name': 'T3',
+  'packages': [],
+  'requires': [],
+  'backend': 'snowflake',
+  'queriesString': '',
+  'type': 'simple',
+  'id': '3',
+  'phase': 1,
+  'disabled': false,
+  'description': ''
+};
+
 describe('getConflicts', () => {
   it('should return empty array for a single transformation', () => {
     assert.deepEqual([], getConflicts(Immutable.fromJS(t1), Immutable.fromJS({'1': t1})).toJS());
@@ -138,5 +167,13 @@ describe('getConflicts', () => {
   it('should return empty array for no conflicts', () => {
     assert.deepEqual([], getConflicts(Immutable.fromJS(t1), Immutable.fromJS({'1': t1, '1b': t1b})).toJS());
     assert.deepEqual([], getConflicts(Immutable.fromJS(t1a), Immutable.fromJS({'1a': t1a, '1b': t1b})).toJS());
+  });
+  it('should detect self conflicts', () => {
+    assert.deepEqual([
+      {
+        'id': '3',
+        'destination': 'out.c-duplicite-output-mapping.conflict'
+      }
+    ], getConflicts(Immutable.fromJS(t3), Immutable.fromJS({'3': t3})).toJS());
   });
 });
