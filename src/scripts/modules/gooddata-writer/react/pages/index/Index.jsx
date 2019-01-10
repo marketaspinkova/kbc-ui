@@ -3,6 +3,7 @@ import { Map, List } from 'immutable';
 import { Alert, DropdownButton } from 'react-bootstrap';
 import { Loader, SearchBar, Protected } from '@keboola/indigo-ui';
 import { Link } from 'react-router';
+import hiddenComponents from '../../../../components/utils/hiddenComponents';
 
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../../../stores/RoutesStore';
@@ -95,10 +96,12 @@ export default React.createClass({
     const writer = this.state.writer.get('config');
     return (
       <div className="container-fluid">
-        <MigrationRow
-          componentId="gooddata-writer"
-          replacementAppId="keboola.gooddata-writer"
-        />
+        { hiddenComponents.hasCurrentUserDevelPreview() &&
+          <MigrationRow
+            componentId="gooddata-writer"
+            replacementAppId="keboola.gooddata-writer"
+          />
+        }
         <div className="col-md-9 kbc-main-content">
           <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
             <ComponentDescription componentId="gooddata-writer" configId={writer.get('id')} />
