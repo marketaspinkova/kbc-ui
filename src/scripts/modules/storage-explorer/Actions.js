@@ -1,5 +1,10 @@
+import dispatcher from '../../Dispatcher';
+import * as constants from '../components/Constants';
 import StorageActionCreators from '../components/StorageActionCreators';
 import StorageApi from '../components/StorageApi';
+import ApplicationStore from '../../stores/ApplicationStore';
+import jobPoller from '../../utils/jobPoller';
+import exportTableApi from './ExportTableApi';
 import RoutesStore from '../../stores/RoutesStore';
 import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
 import HttpError from '../../utils/HttpError';
@@ -100,6 +105,41 @@ const truncateTable = (tableId) => {
     .catch(errorNotification);
 };
 
+const exportTable = tableId => {
+  dispatcher.handleViewAction({
+    type: constants.ActionTypes.STORAGE_TABLE_EXPORT,
+    tableId: tableId
+  });
+  return exportTableApi
+    .export(tableId)
+    .then(response => {
+      return jobPoller.poll(ApplicationStore.getSapiTokenString(), response.url).then(response2 => {
+        if (response2.status === 'error') {
+          dispatcher.handleViewAction({
+            type: constants.ActionTypes.STORAGE_TABLE_EXPORT_ERROR,
+            tableId: tableId,
+            errors: response2.error
+          });
+          throw response2.error.message;
+        }
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_TABLE_EXPORT_SUCCESS,
+          tableId: tableId,
+          response: response2
+        });
+        return response2;
+      });
+    })
+    .catch(error => {
+      dispatcher.handleViewAction({
+        type: constants.ActionTypes.STORAGE_TABLE_EXPORT_ERROR,
+        tableId: tableId,
+        errors: error
+      });
+      throw error;
+    });
+};
+
 export {
   deleteBucket,
   deleteTable,
@@ -112,5 +152,6 @@ export {
   createTableFromSnapshot,
   restoreUsingTimeTravel,
   truncateTable,
-  createTableFromTextInput
+  createTableFromTextInput,
+  exportTable
 };

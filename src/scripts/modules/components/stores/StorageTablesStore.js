@@ -82,6 +82,10 @@ const StorageTablesStore = StoreUtils.createStore({
     return _store.getIn(['pendingTables', 'deletingSnapshot'], Map());
   },
 
+  getIsExportingTable(tableId) {
+    return _store.getIn(['pendingTables', 'exporting', tableId], false);
+  },
+
   getTableMetadata(tableId) {
     return _store.get('tables').getIn(tableId, 'metadata');
   },
@@ -235,6 +239,18 @@ Dispatcher.register(function(payload) {
     case constants.ActionTypes.STORAGE_TABLE_LOAD_SUCCESS:
     case constants.ActionTypes.STORAGE_TABLE_LOAD_ERROR:
       _store = _store.deleteIn(['pendingTables', 'loading']);
+      return StorageTablesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_TABLE_EXPORT:
+      _store = _store.setIn(['pendingTables', 'exporting', action.tableId], true);
+      return StorageTablesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_TABLE_EXPORT_SUCCESS:
+      _store = _store.deleteIn(['pendingTables', 'exporting', action.tableId]);
+      return StorageTablesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_TABLE_EXPORT_ERROR:
+      _store = _store.deleteIn(['pendingTables', 'exporting', action.tableId]);
       return StorageTablesStore.emitChange();
     default:
   }

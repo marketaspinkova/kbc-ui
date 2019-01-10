@@ -210,6 +210,12 @@ var storageApi = {
     });
   },
 
+  exportTable: function(tableId, params) {
+    return createRequest('POST', 'tables/' + tableId + '/export-async').type('form').send(params).promise().then(function(response) {
+      return response.body;
+    });
+  },
+
   loadDataIntoWorkspace: function(workspaceId, params) {
     return createRequest('POST', 'workspaces/' + workspaceId + '/load').type('form').send(params).promise()
       .then(function(response) {

@@ -8,13 +8,16 @@ import RoutesStore from '../../../../../stores/RoutesStore';
 import BucketsStore from '../../../../components/stores/StorageBucketsStore';
 import TablesStore from '../../../../components/stores/StorageTablesStore';
 import DataSample from '../../components/DataSample';
-import TruncateTableModal from '../../modals/TruncateTableModal';
-import DeleteTableModal from '../../modals/DeleteTableModal';
-import LoadTableFromCsvModal from '../../modals/LoadTableFromCsvModal';
 import { deleteTable, truncateTable } from '../../../Actions';
 import FilesStore from '../../../../components/stores/StorageFilesStore';
 import StorageActionCreators from '../../../../components/StorageActionCreators';
+import storageApi from '../../../../components/StorageApi';
+import { exportTable } from '../../../Actions';
 
+import TruncateTableModal from '../../modals/TruncateTableModal';
+import DeleteTableModal from '../../modals/DeleteTableModal';
+import LoadTableFromCsvModal from '../../modals/LoadTableFromCsvModal';
+import ExportTableModal from '../../modals/ExportTableModal';
 import TableOverview from './TableOverview';
 import TableColumn from './TableColumn';
 import SnapshotRestore from './SnapshotRestore';
@@ -50,7 +53,8 @@ export default React.createClass({
       truncatingTable: TablesStore.getIsTruncatingTable(table.get('id')),
       deletingTable: TablesStore.getIsDeletingTable(),
       loadingIntoTable: TablesStore.getIsLoadingTable(),
-      uploadingProgress: FilesStore.getUploadingProgress(bucketId) || 0
+      uploadingProgress: FilesStore.getUploadingProgress(bucketId) || 0,
+      exportingTable: TablesStore.getIsExportingTable(table.get('id'))
     };
   },
 
@@ -90,7 +94,13 @@ export default React.createClass({
               <NavItem eventKey="graph">Graph</NavItem>
               <NavDropdown title="Actions">
                 <MenuItem eventKey="export" onSelect={this.handleDropdownAction}>
-                  Export
+                  {this.state.exportingTable ? (
+                    <span>
+                      <Loader /> Exporting...
+                    </span>
+                  ) : (
+                    <span>Export</span>
+                  )}
                 </MenuItem>
                 <MenuItem eventKey="load" onSelect={this.handleDropdownAction}>
                   {loadingIntoTable ? (
@@ -176,6 +186,7 @@ export default React.createClass({
 
         {this.renderDeletingTableModal()}
         {this.renderLoadTableModal()}
+        {this.renderExportTableModal()}
         {!this.state.table.get('isAlias') && this.canWriteTable() && this.renderTruncateTableModal()}
       </div>
     );
@@ -220,6 +231,18 @@ export default React.createClass({
     );
   },
 
+  renderExportTableModal() {
+    return (
+      <ExportTableModal
+        show={!!(this.state.openActionModal && this.state.actionModalType === 'export')}
+        table={this.state.table}
+        onSubmit={this.handleExportTable}
+        onHide={this.closeActionModal}
+        isExporting={this.state.exportingTable}
+      />
+    );
+  },
+
   handleSelectTab(tab) {
     if (['overview', 'description', 'events', 'data-sample', 'snapshot-and-restore', 'graph'].includes(tab)) {
       this.setState({
@@ -253,31 +276,25 @@ export default React.createClass({
     });
   },
 
+  handleExportTable() {
+    const tableId = this.state.table.get('id');
+
+    return exportTable(tableId).then(response => {
+      return storageApi
+        .getFiles({
+          runId: response.runId,
+          'tags[]': ['storage-merged-export']
+        })
+        .then(files => files[0]);
+    });
+  },
+
   handleDropdownAction(action) {
-    switch (action) {
-      case 'export':
-        return null;
-
-      case 'load':
-        return this.setState({
-          openActionModal: true,
-          actionModalType: 'load'
-        });
-
-      case 'truncate':
-        return this.setState({
-          openActionModal: true,
-          actionModalType: 'truncate'
-        });
-
-      case 'delete':
-        return this.setState({
-          openActionModal: true,
-          actionModalType: 'delete'
-        });
-
-      default:
-        return null;
+    if (['export', 'load', 'truncate', 'delete'].includes(action)) {
+      this.setState({
+        openActionModal: true,
+        actionModalType: action
+      });
     }
   },
 
