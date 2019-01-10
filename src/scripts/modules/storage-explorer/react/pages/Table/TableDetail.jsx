@@ -175,8 +175,8 @@ export default React.createClass({
         </Tab.Container>
 
         {this.renderDeletingTableModal()}
+        {this.renderLoadTableModal()}
         {!this.state.table.get('isAlias') && this.canWriteTable() && this.renderTruncateTableModal()}
-        {this.state.openActionModal && <div>{this.renderLoadTableModal()}</div>}
       </div>
     );
   },
@@ -279,13 +279,6 @@ export default React.createClass({
       default:
         return null;
     }
-  },
-
-  openActionModal(type) {
-    this.setState({
-      openActionModal: true,
-      actionModalType: type
-    });
   },
 
   closeActionModal() {
