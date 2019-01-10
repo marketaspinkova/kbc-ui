@@ -20,7 +20,6 @@ const getConflicts = (current, all) => {
   return conflicts;
 };
 
-
 export {
   getConflicts
 };
