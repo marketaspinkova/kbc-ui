@@ -39,8 +39,8 @@ const StorageFilesStore = StoreUtils.createStore({
     return _store.get('isLoaded');
   },
 
-  getUploadingProgress(bucketId) {
-    return _store.getIn(['uploadingProgress', bucketId]);
+  getUploadingProgress(id) {
+    return _store.getIn(['uploadingProgress', id]);
   }
 });
 
@@ -67,12 +67,12 @@ Dispatcher.register(function(payload) {
       return StorageFilesStore.emitChange();
 
     case constants.ActionTypes.STORAGE_FILE_UPLOAD:
-      _store = _store.setIn(['uploadingProgress', action.bucketId], action.progress);
+      _store = _store.setIn(['uploadingProgress', action.id], action.progress);
       return StorageFilesStore.emitChange();
 
     case constants.ActionTypes.STORAGE_FILE_UPLOAD_SUCCESS:
     case constants.ActionTypes.STORAGE_FILE_UPLOAD_ERROR:
-      _store = _store.deleteIn(['uploadingProgress', action.bucketId]);
+      _store = _store.deleteIn(['uploadingProgress', action.id]);
       return StorageFilesStore.emitChange();
 
     case constants.ActionTypes.STORAGE_FILES_LOAD_MORE:

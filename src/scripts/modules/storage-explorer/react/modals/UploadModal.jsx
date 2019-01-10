@@ -13,7 +13,6 @@ import {
   ButtonToolbar,
   Button
 } from 'react-bootstrap';
-import { Loader } from '@keboola/indigo-ui';
 import Select from 'react-select';
 
 const INITIAL_STATE = {
@@ -27,8 +26,7 @@ const INITIAL_STATE = {
 export default React.createClass({
   propTypes: {
     show: PropTypes.bool.isRequired,
-    uploading: PropTypes.bool.isRequired,
-    progress: PropTypes.number.isRequired,
+    uploadingProgress: PropTypes.number.isRequired,
     onConfirm: PropTypes.func.isRequired,
     onHide: PropTypes.func.isRequired
   },
@@ -78,14 +76,13 @@ export default React.createClass({
   renderProgress() {
     return (
       <div>
-        <ProgressBar striped bsStyle="info" now={this.props.progress} active={this.props.progress < 100} />
-        {this.props.progress < 100 ? (
-          <p>
-            <Loader /> Uploading file...
-          </p>
-        ) : (
-          <p>File was successfully uploaded.</p>
-        )}
+        <p>{this.props.uploadingProgress < 100 ? 'Uploading file...' : 'File was successfully uploaded.'}</p>
+        <ProgressBar
+          striped
+          bsStyle="info"
+          now={this.props.uploadingProgress}
+          active={this.props.uploadingProgress < 100}
+        />
       </div>
     );
   },
@@ -133,7 +130,6 @@ export default React.createClass({
               promptTextCreator={() => 'Add tag'}
               value={this.state.tags.map(tag => ({ label: tag, value: tag }))}
               onChange={this.handleTags}
-              options={[]}
             />
           </Col>
         </FormGroup>
@@ -167,7 +163,13 @@ export default React.createClass({
   handleSubmit(event) {
     event.preventDefault();
 
-    this.props.onConfirm().then(() => {}, this.handleError);
+    const params = {
+      isPublic: this.state.public,
+      isPermanent: this.state.permanent,
+      tags: this.state.tags
+    };
+
+    this.props.onConfirm(this.state.file, params).then(this.onHide, this.handleError);
   },
 
   handleError(message) {
@@ -179,7 +181,7 @@ export default React.createClass({
   },
 
   isSaving() {
-    return this.props.uploading || this.props.progress > 0;
+    return this.props.uploadingProgress > 0;
   },
 
   isDisabled() {

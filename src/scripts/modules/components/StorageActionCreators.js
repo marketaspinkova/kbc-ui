@@ -812,18 +812,19 @@ module.exports = {
     });
   },
 
-  uploadFile: function(bucketId, file) {
+  uploadFile: function(id, file, params = {}) {
     const uploadParams = {
       federationToken: true,
       notify: false,
       isEncrypted: true,
       name: file.name,
-      sizeBytes: file.size
+      sizeBytes: file.size,
+      ...params
     };
 
     dispatcher.handleViewAction({
       type: constants.ActionTypes.STORAGE_FILE_UPLOAD,
-      bucketId: bucketId,
+      id: id,
       progress: 1
     });
 
@@ -855,11 +856,20 @@ module.exports = {
       });
 
       const reportProgress = _.throttle((progress) => {
-        dispatcher.handleViewAction({
-          type: constants.ActionTypes.STORAGE_FILE_UPLOAD,
-          bucketId: bucketId,
-          progress: Math.max(1, Math.round(100 * (progress.loaded / progress.total)))
-        });
+        const percent = Math.max(1, Math.round(100 * (progress.loaded / progress.total)));
+
+        if (percent === 100) {
+          dispatcher.handleViewAction({
+            type: constants.ActionTypes.STORAGE_FILE_UPLOAD_SUCCESS,
+            id: id
+          });
+        } else {
+          dispatcher.handleViewAction({
+            type: constants.ActionTypes.STORAGE_FILE_UPLOAD,
+            id: id,
+            progress: percent
+          });
+        }
       }, 800);
 
       return new AWS.S3(awsParams)
@@ -868,14 +878,14 @@ module.exports = {
         .promise().then(() => {
           dispatcher.handleViewAction({
             type: constants.ActionTypes.STORAGE_FILE_UPLOAD_SUCCESS,
-            bucketId: bucketId
+            id: id
           });
           return fileId;
         });
     }).catch(error => {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.STORAGE_FILE_UPLOAD_ERROR,
-        bucketId: bucketId
+        id: id
       });
       throw error;
     });

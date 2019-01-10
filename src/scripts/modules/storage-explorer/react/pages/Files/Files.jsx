@@ -1,5 +1,4 @@
 import React from 'react';
-import Promise from 'bluebird';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { Button } from 'react-bootstrap';
 import { SearchBar } from '@keboola/indigo-ui';
@@ -13,6 +12,8 @@ import UploadModal from '../../modals/UploadModal';
 import { updateSearchQuery, resetSearchQuery } from '../../../Actions';
 import { filesLimit } from '../../../Constants';
 
+const DIRECT_UPLOAD = 'direct-upload';
+
 export default React.createClass({
   mixins: [ImmutableRenderMixin, createStoreMixin(FilesStore, FilesLocalStore)],
 
@@ -22,7 +23,8 @@ export default React.createClass({
       hasMore: FilesStore.hasMoreFiles(),
       searchQuery: FilesLocalStore.getSearchQuery(),
       isLoadingMore: FilesStore.getIsLoadingMore(),
-      isDeleting: FilesStore.getIsDeleting()
+      isDeleting: FilesStore.getIsDeleting(),
+      uploadingProgress: FilesStore.getUploadingProgress(DIRECT_UPLOAD) || 0
     };
   },
 
@@ -32,8 +34,7 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      openUploadModal: false,
-      isUploading: false
+      openUploadModal: false
     };
   },
 
@@ -93,8 +94,7 @@ export default React.createClass({
     return (
       <UploadModal
         show={this.state.openUploadModal}
-        uploading={this.state.isUploading}
-        progress={0}
+        uploadingProgress={this.state.uploadingProgress}
         onConfirm={this.handleUploadFile}
         onHide={this.closeUploadModal}
       />
@@ -117,12 +117,8 @@ export default React.createClass({
     });
   },
 
-  handleUploadFile(params) {
-    this.setState({ isUploading: true });
-
-    return Promise.resolve(params).finally(() => {
-      this.setState({ isUploading: false });
-    });
+  handleUploadFile(file, params) {
+    return StorageActionCreators.uploadFile(DIRECT_UPLOAD, file, params).then(() => this.fetchFiles());
   },
 
   searchByTag(tag) {
