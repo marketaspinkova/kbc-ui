@@ -108,17 +108,35 @@ const t1b = {
 
 describe('getConflicts', () => {
   it('should return empty array for a single transformation', () => {
-    assert.deepEqual([], getConflicts(Immutable.fromJS(t1), Immutable.fromJS({'1': t1})));
+    assert.deepEqual([], getConflicts(Immutable.fromJS(t1), Immutable.fromJS({'1': t1})).toJS());
   });
   it('should return empty array for conflict in different phases', () => {
-    assert.deepEqual([], getConflicts(Immutable.fromJS(t1), Immutable.fromJS({'1': t1, '2': t2})));
+    assert.deepEqual([], getConflicts(Immutable.fromJS(t1), Immutable.fromJS({'1': t1, '2': t2})).toJS());
   });
   it('should return conflicting transformations', () => {
-    assert.deepEqual(['1a'], getConflicts(Immutable.fromJS(t1), Immutable.fromJS({'1': t1, '1a': t1a, '1b': t1b})));
-    assert.deepEqual(['1'], getConflicts(Immutable.fromJS(t1a), Immutable.fromJS({'1': t1, '1a': t1a, '1b': t1b})));
+    assert.deepEqual([
+      {
+        'id': '1a',
+        'destination': 'out.c-duplicite-output-mapping.test'
+      },
+      {
+        'id': '1a',
+        'destination': 'out.c-duplicite-output-mapping.different_source'
+      }
+    ], getConflicts(Immutable.fromJS(t1), Immutable.fromJS({'1': t1, '1a': t1a, '1b': t1b})).toJS());
+    assert.deepEqual([
+      {
+        'id': '1',
+        'destination': 'out.c-duplicite-output-mapping.test'
+      },
+      {
+        'id': '1',
+        'destination': 'out.c-duplicite-output-mapping.different_source'
+      }
+    ], getConflicts(Immutable.fromJS(t1a), Immutable.fromJS({'1': t1, '1a': t1a, '1b': t1b})).toJS());
   });
   it('should return empty array for no conflicts', () => {
-    assert.deepEqual([], getConflicts(Immutable.fromJS(t1), Immutable.fromJS({'1': t1, '1b': t1b})));
-    assert.deepEqual([], getConflicts(Immutable.fromJS(t1a), Immutable.fromJS({'1a': t1a, '1b': t1b})));
+    assert.deepEqual([], getConflicts(Immutable.fromJS(t1), Immutable.fromJS({'1': t1, '1b': t1b})).toJS());
+    assert.deepEqual([], getConflicts(Immutable.fromJS(t1a), Immutable.fromJS({'1a': t1a, '1b': t1b})).toJS());
   });
 });

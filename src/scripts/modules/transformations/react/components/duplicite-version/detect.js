@@ -4,20 +4,20 @@ const getConflicts = (current, all) => {
   const siblings = all.filter((possibleSibling) => {
     return possibleSibling.get('phase') === current.get('phase') && possibleSibling.get('id') !== current.get('id')
   }).toList();
-  const conflicts = siblings.filter((sibling) => {
-    let isConflict = false;
+  let conflicts = Immutable.List();
+  siblings.forEach((sibling) => {
     sibling.get('output', Immutable.List()).forEach((siblingOutputMapping) => {
       current.get('output', Immutable.List()).forEach((currentOutputMapping) => {
         if (siblingOutputMapping.get('destination') === currentOutputMapping.get('destination')) {
-          isConflict = true;
+          conflicts = conflicts.push({
+            id: sibling.get('id'),
+            destination: siblingOutputMapping.get('destination')
+          });
         }
       });
     });
-    return isConflict;
   });
-  return conflicts.map((conflict) => {
-    return conflict.get('id');
-  }).toArray();
+  return conflicts;
 };
 
 
