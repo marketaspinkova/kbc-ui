@@ -858,12 +858,7 @@ module.exports = {
       const reportProgress = _.throttle((progress) => {
         const percent = Math.max(1, Math.round(100 * (progress.loaded / progress.total)));
 
-        if (percent === 100) {
-          dispatcher.handleViewAction({
-            type: constants.ActionTypes.STORAGE_FILE_UPLOAD_SUCCESS,
-            id: id
-          });
-        } else {
+        if (percent < 100) {
           dispatcher.handleViewAction({
             type: constants.ActionTypes.STORAGE_FILE_UPLOAD,
             id: id,
