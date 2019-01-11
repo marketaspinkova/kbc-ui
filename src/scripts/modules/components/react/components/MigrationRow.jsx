@@ -243,31 +243,42 @@ export default React.createClass({
   },
 
   getInfo() {
-    let replacedApp = this.props.componentId;
     let replacementApp = this.props.replacementAppId;
 
-    if (descriptionsMap.has(replacedApp)) {
-      return descriptionsMap.get(replacedApp);
+    if (descriptionsMap.has(this.props.componentId)) {
+      return descriptionsMap.get(this.props.componentId);
     }
 
     if (!replacementApp) {
       return '';
     }
 
-    if (ComponentsStore.hasComponent(replacedApp) && ComponentsStore.hasComponent(replacementApp)) {
-      replacedApp = ComponentsStore.getComponent(replacedApp).get('name');
-      replacementApp = ComponentsStore.getComponent(replacementApp).get('name');
-    }
-
     return (
       <p>
-        {'Migration process will migrate all configurations of '}<b>{replacedApp}</b>{' to new '}
-        {'configurations of '}<b>{replacementApp}</b>{' component within this project. Any encrypted '}
+        {'Migration process will migrate all configurations of '}
+        {this.renderComponentName(this.props.componentId)}
+        {' to new configurations of '}
+        {this.renderComponentName(this.props.replacementAppId)}
+        {' component within this project. Any encrypted '}
         {'values or authorized accounts will not be migrated and have to be entered/authorized manually '}
-        {'again. Beside that all orchestration tasks of the '}<b>{replacedApp}</b>{' configurations will '}
-        {'be replaced with configurations of the new '}<b>{replacementApp}</b>{'.'}
+        {'again. Beside that all orchestration tasks of the '}
+        {this.renderComponentName(this.props.componentId)}
+        {' configurations will '}
+        {'be replaced with configurations of the new '}
+        {this.renderComponentName(this.props.replacementAppId)}{'.'}
       </p>
     );
+  },
+
+  renderComponentName(componentId) {
+    return ComponentsStore.hasComponent(componentId)
+      ? (
+        <span>
+          <strong>{ComponentsStore.getComponent(componentId).get('name')}</strong> ({componentId})
+        </span>
+      ) : (
+        componentId
+      );
   },
 
   renderModal(title, body, footer, props) {
