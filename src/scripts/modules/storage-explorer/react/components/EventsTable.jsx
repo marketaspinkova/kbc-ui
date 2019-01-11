@@ -17,6 +17,7 @@ export default React.createClass({
 
   getInitialState() {
     return {
+      showDetailModal: false,
       eventDetail: null
     };
   },
@@ -49,7 +50,7 @@ export default React.createClass({
     const component = this.getComponent(event.get('component'));
 
     return (
-      <tr key={event.get('id')} onClick={() => this.eventDetail(event)} className="kbc-cursor-pointer">
+      <tr key={event.get('id')} onClick={() => this.openEventDetail(event)} className="kbc-cursor-pointer">
         <td>{format(event.get('created'))}</td>
         <td>
           <span>
@@ -68,19 +69,21 @@ export default React.createClass({
       return null;
     }
 
-    return <EventDetailModal event={this.state.eventDetail} onHide={this.resetEvent} />;
+    return (
+      <EventDetailModal
+        show={this.state.showDetailModal}
+        event={this.state.eventDetail}
+        onHide={this.closeDetailModal}
+      />
+    );
   },
 
-  eventDetail(event) {
-    this.setState({
-      eventDetail: event
-    });
+  openEventDetail(event) {
+    this.setState({ showDetailModal: true, eventDetail: event });
   },
 
-  resetEvent() {
-    this.setState({
-      eventDetail: null
-    });
+  closeDetailModal() {
+    this.setState({ showDetailModal: false });
   },
 
   getComponent(componentId) {
