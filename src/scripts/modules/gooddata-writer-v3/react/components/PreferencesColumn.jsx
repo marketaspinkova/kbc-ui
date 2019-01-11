@@ -83,7 +83,7 @@ export default React.createClass({
     return (
       <FormGroup  bsSize="small" className="col-sm-12">
         <Col sm={4} componentClass={ControlLabel}>
-          <span className="pull-right">{label}</span>
+          <span className="pull-right text-right">{label}</span>
         </Col>
         <Col sm={8}>
           {
