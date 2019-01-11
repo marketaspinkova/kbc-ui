@@ -42,7 +42,7 @@ const componentNameMap = Map({
   'wr-google-drive': ['keboola.wr-google-drive', 'keboola.wr-google-sheets']
 });
 
-const WR_DB_DESCRIPTION = 'Migrate your current configurations to new Database Writer. This writer will continue to work until May 2017. Then, all your configurations will be migrated automatically. The migration will also alter your orchestrations to use the new writers. The old configurations will remain intact for now. You can remove them yourself after a successful migration.';
+const WR_DB_DESCRIPTION = 'Migrate your current configurations to new Database Writer. This writer will continue to work until May 2017. The migration will also alter your orchestrations to use the new writers. The old configurations will remain intact for now. You can remove them yourself after a successful migration.';
 const EX_GOODDATA_DESCRIPTION = (
   <p>
     <span>Migration takes place with the following consequences:</span>
@@ -62,17 +62,17 @@ const WR_GOOGLE_DRIVE_DESCRIPTION = (
       <li>Depending on the type of files registered in your configuration, the configuration will be migrated either to new Google Drive Writer, Google Sheets Writer or both.</li>
       <li>If type of the file is 'sheet' and action is not 'create', the file will be migrated to Google Sheets Writer, otherwise to Google Drive Writer.</li>
       <li>The migration will also alter your orchestrations to use the new writers.</li>
-      <li>This component will continue to work until December 2017. Then, all your configurations will be migrated automatically.</li>
+      <li>This component will continue to work until December 2017.</li>
       <li>The old configurations will remain intact for now. You can remove them after successful migration.</li>
     </ul>
   </p>
 );
 
 const descriptionsMap = Map({
-  'ex-db': 'Migrate your current configurations to new vendor specific database extractors (MySql, Postgres, Oracle, Microsoft SQL). This extractor will continue to work until August 2016. Then, all your configurations will be migrated automatically. The migration will also alter your orchestrations to use the new extractors. The old configurations will remain intact for now. You can remove them yourself after a successful migration.',
+  'ex-db': 'Migrate your current configurations to new vendor specific database extractors (MySql, Postgres, Oracle, Microsoft SQL). This extractor will continue to work until August 2016. The migration will also alter your orchestrations to use the new extractors. The old configurations will remain intact for now. You can remove them yourself after a successful migration.',
   'ex-gooddata': EX_GOODDATA_DESCRIPTION,
-  'ex-google-analytics': 'Migrate your current configurations to new Google Analytics Extractor, which uses the newest API V4. This extractor will continue to work until November 2016. Then, all your configurations will be migrated automatically. The migration will also alter your orchestrations to use the new extractors. The old configurations will remain intact for now. You can remove them yourself after a successful migration.',
-  'ex-google-drive': 'Migrate your current configurations to new Google Drive Extractor. This extractor will continue to work until April 2017. Then, all your configurations will be migrated automatically. The migration will also alter your orchestrations to use the new extractors. The old configurations will remain intact for now. You can remove them yourself after a successful migration.',
+  'ex-google-analytics': 'Migrate your current configurations to new Google Analytics Extractor, which uses the newest API V4. This extractor will continue to work until November 2016. The migration will also alter your orchestrations to use the new extractors. The old configurations will remain intact for now. You can remove them yourself after a successful migration.',
+  'ex-google-drive': 'Migrate your current configurations to new Google Drive Extractor. This extractor will continue to work until April 2017. The migration will also alter your orchestrations to use the new extractors. The old configurations will remain intact for now. You can remove them yourself after a successful migration.',
   'wr-db-mysql': WR_DB_DESCRIPTION,
   'wr-db-oracle': WR_DB_DESCRIPTION,
   'wr-db-redshift': WR_DB_DESCRIPTION,
