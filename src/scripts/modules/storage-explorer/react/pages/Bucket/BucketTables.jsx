@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import classnames from 'classnames';
-import { Table, ButtonGroup, Button, Row } from 'react-bootstrap';
+import { Table, ButtonToolbar, Button, Row } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 import CreatedWithIcon from '../../../../../react/common/CreatedWithIcon';
 import FileSize from '../../../../../react/common/FileSize';
@@ -36,7 +36,7 @@ export default React.createClass({
       <div>
         <div className="clearfix">
           <div className="kbc-buttons pull-right">
-            <ButtonGroup>
+            <ButtonToolbar>
               <Button bsStyle="success" onClick={this.openCreateTableModal}>
                 {creatingTable ? (
                   <span>
@@ -55,7 +55,7 @@ export default React.createClass({
                   Create table alias
                 </Button>
               )}
-            </ButtonGroup>
+            </ButtonToolbar>
           </div>
         </div>
 
