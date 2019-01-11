@@ -38,12 +38,12 @@ export default React.createClass({
         <div className="kbc-inner-padding">
           {this.renderCreateBucketModal()}
 
-          <SearchBar query={this.state.searchQuery} onChange={this.handleQueryChange} />
-
-          <h3>
-            {this.renderBucketsButtons()}
-            Buckets
-          </h3>
+          <SearchBar
+            placeholder="Search bucket"
+            query={this.state.searchQuery}
+            onChange={this.handleQueryChange}
+            additionalActions={this.renderBucketsButtons()}
+          />
         </div>
 
         <BucketsList buckets={this.filteredBuckets()} tables={this.state.allTables} />
@@ -53,20 +53,18 @@ export default React.createClass({
 
   renderBucketsButtons() {
     return (
-      <div className="pull-right">
-        <ButtonGroup bsSize="small">
-          <Tooltip tooltip="Create new bucket" placement="top">
-            <Button onClick={this.openCreateBucketModal}>
-              <i className="fa fa-plus" />
-            </Button>
-          </Tooltip>
-          <Tooltip tooltip="Refresh buckets" placement="top">
-            <Button onClick={this.handleRefresh}>
-              <RefreshIcon isLoading={this.state.isLoading} title="" />
-            </Button>
-          </Tooltip>
-        </ButtonGroup>
-      </div>
+      <ButtonGroup>
+        <Tooltip tooltip="Create new bucket" placement="top">
+          <Button onClick={this.openCreateBucketModal}>
+            <i className="fa fa-plus" />
+          </Button>
+        </Tooltip>
+        <Tooltip tooltip="Refresh buckets" placement="top">
+          <Button onClick={this.handleRefresh}>
+            <RefreshIcon isLoading={this.state.isLoading} title="" />
+          </Button>
+        </Tooltip>
+      </ButtonGroup>
     );
   },
 
