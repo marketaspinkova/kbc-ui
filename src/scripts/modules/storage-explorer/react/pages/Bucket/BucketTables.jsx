@@ -46,13 +46,15 @@ export default React.createClass({
                   <span>Create table</span>
                 )}
               </Button>
-              <Button
-                bsStyle="success"
-                onClick={this.openCreateAliasTableModal}
-                disabled={this.props.isCreatingAliasTable}
-              >
-                Create table alias
-              </Button>
+              {this.canCreateAliasTable() && (
+                <Button
+                  bsStyle="success"
+                  onClick={this.openCreateAliasTableModal}
+                  disabled={this.props.isCreatingAliasTable}
+                >
+                  Create table alias
+                </Button>
+              )}
             </ButtonGroup>
           </div>
         </div>
@@ -75,7 +77,7 @@ export default React.createClass({
         )}
 
         {this.renderCreateTableModal()}
-        {this.renderCreateAliasTableModal()}
+        {this.canCreateAliasTable() && this.renderCreateAliasTableModal()}
       </div>
     );
   },
