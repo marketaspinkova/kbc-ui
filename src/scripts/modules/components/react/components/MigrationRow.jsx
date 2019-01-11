@@ -14,6 +14,7 @@ import DockerActionFn from '../../DockerActionsApi';
 import date from '../../../../utils/date';
 import JobStatusLabel from '../../../../react/common/JobStatusLabel';
 import Tooltip from '../../../../react/common/Tooltip';
+import ComponentsStore from '../../stores/ComponentsStore';
 import InstalledComponentsStore from '../../stores/InstalledComponentsStore';
 import ComponentConfigurationLink from './ComponentConfigurationLink';
 import ComponentEmptyState from '../../../components/react/components/ComponentEmptyState';
@@ -233,11 +234,7 @@ export default React.createClass({
       <AlertBlock type="warning" title="This component has been deprecated">
         <Row>
           <Col md={9}>
-            <span>
-              <p>
-                {this.getInfo()}
-              </p>
-            </span>
+            {this.getInfo()}
             {this.renderMigrationButton()}
           </Col>
         </Row>
@@ -246,14 +243,31 @@ export default React.createClass({
   },
 
   getInfo() {
-    const replacementApp = this.props.replacementAppId;
+    let replacedApp = this.props.componentId;
+    let replacementApp = this.props.replacementAppId;
+
     if (descriptionsMap.has(this.props.componentId)) {
       return descriptionsMap.get(this.props.componentId);
     }
-    if (replacementApp) {
-      return `Migration process will migrate all configurations of ${this.props.componentId} to new configurations of ${replacementApp} component within this project. Any encrypted values or authorized accounts will not be migrated and have to be entered/authorized manually again. Beside that all orchestration tasks of the ${this.props.componentId} configurations will be replaced with configurations of the new ${replacementApp}`;
+
+    if (!replacementApp) {
+      return '';
     }
-    return '';
+
+    if (ComponentsStore.hasComponent(replacedApp) && ComponentsStore.hasComponent(replacementApp)) {
+      replacedApp = ComponentsStore.getComponent(replacedApp).get('name');
+      replacementApp = ComponentsStore.getComponent(replacementApp).get('name');
+    }
+
+    return (
+      <p>
+        {'Migration process will migrate all configurations of '}<b>{replacedApp}</b>{' to new '}
+        {'configurations of '}<b>{replacementApp}</b>{' component within this project. Any encrypted '}
+        {'values or authorized accounts will not be migrated and have to be entered/authorized manually '}
+        {'again. Beside that all orchestration tasks of the '}<b>{replacedApp}</b>{' configurations will '}
+        {'be replaced with configurations of the new '}<b>{replacementApp}</b>{'.'}
+      </p>
+    );
   },
 
   renderModal(title, body, footer, props) {
