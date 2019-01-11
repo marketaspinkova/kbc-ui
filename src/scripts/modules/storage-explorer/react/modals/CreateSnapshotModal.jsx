@@ -36,7 +36,7 @@ export default React.createClass({
               </Col>
               <Col sm={9}>
                 <FormControl
-                  type="text"
+                  componentClass="textarea"
                   value={this.state.description}
                   onChange={this.handleDescription}
                   autoFocus
