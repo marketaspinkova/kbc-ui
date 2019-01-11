@@ -246,8 +246,8 @@ export default React.createClass({
     let replacedApp = this.props.componentId;
     let replacementApp = this.props.replacementAppId;
 
-    if (descriptionsMap.has(this.props.componentId)) {
-      return descriptionsMap.get(this.props.componentId);
+    if (descriptionsMap.has(replacedApp)) {
+      return descriptionsMap.get(replacedApp);
     }
 
     if (!replacementApp) {
