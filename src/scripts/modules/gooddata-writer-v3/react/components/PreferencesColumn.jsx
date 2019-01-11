@@ -38,20 +38,20 @@ export default React.createClass({
          )}
         {fields.dateDimension.show &&
          this.renderSelectGroup(
-           'Date Dimensions',
+           'Date Dimension',
            'dateDimension',
            this.props.context.dimensions
          )}
         {fields.format.show && this.renderInputGroupWithAddon('Date format', 'format', <DateFormatHint />)}
         {fields.schemaReference.show &&
          this.renderSelectGroup(
-           'Reference',
+           'Source Connection Point',
            'schemaReference',
            this.props.context.referencableTables
          )}
         {fields.reference.show &&
          this.renderSelectGroup(
-           'Reference',
+           this.referenceLabel(column),
            'reference',
            this.props.context.referencableColumns
          )}
@@ -83,7 +83,7 @@ export default React.createClass({
     return (
       <FormGroup  bsSize="small" className="col-sm-12">
         <Col sm={4} componentClass={ControlLabel}>
-          <span className="pull-right">{label}</span>
+          <span className="pull-right text-right">{label}</span>
         </Col>
         <Col sm={8}>
           {
@@ -173,5 +173,17 @@ export default React.createClass({
       .updateColumn(property, value)
       .column;
     this.props.onChange(newColumn);
+  },
+
+  referenceLabel(column) {
+    if (column.type === Types.LABEL) {
+      return 'Source Attribute';
+    }
+
+    if (column.type === Types.HYPERLINK) {
+      return 'Display Label Attribute';
+    }
+
+    return 'Reference';
   }
 });
