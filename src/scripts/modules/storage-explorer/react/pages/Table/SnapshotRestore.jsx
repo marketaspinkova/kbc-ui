@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Map, fromJS } from 'immutable';
-import { Well, Table, Button } from 'react-bootstrap';
+import { Well, Table, Button, Row } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 
 import CreatedWithIcon from '../../../../../react/common/CreatedWithIcon';
@@ -135,7 +135,7 @@ export default React.createClass({
     }
 
     return (
-      <div>
+      <Row>
         <Table responsive striped>
           <thead>
             <tr>
@@ -191,7 +191,7 @@ export default React.createClass({
 
         {this.renderCreateTableFromSnapshotModal()}
         {this.renderDeleteSnapshotModal()}
-      </div>
+      </Row>
     );
   },
 

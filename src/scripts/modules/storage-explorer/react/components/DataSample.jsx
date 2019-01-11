@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Alert, Form, FormGroup, FormControl, Col, ButtonGroup, Button, Table } from 'react-bootstrap';
+import { Alert, Form, FormGroup, FormControl, Col, ButtonGroup, Button, Table, Row } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 import Select from 'react-select';
 import StorageTableDataPreviewItem from '../../../../react/common/StorageTableDataPreviewItem';
@@ -89,28 +89,30 @@ export default React.createClass({
     }
 
     return (
-      <Table responsive striped hover>
-        <thead>
-          <tr>
-            {this.state.data.columns.map((header, index) => (
-              <th key={index}>
-                <strong>{header}</strong>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {this.state.data.rows.map((row, rowIndex) => (
-            <tr key={rowIndex}>
-              {row.map((column, columnIndex) => (
-                <td key={`${rowIndex}-${columnIndex}`}>
-                  <StorageTableDataPreviewItem item={column} />
-                </td>
+      <Row>
+        <Table responsive striped hover>
+          <thead>
+            <tr>
+              {this.state.data.columns.map((header, index) => (
+                <th key={index}>
+                  <strong>{header}</strong>
+                </th>
               ))}
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {this.state.data.rows.map((row, rowIndex) => (
+              <tr key={rowIndex}>
+                {row.map((column, columnIndex) => (
+                  <td key={`${rowIndex}-${columnIndex}`}>
+                    <StorageTableDataPreviewItem item={column} />
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </Row>
     );
   },
 

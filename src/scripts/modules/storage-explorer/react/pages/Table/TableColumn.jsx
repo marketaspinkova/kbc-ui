@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button, Row } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 
 import Tooltip from '../../../../../react/common/Tooltip';
@@ -42,14 +42,16 @@ export default React.createClass({
           Columns
         </h2>
 
-        <Table responsive striped>
-          <tbody>
-            {this.props.table
-              .get('columns')
-              .map(this.renderColumn)
-              .toArray()}
-          </tbody>
-        </Table>
+        <Row>
+          <Table responsive striped>
+            <tbody>
+              {this.props.table
+                .get('columns')
+                .map(this.renderColumn)
+                .toArray()}
+            </tbody>
+          </Table>
+        </Row>
 
         {this.renderCreateColumnModal()}
         {this.renderDeleteColumnModal()}
