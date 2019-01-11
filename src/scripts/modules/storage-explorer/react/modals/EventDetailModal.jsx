@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Table, Button, Modal, Alert } from 'react-bootstrap';
+import { Table, Button, Modal, Alert, Row } from 'react-bootstrap';
 import { ExternalLink, Tree } from '@keboola/indigo-ui';
 import { format } from '../../../../utils/date';
 import FileLink from '../../../sapi-events/react/FileLink';
@@ -39,30 +39,33 @@ export default React.createClass({
 
   renderDetail() {
     return (
-      <Table responsive striped>
-        <tbody>
-          <tr>
-            <td>ID</td>
-            <td>{this.props.event.get('id')}</td>
-          </tr>
-          <tr>
-            <td>Created</td>
-            <td>{format(this.props.event.get('created'))}</td>
-          </tr>
-          <tr>
-            <td>Component</td>
-            <td>{this.props.event.get('component')}</td>
-          </tr>
-          <tr>
-            <td>Configuration ID</td>
-            <td>{this.props.event.get('configurationId') || 'N/A'}</td>
-          </tr>
-          <tr>
-            <td>Run ID</td>
-            <td>{this.props.event.get('runId') || 'N/A'}</td>
-          </tr>
-        </tbody>
-      </Table>
+      <Row>
+
+        <Table responsive striped>
+          <tbody>
+            <tr>
+              <td>ID</td>
+              <td>{this.props.event.get('id')}</td>
+            </tr>
+            <tr>
+              <td>Created</td>
+              <td>{format(this.props.event.get('created'))}</td>
+            </tr>
+            <tr>
+              <td>Component</td>
+              <td>{this.props.event.get('component')}</td>
+            </tr>
+            <tr>
+              <td>Configuration ID</td>
+              <td>{this.props.event.get('configurationId') || 'N/A'}</td>
+            </tr>
+            <tr>
+              <td>Run ID</td>
+              <td>{this.props.event.get('runId') || 'N/A'}</td>
+            </tr>
+          </tbody>
+        </Table>
+      </Row>
     );
   },
 
