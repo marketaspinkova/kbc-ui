@@ -1,3 +1,4 @@
+import { Map } from 'immutable';
 import Index from './react/pages/Index/Index';
 import Files from './react/pages/Files/Files';
 import Jobs from './react/pages/Jobs/Jobs';
@@ -49,8 +50,8 @@ export default {
             const tableName = routerState.getIn(['params', 'tableName']);
             const table = TablesStore.getAll().find(item => {
               return item.getIn(['bucket', 'id']) === bucketId && item.get('name') === tableName;
-            });
-            return table.get('name');
+            }, null, Map());
+            return table.get('name', tableName);
           }
         }
       ]
