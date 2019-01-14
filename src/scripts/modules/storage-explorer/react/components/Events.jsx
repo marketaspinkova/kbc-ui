@@ -24,6 +24,7 @@ export default React.createClass({
     return {
       events: List(),
       isLoadingMore: false,
+      isRefreshing: false,
       isLoading: false,
       hasMore: true,
       searchQuery: ''
@@ -58,7 +59,7 @@ export default React.createClass({
           />
         </div>
         <Row>
-          <EventsTable events={this.state.events} />
+          <EventsTable events={this.state.events} isSearching={this.isSearching()} />
         </Row>
         {this.renderMoreButton()}
       </div>
@@ -66,7 +67,7 @@ export default React.createClass({
   },
 
   renderMoreButton() {
-    if (this.state.isLoading || !this.state.events || !this.state.hasMore) {
+    if (!this.state.events.count() || !this.state.hasMore || this.isSearching()) {
       return null;
     }
 
@@ -90,10 +91,13 @@ export default React.createClass({
   },
 
   handleChange() {
+    const isLoading = this._events.getIsLoading();
+
     this.setState({
       searchQuery: this._events.getQuery(),
       events: this._events.getEvents(),
-      isLoading: this._events.getIsLoading(),
+      isRefreshing: isLoading && this.state.isRefreshing,
+      isLoading,
       isLoadingMore: this._events.getIsLoadingOlder(),
       hasMore: this._events.getHasMore(),
       errorMessage: this._events.getErrorMessage()
@@ -101,7 +105,9 @@ export default React.createClass({
   },
 
   handleRefresh() {
-    this._events.load();
+    this.setState({ isRefreshing: true }, () => {
+      this._events.load();
+    });
   },
 
   handleLoadMore() {
@@ -117,5 +123,9 @@ export default React.createClass({
   handleSearchSubmit() {
     this._events.setQuery(this.state.searchQuery);
     this._events.load();
+  },
+
+  isSearching() {
+    return this.state.isLoading && !this.state.isRefreshing;
   }
 });
