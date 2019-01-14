@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button, Row } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 
 import CreatedWithIcon from '../../../../../react/common/CreatedWithIcon';
@@ -39,100 +39,102 @@ export default React.createClass({
       <div>
         {this.renderDescription()}
 
-        <Table responsive striped>
-          <tbody>
-            <tr>
-              <td>ID</td>
-              <td>{table.get('id')}</td>
-            </tr>
-            <tr>
-              <td>Created</td>
-              <td>
-                <CreatedWithIcon createdTime={table.get('created')} />
-              </td>
-            </tr>
-            <tr>
-              <td>Primary key</td>
-              <td>
-                {this.renderPrimaryKeyInfo(table)}{' '}
-                {!table.get('isAlias') && table.get('primaryKey').count() > 0 && (
-                  <Tooltip tooltip="Remove table primary key" placement="top">
-                    <Button
-                      bsSize="small"
-                      onClick={this.openRemovePrimaryKeyModal}
-                      disabled={this.props.deletingPrimaryKey}
-                    >
-                      {this.props.deletingPrimaryKey ? <Loader /> : <i className="fa fa-trash-o" />}
-                    </Button>
-                  </Tooltip>
-                )}
-                {!table.get('isAlias') && !table.get('primaryKey').count() > 0 && (
-                  <Tooltip tooltip="Create table primary key" placement="top">
-                    <Button
-                      bsSize="small"
-                      onClick={this.openCreatePrimaryKeyModal}
-                      disabled={this.props.creatingPrimaryKey}
-                    >
-                      {this.props.creatingPrimaryKey ? <Loader /> : <i className="fa fa-pencil-square-o" />}
-                    </Button>
-                  </Tooltip>
-                )}
-              </td>
-            </tr>
-            {table.get('sourceTable') && (
+        <Row>
+          <Table responsive striped>
+            <tbody>
               <tr>
-                <td>Source table</td>
-                <td>{this.renderSourceTable()}</td>
+                <td>ID</td>
+                <td>{table.get('id')}</td>
               </tr>
-            )}
-            {(this.props.tableAliases.length > 0 || this.props.tableLinks.length > 0) && (
               <tr>
-                <td>Table aliases</td>
-                <td>{this.renderTableAliases()}</td>
+                <td>Created</td>
+                <td>
+                  <CreatedWithIcon createdTime={table.get('created')} />
+                </td>
               </tr>
-            )}
-            {table.get('isAlias') && !table.get('selectSql') && (
               <tr>
-                <td>Alias filter</td>
-                <td />
+                <td>Primary key</td>
+                <td>
+                  {this.renderPrimaryKeyInfo(table)}{' '}
+                  {!table.get('isAlias') && table.get('primaryKey').count() > 0 && (
+                    <Tooltip tooltip="Remove table primary key" placement="top">
+                      <Button
+                        bsSize="small"
+                        onClick={this.openRemovePrimaryKeyModal}
+                        disabled={this.props.deletingPrimaryKey}
+                      >
+                        {this.props.deletingPrimaryKey ? <Loader /> : <i className="fa fa-trash-o" />}
+                      </Button>
+                    </Tooltip>
+                  )}
+                  {!table.get('isAlias') && !table.get('primaryKey').count() > 0 && (
+                    <Tooltip tooltip="Create table primary key" placement="top">
+                      <Button
+                        bsSize="small"
+                        onClick={this.openCreatePrimaryKeyModal}
+                        disabled={this.props.creatingPrimaryKey}
+                      >
+                        {this.props.creatingPrimaryKey ? <Loader /> : <i className="fa fa-pencil-square-o" />}
+                      </Button>
+                    </Tooltip>
+                  )}
+                </td>
               </tr>
-            )}
-            <tr>
-              <td>Last import</td>
-              <td>
-                {table.get('lastImportDate') ? (
-                  <CreatedWithIcon createdTime={table.get('lastImportDate')} />
-                ) : (
-                  'Not yet imported'
-                )}
-              </td>
-            </tr>
-            <tr>
-              <td>Last change</td>
-              <td>
-                <CreatedWithIcon createdTime={table.get('lastChangeDate')} />
-              </td>
-            </tr>
-            <tr>
-              <td>Rows count</td>
-              <td>
-                {table.get('rowsCount')}{' '}
-                {table.getIn(['bucket', 'backend']) === 'mysql' && (
-                  <Hint title="Rows count">Number of rows is only an estimate.</Hint>
-                )}
-              </td>
-            </tr>
-            <tr>
-              <td>Data size</td>
-              <td>
-                <FileSize size={table.get('dataSizeBytes')} />{' '}
-                {table.getIn(['bucket', 'backend']) === 'mysql' && (
-                  <Hint title="Data size">Data size is only an estimate.</Hint>
-                )}
-              </td>
-            </tr>
-          </tbody>
-        </Table>
+              {table.get('sourceTable') && (
+                <tr>
+                  <td>Source table</td>
+                  <td>{this.renderSourceTable()}</td>
+                </tr>
+              )}
+              {(this.props.tableAliases.length > 0 || this.props.tableLinks.length > 0) && (
+                <tr>
+                  <td>Table aliases</td>
+                  <td>{this.renderTableAliases()}</td>
+                </tr>
+              )}
+              {table.get('isAlias') && !table.get('selectSql') && (
+                <tr>
+                  <td>Alias filter</td>
+                  <td />
+                </tr>
+              )}
+              <tr>
+                <td>Last import</td>
+                <td>
+                  {table.get('lastImportDate') ? (
+                    <CreatedWithIcon createdTime={table.get('lastImportDate')} />
+                  ) : (
+                    'Not yet imported'
+                  )}
+                </td>
+              </tr>
+              <tr>
+                <td>Last change</td>
+                <td>
+                  <CreatedWithIcon createdTime={table.get('lastChangeDate')} />
+                </td>
+              </tr>
+              <tr>
+                <td>Rows count</td>
+                <td>
+                  {table.get('rowsCount')}{' '}
+                  {table.getIn(['bucket', 'backend']) === 'mysql' && (
+                    <Hint title="Rows count">Number of rows is only an estimate.</Hint>
+                  )}
+                </td>
+              </tr>
+              <tr>
+                <td>Data size</td>
+                <td>
+                  <FileSize size={table.get('dataSizeBytes')} />{' '}
+                  {table.getIn(['bucket', 'backend']) === 'mysql' && (
+                    <Hint title="Data size">Data size is only an estimate.</Hint>
+                  )}
+                </td>
+              </tr>
+            </tbody>
+          </Table>
+        </Row>
 
         {this.renderCreatePrimaryKeyModal()}
         {this.renderRemovePrimaryKeyModal()}

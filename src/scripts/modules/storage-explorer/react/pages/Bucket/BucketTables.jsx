@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import classnames from 'classnames';
-import { Table, ButtonGroup, Button } from 'react-bootstrap';
+import { Table, ButtonGroup, Button, Row } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 import CreatedWithIcon from '../../../../../react/common/CreatedWithIcon';
 import FileSize from '../../../../../react/common/FileSize';
@@ -60,18 +60,20 @@ export default React.createClass({
         </div>
 
         {this.props.tables.count() > 0 ? (
-          <Table responsive striped hover>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Rows count</th>
-                <th>Data size</th>
-                <th>Created</th>
-                <th>Last change</th>
-              </tr>
-            </thead>
-            <tbody>{this.props.tables.map(this.renderTableRow).toArray()}</tbody>
-          </Table>
+          <Row>
+            <Table responsive striped hover>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Rows count</th>
+                  <th>Data size</th>
+                  <th>Created</th>
+                  <th>Last change</th>
+                </tr>
+              </thead>
+              <tbody>{this.props.tables.map(this.renderTableRow).toArray()}</tbody>
+            </Table>
+          </Row>
         ) : (
           <p>No tables.</p>
         )}

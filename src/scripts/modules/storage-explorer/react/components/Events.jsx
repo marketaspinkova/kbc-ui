@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { List } from 'immutable';
-import { Button } from 'react-bootstrap';
+import { Button, Row } from 'react-bootstrap';
 import { RefreshIcon, SearchBar } from '@keboola/indigo-ui';
 import { factory as defaultEventsFactory } from '../../../sapi-events/EventsService';
 import Tooltip from '../../../../react/common/Tooltip';
@@ -42,20 +42,24 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <SearchBar
-          placeholder="Search event"
-          query={this.state.searchQuery}
-          onChange={this.handleQueryChange}
-          onSubmit={this.handleSearchSubmit}
-          additionalActions={
-            <Tooltip tooltip="Refresh events" placement="top">
-              <Button onClick={this.handleRefresh}>
-                <RefreshIcon isLoading={this.state.isLoading} title="" />
-              </Button>
-            </Tooltip>
-          }
-        />
-        <EventsTable events={this.state.events} />
+        <div style={{margin: '1em 1em 1em 0'}}>
+          <SearchBar
+            placeholder="Search event"
+            query={this.state.searchQuery}
+            onChange={this.handleQueryChange}
+            onSubmit={this.handleSearchSubmit}
+            additionalActions={
+              <Tooltip tooltip="Refresh events" placement="top">
+                <Button onClick={this.handleRefresh}>
+                  <RefreshIcon isLoading={this.state.isLoading} title="" />
+                </Button>
+              </Tooltip>
+            }
+          />
+        </div>
+        <Row>
+          <EventsTable events={this.state.events} />
+        </Row>
         {this.renderMoreButton()}
       </div>
     );
