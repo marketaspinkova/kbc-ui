@@ -7,10 +7,7 @@ import callDockerAction from '../components/DockerActionsApi';
 
 import getDefaultPort from './templates/defaultPorts';
 import {getProtectedProperties} from './templates/credentials';
-import {
-  incrementalFetchingTimestampTypes,
-  incrementalFetchingAutoIncrementProperty
-} from './templates/incrementalFetchingCandidates';
+import {incrementalFetchingTypes} from './templates/incrementalFetchingCandidates';
 
 export function loadConfiguration(componentId, configId) {
   return componentsActions.loadComponentConfigData(componentId, configId);
@@ -148,11 +145,10 @@ export function createActions(componentId) {
   }
 
   function getIncrementalCandidates(sourceTables) {
-    const autoincProperty = incrementalFetchingAutoIncrementProperty.get(componentId);
-    const timestampTypes = incrementalFetchingTimestampTypes.get(componentId);
+    const allowedTypes = incrementalFetchingTypes.get(componentId);
     return sourceTables.reduce((memo, table) => {
       const qualifyingColumns = table.get('columns', List()).filter((column) => {
-        if (column.has(autoincProperty) || timestampTypes.includes(column.get('type'))) {
+        if (allowedTypes.includes(column.get('type'))) {
           return column;
         }
       });
