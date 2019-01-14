@@ -606,7 +606,7 @@ export default React.createClass({
         <div className="form-group">
           <div className="col-md-8 col-md-offset-3 help-block">
             Incremental fetching is available for this extractor
-            but only for tables containing an auto incrementing primary key or a timestamp column.
+            but only for tables containing numeric or timestamp/datetime columns.
           </div>
         </div>
       );
