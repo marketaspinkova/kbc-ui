@@ -6,7 +6,6 @@ import Bucket from './react/pages/Bucket/Bucket';
 import FilesReloaderButton from './react/components/FilesReloaderButton';
 import JobsReloaderButton from './react/components/JobsReloaderButton';
 import StorageActions from '../components/StorageActionCreators';
-import TablesStore from '../components/stores/StorageTablesStore';
 import { filesLimit } from './Constants';
 import { jobsLimit } from './Constants';
 
@@ -45,12 +44,7 @@ export default {
           path: ':tableName',
           defaultRouteHandler: Table,
           title(routerState) {
-            const bucketId = routerState.getIn(['params', 'bucketId']);
-            const tableName = routerState.getIn(['params', 'tableName']);
-            const table = TablesStore.getAll().find(item => {
-              return item.getIn(['bucket', 'id']) === bucketId && item.get('name') === tableName;
-            });
-            return table.get('name');
+            return routerState.getIn(['params', 'tableName']);
           }
         }
       ]

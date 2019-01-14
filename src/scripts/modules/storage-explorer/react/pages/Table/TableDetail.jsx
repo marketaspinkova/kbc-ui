@@ -1,4 +1,5 @@
 import React from 'react';
+import { Map } from 'immutable';
 import { Tab, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 
@@ -34,7 +35,7 @@ export default React.createClass({
     const tableName = RoutesStore.getCurrentRouteParam('tableName');
     const table = TablesStore.getAll().find(item => {
       return item.getIn(['bucket', 'id']) === bucketId && item.get('name') === tableName;
-    });
+    }, null, Map());
 
     return {
       table,
@@ -68,7 +69,7 @@ export default React.createClass({
   },
 
   render() {
-    if (!this.state.table) {
+    if (!this.state.table.count()) {
       return (
         <div className="kbc-inner-padding">
           <p>Table not found</p>
