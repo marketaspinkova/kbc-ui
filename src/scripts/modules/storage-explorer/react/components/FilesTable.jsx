@@ -16,6 +16,7 @@ export default React.createClass({
 
   propTypes: {
     files: PropTypes.object.isRequired,
+    onSearchById: PropTypes.func.isRequired,
     onSearchByTag: PropTypes.func.isRequired,
     onDeleteFile: PropTypes.func.isRequired,
     isDeleting: PropTypes.object.isRequired
@@ -62,7 +63,11 @@ export default React.createClass({
   renderRow(file) {
     return (
       <tr key={file.get('id')}>
-        <td>{file.get('id')}</td>
+        <td>
+          <span className="kbc-sapi-table-link" onClick={() => this.props.onSearchById(file.get('id'))}>
+            {file.get('id')}
+          </span>
+        </td>
         <td>{format(file.get('created'), 'YYYY-MM-DD HH:mm')}</td>
         <td>
           <FileLink file={file} showFilesize={false} />

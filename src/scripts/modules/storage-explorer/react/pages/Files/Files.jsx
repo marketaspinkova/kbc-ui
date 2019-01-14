@@ -64,6 +64,7 @@ export default React.createClass({
             <div>
               <FilesTable
                 files={this.state.files}
+                onSearchById={this.searchById}
                 onSearchByTag={this.searchByTag}
                 onDeleteFile={this.handleDeleteFile}
                 isDeleting={this.state.isDeleting}
@@ -125,6 +126,11 @@ export default React.createClass({
 
   searchByTag(tag) {
     updateSearchQuery(`tags:${tag}`);
+    setTimeout(this.fetchFiles, 50);
+  },
+
+  searchById(id) {
+    updateSearchQuery(`id:${id}`);
     setTimeout(this.fetchFiles, 50);
   },
 
