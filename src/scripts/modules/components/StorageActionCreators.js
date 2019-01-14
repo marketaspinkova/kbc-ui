@@ -191,10 +191,11 @@ module.exports = {
         });
         throw response.error.message;
       }
-      return dispatcher.handleViewAction({
+      dispatcher.handleViewAction({
         type: constants.ActionTypes.STORAGE_BUCKET_CREATE_SUCCESS,
         bucket: response
       });
+      return response;
     })
       .catch(function(error) {
         var message;

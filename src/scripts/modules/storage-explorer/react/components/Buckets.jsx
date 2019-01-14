@@ -11,6 +11,7 @@ import TablesStore from '../../../components/stores/StorageTablesStore';
 import StorageActionCreators from '../../../components/StorageActionCreators';
 import CreateBucketModal from '../modals/CreateBucketModal';
 import BucketsList from './BucketsList';
+import { navigateToBucketDetail } from '../../Actions';
 
 export default React.createClass({
   mixins: [ImmutableRenderMixin, createStoreMixin(BucketsStore, TablesStore, ApplicationStore)],
@@ -96,7 +97,9 @@ export default React.createClass({
   },
 
   handleCreateBucket(newBucket) {
-    return StorageActionCreators.createBucket(newBucket);
+    return StorageActionCreators.createBucket(newBucket).then(bucket => {
+      navigateToBucketDetail(bucket.id);
+    });
   },
 
   handleQueryChange(query) {
