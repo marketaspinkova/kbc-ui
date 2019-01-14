@@ -62,16 +62,8 @@ const addTableColumn = (tableId, params) => {
 const dataPreview = (tableId, params) => {
   return StorageApi
     .tableDataJsonPreview(tableId, { limit: 20, ...params })
-    .catch(error => {
-      if (!error.response || !error.response.body) {
-        throw new Error(JSON.stringify(error));
-      }
-
-      if (error.response.body.code === 'storage.maxNumberOfColumnsExceed') {
-        return 'Data sample cannot be displayed. Too many columns.';
-      }
-
-      return error.response.body.message;
+    .catch(HttpError, (error) => {
+      throw error.message;
     });
 };
 

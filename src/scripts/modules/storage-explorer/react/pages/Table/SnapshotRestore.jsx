@@ -50,6 +50,10 @@ export default React.createClass({
     }
   },
 
+  componentWillUnmount() {
+    this.fetchingPromise && this.fetchingPromise.cancel();
+  },
+
   render() {
     return (
       <div>
@@ -174,11 +178,7 @@ export default React.createClass({
                       </Button>
                     </Tooltip>
                     <Tooltip tooltip="Delete snapshot" placement="top">
-                      <Button
-                        bsStyle="link"
-                        onClick={() => this.openRemoveSnapshotModal(snapshot)}
-                        disabled={deleting}
-                      >
+                      <Button bsStyle="link" onClick={() => this.openRemoveSnapshotModal(snapshot)} disabled={deleting}>
                         {deleting ? <Loader /> : <i className="fa fa-trash-o" />}
                       </Button>
                     </Tooltip>
@@ -344,16 +344,14 @@ export default React.createClass({
     };
 
     this.setState({ loading: true });
-    StorageApi.loadTableSnapshots(tableId, params)
+    this.fetchingPromise = StorageApi.loadTableSnapshots(tableId, params)
       .then(data => {
         this.setState({
+          loading: false,
           hasMore: data.length > this.state.pagingCount,
           snapshots: fromJS(refetch ? data : this.state.snapshots.toArray().concat(data)),
           offset: this.state.pagingCount + 1
         });
-      })
-      .finally(() => {
-        this.setState({ loading: false });
       });
   },
 
