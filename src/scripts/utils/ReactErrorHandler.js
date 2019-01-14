@@ -26,6 +26,15 @@ function logError(Component, error) {
   const errorMsg = `Error. Check render() method of component '${Component.displayName || Component.name || '[unidentified]'}'.`;
 
   console.error(errorMsg, 'Error details:', error); // eslint-disable-line
+
+  /* global Raven */
+  if (!process.env.__DEV__ && typeof Raven !== 'undefined' && typeof Raven.captureException === 'function') {
+    Raven.captureException(new Error(errorMsg), {
+      extra: {
+        errorStack: error.stack
+      }
+    });
+  }
 }
 
 function monkeypatchRender(prototype) {
