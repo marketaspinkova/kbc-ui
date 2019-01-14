@@ -124,7 +124,7 @@ Dispatcher.register(function(payload) {
 
     case constants.ActionTypes.STORAGE_TABLE_CREATE_SUCCESS:
     case constants.ActionTypes.STORAGE_TABLE_CREATE_ERROR:
-      _store = _store.deleteIn(['pendingTables', 'creating'], false);
+      _store = _store.deleteIn(['pendingTables', 'creating']);
       return StorageTablesStore.emitChange();
 
     case constants.ActionTypes.STORAGE_TRUNCATE_TABLE:
