@@ -1,3 +1,10 @@
+import Promise from 'bluebird';
+import {List, Map, fromJS} from 'immutable';
+import * as columnsMetadata from './columnsMetadata';
+import InstalledComponentsActions from '../../components/InstalledComponentsActionCreators';
+import InstalledComponentsStore from '../../components/stores/InstalledComponentsStore';
+
+const tablesPath = ['storage', 'input', 'tables'];
 const dockerComponents = [
   'wr-db-mssql',
   'keboola.wr-db-mssql-v2',
@@ -11,18 +18,10 @@ const dockerComponents = [
   'keboola.wr-looker',
   'keboola.wr-thoughtspot'
 ];
-import {List, Map, fromJS} from 'immutable';
-import Promise from 'bluebird';
-
-import InstalledComponentsActions from '../../components/InstalledComponentsActionCreators';
-import InstalledComponentsStore from '../../components/stores/InstalledComponentsStore';
-
-import DataTypes from './dataTypes';
 
 function isDockerBasedWriter(componentId) {
   return dockerComponents.indexOf(componentId) >= 0;
 }
-const tablesPath = ['storage', 'input', 'tables'];
 
 function updateTablesMapping(data, table) {
   const tableId = table.get('tableId');
@@ -66,20 +65,6 @@ function generateInputMapping(paramsTables, inputMappingTables) {
 export default function(componentId) {
   if (!isDockerBasedWriter(componentId)) {
     return null;
-  }
-
-  function prepareColumnsDefaultTypes(tableColumns) {
-    const dataTypes = DataTypes[componentId] || {};
-    if (!dataTypes.default) return List();
-    const defaultType = fromJS(dataTypes.default);
-    return tableColumns.map((c) =>
-      Map({
-        'name': c,
-        'dbName': c,
-        'nullable': false,
-        'default': '',
-        'size': ''
-      }).merge(defaultType));
   }
 
   return {
@@ -231,13 +216,13 @@ export default function(componentId) {
     },
 
     // ######## POST TABLE
-    postTable(configId, tableId, table, tableColumns) {
+    postTable(configId, tableId, table, sapiTable) {
       const tableToSave = fromJS({
         dbName: table.dbName,
         export: table.export,
         tableId: tableId,
         items: []
-      }).set('items', prepareColumnsDefaultTypes(tableColumns));
+      }).set('items', columnsMetadata.prepareColumnsTypes(componentId, sapiTable));
 
       return this.loadConfigData(configId).then(
         (data) => {
