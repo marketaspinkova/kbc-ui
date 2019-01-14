@@ -58,7 +58,6 @@ export default React.createClass({
                 >
                   <option value="in">in</option>
                   <option value="out">out</option>
-                  <option value="sys">sys</option>
                 </FormControl>
               </Col>
             </FormGroup>
@@ -157,16 +156,11 @@ export default React.createClass({
       backend: this.state.backend || this.props.defaultBackend
     };
 
-    this.props.onSubmit(newBucket).then(
-      () => {
-        this.onHide();
-      },
-      message => {
-        this.setState({
-          error: message
-        });
-      }
-    );
+    this.props.onSubmit(newBucket).then(this.onHide, message => {
+      this.setState({
+        error: message
+      });
+    });
   },
 
   resetState() {
