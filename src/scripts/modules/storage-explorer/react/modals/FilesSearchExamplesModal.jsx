@@ -55,9 +55,9 @@ export default React.createClass({
             return (
               <Well bsSize="sm" key={index}>
                 <Label bsStyle="info">Search</Label>
-                <span className="btn-link-inline kbc-cursor-pointer" onClick={() => this.selectExample(example)}>
+                <Button bsStyle="link" className="btn-link-inline" onClick={() => this.selectExample(example)}>
                   {example.query}
-                </span>
+                </Button>
                 <br />
                 <Label bsStyle="warning">Shows</Label>
                 <span>{example.description}</span>
