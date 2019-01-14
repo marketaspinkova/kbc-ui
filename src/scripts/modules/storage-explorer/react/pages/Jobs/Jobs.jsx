@@ -7,6 +7,7 @@ import JobsStore from '../../../../components/stores/StorageJobsStore';
 import StorageActionCreators from '../../../../components/StorageActionCreators';
 import JobsTable from '../../components/JobsTable';
 import { jobsLimit } from '../../../Constants';
+import NavButtons from '../../components/NavButtons';
 
 export default React.createClass({
   mixins: [ImmutableRenderMixin, createStoreMixin(JobsStore)],
@@ -23,6 +24,7 @@ export default React.createClass({
     return (
       <div className="container-fluid">
         <div className="kbc-main-content">
+          <NavButtons />
           {this.state.jobs.count() === 0 ? (
             <p className="kbc-inner-padding">No jobs were uploaded yet.</p>
           ) : (

@@ -8,6 +8,7 @@ import FilesStore from '../../../../components/stores/StorageFilesStore';
 import FilesLocalStore from '../../../FilesLocalStore';
 import StorageActionCreators from '../../../../components/StorageActionCreators';
 import FilesTable from '../../components/FilesTable';
+import NavButtons from '../../components/NavButtons';
 import UploadModal from '../../modals/UploadModal';
 import { updateSearchQuery, resetSearchQuery } from '../../../Actions';
 import { filesLimit } from '../../../Constants';
@@ -42,6 +43,7 @@ export default React.createClass({
     return (
       <div className="container-fluid">
         <div className="kbc-main-content">
+          <NavButtons />
           <div className="kbc-inner-padding">
             <SearchBar
               placeholder="Search: tags:tag"
