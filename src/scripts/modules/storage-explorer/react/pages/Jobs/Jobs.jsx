@@ -1,0 +1,66 @@
+import React from 'react';
+import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import { Button } from 'react-bootstrap';
+
+import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
+import JobsStore from '../../../../components/stores/StorageJobsStore';
+import StorageActionCreators from '../../../../components/StorageActionCreators';
+import JobsTable from '../../components/JobsTable';
+import { jobsLimit } from '../../../Constants';
+
+export default React.createClass({
+  mixins: [ImmutableRenderMixin, createStoreMixin(JobsStore)],
+
+  getStateFromStores() {
+    return {
+      jobs: JobsStore.getAll(),
+      hasMore: JobsStore.hasMore(),
+      isLoadingMore: JobsStore.getIsLoadingMore()
+    };
+  },
+
+  render() {
+    return (
+      <div className="container-fluid">
+        <div className="kbc-main-content">
+          {this.state.jobs.count() === 0 ? (
+            <p className="kbc-inner-padding">No jobs were uploaded yet.</p>
+          ) : (
+            <div>
+              <JobsTable jobs={this.state.jobs} />
+              {this.renderMoreButton()}
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  },
+
+  renderMoreButton() {
+    if (!this.state.jobs.count() || !this.state.hasMore) {
+      return null;
+    }
+
+    return (
+      <div className="kbc-block-with-padding">
+        <Button onClick={this.fetchMoreJobs} disabled={this.state.isLoadingMore}>
+          {this.state.isLoadingMore ? 'Loading ...' : 'Load more'}
+        </Button>
+      </div>
+    );
+  },
+
+  getParams(offset) {
+    const params = {
+      limit: jobsLimit,
+      offset
+    };
+
+    return params;
+  },
+
+  fetchMoreJobs() {
+    const offset = this.state.jobs.count();
+    return StorageActionCreators.loadMoreJobs(this.getParams(offset));
+  }
+});
