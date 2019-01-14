@@ -28,7 +28,7 @@ export default React.createClass({
     if (this.props.isSearching) {
       return (
         <p className="kbc-inner-padding">
-          <Loader /> loading events...
+          <Loader /> Loading events...
         </p>
       );
     }
