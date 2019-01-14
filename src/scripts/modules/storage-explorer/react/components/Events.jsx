@@ -42,21 +42,19 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <div className="kbc-inner-padding">
-          <SearchBar
-            placeholder="Search event"
-            query={this.state.searchQuery}
-            onChange={this.handleQueryChange}
-            onSubmit={this.handleSearchSubmit}
-            additionalActions={
-              <Tooltip tooltip="Refresh events" placement="top">
-                <Button onClick={this.handleRefresh}>
-                  <RefreshIcon isLoading={this.state.isLoading} title="" />
-                </Button>
-              </Tooltip>
-            }
-          />
-        </div>
+        <SearchBar
+          placeholder="Search event"
+          query={this.state.searchQuery}
+          onChange={this.handleQueryChange}
+          onSubmit={this.handleSearchSubmit}
+          additionalActions={
+            <Tooltip tooltip="Refresh events" placement="top">
+              <Button onClick={this.handleRefresh}>
+                <RefreshIcon isLoading={this.state.isLoading} title="" />
+              </Button>
+            </Tooltip>
+          }
+        />
         <EventsTable events={this.state.events} />
         {this.renderMoreButton()}
       </div>

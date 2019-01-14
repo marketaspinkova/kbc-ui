@@ -15,7 +15,7 @@ export default React.createClass({
 
   render() {
     return (
-      <ul className="nav nav-pills navbar-nav pull-right">
+      <ul className="nav nav-tabs">
         <li className={this.activeClass('buckets')}>
           <Link to="storage-explorer">Buckets</Link>
         </li>

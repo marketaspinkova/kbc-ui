@@ -34,18 +34,15 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="kbc-main-content">
-        <div className="kbc-inner-padding">
-          {this.renderCreateBucketModal()}
+      <div style={{padding: '1em 0 1em 1em'}}>
+        {this.renderCreateBucketModal()}
 
-          <SearchBar
-            placeholder="Search bucket"
-            query={this.state.searchQuery}
-            onChange={this.handleQueryChange}
-            additionalActions={this.renderBucketsButtons()}
-          />
-        </div>
-
+        <SearchBar
+          placeholder="Search bucket"
+          query={this.state.searchQuery}
+          onChange={this.handleQueryChange}
+          additionalActions={this.renderBucketsButtons()}
+        />
         <BucketsList buckets={this.filteredBuckets()} tables={this.state.allTables} />
       </div>
     );
