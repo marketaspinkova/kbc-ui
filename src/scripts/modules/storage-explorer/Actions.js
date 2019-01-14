@@ -62,7 +62,7 @@ const addTableColumn = (tableId, params) => {
 const dataPreview = (tableId, params) => {
   return StorageApi
     .tableDataJsonPreview(tableId, { limit: 20, ...params })
-    .catch(HttpError, (error) => {
+    .catch(HttpError, error => {
       throw error.message;
     });
 };
