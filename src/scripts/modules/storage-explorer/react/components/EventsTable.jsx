@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import ComponentsStore from '../../../components/stores/ComponentsStore';
 import { Table } from 'react-bootstrap';
+import { Loader } from '@keboola/indigo-ui';
 import { truncate } from 'underscore.string';
 import { format } from '../../../../utils/date';
 import ComponentName from '../../../../react/common/ComponentName';
@@ -12,7 +13,8 @@ export default React.createClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {
-    events: PropTypes.object.isRequired
+    events: PropTypes.object.isRequired,
+    isSearching: PropTypes.bool.isRequired
   },
 
   getInitialState() {
@@ -23,8 +25,16 @@ export default React.createClass({
   },
 
   render() {
+    if (this.props.isSearching) {
+      return (
+        <p className="kbc-inner-padding">
+          <Loader /> Loading events...
+        </p>
+      );
+    }
+
     if (!this.props.events.count()) {
-      return null;
+      return <p className="kbc-inner-padding">No events found.</p>;
     }
 
     return (
