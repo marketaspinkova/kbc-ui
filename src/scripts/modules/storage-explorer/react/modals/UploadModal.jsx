@@ -123,7 +123,6 @@ export default React.createClass({
           <Col sm={9}>
             <Select.Creatable
               multi
-              backspaceRemoves={false}
               deleteRemoves={false}
               placeholder="Enter tags"
               noResultsText=""
