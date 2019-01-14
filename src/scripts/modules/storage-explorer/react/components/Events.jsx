@@ -1,14 +1,24 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { List } from 'immutable';
 import { Button } from 'react-bootstrap';
 import { RefreshIcon, SearchBar } from '@keboola/indigo-ui';
-import { factory as eventsFactory } from '../../../sapi-events/EventsService';
+import { factory as defaultEventsFactory } from '../../../sapi-events/EventsService';
 import Tooltip from '../../../../react/common/Tooltip';
 import EventsTable from './EventsTable';
 
 export default React.createClass({
   mixins: [ImmutableRenderMixin],
+
+  propTypes: {
+    eventsFactory: PropTypes.object
+  },
+
+  getDefaultProps() {
+    return {
+      eventsFactory: defaultEventsFactory()
+    };
+  },
 
   getInitialState() {
     return {
@@ -54,7 +64,7 @@ export default React.createClass({
   },
 
   renderMoreButton() {
-    if (!this.state.events || !this.state.hasMore) {
+    if (this.state.isLoading || !this.state.events || !this.state.hasMore) {
       return null;
     }
 
@@ -68,7 +78,7 @@ export default React.createClass({
   },
 
   createEventsService() {
-    this._events = eventsFactory();
+    this._events = this.props.eventsFactory;
     this._events.addChangeListener(this.handleChange);
   },
 
@@ -78,16 +88,14 @@ export default React.createClass({
   },
 
   handleChange() {
-    if (this.isMounted()) {
-      this.setState({
-        searchQuery: this._events.getQuery(),
-        events: this._events.getEvents(),
-        isLoading: this._events.getIsLoading(),
-        isLoadingMore: this._events.getIsLoadingOlder(),
-        hasMore: this._events.getHasMore(),
-        errorMessage: this._events.getErrorMessage()
-      });
-    }
+    this.setState({
+      searchQuery: this._events.getQuery(),
+      events: this._events.getEvents(),
+      isLoading: this._events.getIsLoading(),
+      isLoadingMore: this._events.getIsLoadingOlder(),
+      hasMore: this._events.getHasMore(),
+      errorMessage: this._events.getErrorMessage()
+    });
   },
 
   handleRefresh() {
