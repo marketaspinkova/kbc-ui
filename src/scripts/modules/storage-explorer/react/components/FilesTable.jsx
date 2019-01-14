@@ -16,8 +16,7 @@ export default React.createClass({
 
   propTypes: {
     files: PropTypes.object.isRequired,
-    onSearchById: PropTypes.func.isRequired,
-    onSearchByTag: PropTypes.func.isRequired,
+    onSearchQuery: PropTypes.func.isRequired,
     onDeleteFile: PropTypes.func.isRequired,
     isDeleting: PropTypes.object.isRequired
   },
@@ -64,7 +63,7 @@ export default React.createClass({
     return (
       <tr key={file.get('id')}>
         <td>
-          <span className="kbc-sapi-table-link" onClick={() => this.props.onSearchById(file.get('id'))}>
+          <span className="kbc-sapi-table-link" onClick={() => this.props.onSearchQuery(`id:${file.get('id')}`)}>
             {file.get('id')}
           </span>
         </td>
@@ -92,7 +91,7 @@ export default React.createClass({
               key={index}
               className="kbc-cursor-pointer"
               bsStyle="success"
-              onClick={() => this.props.onSearchByTag(tag)}
+              onClick={() => this.props.onSearchQuery(`tags:${tag}`)}
             >
               {tag}
             </Label>
