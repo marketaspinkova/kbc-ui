@@ -54,12 +54,12 @@ export default React.createClass({
           {this.state.examples.map((example, index) => {
             return (
               <Well bsSize="sm" key={index}>
-                <Label bsStyle="info">Search:</Label>
-                <span className="kbc-sapi-table-link" onClick={() => this.selectExample(example)}>
+                <Label bsStyle="info">Search</Label>
+                <span className="btn-link-inline kbc-cursor-pointer" onClick={() => this.selectExample(example)}>
                   {example.query}
                 </span>
                 <br />
-                <Label bsStyle="warning">Shows:</Label>
+                <Label bsStyle="warning">Shows</Label>
                 <span>{example.description}</span>
               </Well>
             );
