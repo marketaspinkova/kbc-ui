@@ -1,11 +1,20 @@
 import React from 'react';
 import ClipboardButton from 'react-clipboard.js';
-import {Tooltip, OverlayTrigger} from 'react-bootstrap';
+import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 
 export default React.createClass({
   propTypes: {
     text: React.PropTypes.string,
-    label: React.PropTypes.string
+    label: React.PropTypes.string,
+    tooltipText: React.PropTypes.string,
+    tooltipPlacement: React.PropTypes.string
+  },
+
+  getDefaultProps() {
+    return {
+      tooltipText: 'Copy to clipboard',
+      tooltipPlacement: 'right'
+    };
   },
 
   getInitialState() {
@@ -18,20 +27,25 @@ export default React.createClass({
   render() {
     if (this.props.text && this.props.text !== '') {
       return (
-        <OverlayTrigger overlay={this.tooltip()} ref="overlay">
+        <OverlayTrigger placement={this.props.tooltipPlacement} overlay={this.tooltip()} ref="overlay">
           <span>
-            <ClipboardButton style={{cursor: 'pointer'}} component="span" data-clipboard-text={this.props.text}
-              onError={this.handleError} onSuccess={this.handleAfterCopy}>
-              <span className="fa fa-fw fa-copy"/> {this.props.label}
+            <ClipboardButton
+              component="span"
+              className="kbc-cursor-pointer"
+              data-clipboard-text={this.props.text}
+              onError={this.handleError}
+              onSuccess={this.handleAfterCopy}
+            >
+              <span className="fa fa-fw fa-copy" /> {this.props.label}
             </ClipboardButton>
           </span>
         </OverlayTrigger>
       );
     } else {
       return (
-        <OverlayTrigger overlay={this.tooltip()} ref="overlay">
+        <OverlayTrigger placement={this.props.tooltipPlacement} overlay={this.tooltip()} ref="overlay">
           <span>
-            <span className="fa fa-fw fa-copy"/> {this.props.label}
+            <span className="fa fa-fw fa-copy" /> {this.props.label}
           </span>
         </OverlayTrigger>
       );
@@ -39,14 +53,12 @@ export default React.createClass({
   },
 
   tooltip() {
-    return (
-      <Tooltip id="clipboardtooltip">{this.state.isError ? this.errorTooltip() : this.okTooltip()}</Tooltip>
-    );
+    return <Tooltip id="clipboardtooltip">{this.state.isError ? this.errorTooltip() : this.okTooltip()}</Tooltip>;
   },
 
   okTooltip() {
     if (this.props.text && this.props.text !== '') {
-      return this.state.isCopied ? 'Copied!' : 'Copy to clipboard';
+      return this.state.isCopied ? 'Copied!' : this.props.tooltipText;
     }
     return 'Nothing to copy';
   },
@@ -92,5 +104,4 @@ export default React.createClass({
       isError: false
     });
   }
-
 });

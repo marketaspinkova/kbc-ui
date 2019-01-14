@@ -4,30 +4,53 @@ import ModalHandler from '../sliced-files-downloader/ModalHandler';
 
 export default React.createClass({
   propTypes: {
-    file: React.PropTypes.object
+    file: React.PropTypes.object,
+    showFilesize: React.PropTypes.bool,
+    linkClass: React.PropTypes.string,
+    children: React.PropTypes.any
+  },
+
+  getDefaultProps() {
+    return {
+      showFilesize: true
+    };
   },
 
   render() {
-    const {file} = this.props;
-    return file.get('isSliced') ?
-      this.renderSlicedFileDownloadModalTrigger(file) :
-      this.renderSimpleDownloadLink(file);
+    if (this.props.file.get('isSliced')) {
+      return this.renderSlicedFileDownloadModalTrigger();
+    }
+
+    return this.renderSimpleDownloadLink();
   },
 
-  renderSlicedFileDownloadModalTrigger(file) {
+  renderSlicedFileDownloadModalTrigger() {
     return (
-      <ModalHandler file={file}>
-        <span>{file.get('name')} ({filesize(file.get('sizeBytes'))})</span>
+      <ModalHandler file={this.props.file}>
+        <span className={this.props.linkClass}>
+          {this.renderBody()} {this.renderFilesize()}
+        </span>
       </ModalHandler>
     );
   },
 
-  renderSimpleDownloadLink(file) {
+  renderSimpleDownloadLink() {
     return (
-      <a href={file.get('url')}>
-        {file.get('name')} ({filesize(file.get('sizeBytes'))})
+      <a href={this.props.file.get('url')} className={this.props.linkClass}>
+        {this.renderBody()} {this.renderFilesize()}
       </a>
     );
-  }
+  },
 
+  renderBody() {
+    return this.props.children || this.props.file.get('name');
+  },
+
+  renderFilesize() {
+    if (!this.props.showFilesize) {
+      return null;
+    }
+
+    return <span>({filesize(this.props.file.get('sizeBytes'))})</span>;
+  }
 });

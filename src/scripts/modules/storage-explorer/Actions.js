@@ -1,5 +1,6 @@
 import dispatcher from '../../Dispatcher';
 import * as constants from '../components/Constants';
+import * as localConstants from './Constants';
 import StorageActionCreators from '../components/StorageActionCreators';
 import StorageApi from '../components/StorageApi';
 import ApplicationStore from '../../stores/ApplicationStore';
@@ -140,6 +141,17 @@ const exportTable = tableId => {
     });
 };
 
+const updateSearchQuery = query => {
+  return dispatcher.handleViewAction({
+    type: localConstants.ActionTypes.UPDATE_SEARCH_QUERY,
+    query
+  });
+};
+
+const resetSearchQuery = () => {
+  updateSearchQuery('');
+};
+
 export {
   deleteBucket,
   deleteTable,
@@ -153,5 +165,7 @@ export {
   restoreUsingTimeTravel,
   truncateTable,
   createTableFromTextInput,
-  exportTable
+  exportTable,
+  updateSearchQuery,
+  resetSearchQuery
 };

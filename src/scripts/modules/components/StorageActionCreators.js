@@ -159,6 +159,25 @@ module.exports = {
     return this.loadFilesForce(params);
   },
 
+  loadMoreFiles: function(params) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.STORAGE_FILES_LOAD_MORE
+    });
+    return storageApi.getFiles(params).then(function(files) {
+      dispatcher.handleViewAction({
+        type: constants.ActionTypes.STORAGE_FILES_LOAD_MORE_SUCCESS,
+        files: files
+      });
+    })
+      .catch(function(error) {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_FILES_LOAD_MORE_ERROR,
+          errors: error
+        });
+        throw error;
+      });
+  },
+
   createBucket: function(params) {
     dispatcher.handleViewAction({
       type: constants.ActionTypes.STORAGE_BUCKET_CREATE,
@@ -793,18 +812,19 @@ module.exports = {
     });
   },
 
-  uploadFile: function(bucketId, file) {
+  uploadFile: function(id, file, params = {}) {
     const uploadParams = {
       federationToken: true,
       notify: false,
       isEncrypted: true,
       name: file.name,
-      sizeBytes: file.size
+      sizeBytes: file.size,
+      ...params
     };
 
     dispatcher.handleViewAction({
       type: constants.ActionTypes.STORAGE_FILE_UPLOAD,
-      bucketId: bucketId,
+      id: id,
       progress: 1
     });
 
@@ -836,11 +856,15 @@ module.exports = {
       });
 
       const reportProgress = _.throttle((progress) => {
-        dispatcher.handleViewAction({
-          type: constants.ActionTypes.STORAGE_FILE_UPLOAD,
-          bucketId: bucketId,
-          progress: Math.max(1, Math.round(100 * (progress.loaded / progress.total)))
-        });
+        const percent = Math.max(1, Math.round(100 * (progress.loaded / progress.total)));
+
+        if (percent < 100) {
+          dispatcher.handleViewAction({
+            type: constants.ActionTypes.STORAGE_FILE_UPLOAD,
+            id: id,
+            progress: percent
+          });
+        }
       }, 800);
 
       return new AWS.S3(awsParams)
@@ -849,14 +873,36 @@ module.exports = {
         .promise().then(() => {
           dispatcher.handleViewAction({
             type: constants.ActionTypes.STORAGE_FILE_UPLOAD_SUCCESS,
-            bucketId: bucketId
+            id: id
           });
           return fileId;
         });
     }).catch(error => {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.STORAGE_FILE_UPLOAD_ERROR,
-        bucketId: bucketId
+        id: id
+      });
+      throw error;
+    });
+  },
+
+  deleteFile: function(fileId) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.STORAGE_FILE_DELETE,
+      fileId: fileId
+    });
+    return storageApi.deleteFile(fileId).then(() => {
+      dispatcher.handleViewAction({
+        type: constants.ActionTypes.STORAGE_FILE_DELETE_SUCCESS,
+        fileId: fileId
+      });
+      ApplicationActionCreators.sendNotification({
+        message: 'File has been removed.'
+      });
+    }).catch(function(error) {
+      dispatcher.handleViewAction({
+        type: constants.ActionTypes.STORAGE_FILE_DELETE_ERROR,
+        fileId: fileId
       });
       throw error;
     });
