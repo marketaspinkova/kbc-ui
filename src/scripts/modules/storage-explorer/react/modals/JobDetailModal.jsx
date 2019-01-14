@@ -16,7 +16,6 @@ export default React.createClass({
   },
 
   render() {
-    console.log(this.props.job.toJS()); // eslint-disable-line
     return (
       <Modal bsSize="large" show={this.props.show} onHide={this.props.onHide}>
         <Modal.Header closeButton>
