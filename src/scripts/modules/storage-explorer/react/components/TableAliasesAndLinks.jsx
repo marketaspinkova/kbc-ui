@@ -7,7 +7,7 @@ export default React.createClass({
   mixins: [PureRenderMixin],
 
   propTypes: {
-    sapiToken: PropTypes.object.sapiToken,
+    sapiToken: PropTypes.object.isRequired,
     tableAliases: PropTypes.array.isRequired,
     tableLinks: PropTypes.array.isRequired,
     onLinkClick: PropTypes.func.isRequired
