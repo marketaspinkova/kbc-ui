@@ -345,7 +345,6 @@ export default React.createClass({
 
     this.setState({ loading: true });
     this.cancellablePromise = StorageApi.loadTableSnapshots(tableId, params)
-      .cancellable()
       .then(data => {
         this.setState({
           loading: false,

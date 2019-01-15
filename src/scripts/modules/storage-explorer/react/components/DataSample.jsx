@@ -175,7 +175,6 @@ export default React.createClass({
     this.setState({ loading: true });
 
     this.cancellablePromise = dataPreview(this.props.table.get('id'), params)
-      .cancellable()
       .then(json => {
         this.setState({ data: json, loading: false });
       })
