@@ -29,7 +29,7 @@ export default React.createClass({
 
     return (
       <Row>
-        <Table responsive striped>
+        <Table responsive striped className="storage-table-overview">
           <tbody>
             <tr>
               <td>ID</td>
@@ -64,7 +64,9 @@ export default React.createClass({
               <td>Rows count</td>
               <td>
                 {bucket.get('rowsCount')}{' '}
-                {bucket.get('backend') === 'mysql' && <Hint title="Rows count">Number of rows is only an estimate.</Hint>}
+                {bucket.get('backend') === 'mysql' && (
+                  <Hint title="Rows count">Number of rows is only an estimate.</Hint>
+                )}
               </td>
             </tr>
             <tr>
