@@ -28,10 +28,9 @@ import initializeData from './initializeData';
 import ErrorNotification from './react/common/ErrorNotification';
 
 // Promise global config
+// Note: long stack traces and warnings are enabled in dev env by default
 Promise.config({
-  warnings: false,
-  cancellation: true,
-  longStackTraces: true
+  cancellation: true
 });
 
 /*
