@@ -108,7 +108,6 @@ const startApp = appOptions => {
 
     if (pendingPromise) {
       pendingPromise.cancel();
-      console.log('cancelled route');
     }
 
     RouterActionCreators.routeChangeStart(state);
