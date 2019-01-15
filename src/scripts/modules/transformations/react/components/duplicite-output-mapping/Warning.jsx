@@ -19,9 +19,9 @@ export default React.createClass({
       <Alert bsStyle="warning">
         <h3>Output Mapping Warning</h3>
         <p>
-          Output mapping of this transformation contains some duplicities with transformations in the same stage.
-          Execution order of all output mappings in a single stage is not guaranteed and may change.
-          Please adjust the output mappings to avoid data loss or confusion, eg. split the transformation(s)
+          Output mapping of this transformation contains some duplicities with transformations in the same phase.
+          Execution order of all output mappings in a single phase is not guaranteed and may change.
+          Please adjust the output mappings to avoid data loss or confusion, e.g. split the transformation(s)
           into multiple phases.
         </p>
         <ConflictList
