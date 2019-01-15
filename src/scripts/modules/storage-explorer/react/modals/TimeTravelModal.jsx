@@ -103,8 +103,15 @@ export default React.createClass({
   },
 
   handleTimestamp(timestamp) {
+    let tableName = this.state.tableName;
+
+    if (this.state.tableName.match(/_\d{14}$/)) {
+      tableName = this.props.table.get('name') + '_' + moment(timestamp).format('YYYYMMDDHHmmss');
+    }
+
     this.setState({
-      timestamp
+      timestamp,
+      tableName
     });
   },
 
