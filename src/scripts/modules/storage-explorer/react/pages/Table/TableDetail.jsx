@@ -163,10 +163,16 @@ export default React.createClass({
                 />
               </Tab.Pane>
               <Tab.Pane eventKey="events">
-                <TableEvents eventsFactory={eventsFactory(this.state.table.get('id'))} />
+                <TableEvents
+                  key={this.state.table.get('lastImportDate') || 'table-events'}
+                  eventsFactory={eventsFactory(this.state.table.get('id'))}
+                />
               </Tab.Pane>
               <Tab.Pane eventKey="data-sample">
-                <DataSample table={this.state.table} />
+                <DataSample
+                  key={this.state.table.get('lastImportDate') || 'data-sample'}
+                  table={this.state.table}
+                />
               </Tab.Pane>
               <Tab.Pane eventKey="snapshot-and-restore">
                 <SnapshotRestore
@@ -180,7 +186,10 @@ export default React.createClass({
                 />
               </Tab.Pane>
               <Tab.Pane eventKey="graph">
-                <TableGraph table={this.state.table} />
+                <TableGraph
+                  key={this.state.table.get('lastImportDate') || 'table-graph'}
+                  table={this.state.table}
+                />
               </Tab.Pane>
             </Tab.Content>
           </div>
