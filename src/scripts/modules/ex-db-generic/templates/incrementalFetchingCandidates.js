@@ -14,5 +14,12 @@ export const incrementalFetchingTypes = Immutable.Map({
       'integer', 'int', 'smallint', 'bigint',
       'numeric', 'decimal', 'real', 'float'
     ]
+  ),
+  'keboola.ex-db-pgsql': Immutable.List(
+    [
+      'timestamp', 'timestamp without time zone', 'timestamp with time zone',
+      'smallint', 'integer', 'int', 'bigint', 'double precision', 'serial', 'bigserial',
+      'numeric', 'decimal', 'real', 'float'
+    ]
   )
 });
