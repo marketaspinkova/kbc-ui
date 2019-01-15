@@ -9,11 +9,7 @@ export default React.createClass({
   },
 
   render() {
-    return (<ul>{this.renderItems()}</ul>);
-  },
-
-  renderItems() {
-    return this.props.conflicts.map((conflict, index) => {
+    const items = this.props.conflicts.map((conflict, index) => {
       const transformation = this.props.transformations.get(conflict.get('id'));
       return (
         <ConflictItem
@@ -25,5 +21,7 @@ export default React.createClass({
         />
       );
     }).toArray();
+
+    return (<ul>{items}</ul>);
   }
 });
