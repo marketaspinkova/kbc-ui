@@ -27,6 +27,12 @@ import initializeData from './initializeData';
 
 import ErrorNotification from './react/common/ErrorNotification';
 
+// Promise global config
+// Note: long stack traces and warnings are enabled in dev env by default
+Promise.config({
+  cancellation: true
+});
+
 /*
   Bootstrap and start whole application
   appOptions:
@@ -57,7 +63,6 @@ const startApp = appOptions => {
     location: appOptions.locationMode === 'history' ? Router.HistoryLocation : Router.HashLocation
   });
 
-  Promise.longStackTraces();
   // error thrown during application live not on route chage
   Promise.onPossiblyUnhandledRejection(e => {
     const error = Error.create(e);
@@ -103,6 +108,7 @@ const startApp = appOptions => {
 
     if (pendingPromise) {
       pendingPromise.cancel();
+      console.log('cancelled route');
     }
 
     RouterActionCreators.routeChangeStart(state);
@@ -120,7 +126,6 @@ const startApp = appOptions => {
 
     // wait for data and trigger render
     return (pendingPromise = Promise.all(promises)
-      .cancellable()
       .then(() => {
         RouterActionCreators.routeChangeSuccess(state);
         ReactDOM.render(<Handler />, appOptions.rootNode);
@@ -132,13 +137,13 @@ const startApp = appOptions => {
           return callback;
         }));
       })
-      .catch(Promise.CancellationError, () => console.log('cancelled route'))
       .catch(error => {
         // render error page
         console.log('route change error', error);
         RouterActionCreators.routeChangeError(error);
         return ReactDOM.render(<Handler isError={true} />, appOptions.rootNode);
-      }));
+      })
+    );
   });
 };
 

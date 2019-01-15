@@ -7,7 +7,7 @@
     "@json-editor/json-editor": "^1.2.1",
     "@keboola/indigo-ui": "^7.4.7",
     "aws-sdk": "^2.4.7",
-    "bluebird": "~2.3.11",
+    "bluebird": "^3.5.3",
     "byte-converter": "^0.1.4",
     "classnames": "^2.2.6",
     "codemirror": "~5.8",
