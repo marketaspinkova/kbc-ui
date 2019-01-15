@@ -34,7 +34,7 @@ export default React.createClass({
   },
 
   componentWillUnmount() {
-    this.fetchingPromise && this.fetchingPromise.cancel();
+    this.cancellablePromise && this.cancellablePromise.cancel();
     window.removeEventListener('resize', this.handleResize);
   },
 
@@ -121,7 +121,8 @@ export default React.createClass({
 
   loadData() {
     this.setState({ loading: true });
-    this.fetchingPromise = TableGraphApi.load(this.props.table.get('id'), this.state.direction)
+    this.cancellablePromise = TableGraphApi.load(this.props.table.get('id'), this.state.direction)
+      .cancellable()
       .then(data => {
         data.nodes = graphUtils.addLinksToNodes(data.nodes);
         this.setState({ data, loading: false });

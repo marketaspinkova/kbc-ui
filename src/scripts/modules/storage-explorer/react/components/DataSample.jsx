@@ -26,7 +26,7 @@ export default React.createClass({
   },
 
   componentWillUnmount() {
-    this.fetchingPromise && this.fetchingPromise.cancel();
+    this.cancellablePromise && this.cancellablePromise.cancel();
   },
 
   render() {
@@ -174,7 +174,8 @@ export default React.createClass({
   fetchDataPreview(params = {}) {
     this.setState({ loading: true });
 
-    this.fetchingPromise = dataPreview(this.props.table.get('id'), params)
+    this.cancellablePromise = dataPreview(this.props.table.get('id'), params)
+      .cancellable()
       .then(json => {
         this.setState({ data: json, loading: false });
       })

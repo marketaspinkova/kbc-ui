@@ -51,7 +51,7 @@ export default React.createClass({
   },
 
   componentWillUnmount() {
-    this.fetchingPromise && this.fetchingPromise.cancel();
+    this.cancellablePromise && this.cancellablePromise.cancel();
   },
 
   render() {
@@ -344,7 +344,8 @@ export default React.createClass({
     };
 
     this.setState({ loading: true });
-    this.fetchingPromise = StorageApi.loadTableSnapshots(tableId, params)
+    this.cancellablePromise = StorageApi.loadTableSnapshots(tableId, params)
+      .cancellable()
       .then(data => {
         this.setState({
           loading: false,
