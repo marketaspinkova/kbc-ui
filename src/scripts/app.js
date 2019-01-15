@@ -108,6 +108,7 @@ const startApp = appOptions => {
 
     if (pendingPromise) {
       pendingPromise.cancel();
+      console.log('cancelled route');
     }
 
     RouterActionCreators.routeChangeStart(state);
@@ -136,13 +137,13 @@ const startApp = appOptions => {
           return callback;
         }));
       })
-      .catch(Promise.CancellationError, () => console.log('cancelled route'))
       .catch(error => {
         // render error page
         console.log('route change error', error);
         RouterActionCreators.routeChangeError(error);
         return ReactDOM.render(<Handler isError={true} />, appOptions.rootNode);
-      }));
+      })
+    );
   });
 };
 
