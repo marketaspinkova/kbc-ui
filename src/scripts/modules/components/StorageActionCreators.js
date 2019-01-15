@@ -518,6 +518,48 @@ module.exports = {
       });
   },
 
+  setAliasTableFilter: function(tableId, params) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.STORAGE_SET_ALIAS_TABLE_FILTER,
+      tableId: tableId
+    });
+    return storageApi.setAliasTableFilter(tableId, params).then(() => {
+      dispatcher.handleViewAction({
+        type: constants.ActionTypes.STORAGE_SET_ALIAS_TABLE_FILTER_SUCCESS,
+        tableId: tableId
+      });
+      return this.loadTablesForce();
+    })
+      .catch(error => {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_SET_ALIAS_TABLE_FILTER_ERROR,
+          tableId: tableId
+        });
+        throw error;
+      });
+  },
+
+  removeAliasTableFilter: function(tableId) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.STORAGE_REMOVE_ALIAS_TABLE_FILTER,
+      tableId: tableId
+    });
+    return storageApi.removeAliasTableFilter(tableId).then(() => {
+      dispatcher.handleViewAction({
+        type: constants.ActionTypes.STORAGE_REMOVE_ALIAS_TABLE_FILTER_SUCCESS,
+        tableId: tableId
+      });
+      return this.loadTablesForce();
+    })
+      .catch(error => {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_REMOVE_ALIAS_TABLE_FILTER_ERROR,
+          tableId: tableId
+        });
+        throw error;
+      });
+  },
+
   loadTable: function(tableId, params) {
     var self;
     self = this;

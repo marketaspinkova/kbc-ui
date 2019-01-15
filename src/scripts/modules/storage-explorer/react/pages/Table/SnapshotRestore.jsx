@@ -22,7 +22,8 @@ export default React.createClass({
     restoringTable: PropTypes.bool.isRequired,
     creatingSnapshot: PropTypes.bool.isRequired,
     creatingFromSnapshot: PropTypes.object.isRequired,
-    deletingSnapshot: PropTypes.object.isRequired
+    deletingSnapshot: PropTypes.object.isRequired,
+    canWriteTable: PropTypes.bool.isRequired
   },
 
   getInitialState() {
@@ -57,7 +58,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        {this.canWriteTable() && this.renderRestore()}
+        {this.props.canWriteTable && this.renderRestore()}
         {this.renderSnapshots()}
       </div>
     );
@@ -99,7 +100,7 @@ export default React.createClass({
       <div>
         <h2>Snapshots</h2>
 
-        {this.canWriteTable() && (
+        {this.props.canWriteTable && (
           <Well>
             <p>Create and restore tables from snapshots.</p>
 
@@ -323,13 +324,6 @@ export default React.createClass({
 
       this.refetchSnapshots();
     });
-  },
-
-  canWriteTable() {
-    const bucketId = this.props.table.getIn(['bucket', 'id']);
-    const permission = this.props.sapiToken.getIn(['bucketPermissions', bucketId]);
-
-    return ['write', 'manage'].includes(permission);
   },
 
   refetchSnapshots() {

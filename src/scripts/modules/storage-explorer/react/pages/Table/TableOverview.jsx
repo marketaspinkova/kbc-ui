@@ -13,6 +13,7 @@ import MetadataEditField from '../../../../components/react/components/MetadataE
 import InlineEditArea from '../../../../../react/common/InlineEditArea';
 import ConfirmModal from '../../../../../react/common/ConfirmModal';
 import CreatePrimaryKeyModal from '../../modals/CreatePrimaryKeyModal';
+import AliasFilter from '../../components/TableAliasFilter';
 
 export default React.createClass({
   propTypes: {
@@ -22,7 +23,10 @@ export default React.createClass({
     tableLinks: PropTypes.array.isRequired,
     sapiToken: PropTypes.object.isRequired,
     creatingPrimaryKey: PropTypes.bool.isRequired,
-    deletingPrimaryKey: PropTypes.bool.isRequired
+    deletingPrimaryKey: PropTypes.bool.isRequired,
+    settingAliasFilter: PropTypes.bool.isRequired,
+    removingAliasFilter: PropTypes.bool.isRequired,
+    canWriteTable: PropTypes.bool.isRequired
   },
 
   getInitialState() {
@@ -95,7 +99,15 @@ export default React.createClass({
               {table.get('isAlias') && !table.get('selectSql') && (
                 <tr>
                   <td>Alias filter</td>
-                  <td />
+                  <td>
+                    {this.props.canWriteTable && (
+                      <AliasFilter
+                        table={table}
+                        settingAliasFilter={this.props.settingAliasFilter}
+                        removingAliasFilter={this.props.removingAliasFilter}
+                      />
+                    )}
+                  </td>
                 </tr>
               )}
               <tr>
