@@ -117,7 +117,7 @@ export default React.createClass({
               <tr>
                 <td>Rows count</td>
                 <td>
-                  {table.get('rowsCount')}{' '}
+                  {table.get('rowsCount') || 'N/A'}{' '}
                   {table.getIn(['bucket', 'backend']) === 'mysql' && (
                     <Hint title="Rows count">Number of rows is only an estimate.</Hint>
                   )}
