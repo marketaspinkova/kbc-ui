@@ -13,10 +13,11 @@ export default React.createClass({
   },
 
   renderItems() {
-    return this.props.conflicts.map((conflict) => {
+    return this.props.conflicts.map((conflict, index) => {
       const transformation = this.props.transformations.get(conflict.get('id'));
       return (
         <ConflictItem
+          key={index}
           destination={conflict.get('destination')}
           transformationName={transformation.get('name')}
           transformationId={transformation.get('id')}
