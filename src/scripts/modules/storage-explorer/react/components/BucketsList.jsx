@@ -33,7 +33,12 @@ export default React.createClass({
 
   renderBucketPanel(bucket) {
     return (
-      <Panel header={this.renderBucketHeader(bucket)} key={bucket.get('id')} eventKey={bucket.get('id')}>
+      <Panel
+        className="storage-panel"
+        header={this.renderBucketHeader(bucket)}
+        key={bucket.get('id')}
+        eventKey={bucket.get('id')}
+      >
         {this.renderTables(bucket)}
       </Panel>
     );
@@ -82,7 +87,12 @@ export default React.createClass({
     const tableName = table.get('name');
 
     return (
-      <Link to="storage-explorer-table" params={{ bucketId, tableName }} key={table.get('id')}>
+      <Link
+        className="storage-table-name"
+        to="storage-explorer-table"
+        params={{ bucketId, tableName }}
+        key={table.get('id')}
+      >
         <p>{tableName}</p>
       </Link>
     );
