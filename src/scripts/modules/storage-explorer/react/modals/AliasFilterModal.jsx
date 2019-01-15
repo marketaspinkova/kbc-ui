@@ -18,13 +18,11 @@ export default React.createClass({
   },
 
   render() {
-    const tableColumns = this.tableColumns();
-
     return (
       <Modal show={this.props.show} onHide={this.onHide}>
         <Form onSubmit={this.onSubmit} horizontal>
           <Modal.Header closeButton>
-            <Modal.Title>Update alias filter</Modal.Title>
+            <Modal.Title>Update filter</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Alert bsStyle="info">
@@ -40,11 +38,9 @@ export default React.createClass({
                   clearable={false}
                   backspaceRemoves={false}
                   deleteRemoves={false}
-                  placeholder="Select column..."
                   value={this.state.column}
                   onChange={this.handleColumn}
-                  options={tableColumns}
-                  disabled={tableColumns.length === 0}
+                  options={this.tableColumns()}
                 />
               </Col>
             </FormGroup>
@@ -87,10 +83,7 @@ export default React.createClass({
     return {
       operator: this.props.table.getIn(['aliasFilter', 'operator'], 'eq'),
       column: this.props.table.getIn(['aliasFilter', 'column'], ''),
-      values: this.props.table
-        .getIn(['aliasFilter', 'values'], List())
-        .toArray()
-        .join(', ')
+      values: this.props.table.getIn(['aliasFilter', 'values'], List()).join(', ')
     };
   },
 
@@ -119,12 +112,12 @@ export default React.createClass({
       column: this.state.column,
       values: this.state.values.split(',').map(value => value.trim())
     };
-    this.props.onSubmit(params).then(this.onHide);
+    this.props.onSubmit(params).then(this.props.onHide);
   },
 
   onHide() {
-    this.props.onHide();
     this.setState(this.defaultValues());
+    this.props.onHide();
   },
 
   tableColumns() {

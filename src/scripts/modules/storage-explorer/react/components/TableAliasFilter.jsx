@@ -17,8 +17,8 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      updateModal: false,
-      removeModal: false
+      showUpdateModal: false,
+      showRemoveModal: false
     };
   },
 
@@ -27,38 +27,60 @@ export default React.createClass({
 
     return (
       <div>
-        {this.renderAliasFilterModal()}
-        {filter.count() > 0 ? (
-          <span>
-            Where <b>{filter.get('column')}</b> {this.whereOperator(filter)} <b>{this.values(filter)}</b>
-          </span>
-        ) : (
-          <span>No filter set</span>
-        )}{' '}
-        <Tooltip tooltip="Edit alias filter" placement="top">
-          <Button bsSize="small" onClick={this.openUpdateModal}>
+        {this.renderLabel(filter)}
+        {this.renderEditButton(filter)}
+        {this.renderDeleteButton(filter)}
+      </div>
+    );
+  },
+
+  renderLabel(filter) {
+    if (!filter.count()) {
+      return <span>No filter set</span>;
+    }
+
+    return (
+      <span>
+        Where <b>{filter.get('column')}</b> {this.whereOperator(filter)} <b>{this.values(filter)}</b>
+      </span>
+    );
+  },
+
+  renderEditButton(filter) {
+    return (
+      <span style={{ marginLeft: '5px' }}>
+        <Tooltip tooltip={filter.count() > 0 ? 'Edit filter' : 'Set filter'} placement="top">
+          <Button bsSize="small" onClick={this.openUpdateModal} disabled={this.props.settingAliasFilter}>
             <i className="fa fa-pencil-square-o" />
           </Button>
         </Tooltip>
-        {filter.count() > 0 && (
-          <span>
-            {' '}
-            <Tooltip tooltip="Remove filter" placement="top">
-              <Button bsSize="small" onClick={this.openRemoveModal} disabled={this.props.removingAliasFilter}>
-                {this.props.removingAliasFilter ? <Loader /> : <i className="fa fa-trash-o" />}
-              </Button>
-            </Tooltip>
-            {this.renderDeleteModal()}
-          </span>
-        )}
-      </div>
+        {this.renderAliasFilterModal()}
+      </span>
+    );
+  },
+
+  renderDeleteButton(filter) {
+    if (!filter.count()) {
+      return null;
+    }
+
+    return (
+      <span style={{ marginLeft: '5px' }}>
+        <Tooltip tooltip="Remove filter" placement="top">
+          <Button bsSize="small" onClick={this.openRemoveModal} disabled={this.props.removingAliasFilter}>
+            {this.props.removingAliasFilter ? <Loader /> : <i className="fa fa-trash-o" />}
+          </Button>
+        </Tooltip>
+        {this.renderDeleteModal()}
+      </span>
     );
   },
 
   renderAliasFilterModal() {
     return (
       <AliasFilterModal
-        show={this.state.updateModal}
+        key={this.props.table.get('lastChangeDate')}
+        show={this.state.showUpdateModal}
         onSubmit={this.handleSubmit}
         onHide={this.closeUpdateModal}
         isSaving={this.props.settingAliasFilter}
@@ -70,7 +92,7 @@ export default React.createClass({
   renderDeleteModal() {
     return (
       <ConfirmModal
-        show={this.state.removeModal}
+        show={this.state.showRemoveModal}
         onHide={this.closeRemoveModal}
         title="Remove alias filter"
         text={<p>Do you really want to remove filter?</p>}
@@ -101,25 +123,25 @@ export default React.createClass({
 
   openUpdateModal() {
     this.setState({
-      updateModal: true
+      showUpdateModal: true
     });
   },
 
   closeUpdateModal() {
     this.setState({
-      updateModal: false
+      showUpdateModal: false
     });
   },
 
   openRemoveModal() {
     this.setState({
-      removeModal: true
+      showRemoveModal: true
     });
   },
 
   closeRemoveModal() {
     this.setState({
-      removeModal: false
+      showRemoveModal: false
     });
   },
 
