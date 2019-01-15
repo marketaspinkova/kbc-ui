@@ -30,7 +30,9 @@ import ErrorNotification from './react/common/ErrorNotification';
 // Promise global config
 // Note: long stack traces and warnings are enabled in dev env by default
 Promise.config({
-  cancellation: true
+  cancellation: true,
+  longStackTraces: process.env.NODE_ENV === 'development',
+  warnings: process.env.NODE_ENV === 'development'
 });
 
 /*
