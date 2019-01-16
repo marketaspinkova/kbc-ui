@@ -65,11 +65,9 @@ export default React.createClass({
   },
 
   handleChange() {
-    if (this.isMounted()) {
-      this.setState({
-        events: this._events.getEvents(),
-        isLoading: this._events.getIsLoading()
-      });
-    }
+    this.setState({
+      events: this._events.getEvents(),
+      isLoading: this._events.getIsLoading()
+    });
   }
 });

@@ -25,6 +25,10 @@ export default React.createClass({
     this.fetchDataPreview();
   },
 
+  componentWillUnmount() {
+    this.cancellablePromise && this.cancellablePromise.cancel();
+  },
+
   render() {
     return (
       <div>
@@ -170,15 +174,16 @@ export default React.createClass({
   fetchDataPreview(params = {}) {
     this.setState({ loading: true });
 
-    return dataPreview(this.props.table.get('id'), params)
+    this.cancellablePromise = dataPreview(this.props.table.get('id'), params)
       .then(json => {
-        this.setState({ data: json });
+        this.setState({ data: json, loading: false });
       })
-      .catch(errorMessage => {
-        this.setState({ data: [], error: errorMessage });
-      })
-      .finally(() => {
-        this.setState({ loading: false });
+      .catch(({ message, response }) => {
+        const errorMessage =
+          response.body.code === 'storage.maxNumberOfColumnsExceed'
+            ? 'Data sample cannot be displayed. Too many columns.'
+            : message;
+        this.setState({ data: [], error: errorMessage, loading: false });
       });
   }
 });
