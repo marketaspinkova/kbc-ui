@@ -50,8 +50,12 @@ export default React.createClass({
     return (
       <span style={{ marginLeft: '5px' }}>
         <Tooltip tooltip={filter.count() > 0 ? 'Edit filter' : 'Set filter'} placement="top">
-          <Button bsSize="small" onClick={this.openUpdateModal} disabled={this.props.settingAliasFilter}>
-            <i className="fa fa-pencil-square-o" />
+          <Button
+            bsSize="small"
+            onClick={this.openUpdateModal}
+            disabled={this.props.settingAliasFilter || this.props.removingAliasFilter}
+          >
+            {this.props.settingAliasFilter ? <Loader /> : <i className="fa fa-pencil-square-o" />}
           </Button>
         </Tooltip>
         {this.renderAliasFilterModal()}
@@ -67,7 +71,11 @@ export default React.createClass({
     return (
       <span style={{ marginLeft: '5px' }}>
         <Tooltip tooltip="Remove filter" placement="top">
-          <Button bsSize="small" onClick={this.openRemoveModal} disabled={this.props.removingAliasFilter}>
+          <Button
+            bsSize="small"
+            onClick={this.openRemoveModal}
+            disabled={this.props.settingAliasFilter || this.props.removingAliasFilter}
+          >
             {this.props.removingAliasFilter ? <Loader /> : <i className="fa fa-trash-o" />}
           </Button>
         </Tooltip>
