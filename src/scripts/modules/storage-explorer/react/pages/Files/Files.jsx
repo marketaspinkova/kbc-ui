@@ -1,8 +1,9 @@
 import React from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
-import { Button } from 'react-bootstrap';
+import { ButtonToolbar, Button } from 'react-bootstrap';
 import { SearchBar } from '@keboola/indigo-ui';
 
+import Tooltip from '../../../../../react/common/Tooltip';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import FilesStore from '../../../../components/stores/StorageFilesStore';
 import FilesLocalStore from '../../../FilesLocalStore';
@@ -10,6 +11,7 @@ import StorageActionCreators from '../../../../components/StorageActionCreators'
 import FilesTable from '../../components/FilesTable';
 import NavButtons from '../../components/NavButtons';
 import UploadModal from '../../modals/UploadModal';
+import ExamplesModal from '../../modals/FilesSearchExamplesModal';
 import { updateSearchQuery, resetSearchQuery } from '../../../Actions';
 import { filesLimit } from '../../../Constants';
 
@@ -35,6 +37,7 @@ export default React.createClass({
 
   getInitialState() {
     return {
+      openExamplesModal: false,
       openUploadModal: false
     };
   },
@@ -51,9 +54,16 @@ export default React.createClass({
               onChange={this.handleQueryChange}
               onSubmit={this.fetchFiles}
               additionalActions={
-                <Button bsStyle="primary" onClick={this.openUploadModal}>
-                  <i className="fa fa-arrow-circle-o-up" /> Upload File
-                </Button>
+                <ButtonToolbar>
+                  <Tooltip tooltip="Search syntax &amp; Examples" placement="top">
+                    <Button bsStyle="default" onClick={this.openExamplesModal}>
+                      <i className="fa fa-question-circle" />
+                    </Button>
+                  </Tooltip>
+                  <Button bsStyle="primary" onClick={this.openUploadModal}>
+                    <i className="fa fa-arrow-circle-o-up" /> Upload File
+                  </Button>
+                </ButtonToolbar>
               }
             />
           </div>
@@ -64,7 +74,7 @@ export default React.createClass({
             <div>
               <FilesTable
                 files={this.state.files}
-                onSearchByTag={this.searchByTag}
+                onSearchQuery={this.searchQuery}
                 onDeleteFile={this.handleDeleteFile}
                 isDeleting={this.state.isDeleting}
               />
@@ -74,6 +84,7 @@ export default React.createClass({
         </div>
 
         {this.renderUploadModal()}
+        {this.renderExamplesModal()}
       </div>
     );
   },
@@ -103,6 +114,16 @@ export default React.createClass({
     );
   },
 
+  renderExamplesModal() {
+    return (
+      <ExamplesModal
+        show={this.state.openExamplesModal}
+        onHide={this.closeExamplesModal}
+        onSelectExample={this.searchQuery}
+      />
+    );
+  },
+
   handleQueryChange(query) {
     updateSearchQuery(query);
   },
@@ -119,12 +140,24 @@ export default React.createClass({
     });
   },
 
+  openExamplesModal() {
+    this.setState({
+      openExamplesModal: true
+    });
+  },
+
+  closeExamplesModal() {
+    this.setState({
+      openExamplesModal: false
+    });
+  },
+
   handleUploadFile(file, params) {
     return StorageActionCreators.uploadFile(DIRECT_UPLOAD, file, params).then(() => this.fetchFiles());
   },
 
-  searchByTag(tag) {
-    updateSearchQuery(`tags:${tag}`);
+  searchQuery(query) {
+    updateSearchQuery(query);
     setTimeout(this.fetchFiles, 50);
   },
 

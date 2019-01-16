@@ -16,7 +16,7 @@ export default React.createClass({
 
   propTypes: {
     files: PropTypes.object.isRequired,
-    onSearchByTag: PropTypes.func.isRequired,
+    onSearchQuery: PropTypes.func.isRequired,
     onDeleteFile: PropTypes.func.isRequired,
     isDeleting: PropTypes.object.isRequired
   },
@@ -62,7 +62,14 @@ export default React.createClass({
   renderRow(file) {
     return (
       <tr key={file.get('id')}>
-        <td>{file.get('id')}</td>
+        <td>
+          <button
+            className="btn btn-link btn-link-inline"
+            onClick={() => this.props.onSearchQuery(`id:${file.get('id')}`)}
+          >
+            {file.get('id')}
+          </button>
+        </td>
         <td>{format(file.get('created'), 'YYYY-MM-DD HH:mm')}</td>
         <td>
           <FileLink file={file} showFilesize={false} />
@@ -87,7 +94,7 @@ export default React.createClass({
               key={index}
               className="kbc-cursor-pointer"
               bsStyle="success"
-              onClick={() => this.props.onSearchByTag(tag)}
+              onClick={() => this.props.onSearchQuery(`tags:${tag}`)}
             >
               {tag}
             </Label>
