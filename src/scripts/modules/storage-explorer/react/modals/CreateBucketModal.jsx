@@ -37,19 +37,19 @@ export default React.createClass({
             {this.renderCheckSnowflake()}
 
             <FormGroup>
-              <Col sm={4} componentClass={ControlLabel}>
+              <Col sm={3} componentClass={ControlLabel}>
                 Name
               </Col>
-              <Col sm={8}>
+              <Col sm={9}>
                 <FormControl type="text" name="name" value={this.state.name} onChange={this.handleName} />
               </Col>
             </FormGroup>
 
             <FormGroup>
-              <Col sm={4} componentClass={ControlLabel}>
+              <Col sm={3} componentClass={ControlLabel}>
                 Stage
               </Col>
-              <Col sm={8}>
+              <Col sm={9}>
                 <FormControl
                   componentClass="select"
                   placeholder="Select stage..."
@@ -63,10 +63,10 @@ export default React.createClass({
             </FormGroup>
 
             <FormGroup>
-              <Col sm={4} componentClass={ControlLabel}>
+              <Col sm={3} componentClass={ControlLabel}>
                 Backend
               </Col>
-              <Col sm={8}>
+              <Col sm={9}>
                 <FormControl
                   componentClass="select"
                   placeholder="Select backend..."
