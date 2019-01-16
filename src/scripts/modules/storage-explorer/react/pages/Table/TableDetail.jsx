@@ -148,7 +148,10 @@ export default React.createClass({
                   deletingPrimaryKey={this.state.deletingPrimaryKey}
                 />
 
-                <LatestImports table={this.state.table} />
+                <LatestImports
+                  table={this.state.table}
+                  key={this.state.table.get('lastImportDate') || 'table-imports'}
+                />
 
                 <TableColumn
                   table={this.state.table}
