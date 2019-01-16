@@ -41,7 +41,7 @@ export default React.createClass({
 
     return (
       <span>
-        Where <b>{filter.get('column')}</b> {this.whereOperator(filter)} <b>{this.values(filter)}</b>
+        Where <b>{filter.get('column')}</b> {this.whereOperator(filter)} <b>{filter.get('values').join(', ')}</b>
       </span>
     );
   },
@@ -151,10 +151,6 @@ export default React.createClass({
     this.setState({
       showRemoveModal: false
     });
-  },
-
-  values(filter) {
-    return filter.get('values').join(', ');
   },
 
   whereOperator(filter) {
