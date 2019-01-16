@@ -64,7 +64,7 @@ export default React.createClass({
 
             <FormGroup>
               <Col sm={4} componentClass={ControlLabel}>
-                Stage
+                Backend
               </Col>
               <Col sm={8}>
                 <FormControl
