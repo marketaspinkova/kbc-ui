@@ -89,7 +89,7 @@ export default React.createClass({
       buckets = buckets.filter(bucket => matchByWords(bucket.get('id').toLowerCase(), search));
     }
 
-    return buckets.sortBy(bucket => bucket.get('name').toLowerCase());
+    return buckets;
   },
 
   handleRefresh() {
