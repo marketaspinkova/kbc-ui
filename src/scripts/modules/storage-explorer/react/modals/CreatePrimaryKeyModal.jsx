@@ -34,6 +34,7 @@ export default React.createClass({
               </Col>
               <Col sm={9}>
                 <Select
+                  autoFocus
                   clearable={false}
                   multi={true}
                   placeholder="Check one or more columns"
