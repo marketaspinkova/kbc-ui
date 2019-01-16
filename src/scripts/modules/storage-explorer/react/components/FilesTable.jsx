@@ -63,9 +63,12 @@ export default React.createClass({
     return (
       <tr key={file.get('id')}>
         <td>
-          <span className="kbc-sapi-table-link" onClick={() => this.props.onSearchQuery(`id:${file.get('id')}`)}>
+          <button
+            className="btn btn-link btn-link-inline"
+            onClick={() => this.props.onSearchQuery(`id:${file.get('id')}`)}
+          >
             {file.get('id')}
-          </span>
+          </button>
         </td>
         <td>{format(file.get('created'), 'YYYY-MM-DD HH:mm')}</td>
         <td>
