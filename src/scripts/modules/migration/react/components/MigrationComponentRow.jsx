@@ -13,7 +13,7 @@ export default React.createClass({
   },
 
   render() {
-    return (
+    return this.props.configurations.count() ? (
       <div>
         <div className="kbc-header">
           <div className="kbc-title">
@@ -27,7 +27,7 @@ export default React.createClass({
           <span className="tbody">{this.configurations()}</span>
         </div>
       </div>
-    );
+    ) : null;
   },
 
   configurations() {

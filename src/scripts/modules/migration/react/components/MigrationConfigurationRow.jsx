@@ -19,15 +19,6 @@ export default React.createClass({
           <strong>{this.props.config.get('name', '---')}</strong>
           {this.description()}
         </span>
-        <span className="td text-right kbc-component-buttons">
-          {console.log(this.props.config.toJS())}
-
-          {(this.props.config.getIn(['authorization', 'oauth_api', 'version']) === 3) ? (
-            <span className="label label-success">Migrated to version 3</span>
-          ) : (
-            <span className="label label-danger">Migration needed</span>
-          )}
-        </span>
       </span>
     );
   },

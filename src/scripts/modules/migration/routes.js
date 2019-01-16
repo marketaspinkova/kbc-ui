@@ -1,6 +1,7 @@
 import Index from './react/pages/Index';
-import installedComponentsActions from '../components/InstalledComponentsActionCreators';
+import InstalledComponentsActions from '../components/InstalledComponentsActionCreators';
 import ComponentReloaderButton from '../components/react/components/ComponentsReloaderButton';
+import InstalledComponentsStore from '../components/stores/InstalledComponentsStore';
 
 export default {
   name: 'migrations',
@@ -10,7 +11,14 @@ export default {
   defaultRouteHandler: Index,
   reloaderHandler: ComponentReloaderButton,
   requireData: [
-    () => installedComponentsActions.loadComponentsForce()
+    () => InstalledComponentsActions.loadComponents()
+      .then(() => InstalledComponentsStore.getAll())
+      .then(components => components.filter(component => {
+        return component.get('flags').contains('genericDockerUI-authorization');
+      }))
+      .then(componentsWithOauth => componentsWithOauth.map(component => {
+        return InstalledComponentsActions.loadComponentConfigsData(component.get('id'));
+      }))
   ],
   // poll: {
   //   interval: 10,
