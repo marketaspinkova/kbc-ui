@@ -20,7 +20,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Modal show={this.props.show} onHide={this.onHide} enforceFocus={false}>
+      <Modal show={this.props.show} onHide={this.onHide}>
         <Form onSubmit={this.handleSubmit} horizontal>
           <Modal.Header closeButton>
             <Modal.Title>Create primary key</Modal.Title>

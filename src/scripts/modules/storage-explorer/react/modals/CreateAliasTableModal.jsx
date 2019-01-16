@@ -36,7 +36,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Modal bsSize="large" show={this.props.openModal} onHide={this.onHide} enforceFocus={false}>
+      <Modal bsSize="large" show={this.props.openModal} onHide={this.onHide}>
         <Form onSubmit={this.onSubmit} horizontal>
           <Modal.Header closeButton>
             <Modal.Title>Create table alias in {this.props.bucket.get('id')}</Modal.Title>

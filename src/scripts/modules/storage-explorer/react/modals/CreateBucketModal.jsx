@@ -26,7 +26,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Modal show={this.props.openModal} onHide={this.onHide} enforceFocus={false}>
+      <Modal show={this.props.openModal} onHide={this.onHide}>
         <Form onSubmit={this.onSubmit} horizontal>
           <Modal.Header closeButton>
             <Modal.Title>Create bucket</Modal.Title>
