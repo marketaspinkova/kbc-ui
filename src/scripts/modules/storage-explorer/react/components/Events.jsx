@@ -43,21 +43,19 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <div style={{margin: '1em 1em 1em 0'}}>
-          <SearchBar
-            placeholder="Search event"
-            query={this.state.searchQuery}
-            onChange={this.handleQueryChange}
-            onSubmit={this.handleSearchSubmit}
-            additionalActions={
-              <Tooltip tooltip="Refresh events" placement="top">
-                <Button onClick={this.handleRefresh}>
-                  <RefreshIcon isLoading={this.state.isLoading} title="" />
-                </Button>
-              </Tooltip>
-            }
-          />
-        </div>
+        <SearchBar
+          placeholder="Search event"
+          query={this.state.searchQuery}
+          onChange={this.handleQueryChange}
+          onSubmit={this.handleSearchSubmit}
+          additionalActions={
+            <Tooltip tooltip="Refresh events" placement="top">
+              <Button onClick={this.handleRefresh}>
+                <RefreshIcon isLoading={this.state.isLoading} title="" />
+              </Button>
+            </Tooltip>
+          }
+        />
         <Row>
           <EventsTable events={this.state.events} isSearching={this.isSearching()} />
         </Row>

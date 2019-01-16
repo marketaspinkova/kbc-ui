@@ -20,19 +20,18 @@ export default React.createClass({
     return (
       <div className="container-fluid">
         <div className="kbc-main-content">
-          <div>
-            <NavButtons />
-            <Row>
-              <Col sm={3}>
-                <Buckets />
-              </Col>
-              <Col sm={9}>
-                {this.state.tableName && (
-                  <TableDetail key={`${this.state.bucketId}-${this.state.tableName}`} />
-                )}
-              </Col>
-            </Row>
-          </div>
+          <NavButtons />
+
+          <Col sm={3}>
+            <Buckets />
+          </Col>
+          <Col sm={9}>
+            {this.state.tableName && (
+              <Row>
+                <TableDetail key={`${this.state.bucketId}-${this.state.tableName}`} />
+              </Row>
+            )}
+          </Col>
         </div>
       </div>
     );

@@ -19,17 +19,16 @@ export default React.createClass({
     return (
       <div className="container-fluid">
         <div className="kbc-main-content">
-          <div>
-            <NavButtons />
+          <NavButtons />
+
+          <Col sm={3}>
+            <Buckets />
+          </Col>
+          <Col sm={9}>
             <Row>
-              <Col sm={3}>
-                <Buckets />
-              </Col>
-              <Col sm={9}>
-                <BucketDetail key={this.state.bucketId} />
-              </Col>
+              <BucketDetail key={this.state.bucketId} />
             </Row>
-          </div>
+          </Col>
         </div>
       </div>
     );
