@@ -35,7 +35,7 @@ export default React.createClass({
 
   render() {
     return (
-      <div>
+      <div className="storage-buckets-sidebar">
         {this.renderCreateBucketModal()}
 
         <SearchBar
