@@ -44,7 +44,7 @@ export default React.createClass({
         {this.renderDescription()}
 
         <Row>
-          <Table responsive striped>
+          <Table responsive striped className="storage-table-overview">
             <tbody>
               <tr>
                 <td>ID</td>
