@@ -146,7 +146,7 @@ export function createActions(componentId) {
   }
 
   function getIncrementalCandidates(sourceTables) {
-    const allowedTypes = incrementalFetchingTypes.get(componentId);
+    const allowedTypes = incrementalFetchingTypes.get(componentId, List());
     return sourceTables.reduce((memo, table) => {
       const qualifyingColumns = table.get('columns', List()).filter((column) => {
         if (allowedTypes.includes(column.get('type'))) {
