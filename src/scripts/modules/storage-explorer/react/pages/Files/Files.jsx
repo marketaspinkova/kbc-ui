@@ -1,6 +1,7 @@
 import React from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { ButtonToolbar, Button } from 'react-bootstrap';
+import { Navigation } from 'react-router';
 import { SearchBar } from '@keboola/indigo-ui';
 
 import Tooltip from '../../../../../react/common/Tooltip';
@@ -12,13 +13,13 @@ import FilesTable from '../../components/FilesTable';
 import NavButtons from '../../components/NavButtons';
 import UploadModal from '../../modals/UploadModal';
 import ExamplesModal from '../../modals/FilesSearchExamplesModal';
-import { updateSearchQuery, resetSearchQuery } from '../../../Actions';
+import { loadFiles, loadMoreFiles, filterFiles, updateFilesSearchQuery, resetFilesSearchQuery } from '../../../Actions';
 import { filesLimit } from '../../../Constants';
 
 const DIRECT_UPLOAD = 'direct-upload';
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin, createStoreMixin(FilesStore, FilesLocalStore)],
+  mixins: [ImmutableRenderMixin, Navigation, createStoreMixin(FilesStore, FilesLocalStore)],
 
   getStateFromStores() {
     return {
@@ -32,7 +33,7 @@ export default React.createClass({
   },
 
   componentWillUnmount() {
-    resetSearchQuery();
+    resetFilesSearchQuery();
   },
 
   getInitialState() {
@@ -51,8 +52,10 @@ export default React.createClass({
             <SearchBar
               placeholder="Search: tags:tag"
               query={this.state.searchQuery}
-              onChange={this.handleQueryChange}
-              onSubmit={this.fetchFiles}
+              onChange={this.updateSearchQuery}
+              onSubmit={() => {
+                filterFiles(this.state.searchQuery);
+              }}
               additionalActions={
                 <ButtonToolbar>
                   <Tooltip tooltip="Search syntax &amp; Examples" placement="top">
@@ -74,7 +77,7 @@ export default React.createClass({
             <div>
               <FilesTable
                 files={this.state.files}
-                onSearchQuery={this.searchQuery}
+                onSearchQuery={filterFiles}
                 onDeleteFile={this.handleDeleteFile}
                 isDeleting={this.state.isDeleting}
               />
@@ -119,13 +122,9 @@ export default React.createClass({
       <ExamplesModal
         show={this.state.openExamplesModal}
         onHide={this.closeExamplesModal}
-        onSelectExample={this.searchQuery}
+        onSelectExample={filterFiles}
       />
     );
-  },
-
-  handleQueryChange(query) {
-    updateSearchQuery(query);
   },
 
   openUploadModal() {
@@ -156,16 +155,11 @@ export default React.createClass({
     return StorageActionCreators.uploadFile(DIRECT_UPLOAD, file, params).then(() => this.fetchFiles());
   },
 
-  searchQuery(query) {
-    updateSearchQuery(query);
-    setTimeout(this.fetchFiles, 50);
-  },
-
   handleDeleteFile(fileId) {
     return StorageActionCreators.deleteFile(fileId);
   },
 
-  getParams(offset) {
+  getSearchParams(offset) {
     const params = {
       limit: filesLimit,
       offset
@@ -179,11 +173,15 @@ export default React.createClass({
   },
 
   fetchFiles(offset = 0) {
-    StorageActionCreators.loadFilesForce(this.getParams(offset));
+    loadFiles(this.getSearchParams(offset));
   },
 
   fetchMoreFiles() {
     const offset = this.state.files.count();
-    return StorageActionCreators.loadMoreFiles(this.getParams(offset));
+    return loadMoreFiles(this.getSearchParams(offset));
+  },
+
+  updateSearchQuery(query) {
+    updateFilesSearchQuery(query);
   }
 });

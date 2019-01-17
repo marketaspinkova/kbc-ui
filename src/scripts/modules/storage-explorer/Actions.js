@@ -127,15 +127,38 @@ const exportTable = tableId => {
     });
 };
 
-const updateSearchQuery = query => {
+const loadFiles = params => {
+  return StorageActionCreators
+    .loadFilesForce(params)
+    .catch(HttpError, error => {
+      throw error.message;
+    })
+    .catch(errorNotification);
+};
+
+const loadMoreFiles = params => {
+  return StorageActionCreators
+    .loadMoreFiles(params)
+    .catch(HttpError, error => {
+      throw error.message;
+    })
+    .catch(errorNotification);
+};
+
+const filterFiles = query => {
+  const queryParams = query ? {q: query} : {};
+  RoutesStore.getRouter().transitionTo('storage-explorer-files', null, queryParams);
+};
+
+const updateFilesSearchQuery = query => {
   return dispatcher.handleViewAction({
     type: localConstants.ActionTypes.UPDATE_SEARCH_QUERY,
     query
   });
 };
 
-const resetSearchQuery = () => {
-  updateSearchQuery('');
+const resetFilesSearchQuery = () => {
+  updateFilesSearchQuery('');
 };
 
 export {
@@ -152,6 +175,9 @@ export {
   truncateTable,
   createTableFromTextInput,
   exportTable,
-  updateSearchQuery,
-  resetSearchQuery
+  loadFiles,
+  loadMoreFiles,
+  updateFilesSearchQuery,
+  filterFiles,
+  resetFilesSearchQuery
 };

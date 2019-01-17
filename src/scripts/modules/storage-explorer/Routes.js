@@ -6,8 +6,8 @@ import Bucket from './react/pages/Bucket/Bucket';
 import FilesReloaderButton from './react/components/FilesReloaderButton';
 import JobsReloaderButton from './react/components/JobsReloaderButton';
 import StorageActions from '../components/StorageActionCreators';
-import { filesLimit } from './Constants';
-import { jobsLimit } from './Constants';
+import { filesLimit, jobsLimit } from './Constants';
+import { loadFiles, updateFilesSearchQuery } from './Actions';
 
 export default {
   name: 'storage-explorer',
@@ -21,7 +21,18 @@ export default {
       defaultRouteHandler: Files,
       reloaderHandler: FilesReloaderButton,
       title: 'Files',
-      requireData: [() => StorageActions.loadFilesForce({ limit: filesLimit })]
+      requireData: [
+        (params, query) => {
+          const searchParams = { limit: filesLimit };
+
+          if (query.q || query.q === '') {
+            searchParams.q = query.q;
+            updateFilesSearchQuery(query.q);
+          }
+
+          return loadFiles(searchParams);
+        }
+      ]
     },
     {
       name: 'storage-explorer-jobs',
