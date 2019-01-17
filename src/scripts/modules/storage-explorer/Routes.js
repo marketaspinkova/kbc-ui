@@ -30,7 +30,7 @@ export default {
             updateSearchQuery(query.q);
           }
 
-          loadFiles(searchParams);
+          return loadFiles(searchParams);
         }
       ]
     },
