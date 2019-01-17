@@ -107,7 +107,11 @@ export default React.createClass({
                     <span>Export</span>
                   )}
                 </MenuItem>
-                <MenuItem eventKey="load" onSelect={this.handleDropdownAction}>
+                <MenuItem
+                  eventKey="load"
+                  onSelect={this.handleDropdownAction}
+                  disabled={this.state.table.get('isAlias')}
+                >
                   {loadingIntoTable ? (
                     <span>
                       <Loader /> Loading into table...
