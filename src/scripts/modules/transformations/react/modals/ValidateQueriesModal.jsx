@@ -52,7 +52,11 @@ export default React.createClass({
       return null;
     }
 
-    return <Result result={this.state.result} bucketId={this.props.bucketId} onRedirect={this.onHide} />;
+    return (
+      <span style={{ maxHeight: '300px', overflow: 'scroll' }}>
+        <Result result={this.state.result} bucketId={this.props.bucketId} onRedirect={this.onHide} />
+      </span>
+    );
   },
 
   renderNotSavedWarning() {
@@ -74,7 +78,7 @@ export default React.createClass({
           </p>
           <p>Tables defined in output mapping that does not yet exist in Storage are not validated.</p>
           {this.renderNotSavedWarning()}
-          <span style={{ maxHeight: '300px', overflow: 'scroll' }}>{this.renderResult()}</span>
+          {this.renderResult()}
         </span>
       );
     }
