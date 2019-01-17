@@ -7,7 +7,7 @@ import FilesReloaderButton from './react/components/FilesReloaderButton';
 import JobsReloaderButton from './react/components/JobsReloaderButton';
 import StorageActions from '../components/StorageActionCreators';
 import { filesLimit, jobsLimit } from './Constants';
-import { loadFiles, updateSearchQuery } from './Actions';
+import { loadFiles, updateFilesSearchQuery } from './Actions';
 
 export default {
   name: 'storage-explorer',
@@ -27,7 +27,7 @@ export default {
 
           if (query.q) {
             searchParams.q = query.q;
-            updateSearchQuery(query.q);
+            updateFilesSearchQuery(query.q);
           }
 
           return loadFiles(searchParams);

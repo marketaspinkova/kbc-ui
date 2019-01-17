@@ -145,15 +145,15 @@ const loadMoreFiles = params => {
     .catch(errorNotification);
 };
 
-const updateSearchQuery = query => {
+const updateFilesSearchQuery = query => {
   return dispatcher.handleViewAction({
     type: localConstants.ActionTypes.UPDATE_SEARCH_QUERY,
     query
   });
 };
 
-const resetSearchQuery = () => {
-  updateSearchQuery('');
+const resetFilesSearchQuery = () => {
+  updateFilesSearchQuery('');
 };
 
 export {
@@ -172,6 +172,6 @@ export {
   exportTable,
   loadFiles,
   loadMoreFiles,
-  updateSearchQuery,
-  resetSearchQuery
+  updateFilesSearchQuery,
+  resetFilesSearchQuery
 };

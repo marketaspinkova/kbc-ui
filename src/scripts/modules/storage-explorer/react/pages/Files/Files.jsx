@@ -13,7 +13,7 @@ import FilesTable from '../../components/FilesTable';
 import NavButtons from '../../components/NavButtons';
 import UploadModal from '../../modals/UploadModal';
 import ExamplesModal from '../../modals/FilesSearchExamplesModal';
-import { loadFiles, loadMoreFiles, updateSearchQuery, resetSearchQuery } from '../../../Actions';
+import { loadFiles, loadMoreFiles, updateFilesSearchQuery, resetFilesSearchQuery } from '../../../Actions';
 import { filesLimit } from '../../../Constants';
 
 const DIRECT_UPLOAD = 'direct-upload';
@@ -33,7 +33,7 @@ export default React.createClass({
   },
 
   componentWillUnmount() {
-    resetSearchQuery();
+    resetFilesSearchQuery();
   },
 
   getInitialState() {
@@ -185,7 +185,7 @@ export default React.createClass({
   },
 
   updateSearchQuery(query) {
-    updateSearchQuery(query);
+    updateFilesSearchQuery(query);
 
     const token = process.env.NODE_ENV === 'development' ? `${window.location.search}#` : '';
     const pathname = this.makePath('storage-explorer-files', null, { q: query });
