@@ -47,26 +47,6 @@ export default React.createClass({
     );
   },
 
-  renderResult() {
-    if (!this.state.result) {
-      return null;
-    }
-
-    return (
-      <span style={{ maxHeight: '300px', overflow: 'scroll' }}>
-        <Result result={this.state.result} bucketId={this.props.bucketId} onRedirect={this.onHide} />
-      </span>
-    );
-  },
-
-  renderNotSavedWarning() {
-    if (this.props.isSaved) {
-      return null;
-    }
-
-    return <Alert bsStyle="warning">You have unsaved changes. Validation will only apply to the last version.</Alert>;
-  },
-
   renderBody() {
     if (this.isValidBackend()) {
       return (
@@ -84,6 +64,26 @@ export default React.createClass({
     }
 
     return <p>SQL validation is available for Snowflake transformations only.</p>;
+  },
+
+  renderNotSavedWarning() {
+    if (this.props.isSaved) {
+      return null;
+    }
+
+    return <Alert bsStyle="warning">You have unsaved changes. Validation will only apply to the last version.</Alert>;
+  },
+
+  renderResult() {
+    if (!this.state.result) {
+      return null;
+    }
+
+    return (
+      <span style={{ maxHeight: '300px', overflow: 'scroll' }}>
+        <Result result={this.state.result} bucketId={this.props.bucketId} onRedirect={this.onHide} />
+      </span>
+    );
   },
 
   onHide() {
