@@ -35,7 +35,7 @@ export default React.createClass({
 
   render() {
     return (
-      <div style={{padding: '1em 0 1em 1em'}}>
+      <div className="storage-buckets-sidebar">
         {this.renderCreateBucketModal()}
 
         <SearchBar

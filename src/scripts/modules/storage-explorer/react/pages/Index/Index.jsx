@@ -8,7 +8,7 @@ export default React.createClass({
   render() {
     return (
       <div className="container-fluid">
-        <div className="kbc-main-content">
+        <div className="kbc-main-content reset-overflow">
           <div>
             <NavButtons />
             <Row>
