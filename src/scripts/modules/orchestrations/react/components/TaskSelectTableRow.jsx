@@ -42,7 +42,7 @@ export default React.createClass({
     const parameters = this.props.task.get('actionParameters');
 
     if (parameters.size === 1 && parameters.has('config') && this.props.component) {
-      const config = InstalledComponentsStore.getConfig(this.props.component.get('id'), parameters.get('config'));
+      const config = InstalledComponentsStore.getConfig(this.props.component.get('id'), parameters.get('config').toString());
       return config.get('name', parameters.get('config'));
     }
 
