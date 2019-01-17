@@ -45,6 +45,8 @@ export default React.createClass({
       bucket: BucketsStore.getAll().find(item => item.get('id') === bucketId),
       creatingPrimaryKey: TablesStore.getIsCreatingPrimaryKey(table.get('id')),
       deletingPrimaryKey: TablesStore.getIsDeletingPrimaryKey(table.get('id')),
+      settingAliasFilter: TablesStore.getIsSettingAliasFilter(table.get('id')),
+      removingAliasFilter: TablesStore.getIsRemovingAliasFilter(table.get('id')),
       addingColumn: TablesStore.getAddingColumn(),
       deletingColumn: TablesStore.getDeletingColumn(),
       creatingTable: TablesStore.getIsCreatingTable(),
@@ -78,6 +80,7 @@ export default React.createClass({
     }
 
     const loadingIntoTable = this.state.loadingIntoTable || this.state.uploadingProgress > 0;
+    const canWriteTable = this.canWriteTable(this.state.table, this.state.sapiToken);
 
     return (
       <div>
@@ -114,7 +117,7 @@ export default React.createClass({
                   )}
                 </MenuItem>
                 <MenuItem divider />
-                {!this.state.table.get('isAlias') && this.canWriteTable() && (
+                {!this.state.table.get('isAlias') && canWriteTable && (
                   <MenuItem
                     eventKey="truncate"
                     onSelect={this.handleDropdownAction}
@@ -123,7 +126,7 @@ export default React.createClass({
                     Truncate table
                   </MenuItem>
                 )}
-                {this.canWriteTable() && (
+                {canWriteTable && (
                   <MenuItem eventKey="delete" onSelect={this.handleDropdownAction} disabled={this.state.deletingTable}>
                     {this.state.deletingTable ? (
                       <span>
@@ -146,6 +149,9 @@ export default React.createClass({
                   sapiToken={this.state.sapiToken}
                   creatingPrimaryKey={this.state.creatingPrimaryKey}
                   deletingPrimaryKey={this.state.deletingPrimaryKey}
+                  settingAliasFilter={this.state.settingAliasFilter}
+                  removingAliasFilter={this.state.removingAliasFilter}
+                  canWriteTable={canWriteTable}
                 />
 
                 <LatestImports
@@ -163,6 +169,7 @@ export default React.createClass({
                   deletingPrimaryKey={this.state.deletingPrimaryKey}
                   addingColumn={this.state.addingColumn}
                   deletingColumn={this.state.deletingColumn}
+                  canWriteTable={canWriteTable}
                 />
               </Tab.Pane>
               <Tab.Pane eventKey="events">
@@ -186,6 +193,7 @@ export default React.createClass({
                   creatingSnapshot={this.state.creatingSnapshot}
                   creatingFromSnapshot={this.state.creatingFromSnapshot}
                   deletingSnapshot={this.state.deletingSnapshot}
+                  canWriteTable={canWriteTable}
                 />
               </Tab.Pane>
               <Tab.Pane eventKey="graph">
@@ -201,7 +209,7 @@ export default React.createClass({
         {this.renderDeletingTableModal()}
         {this.renderLoadTableModal()}
         {this.renderExportTableModal()}
-        {!this.state.table.get('isAlias') && this.canWriteTable() && this.renderTruncateTableModal()}
+        {!this.state.table.get('isAlias') && canWriteTable && this.renderTruncateTableModal()}
       </div>
     );
   },
@@ -319,9 +327,9 @@ export default React.createClass({
     });
   },
 
-  canWriteTable() {
-    const bucketId = this.state.table.getIn(['bucket', 'id']);
-    const permission = this.state.sapiToken.getIn(['bucketPermissions', bucketId]);
+  canWriteTable(table, sapiToken) {
+    const bucketId = table.getIn(['bucket', 'id']);
+    const permission = sapiToken.getIn(['bucketPermissions', bucketId]);
     return ['write', 'manage'].includes(permission);
   },
 

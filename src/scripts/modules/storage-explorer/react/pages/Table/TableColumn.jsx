@@ -15,7 +15,8 @@ export default React.createClass({
     tableLinks: PropTypes.array.isRequired,
     sapiToken: PropTypes.object.isRequired,
     addingColumn: PropTypes.object.isRequired,
-    deletingColumn: PropTypes.object.isRequired
+    deletingColumn: PropTypes.object.isRequired,
+    canWriteTable: PropTypes.bool.isRequired
   },
 
   getInitialState() {
@@ -143,17 +144,10 @@ export default React.createClass({
     return this.props.table.get('primaryKey').find(item => item === column);
   },
 
-  canWriteTable() {
-    const bucketId = this.props.table.getIn(['bucket', 'id']);
-    const permission = this.props.sapiToken.getIn(['bucketPermissions', bucketId]);
-
-    return ['write', 'manage'].includes(permission);
-  },
-
   canAddColumn() {
     const { table } = this.props;
 
-    if (!this.canWriteTable() || table.getIn(['bucket', 'backend']) === 'redshift') {
+    if (!this.props.canWriteTable || table.getIn(['bucket', 'backend']) === 'redshift') {
       return false;
     }
 
@@ -163,7 +157,7 @@ export default React.createClass({
   canDeleteColumn() {
     const { table } = this.props;
 
-    if (!this.canWriteTable()) {
+    if (!this.props.canWriteTable) {
       return false;
     }
 

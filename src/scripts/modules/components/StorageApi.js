@@ -186,6 +186,18 @@ var storageApi = {
     });
   },
 
+  setAliasTableFilter: function(tableId, params) {
+    return createRequest('POST', 'tables/' + tableId + '/alias-filter').type('form').send(params).promise().then(function(response) {
+      return response.body;
+    });
+  },
+
+  removeAliasTableFilter: function(tableId) {
+    return createRequest('DELETE', 'tables/' + tableId + '/alias-filter').promise().then(function(response) {
+      return response.body;
+    });
+  },
+
   loadTable: function(tableId, params) {
     return createRequest('POST', 'tables/' + tableId + '/import-async').type('form').send(params).promise().then(function(response) {
       return response.body;

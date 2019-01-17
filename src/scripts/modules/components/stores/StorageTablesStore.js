@@ -54,6 +54,14 @@ const StorageTablesStore = StoreUtils.createStore({
     return _store.getIn(['pendingTables', 'creatingAlias'], false);
   },
 
+  getIsSettingAliasFilter(tableId) {
+    return _store.getIn(['pendingTables', 'settingAliasFilter', tableId], false);
+  },
+
+  getIsRemovingAliasFilter(tableId) {
+    return _store.getIn(['pendingTables', 'removingAliasFilter', tableId], false);
+  },
+
   getIsCreatingPrimaryKey(tableId) {
     return _store.getIn(['pendingTables', 'creatingPrimaryKey', tableId], false);
   },
@@ -168,11 +176,26 @@ Dispatcher.register(function(payload) {
       return StorageTablesStore.emitChange();
 
     case constants.ActionTypes.STORAGE_ALIAS_TABLE_CREATE_SUCCESS:
+    case constants.ActionTypes.STORAGE_ALIAS_TABLE_CREATE_ERROR:
       _store = _store.setIn(['pendingTables', 'creatingAlias'], false);
       return StorageTablesStore.emitChange();
 
-    case constants.ActionTypes.STORAGE_ALIAS_TABLE_CREATE_ERROR:
-      _store = _store.setIn(['pendingTables', 'creatingAlias'], false);
+    case constants.ActionTypes.STORAGE_SET_ALIAS_TABLE_FILTER:
+      _store = _store.setIn(['pendingTables', 'settingAliasFilter', action.tableId], true);
+      return StorageTablesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_SET_ALIAS_TABLE_FILTER_SUCCESS:
+    case constants.ActionTypes.STORAGE_SET_ALIAS_TABLE_FILTER_ERROR:
+      _store = _store.setIn(['pendingTables', 'settingAliasFilter', action.tableId], false);
+      return StorageTablesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_REMOVE_ALIAS_TABLE_FILTER:
+      _store = _store.setIn(['pendingTables', 'removingAliasFilter', action.tableId], true);
+      return StorageTablesStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_REMOVE_ALIAS_TABLE_FILTER_SUCCESS:
+    case constants.ActionTypes.STORAGE_REMOVE_ALIAS_TABLE_FILTER_ERROR:
+      _store = _store.setIn(['pendingTables', 'removingAliasFilter', action.tableId], false);
       return StorageTablesStore.emitChange();
 
     case constants.ActionTypes.STORAGE_TABLE_SET_PRIMARY_KEY:
