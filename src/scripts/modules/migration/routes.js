@@ -5,8 +5,7 @@ import InstalledComponentsStore from '../components/stores/InstalledComponentsSt
 
 function loadComponentsWithOauth() {
   return InstalledComponentsActions.loadComponents()
-    .then(() => InstalledComponentsStore.getAll())
-    .then(components => components.filter(component => {
+    .then(() => InstalledComponentsStore.getAll().filter(component => {
       return component.get('flags').contains('genericDockerUI-authorization');
     }))
     .then(componentsWithOauth => componentsWithOauth.map(component => {
