@@ -55,7 +55,7 @@ export default React.createClass({
               Close
             </Button>
             <Button type="submit" bsStyle="success" onClick={this.onSubmit} disabled={this.isDisabled()}>
-              Create
+              Import
             </Button>
             {this.state.error && (
               <Button bsStyle="primary" onClick={this.resetState}>
