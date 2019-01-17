@@ -27,13 +27,25 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    this.fetchLastMigrationJob().then((job) => {
-      this.setState({
+    this.updateLastJob();
+    this.timerID = setInterval(
+      () => this.updateLastJob(),
+      10000
+    );
+  },
+
+  componentWillUnmount() {
+    clearInterval(this.timerID);
+  },
+
+  updateLastJob() {
+    this.setState({isLoading: true});
+    this.fetchLastMigrationJob()
+      .then(job => this.setState({
         job: job,
         isLoading: false,
         isMigrating: !job.get('isFinished')
-      });
-    });
+      }));
   },
 
   fetchLastMigrationJob() {
@@ -49,6 +61,8 @@ export default React.createClass({
     if (!job) {
       return (
         <div>
+          {this.state.isLoading ? <Loader /> : ''}
+          &nbsp;
           <small>
             Last Job: N/A
           </small>
@@ -58,6 +72,8 @@ export default React.createClass({
 
     return (
       <div>
+        {this.state.isLoading ? <Loader /> : ''}
+        &nbsp;
         <strong>Last migration job: {' '}</strong>
         <Link to="jobDetail" params={{jobId: job.get('id')}}>
           {job.get('id')}
@@ -98,20 +114,11 @@ export default React.createClass({
   },
 
   renderButton(components, configurationsFlatten) {
-    if (this.state.isLoading) {
-      return (
-        <span>
-          <Loader />
-          &nbsp;Checking migration status
-        </span>
-      );
-    }
-
     if (this.state.isMigrating) {
       return (
         <span>
           <Loader />
-          &nbsp;Migration is under way
+          &nbsp;Migrating
         </span>
       );
     }
@@ -174,10 +181,9 @@ export default React.createClass({
 
   getOnMigrateFn(components) {
     const configurations = this.getConfigurationsToMigrateAll(components);
-    const indexPage = this;
 
-    return () => {
-      indexPage.setState({
+    return function() {
+      this.setState({
         isMigrating: true,
         isLoading: true
       });
@@ -204,6 +210,6 @@ export default React.createClass({
           this.setState({isLoading: false});
           throw error;
         });
-    };
+    }.bind(this);
   }
 });

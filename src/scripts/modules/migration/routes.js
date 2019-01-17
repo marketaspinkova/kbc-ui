@@ -3,6 +3,17 @@ import InstalledComponentsActions from '../components/InstalledComponentsActionC
 import ComponentReloaderButton from '../components/react/components/ComponentsReloaderButton';
 import InstalledComponentsStore from '../components/stores/InstalledComponentsStore';
 
+function loadComponentsWithOauth() {
+  return InstalledComponentsActions.loadComponents()
+    .then(() => InstalledComponentsStore.getAll())
+    .then(components => components.filter(component => {
+      return component.get('flags').contains('genericDockerUI-authorization');
+    }))
+    .then(componentsWithOauth => componentsWithOauth.map(component => {
+      return InstalledComponentsActions.loadComponentConfigsData(component.get('id'));
+    }));
+}
+
 export default {
   name: 'migrations',
   title: 'Migrations',
@@ -11,19 +22,12 @@ export default {
   defaultRouteHandler: Index,
   reloaderHandler: ComponentReloaderButton,
   requireData: [
-    () => InstalledComponentsActions.loadComponents()
-      .then(() => InstalledComponentsStore.getAll())
-      .then(components => components.filter(component => {
-        return component.get('flags').contains('genericDockerUI-authorization');
-      }))
-      .then(componentsWithOauth => componentsWithOauth.map(component => {
-        return InstalledComponentsActions.loadComponentConfigsData(component.get('id'));
-      }))
+    () => loadComponentsWithOauth()
   ],
-  // poll: {
-  //   interval: 10,
-  //   action: () => installedComponentsActions.loadDeletedComponentsForce()
-  // },
+  poll: {
+    interval: 10,
+    action: () => loadComponentsWithOauth()
+  },
   childRoutes: [
   ]
 };
