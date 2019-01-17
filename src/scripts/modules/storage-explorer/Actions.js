@@ -145,6 +145,11 @@ const loadMoreFiles = params => {
     .catch(errorNotification);
 };
 
+const filterFiles = query => {
+  const queryParams = query ? {q: query} : {};
+  RoutesStore.getRouter().transitionTo('storage-explorer-files', null, queryParams);
+};
+
 const updateFilesSearchQuery = query => {
   return dispatcher.handleViewAction({
     type: localConstants.ActionTypes.UPDATE_SEARCH_QUERY,
@@ -173,5 +178,6 @@ export {
   loadFiles,
   loadMoreFiles,
   updateFilesSearchQuery,
+  filterFiles,
   resetFilesSearchQuery
 };

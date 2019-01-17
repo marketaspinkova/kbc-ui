@@ -13,7 +13,7 @@ import FilesTable from '../../components/FilesTable';
 import NavButtons from '../../components/NavButtons';
 import UploadModal from '../../modals/UploadModal';
 import ExamplesModal from '../../modals/FilesSearchExamplesModal';
-import { loadFiles, loadMoreFiles, updateFilesSearchQuery, resetFilesSearchQuery } from '../../../Actions';
+import { loadFiles, loadMoreFiles, filterFiles, updateFilesSearchQuery, resetFilesSearchQuery } from '../../../Actions';
 import { filesLimit } from '../../../Constants';
 
 const DIRECT_UPLOAD = 'direct-upload';
@@ -53,7 +53,9 @@ export default React.createClass({
               placeholder="Search: tags:tag"
               query={this.state.searchQuery}
               onChange={this.updateSearchQuery}
-              onSubmit={this.fetchFiles}
+              onSubmit={() => {
+                filterFiles(this.state.searchQuery);
+              }}
               additionalActions={
                 <ButtonToolbar>
                   <Tooltip tooltip="Search syntax &amp; Examples" placement="top">
@@ -75,7 +77,7 @@ export default React.createClass({
             <div>
               <FilesTable
                 files={this.state.files}
-                onSearchQuery={this.searchQuery}
+                onSearchQuery={filterFiles}
                 onDeleteFile={this.handleDeleteFile}
                 isDeleting={this.state.isDeleting}
               />
@@ -120,7 +122,7 @@ export default React.createClass({
       <ExamplesModal
         show={this.state.openExamplesModal}
         onHide={this.closeExamplesModal}
-        onSelectExample={this.searchQuery}
+        onSelectExample={filterFiles}
       />
     );
   },
@@ -153,11 +155,6 @@ export default React.createClass({
     return StorageActionCreators.uploadFile(DIRECT_UPLOAD, file, params).then(() => this.fetchFiles());
   },
 
-  searchQuery(query) {
-    this.updateSearchQuery(query);
-    setTimeout(this.fetchFiles, 50);
-  },
-
   handleDeleteFile(fileId) {
     return StorageActionCreators.deleteFile(fileId);
   },
@@ -186,9 +183,5 @@ export default React.createClass({
 
   updateSearchQuery(query) {
     updateFilesSearchQuery(query);
-
-    const token = process.env.NODE_ENV === 'development' ? `${window.location.search}#` : '';
-    const pathname = this.makePath('storage-explorer-files', null, { q: query });
-    window.history.replaceState(null, null, token + pathname);
   }
 });

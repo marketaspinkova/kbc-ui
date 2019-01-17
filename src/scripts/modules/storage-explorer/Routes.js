@@ -25,7 +25,7 @@ export default {
         (params, query) => {
           const searchParams = { limit: filesLimit };
 
-          if (query.q) {
+          if (query.q || query.q === '') {
             searchParams.q = query.q;
             updateFilesSearchQuery(query.q);
           }
