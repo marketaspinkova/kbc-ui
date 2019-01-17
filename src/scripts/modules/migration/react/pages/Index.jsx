@@ -9,7 +9,6 @@ import InstalledComponentsActionCreators from '../../../components/InstalledComp
 import jobsApi from '../../../jobs/JobsApi';
 import {fromJS, List} from 'immutable';
 import {Loader} from '@keboola/indigo-ui';
-// import date from '../../../../utils/date';
 import {Link} from 'react-router/lib';
 import JobStatusLabel from '../../../../react/common/JobStatusLabel';
 
@@ -30,7 +29,7 @@ export default React.createClass({
     this.updateLastJob();
     this.timerID = setInterval(
       () => this.updateLastJob(),
-      10000
+      5000
     );
   },
 
@@ -44,7 +43,7 @@ export default React.createClass({
       .then(job => this.setState({
         job: job,
         isLoading: false,
-        isMigrating: !job.get('isFinished')
+        isMigrating: !!job ? !job.get('isFinished') : false
       }));
   },
 
@@ -118,7 +117,7 @@ export default React.createClass({
       return (
         <span>
           <Loader />
-          &nbsp;Migrating
+          &nbsp;Migration in progress
         </span>
       );
     }
@@ -126,7 +125,7 @@ export default React.createClass({
     return (
       <MigrationButton
         key="migration-button"
-        onClick={this.getOnMigrateFn(components)}
+        onClick={this.onMigrate}
         enabled={!!configurationsFlatten.count()}
       />
     );
@@ -179,37 +178,35 @@ export default React.createClass({
     }).flatten(1);
   },
 
-  getOnMigrateFn(components) {
-    const configurations = this.getConfigurationsToMigrateAll(components);
+  onMigrate() {
+    const configurations = this.getConfigurationsToMigrateAll(this.getComponentsWithOAuth());
 
-    return function() {
-      this.setState({
-        isMigrating: true,
-        isLoading: true
-      });
+    this.setState({
+      isMigrating: true,
+      isLoading: true
+    });
 
-      const params = {
-        method: 'run',
-        component: MIGRATION_COMPONENT_ID,
-        data: {
-          configData: {
-            parameters: {
-              oauth: {
-                configurations: configurations.toJS()
-              }
+    const params = {
+      method: 'run',
+      component: MIGRATION_COMPONENT_ID,
+      data: {
+        configData: {
+          parameters: {
+            oauth: {
+              configurations: configurations.toJS()
             }
           }
-        },
-        notify: true
-      };
+        }
+      },
+      notify: true
+    };
 
-      InstalledComponentsActionCreators
-        .runComponent(params)
-        .then(this.setState({isLoading: false}))
-        .catch((error) => {
-          this.setState({isLoading: false});
-          throw error;
-        });
-    }.bind(this);
+    InstalledComponentsActionCreators
+      .runComponent(params)
+      .then(this.setState({isLoading: false}))
+      .catch((error) => {
+        this.setState({isLoading: false});
+        throw error;
+      });
   }
 });
