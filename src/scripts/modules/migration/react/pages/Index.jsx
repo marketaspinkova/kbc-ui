@@ -19,9 +19,15 @@ export default React.createClass({
 
   getStateFromStores() {
     return {
-      components: InstalledComponentsStore.getAll(),
+      components: InstalledComponentsStore.getAll()
+    };
+  },
+
+  getInitialState() {
+    return {
       isLoading: true,
-      isMigrating: false
+      isMigrating: false,
+      isButtonEnabled: true
     };
   },
 
@@ -29,7 +35,7 @@ export default React.createClass({
     this.updateLastJob();
     this.timerID = setInterval(
       () => this.updateLastJob(),
-      5000
+      10000
     );
   },
 
@@ -40,11 +46,15 @@ export default React.createClass({
   updateLastJob() {
     this.setState({isLoading: true});
     this.fetchLastMigrationJob()
-      .then(job => this.setState({
-        job: job,
-        isLoading: false,
-        isMigrating: !!job ? !job.get('isFinished') : false
-      }));
+      .then(job => {
+        const isMigrating = this.state.isMigrating;
+
+        this.setState({
+          job: job,
+          isLoading: false,
+          isMigrating: (!!job) ? !job.get('isFinished') : isMigrating
+        });
+      });
   },
 
   fetchLastMigrationJob() {
@@ -126,7 +136,7 @@ export default React.createClass({
       <MigrationButton
         key="migration-button"
         onClick={this.onMigrate}
-        enabled={!!configurationsFlatten.count()}
+        enabled={!!configurationsFlatten.count() && this.state.isButtonEnabled}
       />
     );
   },
@@ -183,7 +193,7 @@ export default React.createClass({
 
     this.setState({
       isMigrating: true,
-      isLoading: true
+      isButtonEnabled: false
     });
 
     const params = {
@@ -203,9 +213,10 @@ export default React.createClass({
 
     InstalledComponentsActionCreators
       .runComponent(params)
-      .then(this.setState({isLoading: false}))
+      .then(() => this.setState({
+        isButtonEnabled: true
+      }))
       .catch((error) => {
-        this.setState({isLoading: false});
         throw error;
       });
   }
