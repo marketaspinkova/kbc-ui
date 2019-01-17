@@ -95,9 +95,7 @@ export default React.createClass({
 
   onRunTransformation() {
     InstalledComponentsActionCreators.runComponent({
-      method: 'run',
       component: 'transformation',
-      notify: true,
       data: {
         configBucketId: this.props.bucketId,
         transformations: [this.props.transformation.get('id')]
