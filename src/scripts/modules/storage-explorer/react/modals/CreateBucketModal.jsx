@@ -12,6 +12,7 @@ const INITIAL_STATE = {
 export default React.createClass({
   propTypes: {
     openModal: PropTypes.bool.isRequired,
+    hasMysql: PropTypes.bool.isRequired,
     hasRedshift: PropTypes.bool.isRequired,
     hasSnowflake: PropTypes.bool.isRequired,
     defaultBackend: PropTypes.string.isRequired,
@@ -33,8 +34,6 @@ export default React.createClass({
           </Modal.Header>
           <Modal.Body>
             {this.renderError()}
-            {this.renderCheckRedshift()}
-            {this.renderCheckSnowflake()}
 
             <FormGroup>
               <Col sm={3} componentClass={ControlLabel}>
@@ -73,9 +72,7 @@ export default React.createClass({
                   onChange={this.handleBackend}
                   value={this.state.backend || this.props.defaultBackend}
                 >
-                  <option value="mysql">MySQL</option>
-                  <option value="redshift">Redshift</option>
-                  <option value="snowflake">Snowflake</option>
+                  {this.renderBackendOptions()}
                 </FormControl>
               </Col>
             </FormGroup>
@@ -95,34 +92,30 @@ export default React.createClass({
     );
   },
 
-  renderCheckRedshift() {
-    if (this.state.backend === 'redshift' && !this.props.hasRedshift) {
-      return (
-        <Alert bsStyle="warning">
-          Redshift is not enabled for this project. Please contact{' '}
-          <a href="mailto:support@keboola.com">support@keboola.com</a>.
-        </Alert>
-      );
-    }
-  },
-
-  renderCheckSnowflake() {
-    if (this.state.backend === 'snowflake' && !this.props.hasSnowflake) {
-      return (
-        <Alert bsStyle="warning">
-          Snowflake is not enabled for this project. Please contact{' '}
-          <a href="mailto:support@keboola.com">support@keboola.com</a>.
-        </Alert>
-      );
-    }
-  },
-
   renderError() {
     if (!this.state.error) {
       return null;
     }
 
     return <Alert bsStyle="danger">{this.state.error}</Alert>;
+  },
+
+  renderBackendOptions() {
+    const options = [];
+
+    if (this.props.hasMysql) {
+      options.push(<option key="mysql" value="mysql">MySQL</option>);
+    }
+
+    if (this.props.hasRedshift) {
+      options.push(<option key="redshift" value="redshift">Redshift</option>);
+    }
+
+    if (this.props.hasSnowflake) {
+      options.push(<option key="snowflake" value="snowflake">Snowflake</option>);
+    }
+
+    return options;
   },
 
   handleName(event) {
@@ -169,14 +162,6 @@ export default React.createClass({
 
   isDisabled() {
     const backend = this.state.backend || this.props.defaultBackend;
-
-    if (backend === 'redshift' && !this.props.hasRedshift) {
-      return true;
-    }
-
-    if (backend === 'snowflake' && !this.props.hasSnowflake) {
-      return true;
-    }
 
     if (!this.state.name || !this.state.stage || !backend) {
       return true;
