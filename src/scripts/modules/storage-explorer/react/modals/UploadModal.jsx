@@ -95,7 +95,7 @@ export default React.createClass({
             File
           </Col>
           <Col sm={9}>
-            <FormControl type="file" onChange={this.handleFile} />
+            <FormControl type="file" autoFocus onChange={this.handleFile} />
           </Col>
         </FormGroup>
         <FormGroup>

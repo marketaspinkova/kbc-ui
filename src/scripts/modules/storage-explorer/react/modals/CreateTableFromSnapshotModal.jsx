@@ -45,6 +45,7 @@ export default React.createClass({
               </Col>
               <Col sm={8}>
                 <Select
+                  autoFocus
                   clearable={false}
                   backspaceRemoves={false}
                   deleteRemoves={false}

@@ -20,7 +20,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Modal show={this.props.show} onHide={this.onHide} enforceFocus={false}>
+      <Modal show={this.props.show} onHide={this.onHide}>
         <Form onSubmit={this.handleSubmit} horizontal>
           <Modal.Header closeButton>
             <Modal.Title>Create primary key</Modal.Title>
@@ -34,6 +34,7 @@ export default React.createClass({
               </Col>
               <Col sm={9}>
                 <Select
+                  autoFocus
                   clearable={false}
                   multi={true}
                   placeholder="Check one or more columns"

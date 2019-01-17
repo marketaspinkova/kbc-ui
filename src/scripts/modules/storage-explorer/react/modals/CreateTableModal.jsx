@@ -83,7 +83,7 @@ export default React.createClass({
             Name
           </Col>
           <Col sm={9}>
-            <FormControl type="text" value={this.state.name} onChange={this.handleName} />
+            <FormControl type="text" autoFocus value={this.state.name} onChange={this.handleName} />
           </Col>
         </FormGroup>
 

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Modal, ButtonToolbar, Button } from 'react-bootstrap';
-import { Loader } from '@keboola/indigo-ui';
+import { Modal } from 'react-bootstrap';
+import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
 export default React.createClass({
   propTypes: {
@@ -20,9 +20,7 @@ export default React.createClass({
     return (
       <Modal onHide={this.props.onHide} show={this.props.show}>
         <Modal.Header closeButton>
-          <Modal.Title>
-            Truncate table
-          </Modal.Title>
+          <Modal.Title>Truncate table</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <p>
@@ -30,25 +28,14 @@ export default React.createClass({
           </p>
         </Modal.Body>
         <Modal.Footer>
-          <div className="row">
-            <div className="col-sm-6 text-left">
-              {this.state.isPending && (
-                <div style={{ padding: '7px 12px'}}>
-                  <Loader />
-                </div>
-              )}
-            </div>
-            <div className="col-sm-6">
-              <ButtonToolbar>
-                <Button onClick={this.props.onHide} bsStyle="link">
-                  Cancel
-                </Button>
-                <Button onClick={this.handleConfirm} bsStyle="danger" disabled={this.state.isPending}>
-                  Truncate
-                </Button>
-              </ButtonToolbar>
-            </div>
-          </div>
+          <ConfirmButtons
+            isSaving={this.state.isPending}
+            isDisabled={this.state.isPending}
+            saveLabel={this.state.isPending ? 'Truncating...' : 'Truncate'}
+            saveStyle="danger"
+            onCancel={this.props.onHide}
+            onSave={this.handleConfirm}
+          />
         </Modal.Footer>
       </Modal>
     );
@@ -58,14 +45,10 @@ export default React.createClass({
     this.setState({
       isPending: true
     });
-    this.props
-      .onConfirm()
-      .finally(() => {
-        this.setState({
-          isPending: false
-        }, () => {
-          this.props.onHide();
-        });
+    this.props.onConfirm().finally(() => {
+      this.setState({ isPending: false }, () => {
+        this.props.onHide();
       });
+    });
   }
 });
