@@ -127,6 +127,24 @@ const exportTable = tableId => {
     });
 };
 
+const loadFiles = params => {
+  return StorageActionCreators
+    .loadFilesForce(params)
+    .catch(HttpError, error => {
+      throw error.message;
+    })
+    .catch(errorNotification);
+};
+
+const loadMoreFiles = params => {
+  return StorageActionCreators
+    .loadMoreFiles(params)
+    .catch(HttpError, error => {
+      throw error.message;
+    })
+    .catch(errorNotification);
+};
+
 const updateSearchQuery = query => {
   return dispatcher.handleViewAction({
     type: localConstants.ActionTypes.UPDATE_SEARCH_QUERY,
@@ -152,6 +170,8 @@ export {
   truncateTable,
   createTableFromTextInput,
   exportTable,
+  loadFiles,
+  loadMoreFiles,
   updateSearchQuery,
   resetSearchQuery
 };

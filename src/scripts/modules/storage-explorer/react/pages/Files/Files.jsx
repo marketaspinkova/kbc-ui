@@ -1,6 +1,7 @@
 import React from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { ButtonToolbar, Button } from 'react-bootstrap';
+import { Navigation } from 'react-router';
 import { SearchBar } from '@keboola/indigo-ui';
 
 import Tooltip from '../../../../../react/common/Tooltip';
@@ -12,13 +13,13 @@ import FilesTable from '../../components/FilesTable';
 import NavButtons from '../../components/NavButtons';
 import UploadModal from '../../modals/UploadModal';
 import ExamplesModal from '../../modals/FilesSearchExamplesModal';
-import { updateSearchQuery, resetSearchQuery } from '../../../Actions';
+import { loadFiles, loadMoreFiles, updateSearchQuery, resetSearchQuery } from '../../../Actions';
 import { filesLimit } from '../../../Constants';
 
 const DIRECT_UPLOAD = 'direct-upload';
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin, createStoreMixin(FilesStore, FilesLocalStore)],
+  mixins: [ImmutableRenderMixin, Navigation, createStoreMixin(FilesStore, FilesLocalStore)],
 
   getStateFromStores() {
     return {
@@ -51,7 +52,7 @@ export default React.createClass({
             <SearchBar
               placeholder="Search: tags:tag"
               query={this.state.searchQuery}
-              onChange={this.handleQueryChange}
+              onChange={this.updateSearchQuery}
               onSubmit={this.fetchFiles}
               additionalActions={
                 <ButtonToolbar>
@@ -124,10 +125,6 @@ export default React.createClass({
     );
   },
 
-  handleQueryChange(query) {
-    updateSearchQuery(query);
-  },
-
   openUploadModal() {
     this.setState({
       openUploadModal: true
@@ -157,7 +154,7 @@ export default React.createClass({
   },
 
   searchQuery(query) {
-    updateSearchQuery(query);
+    this.updateSearchQuery(query);
     setTimeout(this.fetchFiles, 50);
   },
 
@@ -165,7 +162,7 @@ export default React.createClass({
     return StorageActionCreators.deleteFile(fileId);
   },
 
-  getParams(offset) {
+  getSearchParams(offset) {
     const params = {
       limit: filesLimit,
       offset
@@ -179,11 +176,19 @@ export default React.createClass({
   },
 
   fetchFiles(offset = 0) {
-    StorageActionCreators.loadFilesForce(this.getParams(offset));
+    loadFiles(this.getSearchParams(offset));
   },
 
   fetchMoreFiles() {
     const offset = this.state.files.count();
-    return StorageActionCreators.loadMoreFiles(this.getParams(offset));
+    return loadMoreFiles(this.getSearchParams(offset));
+  },
+
+  updateSearchQuery(query) {
+    updateSearchQuery(query);
+
+    const token = process.env.NODE_ENV === 'development' ? `${window.location.search}#` : '';
+    const pathname = this.makePath('storage-explorer-files', null, { q: query });
+    window.history.replaceState(null, null, token + pathname);
   }
 });
