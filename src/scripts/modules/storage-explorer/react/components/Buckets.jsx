@@ -70,6 +70,7 @@ export default React.createClass({
     return (
       <CreateBucketModal
         openModal={this.state.createBucketModal}
+        hasMysql={!!this.state.sapiToken.getIn(['owner', 'hasMysql'])}
         hasRedshift={!!this.state.sapiToken.getIn(['owner', 'hasRedshift'])}
         hasSnowflake={!!this.state.sapiToken.getIn(['owner', 'hasSnowflake'])}
         defaultBackend={this.state.sapiToken.getIn(['owner', 'defaultBackend'])}
