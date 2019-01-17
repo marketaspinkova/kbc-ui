@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { Link } from 'react-router';
 import {
   Alert,
   Button,
@@ -13,6 +14,7 @@ import {
   HelpBlock
 } from 'react-bootstrap';
 import { Loader, PanelWithDetails } from '@keboola/indigo-ui';
+import { parse as parseTable } from '../../../../utils/tableIdParser';
 
 const INITIAL_STATE = {
   file: null,
@@ -55,7 +57,7 @@ export default React.createClass({
               Close
             </Button>
             <Button type="submit" bsStyle="success" onClick={this.onSubmit} disabled={this.isDisabled()}>
-              Create
+              Import
             </Button>
             {this.state.error && (
               <Button bsStyle="primary" onClick={this.resetState}>
@@ -69,6 +71,27 @@ export default React.createClass({
   },
 
   renderForm() {
+    if (this.props.table.get('isAlias')) {
+      const sourceTable = parseTable(this.props.table.getIn(['sourceTable', 'id']));
+      const sourceTableLinkParams = {
+        bucketId: `${sourceTable.parts.stage}.${sourceTable.parts.bucket}`,
+        tableName: sourceTable.parts.table
+      };
+
+      return (
+        <Alert bsStyle="warning">
+          <p>The table is an alias table. Import is disabled.</p>
+          <p>
+            Please import data into the{' '}
+            <Link to="storage-explorer-table" params={sourceTableLinkParams}>
+              source table
+            </Link>
+            .
+          </p>
+        </Alert>
+      );
+    }
+
     return (
       <div>
         <FormGroup>
@@ -188,7 +211,7 @@ export default React.createClass({
   },
 
   isDisabled() {
-    if (this.isSaving() || this.state.error) {
+    if (this.isSaving() || this.state.error || this.props.table.get('isAlias')) {
       return true;
     }
 
