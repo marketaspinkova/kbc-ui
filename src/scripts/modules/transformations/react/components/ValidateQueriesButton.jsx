@@ -4,9 +4,9 @@ import Modal from '../modals/ValidateQueriesModal';
 
 export default React.createClass({
   propTypes: {
-    transformationId: PropTypes.string.isRequired,
-    bucketId: PropTypes.string.isRequired,
     backend: PropTypes.string.isRequired,
+    bucketId: PropTypes.string.isRequired,
+    transformation: PropTypes.object.isRequired,
     modalOpen: PropTypes.bool.isRequired,
     onModalOpen: PropTypes.func.isRequired,
     onModalClose: PropTypes.func.isRequired,
@@ -23,9 +23,9 @@ export default React.createClass({
       <a onClick={this.handleOpenButtonClick}>
         <i className="fa fa-check-square-o fa-fw" /> Validate <Label bsStyle="info">BETA</Label>
         <Modal
-          transformationId={this.props.transformationId}
-          bucketId={this.props.bucketId}
           backend={this.props.backend}
+          bucketId={this.props.bucketId}
+          transformation={this.props.transformation}
           show={this.props.modalOpen}
           onHide={this.props.onModalClose}
           isSaved={this.props.isSaved}

@@ -3,19 +3,21 @@ import { fromJS } from 'immutable';
 import { Alert, Modal } from 'react-bootstrap';
 import { ExternalLink } from '@keboola/indigo-ui';
 import SqlDepAnalyzerApi from '../../../sqldep-analyzer/Api';
+import InstalledComponentsActionCreators from '../../../components/InstalledComponentsActionCreators';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import Result from '../components/validation/Result';
 
 const INITIAL_STATE = {
   isLoading: false,
+  isValid: false,
   result: null
 };
 
 export default React.createClass({
   propTypes: {
-    transformationId: PropTypes.string.isRequired,
-    bucketId: PropTypes.string.isRequired,
     backend: PropTypes.string.isRequired,
+    bucketId: PropTypes.string.isRequired,
+    transformation: PropTypes.object.isRequired,
     show: PropTypes.bool.isRequired,
     onHide: PropTypes.func.isRequired,
     isSaved: PropTypes.bool.isRequired
@@ -35,11 +37,11 @@ export default React.createClass({
         <Modal.Footer>
           <ConfirmButtons
             isSaving={this.state.isLoading}
-            isDisabled={this.state.isLoading || !!this.state.result || !this.isValidBackend()}
-            saveLabel="Validate"
-            saveStyle="primary"
+            isDisabled={this.isDisabled()}
             onCancel={this.onHide}
-            onSave={this.onRun}
+            onSave={this.state.isValid ? this.onRunTransformation : this.onRunValidation}
+            saveLabel={this.state.isValid ? 'Run transformation' : 'Validate'}
+            saveStyle="primary"
             saveButtonType="submit"
           />
         </Modal.Footer>
@@ -91,19 +93,46 @@ export default React.createClass({
     this.props.onHide();
   },
 
-  onRun() {
+  onRunTransformation() {
+    InstalledComponentsActionCreators.runComponent({
+      method: 'run',
+      component: 'transformation',
+      notify: true,
+      data: {
+        configBucketId: this.props.bucketId,
+        transformations: [this.props.transformation.get('id')]
+      }
+    });
+    this.onHide();
+  },
+
+  onRunValidation() {
     this.setState({ isLoading: true });
-    return SqlDepAnalyzerApi.validate(this.props.bucketId, this.props.transformationId)
+    return SqlDepAnalyzerApi.validate(this.props.bucketId, this.props.transformation.get('id'))
       .then(response => {
+        const result = fromJS(response);
         return this.setState({
           isLoading: false,
-          result: fromJS(response)
+          isValid: result.count() === 0,
+          result
         });
       })
       .catch(error => {
         this.setState({ isLoading: false });
         throw error;
       });
+  },
+
+  isDisabled() {
+    if (this.state.isLoading || !this.isValidBackend()) {
+      return true;
+    }
+
+    if (this.state.result && (!this.state.isValid || this.props.transformation.get('disabled'))) {
+      return true;
+    }
+
+    return false;
   },
 
   isValidBackend() {
