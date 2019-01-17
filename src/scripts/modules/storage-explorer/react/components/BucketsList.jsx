@@ -21,7 +21,14 @@ export default React.createClass({
       return <p className="kbc-inner-padding">No buckets found.</p>;
     }
 
-    return <Accordion className="kbc-accordion">{this.props.buckets.map(this.renderBucketPanel).toArray()}</Accordion>;
+    return (
+      <Accordion className="kbc-accordion">
+        {this.props.buckets
+          .sortBy(bucket => bucket.get('id').toLowerCase())
+          .map(this.renderBucketPanel)
+          .toArray()}
+      </Accordion>
+    );
   },
 
   renderBucketPanel(bucket) {
@@ -64,7 +71,10 @@ export default React.createClass({
       return <p>No tables.</p>;
     }
 
-    return tables.map(this.renderTable).toArray();
+    return tables
+      .sortBy(table => table.get('name').toLowerCase())
+      .map(this.renderTable)
+      .toArray();
   },
 
   renderTable(table) {
