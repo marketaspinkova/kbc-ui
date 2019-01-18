@@ -3,7 +3,7 @@ import { Alert, Modal, Form, Col, FormGroup, ControlLabel, FormControl } from 'r
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
 const INITIAL_STATE = {
-  bucket: '',
+  bucket: null,
   name: '',
   stage: 'in',
   error: null
@@ -14,7 +14,8 @@ export default React.createClass({
     sharedBuckets: PropTypes.object.isRequired,
     show: PropTypes.bool.isRequired,
     onSubmit: PropTypes.func.isRequired,
-    onHide: PropTypes.func.isRequired
+    onHide: PropTypes.func.isRequired,
+    isSaving: PropTypes.bool.isRequired
   },
 
   getInitialState() {
@@ -40,20 +41,24 @@ export default React.createClass({
                   componentClass="select"
                   placeholder="Select bucket..."
                   onChange={this.handleBucket}
-                  value={this.state.bucket}
+                  value={JSON.stringify(this.state.bucket)}
                 >
                   {this.groupedBuckets()
-                    .map((groupName, group) => (
-                      <optgroup key={groupName} label={groupName}>
-                        {group
-                          .map((bucket, index) => (
-                            <option key={index} value={bucket}>
-                              {this.bucketLabel(bucket)}
-                            </option>
-                          ))
-                          .toArray()}
-                      </optgroup>
-                    ))
+                    .map((group, groupName) => {
+                      return (
+                        <optgroup key={groupName} label={groupName}>
+                          {group
+                            .map((bucket, index) => {
+                              return (
+                                <option key={index} value={JSON.stringify(bucket.toJS())}>
+                                  {this.bucketLabel(bucket)}
+                                </option>
+                              );
+                            })
+                            .toArray()}
+                        </optgroup>
+                      );
+                    })
                     .toArray()}
                 </FormControl>
               </Col>
@@ -87,7 +92,7 @@ export default React.createClass({
           </Modal.Body>
           <Modal.Footer>
             <ConfirmButtons
-              isSaving={false}
+              isSaving={this.props.isSaving}
               isDisabled={this.isDisabled()}
               saveLabel="Link"
               onCancel={this.props.onHide}
@@ -115,7 +120,7 @@ export default React.createClass({
   },
 
   bucketLabel(bucket) {
-    const label = bucket.get('id');
+    let label = bucket.get('id');
 
     if (bucket.get('description')) {
       label += ` - ${bucket.get('description')}`;
@@ -124,14 +129,14 @@ export default React.createClass({
     return label;
   },
 
-  handleSubmit() {
+  handleSubmit(event) {
     event.preventDefault();
 
     const newBucket = {
       name: this.state.name,
       stage: this.state.stage,
-      sourceProjectId: '',
-      sourceBucketId: ''
+      sourceProjectId: this.state.bucket.project.id,
+      sourceBucketId: this.state.bucket.id
     };
 
     this.props.onSubmit(newBucket).then(this.onHide, message => {
@@ -143,7 +148,7 @@ export default React.createClass({
 
   handleBucket(event) {
     this.setState({
-      bucket: event.target.value
+      bucket: JSON.parse(event.target.value)
     });
   },
 

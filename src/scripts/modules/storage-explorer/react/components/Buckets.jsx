@@ -97,6 +97,7 @@ export default React.createClass({
         show={this.state.linkBucketModal}
         onSubmit={this.handleCreateBucket}
         onHide={this.closeBucketLinkModal}
+        isSaving={this.state.isCreatingBucket}
       />
     );
   },
