@@ -1,47 +1,26 @@
 import React from 'react';
 import classnames from 'classnames';
-import { Link } from 'react-router';
-import createStoreMixin from '../../../../react/mixins/createStoreMixin';
-import RoutesStore from '../../../../stores/RoutesStore';
+import { Link, State } from 'react-router';
 
 export default React.createClass({
-  mixins: [createStoreMixin(RoutesStore)],
-
-  getStateFromStores() {
-    return {
-      routeName: RoutesStore.getCurrentRouteConfig().get('name')
-    };
-  },
+  mixins: [State],
 
   render() {
+    const isFilesActive = this.isActive('storage-explorer-files');
+    const isJobsActive = this.isActive('storage-explorer-jobs');
+
     return (
       <ul className="nav nav-tabs">
-        <li className={this.activeClass('buckets')}>
+        <li className={classnames({ active: !isFilesActive && !isJobsActive })}>
           <Link to="storage-explorer">Buckets</Link>
         </li>
-        <li className={this.activeClass('files')}>
+        <li className={classnames({ active: isFilesActive })}>
           <Link to="storage-explorer-files">Files</Link>
         </li>
-        <li className={this.activeClass('jobs')}>
+        <li className={classnames({ active: isJobsActive })}>
           <Link to="storage-explorer-jobs">Jobs</Link>
         </li>
       </ul>
     );
-  },
-
-  activeClass(name) {
-    return classnames({ active: this.activeLink() === name });
-  },
-
-  activeLink() {
-    if (this.state.routeName === 'storage-explorer-jobs') {
-      return 'jobs';
-    }
-
-    if (this.state.routeName === 'storage-explorer-files') {
-      return 'files';
-    }
-
-    return 'buckets';
   }
 });
