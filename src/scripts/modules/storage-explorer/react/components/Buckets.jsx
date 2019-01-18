@@ -114,7 +114,7 @@ export default React.createClass({
   },
 
   canLinkBucket() {
-    return this.state.sharedBuckets.count() === 0;
+    return this.state.sharedBuckets.count() > 0;
   },
 
   handleCreateBucket(newBucket) {
