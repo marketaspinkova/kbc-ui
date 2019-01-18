@@ -1,8 +1,8 @@
 import React from 'react';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
-import StorageActionCreators from '../../../components/StorageActionCreators';
 import JobsStore from '../../../components/stores/StorageJobsStore';
 import { jobsLimit } from '../../Constants';
+import { loadJobs } from '../../Actions';
 import { RefreshIcon } from '@keboola/indigo-ui';
 
 export default React.createClass({
@@ -19,7 +19,7 @@ export default React.createClass({
       limit: jobsLimit
     };
 
-    return StorageActionCreators.loadJobs(params);
+    return loadJobs(params);
   },
 
   render() {

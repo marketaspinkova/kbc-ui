@@ -3,10 +3,10 @@ import { Map } from 'immutable';
 import { Button } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 
-import StorageActionCreators from '../../../components/StorageActionCreators';
 import Tooltip from '../../../../react/common/Tooltip';
 import ConfirmModal from '../../../../react/common/ConfirmModal';
 import AliasFilterModal from '../modals/AliasFilterModal';
+import { setAliasTableFilter, removeAliasTableFilter } from '../../Actions';
 
 export default React.createClass({
   propTypes: {
@@ -113,7 +113,7 @@ export default React.createClass({
 
   handleSubmit(params) {
     const tableId = this.props.table.get('id');
-    return StorageActionCreators.setAliasTableFilter(tableId, params);
+    return setAliasTableFilter(tableId, params);
   },
 
   handleSetFilter(filterOptions) {
@@ -121,12 +121,12 @@ export default React.createClass({
     const params = {
       filterOptions
     };
-    return StorageActionCreators.setAliasTableFilter(tableId, params);
+    return setAliasTableFilter(tableId, params);
   },
 
   handleRemoveFilter() {
     const tableId = this.props.table.get('id');
-    return StorageActionCreators.removeAliasTableFilter(tableId);
+    return removeAliasTableFilter(tableId);
   },
 
   openUpdateModal() {

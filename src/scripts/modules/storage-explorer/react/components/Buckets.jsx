@@ -8,10 +8,9 @@ import matchByWords from '../../../../utils/matchByWords';
 import Tooltip from '../../../../react/common/Tooltip';
 import BucketsStore from '../../../components/stores/StorageBucketsStore';
 import TablesStore from '../../../components/stores/StorageTablesStore';
-import StorageActionCreators from '../../../components/StorageActionCreators';
 import CreateBucketModal from '../modals/CreateBucketModal';
 import BucketsList from './BucketsList';
-import { navigateToBucketDetail } from '../../Actions';
+import { loadBuckets, createBucket } from '../../Actions';
 
 export default React.createClass({
   mixins: [ImmutableRenderMixin, createStoreMixin(BucketsStore, TablesStore, ApplicationStore)],
@@ -58,7 +57,7 @@ export default React.createClass({
           </Button>
         </Tooltip>
         <Tooltip tooltip="Refresh buckets" placement="top">
-          <Button onClick={this.handleRefresh}>
+          <Button onClick={loadBuckets}>
             <RefreshIcon isLoading={this.state.isLoading} title="" />
           </Button>
         </Tooltip>
@@ -93,14 +92,8 @@ export default React.createClass({
     return buckets;
   },
 
-  handleRefresh() {
-    StorageActionCreators.loadBucketsForce();
-  },
-
   handleCreateBucket(newBucket) {
-    return StorageActionCreators.createBucket(newBucket).then(bucket => {
-      navigateToBucketDetail(bucket.id);
-    });
+    return createBucket(newBucket);
   },
 
   handleQueryChange(query) {

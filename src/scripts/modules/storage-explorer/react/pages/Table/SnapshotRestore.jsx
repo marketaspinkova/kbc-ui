@@ -7,12 +7,11 @@ import CreatedWithIcon from '../../../../../react/common/CreatedWithIcon';
 import Tooltip from '../../../../../react/common/Tooltip';
 import ConfirmModal from '../../../../../react/common/ConfirmModal';
 import StorageApi from '../../../../components/StorageApi';
-import StorageActionCreators from '../../../../components/StorageActionCreators';
 
 import CreateSnapshotModal from '../../modals/CreateSnapshotModal';
 import CreateTableFromSnapshotModal from '../../modals/CreateTableFromSnapshotModal';
 import TimeTravelModal from '../../modals/TimeTravelModal';
-import { createTableFromSnapshot, restoreUsingTimeTravel } from '../../../Actions';
+import { createSnapshot, deleteSnapshot, createTableFromSnapshot, restoreUsingTimeTravel } from '../../../Actions';
 
 export default React.createClass({
   propTypes: {
@@ -300,7 +299,7 @@ export default React.createClass({
     const tableId = this.props.table.get('id');
     const params = { description };
 
-    return StorageActionCreators.createSnapshot(tableId, params).then(() => {
+    return createSnapshot(tableId, params).then(() => {
       this.refetchSnapshots();
     });
   },
@@ -317,7 +316,7 @@ export default React.createClass({
   handleRemoveSnapshot() {
     const snapshotId = this.state.selectedSnapshot.get('id');
 
-    return StorageActionCreators.deleteSnapshot(snapshotId).then(() => {
+    return deleteSnapshot(snapshotId).then(() => {
       this.setState({
         selectedSnapshot: null
       });

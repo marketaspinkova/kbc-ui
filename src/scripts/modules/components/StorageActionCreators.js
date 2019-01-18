@@ -921,11 +921,16 @@ module.exports = {
           return fileId;
         });
     }).catch(error => {
+      var message;
+      message = error;
+      if (error.message) {
+        message = error.message;
+      }
       dispatcher.handleViewAction({
         type: constants.ActionTypes.STORAGE_FILE_UPLOAD_ERROR,
         id: id
       });
-      throw error;
+      throw message;
     });
   },
 

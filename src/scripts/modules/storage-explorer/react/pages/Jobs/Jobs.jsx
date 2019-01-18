@@ -4,9 +4,9 @@ import { Button } from 'react-bootstrap';
 
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import JobsStore from '../../../../components/stores/StorageJobsStore';
-import StorageActionCreators from '../../../../components/StorageActionCreators';
 import JobsTable from '../../components/JobsTable';
 import { jobsLimit } from '../../../Constants';
+import { loadMoreJobs } from '../../../Actions';
 import NavButtons from '../../components/NavButtons';
 
 export default React.createClass({
@@ -63,6 +63,6 @@ export default React.createClass({
 
   fetchMoreJobs() {
     const offset = this.state.jobs.count();
-    return StorageActionCreators.loadMoreJobs(this.getParams(offset));
+    return loadMoreJobs(this.getParams(offset));
   }
 });

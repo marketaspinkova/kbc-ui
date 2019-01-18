@@ -5,15 +5,14 @@ import Table from './react/pages/Table/Table';
 import Bucket from './react/pages/Bucket/Bucket';
 import FilesReloaderButton from './react/components/FilesReloaderButton';
 import JobsReloaderButton from './react/components/JobsReloaderButton';
-import StorageActions from '../components/StorageActionCreators';
 import { filesLimit, jobsLimit } from './Constants';
-import { loadFiles, updateFilesSearchQuery } from './Actions';
+import { loadBuckets, loadTables, loadJobs, loadFiles, updateFilesSearchQuery } from './Actions';
 
 export default {
   name: 'storage-explorer',
   title: 'Storage Explorer',
   defaultRouteHandler: Index,
-  requireData: [() => StorageActions.loadBuckets(), () => StorageActions.loadTables()],
+  requireData: [() => loadBuckets(), () => loadTables()],
   childRoutes: [
     {
       name: 'storage-explorer-files',
@@ -40,7 +39,7 @@ export default {
       defaultRouteHandler: Jobs,
       reloaderHandler: JobsReloaderButton,
       title: 'Jobs',
-      requireData: [() => StorageActions.loadJobs({ limit: jobsLimit })]
+      requireData: [() => loadJobs({ limit: jobsLimit })]
     },
     {
       name: 'storage-explorer-bucket',
