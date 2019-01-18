@@ -11,7 +11,7 @@ const INITIAL_STATE = {
 
 export default React.createClass({
   propTypes: {
-    buckets: PropTypes.object.isRequired,
+    sharedBuckets: PropTypes.object.isRequired,
     show: PropTypes.bool.isRequired,
     onSubmit: PropTypes.func.isRequired,
     onHide: PropTypes.func.isRequired
@@ -42,7 +42,19 @@ export default React.createClass({
                   onChange={this.handleBucket}
                   value={this.state.bucket}
                 >
-                  {this.renderBucketsGrouped()}
+                  {this.groupedBuckets()
+                    .map((groupName, group) => (
+                      <optgroup key={groupName} label={groupName}>
+                        {group
+                          .map((bucket, index) => (
+                            <option key={index} value={bucket}>
+                              {this.bucketLabel(bucket)}
+                            </option>
+                          ))
+                          .toArray()}
+                      </optgroup>
+                    ))
+                    .toArray()}
                 </FormControl>
               </Col>
             </FormGroup>
@@ -88,16 +100,28 @@ export default React.createClass({
     );
   },
 
-  renderBucketsGrouped() {
-    return [];
-  },
-
   renderError() {
     if (!this.state.error) {
       return null;
     }
 
     return <Alert bsStyle="danger">{this.state.error}</Alert>;
+  },
+
+  groupedBuckets() {
+    return this.props.sharedBuckets.groupBy(bucket => {
+      return bucket.getIn(['project', 'name']);
+    });
+  },
+
+  bucketLabel(bucket) {
+    const label = bucket.get('id');
+
+    if (bucket.get('description')) {
+      label += ` - ${bucket.get('description')}`;
+    }
+
+    return label;
   },
 
   handleSubmit() {

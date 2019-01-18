@@ -93,7 +93,7 @@ export default React.createClass({
   renderSharedBucketsModal() {
     return (
       <SharedBucketsModal
-        buckets={this.state.allBuckets}
+        sharedBuckets={this.state.sharedBuckets}
         show={this.state.linkBucketModal}
         onSubmit={this.handleCreateBucket}
         onHide={this.closeBucketLinkModal}
