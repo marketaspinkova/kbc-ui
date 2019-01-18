@@ -11,6 +11,7 @@ import {fromJS, List} from 'immutable';
 import {Loader} from '@keboola/indigo-ui';
 import {Link} from 'react-router/lib';
 import JobStatusLabel from '../../../../react/common/JobStatusLabel';
+import Tooltip from '../../../../react/common/Tooltip';
 
 const MIGRATION_COMPONENT_ID = 'keboola.config-migration-tool';
 
@@ -104,6 +105,7 @@ export default React.createClass({
             <div className="jumbotron">
               <h2>OAuth Credentials Migration</h2>
               <p>As we have introduced new version of our OAuth API, it is necessary to migrate configurations using OAuth authorization to this new API version.</p>
+              <p>Some components{this.renderIgnoredTooltip()} must be migrated manually. Please reset the credentials to do so.</p>
               <p>By clicking button below, all of the affected configurations will be migrated.</p>
               <hr />
               <div className="row">
@@ -119,6 +121,20 @@ export default React.createClass({
           {this.renderRows(components, configurationsToMigrateFlatten)}
         </div>
       </div>
+    );
+  },
+
+  renderIgnoredTooltip() {
+    const ignoredComponents = [
+      'esnerda.wr-zoho-crm',
+      'keboola.ex-github',
+      'esnerda.ex-twitter-ads'
+    ];
+
+    return (
+      <Tooltip tooltip={ignoredComponents.join(', ')}>
+        <sup><span className="fa fa-fw fa-question-circle" /></sup>
+      </Tooltip>
     );
   },
 
