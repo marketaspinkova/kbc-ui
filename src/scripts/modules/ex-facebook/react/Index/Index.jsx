@@ -85,7 +85,7 @@ export default function(COMPONENT_ID) {
             }
             {
               (this.isAuthorized() && this.state.store.hasAccounts) || this.state.store.hasQueries ?
-                <div className="row" style={{paddingLeft: 0, paddingRight: 0}}>
+                <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
                   {this.state.store.hasQueries ?
                     <QueriesTable
                       componentId={COMPONENT_ID}
