@@ -17,16 +17,54 @@ const errorNotification = (message) => {
   });
 };
 
+const loadJobs = (params) => {
+  return StorageActionCreators.loadJobs(params);
+};
+
+const loadMoreJobs = (params) => {
+  return StorageActionCreators.loadMoreJobs(params);
+};
+
+const loadBuckets = () => {
+  return StorageActionCreators.loadBucketsForce();
+};
+
+const loadTable = (tableId, params) => {
+  return StorageActionCreators.loadTable(tableId, params);
+};
+
+const loadTables = () => {
+  return StorageActionCreators.loadTables();
+};
+
+const createBucket = (newBucket) => {
+  return StorageActionCreators
+    .createBucket(newBucket)
+    .then(bucket => {
+      navigateToBucketDetail(bucket.id);
+    });
+};
+
 const deleteBucket = (bucketId, forceDelete) => {
   return StorageActionCreators.deleteBucket(bucketId, forceDelete).then(() => {
     RoutesStore.getRouter().transitionTo('storage-explorer');
   });
 };
 
+const createTable = (bucketId, params) => {
+  return StorageActionCreators
+    .createTable(bucketId, params)
+    .catch(errorNotification);
+};
+
 const deleteTable = (bukcetId, tableId, forceDelete) => {
   return StorageActionCreators.deleteTable(tableId, forceDelete).then(() => {
     navigateToBucketDetail(bukcetId);
   });
+};
+
+const createAliasTable = (bucketId, params) => {
+  return StorageActionCreators.createAliasTable(bucketId, params);
 };
 
 const navigateToBucketDetail = bucketId => {
@@ -57,6 +95,22 @@ const addTableColumn = (tableId, params) => {
   return StorageActionCreators
     .addTableColumn(tableId, params)
     .catch(errorNotification);
+};
+
+const setAliasTableFilter = (tableId, params) => {
+  return StorageActionCreators
+    .setAliasTableFilter(tableId, params)
+    .catch(HttpError, error => {
+      throw error.message;
+    });
+};
+
+const removeAliasTableFilter = (tableId) => {
+  return StorageActionCreators
+    .removeAliasTableFilter(tableId)
+    .catch(HttpError, error => {
+      throw error.message;
+    });
 };
 
 const dataPreview = (tableId, params) => {
@@ -127,6 +181,39 @@ const exportTable = tableId => {
     });
 };
 
+const createSnapshot = (tableId, params) => {
+  return StorageActionCreators.createSnapshot(tableId, params);
+};
+
+const deleteSnapshot = (snapshotId) => {
+  return StorageActionCreators.deleteSnapshot(snapshotId);
+};
+
+const shareBucket = (bucketId, params) => {
+  return StorageActionCreators.shareBucket(bucketId, params);
+};
+
+const unshareBucket = (bucketId) => {
+  return StorageActionCreators.unshareBucket(bucketId);
+};
+
+const uploadFile = (id, file, params) => {
+  return StorageActionCreators
+    .uploadFile(id, file, params)
+    .catch(HttpError, error => {
+      throw error.message;
+    });
+};
+
+const deleteFile = (fileId) => {
+  return StorageActionCreators
+    .deleteFile(fileId)
+    .catch(HttpError, error => {
+      throw error.message;
+    })
+    .catch(errorNotification);
+};
+
 const loadFiles = params => {
   return StorageActionCreators
     .loadFilesForce(params)
@@ -162,19 +249,35 @@ const resetFilesSearchQuery = () => {
 };
 
 export {
+  loadJobs,
+  loadMoreJobs,
+  loadBuckets,
+  loadTable,
+  loadTables,
+  createBucket,
   deleteBucket,
+  createTable,
   deleteTable,
+  createAliasTable,
   navigateToBucketDetail,
   createTablePrimaryKey,
   removeTablePrimaryKey,
   deleteTableColumn,
   addTableColumn,
+  setAliasTableFilter,
+  removeAliasTableFilter,
   dataPreview,
   createTableFromSnapshot,
   restoreUsingTimeTravel,
   truncateTable,
   createTableFromTextInput,
   exportTable,
+  createSnapshot,
+  deleteSnapshot,
+  shareBucket,
+  unshareBucket,
+  uploadFile,
+  deleteFile,
   loadFiles,
   loadMoreFiles,
   updateFilesSearchQuery,

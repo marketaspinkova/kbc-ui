@@ -7,14 +7,13 @@ import RoutesStore from '../../../../../stores/RoutesStore';
 import BucketsStore from '../../../../components/stores/StorageBucketsStore';
 import TablesStore from '../../../../components/stores/StorageTablesStore';
 import FilesStore from '../../../../components/stores/StorageFilesStore';
-import StorageActionCreators from '../../../../components/StorageActionCreators';
 
 import { factory as eventsFactory } from '../../../../sapi-events/BucketEventsService';
 import BucketEvents from '../../components/Events';
 import DeleteBucketModal from '../../modals/DeleteBucketModal';
 import BucketOverview from './BucketOverview';
 import BucketTables from './BucketTables';
-import { deleteBucket, createTableFromTextInput } from '../../../Actions';
+import { createTable, deleteBucket, createAliasTable, createTableFromTextInput, uploadFile } from '../../../Actions';
 
 export default React.createClass({
   mixins: [createStoreMixin(BucketsStore, ApplicationStore, TablesStore, FilesStore)],
@@ -119,11 +118,8 @@ export default React.createClass({
 
   handleCreateTableFromCsv(file, params) {
     const bucketId = this.state.bucket.get('id');
-    return StorageActionCreators.uploadFile(bucketId, file).then(fileId => {
-      return StorageActionCreators.createTable(bucketId, {
-        ...params,
-        dataFileId: fileId
-      });
+    return uploadFile(bucketId, file).then(fileId => {
+      return createTable(bucketId, { ...params, dataFileId: fileId });
     });
   },
 
@@ -134,7 +130,7 @@ export default React.createClass({
 
   handleCreateAliasTable(params) {
     const bucketId = this.state.bucket.get('id');
-    return StorageActionCreators.createAliasTable(bucketId, params);
+    return createAliasTable(bucketId, params);
   },
 
   handleDeleteBucket() {

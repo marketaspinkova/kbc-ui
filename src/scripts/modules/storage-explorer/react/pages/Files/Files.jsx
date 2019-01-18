@@ -8,12 +8,19 @@ import Tooltip from '../../../../../react/common/Tooltip';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import FilesStore from '../../../../components/stores/StorageFilesStore';
 import FilesLocalStore from '../../../FilesLocalStore';
-import StorageActionCreators from '../../../../components/StorageActionCreators';
 import FilesTable from '../../components/FilesTable';
 import NavButtons from '../../components/NavButtons';
 import UploadModal from '../../modals/UploadModal';
 import ExamplesModal from '../../modals/FilesSearchExamplesModal';
-import { loadFiles, loadMoreFiles, filterFiles, updateFilesSearchQuery, resetFilesSearchQuery } from '../../../Actions';
+import {
+  uploadFile,
+  deleteFile,
+  loadFiles,
+  loadMoreFiles,
+  filterFiles,
+  updateFilesSearchQuery,
+  resetFilesSearchQuery
+} from '../../../Actions';
 import { filesLimit } from '../../../Constants';
 
 const DIRECT_UPLOAD = 'direct-upload';
@@ -152,11 +159,11 @@ export default React.createClass({
   },
 
   handleUploadFile(file, params) {
-    return StorageActionCreators.uploadFile(DIRECT_UPLOAD, file, params).then(() => this.fetchFiles());
+    return uploadFile(DIRECT_UPLOAD, file, params).then(() => this.fetchFiles());
   },
 
   handleDeleteFile(fileId) {
-    return StorageActionCreators.deleteFile(fileId);
+    return deleteFile(fileId);
   },
 
   getSearchParams(offset) {

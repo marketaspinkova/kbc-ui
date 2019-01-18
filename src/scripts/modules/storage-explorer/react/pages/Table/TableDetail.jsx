@@ -11,9 +11,8 @@ import TablesStore from '../../../../components/stores/StorageTablesStore';
 import DataSample from '../../components/DataSample';
 import { deleteTable, truncateTable } from '../../../Actions';
 import FilesStore from '../../../../components/stores/StorageFilesStore';
-import StorageActionCreators from '../../../../components/StorageActionCreators';
 import storageApi from '../../../../components/StorageApi';
-import { exportTable } from '../../../Actions';
+import { exportTable, uploadFile, loadTable } from '../../../Actions';
 
 import TruncateTableModal from '../../modals/TruncateTableModal';
 import DeleteTableModal from '../../modals/DeleteTableModal';
@@ -294,11 +293,8 @@ export default React.createClass({
     const bucketId = this.state.bucket.get('id');
     const tableId = this.state.table.get('id');
 
-    return StorageActionCreators.uploadFile(bucketId, file).then(fileId => {
-      return StorageActionCreators.loadTable(tableId, {
-        ...params,
-        dataFileId: fileId
-      });
+    return uploadFile(bucketId, file).then(fileId => {
+      return loadTable(tableId, { ...params, dataFileId: fileId });
     });
   },
 

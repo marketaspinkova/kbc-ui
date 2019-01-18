@@ -6,8 +6,8 @@ import Hint from '../../../../../react/common/Hint';
 import FileSize from '../../../../../react/common/FileSize';
 import Tooltip from '../../../../../react/common/Tooltip';
 import ConfirmModal from '../../../../../react/common/ConfirmModal';
-import StorageActionCreators from '../../../../components/StorageActionCreators';
 import ShareBucketModal from '../../modals/ShareBucketModal';
+import { shareBucket, unshareBucket } from '../../../Actions';
 
 export default React.createClass({
   propTypes: {
@@ -172,13 +172,13 @@ export default React.createClass({
     const bucketId = this.props.bucket.get('id');
     const params = { sharing: sharingType };
 
-    return StorageActionCreators.shareBucket(bucketId, params);
+    return shareBucket(bucketId, params);
   },
 
   handleUnshareBucket() {
     const bucketId = this.props.bucket.get('id');
 
-    return StorageActionCreators.unshareBucket(bucketId);
+    return unshareBucket(bucketId);
   },
 
   sharingInfo(bucket) {
