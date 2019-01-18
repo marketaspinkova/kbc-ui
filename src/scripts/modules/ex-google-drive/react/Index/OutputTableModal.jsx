@@ -37,11 +37,7 @@ export default React.createClass({
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="form-horizontal clearfix">
-            <div className="row">
-              {this.renderEdit()}
-            </div>
-          </div>
+          {this.renderEdit()}
         </Modal.Body>
         <Modal.Footer>
           <ConfirmButtons
@@ -62,7 +58,7 @@ export default React.createClass({
     const err = this.invalidReason();
 
     return (
-      <div className="col-md-12">
+      <div className="form-horizontal">
         <div className="form-group">
           <label className="control-label col-sm-4">
             Output Table

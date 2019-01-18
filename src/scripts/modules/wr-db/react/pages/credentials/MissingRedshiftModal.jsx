@@ -21,13 +21,9 @@ export default React.createClass({
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <div className="row">
-              <span className="col-md-12">
-                Redshift is not enabled for this project, please
-                <a onClick={this.openSupportModal}> contact us </a>
-                to get more info.
-              </span>
-            </div>
+            Redshift is not enabled for this project, please
+            <a onClick={this.openSupportModal}> contact us </a>
+            to get more info.
           </Modal.Body>
           <Modal.Footer>
             <ButtonToolbar>

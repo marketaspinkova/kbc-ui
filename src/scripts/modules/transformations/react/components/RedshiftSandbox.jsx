@@ -126,14 +126,14 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="row">
-        <div className="col-xs-12">
-          <h4>
-            Redshift
-          </h4>
+      <div className="kbc-row">
+        <h4>
+          Redshift
+        </h4>
+        <div className="row">
+          <div className="col-md-9">{this._renderCredentials()}</div>
+          <div className="col-md-3">{this._renderControlButtons()}</div>
         </div>
-        <div className="col-md-9">{this._renderCredentials()}</div>
-        <div className="col-md-3">{this._renderControlButtons()}</div>
       </div>
     );
   },

@@ -53,9 +53,7 @@ export default React.createClass({
 
   renderLoadingInfo() {
     return (
-      <div className="col-md-12">
-        <p> Looking for existing sandbox... </p>
-      </div>
+      <p> Looking for existing sandbox... </p>
     );
   },
 
@@ -64,26 +62,28 @@ export default React.createClass({
     if (!this.state.credentials.get('id') && !this.state.isLoading) return this.renderCreateInfo();
     const isPython = this.isPythonTransformation();
     return (
-      <div className="row">
-        <div className="help-block col-md-12">
+      <div>
+        <div className="help-block">
           Note: To create a new sandbox or load new data you have to drop the current sandbox.
         </div>
-        <div className="col-md-8">
-          {isPython ?
-            <JupyterCredentials
-              validUntil={this.state.validUntil}
-              credentials={this.state.credentials}
-              isLoading={this.state.isLoading}
-              isCreating={this.state.pendingActions.get('create')}/>
-            :
-            <RStudioCredentials
-              credentials={this.state.credentials}
-              validUntil={this.state.validUntil}
-              isCreating={this.state.pendingActions.get('create')}/>
-          }
-        </div>
-        <div className="col-md-3">
-          {this.renderDockerConnect()}
+        <div className="row">
+          <div className="col-md-8">
+            {isPython ?
+              <JupyterCredentials
+                validUntil={this.state.validUntil}
+                credentials={this.state.credentials}
+                isLoading={this.state.isLoading}
+                isCreating={this.state.pendingActions.get('create')}/>
+              :
+              <RStudioCredentials
+                credentials={this.state.credentials}
+                validUntil={this.state.validUntil}
+                isCreating={this.state.pendingActions.get('create')}/>
+            }
+          </div>
+          <div className="col-md-3">
+            {this.renderDockerConnect()}
+          </div>
         </div>
       </div>
     );

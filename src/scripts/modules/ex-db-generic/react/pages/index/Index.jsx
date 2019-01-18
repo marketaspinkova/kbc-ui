@@ -154,22 +154,20 @@ export default function(componentId) {
         && !this.state.localState.getIn(storeProvisioning.SOURCE_TABLES_ERROR_PATH)
       ) {
         return (
-          <div className="row component-empty-state text-center">
-            <div className="col-md-12">
-              <Quickstart
-                componentId={componentId}
-                configId={this.state.configId}
-                isLoadingSourceTables={this.state.localState.getIn(storeProvisioning.LOADING_SOURCE_TABLES_PATH) || false}
-                isTestingConnection={this.state.localState.getIn(storeProvisioning.TESTING_CONNECTION_PATH) || false}
-                validConnection={this.state.localState.getIn(storeProvisioning.CONNECTION_VALID_PATH) || false}
-                sourceTables={this.state.localState.getIn(storeProvisioning.SOURCE_TABLES_PATH)}
-                sourceTablesError={this.state.localState.getIn(storeProvisioning.SOURCE_TABLES_ERROR_PATH)}
-                quickstart={this.state.localState.get('quickstart') || Map()}
-                onChange={actionsCreators.quickstartSelected}
-                onSubmit={actionsCreators.quickstart}
-                refreshMethod={this.handleRefreshSourceTables}
-              />
-            </div>
+          <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border text-center">
+            <Quickstart
+              componentId={componentId}
+              configId={this.state.configId}
+              isLoadingSourceTables={this.state.localState.getIn(storeProvisioning.LOADING_SOURCE_TABLES_PATH) || false}
+              isTestingConnection={this.state.localState.getIn(storeProvisioning.TESTING_CONNECTION_PATH) || false}
+              validConnection={this.state.localState.getIn(storeProvisioning.CONNECTION_VALID_PATH) || false}
+              sourceTables={this.state.localState.getIn(storeProvisioning.SOURCE_TABLES_PATH)}
+              sourceTablesError={this.state.localState.getIn(storeProvisioning.SOURCE_TABLES_ERROR_PATH)}
+              quickstart={this.state.localState.get('quickstart') || Map()}
+              onChange={actionsCreators.quickstartSelected}
+              onSubmit={actionsCreators.quickstart}
+              refreshMethod={this.handleRefreshSourceTables}
+            />
           </div>
         );
       } else if (this.state.hasCredentials) {

@@ -29,7 +29,7 @@ export default React.createClass({
   render() {
     return (
       <div className="container-fluid">
-        <div className="col-md-12 kbc-main-content">
+        <div className="kbc-main-content">
           <div className="kbc-row">
             <GraphContainer
               bucketId={this.state.bucketId}

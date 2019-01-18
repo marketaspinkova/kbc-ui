@@ -66,13 +66,11 @@ export default function(COMPONENT_ID) {
           {this.renderQueryModal()}
           {this.renderApiVersionModal()}
           <div className="col-md-9 kbc-main-content">
-            <div className="row kbc-header">
-              <div className="col-sm-12">
-                <ComponentDescription
-                  componentId={COMPONENT_ID}
-                  configId={this.state.configId}
-                />
-              </div>
+            <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
+              <ComponentDescription
+                componentId={COMPONENT_ID}
+                configId={this.state.configId}
+              />
             </div>
             <div className="row">
               {this.renderAuthorizedInfo('col-xs-6')}
@@ -87,7 +85,7 @@ export default function(COMPONENT_ID) {
             }
             {
               (this.isAuthorized() && this.state.store.hasAccounts) || this.state.store.hasQueries ?
-                <div className="row" style={{paddingLeft: 0, paddingRight: 0}}>
+                <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
                   {this.state.store.hasQueries ?
                     <QueriesTable
                       componentId={COMPONENT_ID}
@@ -345,12 +343,10 @@ export default function(COMPONENT_ID) {
       }
 
       return (
-        <div className="col-xs-12">
-          <EmptyState>
-            <p>No Queries Configured</p>
-            {this.renderAddQueryLink()}
-          </EmptyState>
-        </div>
+        <EmptyState>
+          <p>No Queries Configured</p>
+          {this.renderAddQueryLink()}
+        </EmptyState>
       );
     },
 

@@ -32,9 +32,11 @@ const QueryDetailStatic = ({ query, componentId }) => {
         <div className="form-group">
           <label className="col-md-2 control-label">Output table</label>
           <div className="col-md-4">
-            <SapiTableLinkEx tableId={query.get('outputTable')}>
-              <div className="form-control-static col-md-12">{query.get('outputTable')}</div>
-            </SapiTableLinkEx>
+            <div className="form-control-static">
+              <SapiTableLinkEx tableId={query.get('outputTable')}>
+                {query.get('outputTable')}
+              </SapiTableLinkEx>
+            </div>
           </div>
           <div className="col-md-4 col-md-offset-2 checkbox">
             <label>
@@ -53,21 +55,23 @@ const QueryDetailStatic = ({ query, componentId }) => {
           </div>
         </div>
         <div className="form-group">
-          <label className="col-md-12 control-label">SQL query</label>
-          <div className="col-md-12">
-            {query.get('query').length ? (
-              <CodeEditor
-                readOnly={true}
-                lineNumbers={false}
-                value={query.get('query')}
-                mode={editorMode(componentId)}
-                style={{ width: '100%' }}
-              />
-            ) : (
-              <div className="row kbc-header">
-                <p className="text-muted">SQL query not set.</p>
-              </div>
-            )}
+          <label className="col-md-2 control-label">SQL query</label>
+          <div className="col-md-10">
+            <div className="form-control-static">
+              {query.get('query').length ? (
+                <CodeEditor
+                  readOnly={true}
+                  lineNumbers={false}
+                  value={query.get('query')}
+                  mode={editorMode(componentId)}
+                  style={{width: '100%'}}
+                />
+              ) : (
+                <div className="row kbc-header">
+                  <p className="text-muted">SQL query not set.</p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

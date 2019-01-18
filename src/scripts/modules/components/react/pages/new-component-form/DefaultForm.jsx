@@ -3,7 +3,6 @@ import ComponentIcon from '../../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../../react/common/ComponentName';
 import { Input } from './../../../../../react/common/KbcBootstrap';
 import AppVendorInfo from './AppVendorInfo';
-import AppUsageInfo from './AppUsageInfo';
 import { Modal, ButtonToolbar, Button } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 
@@ -95,16 +94,6 @@ export default React.createClass({
         licenseAgreed={this._isLicenseAgreed()}
         handleAgreedLicense={this._setAgreedLicense}
       />
-    );
-  },
-
-  _renderAppUsageInfo() {
-    return (
-      <div className="form-group">
-        <div className="col-xs-12">
-          <AppUsageInfo component={this.props.component} />
-        </div>
-      </div>
     );
   },
 

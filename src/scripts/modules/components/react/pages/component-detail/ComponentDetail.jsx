@@ -67,10 +67,8 @@ export default React.createClass({
             </div>
           </div>
           {this.state.component.get('longDescription') && (
-            <div className="row">
-              <div className="col-md-12">
-                <ComponentDescription component={this.state.component} />
-              </div>
+            <div className="kbc-row">
+              <ComponentDescription component={this.state.component} />
             </div>
           )}
           {this._renderSearchBar()}

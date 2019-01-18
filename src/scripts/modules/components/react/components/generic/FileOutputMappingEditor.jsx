@@ -59,75 +59,67 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="form-horizontal clearfix">
-        <div className="row col-md-12">
-          <Input
-            type="text"
-            label="Source"
-            value={this.props.value.get('source')}
-            disabled={this.props.disabled}
-            placeholder=""
-            onChange={this._handleChangeSource}
-            labelClassName="col-xs-2"
-            wrapperClassName="col-xs-10"
-            autoFocus={true}
-            help={
-              <span>
-                {'File will be uploaded from '}
-                <code>{`/data/out/files/${this.props.value.get('source', '')}`}</code>
-              </span>
-            }
-          />
-        </div>
-        <div className="row col-md-12">
-          <div className="form-group">
-            <label className="col-xs-2 control-label">Tags</label>
-            <div className="col-xs-10">
-              <Select.Creatable
-                options={[]}
-                name="tags"
-                value={this._getTags()}
-                disabled={this.props.disabled}
-                placeholder="Add tags"
-                multi={true}
-                onChange={this._handleChangeTags}
-              />
-              <HelpBlock>File will be assigned these tags</HelpBlock>
-            </div>
+      <div className="form-horizontal">
+        <Input
+          type="text"
+          label="Source"
+          value={this.props.value.get('source')}
+          disabled={this.props.disabled}
+          placeholder=""
+          onChange={this._handleChangeSource}
+          labelClassName="col-xs-2"
+          wrapperClassName="col-xs-10"
+          autoFocus={true}
+          help={
+            <span>
+              {'File will be uploaded from '}
+              <code>{`/data/out/files/${this.props.value.get('source', '')}`}</code>
+            </span>
+          }
+        />
+        <div className="form-group">
+          <label className="col-xs-2 control-label">Tags</label>
+          <div className="col-xs-10">
+            <Select.Creatable
+              options={[]}
+              name="tags"
+              value={this._getTags()}
+              disabled={this.props.disabled}
+              placeholder="Add tags"
+              multi={true}
+              onChange={this._handleChangeTags}
+            />
+            <HelpBlock>File will be assigned these tags</HelpBlock>
           </div>
         </div>
-        <div className="row col-md-12">
-          <PanelWithDetails defaultExpanded={this.state.showDetails}>
-            <div className="form-horizontal clearfix">
-              <div className="form-group">
-                <div className="col-xs-10 col-xs-offset-2">
-                  <Input
-                    standalone={true}
-                    type="checkbox"
-                    label="Is public"
-                    checked={this.props.value.get('is_public')}
-                    onChange={this._handleChangeIsPublic}
-                    disabled={this.props.disabled}
-                    help="File will be public (accessible outside Keboola Connection)"
-                  />
-                </div>
-              </div>
+        <PanelWithDetails defaultExpanded={this.state.showDetails}>
+          <div className="form-group">
+            <div className="col-xs-10 col-xs-offset-2">
+              <Input
+                standalone={true}
+                type="checkbox"
+                label="Is public"
+                checked={this.props.value.get('is_public')}
+                onChange={this._handleChangeIsPublic}
+                disabled={this.props.disabled}
+                help="File will be public (accessible outside Keboola Connection)"
+              />
             </div>
-            <div className="form-group">
-              <div className="col-xs-10 col-xs-offset-2">
-                <Input
-                  standalone={true}
-                  type="checkbox"
-                  label="Is permanent"
-                  checked={this.props.value.get('is_permanent')}
-                  onChange={this._handleChangeIsPermanent}
-                  disabled={this.props.disabled}
-                  help="File will be stored permanently (otherwise will be deleted after 180 days)"
-                />
-              </div>
+          </div>
+          <div className="form-group">
+            <div className="col-xs-10 col-xs-offset-2">
+              <Input
+                standalone={true}
+                type="checkbox"
+                label="Is permanent"
+                checked={this.props.value.get('is_permanent')}
+                onChange={this._handleChangeIsPermanent}
+                disabled={this.props.disabled}
+                help="File will be stored permanently (otherwise will be deleted after 180 days)"
+              />
             </div>
-          </PanelWithDetails>
-        </div>
+          </div>
+        </PanelWithDetails>
       </div>
     );
   }

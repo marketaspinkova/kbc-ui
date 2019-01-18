@@ -1,9 +1,9 @@
 import React from 'react';
 import {List, Map} from 'immutable';
 import _ from 'underscore';
-import {FormControls} from './../../../react/common/KbcBootstrap';
 import {Check} from '@keboola/indigo-ui';
 import Select from 'react-select';
+
 import classnames from 'classnames';
 
 import Tooltip from '../../../react/common/Tooltip';
@@ -14,7 +14,7 @@ import FiltersDescription from '../../components/react/components/generic/Filter
 
 import TablesFilterModal from '../../components/react/components/generic/TableFiltersOnlyModal';
 
-const StaticText = FormControls.Static;
+import {ControlLabel, FormControl, FormGroup} from 'react-bootstrap';
 import {params,
   getInTable,
   updateLocalState,
@@ -107,13 +107,13 @@ export default React.createClass({
       <div className="container-fluid">
         {this.renderTableFiltersModal()}
         <div className="col-md-9 kbc-main-content">
-          <div className="row kbc-header">
+          <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
             <ComponentDescription
               componentId={componentId}
               configId={this.state.configId}
             />
           </div>
-          <div className="row">
+          <div className="kbc-inner-padding">
             <form className="form-horizontal">
               { this.state.editing ? this.renderEditing() : this.renderStatic()}
             </form>
@@ -170,7 +170,7 @@ export default React.createClass({
     };
     const outputValid = isOutputValid(this.getEditingValue(params.OUTPUT));
     return (
-      <div className="row">
+      <div>
         {this.renderFormElement('Input Table',
           <SapiTableSelector
             placeholder="Select..."
@@ -363,7 +363,7 @@ export default React.createClass({
   },
   renderStatic() {
     return (
-      <div className="row">
+      <div>
         {this.renderIntableStatic()}
         {this.RenderStaticInput('Data Filter', this.renderDataFilter() )}
         {this.RenderStaticInput('Data Column', this.parameter(params.DATACOLUMN) )}
@@ -387,21 +387,21 @@ export default React.createClass({
       const outTableId = outParam ? `${outParam}${task}` : '';
       return (
         <li>
-          <span className="col-sm-12" style={{ paddingLeft: 0}}>
+          <div className="row">
             <Tooltip tooltip={info.description} placement="top">
-              <span className="col-sm-4" style={{ paddingLeft: 0}}>
+              <div className="col-sm-4" style={{paddingLeft: 0}}>
                 <strong className="text-left">
                   {info.name}
                 </strong>
-              </span>
+              </div>
             </Tooltip>
-            <i style={{ paddingLeft: 0}} className="kbc-icon-arrow-right col-sm-1" />
-            <SapiTableLinkEx className="col-sm-4" tableId={outTableId}/>
-          </span>
+            <i style={{paddingLeft: 0}} className="kbc-icon-arrow-right col-sm-1"/>
+            <SapiTableLinkEx className="col-sm-6" tableId={outTableId}/>
+          </div>
         </li>
       );
     }).toArray();
-    return (<ul className="nav nav-stacked">{renderedTasks}</ul>);
+    return (<ul className="list-unstyled">{renderedTasks}</ul>);
   },
 
   renderIntableStatic() {
@@ -417,13 +417,13 @@ export default React.createClass({
 
   RenderStaticInput(label, value, isBetaCheckobx = false) {
     return (
-      <StaticText
-        label={label}
-        labelClassName="col-sm-3"
-        wrapperClassName="col-sm-9">
-        {isBetaCheckobx ? <Check
-          isChecked={value}/> : value || 'n/a'}
-      </StaticText>
+      <FormGroup>
+        <ControlLabel className="col-sm-3">{label}</ControlLabel>
+        <FormControl.Static className="col-sm-9" componentClass="div">
+          {isBetaCheckobx ? <Check
+            isChecked={value}/> : value || 'n/a'}
+        </FormControl.Static>
+      </FormGroup>
     );
   },
 

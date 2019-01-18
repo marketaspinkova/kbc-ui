@@ -227,16 +227,13 @@ export default React.createClass({
     return (
       <div className="form-horizontal">
         {resultForm}
-        <div className="col-md-12">
-          <span className="pull-right">
-            <button className="btn btn-link" onClick={this.showSetupModal}>
-              <span className="kbc-icon-pencil" />
-              {' '}
-              Edit Configuration
-            </button>
-          </span>
+        <div className="text-right">
+          <button className="btn btn-link" onClick={this.showSetupModal}>
+            <span className="kbc-icon-pencil"/>
+            {' '}
+            Edit Configuration
+          </button>
         </div>
-        <br />
         {this.renderStaticFormGroup('Results table', resultsTable)}
       </div>
     );

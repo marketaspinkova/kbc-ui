@@ -107,13 +107,11 @@ export default React.createClass({
 
   renderComponentDescription() {
     return (
-      <div className="row kbc-header">
-        <div className="col-sm-12">
-          <ComponentDescription
-            componentId={componentId}
-            configId={this.state.configId}
-          />
-        </div>
+      <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
+        <ComponentDescription
+          componentId={componentId}
+          configId={this.state.configId}
+        />
       </div>
     );
   },
