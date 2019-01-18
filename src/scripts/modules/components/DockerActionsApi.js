@@ -2,9 +2,10 @@
 
 import request from '../../utils/request';
 import ApplicationStore from '../../stores/ApplicationStore';
+import ServicesStore from '../services/Store';
 
 function createUrl(componentId, action) {
-  const dockerActionsUri = ApplicationStore.getKbcVars().get('dockerRunnerUrl');
+  const dockerActionsUri = ServicesStore.getService('docker-runner').get('url');
   return `${dockerActionsUri}/docker/${componentId}/action/${action}`;
 }
 

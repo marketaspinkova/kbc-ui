@@ -2,6 +2,7 @@ import request from '../../utils/request';
 import ApplicationStore from '../../stores/ApplicationStore';
 import TransformationBucketsStore from '../transformations/stores/TransformationBucketsStore';
 import InstalledComponentsStore from './stores/InstalledComponentsStore';
+import ServicesStore from '../services/Store';
 
 const createUrl = function(path) {
   const baseUrl = ApplicationStore.getSapiUrl();
@@ -48,7 +49,7 @@ const installedComponentsApi = {
     });
   },
   encryptConfiguration: function(componentId, projectId, data) {
-    const dockerRunnerUrl = ApplicationStore.getKbcVars().get('dockerRunnerUrl');
+    const dockerRunnerUrl = ServicesStore.getService('docker-runner').get('url');
     return request('POST', dockerRunnerUrl + '/docker/encrypt?componentId=' + componentId + '&projectId=' + projectId).set('Content-Type', 'application/json').send(data).promise();
   },
   createConfiguration: function(componentId, data, changeDescription) {
