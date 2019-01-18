@@ -136,6 +136,6 @@ export default React.createClass({
   },
 
   isDisabled() {
-    return !this.state.bucket || !this.state.name || !this.state.stage;
+    return !this.state.backend || !this.state.name || !this.state.stage;
   }
 });
