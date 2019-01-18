@@ -185,5 +185,7 @@ export default React.createClass({
             : message;
         this.setState({ data: [], error: errorMessage, loading: false });
       });
+
+    return this.cancellablePromise;
   }
 });
