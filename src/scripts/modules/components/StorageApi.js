@@ -80,6 +80,10 @@ var storageApi = {
       .promise().then(response => response.body);
   },
 
+  sharedBuckets: function() {
+    return createRequest('GET', 'shared-buckets').promise().then(response => response.body);
+  },
+
   getTokens: function() {
     return createRequest('GET', 'tokens').promise().then(function(response) {
       return response.body;

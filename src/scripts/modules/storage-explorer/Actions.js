@@ -29,6 +29,10 @@ const loadBuckets = () => {
   return StorageActionCreators.loadBucketsForce();
 };
 
+const loadSharedBuckets = () => {
+  return StorageActionCreators.sharedBuckets();
+};
+
 const loadTable = (tableId, params) => {
   return StorageActionCreators.loadTable(tableId, params);
 };
@@ -246,6 +250,7 @@ export {
   loadJobs,
   loadMoreJobs,
   loadBuckets,
+  loadSharedBuckets,
   loadTable,
   loadTables,
   createBucket,

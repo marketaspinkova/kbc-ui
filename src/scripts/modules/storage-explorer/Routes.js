@@ -6,13 +6,13 @@ import Bucket from './react/pages/Bucket/Bucket';
 import FilesReloaderButton from './react/components/FilesReloaderButton';
 import JobsReloaderButton from './react/components/JobsReloaderButton';
 import { filesLimit, jobsLimit } from './Constants';
-import { loadBuckets, loadTables, loadJobs, loadFiles, updateFilesSearchQuery } from './Actions';
+import { loadBuckets, loadTables, loadSharedBuckets, loadJobs, loadFiles, updateFilesSearchQuery } from './Actions';
 
 export default {
   name: 'storage-explorer',
   title: 'Storage Explorer',
   defaultRouteHandler: Index,
-  requireData: [() => loadBuckets(), () => loadTables()],
+  requireData: [() => loadBuckets(), () => loadTables(), () => loadSharedBuckets()],
   childRoutes: [
     {
       name: 'storage-explorer-files',

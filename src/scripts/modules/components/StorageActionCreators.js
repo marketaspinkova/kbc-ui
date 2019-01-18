@@ -276,6 +276,24 @@ module.exports = {
       });
   },
 
+  sharedBuckets: function() {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.STORAGE_LOAD_SHARED_BUCKETS
+    });
+    return storageApi.sharedBuckets().then(data => {
+      dispatcher.handleViewAction({
+        type: constants.ActionTypes.STORAGE_LOAD_SHARED_BUCKETS_SUCCESS,
+        sharedBuckets: data
+      });
+    })
+      .catch(error => {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_LOAD_SHARED_BUCKETS_ERROR
+        });
+        throw error;
+      });
+  },
+
   createTable: function(bucketId, params) {
     var self;
     self = this;

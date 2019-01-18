@@ -15,12 +15,17 @@ let _store = Map({
   isLoading: false,
   credentials: Map(), // bucketId
   pendingCredentials: Map(), // (loading, deleting, creating)
-  pendingBuckets: Map() // (creating)
+  pendingBuckets: Map(), // (creating)
+  sharedBuckets: Map()
 });
 
 const StorageBucketsStore = StoreUtils.createStore({
   getAll() {
     return _store.get('buckets');
+  },
+
+  getSharedBuckets() {
+    return _store.get('sharedBuckets');
   },
 
   getIsLoading() {
@@ -178,6 +183,10 @@ Dispatcher.register(function(payload) {
     case constants.ActionTypes.STORAGE_BUCKET_UNSHARE_SUCCESS:
     case constants.ActionTypes.STORAGE_BUCKET_UNSHARE_ERROR:
       _store = _store.removeIn(['pendingBuckets', 'unsharing', action.bucketId]);
+      return StorageBucketsStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_SHARED_BUCKETS_LOAD_SUCCESS:
+      _store = _store.set('sharedBuckets', fromJS(action.sharedBuckets));
       return StorageBucketsStore.emitChange();
 
     default:
