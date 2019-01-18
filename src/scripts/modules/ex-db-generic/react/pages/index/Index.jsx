@@ -154,7 +154,7 @@ export default function(componentId) {
         && !this.state.localState.getIn(storeProvisioning.SOURCE_TABLES_ERROR_PATH)
       ) {
         return (
-          <div className="row component-empty-state text-center">
+          <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border text-center">
             <Quickstart
               componentId={componentId}
               configId={this.state.configId}

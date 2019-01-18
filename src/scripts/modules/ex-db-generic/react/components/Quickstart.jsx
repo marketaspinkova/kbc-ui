@@ -110,7 +110,7 @@ export default React.createClass({
     );
 
     return (
-      <div className="row text-center">
+      <div className="text-center">
         <TableLoader
           componentId={this.props.componentId}
           configId={this.props.configId}
