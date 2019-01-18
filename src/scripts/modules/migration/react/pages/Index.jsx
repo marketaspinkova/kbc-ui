@@ -143,7 +143,7 @@ export default React.createClass({
 
   renderRows(components, configurationsFlatten) {
     if (!configurationsFlatten.count()) {
-      return <SplashIcon icon="kbc-icon-cup" label="No configurations needs migration" />;
+      return <SplashIcon icon="kbc-icon-cup" label="No configurations need migration" />;
     }
 
     const componentRows = components.map(component => (
