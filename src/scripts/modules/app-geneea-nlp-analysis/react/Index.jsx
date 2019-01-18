@@ -107,13 +107,13 @@ export default React.createClass({
       <div className="container-fluid">
         {this.renderTableFiltersModal()}
         <div className="col-md-9 kbc-main-content">
-          <div className="row kbc-header">
+          <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
             <ComponentDescription
               componentId={componentId}
               configId={this.state.configId}
             />
           </div>
-          <div className="row">
+          <div className="kbc-inner-padding">
             <form className="form-horizontal">
               { this.state.editing ? this.renderEditing() : this.renderStatic()}
             </form>
@@ -170,7 +170,7 @@ export default React.createClass({
     };
     const outputValid = isOutputValid(this.getEditingValue(params.OUTPUT));
     return (
-      <div className="row">
+      <div>
         {this.renderFormElement('Input Table',
           <SapiTableSelector
             placeholder="Select..."
@@ -363,7 +363,7 @@ export default React.createClass({
   },
   renderStatic() {
     return (
-      <div className="row">
+      <div>
         {this.renderIntableStatic()}
         {this.RenderStaticInput('Data Filter', this.renderDataFilter() )}
         {this.RenderStaticInput('Data Column', this.parameter(params.DATACOLUMN) )}
