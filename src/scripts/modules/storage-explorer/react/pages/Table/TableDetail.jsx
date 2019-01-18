@@ -1,6 +1,6 @@
 import React from 'react';
 import { Map } from 'immutable';
-import { Tab, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+import { Tab, Nav, NavItem, NavDropdown, MenuItem, Row } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 
 import ApplicationStore from '../../../../../stores/ApplicationStore';
@@ -176,10 +176,12 @@ export default React.createClass({
                 />
               </Tab.Pane>
               <Tab.Pane eventKey="events">
-                <TableEvents
-                  key={this.state.table.get('lastImportDate') || 'table-events'}
-                  eventsFactory={eventsFactory(this.state.table.get('id'))}
-                />
+                <Row>
+                  <TableEvents
+                    key={this.state.table.get('lastImportDate') || 'table-events'}
+                    eventsFactory={eventsFactory(this.state.table.get('id'))}
+                  />
+                </Row>
               </Tab.Pane>
               <Tab.Pane eventKey="data-sample">
                 <DataSample

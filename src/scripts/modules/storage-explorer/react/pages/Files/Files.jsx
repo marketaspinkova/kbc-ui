@@ -54,9 +54,10 @@ export default React.createClass({
     return (
       <div className="container-fluid">
         <div className="kbc-main-content">
-          <NavButtons />
-          <div className="kbc-inner-padding">
+          <div className="storage-explorer">
+            <NavButtons />
             <SearchBar
+              className="storage-search-bar"
               placeholder="Search: tags:tag"
               query={this.state.searchQuery}
               onChange={this.updateSearchQuery}
@@ -76,25 +77,25 @@ export default React.createClass({
                 </ButtonToolbar>
               }
             />
+
+            {this.state.files.count() === 0 ? (
+              <p className="kbc-inner-padding">No files.</p>
+            ) : (
+              <div>
+                <FilesTable
+                  files={this.state.files}
+                  onSearchQuery={filterFiles}
+                  onDeleteFile={this.handleDeleteFile}
+                  isDeleting={this.state.isDeleting}
+                />
+                {this.renderMoreButton()}
+              </div>
+            )}
+
+            {this.renderUploadModal()}
+            {this.renderExamplesModal()}
           </div>
-
-          {this.state.files.count() === 0 ? (
-            <p className="kbc-inner-padding">No files.</p>
-          ) : (
-            <div>
-              <FilesTable
-                files={this.state.files}
-                onSearchQuery={filterFiles}
-                onDeleteFile={this.handleDeleteFile}
-                isDeleting={this.state.isDeleting}
-              />
-              {this.renderMoreButton()}
-            </div>
-          )}
         </div>
-
-        {this.renderUploadModal()}
-        {this.renderExamplesModal()}
       </div>
     );
   },

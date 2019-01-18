@@ -48,7 +48,7 @@ export default React.createClass({
 
   renderEditButton(filter) {
     return (
-      <span style={{ marginLeft: '5px' }}>
+      <span className="storage-inline-action">
         <Tooltip tooltip={filter.count() > 0 ? 'Edit filter' : 'Set filter'} placement="top">
           <Button
             bsSize="small"
@@ -69,7 +69,7 @@ export default React.createClass({
     }
 
     return (
-      <span style={{ marginLeft: '5px' }}>
+      <span className="storage-inline-action">
         <Tooltip tooltip="Remove filter" placement="top">
           <Button
             bsSize="small"

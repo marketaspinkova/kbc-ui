@@ -1,14 +1,9 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
+import classnames from 'classnames';
 import { Accordion, Panel, Button } from 'react-bootstrap';
 import Tooltip from '../../../../react/common/Tooltip';
 import { navigateToBucketDetail } from '../../Actions';
-
-const flexStyles = {
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center'
-};
 
 export default React.createClass({
   propTypes: {
@@ -47,7 +42,7 @@ export default React.createClass({
   renderBucketHeader(bucket) {
     return (
       <div>
-        <div style={flexStyles}>
+        <div className="storage-bucket-header">
           <h4>{bucket.get('id')}</h4>
           <Tooltip tooltip="Bucket detail" placement="top">
             <Button
@@ -76,10 +71,14 @@ export default React.createClass({
       return <p>No tables.</p>;
     }
 
-    return tables
-      .sortBy(table => table.get('name').toLowerCase())
-      .map(this.renderTable)
-      .toArray();
+    return (
+      <ul className="list-unstyled">
+        {tables
+          .sortBy(table => table.get('name').toLowerCase())
+          .map(this.renderTable)
+          .toArray()}
+      </ul>
+    );
   },
 
   renderTable(table) {
@@ -87,14 +86,16 @@ export default React.createClass({
     const tableName = table.get('name');
 
     return (
-      <Link
-        className="storage-table-name"
-        to="storage-explorer-table"
-        params={{ bucketId, tableName }}
-        key={table.get('id')}
-      >
-        <p>{tableName}</p>
-      </Link>
+      <li>
+        <Link
+          className={classnames({ alias: table.get('isAlias', false) })}
+          to="storage-explorer-table"
+          params={{ bucketId, tableName }}
+          key={table.get('id')}
+        >
+          {tableName}
+        </Link>
+      </li>
     );
   }
 });

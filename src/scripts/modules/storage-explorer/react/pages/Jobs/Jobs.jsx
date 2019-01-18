@@ -24,15 +24,17 @@ export default React.createClass({
     return (
       <div className="container-fluid">
         <div className="kbc-main-content">
-          <NavButtons />
-          {this.state.jobs.count() === 0 ? (
-            <p className="kbc-inner-padding">No jobs were uploaded yet.</p>
-          ) : (
-            <div>
-              <JobsTable jobs={this.state.jobs} />
-              {this.renderMoreButton()}
-            </div>
-          )}
+          <div className="storage-explorer">
+            <NavButtons />
+            {this.state.jobs.count() === 0 ? (
+              <p className="kbc-inner-padding">No jobs were uploaded yet.</p>
+            ) : (
+              <div>
+                <JobsTable jobs={this.state.jobs} />
+                {this.renderMoreButton()}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     );

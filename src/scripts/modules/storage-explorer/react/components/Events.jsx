@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { List } from 'immutable';
-import { Button, Row } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { RefreshIcon, SearchBar } from '@keboola/indigo-ui';
 import { factory as defaultEventsFactory } from '../../../sapi-events/EventsService';
 import Tooltip from '../../../../react/common/Tooltip';
@@ -44,6 +44,7 @@ export default React.createClass({
     return (
       <div>
         <SearchBar
+          className="storage-search-bar"
           placeholder="Search event"
           query={this.state.searchQuery}
           onChange={this.handleQueryChange}
@@ -56,9 +57,7 @@ export default React.createClass({
             </Tooltip>
           }
         />
-        <Row>
-          <EventsTable events={this.state.events} isSearching={this.isSearching()} />
-        </Row>
+        <EventsTable events={this.state.events} isSearching={this.isSearching()} />
         {this.renderMoreButton()}
       </div>
     );
