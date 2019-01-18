@@ -1,4 +1,8 @@
-.storage-panel {
+.panel.storage-panel {
+  + .storage-panel {
+    margin-top: 0px;
+  }
+
   .panel-heading > .panel-title > a {
     padding: 5px 15px;
   }
@@ -10,6 +14,12 @@
       margin-bottom: 0;
     }
   }
+
+  .storage-bucket-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 
 .storage-table-overview {
@@ -18,13 +28,26 @@
   }
 }
 
+.storage-search-bar {
+  padding-right: 15px;
+}
+
+.nav-tabs + .storage-search-bar {
+  padding: 0 15px;
+}
+
+.storage-inline-action {
+  margin-left: 5px;
+}
+
 .kbc-main-content.reset-overflow {
   overflow: visible;
 }
 
 .storage-buckets-sidebar {
   margin-left: 1em;
-  .searchbar {
-    margin-bottom: 1em;
-  }
+}
+
+.searchbar {
+  margin-bottom: 1em;
 }

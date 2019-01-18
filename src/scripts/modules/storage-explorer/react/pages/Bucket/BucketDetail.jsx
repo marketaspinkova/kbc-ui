@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tab, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+import { Tab, Nav, NavItem, NavDropdown, MenuItem, Row } from 'react-bootstrap';
 
 import ApplicationStore from '../../../../../stores/ApplicationStore';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
@@ -92,7 +92,9 @@ export default React.createClass({
                 />
               </Tab.Pane>
               <Tab.Pane eventKey="events">
-                <BucketEvents eventsFactory={eventsFactory(this.state.bucket.get('id'))} />
+                <Row>
+                  <BucketEvents eventsFactory={eventsFactory(this.state.bucket.get('id'))} />
+                </Row>
               </Tab.Pane>
             </Tab.Content>
           </div>

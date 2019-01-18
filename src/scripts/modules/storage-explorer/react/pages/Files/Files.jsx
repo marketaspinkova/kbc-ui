@@ -55,28 +55,27 @@ export default React.createClass({
       <div className="container-fluid">
         <div className="kbc-main-content">
           <NavButtons />
-          <div className="kbc-inner-padding">
-            <SearchBar
-              placeholder="Search: tags:tag"
-              query={this.state.searchQuery}
-              onChange={this.updateSearchQuery}
-              onSubmit={() => {
-                filterFiles(this.state.searchQuery);
-              }}
-              additionalActions={
-                <ButtonToolbar>
-                  <Tooltip tooltip="Search syntax &amp; Examples" placement="top">
-                    <Button bsStyle="default" onClick={this.openExamplesModal}>
-                      <i className="fa fa-question-circle" />
-                    </Button>
-                  </Tooltip>
-                  <Button bsStyle="primary" onClick={this.openUploadModal}>
-                    <i className="fa fa-arrow-circle-o-up" /> Upload File
+          <SearchBar
+            className="storage-search-bar"
+            placeholder="Search: tags:tag"
+            query={this.state.searchQuery}
+            onChange={this.updateSearchQuery}
+            onSubmit={() => {
+              filterFiles(this.state.searchQuery);
+            }}
+            additionalActions={
+              <ButtonToolbar>
+                <Tooltip tooltip="Search syntax &amp; Examples" placement="top">
+                  <Button bsStyle="default" onClick={this.openExamplesModal}>
+                    <i className="fa fa-question-circle" />
                   </Button>
-                </ButtonToolbar>
-              }
-            />
-          </div>
+                </Tooltip>
+                <Button bsStyle="primary" onClick={this.openUploadModal}>
+                  <i className="fa fa-arrow-circle-o-up" /> Upload File
+                </Button>
+              </ButtonToolbar>
+            }
+          />
 
           {this.state.files.count() === 0 ? (
             <p className="kbc-inner-padding">No files.</p>

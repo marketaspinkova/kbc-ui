@@ -4,12 +4,6 @@ import { Accordion, Panel, Button } from 'react-bootstrap';
 import Tooltip from '../../../../react/common/Tooltip';
 import { navigateToBucketDetail } from '../../Actions';
 
-const flexStyles = {
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center'
-};
-
 export default React.createClass({
   propTypes: {
     buckets: PropTypes.object.isRequired,
@@ -47,7 +41,7 @@ export default React.createClass({
   renderBucketHeader(bucket) {
     return (
       <div>
-        <div style={flexStyles}>
+        <div className="storage-bucket-header">
           <h4>{bucket.get('id')}</h4>
           <Tooltip tooltip="Bucket detail" placement="top">
             <Button
