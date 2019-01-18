@@ -32,10 +32,10 @@ export default React.createClass({
             {this.renderError()}
 
             <FormGroup>
-              <Col sm={3} componentClass={ControlLabel}>
+              <Col sm={4} componentClass={ControlLabel}>
                 Shared buckets
               </Col>
-              <Col sm={9}>
+              <Col sm={8}>
                 <FormControl
                   componentClass="select"
                   placeholder="Select bucket..."
@@ -48,19 +48,19 @@ export default React.createClass({
             </FormGroup>
 
             <FormGroup>
-              <Col sm={3} componentClass={ControlLabel}>
+              <Col sm={4} componentClass={ControlLabel}>
                 Name
               </Col>
-              <Col sm={9}>
+              <Col sm={8}>
                 <FormControl type="text" autoFocus value={this.state.name} onChange={this.handleName} />
               </Col>
             </FormGroup>
 
             <FormGroup>
-              <Col sm={3} componentClass={ControlLabel}>
+              <Col sm={4} componentClass={ControlLabel}>
                 Stage
               </Col>
-              <Col sm={9}>
+              <Col sm={8}>
                 <FormControl
                   componentClass="select"
                   placeholder="Select stage..."
