@@ -71,10 +71,14 @@ export default React.createClass({
       return <p>No tables.</p>;
     }
 
-    return tables
-      .sortBy(table => table.get('name').toLowerCase())
-      .map(this.renderTable)
-      .toArray();
+    return (
+      <ul className="list-unstyled">
+        {tables
+          .sortBy(table => table.get('name').toLowerCase())
+          .map(this.renderTable)
+          .toArray()}
+      </ul>
+    );
   },
 
   renderTable(table) {
@@ -82,7 +86,7 @@ export default React.createClass({
     const tableName = table.get('name');
 
     return (
-      <p className="storage-table-name">
+      <li>
         <Link
           className={classnames({ alias: table.get('isAlias', false) })}
           to="storage-explorer-table"
@@ -91,7 +95,7 @@ export default React.createClass({
         >
           {tableName}
         </Link>
-      </p>
+      </li>
     );
   }
 });
