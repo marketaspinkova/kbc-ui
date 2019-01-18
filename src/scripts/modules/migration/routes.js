@@ -3,17 +3,10 @@ import InstalledComponentsActions from '../components/InstalledComponentsActionC
 import ComponentReloaderButton from '../components/react/components/ComponentsReloaderButton';
 import InstalledComponentsStore from '../components/stores/InstalledComponentsStore';
 
-const ignoreComponents = [
-  'esnerda.wr-zoho-crm',
-  'keboola.ex-github',
-  'esnerda.ex-twitter-ads'
-];
-
 function loadComponentsWithOauth() {
   return InstalledComponentsActions.loadComponents()
     .then(() => InstalledComponentsStore.getAll().filter(component => {
-      return component.get('flags').contains('genericDockerUI-authorization')
-        && !ignoreComponents.includes(component.get('id'));
+      return component.get('flags').contains('genericDockerUI-authorization');
     }))
     .then(componentsWithOauth => componentsWithOauth.map(component => {
       return InstalledComponentsActions.loadComponentConfigsData(component.get('id'));

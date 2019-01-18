@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import descriptionExcerpt from '../../../../utils/descriptionExcerpt';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import ComponentConfigurationLink from '../../../components/react/components/ComponentConfigurationLink';
 
 export default React.createClass({
   mixins: [PureRenderMixin],
@@ -16,7 +17,9 @@ export default React.createClass({
     return (
       <span className="tr">
         <span className="td">
-          <strong>{this.props.config.get('name', '---')}</strong>
+          <ComponentConfigurationLink componentId={this.props.componentId} configId={this.props.config.get('id')}>
+            {this.props.config.get('name', '---')}
+          </ComponentConfigurationLink>
           {this.description()}
         </span>
       </span>

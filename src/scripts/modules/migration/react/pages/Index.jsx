@@ -11,9 +11,14 @@ import {fromJS, List} from 'immutable';
 import {Loader} from '@keboola/indigo-ui';
 import {Link} from 'react-router/lib';
 import JobStatusLabel from '../../../../react/common/JobStatusLabel';
-import Tooltip from '../../../../react/common/Tooltip';
 
 const MIGRATION_COMPONENT_ID = 'keboola.config-migration-tool';
+
+const ignoreComponents = [
+  'esnerda.wr-zoho-crm',
+  'keboola.ex-github',
+  'esnerda.ex-twitter-ads'
+];
 
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore, OAuthStore)],
@@ -66,6 +71,62 @@ export default React.createClass({
     });
   },
 
+  render() {
+    const components = this.getComponentsWithOAuth();
+    const affectedComponents = this.getComponentsToMigrate(components);
+    const ignoredComponents = this.getIgnoredComponents(components);
+    const configurationsToMigrateFlatten = this.getConfigurationsFlatten(affectedComponents);
+    const ignoredConfigurationsFlatten = this.getConfigurationsFlatten(ignoredComponents);
+
+    return (
+      <div className="container-fluid">
+        <div className="kbc-main-content kbc-components-list">
+          <div className="kbc-header">
+            <div className="jumbotron">
+              <h2>OAuth Credentials Migration</h2>
+              <p>As we have introduced new version of our OAuth API, it is necessary to migrate configurations using OAuth authorization to this new API version.</p>
+              <p>By clicking button below, all of the affected configurations will be migrated.</p>
+              <hr />
+              <div className="row">
+                <div className="col-md-5">
+                  {this.renderButton(configurationsToMigrateFlatten)}
+                </div>
+                <div className="col-md-7 text-right">
+                  {this.renderJobInfo()}
+                </div>
+              </div>
+            </div>
+          </div>
+          {this.renderConfigurationsList(
+            affectedComponents,
+            ignoredComponents,
+            configurationsToMigrateFlatten,
+            ignoredConfigurationsFlatten
+          )}
+        </div>
+      </div>
+    );
+  },
+
+  renderButton(configurationsFlatten) {
+    if (this.state.isMigrating) {
+      return (
+        <span>
+          <Loader />
+          &nbsp;Migration in progress
+        </span>
+      );
+    }
+
+    return (
+      <MigrationButton
+        key="migration-button"
+        onClick={this.onMigrate}
+        enabled={!!configurationsFlatten.count() && this.state.isButtonEnabled}
+      />
+    );
+  },
+
   renderJobInfo() {
     const {job} = this.state;
     if (!job) {
@@ -94,96 +155,75 @@ export default React.createClass({
     );
   },
 
-  render() {
-    const components = this.getComponentsWithOAuth();
-    const configurationsToMigrateFlatten = this.getConfigurationsToMigrateAll(components);
+  renderConfigurationsList(
+    affectedComponents,
+    ignoredComponents,
+    configurationsToMigrateFlatten,
+    ignoredConfigurationsFlatten
+  ) {
+    if (!ignoredConfigurationsFlatten.count() && !configurationsToMigrateFlatten.count()) {
+      return (<SplashIcon icon="kbc-icon-cup" label="No configurations need migration" />);
+    }
 
+    const ignored = ignoredConfigurationsFlatten.count()
+      ? this.renderIgnored(ignoredComponents)
+      : null;
+
+    const affected = configurationsToMigrateFlatten.count()
+      ? this.renderAffected(affectedComponents)
+      : null;
+
+    return [
+      affected,
+      ignored
+    ];
+  },
+
+  renderAffected(components) {
     return (
-      <div className="container-fluid">
-        <div className="kbc-main-content kbc-components-list">
-          <div className="kbc-header">
-            <div className="jumbotron">
-              <h2>OAuth Credentials Migration</h2>
-              <p>As we have introduced new version of our OAuth API, it is necessary to migrate configurations using OAuth authorization to this new API version.</p>
-              <p>Some components{this.renderIgnoredTooltip()} must be migrated manually. Please reset the credentials to do so.</p>
-              <p>By clicking button below, all of the affected configurations will be migrated.</p>
-              <hr />
-              <div className="row">
-                <div className="col-md-5">
-                  {this.renderButton(components, configurationsToMigrateFlatten)}
-                </div>
-                <div className="col-md-7 text-right">
-                  {this.renderJobInfo()}
-                </div>
-              </div>
-            </div>
-          </div>
-          {this.renderRows(components, configurationsToMigrateFlatten)}
+      <div className="row">
+        <div className="col-md-12">
+          <h3>Affected configurations</h3>
         </div>
+        {this.renderRows(components)}
       </div>
     );
   },
 
-  renderIgnoredTooltip() {
-    const ignoredComponents = [
-      'esnerda.wr-zoho-crm',
-      'keboola.ex-github',
-      'esnerda.ex-twitter-ads'
-    ];
-
+  renderIgnored(components) {
     return (
-      <Tooltip tooltip={ignoredComponents.join(', ')}>
-        <sup><span className="fa fa-fw fa-question-circle" /></sup>
-      </Tooltip>
+      <div className="row">
+        <div className="col-md-12">
+          <h3>Manual migration needed!</h3>
+          <p>The configurations below need to be migrated manually. Please open each configuration and reset the authorization to migrate.</p>
+        </div>
+        {this.renderRows(components)}
+      </div>
     );
   },
 
-  renderButton(components, configurationsFlatten) {
-    if (this.state.isMigrating) {
-      return (
-        <span>
-          <Loader />
-          &nbsp;Migration in progress
-        </span>
-      );
-    }
-
-    return (
-      <MigrationButton
-        key="migration-button"
-        onClick={this.onMigrate}
-        enabled={!!configurationsFlatten.count() && this.state.isButtonEnabled}
-      />
-    );
-  },
-
-  renderRows(components, configurationsFlatten) {
-    if (!configurationsFlatten.count()) {
-      return <SplashIcon icon="kbc-icon-cup" label="No configurations need migration" />;
-    }
-
-    const componentRows = components.map(component => (
+  renderRows(components) {
+    return components.map(component => (
       <MigrationComponentRow
         component={component}
         configurations={this.getConfigurationsToMigrate(component)}
         key={component.id}
       />
     )).toArray();
-
-    return (
-      <div className="row">
-        <div className="col-md-12">
-          <h4>Affected configurations:</h4>
-        </div>
-        {componentRows}
-      </div>
-    );
   },
 
   getComponentsWithOAuth() {
     return this.state.components.filter(component => {
       return component.get('flags').contains('genericDockerUI-authorization');
     });
+  },
+
+  getComponentsToMigrate(components) {
+    return components.filter(component => !ignoreComponents.includes(component.get('id')));
+  },
+
+  getIgnoredComponents(components) {
+    return components.filter(component => ignoreComponents.includes(component.get('id')));
   },
 
   getConfigurationsToMigrate(component) {
@@ -194,7 +234,7 @@ export default React.createClass({
       });
   },
 
-  getConfigurationsToMigrateAll(components) {
+  getConfigurationsFlatten(components) {
     return components.map(component => {
       return this.getConfigurationsToMigrate(component)
         .map(config => ({
@@ -205,7 +245,9 @@ export default React.createClass({
   },
 
   onMigrate() {
-    const configurations = this.getConfigurationsToMigrateAll(this.getComponentsWithOAuth());
+    const configurations = this.getConfigurationsFlatten(
+      this.getComponentsToMigrate(this.getComponentsWithOAuth())
+    );
 
     this.setState({
       isMigrating: true,
