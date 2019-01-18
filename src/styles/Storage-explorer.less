@@ -10,8 +10,12 @@
   .panel-body {
     padding: 15px;
 
-    .storage-table-name:last-of-type > p {
-      margin-bottom: 0;
+    .storage-table-name {
+      margin-bottom: 10px;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
     }
   }
 
@@ -34,6 +38,10 @@
 
 .nav-tabs + .storage-search-bar {
   padding: 0 15px;
+}
+
+a.alias {
+  border-bottom: 1px dotted #08c;
 }
 
 .storage-inline-action {

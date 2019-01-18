@@ -93,7 +93,7 @@ export default React.createClass({
             params={{ bucketId: this.props.bucket.get('id'), tableName: table.get('name') }}
             className={classnames({ alias: table.get('isAlias', false) })}
           >
-            {table.get('name')} {table.get('isAlias', false) && ' (Alias)'}
+            {table.get('name')}
           </Link>
         </td>
         <td>{table.get('rowsCount') || 'N/A'}</td>

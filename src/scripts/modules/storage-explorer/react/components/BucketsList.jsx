@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
+import classnames from 'classnames';
 import { Accordion, Panel, Button } from 'react-bootstrap';
 import Tooltip from '../../../../react/common/Tooltip';
 import { navigateToBucketDetail } from '../../Actions';
@@ -81,14 +82,16 @@ export default React.createClass({
     const tableName = table.get('name');
 
     return (
-      <Link
-        className="storage-table-name"
-        to="storage-explorer-table"
-        params={{ bucketId, tableName }}
-        key={table.get('id')}
-      >
-        <p>{tableName}</p>
-      </Link>
+      <p className="storage-table-name">
+        <Link
+          className={classnames({ alias: table.get('isAlias', false) })}
+          to="storage-explorer-table"
+          params={{ bucketId, tableName }}
+          key={table.get('id')}
+        >
+          {tableName}
+        </Link>
+      </p>
     );
   }
 });
