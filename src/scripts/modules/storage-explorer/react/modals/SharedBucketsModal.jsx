@@ -3,7 +3,7 @@ import { Alert, Modal, Form, Col, FormGroup, ControlLabel, FormControl } from 'r
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
 const INITIAL_STATE = {
-  backend: '',
+  bucket: '',
   name: '',
   stage: 'in',
   error: null
@@ -38,9 +38,9 @@ export default React.createClass({
               <Col sm={9}>
                 <FormControl
                   componentClass="select"
-                  placeholder="Select backend..."
-                  onChange={this.handleBackend}
-                  value={this.state.backend}
+                  placeholder="Select bucket..."
+                  onChange={this.handleBucket}
+                  value={this.state.bucket}
                 >
                   {this.renderBucketsGrouped()}
                 </FormControl>
@@ -117,9 +117,9 @@ export default React.createClass({
     });
   },
 
-  handleBackend(event) {
+  handleBucket(event) {
     this.setState({
-      backend: event.target.value
+      bucket: event.target.value
     });
   },
 
@@ -136,6 +136,6 @@ export default React.createClass({
   },
 
   isDisabled() {
-    return !this.state.backend || !this.state.name || !this.state.stage;
+    return !this.state.bucket || !this.state.name || !this.state.stage;
   }
 });
