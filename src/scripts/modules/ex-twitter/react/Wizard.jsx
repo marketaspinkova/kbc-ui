@@ -115,15 +115,17 @@ export default React.createClass({
     });
     return (
       <WizardStep step={Steps.STEP_AUTHORIZATION} title="Authorization" buttons={buttons}>
-        <AuthorizationRow
-          id={this.props.oauthCredentialsId}
-          configId={this.props.configId}
-          componentId={COMPONENT_ID}
-          credentials={this.props.oauthCredentials}
-          isResetingCredentials={false}
-          onResetCredentials={this.deleteCredentials}
-          showHeader={false}
-        />
+        <div className="col-md-12">
+          <AuthorizationRow
+            id={this.props.oauthCredentialsId}
+            configId={this.props.configId}
+            componentId={COMPONENT_ID}
+            credentials={this.props.oauthCredentials}
+            isResetingCredentials={false}
+            onResetCredentials={this.deleteCredentials}
+            showHeader={false}
+          />
+        </div>
       </WizardStep>
     );
   },
