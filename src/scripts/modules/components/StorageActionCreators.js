@@ -278,17 +278,17 @@ module.exports = {
 
   sharedBuckets: function() {
     dispatcher.handleViewAction({
-      type: constants.ActionTypes.STORAGE_LOAD_SHARED_BUCKETS
+      type: constants.ActionTypes.STORAGE_SHARED_BUCKETS_LOAD
     });
     return storageApi.sharedBuckets().then(data => {
       dispatcher.handleViewAction({
-        type: constants.ActionTypes.STORAGE_LOAD_SHARED_BUCKETS_SUCCESS,
+        type: constants.ActionTypes.STORAGE_SHARED_BUCKETS_LOAD_SUCCESS,
         sharedBuckets: data
       });
     })
       .catch(error => {
         dispatcher.handleViewAction({
-          type: constants.ActionTypes.STORAGE_LOAD_SHARED_BUCKETS_ERROR
+          type: constants.ActionTypes.STORAGE_SHARED_BUCKETS_LOAD_ERROR
         });
         throw error;
       });
