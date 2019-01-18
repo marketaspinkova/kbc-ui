@@ -78,7 +78,7 @@ export default React.createClass({
               isSaving={false}
               isDisabled={this.isDisabled()}
               saveLabel="Link"
-              onCancel={this.propsonHide}
+              onCancel={this.props.onHide}
               onSave={this.handleSubmit}
               saveButtonType="submit"
             />
