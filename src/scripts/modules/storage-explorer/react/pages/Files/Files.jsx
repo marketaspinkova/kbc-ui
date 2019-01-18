@@ -54,46 +54,48 @@ export default React.createClass({
     return (
       <div className="container-fluid">
         <div className="kbc-main-content">
-          <NavButtons />
-          <SearchBar
-            className="storage-search-bar"
-            placeholder="Search: tags:tag"
-            query={this.state.searchQuery}
-            onChange={this.updateSearchQuery}
-            onSubmit={() => {
-              filterFiles(this.state.searchQuery);
-            }}
-            additionalActions={
-              <ButtonToolbar>
-                <Tooltip tooltip="Search syntax &amp; Examples" placement="top">
-                  <Button bsStyle="default" onClick={this.openExamplesModal}>
-                    <i className="fa fa-question-circle" />
+          <div className="storage-explorer">
+            <NavButtons />
+            <SearchBar
+              className="storage-search-bar"
+              placeholder="Search: tags:tag"
+              query={this.state.searchQuery}
+              onChange={this.updateSearchQuery}
+              onSubmit={() => {
+                filterFiles(this.state.searchQuery);
+              }}
+              additionalActions={
+                <ButtonToolbar>
+                  <Tooltip tooltip="Search syntax &amp; Examples" placement="top">
+                    <Button bsStyle="default" onClick={this.openExamplesModal}>
+                      <i className="fa fa-question-circle" />
+                    </Button>
+                  </Tooltip>
+                  <Button bsStyle="primary" onClick={this.openUploadModal}>
+                    <i className="fa fa-arrow-circle-o-up" /> Upload File
                   </Button>
-                </Tooltip>
-                <Button bsStyle="primary" onClick={this.openUploadModal}>
-                  <i className="fa fa-arrow-circle-o-up" /> Upload File
-                </Button>
-              </ButtonToolbar>
-            }
-          />
+                </ButtonToolbar>
+              }
+            />
 
-          {this.state.files.count() === 0 ? (
-            <p className="kbc-inner-padding">No files.</p>
-          ) : (
-            <div>
-              <FilesTable
-                files={this.state.files}
-                onSearchQuery={filterFiles}
-                onDeleteFile={this.handleDeleteFile}
-                isDeleting={this.state.isDeleting}
-              />
-              {this.renderMoreButton()}
-            </div>
-          )}
+            {this.state.files.count() === 0 ? (
+              <p className="kbc-inner-padding">No files.</p>
+            ) : (
+              <div>
+                <FilesTable
+                  files={this.state.files}
+                  onSearchQuery={filterFiles}
+                  onDeleteFile={this.handleDeleteFile}
+                  isDeleting={this.state.isDeleting}
+                />
+                {this.renderMoreButton()}
+              </div>
+            )}
+
+            {this.renderUploadModal()}
+            {this.renderExamplesModal()}
+          </div>
         </div>
-
-        {this.renderUploadModal()}
-        {this.renderExamplesModal()}
       </div>
     );
   },

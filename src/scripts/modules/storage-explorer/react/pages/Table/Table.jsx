@@ -20,7 +20,7 @@ export default React.createClass({
     return (
       <div className="container-fluid">
         <div className="kbc-main-content reset-overflow">
-          <div>
+          <div className="storage-explorer">
             <NavButtons />
             <Row>
               <Col sm={3}>
