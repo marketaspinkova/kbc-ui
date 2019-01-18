@@ -17,11 +17,12 @@ export default React.createClass({
       preserve: false,
       backend: this.props.backend,
       include: [],
-      exclude: []
+      exclude: [],
+      rows: 0
     };
   },
 
-  renderInfo() {
+  renderSnowflakeSandboxInfo() {
     if (this.props.backend === 'snowflake') {
       return (
         <p className="well">
@@ -35,10 +36,31 @@ export default React.createClass({
     }
   },
 
+  renderRowsInput() {
+    if (this.props.backend === 'snowflake') {
+      return;
+    }
+    return (
+      <div className="form-group">
+        <label className="col-sm-3 control-label">Sample rows</label>
+        <div className="col-sm-9">
+          <input
+            type="number"
+            placeholder="Number of rows"
+            className="form-control"
+            value={this.state.rows}
+            onChange={this._setRows}
+            ref="exclude"
+          />
+        </div>
+      </div>
+    );
+  },
+
   render() {
     return (
       <form className="form-horizontal">
-        {this.renderInfo()}
+        {this.renderSnowflakeSandboxInfo()}
         <div className="form-group">
           <label className="col-sm-3 control-label">Backend</label>
           <div className="col-sm-9">
@@ -59,6 +81,7 @@ export default React.createClass({
             />
           </div>
         </div>
+        {this.renderRowsInput()}
         <div className="form-group">
           <label className="col-sm-3 control-label" />
           <div className="col-sm-9">
@@ -75,6 +98,11 @@ export default React.createClass({
   _setInclude(array) {
     const values = _.map(array, item => item.value);
     return this.setState({ include: values }, () => this.props.onChange(this.state));
+  },
+
+  _setRows(e) {
+    const rows = e.target.value.trim();
+    return this.setState({ rows }, () => this.props.onChange(this.state));
   },
 
   _setPreserve(e) {
