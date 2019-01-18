@@ -52,9 +52,7 @@ const deleteBucket = (bucketId, forceDelete) => {
 };
 
 const createTable = (bucketId, params) => {
-  return StorageActionCreators
-    .createTable(bucketId, params)
-    .catch(errorNotification);
+  return StorageActionCreators.createTable(bucketId, params);
 };
 
 const deleteTable = (bukcetId, tableId, forceDelete) => {
@@ -198,11 +196,7 @@ const unshareBucket = (bucketId) => {
 };
 
 const uploadFile = (id, file, params) => {
-  return StorageActionCreators
-    .uploadFile(id, file, params)
-    .catch(HttpError, error => {
-      throw error.message;
-    });
+  return StorageActionCreators.uploadFile(id, file, params);
 };
 
 const deleteFile = (fileId) => {
