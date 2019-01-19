@@ -1,7 +1,6 @@
 import React from 'react';
 import DurationWithIcon from '../../../../../react/common/DurationWithIcon';
-import { Finished } from '@keboola/indigo-ui';
-import JobStatusCircle from '../../../../../react/common/JobStatusCircle';
+import { Finished, JobStatusCircle } from '@keboola/indigo-ui';
 import { Link } from 'react-router';
 import OrchestrationActiveButton from '../../components/OrchestrationActiveButton';
 import OrchestrationDeleteButton from '../../components/OrchestrationDeleteButton';
@@ -32,7 +31,9 @@ export default React.createClass({
     return (
       <Link className="tr" to="orchestration" params={{ orchestrationId: this.props.orchestration.get('id') }}>
         <span className="td">
-          <JobStatusCircle status={lastExecutedJob && lastExecutedJob.get('status')} />{' '}
+          <JobStatusCircle status={lastExecutedJob && lastExecutedJob.get('status')} />
+        </span>
+        <span className="td">
           {this.props.orchestration.get('name')}
         </span>
         <span className="td">
