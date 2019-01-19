@@ -101,6 +101,7 @@ export default React.createClass({
     return (
       <div className="thead" key="table-header">
         <div className="tr">
+          <span className="th" style={{width: '50px'}}/>
           <span className="th">
             <strong>Name</strong>
           </span>

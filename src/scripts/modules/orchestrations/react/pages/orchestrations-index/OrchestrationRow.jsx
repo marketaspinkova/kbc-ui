@@ -31,7 +31,9 @@ export default React.createClass({
     return (
       <Link className="tr" to="orchestration" params={{ orchestrationId: this.props.orchestration.get('id') }}>
         <span className="td">
-          <JobStatusCircle status={lastExecutedJob && lastExecutedJob.get('status')} />{' '}
+          <JobStatusCircle status={lastExecutedJob && lastExecutedJob.get('status')} />
+        </span>
+        <span className="td">
           {this.props.orchestration.get('name')}
         </span>
         <span className="td">
