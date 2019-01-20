@@ -148,7 +148,8 @@ export default React.createClass({
         <CreatedWithIcon createdTime={linkedBucket.get('created')} relative={false} />{' '}
         {this.isOrganizationMember() ? (
           <span>
-            <a href={`/admin/projects/${project.get('id')}`}>{project.get('name')}</a> /
+            <a href={`/admin/projects/${project.get('id')}`}>{project.get('name')}</a>
+            {' / '}
             <a href={`/admin/projects/${project.get('id')}/storage#/buckets/${linkedBucket.get('id')}`}>
               {linkedBucket.get('id')}
             </a>
