@@ -140,12 +140,12 @@ export default React.createClass({
     );
   },
 
-  renderLinkedBucket(linkedBucket) {
+  renderLinkedBucket(linkedBucket, index) {
     const project = linkedBucket.get('project');
 
     return (
-      <div>
-        <CreatedWithIcon createdTime={linkedBucket.get('created')} relative={false} />
+      <div key={index}>
+        <CreatedWithIcon createdTime={linkedBucket.get('created')} relative={false} />{' '}
         {this.isOrganizationMember() ? (
           <span>
             <a href={`/admin/projects/${project.get('id')}`}>{project.get('name')}</a> /
