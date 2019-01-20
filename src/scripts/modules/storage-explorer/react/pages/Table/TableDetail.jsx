@@ -119,7 +119,7 @@ export default React.createClass({
                     'Load'
                   )}
                 </MenuItem>
-                <MenuItem divider />
+                {canWriteTable && <MenuItem divider />}
                 {!this.state.table.get('isAlias') && canWriteTable && (
                   <MenuItem
                     eventKey="truncate"
@@ -340,7 +340,7 @@ export default React.createClass({
 
     this.state.tables.forEach(table => {
       if (
-        table.get('sourceTable') &&
+        !table.getIn(['bucket', 'sourceBucket']) &&
         table.get('isAlias') &&
         table.getIn(['sourceTable', 'id']) === this.state.table.get('id') &&
         this.state.sapiToken.getIn(['owner', 'id']) === table.getIn(['sourceTable', 'project', 'id'])

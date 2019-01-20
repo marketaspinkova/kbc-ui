@@ -12,6 +12,7 @@ import Tooltip from '../../../../../react/common/Tooltip';
 import ConfirmModal from '../../../../../react/common/ConfirmModal';
 import ShareBucketModal from '../../modals/ShareBucketModal';
 import ChangeSharingTypeModal from '../../modals/ChangeSharingTypeModal';
+import ProjectBucketLink from '../../components/ProjectBucketLink';
 import { shareBucket, unshareBucket, changeBucketSharingType } from '../../../Actions';
 
 export default React.createClass({
@@ -127,11 +128,7 @@ export default React.createClass({
         <td>Source bucket</td>
         {this.isOrganizationMember() ? (
           <td>
-            <a href={`/admin/projects/${source.getIn(['project', 'id'])}`}>{source.getIn(['project', 'name'])}</a>
-            {' / '}
-            <a href={`/admin/projects/${source.getIn(['project', 'id'])}/storage#/buckets/${source.get('id')}`}>
-              {source.get('id')}
-            </a>{' '}
+            <ProjectBucketLink bucket={source} />
             <Hint title="Source bucket">Bucket is linked from other project.</Hint>
           </td>
         ) : (
@@ -145,22 +142,14 @@ export default React.createClass({
   },
 
   renderLinkedBucket(linkedBucket, index) {
-    const project = linkedBucket.get('project');
-
     return (
       <div key={index}>
         <CreatedWithIcon createdTime={linkedBucket.get('created')} relative={false} />{' '}
         {this.isOrganizationMember() ? (
-          <span>
-            <a href={`/admin/projects/${project.get('id')}`}>{project.get('name')}</a>
-            {' / '}
-            <a href={`/admin/projects/${project.get('id')}/storage#/buckets/${linkedBucket.get('id')}`}>
-              {linkedBucket.get('id')}
-            </a>
-          </span>
+          <ProjectBucketLink bucket={linkedBucket} />
         ) : (
           <span>
-            {project.get('name')} / {linkedBucket.get('id')}
+            {linkedBucket.getIn(['project', 'name'])} / {linkedBucket.get('id')}
           </span>
         )}
       </div>

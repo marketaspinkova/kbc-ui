@@ -11,6 +11,7 @@ import Hint from '../../../../../react/common/Hint';
 import FileSize from '../../../../../react/common/FileSize';
 import ConfirmModal from '../../../../../react/common/ConfirmModal';
 import CreatePrimaryKeyModal from '../../modals/CreatePrimaryKeyModal';
+import ProjectAliasLink from '../../components/ProjectAliasLink';
 import AliasFilter from '../../components/TableAliasFilter';
 import { createTablePrimaryKey, removeTablePrimaryKey } from '../../../Actions';
 
@@ -52,7 +53,7 @@ export default React.createClass({
               <tr>
                 <td>Created</td>
                 <td>
-                  <CreatedWithIcon createdTime={table.get('created')} />
+                  <CreatedWithIcon createdTime={table.get('created')} relative={false} />
                 </td>
               </tr>
               <tr>
@@ -113,7 +114,7 @@ export default React.createClass({
                 <td>Last import</td>
                 <td>
                   {table.get('lastImportDate') ? (
-                    <CreatedWithIcon createdTime={table.get('lastImportDate')} />
+                    <CreatedWithIcon createdTime={table.get('lastImportDate')} relative={false} />
                   ) : (
                     'Not yet imported'
                   )}
@@ -122,7 +123,7 @@ export default React.createClass({
               <tr>
                 <td>Last change</td>
                 <td>
-                  <CreatedWithIcon createdTime={table.get('lastChangeDate')} />
+                  <CreatedWithIcon createdTime={table.get('lastChangeDate')} relative={false} />
                 </td>
               </tr>
               <tr>
@@ -215,39 +216,11 @@ export default React.createClass({
           </div>
         ))}
 
-        {this.props.tableLinks.map(alias => {
-          const ownerId = this.props.sapiToken.getIn(['owner', 'id']);
-          const isOrganizationMember = this.props.sapiToken.getIn(['admin', 'isOrganizationMember']);
-          const project = alias.get('project');
-
-          return (
-            <div key={alias.get('id')}>
-              {ownerId === project.get('id') && (
-                <Link
-                  to="storage-explorer-table"
-                  params={{ bucketId: alias.get('bucketId'), tableName: alias.get('tableName') }}
-                >
-                  {alias.get('id')}
-                </Link>
-              )}
-
-              {ownerId !== project.get('id') && isOrganizationMember && (
-                <span>
-                  {project.get('name')} / {alias.get('id')}
-                </span>
-              )}
-
-              {ownerId !== project.get('id') &&
-                isOrganizationMember &&
-                <a href={`/admin/projects/${project.get('id')}`}>{project.get('name')}</a> /
-                (
-                  <a href={`/admin/projects/${project.get('id')}/storage#/buckets/${alias.get('id')}`}>
-                    {alias.get('id')}
-                  </a>
-                )}
-            </div>
-          );
-        })}
+        {this.props.tableLinks.map(alias => (
+          <div key={alias.get('id')}>
+            <ProjectAliasLink sapiToken={this.props.sapiToken} alias={alias} />
+          </div>
+        ))}
       </span>
     );
   },
