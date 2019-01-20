@@ -100,13 +100,12 @@ export default React.createClass({
                 <tr>
                   <td>Alias filter</td>
                   <td>
-                    {this.props.canWriteTable && (
-                      <AliasFilter
-                        table={table}
-                        settingAliasFilter={this.props.settingAliasFilter}
-                        removingAliasFilter={this.props.removingAliasFilter}
-                      />
-                    )}
+                    <AliasFilter
+                      table={table}
+                      canEdit={this.props.canWriteTable}
+                      settingAliasFilter={this.props.settingAliasFilter}
+                      removingAliasFilter={this.props.removingAliasFilter}
+                    />
                   </td>
                 </tr>
               )}

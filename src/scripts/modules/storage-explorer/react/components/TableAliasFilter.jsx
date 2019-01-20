@@ -11,6 +11,7 @@ import { setAliasTableFilter, removeAliasTableFilter } from '../../Actions';
 export default React.createClass({
   propTypes: {
     table: PropTypes.object.isRequired,
+    canEdit: PropTypes.bool.isRequired,
     settingAliasFilter: PropTypes.bool.isRequired,
     removingAliasFilter: PropTypes.bool.isRequired
   },
@@ -47,6 +48,10 @@ export default React.createClass({
   },
 
   renderEditButton(filter) {
+    if (!this.props.canEdit) {
+      return null;
+    }
+
     return (
       <span className="storage-inline-action">
         <Tooltip tooltip={filter.count() > 0 ? 'Edit filter' : 'Set filter'} placement="top">
@@ -64,7 +69,7 @@ export default React.createClass({
   },
 
   renderDeleteButton(filter) {
-    if (!filter.count()) {
+    if (!this.props.canEdit || !filter.count()) {
       return null;
     }
 
