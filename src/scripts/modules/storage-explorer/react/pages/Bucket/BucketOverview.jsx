@@ -128,7 +128,7 @@ export default React.createClass({
         <td>Source bucket</td>
         {this.isOrganizationMember() ? (
           <td>
-            <ProjectBucketLink bucket={source} />
+            <ProjectBucketLink bucket={source} />{' '}
             <Hint title="Source bucket">Bucket is linked from other project.</Hint>
           </td>
         ) : (
