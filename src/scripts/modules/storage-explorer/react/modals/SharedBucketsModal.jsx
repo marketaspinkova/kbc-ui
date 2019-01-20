@@ -24,7 +24,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Modal show={this.props.show} onHide={this.props.onHide}>
+      <Modal show={this.props.show} onHide={this.onHide}>
         <Form onSubmit={this.handleSubmit} horizontal>
           <Modal.Header closeButton>
             <Modal.Title>Link bucket</Modal.Title>
@@ -95,7 +95,7 @@ export default React.createClass({
               isSaving={this.props.isSaving}
               isDisabled={this.isDisabled()}
               saveLabel="Link"
-              onCancel={this.props.onHide}
+              onCancel={this.onHide}
               onSave={this.handleSubmit}
               saveButtonType="submit"
             />
@@ -139,11 +139,11 @@ export default React.createClass({
       sourceBucketId: this.state.bucket.id
     };
 
-    this.props.onSubmit(newBucket).then(this.onHide, message => {
-      this.setState({
-        error: message
-      });
-    });
+    this.props.onSubmit(newBucket).then(this.onHide, this.handleError);
+  },
+
+  handleError(message) {
+    this.setState({ error: message });
   },
 
   handleBucket(event) {
@@ -162,6 +162,11 @@ export default React.createClass({
     this.setState({
       stage: event.target.value
     });
+  },
+
+  onHide() {
+    this.setState(INITIAL_STATE);
+    this.props.onHide();
   },
 
   isDisabled() {
