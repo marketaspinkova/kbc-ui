@@ -192,11 +192,11 @@ const deleteSnapshot = (snapshotId) => {
 };
 
 const shareBucket = (bucketId, params) => {
-  return StorageActionCreators.shareBucket(bucketId, params);
+  return StorageActionCreators.shareBucket(bucketId, params).then(loadSharedBuckets);
 };
 
 const unshareBucket = (bucketId) => {
-  return StorageActionCreators.unshareBucket(bucketId);
+  return StorageActionCreators.unshareBucket(bucketId).then(loadSharedBuckets);
 };
 
 const uploadFile = (id, file, params) => {
