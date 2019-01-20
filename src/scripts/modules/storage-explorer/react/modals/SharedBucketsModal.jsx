@@ -3,7 +3,7 @@ import { Alert, Modal, Form, Col, FormGroup, ControlLabel, FormControl } from 'r
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
 const INITIAL_STATE = {
-  bucket: null,
+  bucket: '',
   name: '',
   stage: 'in',
   error: null
@@ -37,12 +37,8 @@ export default React.createClass({
                 Shared buckets
               </Col>
               <Col sm={8}>
-                <FormControl
-                  componentClass="select"
-                  placeholder="Select bucket..."
-                  onChange={this.handleBucket}
-                  value={JSON.stringify(this.state.bucket)}
-                >
+                <FormControl autoFocus componentClass="select" onChange={this.handleBucket} value={this.state.bucket}>
+                  <option value="">Select bucket...</option>
                   {this.groupedBuckets()
                     .map((group, groupName) => {
                       return (
@@ -69,7 +65,7 @@ export default React.createClass({
                 Name
               </Col>
               <Col sm={8}>
-                <FormControl type="text" autoFocus value={this.state.name} onChange={this.handleName} />
+                <FormControl type="text" value={this.state.name} onChange={this.handleName} />
               </Col>
             </FormGroup>
 
@@ -131,12 +127,12 @@ export default React.createClass({
 
   handleSubmit(event) {
     event.preventDefault();
-
+    const sharedBucket = JSON.parse(this.state.bucket);
     const newBucket = {
       name: this.state.name,
       stage: this.state.stage,
-      sourceProjectId: this.state.bucket.project.id,
-      sourceBucketId: this.state.bucket.id
+      sourceProjectId: sharedBucket.project.id,
+      sourceBucketId: sharedBucket.id
     };
 
     this.props.onSubmit(newBucket).then(this.onHide, this.handleError);
@@ -148,7 +144,7 @@ export default React.createClass({
 
   handleBucket(event) {
     this.setState({
-      bucket: JSON.parse(event.target.value)
+      bucket: event.target.value
     });
   },
 
