@@ -15,14 +15,16 @@ export default React.createClass({
 
   render() {
     return (
-      <span className="tr">
+      <ComponentConfigurationLink
+        componentId={this.props.componentId}
+        configId={this.props.config.get('id')}
+        className="tr"
+      >
         <span className="td">
-          <ComponentConfigurationLink componentId={this.props.componentId} configId={this.props.config.get('id')}>
-            {this.props.config.get('name', '---')}
-          </ComponentConfigurationLink>
+          <strong>{this.props.config.get('name', '---')}</strong>
           {this.description()}
         </span>
-      </span>
+      </ComponentConfigurationLink>
     );
   },
 

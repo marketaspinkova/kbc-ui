@@ -180,26 +180,26 @@ export default React.createClass({
   },
 
   renderAffected(components) {
-    return (
-      <div className="row">
+    return [
+      (<div className="row">
         <div className="col-md-12">
-          <h3>Affected configurations</h3>
+          <h2>Affected configurations</h2>
         </div>
-        {this.renderRows(components)}
-      </div>
-    );
+      </div>),
+      this.renderRows(components)
+    ];
   },
 
   renderIgnored(components) {
-    return (
-      <div className="row">
+    return [
+      (<div className="row">
         <div className="col-md-12">
-          <h3>Manual migration needed!</h3>
+          <h2>Manual migration needed!</h2>
           <p>The configurations below need to be migrated manually. Please open each configuration and reset the authorization to migrate.</p>
         </div>
-        {this.renderRows(components)}
-      </div>
-    );
+      </div>),
+      this.renderRows(components)
+    ];
   },
 
   renderRows(components) {
