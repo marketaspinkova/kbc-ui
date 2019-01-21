@@ -175,6 +175,7 @@ describe('utils', function() {
       expect(true).toEqual(hasWildcard('*'));
     });
     it('should return false on string without wildcard', function() {
+      expect(false).toEqual(hasWildcard('my*key'));
     });
     it('should return true on wildcard', function() {
       expect(true).toEqual(hasWildcard('myKey*'));
