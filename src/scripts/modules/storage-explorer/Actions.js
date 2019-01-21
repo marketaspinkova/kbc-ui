@@ -196,7 +196,7 @@ const shareBucket = (bucketId, params) => {
 };
 
 const changeBucketSharingType = (bucketId, params) => {
-  return StorageActionCreators.changeBucketSharingType(bucketId, params).then(loadSharedBuckets);
+  return StorageActionCreators.changeBucketSharingType(bucketId, params).then(loadBuckets);
 };
 
 const unshareBucket = (bucketId) => {
