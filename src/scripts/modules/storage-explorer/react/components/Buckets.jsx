@@ -8,8 +8,9 @@ import Tooltip from '../../../../react/common/Tooltip';
 import BucketsStore from '../../../components/stores/StorageBucketsStore';
 import TablesStore from '../../../components/stores/StorageTablesStore';
 import CreateBucketModal from '../modals/CreateBucketModal';
+import SharedBucketsModal from '../modals/SharedBucketsModal';
 import BucketsList from './BucketsList';
-import { loadBuckets, createBucket } from '../../Actions';
+import { loadBuckets, loadSharedBuckets, createBucket } from '../../Actions';
 
 export default React.createClass({
   mixins: [createStoreMixin(BucketsStore, TablesStore, ApplicationStore)],
@@ -18,6 +19,7 @@ export default React.createClass({
     return {
       allBuckets: BucketsStore.getAll(),
       allTables: TablesStore.getAll(),
+      sharedBuckets: BucketsStore.getSharedBuckets(),
       isLoading: BucketsStore.getIsLoading(),
       sapiToken: ApplicationStore.getSapiToken(),
       isCreatingBucket: BucketsStore.isCreatingBucket()
@@ -27,7 +29,8 @@ export default React.createClass({
   getInitialState() {
     return {
       searchQuery: '',
-      createBucketModal: false
+      createBucketModal: false,
+      linkBucketModal: false
     };
   },
 
@@ -35,6 +38,7 @@ export default React.createClass({
     return (
       <div className="storage-buckets-sidebar">
         {this.renderCreateBucketModal()}
+        {this.canLinkBucket() && this.renderSharedBucketsModal()}
 
         <SearchBar
           placeholder="Search bucket"
@@ -55,8 +59,20 @@ export default React.createClass({
             <i className="fa fa-plus" />
           </Button>
         </Tooltip>
+        {this.canLinkBucket() && (
+          <Tooltip tooltip="Link shared bucket to project" placement="top">
+            <Button onClick={this.openBucketLinkModal}>
+              <i className="fa fa-random" />
+            </Button>
+          </Tooltip>
+        )}
         <Tooltip tooltip="Refresh buckets" placement="top">
-          <Button onClick={loadBuckets}>
+          <Button
+            onClick={() => {
+              loadBuckets();
+              loadSharedBuckets();
+            }}
+          >
             <RefreshIcon isLoading={this.state.isLoading} title="" />
           </Button>
         </Tooltip>
@@ -79,6 +95,18 @@ export default React.createClass({
     );
   },
 
+  renderSharedBucketsModal() {
+    return (
+      <SharedBucketsModal
+        sharedBuckets={this.state.sharedBuckets}
+        show={this.state.linkBucketModal}
+        onSubmit={this.handleCreateBucket}
+        onHide={this.closeBucketLinkModal}
+        isSaving={this.state.isCreatingBucket}
+      />
+    );
+  },
+
   filteredBuckets() {
     let buckets = this.state.allBuckets;
 
@@ -89,6 +117,10 @@ export default React.createClass({
     }
 
     return buckets;
+  },
+
+  canLinkBucket() {
+    return this.state.sharedBuckets.count() > 0;
   },
 
   handleCreateBucket(newBucket) {
@@ -110,6 +142,18 @@ export default React.createClass({
   closeCreateBucketModal() {
     this.setState({
       createBucketModal: false
+    });
+  },
+
+  openBucketLinkModal() {
+    this.setState({
+      linkBucketModal: true
+    });
+  },
+
+  closeBucketLinkModal() {
+    this.setState({
+      linkBucketModal: false
     });
   }
 });

@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Map } from 'immutable';
 import { Table, Button, Row } from 'react-bootstrap';
+import { Loader } from '@keboola/indigo-ui';
 
 import MetadataEditField from '../../../../components/react/components/MetadataEditField';
 import InlineEditArea from '../../../../../react/common/InlineEditArea';
@@ -122,15 +123,16 @@ export default React.createClass({
         <td>Source bucket</td>
         {this.isOrganizationMember() ? (
           <td>
-            <a href={`/admin/projects/${source.getIn(['project', 'id'])}`}>{source.getIn(['project', 'name'])}</a> /
+            <a href={`/admin/projects/${source.getIn(['project', 'id'])}`}>{source.getIn(['project', 'name'])}</a>
+            {' / '}
             <a href={`/admin/projects/${source.getIn(['project', 'id'])}/storage#/buckets/${source.get('id')}`}>
               {source.get('id')}
-            </a>
+            </a>{' '}
             <Hint title="Source bucket">Bucket is linked from other project.</Hint>
           </td>
         ) : (
           <td>
-            {source.getIn(['project', 'name'])} /{source.get('id')}
+            {source.getIn(['project', 'name'])} / {source.get('id')}{' '}
             <Hint title="Source bucket">Bucket is linked from other project.</Hint>
           </td>
         )}
@@ -138,15 +140,16 @@ export default React.createClass({
     );
   },
 
-  renderLinkedBucket(linkedBucket) {
+  renderLinkedBucket(linkedBucket, index) {
     const project = linkedBucket.get('project');
 
     return (
-      <div>
-        <CreatedWithIcon createdTime={linkedBucket.get('created')} relative={false} />
+      <div key={index}>
+        <CreatedWithIcon createdTime={linkedBucket.get('created')} relative={false} />{' '}
         {this.isOrganizationMember() ? (
           <span>
-            <a href={`/admin/projects/${project.get('id')}`}>{project.get('name')}</a> /
+            <a href={`/admin/projects/${project.get('id')}`}>{project.get('name')}</a>
+            {' / '}
             <a href={`/admin/projects/${project.get('id')}/storage#/buckets/${linkedBucket.get('id')}`}>
               {linkedBucket.get('id')}
             </a>
@@ -220,7 +223,7 @@ export default React.createClass({
     if (!sharing && canShareBucket) {
       return (
         <Button bsSize="small" onClick={this.openShareModal}>
-          <i className="fa fa-share-square-o" /> Enable sharing
+          {this.props.isSharing ? <Loader /> : <i className="fa fa-share-square-o" />} Enable sharing
         </Button>
       );
     }
@@ -228,7 +231,7 @@ export default React.createClass({
     if (sharing && canShareBucket && linked.count() === 0) {
       return (
         <Button bsSize="small" onClick={this.openUnshareModal}>
-          <i className="fa fa-ban" /> Disable sharing
+          {this.props.isUnsharing ? <Loader /> : <i className="fa fa-ban" />} Disable sharing
         </Button>
       );
     }

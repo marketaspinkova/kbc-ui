@@ -29,6 +29,10 @@ const loadBuckets = () => {
   return StorageActionCreators.loadBucketsForce();
 };
 
+const loadSharedBuckets = () => {
+  return StorageActionCreators.sharedBuckets();
+};
+
 const loadTable = (tableId, params) => {
   return StorageActionCreators.loadTable(tableId, params);
 };
@@ -188,11 +192,11 @@ const deleteSnapshot = (snapshotId) => {
 };
 
 const shareBucket = (bucketId, params) => {
-  return StorageActionCreators.shareBucket(bucketId, params);
+  return StorageActionCreators.shareBucket(bucketId, params).then(loadSharedBuckets);
 };
 
 const unshareBucket = (bucketId) => {
-  return StorageActionCreators.unshareBucket(bucketId);
+  return StorageActionCreators.unshareBucket(bucketId).then(loadSharedBuckets);
 };
 
 const uploadFile = (id, file, params) => {
@@ -246,6 +250,7 @@ export {
   loadJobs,
   loadMoreJobs,
   loadBuckets,
+  loadSharedBuckets,
   loadTable,
   loadTables,
   createBucket,

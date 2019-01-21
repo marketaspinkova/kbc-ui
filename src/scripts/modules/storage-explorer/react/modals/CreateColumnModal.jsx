@@ -92,6 +92,10 @@ export default React.createClass({
     const sourceTableId = this.props.table.getIn(['sourceTable', 'id']);
     const sourceTable = this.props.tables.find(table => table.get('id') === sourceTableId);
 
+    if (!sourceTable) {
+      return null;
+    }
+
     return sourceTable
       .get('columns')
       .filter(column => !columns.includes(column))

@@ -14,7 +14,7 @@ var createRequest = function(method, path) {
 var storageApi = {
 
   getBuckets: function() {
-    return createRequest('GET', 'buckets?include=metadata').promise().then(function(response) {
+    return createRequest('GET', 'buckets?include=metadata,linkedBuckets').promise().then(function(response) {
       return response.body;
     });
   },
@@ -78,6 +78,10 @@ var storageApi = {
       .type('form')
       .send(params)
       .promise().then(response => response.body);
+  },
+
+  sharedBuckets: function() {
+    return createRequest('GET', 'shared-buckets').promise().then(response => response.body);
   },
 
   getTokens: function() {
