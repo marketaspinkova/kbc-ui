@@ -160,6 +160,12 @@ var storageApi = {
     });
   },
 
+  changeBucketSharingType: function(bucketId, params) {
+    return createRequest('PUT', 'buckets/' + bucketId + '/share').type('form').send(params).promise().then(function(response) {
+      return response.body;
+    });
+  },
+
   createTable: function(bucketId, params) {
     return createRequest('POST', 'buckets/' + bucketId + '/tables-async').type('form').send(params).promise().then(function(response) {
       return response.body;
