@@ -6,3 +6,8 @@ export const filesLimit = 50;
 export const ActionTypes = keyMirror({
   UPDATE_SEARCH_QUERY: null
 });
+
+export const bucketSharingTypes = {
+  ORGANIZATION: 'organization',
+  ORGANIZATION_PROJECT: 'organization-project'
+};
