@@ -1,14 +1,15 @@
-import assert from 'assert';
 import { getMetadataDataTypes } from './InputMappingRowSnowflakeEditorHelper';
 import { fromJS } from 'immutable';
 
 describe('getMetadataDataType', function() {
   it('should not break on empty input', function() {
-    assert.deepStrictEqual(getMetadataDataTypes(fromJS({})), fromJS({}));
+    expect(fromJS({})).toEqual(getMetadataDataTypes(fromJS({})));
   });
 
   it('should return null with KBC.datatype.length only (no base type)', function() {
-    assert.deepStrictEqual(getMetadataDataTypes(fromJS({
+    expect(fromJS({
+      Price: null
+    })).toEqual(getMetadataDataTypes(fromJS({
       Price: [
         {
           id: '85349672',
@@ -18,13 +19,13 @@ describe('getMetadataDataType', function() {
           timestamp: '2018-11-19T13:04:43+0100'
         }
       ]
-    })), fromJS({
-      Price: null
-    }));
+    })));
   });
 
   it('should return null with KBC.datatype.nullable only (no base type)', function() {
-    assert.deepStrictEqual(getMetadataDataTypes(fromJS({
+    expect(fromJS({
+      Price: null
+    })).toEqual(getMetadataDataTypes(fromJS({
       Price: [
         {
           id: '85349670',
@@ -34,13 +35,18 @@ describe('getMetadataDataType', function() {
           timestamp: '2018-11-19T13:04:43+0100'
         }
       ]
-    })), fromJS({
-      Price: null
-    }));
+    })));
   });
 
   it('should work with KBC.datatype.basetype only', function() {
-    assert.deepStrictEqual(getMetadataDataTypes(fromJS({
+    expect(fromJS({
+      Price: {
+        column: 'Price',
+        type: 'NUMBER',
+        length: null,
+        convertEmptyValuesToNull: false
+      }
+    })).toEqual(getMetadataDataTypes(fromJS({
       Price: [
         {
           id: '85349671',
@@ -50,18 +56,13 @@ describe('getMetadataDataType', function() {
           timestamp: '2018-11-19T13:04:43+0100'
         }
       ]
-    })), fromJS({
-      Price: {
-        column: 'Price',
-        type: 'NUMBER',
-        length: null,
-        convertEmptyValuesToNull: false
-      }
-    }));
+    })));
   });
 
   it('should return null for nonexistent KBC.datatype.basetype', function() {
-    assert.deepStrictEqual(getMetadataDataTypes(fromJS({
+    expect(fromJS({
+      Price: null
+    })).toEqual(getMetadataDataTypes(fromJS({
       Price: [
         {
           id: '85349671',
@@ -71,13 +72,18 @@ describe('getMetadataDataType', function() {
           timestamp: '2018-11-19T13:04:43+0100'
         }
       ]
-    })), fromJS({
-      Price: null
-    }));
+    })));
   });
 
   it('should work with KBC.datatype.basetype and KBC.datatype.nullable', function() {
-    assert.deepStrictEqual(getMetadataDataTypes(fromJS({
+    expect(fromJS({
+      Price: {
+        column: 'Price',
+        type: 'NUMBER',
+        length: null,
+        convertEmptyValuesToNull: true
+      }
+    })).toEqual(getMetadataDataTypes(fromJS({
       Price: [
         {
           id: '85349671',
@@ -94,18 +100,18 @@ describe('getMetadataDataType', function() {
           timestamp: '2018-11-19T13:04:43+0100'
         }
       ]
-    })), fromJS({
+    })));
+  });
+
+  it('should work with KBC.datatype.basetype and KBC.datatype.nullable (nullable set to 0)', function() {
+    expect(fromJS({
       Price: {
         column: 'Price',
         type: 'NUMBER',
         length: null,
-        convertEmptyValuesToNull: true
+        convertEmptyValuesToNull: false
       }
-    }));
-  });
-
-  it('should work with KBC.datatype.basetype and KBC.datatype.nullable (nullable set to 0)', function() {
-    assert.deepStrictEqual(getMetadataDataTypes(fromJS({
+    })).toEqual(getMetadataDataTypes(fromJS({
       Price: [
         {
           id: '85349671',
@@ -122,18 +128,18 @@ describe('getMetadataDataType', function() {
           timestamp: '2018-11-19T13:04:43+0100'
         }
       ]
-    })), fromJS({
-      Price: {
-        column: 'Price',
-        type: 'NUMBER',
-        length: null,
-        convertEmptyValuesToNull: false
-      }
-    }));
+    })));
   });
 
   it('should work with KBC.datatype.basetype and KBC.datatype.length', function() {
-    assert.deepStrictEqual(getMetadataDataTypes(fromJS({
+    expect(fromJS({
+      Price: {
+        column: 'Price',
+        type: 'NUMBER',
+        length: '19,4',
+        convertEmptyValuesToNull: false
+      }
+    })).toEqual(getMetadataDataTypes(fromJS({
       Price: [
         {
           id: '85349671',
@@ -150,18 +156,18 @@ describe('getMetadataDataType', function() {
           timestamp: '2018-11-19T13:04:43+0100'
         }
       ]
-    })), fromJS({
-      Price: {
-        column: 'Price',
-        type: 'NUMBER',
-        length: '19,4',
-        convertEmptyValuesToNull: false
-      }
-    }));
+    })));
   });
 
   it('should work with KBC.datatype.basetype and KBC.datatype.length (should keep the length)', function() {
-    assert.deepStrictEqual(getMetadataDataTypes(fromJS({
+    expect(fromJS({
+      Price: {
+        column: 'Price',
+        type: 'VARCHAR',
+        length: '123',
+        convertEmptyValuesToNull: false
+      }
+    })).toEqual(getMetadataDataTypes(fromJS({
       Price: [
         {
           id: '85349679',
@@ -178,18 +184,18 @@ describe('getMetadataDataType', function() {
           timestamp: '2018-11-19T13:04:43+0100'
         }
       ]
-    })), fromJS({
-      Price: {
-        column: 'Price',
-        type: 'VARCHAR',
-        length: '123',
-        convertEmptyValuesToNull: false
-      }
-    }));
+    })));
   });
 
   it('should work with KBC.datatype.basetype and KBC.datatype.length (should decrease length)', function() {
-    assert.deepStrictEqual(getMetadataDataTypes(fromJS({
+    expect(fromJS({
+      Price: {
+        column: 'Price',
+        type: 'VARCHAR',
+        length: 16777216,
+        convertEmptyValuesToNull: false
+      }
+    })).toEqual(getMetadataDataTypes(fromJS({
       Price: [
         {
           id: '85349679',
@@ -206,13 +212,6 @@ describe('getMetadataDataType', function() {
           timestamp: '2018-11-19T13:04:43+0100'
         }
       ]
-    })), fromJS({
-      Price: {
-        column: 'Price',
-        type: 'VARCHAR',
-        length: 16777216,
-        convertEmptyValuesToNull: false
-      }
-    }));
+    })));
   });
 });

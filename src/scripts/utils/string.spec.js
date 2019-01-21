@@ -1,32 +1,31 @@
-import assert from 'assert';
 import stringUtils from './string';
 const {webalize} = stringUtils;
 
 describe('string utils tests', function() {
   describe('webalize', function() {
     it('jeden dva tri styri pat -> jeden-dva-tri-styri-pat', function() {
-      assert.equal(webalize('jeden dva tri styri pat'), 'jeden-dva-tri-styri-pat');
+      expect('jeden-dva-tri-styri-pat').toEqual(webalize('jeden dva tri styri pat'));
     });
     it('jeden dva  Tri -> jeden-dva-tri', function() {
-      assert.equal(webalize('jeden dva  Tri'), 'jeden-dva-tri');
+      expect('jeden-dva-tri').toEqual(webalize('jeden dva  Tri'));
     });
     it('jeden DVA  Tri -> jeden-DVA-Tri', function() {
-      assert.equal(webalize('jeden DVA  Tri', {caseSensitive: true}), 'jeden-DVA-Tri');
+      expect('jeden-DVA-Tri').toEqual(webalize('jeden DVA  Tri', {caseSensitive: true}));
     });
     it('Háčky a čárky NEdělají problémyô->hacky-a-carky-nedelaji-problemyo', function() {
-      assert.equal(webalize('Háčky a čárky NEdělají problémyô'), 'hacky-a-carky-nedelaji-problemyo');
+      expect('hacky-a-carky-nedelaji-problemyo').toEqual(webalize('Háčky a čárky NEdělají problémyô'));
     });
     it('LaLaLa123->lalala123', function() {
-      assert.equal(webalize('LaLaLa123'), 'lalala123');
+      expect('lalala123').toEqual(webalize('LaLaLa123'));
     });
     it('a_b->a_b', function() {
-      assert.equal(webalize('a_b'), 'a_b');
+      expect('a_b').toEqual(webalize('a_b'));
     });
     it('__a__b___c->a_b_c', function() {
-      assert.equal(webalize('__a__b___c'), 'a_b_c');
+      expect('a_b_c').toEqual(webalize('__a__b___c'));
     });
     it('_a_b_->a_b', function() {
-      assert.equal(webalize('_a_b_'), 'a_b');
+      expect('a_b').toEqual(webalize('_a_b_'));
     });
   });
 });

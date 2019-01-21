@@ -1,5 +1,3 @@
-let assert = require('assert');
-
 jest.mock('../../../../modules/components/stores/InstalledComponentsStore', () => {
   const Immutable = require('immutable');
   const data = Immutable.fromJS({
@@ -39,10 +37,7 @@ const store = require('../../storeProvisioning').createStore('keboola.ex-db-mysq
 describe('shouldDestinationHaveOldFormat test 2', function() {
   describe('shouldDestinationHaveOldFormat', function() {
     it('it should have old format (only old tables)', function() {
-      assert.equal(
-        store.shouldDestinationHaveOldFormat('in.c-keboola-ex-db-mysql'),
-        true
-      );
+      expect(true).toEqual(store.shouldDestinationHaveOldFormat('in.c-keboola-ex-db-mysql'));
     });
   });
 });

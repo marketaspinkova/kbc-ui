@@ -1,4 +1,3 @@
-import assert from 'assert';
 import { fromJS } from 'immutable';
 import { prepareColumnsTypes } from './columnsMetadata';
 
@@ -33,40 +32,33 @@ function defaultMysqlType(column) {
 
 describe('prepareColumnsTypes', function() {
   it('it return null for unknown componentId', () => {
-    assert.equal(prepareColumnsTypes('keboola.wr-db-unknown', table), null);
+    expect(null).toEqual(prepareColumnsTypes('keboola.wr-db-unknown', table));
   });
 
   it('only table with snowflake backend can read metadata, default values is returned for others backend', () => {
-    assert.deepStrictEqual(
-      prepareColumnsTypes('keboola.wr-db-mysql', table),
-      fromJS([defaultMysqlType('country'), defaultMysqlType('cars')])
-    );
+    expect(prepareColumnsTypes('keboola.wr-db-mysql', table)).toEqual(fromJS([defaultMysqlType('country'), defaultMysqlType('cars')]));
   });
 
   it('snowflake backend can read metadata, default values is returned for columns without metadata', () => {
     const expected = fromJS([metadataSnowflakeType('country'), defaultSnowflakeType('cars')]);
-
-    assert.deepStrictEqual(prepareColumnsTypes(SnowflakeComponentId, table), expected);
+    expect(expected).toEqual(prepareColumnsTypes(SnowflakeComponentId, table));
   });
 
   it('if metadata has no basetype, default values are returned', () => {
     const withoutMetadataBasetype = table.deleteIn(['columnMetadata', 'country', 0]);
     const expected = fromJS([defaultSnowflakeType('country'), defaultSnowflakeType('cars')]);
-
-    assert.deepStrictEqual(prepareColumnsTypes(SnowflakeComponentId, withoutMetadataBasetype), expected);
+    expect(expected).toEqual(prepareColumnsTypes(SnowflakeComponentId, withoutMetadataBasetype));
   });
 
   it('if metadata has unknown basetype, default values are returned', () => {
     const uknownMetadataBasetype = table.setIn(['columnMetadata', 'country', 0, 'value'], 'UNKNOWN');
     const expected = fromJS([defaultSnowflakeType('country'), defaultSnowflakeType('cars')]);
-
-    assert.deepStrictEqual(prepareColumnsTypes(SnowflakeComponentId, uknownMetadataBasetype), expected);
+    expect(expected).toEqual(prepareColumnsTypes(SnowflakeComponentId, uknownMetadataBasetype));
   });
 
   it('if length value from metadata is bigger than allowed, default size is used', () => {
     const updatedTable = table.setIn(['columnMetadata', 'country', 3, 'value'], 26777216);
     const expected = fromJS([metadataSnowflakeType('country'), defaultSnowflakeType('cars')]);
-
-    assert.deepStrictEqual(prepareColumnsTypes(SnowflakeComponentId, updatedTable), expected);
+    expect(expected).toEqual(prepareColumnsTypes(SnowflakeComponentId, updatedTable));
   });
 });

@@ -1,4 +1,3 @@
-import assert from 'assert';
 import Immutable from 'immutable';
 import { createConfiguration, parseConfiguration, createEmptyConfiguration } from './configuration';
 import { cases } from './configuration.spec.def';
@@ -6,29 +5,29 @@ import { cases } from './configuration.spec.def';
 describe('row', function() {
   describe('createConfiguration()', function() {
     it('should return an empty config with defaults from an empty local state', function() {
-      assert.deepEqual(cases.emptyWithDefaults.configuration, createConfiguration(Immutable.fromJS({})).toJS());
+      expect(cases.emptyWithDefaults.configuration).toEqual(createConfiguration(Immutable.fromJS({})).toJS());
     });
     Object.keys(cases).forEach(function(key) {
       it('should return a valid config for a local state with ' + key, function() {
-        assert.deepEqual(cases[key].configuration, createConfiguration(Immutable.fromJS(cases[key].localState)).toJS());
+        expect(cases[key].configuration).toEqual(createConfiguration(Immutable.fromJS(cases[key].localState)).toJS());
       });
     });
   });
 
   describe('parseConfiguration()', function() {
     it('should return empty localState with defaults from empty configuration', function() {
-      assert.deepEqual(cases.emptyWithDefaults.localState, parseConfiguration(Immutable.fromJS({})).toJS());
+      expect(cases.emptyWithDefaults.localState).toEqual(parseConfiguration(Immutable.fromJS({})).toJS());
     });
     Object.keys(cases).forEach(function(key) {
       it('should return a correct localState with ' + key + ' configuration', function() {
-        assert.deepEqual(cases[key].localState, parseConfiguration(Immutable.fromJS(cases[key].configuration)).toJS());
+        expect(cases[key].localState).toEqual(parseConfiguration(Immutable.fromJS(cases[key].configuration)).toJS());
       });
     });
   });
 
   describe('createEmptyConfiguration()', function() {
     it('should return a default config with the webalized name filled in', function() {
-      assert.deepEqual(createEmptyConfiguration('in.c-bucket.test').toJS(), createConfiguration(Immutable.fromJS({source: 'in.c-bucket.test', destination: 'test.csv'})).toJS());
+      expect(createEmptyConfiguration('in.c-bucket.test').toJS()).toEqual(createConfiguration(Immutable.fromJS({ source: 'in.c-bucket.test', destination: 'test.csv' })).toJS());
     });
   });
 });

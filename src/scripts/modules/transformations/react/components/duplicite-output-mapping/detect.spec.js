@@ -1,4 +1,3 @@
-import assert from 'assert';
 import Immutable from 'immutable';
 import getConflicts from './detect';
 
@@ -137,13 +136,13 @@ const t3 = {
 
 describe('getConflicts', () => {
   it('should return empty array for a single transformation', () => {
-    assert.deepEqual([], getConflicts(Immutable.fromJS(t1), Immutable.fromJS({'1': t1})).toJS());
+    expect([]).toEqual(getConflicts(Immutable.fromJS(t1), Immutable.fromJS({'1': t1})).toJS());
   });
   it('should return empty array for conflict in different phases', () => {
-    assert.deepEqual([], getConflicts(Immutable.fromJS(t1), Immutable.fromJS({'1': t1, '2': t2})).toJS());
+    expect([]).toEqual(getConflicts(Immutable.fromJS(t1), Immutable.fromJS({'1': t1, '2': t2})).toJS());
   });
   it('should return conflicting transformations', () => {
-    assert.deepEqual([
+    expect([
       {
         'id': '1a',
         'destination': 'out.c-duplicite-output-mapping.test'
@@ -152,8 +151,8 @@ describe('getConflicts', () => {
         'id': '1a',
         'destination': 'out.c-duplicite-output-mapping.different_source'
       }
-    ], getConflicts(Immutable.fromJS(t1), Immutable.fromJS({'1': t1, '1a': t1a, '1b': t1b})).toJS());
-    assert.deepEqual([
+    ]).toEqual(getConflicts(Immutable.fromJS(t1), Immutable.fromJS({'1': t1, '1a': t1a, '1b': t1b})).toJS());
+    expect([
       {
         'id': '1',
         'destination': 'out.c-duplicite-output-mapping.test'
@@ -162,18 +161,18 @@ describe('getConflicts', () => {
         'id': '1',
         'destination': 'out.c-duplicite-output-mapping.different_source'
       }
-    ], getConflicts(Immutable.fromJS(t1a), Immutable.fromJS({'1': t1, '1a': t1a, '1b': t1b})).toJS());
+    ]).toEqual(getConflicts(Immutable.fromJS(t1a), Immutable.fromJS({'1': t1, '1a': t1a, '1b': t1b})).toJS());
   });
   it('should return empty array for no conflicts', () => {
-    assert.deepEqual([], getConflicts(Immutable.fromJS(t1), Immutable.fromJS({'1': t1, '1b': t1b})).toJS());
-    assert.deepEqual([], getConflicts(Immutable.fromJS(t1a), Immutable.fromJS({'1a': t1a, '1b': t1b})).toJS());
+    expect([]).toEqual(getConflicts(Immutable.fromJS(t1), Immutable.fromJS({'1': t1, '1b': t1b})).toJS());
+    expect([]).toEqual(getConflicts(Immutable.fromJS(t1a), Immutable.fromJS({'1a': t1a, '1b': t1b})).toJS());
   });
   it('should detect self conflicts', () => {
-    assert.deepEqual([
+    expect([
       {
         'id': '3',
         'destination': 'out.c-duplicite-output-mapping.conflict'
       }
-    ], getConflicts(Immutable.fromJS(t3), Immutable.fromJS({'3': t3})).toJS());
+    ]).toEqual(getConflicts(Immutable.fromJS(t3), Immutable.fromJS({'3': t3})).toJS());
   });
 });

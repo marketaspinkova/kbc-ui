@@ -1,5 +1,4 @@
-import {parseDataTypeFromString} from './parseDataType';
-import assert from 'assert';
+import { parseDataTypeFromString } from './parseDataType';
 
 describe('parseDataTypeFromString()', () => {
   it('should parse empty string', () => {
@@ -9,57 +8,57 @@ describe('parseDataTypeFromString()', () => {
       type: '',
       length: null
     };
-    assert.deepEqual(test, expected);
+    expect(expected).toEqual(test);
   });
 
   it('should parse string defined data types', () => {
-    assert.deepEqual({
+    expect({
       type: 'VARCHAR',
       length: null,
       column: 'name'
-    }, parseDataTypeFromString('VARCHAR', 'name').toJS());
+    }).toEqual(parseDataTypeFromString('VARCHAR', 'name').toJS());
 
-    assert.deepEqual({
+    expect({
       type: 'NUMBER',
       length: null,
       column: 'name'
-    }, parseDataTypeFromString('NUMBER', 'name').toJS());
+    }).toEqual(parseDataTypeFromString('NUMBER', 'name').toJS());
 
-    assert.deepEqual({
+    expect({
       type: 'DATE',
       length: null,
       column: 'name'
-    }, parseDataTypeFromString('DATE', 'name').toJS());
+    }).toEqual(parseDataTypeFromString('DATE', 'name').toJS());
 
-    assert.deepEqual({
+    expect({
       type: 'BIGINT UNSIGNED',
       length: null,
       column: 'name'
-    }, parseDataTypeFromString('BIGINT UNSIGNED', 'name').toJS());
+    }).toEqual(parseDataTypeFromString('BIGINT UNSIGNED', 'name').toJS());
   });
   it('should parse string defined data types with length', () => {
-    assert.deepEqual({
+    expect({
       type: 'VARCHAR',
       length: '255',
       column: 'name'
-    }, parseDataTypeFromString('VARCHAR (255)', 'name').toJS());
+    }).toEqual(parseDataTypeFromString('VARCHAR (255)', 'name').toJS());
 
-    assert.deepEqual({
+    expect({
       type: 'VARCHAR',
       length: '255',
       column: 'name'
-    }, parseDataTypeFromString('VARCHAR(255)', 'name').toJS());
+    }).toEqual(parseDataTypeFromString('VARCHAR(255)', 'name').toJS());
 
-    assert.deepEqual({
+    expect({
       type: 'NUMBER',
       length: '12,2',
       column: 'name'
-    }, parseDataTypeFromString('NUMBER (12,2)', 'name').toJS());
+    }).toEqual(parseDataTypeFromString('NUMBER (12,2)', 'name').toJS());
 
-    assert.deepEqual({
+    expect({
       type: 'NUMBER',
       length: '12,2',
       column: 'name'
-    }, parseDataTypeFromString('NUMBER(12,2)', 'name').toJS());
+    }).toEqual(parseDataTypeFromString('NUMBER(12,2)', 'name').toJS());
   });
 });

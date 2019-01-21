@@ -1,4 +1,3 @@
-import assert from 'assert';
 import Immutable from 'immutable';
 import sections from './sections';
 
@@ -35,7 +34,7 @@ describe('sections makeParseFn()', function() {
         key2: 'val2'
       }
     ];
-    assert.deepEqual(expected, parseFn(configuration).toJS());
+    expect(expected).toEqual(parseFn(configuration).toJS());
   });
   it('should not map invalid values', function() {
     const parseFn = sections.makeParseFn(sectionsDefinition, null);
@@ -54,7 +53,7 @@ describe('sections makeParseFn()', function() {
         key2: 'val2'
       }
     ];
-    assert.deepEqual(expected, parseFn(configuration).toJS());
+    expect(expected).toEqual(parseFn(configuration).toJS());
   });
 
   it('should use provided conform function', function() {
@@ -82,7 +81,7 @@ describe('sections makeParseFn()', function() {
         key2: 'val2'
       }
     ];
-    assert.deepEqual(expected, parseFn(configuration).toJS());
+    expect(expected).toEqual(parseFn(configuration).toJS());
   });
 });
 
@@ -123,7 +122,7 @@ describe('sections makeCreateFn()', function() {
         key2: 'val2'
       }
     };
-    assert.deepEqual(expected, createFn(localState).toJS());
+    expect(expected).toEqual(createFn(localState).toJS());
   });
   it('should not map invalid values', function() {
     const createFn = sections.makeCreateFn(sectionsDefinition);
@@ -143,7 +142,7 @@ describe('sections makeCreateFn()', function() {
         key2: 'val2'
       }
     };
-    assert.deepEqual(expected, createFn(localState).toJS());
+    expect(expected).toEqual(createFn(localState).toJS());
   });
 });
 
@@ -180,7 +179,7 @@ describe('sections makeCreateEmptyFn()', function() {
         key2: ''
       }
     };
-    assert.deepEqual(expected, createEmptyFn('myName', 'myWebalized').toJS());
+    expect(expected).toEqual(createEmptyFn('myName', 'myWebalized').toJS());
   });
 });
 
@@ -198,7 +197,7 @@ describe('sections isComplete', function() {
     }
   ]);
   it('should return true for a complete config', function() {
-    assert.equal(true, sections.isComplete(sectionsDefinition, Immutable.fromJS({
+    expect(true).toEqual(sections.isComplete(sectionsDefinition, Immutable.fromJS({
       parameters: {
         key1: 'val1',
         key2: 'val2'
@@ -206,16 +205,16 @@ describe('sections isComplete', function() {
     })));
   });
   it('should return false for an empty config', function() {
-    assert.equal(false, sections.isComplete(sectionsDefinition, Immutable.fromJS({})));
+    expect(false).toEqual(sections.isComplete(sectionsDefinition, Immutable.fromJS({})));
   });
   it('should return false for an incomplete complete config', function() {
-    assert.equal(false, sections.isComplete(sectionsDefinition, Immutable.fromJS({
+    expect(false).toEqual(sections.isComplete(sectionsDefinition, Immutable.fromJS({
       parameters: {
         key1: '',
         key2: 'val2'
       }
     })));
-    assert.equal(false, sections.isComplete(sectionsDefinition, Immutable.fromJS({
+    expect(false).toEqual(sections.isComplete(sectionsDefinition, Immutable.fromJS({
       parameters: {
         key1: 'val1',
         key2: ''
@@ -274,7 +273,7 @@ describe('sections parse(create())', function() {
         key2: 'value2'
       }
     });
-    assert.deepEqual(configuration.toJS(), createBySectionsFn(parseBySectionsFn(configuration)).toJS());
+    expect(configuration.toJS()).toEqual(createBySectionsFn(parseBySectionsFn(configuration)).toJS());
   });
 
   it('should deep merge', function() {
@@ -332,7 +331,7 @@ describe('sections parse(create())', function() {
         }
       }
     });
-    assert.deepEqual(configuration.toJS(), createBySectionsFn(parseBySectionsFn(configuration)).toJS());
+    expect(configuration.toJS()).toEqual(createBySectionsFn(parseBySectionsFn(configuration)).toJS());
   });
 
   it('unknown key shall not pass', function() {
@@ -372,7 +371,7 @@ describe('sections parse(create())', function() {
         key: 'value'
       }
     };
-    assert.deepEqual(expected, createBySectionsFn(parseBySectionsFn(configuration)).toJS());
+    expect(expected).toEqual(createBySectionsFn(parseBySectionsFn(configuration)).toJS());
   });
 
   it('should aggressively conform parsed config with missing value', function() {
@@ -391,7 +390,7 @@ describe('sections parse(create())', function() {
     const rowSections = Immutable.fromJS([{onLoad, onSave}]);
     const parseBySectionsFn = sections.makeParseFn(rowSections, conformFn);
     const createBySectionsFn = sections.makeCreateFn(rowSections);
-    assert.deepEqual(expected, createBySectionsFn(parseBySectionsFn(configuration)).toJS());
+    expect(expected).toEqual(createBySectionsFn(parseBySectionsFn(configuration)).toJS());
   });
 
   it('should conform parsed config with existing value', function() {
@@ -409,7 +408,7 @@ describe('sections parse(create())', function() {
     const rowSections = Immutable.fromJS([{onLoad, onSave}]);
     const parseBySectionsFn = sections.makeParseFn(rowSections, conformFn);
     const createBySectionsFn = sections.makeCreateFn(rowSections);
-    assert.deepEqual(expected, createBySectionsFn(parseBySectionsFn(configuration)).toJS());
+    expect(expected).toEqual(createBySectionsFn(parseBySectionsFn(configuration)).toJS());
   });
 
   it('should pass context to section parse section fn', function() {
@@ -431,6 +430,6 @@ describe('sections parse(create())', function() {
     const rowSections = Immutable.fromJS([{onLoad}]);
     const parseBySectionsFn = sections.makeParseFn(rowSections, null, context);
     const localState = parseBySectionsFn(configuration);
-    assert.deepEqual(expectedSectionsLocalState, localState.toJS());
+    expect(expectedSectionsLocalState).toEqual(localState.toJS());
   });
 });

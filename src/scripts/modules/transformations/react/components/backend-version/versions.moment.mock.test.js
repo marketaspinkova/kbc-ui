@@ -1,4 +1,3 @@
-import assert from 'assert';
 import { hasVersions, getVersions } from './versions';
 import { transformationType } from '../../../Constants';
 
@@ -12,12 +11,12 @@ jest.mock('moment', () => {
 
 describe('hasVersions', () => {
   it('should return true for date before until', () => {
-    assert.strictEqual(true, hasVersions(transformationType.R));
+    expect(true).toEqual(hasVersions(transformationType.R));
   });
 });
 
 describe('getVersions', () => {
   it('should return non empty array for date before until', () => {
-    assert.strictEqual(true, getVersions(transformationType.R).length >= 2);
+    expect(true).toEqual(getVersions(transformationType.R).length >= 2);
   });
 });

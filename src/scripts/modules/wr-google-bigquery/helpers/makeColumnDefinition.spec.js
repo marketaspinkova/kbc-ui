@@ -1,6 +1,5 @@
 import makeColumnDefinition from './makeColumnDefinition';
 import {Types} from './constants';
-import assert from 'assert';
 
 describe('makeColumnDefinition', () => {
   it('test type STRING setup', () => {
@@ -9,11 +8,11 @@ describe('makeColumnDefinition', () => {
       dbName: 'id',
       type: Types.STRING
     });
-    assert.deepEqual(definition.fields.dbName, {
+    expect(definition.fields.dbName).toEqual({
       show: true,
       defaultValue: 'id'
     });
-    assert.deepEqual(definition.fields.type, {
+    expect(definition.fields.type).toEqual({
       show: true,
       defaultValue: Types.IGNORE
     });
@@ -25,11 +24,11 @@ describe('makeColumnDefinition', () => {
       dbName: 'id',
       type: Types.IGNORE
     });
-    assert.deepEqual(definition.fields.dbName, {
+    expect(definition.fields.dbName).toEqual({
       show: false,
       defaultValue: 'id'
     });
-    assert.deepEqual(definition.fields.type, {
+    expect(definition.fields.type).toEqual({
       show: true,
       defaultValue: Types.IGNORE
     });

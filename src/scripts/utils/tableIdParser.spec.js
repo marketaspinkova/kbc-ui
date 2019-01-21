@@ -1,74 +1,73 @@
-import assert from 'assert';
 import {parse} from './tableIdParser';
 
 describe('tableIdParser', () => {
   it('should parse null input', function() {
     const parsed = parse(null);
-    assert.equal('..', parsed.tableId);
+    expect('..').toEqual(parsed.tableId);
     const {stage, bucket, table} = parsed.parts;
-    assert.equal('', stage);
-    assert.equal('', bucket);
-    assert.equal('', table);
+    expect('').toEqual(stage);
+    expect('').toEqual(bucket);
+    expect('').toEqual(table);
   });
   it('should parse null input with default stage', function() {
     const parsed = parse(null, {defaultStage: 'out'});
-    assert.equal('out..', parsed.tableId);
+    expect('out..').toEqual(parsed.tableId);
     const {stage, bucket, table} = parsed.parts;
-    assert.equal('out', stage);
-    assert.equal('', bucket);
-    assert.equal('', table);
+    expect('out').toEqual(stage);
+    expect('').toEqual(bucket);
+    expect('').toEqual(table);
   });
 
   it('should parse table with missing bucket', function() {
     const parsed = parse('in..table', {defaultStage: 'out'});
-    assert.equal('in..table', parsed.tableId);
+    expect('in..table').toEqual(parsed.tableId);
     const {stage, bucket, table} = parsed.parts;
-    assert.equal('in', stage);
-    assert.equal('', bucket);
-    assert.equal('table', table);
+    expect('in').toEqual(stage);
+    expect('').toEqual(bucket);
+    expect('table').toEqual(table);
   });
 
   it('should parse bucket with missing table', function() {
     const parsed = parse('in.bucket.', {defaultStage: 'out'});
-    assert.equal('in.bucket.', parsed.tableId);
+    expect('in.bucket.').toEqual(parsed.tableId);
     const {stage, bucket, table} = parsed.parts;
-    assert.equal('in', stage);
-    assert.equal('bucket', bucket);
-    assert.equal('', table);
+    expect('in').toEqual(stage);
+    expect('bucket').toEqual(bucket);
+    expect('').toEqual(table);
   });
 
   it('should parse whole tableId', function() {
     const parsed = parse('in.bucket.table');
-    assert.equal('in.bucket.table', parsed.tableId);
+    expect('in.bucket.table').toEqual(parsed.tableId);
     const {stage, bucket, table} = parsed.parts;
-    assert.equal('in', stage);
-    assert.equal('bucket', bucket);
-    assert.equal('table', table);
+    expect('in').toEqual(stage);
+    expect('bucket').toEqual(bucket);
+    expect('table').toEqual(table);
   });
 
   it('should parse null input with default stage and bucket', function() {
     const parsed = parse(null, {defaultStage: 'out', defaultBucket: 'bucket'});
-    assert.equal('out.bucket.', parsed.tableId);
+    expect('out.bucket.').toEqual(parsed.tableId);
     const {stage, bucket, table} = parsed.parts;
-    assert.equal('out', stage);
-    assert.equal('bucket', bucket);
-    assert.equal('', table);
+    expect('out').toEqual(stage);
+    expect('bucket').toEqual(bucket);
+    expect('').toEqual(table);
   });
 
   it('should parse input with default stage and bucket', function() {
     const parsed = parse('in.other.table', {defaultStage: 'out', defaultBucket: 'bucket'});
-    assert.equal('in.other.table', parsed.tableId);
+    expect('in.other.table').toEqual(parsed.tableId);
     const {stage, bucket, table} = parsed.parts;
-    assert.equal('in', stage);
-    assert.equal('other', bucket);
-    assert.equal('table', table);
+    expect('in').toEqual(stage);
+    expect('other').toEqual(bucket);
+    expect('table').toEqual(table);
   });
   it('should parse input filling defaultbucket', function() {
     const parsed = parse('in..table', {defaultStage: 'out', defaultBucket: 'bucket'});
-    assert.equal('in.bucket.table', parsed.tableId);
+    expect('in.bucket.table').toEqual(parsed.tableId);
     const {stage, bucket, table} = parsed.parts;
-    assert.equal('in', stage);
-    assert.equal('bucket', bucket);
-    assert.equal('table', table);
+    expect('in').toEqual(stage);
+    expect('bucket').toEqual(bucket);
+    expect('table').toEqual(table);
   });
 });

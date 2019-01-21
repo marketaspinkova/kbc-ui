@@ -1,95 +1,94 @@
-import assert from 'assert';
 import { validate } from './columnTypeValidation';
 
 describe('columnTypeValidation', () => {
   describe('binary', () => {
-    it('number bigger that zero is fine', () => assert.equal(validate('binary', 10), true));
-    it('even string numeric value is fine', () => assert.equal(validate('binary', '5'), true));
-    it('must be bigger that zero', () => assert.equal(validate('binary', 0), false));
-    it('must be numeric', () => assert.equal(validate('binary', 'baz'), false));
-    it('can not be empty', () => assert.equal(validate('binary', ''), false));
+    it('number bigger that zero is fine', () => expect(validate('binary', 10)).toEqual(true));
+    it('even string numeric value is fine', () => expect(validate('binary', '5')).toEqual(true));
+    it('must be bigger that zero', () => expect(validate('binary', 0)).toEqual(false));
+    it('must be numeric', () => expect(validate('binary', 'baz')).toEqual(false));
+    it('can not be empty', () => expect(validate('binary', '')).toEqual(false));
   });
 
   describe('char', () => {
-    it('number bigger that zero is fine', () => assert.equal(validate('char', 10), true));
-    it('even string numeric value is fine', () => assert.equal(validate('char', '5'), true));
-    it('must be bigger that zero', () => assert.equal(validate('char', 0), false));
-    it('must be numeric', () => assert.equal(validate('char', 'baz'), false));
-    it('can not be empty', () => assert.equal(validate('char', ''), false));
+    it('number bigger that zero is fine', () => expect(validate('char', 10)).toEqual(true));
+    it('even string numeric value is fine', () => expect(validate('char', '5')).toEqual(true));
+    it('must be bigger that zero', () => expect(validate('char', 0)).toEqual(false));
+    it('must be numeric', () => expect(validate('char', 'baz')).toEqual(false));
+    it('can not be empty', () => expect(validate('char', '')).toEqual(false));
   });
 
   describe('character', () => {
-    it('number bigger that zero is fine', () => assert.equal(validate('character', 10), true));
-    it('even string numeric value is fine', () => assert.equal(validate('character', '5'), true));
-    it('must be bigger that zero', () => assert.equal(validate('character', 0), false));
-    it('must be numeric', () => assert.equal(validate('character', 'baz'), false));
-    it('can not be empty', () => assert.equal(validate('character', ''), false));
+    it('number bigger that zero is fine', () => expect(validate('character', 10)).toEqual(true));
+    it('even string numeric value is fine', () => expect(validate('character', '5')).toEqual(true));
+    it('must be bigger that zero', () => expect(validate('character', 0)).toEqual(false));
+    it('must be numeric', () => expect(validate('character', 'baz')).toEqual(false));
+    it('can not be empty', () => expect(validate('character', '')).toEqual(false));
   });
 
   describe('string', () => {
-    it('number bigger that zero is fine', () => assert.equal(validate('string', 10), true));
-    it('even string numeric value is fine', () => assert.equal(validate('string', '5'), true));
-    it('must be bigger that zero', () => assert.equal(validate('string', 0), false));
-    it('must be numeric', () => assert.equal(validate('string', 'baz'), false));
-    it('can not be empty', () => assert.equal(validate('string', ''), false));
+    it('number bigger that zero is fine', () => expect(validate('string', 10)).toEqual(true));
+    it('even string numeric value is fine', () => expect(validate('string', '5')).toEqual(true));
+    it('must be bigger that zero', () => expect(validate('string', 0)).toEqual(false));
+    it('must be numeric', () => expect(validate('string', 'baz')).toEqual(false));
+    it('can not be empty', () => expect(validate('string', '')).toEqual(false));
   });
 
   describe('text', () => {
-    it('number bigger that zero is fine', () => assert.equal(validate('text', 10), true));
-    it('even string numeric value is fine', () => assert.equal(validate('text', '5'), true));
-    it('must be bigger that zero', () => assert.equal(validate('text', 0), false));
-    it('must be numeric', () => assert.equal(validate('text', 'baz'), false));
-    it('can not be empty', () => assert.equal(validate('text', ''), false));
+    it('number bigger that zero is fine', () => expect(validate('text', 10)).toEqual(true));
+    it('even string numeric value is fine', () => expect(validate('text', '5')).toEqual(true));
+    it('must be bigger that zero', () => expect(validate('text', 0)).toEqual(false));
+    it('must be numeric', () => expect(validate('text', 'baz')).toEqual(false));
+    it('can not be empty', () => expect(validate('text', '')).toEqual(false));
   });
 
   describe('varchar', () => {
-    it('number bigger that zero is fine', () => assert.equal(validate('varchar', 10), true));
-    it('even string numeric value is fine', () => assert.equal(validate('varchar', '5'), true));
-    it('must be bigger that zero', () => assert.equal(validate('varchar', 0), false));
-    it('must be numeric', () => assert.equal(validate('varchar', 'baz'), false));
-    it('can not be empty', () => assert.equal(validate('varchar', ''), false));
+    it('number bigger that zero is fine', () => expect(validate('varchar', 10)).toEqual(true));
+    it('even string numeric value is fine', () => expect(validate('varchar', '5')).toEqual(true));
+    it('must be bigger that zero', () => expect(validate('varchar', 0)).toEqual(false));
+    it('must be numeric', () => expect(validate('varchar', 'baz')).toEqual(false));
+    it('can not be empty', () => expect(validate('varchar', '')).toEqual(false));
   });
 
   describe('decimal', () => {
-    it('number bigger that zero is fine', () => assert.equal(validate('decimal', 10), true));
-    it('even string numeric value is fine', () => assert.equal(validate('decimal', '5'), true));
-    it('can accept precizion', () => assert.equal(validate('decimal', '5,2'), true));
-    it('dot delimiter is not valid', () => assert.equal(validate('decimal', '5.2'), false));
-    it('must be bigger that zero', () => assert.equal(validate('decimal', 0), false));
-    it('must be numeric', () => assert.equal(validate('decimal', 'baz'), false));
-    it('can not be empty', () => assert.equal(validate('decimal', ''), false));
+    it('number bigger that zero is fine', () => expect(validate('decimal', 10)).toEqual(true));
+    it('even string numeric value is fine', () => expect(validate('decimal', '5')).toEqual(true));
+    it('can accept precizion', () => expect(validate('decimal', '5,2')).toEqual(true));
+    it('dot delimiter is not valid', () => expect(validate('decimal', '5.2')).toEqual(false));
+    it('must be bigger that zero', () => expect(validate('decimal', 0)).toEqual(false));
+    it('must be numeric', () => expect(validate('decimal', 'baz')).toEqual(false));
+    it('can not be empty', () => expect(validate('decimal', '')).toEqual(false));
   });
 
   describe('number', () => {
-    it('number bigger that zero is fine', () => assert.equal(validate('number', 10), true));
-    it('even string numeric value is fine', () => assert.equal(validate('number', '5'), true));
-    it('can accept precizion', () => assert.equal(validate('number', '5,2'), true));
-    it('dot delimiter is not valid', () => assert.equal(validate('number', '5.2'), false));
-    it('must be bigger that zero', () => assert.equal(validate('number', 0), false));
-    it('must be numeric', () => assert.equal(validate('number', 'baz'), false));
-    it('can not be empty', () => assert.equal(validate('number', ''), false));
+    it('number bigger that zero is fine', () => expect(validate('number', 10)).toEqual(true));
+    it('even string numeric value is fine', () => expect(validate('number', '5')).toEqual(true));
+    it('can accept precizion', () => expect(validate('number', '5,2')).toEqual(true));
+    it('dot delimiter is not valid', () => expect(validate('number', '5.2')).toEqual(false));
+    it('must be bigger that zero', () => expect(validate('number', 0)).toEqual(false));
+    it('must be numeric', () => expect(validate('number', 'baz')).toEqual(false));
+    it('can not be empty', () => expect(validate('number', '')).toEqual(false));
   });
 
   describe('numeric', () => {
-    it('number bigger that zero is fine', () => assert.equal(validate('numeric', 10), true));
-    it('even string numeric value is fine', () => assert.equal(validate('numeric', '5'), true));
-    it('can accept precizion', () => assert.equal(validate('numeric', '5,2'), true));
-    it('dot delimiter is not valid', () => assert.equal(validate('numeric', '5.2'), false));
-    it('must be bigger that zero', () => assert.equal(validate('numeric', 0), false));
-    it('must be numeric', () => assert.equal(validate('numeric', 'baz'), false));
-    it('can not be empty', () => assert.equal(validate('numeric', ''), false));
+    it('number bigger that zero is fine', () => expect(validate('numeric', 10)).toEqual(true));
+    it('even string numeric value is fine', () => expect(validate('numeric', '5')).toEqual(true));
+    it('can accept precizion', () => expect(validate('numeric', '5,2')).toEqual(true));
+    it('dot delimiter is not valid', () => expect(validate('numeric', '5.2')).toEqual(false));
+    it('must be bigger that zero', () => expect(validate('numeric', 0)).toEqual(false));
+    it('must be numeric', () => expect(validate('numeric', 'baz')).toEqual(false));
+    it('can not be empty', () => expect(validate('numeric', '')).toEqual(false));
   });
 
   describe('time', () => {
     it('number in range 0-9', () => {
-      assert.equal(validate('time', 0), true);
-      assert.equal(validate('time', 3), true);
-      assert.equal(validate('time', 9), true);
+      expect(validate('time', 0)).toEqual(true);
+      expect(validate('time', 3)).toEqual(true);
+      expect(validate('time', 9)).toEqual(true);
     });
-    it('even string numeric value is fine', () => assert.equal(validate('time', '5'), true));
-    it('number bigger than 9 is invalid', () => assert.equal(validate('time', 10), false));
-    it('number smaller than 0 is invalid', () => assert.equal(validate('time', -1), false));
-    it('must be numeric', () => assert.equal(validate('time', 'baz'), false));
-    it('can not be empty', () => assert.equal(validate('time', ''), false));
+    it('even string numeric value is fine', () => expect(validate('time', '5')).toEqual(true));
+    it('number bigger than 9 is invalid', () => expect(validate('time', 10)).toEqual(false));
+    it('number smaller than 0 is invalid', () => expect(validate('time', -1)).toEqual(false));
+    it('must be numeric', () => expect(validate('time', 'baz')).toEqual(false));
+    it('can not be empty', () => expect(validate('time', '')).toEqual(false));
   });
 });
