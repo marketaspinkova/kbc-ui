@@ -127,7 +127,7 @@ const parseConfiguration = function(configuration) {
   return Immutable.fromJS({
     path: configuration.getIn(['parameters', 'path'], ''),
     name: processorMoveFiles.getIn(['parameters', 'folder'], ''),
-    onlyNewFiles: configuration.getIn(['parameters', 'onlyNewFiles'], ''),
+    onlyNewFiles: configuration.getIn(['parameters', 'onlyNewFiles'], false),
     incremental: processorCreateManifest.getIn(['parameters', 'incremental'], false),
     primaryKey: processorCreateManifest.getIn(['parameters', 'primary_key'], Immutable.List()).toJS(),
     delimiter: processorCreateManifest.getIn(['parameters', 'delimiter'], ','),

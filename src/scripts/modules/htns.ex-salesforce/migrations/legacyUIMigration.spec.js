@@ -1,11 +1,10 @@
-import assert from 'assert';
 import Immutable from 'immutable';
 import * as legacyUIMigration from './legacyUIMigration';
 
 describe('legacyUIMigration', function() {
   describe('isMigrated()', function() {
     it('should return a true for a migrated config', function() {
-      assert.strictEqual(true, legacyUIMigration.isMigrated(Immutable.fromJS({
+      expect(true).toEqual(legacyUIMigration.isMigrated(Immutable.fromJS({
         configuration: {
           parameters: {
             loginname: '',
@@ -17,7 +16,7 @@ describe('legacyUIMigration', function() {
       })));
     });
     it('should return false for a config with objects key', function() {
-      assert.strictEqual(false, legacyUIMigration.isMigrated(Immutable.fromJS({
+      expect(false).toEqual(legacyUIMigration.isMigrated(Immutable.fromJS({
         configuration: {
           parameters: {
             objects: []
@@ -26,7 +25,7 @@ describe('legacyUIMigration', function() {
       })));
     });
     it('should return false for a config with sinceLast key', function() {
-      assert.strictEqual(false, legacyUIMigration.isMigrated(Immutable.fromJS({
+      expect(false).toEqual(legacyUIMigration.isMigrated(Immutable.fromJS({
         configuration: {
           parameters: {
             sinceLast: false
@@ -46,7 +45,7 @@ describe('legacyUIMigration', function() {
           sandbox: false
         }
       };
-      assert.deepStrictEqual(expected, legacyUIMigration.getRootConfiguration(Immutable.fromJS({configuration: {}})).toJS());
+      expect(expected).toEqual(legacyUIMigration.getRootConfiguration(Immutable.fromJS({configuration: {}})).toJS());
     });
     it('should return correct config for a populated config', function() {
       const configuration = {
@@ -69,31 +68,31 @@ describe('legacyUIMigration', function() {
           sandbox: true
         }
       };
-      assert.deepStrictEqual(expected, legacyUIMigration.getRootConfiguration(Immutable.fromJS(configuration)).toJS());
+      expect(expected).toEqual(legacyUIMigration.getRootConfiguration(Immutable.fromJS(configuration)).toJS());
     });
   });
 
   describe('getRootState()', function() {
     it('should return empty state defaults for an empty state', function() {
-      assert.deepStrictEqual({}, legacyUIMigration.getRootState(Immutable.fromJS({state: {}})).toJS());
+      expect({}).toEqual(legacyUIMigration.getRootState(Immutable.fromJS({state: {}})).toJS());
     });
     it('should return correct value for a populated state', function() {
       const configuration = {
         state: {key: 'val'}
       };
-      assert.deepStrictEqual(configuration.state, legacyUIMigration.getRootState(Immutable.fromJS(configuration)).toJS());
+      expect(configuration.state).toEqual(legacyUIMigration.getRootState(Immutable.fromJS(configuration)).toJS());
     });
   });
 
   describe('getRowsCount()', function() {
     it('should return 0 for missing objects prop', function() {
-      assert.strictEqual(0, legacyUIMigration.getRowsCount(Immutable.fromJS({configuration: {}})));
+      expect(0).toEqual(legacyUIMigration.getRowsCount(Immutable.fromJS({configuration: {}})));
     });
     it('should return 0 for empty objects prop', function() {
-      assert.strictEqual(0, legacyUIMigration.getRowsCount(Immutable.fromJS({configuration: {parameters: {objects: []}}})));
+      expect(0).toEqual(legacyUIMigration.getRowsCount(Immutable.fromJS({configuration: {parameters: {objects: []}}})));
     });
     it('should return 2 for 2 objects', function() {
-      assert.strictEqual(2, legacyUIMigration.getRowsCount(Immutable.fromJS({configuration: {parameters: {objects: [{}, {}]}}})));
+      expect(2).toEqual(legacyUIMigration.getRowsCount(Immutable.fromJS({configuration: {parameters: {objects: [{}, {}]}}})));
     });
   });
 
@@ -107,8 +106,8 @@ describe('legacyUIMigration', function() {
           }
         }
       };
-      assert.strictEqual('Unknown object', legacyUIMigration.getRowName(Immutable.fromJS(configuration), 0));
-      assert.strictEqual('Unknown object', legacyUIMigration.getRowName(Immutable.fromJS(configuration), 1));
+      expect('Unknown object').toEqual(legacyUIMigration.getRowName(Immutable.fromJS(configuration), 0));
+      expect('Unknown object').toEqual(legacyUIMigration.getRowName(Immutable.fromJS(configuration), 1));
     });
     it('should return correct name for a populated config', function() {
       const configuration = {
@@ -127,8 +126,8 @@ describe('legacyUIMigration', function() {
           }
         }
       };
-      assert.strictEqual('Account', legacyUIMigration.getRowName(Immutable.fromJS(configuration), 0));
-      assert.strictEqual('User', legacyUIMigration.getRowName(Immutable.fromJS(configuration), 1));
+      expect('Account').toEqual(legacyUIMigration.getRowName(Immutable.fromJS(configuration), 0));
+      expect('User').toEqual(legacyUIMigration.getRowName(Immutable.fromJS(configuration), 1));
     });
   });
 
@@ -152,8 +151,8 @@ describe('legacyUIMigration', function() {
           ]
         }
       };
-      assert.deepStrictEqual(expected, legacyUIMigration.getRowConfiguration(Immutable.fromJS(configuration), 0).toJS());
-      assert.deepStrictEqual(expected, legacyUIMigration.getRowConfiguration(Immutable.fromJS(configuration), 1).toJS());
+      expect(expected).toEqual(legacyUIMigration.getRowConfiguration(Immutable.fromJS(configuration), 0).toJS());
+      expect(expected).toEqual(legacyUIMigration.getRowConfiguration(Immutable.fromJS(configuration), 1).toJS());
     });
     it('should return correct config for a populated config', function() {
       const configuration = {
@@ -195,22 +194,22 @@ describe('legacyUIMigration', function() {
           ]
         }
       };
-      assert.deepStrictEqual(expected0, legacyUIMigration.getRowConfiguration(Immutable.fromJS(configuration), 0).toJS());
-      assert.deepStrictEqual(expected1, legacyUIMigration.getRowConfiguration(Immutable.fromJS(configuration), 1).toJS());
+      expect(expected0).toEqual(legacyUIMigration.getRowConfiguration(Immutable.fromJS(configuration), 0).toJS());
+      expect(expected1).toEqual(legacyUIMigration.getRowConfiguration(Immutable.fromJS(configuration), 1).toJS());
     });
   });
 
   describe('getRowState()', function() {
     it('should return empty state defaults for an empty state', function() {
-      assert.deepStrictEqual({}, legacyUIMigration.getRowState(Immutable.fromJS({state: {}}), 0).toJS());
-      assert.deepStrictEqual({}, legacyUIMigration.getRowState(Immutable.fromJS({state: {}}), 1).toJS());
+      expect({}).toEqual(legacyUIMigration.getRowState(Immutable.fromJS({state: {}}), 0).toJS());
+      expect({}).toEqual(legacyUIMigration.getRowState(Immutable.fromJS({state: {}}), 1).toJS());
     });
     it('should return correct value for a populated state', function() {
       const configuration = {
         state: {key: 'val'}
       };
-      assert.deepStrictEqual(configuration.state, legacyUIMigration.getRowState(Immutable.fromJS(configuration), 0).toJS());
-      assert.deepStrictEqual(configuration.state, legacyUIMigration.getRowState(Immutable.fromJS(configuration), 1).toJS());
+      expect(configuration.state).toEqual(legacyUIMigration.getRowState(Immutable.fromJS(configuration), 0).toJS());
+      expect(configuration.state).toEqual(legacyUIMigration.getRowState(Immutable.fromJS(configuration), 1).toJS());
     });
   });
 });

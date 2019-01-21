@@ -1,4 +1,3 @@
-var assert = require('assert');
 var Immutable = require('immutable');
 var templateFinder = require('./templateFinder');
 
@@ -35,17 +34,17 @@ describe('templateFinder', function() {
   describe('#templateFinder()', function() {
     it('should return 0 templates on empty config', function() {
       var config = Immutable.Map();
-      assert.equal(0, templateFinder(templates, config).count());
+      expect(0).toEqual(templateFinder(templates, config).count());
     });
 
     it('should return 0 templates on config with no matching keys', function() {
       var config = Immutable.fromJS({'someotherKey': false});
-      assert.equal(0, templateFinder(templates, config).count());
+      expect(0).toEqual(templateFinder(templates, config).count());
     });
 
     it('should return 0 templates on config with one matching key (of three)', function() {
       var config = Immutable.fromJS({'boolKey': true});
-      assert.equal(0, templateFinder(templates, config).count());
+      expect(0).toEqual(templateFinder(templates, config).count());
     });
 
     it('should return 1 templates on match', function() {
@@ -54,7 +53,7 @@ describe('templateFinder', function() {
         'objectKey': {},
         'arrayKey': []
       });
-      assert.equal(1, templateFinder(templates, config).count());
+      expect(1).toEqual(templateFinder(templates, config).count());
     });
 
     it('should return 0 templates on type mismatch', function() {
@@ -63,7 +62,7 @@ describe('templateFinder', function() {
         'objectKey': {},
         'arrayKey': []
       });
-      assert.equal(0, templateFinder(templates, config).count());
+      expect(0).toEqual(templateFinder(templates, config).count());
     });
 
     it('should return 0 templates on type mismatch', function() {
@@ -72,7 +71,7 @@ describe('templateFinder', function() {
         'objectKey': [],
         'arrayKey': []
       });
-      assert.equal(0, templateFinder(templates, config).count());
+      expect(0).toEqual(templateFinder(templates, config).count());
     });
 
     it('should return 0 templates on type mismatch', function() {
@@ -81,7 +80,7 @@ describe('templateFinder', function() {
         'objectKey': {},
         'arrayKey': {}
       });
-      assert.equal(0, templateFinder(templates, config).count());
+      expect(0).toEqual(templateFinder(templates, config).count());
     });
 
     it('should return 1 templates on deep match', function() {
@@ -102,7 +101,7 @@ describe('templateFinder', function() {
           }
         ]
       });
-      assert.equal(1, templateFinder(templates, config).count());
+      expect(1).toEqual(templateFinder(templates, config).count());
     });
 
     it('should return 0 templates on deep mismatch', function() {
@@ -123,7 +122,7 @@ describe('templateFinder', function() {
           }
         ]
       });
-      assert.equal(0, templateFinder(templates, config).count());
+      expect(0).toEqual(templateFinder(templates, config).count());
     });
 
     it('should return 0 templates on deep mismatch', function() {
@@ -144,7 +143,7 @@ describe('templateFinder', function() {
           }
         ]
       });
-      assert.equal(0, templateFinder(templates, config).count());
+      expect(0).toEqual(templateFinder(templates, config).count());
     });
 
     it('should return 0 templates on deep mismatch', function() {
@@ -165,7 +164,7 @@ describe('templateFinder', function() {
           }
         ]
       });
-      assert.equal(0, templateFinder(templates, config).count());
+      expect(0).toEqual(templateFinder(templates, config).count());
     });
   });
 });

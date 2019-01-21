@@ -1,4 +1,3 @@
-var assert = require('assert');
 var mappingDefinitions = require('./mappingDefinitions');
 var Immutable = require('immutable');
 
@@ -20,13 +19,13 @@ describe('mappingDefinitions', function() {
       var value = Immutable.fromJS({
         destination: 'data.csv'
       });
-      assert.deepEqual(inputMappingDefinition.toJS(), mappingDefinitions.findInputMappingDefinition(inputMappingDefinitions, value).toJS());
+      expect(inputMappingDefinition.toJS()).toEqual(mappingDefinitions.findInputMappingDefinition(inputMappingDefinitions, value).toJS());
     });
     it('should return empty map when not present', function() {
       var value = Immutable.fromJS({
         destination: 'notfound.csv'
       });
-      assert.deepEqual({}, mappingDefinitions.findInputMappingDefinition(inputMappingDefinitions, value).toJS());
+      expect({}).toEqual(mappingDefinitions.findInputMappingDefinition(inputMappingDefinitions, value).toJS());
     });
   });
 
@@ -35,13 +34,13 @@ describe('mappingDefinitions', function() {
       var value = Immutable.fromJS({
         source: 'data.csv'
       });
-      assert.deepEqual(outputMappingDefinition.toJS(), mappingDefinitions.findOutputMappingDefinition(outputMappingDefinitions, value).toJS());
+      expect(outputMappingDefinition.toJS()).toEqual(mappingDefinitions.findOutputMappingDefinition(outputMappingDefinitions, value).toJS());
     });
     it('should return empty map when not present', function() {
       var value = Immutable.fromJS({
         source: 'notfound.csv'
       });
-      assert.deepEqual({}, mappingDefinitions.findOutputMappingDefinition(outputMappingDefinitions, value).toJS());
+      expect({}).toEqual(mappingDefinitions.findOutputMappingDefinition(outputMappingDefinitions, value).toJS());
     });
   });
 
@@ -54,7 +53,7 @@ describe('mappingDefinitions', function() {
           'destination': 'data.csv'
         }
       ];
-      assert.deepEqual(expected, mappingDefinitions.getInputMappingValue(inputMappingDefinitions, value).toJS());
+      expect(expected).toEqual(mappingDefinitions.getInputMappingValue(inputMappingDefinitions, value).toJS());
     });
     it('should add input mapping to an existing value', function() {
       const value = Immutable.fromJS(
@@ -75,7 +74,7 @@ describe('mappingDefinitions', function() {
           'destination': 'data.csv'
         }
       ];
-      assert.deepEqual(expected, mappingDefinitions.getInputMappingValue(inputMappingDefinitions, value).toJS());
+      expect(expected).toEqual(mappingDefinitions.getInputMappingValue(inputMappingDefinitions, value).toJS());
     });
     it('should not overwrite existing input mapping', function() {
       const value = Immutable.fromJS(
@@ -100,7 +99,7 @@ describe('mappingDefinitions', function() {
           'destination': 'data.csv'
         }
       ];
-      assert.deepEqual(expected, mappingDefinitions.getInputMappingValue(inputMappingDefinitions, value).toJS());
+      expect(expected).toEqual(mappingDefinitions.getInputMappingValue(inputMappingDefinitions, value).toJS());
     });
   });
 
@@ -114,7 +113,7 @@ describe('mappingDefinitions', function() {
           'destination': ''
         }
       ];
-      assert.deepEqual(expected, mappingDefinitions.getOutputMappingValue(outputMappingDefinitions, value).toJS());
+      expect(expected).toEqual(mappingDefinitions.getOutputMappingValue(outputMappingDefinitions, value).toJS());
     });
     it('should add out mapping to an existing value', function() {
       const value = Immutable.fromJS(
@@ -135,7 +134,7 @@ describe('mappingDefinitions', function() {
           'destination': ''
         }
       ];
-      assert.deepEqual(expected, mappingDefinitions.getOutputMappingValue(outputMappingDefinitions, value).toJS());
+      expect(expected).toEqual(mappingDefinitions.getOutputMappingValue(outputMappingDefinitions, value).toJS());
     });
     it('should not overwrite existing output mapping', function() {
       const value = Immutable.fromJS(
@@ -160,7 +159,7 @@ describe('mappingDefinitions', function() {
           'destination': 'out.c-main.data'
         }
       ];
-      assert.deepEqual(expected, mappingDefinitions.getOutputMappingValue(outputMappingDefinitions, value).toJS());
+      expect(expected).toEqual(mappingDefinitions.getOutputMappingValue(outputMappingDefinitions, value).toJS());
     });
   });
 });

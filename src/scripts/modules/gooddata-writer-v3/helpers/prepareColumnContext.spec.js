@@ -1,6 +1,5 @@
-import assert from 'assert';
 import prepareColumnContext from './prepareColumnContext';
-import {fromJS, Map, List} from 'immutable';
+import { fromJS, Map, List } from 'immutable';
 
 const tableId = 'in.some.table';
 const configuration = fromJS({
@@ -51,7 +50,6 @@ const allColumns = fromJS([
     id: 'id',
     type: 'CONNECTION_POINT',
     title: 'id'
-
   },
   {
     type: 'ATTRIBUTE',
@@ -69,42 +67,25 @@ const allColumns = fromJS([
 describe('prepareColumnContext tests', () => {
   it('should pass empty', () => {
     const columnContext = prepareColumnContext(Map(), Map(), tableId, List());
-    assert.deepEqual(
-      columnContext.toJS(),
-      {
-        referencableTables: [],
-        referencableColumns: [],
-        sortLabelsColumns: {},
-        dimensions: []
-      }
-    );
+    expect(columnContext.toJS()).toEqual({
+      referencableTables: [],
+      referencableColumns: [],
+      sortLabelsColumns: {},
+      dimensions: []
+    });
   });
 
   it('should pass with some context and columns', () => {
     const configParameters = configuration.get('parameters');
     const allTables = configuration.getIn(['parameters', 'tables']);
     const columnContext = prepareColumnContext(configParameters, allTables, tableId, allColumns);
-    assert.deepEqual(
-      columnContext.toJS(),
-      {
-        referencableTables: [
-          'in.OTHER.TABLE'
-        ],
-        referencableColumns: [
-          'id',
-          'city'
-        ],
-        sortLabelsColumns: {
-          name: [
-            'refColumn'
-          ]
-        },
-        dimensions: [
-          'dim1',
-          'dim2',
-          'dim3'
-        ]
-      }
-    );
+    expect(columnContext.toJS()).toEqual({
+      referencableTables: ['in.OTHER.TABLE'],
+      referencableColumns: ['id', 'city'],
+      sortLabelsColumns: {
+        name: ['refColumn']
+      },
+      dimensions: ['dim1', 'dim2', 'dim3']
+    });
   });
 });

@@ -1,6 +1,5 @@
 import makeColumnDefinition from './makeColumnDefinition';
-import {Types, DataTypes} from '../constants';
-import assert from 'assert';
+import { Types, DataTypes } from '../constants';
 
 describe('makeColumnDefinition', () => {
   it('test empty connection point setup', () => {
@@ -8,17 +7,17 @@ describe('makeColumnDefinition', () => {
       id: 'id',
       type: Types.CONNECTION_POINT
     });
-    assert.deepEqual(definition.fields.type, {
+    expect(definition.fields.type).toEqual({
       show: true,
       invalidReason: false,
       defaultValue: 'IGNORE'
     });
-    assert.deepEqual(definition.fields.title, {
+    expect(definition.fields.title).toEqual({
       show: true,
       invalidReason: 'GoodData Title can not be empty',
       defaultValue: 'id'
     });
-    assert.deepEqual(definition.fields.dataType, {
+    expect(definition.fields.dataType).toEqual({
       show: true
     });
   });
@@ -32,32 +31,32 @@ describe('makeColumnDefinition', () => {
       dataTypeSize: '255'
     });
 
-    assert.deepEqual(definition.fields.type, {
+    expect(definition.fields.type).toEqual({
       show: true,
       invalidReason: false,
       defaultValue: 'IGNORE'
     });
-    assert.deepEqual(definition.fields.title, {
+    expect(definition.fields.title).toEqual({
       show: true,
       invalidReason: false,
       defaultValue: 'id'
     });
-    assert.deepEqual(definition.fields.dataType, {
+    expect(definition.fields.dataType).toEqual({
       show: true
     });
     delete definition.fields.dataTypeSize.onChange;
-    assert.deepEqual(definition.fields.dataTypeSize, {
+    expect(definition.fields.dataTypeSize).toEqual({
       show: true,
       invalidReason: false,
       defaultValue: '255'
     });
-    assert.deepEqual(definition.fields.identifier, {
+    expect(definition.fields.identifier).toEqual({
       show: true
     });
-    assert.deepEqual(definition.fields.identifierLabel, {
+    expect(definition.fields.identifierLabel).toEqual({
       show: true
     });
-    assert.deepEqual(definition.fields.identifierSortLabel, {
+    expect(definition.fields.identifierSortLabel).toEqual({
       show: true
     });
   });
@@ -69,27 +68,26 @@ describe('makeColumnDefinition', () => {
       title: 'datum',
       dateDimension: 'dimenze'
     });
-    assert.deepEqual(definition.fields.type, {
+    expect(definition.fields.type).toEqual({
       show: true,
       invalidReason: false,
       defaultValue: 'IGNORE'
     });
-    assert.deepEqual(definition.fields.title, {
+    expect(definition.fields.title).toEqual({
       show: false,
       invalidReason: false,
       defaultValue: 'date'
     });
-    assert.deepEqual(definition.fields.dateDimension, {
+    expect(definition.fields.dateDimension).toEqual({
       show: true,
       invalidReason: false
     });
-    assert.deepEqual(definition.fields.format, {
+    expect(definition.fields.format).toEqual({
       show: true,
       invalidReason: 'Date format can not be empty',
       defaultValue: 'yyyy-MM-dd HH:mm:ss'
     });
   });
-
 
   it('test schema reference setup', () => {
     const definition = makeColumnDefinition({
@@ -97,12 +95,12 @@ describe('makeColumnDefinition', () => {
       type: Types.REFERENCE,
       schemaReference: 'tableId'
     });
-    assert.deepEqual(definition.fields.type, {
+    expect(definition.fields.type).toEqual({
       show: true,
       invalidReason: false,
       defaultValue: 'IGNORE'
     });
-    assert.deepEqual(definition.fields.schemaReference, {
+    expect(definition.fields.schemaReference).toEqual({
       show: true
     });
   });

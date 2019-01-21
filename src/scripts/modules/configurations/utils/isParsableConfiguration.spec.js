@@ -1,4 +1,3 @@
-import assert from 'assert';
 import Immutable from 'immutable';
 import isParsableConfiguration from './isParsableConfiguration';
 
@@ -25,7 +24,7 @@ const parse = function(configuration) {
 describe('isParsableConfiguration', function() {
   it('empty configuration should be parsable', function() {
     const configuration = Immutable.fromJS({});
-    assert.equal(true, isParsableConfiguration(configuration, parse, create));
+    expect(true).toEqual(isParsableConfiguration(configuration, parse, create));
   });
   it('simple full configuration should be parsable', function() {
     const configuration = Immutable.fromJS({
@@ -36,7 +35,7 @@ describe('isParsableConfiguration', function() {
         key2: 'test4'
       }
     });
-    assert.equal(true, isParsableConfiguration(configuration, parse, create));
+    expect(true).toEqual(isParsableConfiguration(configuration, parse, create));
   });
   it('invalid configuration should not be parsable', function() {
     const configuration = Immutable.fromJS({
@@ -48,6 +47,6 @@ describe('isParsableConfiguration', function() {
         key2: 'test4'
       }
     });
-    assert.equal(false, isParsableConfiguration(configuration, parse, create));
+    expect(false).toEqual(isParsableConfiguration(configuration, parse, create));
   });
 });

@@ -1,4 +1,3 @@
-import assert from 'assert';
 import Immutable from 'immutable';
 import conform  from './conform';
 
@@ -81,7 +80,7 @@ describe('conform', function() {
         ]
       }
     };
-    assert.deepEqual(expected, conform(Immutable.fromJS(configuration)).toJS());
+    expect(expected).toEqual(conform(Immutable.fromJS(configuration)).toJS());
   });
   it('should remove columns property from processor-create-manifest if columns_from is set to auto', function() {
     const configuration = {
@@ -161,7 +160,7 @@ describe('conform', function() {
         ]
       }
     };
-    assert.deepEqual(expected, conform(Immutable.fromJS(configuration)).toJS());
+    expect(expected).toEqual(conform(Immutable.fromJS(configuration)).toJS());
   });
 
   it('should not remove columns property from processor-create-manifest if columns_from is not set', function() {
@@ -241,6 +240,6 @@ describe('conform', function() {
         ]
       }
     };
-    assert.deepEqual(expected, conform(Immutable.fromJS(configuration)).toJS());
+    expect(expected).toEqual(conform(Immutable.fromJS(configuration)).toJS());
   });
 });
