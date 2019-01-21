@@ -136,7 +136,7 @@ const RoutesStore = StoreUtils.createStore({
   },
 
   getCurrentRouteConfig() {
-    return _store.getIn(['routesByName', getCurrentRouteName(_store)]);
+    return getRoute(_store, getCurrentRouteName(_store));
   },
 
   getRouterState() {
