@@ -1,4 +1,5 @@
 import React from 'react';
+import { Map } from 'immutable';
 import { Tab, Nav, NavItem, NavDropdown, MenuItem, Row } from 'react-bootstrap';
 
 import ApplicationStore from '../../../../../stores/ApplicationStore';
@@ -49,6 +50,7 @@ export default React.createClass({
         </div>
       );
     }
+    const linkedBuckets = this.state.bucket.get('linkedBy', Map());
 
     return (
       <div>
@@ -64,7 +66,11 @@ export default React.createClass({
               <NavItem eventKey="tables">Tables</NavItem>
               <NavItem eventKey="events">Events</NavItem>
               <NavDropdown title="Actions">
-                <MenuItem eventKey="delete" onSelect={this.openDeleteBucketModal}>
+                <MenuItem
+                  eventKey="delete"
+                  onSelect={this.openDeleteBucketModal}
+                  disabled={linkedBuckets.count() > 0}
+                >
                   Delete bucket
                 </MenuItem>
               </NavDropdown>
