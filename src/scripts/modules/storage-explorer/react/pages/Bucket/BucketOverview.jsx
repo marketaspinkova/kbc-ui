@@ -1,6 +1,9 @@
 import React, { PropTypes } from 'react';
 import { Map } from 'immutable';
 import { Table, Button, Row } from 'react-bootstrap';
+
+import MetadataEditField from '../../../../components/react/components/MetadataEditField';
+import InlineEditArea from '../../../../../react/common/InlineEditArea';
 import CreatedWithIcon from '../../../../../react/common/CreatedWithIcon';
 import Hint from '../../../../../react/common/Hint';
 import FileSize from '../../../../../react/common/FileSize';
@@ -28,57 +31,73 @@ export default React.createClass({
     const bucket = this.props.bucket;
 
     return (
-      <Row>
-        <Table responsive striped className="storage-table-overview">
-          <tbody>
-            <tr>
-              <td>ID</td>
-              <td>{bucket.get('id')}</td>
-            </tr>
-            <tr>
-              <td>Backend</td>
-              <td>{bucket.get('backend')}</td>
-            </tr>
-            {this.renderSourceBucket(bucket)}
-            {bucket.get('linkedBy') && (
+      <div>
+        {this.renderDescription()}
+
+        <Row>
+          <Table responsive striped className="storage-table-overview">
+            <tbody>
               <tr>
-                <td>Linked buckets</td>
-                <td>{bucket.get('linkedBy').map(this.renderLinkedBucket)}</td>
+                <td>ID</td>
+                <td>{bucket.get('id')}</td>
               </tr>
-            )}
-            <tr>
-              <td>Created</td>
-              <td>
-                <CreatedWithIcon createdTime={bucket.get('created')} relative={false} />
-              </td>
-            </tr>
-            {bucket.get('lastChangeDate') && (
               <tr>
-                <td>Last change</td>
+                <td>Backend</td>
+                <td>{bucket.get('backend')}</td>
+              </tr>
+              {this.renderSourceBucket(bucket)}
+              {bucket.get('linkedBy') && (
+                <tr>
+                  <td>Linked buckets</td>
+                  <td>{bucket.get('linkedBy').map(this.renderLinkedBucket)}</td>
+                </tr>
+              )}
+              <tr>
+                <td>Created</td>
                 <td>
-                  <CreatedWithIcon createdTime={bucket.get('lastChangeDate')} relative={false} />
+                  <CreatedWithIcon createdTime={bucket.get('created')} relative={false} />
                 </td>
               </tr>
-            )}
-            <tr>
-              <td>Rows count</td>
-              <td>
-                {bucket.get('rowsCount')}{' '}
-                {bucket.get('backend') === 'mysql' && (
-                  <Hint title="Rows count">Number of rows is only an estimate.</Hint>
-                )}
-              </td>
-            </tr>
-            <tr>
-              <td>Data size</td>
-              <td>
-                <FileSize size={bucket.get('dataSizeBytes')} />{' '}
-                {bucket.get('backend') === 'mysql' && <Hint title="Data size">Data size is only an estimate.</Hint>}
-              </td>
-            </tr>
-          </tbody>
-        </Table>
-      </Row>
+              {bucket.get('lastChangeDate') && (
+                <tr>
+                  <td>Last change</td>
+                  <td>
+                    <CreatedWithIcon createdTime={bucket.get('lastChangeDate')} relative={false} />
+                  </td>
+                </tr>
+              )}
+              <tr>
+                <td>Rows count</td>
+                <td>
+                  {bucket.get('rowsCount')}{' '}
+                  {bucket.get('backend') === 'mysql' && (
+                    <Hint title="Rows count">Number of rows is only an estimate.</Hint>
+                  )}
+                </td>
+              </tr>
+              <tr>
+                <td>Data size</td>
+                <td>
+                  <FileSize size={bucket.get('dataSizeBytes')} />{' '}
+                  {bucket.get('backend') === 'mysql' && <Hint title="Data size">Data size is only an estimate.</Hint>}
+                </td>
+              </tr>
+            </tbody>
+          </Table>
+        </Row>
+      </div>
+    );
+  },
+
+  renderDescription() {
+    return (
+      <MetadataEditField
+        objectType="bucket"
+        metadataKey="KBC.description"
+        placeholder="Describe bucket"
+        objectId={this.props.bucket.get('id')}
+        editElement={InlineEditArea}
+      />
     );
   },
 

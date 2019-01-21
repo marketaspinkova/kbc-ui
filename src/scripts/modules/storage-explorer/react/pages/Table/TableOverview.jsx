@@ -3,17 +3,16 @@ import { Link } from 'react-router';
 import { Table, Button, Row } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 
+import MetadataEditField from '../../../../components/react/components/MetadataEditField';
+import InlineEditArea from '../../../../../react/common/InlineEditArea';
 import CreatedWithIcon from '../../../../../react/common/CreatedWithIcon';
 import Tooltip from '../../../../../react/common/Tooltip';
 import Hint from '../../../../../react/common/Hint';
 import FileSize from '../../../../../react/common/FileSize';
-import { createTablePrimaryKey, removeTablePrimaryKey } from '../../../Actions';
-
-import MetadataEditField from '../../../../components/react/components/MetadataEditField';
-import InlineEditArea from '../../../../../react/common/InlineEditArea';
 import ConfirmModal from '../../../../../react/common/ConfirmModal';
 import CreatePrimaryKeyModal from '../../modals/CreatePrimaryKeyModal';
 import AliasFilter from '../../components/TableAliasFilter';
+import { createTablePrimaryKey, removeTablePrimaryKey } from '../../../Actions';
 
 export default React.createClass({
   propTypes: {
