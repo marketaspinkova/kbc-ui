@@ -15,9 +15,9 @@ export default React.createClass({
       return (
         <Link
           to="storage-explorer-table"
-          params={{ bucketId: this.props.alias.get('bucketId'), tableName: this.props.alias.get('tableName') }}
+          params={{ bucketId: this.props.alias.get('id'), tableName: this.props.alias.get('tableName') }}
         >
-          {this.props.alias.get('id')}
+          {this.props.alias.get('id')}.{this.props.alias.get('tableName')}
         </Link>
       );
     }
@@ -28,7 +28,7 @@ export default React.createClass({
 
     return (
       <span>
-        {this.props.alias.get(['project', 'name'])} / {this.props.alias.get('id')}
+        {this.props.alias.get(['project', 'name'])} / {this.props.alias.get('id')}.{this.props.alias.get('tableName')}
       </span>
     );
   }

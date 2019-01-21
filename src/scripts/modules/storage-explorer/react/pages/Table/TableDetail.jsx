@@ -360,13 +360,7 @@ export default React.createClass({
     }
 
     this.state.bucket.get('linkedBy').forEach(bucket => {
-      foundLinks.push(
-        bucket.merge({
-          id: `${bucket.get('id')}.${this.state.table.get('name')}`,
-          bucketId: bucket.get('id'),
-          tableName: this.state.table.get('name')
-        })
-      );
+      foundLinks.push(bucket.merge({ tableName: this.state.table.get('name') }));
     });
 
     return foundLinks;

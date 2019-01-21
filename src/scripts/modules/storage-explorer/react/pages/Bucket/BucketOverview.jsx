@@ -126,17 +126,16 @@ export default React.createClass({
     return (
       <tr>
         <td>Source bucket</td>
-        {this.isOrganizationMember() ? (
-          <td>
-            <ProjectBucketLink bucket={source} />{' '}
-            <Hint title="Source bucket">Bucket is linked from other project.</Hint>
-          </td>
-        ) : (
-          <td>
-            {source.getIn(['project', 'name'])} / {source.get('id')}{' '}
-            <Hint title="Source bucket">Bucket is linked from other project.</Hint>
-          </td>
-        )}
+        <td>
+          {this.isOrganizationMember() ? (
+            <ProjectBucketLink bucket={source} />
+          ) : (
+            <span>
+              {source.getIn(['project', 'name'])} / {source.get('id')}
+            </span>
+          )}{' '}
+          <Hint title="Source bucket">Bucket is linked from other project.</Hint>
+        </td>
       </tr>
     );
   },

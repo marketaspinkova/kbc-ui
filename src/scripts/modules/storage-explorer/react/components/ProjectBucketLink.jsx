@@ -7,7 +7,7 @@ export default React.createClass({
   },
 
   render() {
-    const bucketId = this.props.bucket.get('bucketId');
+    const bucketId = this.props.bucket.get('id');
     const projectId = this.props.bucket.getIn(['project', 'id']);
     const projectName = this.props.bucket.getIn(['project', 'name']);
 
