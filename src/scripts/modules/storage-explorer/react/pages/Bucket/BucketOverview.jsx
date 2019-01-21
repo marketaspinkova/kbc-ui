@@ -239,7 +239,7 @@ export default React.createClass({
     if (sharing && canShareBucket && linked.count() > 0) {
       return (
         <Button bsSize="small" onClick={() => null} disabled={true}>
-          <Tooltip tooltip="Please unlink first linked buckets" placement="top">
+          <Tooltip tooltip="Please unlink linked buckets first" placement="top">
             <span>
               <i className="fa fa-ban" /> Disable sharing
             </span>

@@ -8,6 +8,7 @@ import RoutesStore from '../../../../../stores/RoutesStore';
 import BucketsStore from '../../../../components/stores/StorageBucketsStore';
 import TablesStore from '../../../../components/stores/StorageTablesStore';
 import FilesStore from '../../../../components/stores/StorageFilesStore';
+import Tooltip from '../../../../../react/common/Tooltip';
 
 import { factory as eventsFactory } from '../../../../sapi-events/BucketEventsService';
 import BucketEvents from '../../components/Events';
@@ -71,7 +72,11 @@ export default React.createClass({
                   onSelect={this.openDeleteBucketModal}
                   disabled={linkedBuckets.count() > 0}
                 >
-                  Delete bucket
+                  {linkedBuckets.count() > 0 ? (
+                    <Tooltip tooltip="Please unlink linked buckets first" placement="top">
+                      <span>Delete bucket</span>
+                    </Tooltip>
+                  ) : 'Delete bucket'}
                 </MenuItem>
               </NavDropdown>
             </Nav>
