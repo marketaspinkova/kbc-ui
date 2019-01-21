@@ -1,4 +1,5 @@
 import React from 'react';
+import { Map } from 'immutable';
 import { Tab, Nav, NavItem, NavDropdown, MenuItem, Row } from 'react-bootstrap';
 
 import ApplicationStore from '../../../../../stores/ApplicationStore';
@@ -7,6 +8,7 @@ import RoutesStore from '../../../../../stores/RoutesStore';
 import BucketsStore from '../../../../components/stores/StorageBucketsStore';
 import TablesStore from '../../../../components/stores/StorageTablesStore';
 import FilesStore from '../../../../components/stores/StorageFilesStore';
+import Tooltip from '../../../../../react/common/Tooltip';
 
 import { factory as eventsFactory } from '../../../../sapi-events/BucketEventsService';
 import BucketEvents from '../../components/Events';
@@ -49,6 +51,7 @@ export default React.createClass({
         </div>
       );
     }
+    const linkedBuckets = this.state.bucket.get('linkedBy', Map());
 
     return (
       <div>
@@ -64,8 +67,16 @@ export default React.createClass({
               <NavItem eventKey="tables">Tables</NavItem>
               <NavItem eventKey="events">Events</NavItem>
               <NavDropdown title="Actions">
-                <MenuItem eventKey="delete" onSelect={this.openDeleteBucketModal}>
-                  Delete bucket
+                <MenuItem
+                  eventKey="delete"
+                  onSelect={this.openDeleteBucketModal}
+                  disabled={linkedBuckets.count() > 0}
+                >
+                  {linkedBuckets.count() > 0 ? (
+                    <Tooltip tooltip="Please unlink linked buckets first" placement="top">
+                      <span>Delete bucket</span>
+                    </Tooltip>
+                  ) : 'Delete bucket'}
                 </MenuItem>
               </NavDropdown>
             </Nav>
