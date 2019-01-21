@@ -1,18 +1,14 @@
 import StoreUtils from '../../../utils/StoreUtils';
-import Immutable from 'immutable';
+import { Map, List, fromJS } from 'immutable';
 import dispatcher from '../../../Dispatcher';
 import MetadataConstants from '../MetadataConstants';
 import * as Constants from '../Constants';
-
 import _ from 'underscore';
-
-var Map = Immutable.Map, List = Immutable.List;
 
 var _store = Map({
   savingMetadata: Map(),
   editingMetadata: Map(),
   metadata: Map(),
-
   filters: Map()
 });
 
@@ -61,9 +57,8 @@ var MetadataStore = StoreUtils.createStore({
     return _store.getIn(['metadata', objectType, objectId]).hasIn(['key', metadataKey]);
   },
 
-
   getMetadataAll: function(objectType, objectId) {
-    return _store.getIn(['metadata', objectType, objectId], List);
+    return _store.getIn(['metadata', objectType, objectId], List());
   },
 
   hasProviderMetadata: function(objectType, objectId, provider, metadataKey) {
@@ -128,7 +123,6 @@ var MetadataStore = StoreUtils.createStore({
     });
     return columnsWithBaseTypes.count() > 0;
   }
-
 });
 
 dispatcher.register(function(payload) {
@@ -165,23 +159,29 @@ dispatcher.register(function(payload) {
       return MetadataStore.emitChange();
 
     case MetadataConstants.ActionTypes.METADATA_SAVE_SUCCESS:
-      _store = _store.setIn(['metadata', action.objectType, action.objectId], Immutable.fromJS(action.metadata));
+      _store = _store.setIn(['metadata', action.objectType, action.objectId], fromJS(action.metadata));
       _store = _store.deleteIn(['savingMetadata', action.objectType, action.objectId, action.metadataKey]);
+      return MetadataStore.emitChange();
+
+    case Constants.ActionTypes.STORAGE_BUCKETS_LOAD_SUCCESS:
+      _.each(action.buckets, function(bucket) {
+        _store = _store.setIn(['metadata', 'bucket', bucket.id], fromJS(bucket.metadata));
+      });
       return MetadataStore.emitChange();
 
     case Constants.ActionTypes.STORAGE_TABLES_LOAD_SUCCESS:
       _.each(action.tables, function(table) {
-        const tableMetadata = Immutable.fromJS(table.metadata);
+        const tableMetadata = fromJS(table.metadata);
         _store = _store.setIn(
           ['metadata', 'table', table.id], tableMetadata
         );
         _.each(table.columnMetadata, function(metadata, columnName) {
           _store = _store
             .setIn(
-              ['metadata', 'column', table.id + '.' + columnName], Immutable.fromJS(metadata)
+              ['metadata', 'column', table.id + '.' + columnName], fromJS(metadata)
             )
             .setIn(
-              ['metadata', 'tableColumns', table.id, columnName], Immutable.fromJS(metadata)
+              ['metadata', 'tableColumns', table.id, columnName], fromJS(metadata)
             );
         });
       });
