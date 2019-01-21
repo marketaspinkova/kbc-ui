@@ -11,6 +11,7 @@ import {fromJS, List} from 'immutable';
 import {Loader} from '@keboola/indigo-ui';
 import {Link} from 'react-router/lib';
 import JobStatusLabel from '../../../../react/common/JobStatusLabel';
+import date from '../../../../utils/date';
 
 const MIGRATION_COMPONENT_ID = 'keboola.config-migration-tool';
 
@@ -147,7 +148,7 @@ export default React.createClass({
         &nbsp;
         <strong>Last migration job: {' '}</strong>
         <Link to="jobDetail" params={{jobId: job.get('id')}}>
-          {job.get('id')}
+          {date.format(job.get('createdTime'))}
         </Link>
         {'  '}
         <JobStatusLabel status={job.get('status')} />
