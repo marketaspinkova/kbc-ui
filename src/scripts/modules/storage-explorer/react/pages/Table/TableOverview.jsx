@@ -12,6 +12,7 @@ import FileSize from '../../../../../react/common/FileSize';
 import ConfirmModal from '../../../../../react/common/ConfirmModal';
 import CreatePrimaryKeyModal from '../../modals/CreatePrimaryKeyModal';
 import ProjectAliasLink from '../../components/ProjectAliasLink';
+import ExternalProjectTableLink from '../../components/ExternalProjectTableLink';
 import AliasFilter from '../../components/TableAliasFilter';
 import { createTablePrimaryKey, removeTablePrimaryKey } from '../../../Actions';
 
@@ -177,6 +178,9 @@ export default React.createClass({
     const { sapiToken, table } = this.props;
 
     if (sapiToken.getIn(['owner', 'id']) !== table.getIn(['sourceTable', 'project', 'id'])) {
+      if (this.props.sapiToken.getIn(['admin', 'isOrganizationMember'])) {
+        return <ExternalProjectTableLink table={table.get('sourceTable')} />;
+      }
       return (
         <span>
           {table.getIn(['sourceTable', 'project', 'name'])} / {table.getIn(['sourceTable', 'id'])}
