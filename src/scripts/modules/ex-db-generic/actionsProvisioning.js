@@ -149,7 +149,7 @@ export function createActions(componentId) {
     const allowedTypes = incrementalFetchingTypes.get(componentId, List());
     return sourceTables.reduce((memo, table) => {
       const qualifyingColumns = table.get('columns', List()).filter((column) => {
-        if (allowedTypes.includes(column.get('type').toLowerCase())) {
+        if (column.get('type') && allowedTypes.includes(column.get('type').toLowerCase())) {
           return column;
         }
       });
