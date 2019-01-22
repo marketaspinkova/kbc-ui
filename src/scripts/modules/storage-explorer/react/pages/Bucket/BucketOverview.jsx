@@ -12,7 +12,7 @@ import Tooltip from '../../../../../react/common/Tooltip';
 import ConfirmModal from '../../../../../react/common/ConfirmModal';
 import ShareBucketModal from '../../modals/ShareBucketModal';
 import ChangeSharingTypeModal from '../../modals/ChangeSharingTypeModal';
-import ProjectBucketLink from '../../components/ProjectBucketLink';
+import ExternalProjectBucketLink from '../../components/ExternalProjectBucketLink';
 import { shareBucket, unshareBucket, changeBucketSharingType } from '../../../Actions';
 
 export default React.createClass({
@@ -128,7 +128,7 @@ export default React.createClass({
         <td>Source bucket</td>
         <td>
           {this.isOrganizationMember() ? (
-            <ProjectBucketLink bucket={source} />
+            <ExternalProjectBucketLink bucket={source} />
           ) : (
             <span>
               {source.getIn(['project', 'name'])} / {source.get('id')}
@@ -145,7 +145,7 @@ export default React.createClass({
       <div key={index}>
         <CreatedWithIcon createdTime={linkedBucket.get('created')} relative={false} />{' '}
         {this.isOrganizationMember() ? (
-          <ProjectBucketLink bucket={linkedBucket} />
+          <ExternalProjectBucketLink bucket={linkedBucket} />
         ) : (
           <span>
             {linkedBucket.getIn(['project', 'name'])} / {linkedBucket.get('id')}

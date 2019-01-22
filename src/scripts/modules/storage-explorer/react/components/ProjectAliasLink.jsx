@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
-import ProjectBucketLink from './ProjectBucketLink';
+import ExternalProjectBucketLink from './ExternalProjectBucketLink';
 
 export default React.createClass({
   propTypes: {
@@ -23,7 +23,7 @@ export default React.createClass({
     }
 
     if (this.props.sapiToken.getIn(['admin', 'isOrganizationMember'])) {
-      return <ProjectBucketLink bucket={this.props.alias} />;
+      return <ExternalProjectBucketLink bucket={this.props.alias} />;
     }
 
     return (
