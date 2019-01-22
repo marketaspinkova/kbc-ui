@@ -1,26 +1,30 @@
 import React from 'react';
 import { ButtonGroup, Button } from 'react-bootstrap';
 import { RefreshIcon, SearchBar } from '@keboola/indigo-ui';
-import ApplicationStore from '../../../../stores/ApplicationStore';
+
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
-import matchByWords from '../../../../utils/matchByWords';
-import Tooltip from '../../../../react/common/Tooltip';
+import RoutesStore from '../../../../stores/RoutesStore';
+import ApplicationStore from '../../../../stores/ApplicationStore';
 import BucketsStore from '../../../components/stores/StorageBucketsStore';
 import TablesStore from '../../../components/stores/StorageTablesStore';
+
+import matchByWords from '../../../../utils/matchByWords';
+import Tooltip from '../../../../react/common/Tooltip';
 import CreateBucketModal from '../modals/CreateBucketModal';
 import SharedBucketsModal from '../modals/SharedBucketsModal';
 import BucketsList from './BucketsList';
-import { loadBuckets, loadSharedBuckets, createBucket } from '../../Actions';
+import { reloadBuckets, loadSharedBuckets, createBucket } from '../../Actions';
 
 export default React.createClass({
-  mixins: [createStoreMixin(BucketsStore, TablesStore, ApplicationStore)],
+  mixins: [createStoreMixin(ApplicationStore, RoutesStore, BucketsStore, TablesStore)],
 
   getStateFromStores() {
     return {
+      bucketId: RoutesStore.getCurrentRouteParam('bucketId'),
       allBuckets: BucketsStore.getAll(),
       allTables: TablesStore.getAll(),
       sharedBuckets: BucketsStore.getSharedBuckets(),
-      isLoading: BucketsStore.getIsLoading(),
+      isReloading: BucketsStore.getIsReloading(),
       sapiToken: ApplicationStore.getSapiToken(),
       isCreatingBucket: BucketsStore.isCreatingBucket()
     };
@@ -46,7 +50,11 @@ export default React.createClass({
           onChange={this.handleQueryChange}
           additionalActions={this.renderBucketsButtons()}
         />
-        <BucketsList buckets={this.filteredBuckets()} tables={this.state.allTables} />
+        <BucketsList
+          buckets={this.filteredBuckets()}
+          tables={this.state.allTables}
+          activeBucketId={this.state.bucketId}
+        />
       </div>
     );
   },
@@ -69,11 +77,11 @@ export default React.createClass({
         <Tooltip tooltip="Refresh buckets" placement="top">
           <Button
             onClick={() => {
-              loadBuckets();
+              reloadBuckets();
               loadSharedBuckets();
             }}
           >
-            <RefreshIcon isLoading={this.state.isLoading} title="" />
+            <RefreshIcon isLoading={this.state.isReloading} title="" />
           </Button>
         </Tooltip>
       </ButtonGroup>

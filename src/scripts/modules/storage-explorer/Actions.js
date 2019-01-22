@@ -25,6 +25,10 @@ const loadMoreJobs = (params) => {
   return StorageActionCreators.loadMoreJobs(params);
 };
 
+const reloadBuckets = () => {
+  return StorageActionCreators.reloadBuckets();
+};
+
 const loadBuckets = () => {
   return StorageActionCreators.loadBucketsForce();
 };
@@ -253,6 +257,7 @@ const resetFilesSearchQuery = () => {
 export {
   loadJobs,
   loadMoreJobs,
+  reloadBuckets,
   loadBuckets,
   loadSharedBuckets,
   loadTable,
