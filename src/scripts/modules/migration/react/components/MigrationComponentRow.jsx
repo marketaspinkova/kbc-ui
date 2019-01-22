@@ -2,10 +2,10 @@ import React, { PropTypes } from 'react';
 import MigrationConfigurationRow from './MigrationConfigurationRow';
 import ComponentIcon from '../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../react/common/ComponentName';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+import ImmutableRenderMixin from 'react-immutable-render-mixin';
 
 export default React.createClass({
-  mixins: [PureRenderMixin],
+  mixins: [ImmutableRenderMixin],
 
   propTypes: {
     component: PropTypes.object.isRequired,

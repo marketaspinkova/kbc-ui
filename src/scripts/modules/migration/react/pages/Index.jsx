@@ -90,10 +90,10 @@ export default React.createClass({
               <p>By clicking button below, all of the affected configurations will be migrated.</p>
               <hr />
               <Row>
-                <Col md={7}>
+                <Col md={5}>
                   {this.renderButton(configurationsToMigrateFlatten)}
                 </Col>
-                <Col md={5} className="text-right">
+                <Col md={7} className="text-right">
                   {this.renderJobInfo()}
                 </Col>
               </Row>

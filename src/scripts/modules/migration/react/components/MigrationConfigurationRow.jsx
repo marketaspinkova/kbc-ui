@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react';
 import descriptionExcerpt from '../../../../utils/descriptionExcerpt';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import ComponentConfigurationLink from '../../../components/react/components/ComponentConfigurationLink';
+import ImmutableRenderMixin from 'react-immutable-render-mixin';
 
 export default React.createClass({
-  mixins: [PureRenderMixin],
+  mixins: [ImmutableRenderMixin],
 
   propTypes: {
     config: PropTypes.object.isRequired,
