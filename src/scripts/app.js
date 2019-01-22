@@ -69,16 +69,8 @@ const startApp = appOptions => {
   Promise.onPossiblyUnhandledRejection(e => {
     const error = Error.create(e);
 
-    const notification = React.createClass({
-      render() {
-        return (
-          <ErrorNotification error={error} />
-        );
-      }
-    });
-
     ApplicationActionCreators.sendNotification({
-      message: notification,
+      message: () => <ErrorNotification error={error} />,
       type: 'error',
       id: error.id
     });
