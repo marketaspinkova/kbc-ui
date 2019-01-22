@@ -45,15 +45,7 @@ export default React.createClass({
         <div className="storage-bucket-header">
           <h4>{bucket.get('id')}</h4>
           <Tooltip tooltip="Bucket detail" placement="top">
-            <Button
-              bsStyle="link"
-              bsSize="sm"
-              onClick={e => {
-                e.preventDefault();
-                e.stopPropagation();
-                navigateToBucketDetail(bucket.get('id'));
-              }}
-            >
+            <Button bsStyle="link" bsSize="sm" onClick={() => navigateToBucketDetail(bucket.get('id'))}>
               <i className="fa fa-fw fa-chevron-right" />
             </Button>
           </Tooltip>
