@@ -1,14 +1,21 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import classnames from 'classnames';
-import { Accordion, Panel, Button } from 'react-bootstrap';
+import { PanelGroup, Panel, Button } from 'react-bootstrap';
 import Tooltip from '../../../../react/common/Tooltip';
 import { navigateToBucketDetail } from '../../Actions';
 
 export default React.createClass({
   propTypes: {
     buckets: PropTypes.object.isRequired,
-    tables: PropTypes.object.isRequired
+    tables: PropTypes.object.isRequired,
+    activeBucketId: PropTypes.string
+  },
+
+  getInitialState() {
+    return {
+      activeBucketId: null
+    };
   },
 
   render() {
@@ -17,12 +24,17 @@ export default React.createClass({
     }
 
     return (
-      <Accordion className="kbc-accordion">
+      <PanelGroup
+        accordion
+        activeKey={this.state.activeBucketId || this.props.activeBucketId}
+        onSelect={this.handleSelect}
+        className="kbc-accordion"
+      >
         {this.props.buckets
           .sortBy(bucket => bucket.get('id').toLowerCase())
           .map(this.renderBucketPanel)
           .toArray()}
-      </Accordion>
+      </PanelGroup>
     );
   },
 
@@ -88,5 +100,11 @@ export default React.createClass({
         </Link>
       </li>
     );
+  },
+
+  handleSelect(bucketId) {
+    this.setState({
+      activeBucketId: bucketId
+    });
   }
 });
