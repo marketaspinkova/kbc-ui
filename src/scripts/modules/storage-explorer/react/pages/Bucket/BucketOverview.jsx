@@ -12,6 +12,7 @@ import Tooltip from '../../../../../react/common/Tooltip';
 import ConfirmModal from '../../../../../react/common/ConfirmModal';
 import ShareBucketModal from '../../modals/ShareBucketModal';
 import ChangeSharingTypeModal from '../../modals/ChangeSharingTypeModal';
+import ExternalProjectBucketLink from '../../components/ExternalProjectBucketLink';
 import { shareBucket, unshareBucket, changeBucketSharingType } from '../../../Actions';
 
 export default React.createClass({
@@ -125,42 +126,29 @@ export default React.createClass({
     return (
       <tr>
         <td>Source bucket</td>
-        {this.isOrganizationMember() ? (
-          <td>
-            <a href={`/admin/projects/${source.getIn(['project', 'id'])}`}>{source.getIn(['project', 'name'])}</a>
-            {' / '}
-            <a href={`/admin/projects/${source.getIn(['project', 'id'])}/storage#/buckets/${source.get('id')}`}>
-              {source.get('id')}
-            </a>{' '}
-            <Hint title="Source bucket">Bucket is linked from other project.</Hint>
-          </td>
-        ) : (
-          <td>
-            {source.getIn(['project', 'name'])} / {source.get('id')}{' '}
-            <Hint title="Source bucket">Bucket is linked from other project.</Hint>
-          </td>
-        )}
+        <td>
+          {this.isOrganizationMember() ? (
+            <ExternalProjectBucketLink bucket={source} />
+          ) : (
+            <span>
+              {source.getIn(['project', 'name'])} / {source.get('id')}
+            </span>
+          )}{' '}
+          <Hint title="Source bucket">Bucket is linked from other project.</Hint>
+        </td>
       </tr>
     );
   },
 
   renderLinkedBucket(linkedBucket, index) {
-    const project = linkedBucket.get('project');
-
     return (
       <div key={index}>
         <CreatedWithIcon createdTime={linkedBucket.get('created')} relative={false} />{' '}
         {this.isOrganizationMember() ? (
-          <span>
-            <a href={`/admin/projects/${project.get('id')}`}>{project.get('name')}</a>
-            {' / '}
-            <a href={`/admin/projects/${project.get('id')}/storage#/buckets/${linkedBucket.get('id')}`}>
-              {linkedBucket.get('id')}
-            </a>
-          </span>
+          <ExternalProjectBucketLink bucket={linkedBucket} />
         ) : (
           <span>
-            {project.get('name')} / {linkedBucket.get('id')}
+            {linkedBucket.getIn(['project', 'name'])} / {linkedBucket.get('id')}
           </span>
         )}
       </div>

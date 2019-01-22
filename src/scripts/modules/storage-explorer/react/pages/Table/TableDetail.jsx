@@ -119,7 +119,7 @@ export default React.createClass({
                     'Load'
                   )}
                 </MenuItem>
-                <MenuItem divider />
+                {canWriteTable && <MenuItem divider />}
                 {!this.state.table.get('isAlias') && canWriteTable && (
                   <MenuItem
                     eventKey="truncate"
@@ -340,7 +340,7 @@ export default React.createClass({
 
     this.state.tables.forEach(table => {
       if (
-        table.get('sourceTable') &&
+        !table.getIn(['bucket', 'sourceBucket']) &&
         table.get('isAlias') &&
         table.getIn(['sourceTable', 'id']) === this.state.table.get('id') &&
         this.state.sapiToken.getIn(['owner', 'id']) === table.getIn(['sourceTable', 'project', 'id'])
@@ -360,13 +360,7 @@ export default React.createClass({
     }
 
     this.state.bucket.get('linkedBy').forEach(bucket => {
-      foundLinks.push(
-        bucket.merge({
-          id: `${bucket.get('id')}.${this.state.table.get('name')}`,
-          bucketId: bucket.get('id'),
-          tableName: this.state.table.get('name')
-        })
-      );
+      foundLinks.push(bucket.merge({ tableName: this.state.table.get('name') }));
     });
 
     return foundLinks;

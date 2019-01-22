@@ -71,7 +71,12 @@ export default React.createClass({
                   <th>Last change</th>
                 </tr>
               </thead>
-              <tbody>{this.props.tables.map(this.renderTableRow).toArray()}</tbody>
+              <tbody>
+                {this.props.tables
+                  .sortBy(table => table.get('name').toLowerCase())
+                  .map(this.renderTableRow)
+                  .toArray()}
+              </tbody>
             </Table>
           </Row>
         ) : (

@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { Link } from 'react-router';
 import { Table, Row } from 'react-bootstrap';
+import ProjectAliasLink from './ProjectAliasLink';
 
 export default React.createClass({
   mixins: [PureRenderMixin],
@@ -18,12 +19,8 @@ export default React.createClass({
       return null;
     }
 
-    const ownerId = this.props.sapiToken.getIn(['owner', 'id']);
-    const isOrganizationMember = this.props.sapiToken.getIn(['admin', 'isOrganizationMember']);
-
     return (
       <Row>
-
         <Table responsive striped>
           <thead>
             <tr>
@@ -45,37 +42,13 @@ export default React.createClass({
               </tr>
             ))}
 
-            {this.props.tableLinks.map(alias => {
-              const project = alias.get('project');
-
-              return (
-                <tr key={`link-${alias.get('id')}`}>
-                  <td>
-                    {ownerId === project.get('id') && (
-                      <Link
-                        to="storage-explorer-table"
-                        params={{ bucketId: alias.get('bucketId'), tableName: alias.get('tableName') }}
-                      >
-                        {alias.get('id')}
-                      </Link>
-                    )}
-                    {ownerId !== project.get('id') && isOrganizationMember && (
-                      <span>
-                        {project.get('name')} / {alias.get('id')}
-                      </span>
-                    )}
-                    {ownerId !== project.get('id') &&
-                      isOrganizationMember &&
-                      <a href={`/admin/projects/${project.get('id')}`}>{project.get('name')}</a> /
-                      (
-                        <a href={`/admin/projects/${project.get('id')}/storage#/buckets/${alias.get('id')}`}>
-                          {alias.get('id')}
-                        </a>
-                      )}
-                  </td>
-                </tr>
-              );
-            })}
+            {this.props.tableLinks.map(alias => (
+              <tr key={`link-${alias.get('id')}`}>
+                <td>
+                  <ProjectAliasLink sapiToken={this.props.sapiToken} alias={alias} />
+                </td>
+              </tr>
+            ))}
           </tbody>
         </Table>
       </Row>
