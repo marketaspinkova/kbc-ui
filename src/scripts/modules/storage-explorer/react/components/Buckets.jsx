@@ -10,7 +10,7 @@ import TablesStore from '../../../components/stores/StorageTablesStore';
 import CreateBucketModal from '../modals/CreateBucketModal';
 import SharedBucketsModal from '../modals/SharedBucketsModal';
 import BucketsList from './BucketsList';
-import { loadBuckets, loadSharedBuckets, createBucket } from '../../Actions';
+import { reloadBuckets, loadSharedBuckets, createBucket } from '../../Actions';
 
 export default React.createClass({
   mixins: [createStoreMixin(BucketsStore, TablesStore, ApplicationStore)],
@@ -20,7 +20,7 @@ export default React.createClass({
       allBuckets: BucketsStore.getAll(),
       allTables: TablesStore.getAll(),
       sharedBuckets: BucketsStore.getSharedBuckets(),
-      isLoading: BucketsStore.getIsLoading(),
+      isReloading: BucketsStore.getIsReloading(),
       sapiToken: ApplicationStore.getSapiToken(),
       isCreatingBucket: BucketsStore.isCreatingBucket()
     };
@@ -69,11 +69,11 @@ export default React.createClass({
         <Tooltip tooltip="Refresh buckets" placement="top">
           <Button
             onClick={() => {
-              loadBuckets();
+              reloadBuckets();
               loadSharedBuckets();
             }}
           >
-            <RefreshIcon isLoading={this.state.isLoading} title="" />
+            <RefreshIcon isLoading={this.state.isReloading} title="" />
           </Button>
         </Tooltip>
       </ButtonGroup>
