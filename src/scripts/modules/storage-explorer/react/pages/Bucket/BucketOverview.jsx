@@ -180,8 +180,10 @@ export default React.createClass({
   },
 
   renderChangeSharingTypeModal() {
+    const bucketSharing = this.props.bucket.get('sharing', null);
     return (
       <ChangeSharingTypeModal
+        key={`${this.props.bucket.get('id')}-${bucketSharing !== null ? bucketSharing : 'not-shared'}`}
         show={this.state.openChangeSharingModal}
         bucket={this.props.bucket}
         isChangingSharingType={this.props.isChangingSharingType}
