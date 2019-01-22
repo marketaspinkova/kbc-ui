@@ -141,7 +141,12 @@ export default React.createClass({
 
   renderButton() {
     return (
-      <Button onClick={this._handleOpenClick} bsStyle="link" block={this.props.buttonBlock}>
+      <Button
+        onClick={this._handleOpenClick}
+        bsStyle="link"
+        block={this.props.buttonBlock}
+        disabled={this.props.isLoading}
+      >
         {this.props.isLoading ? <Loader className="fa-fw" /> : <i className="fa fa-fw fa-play" />}
         {this.props.buttonLabel && <span> {this.props.buttonLabel}</span>}
       </Button>
