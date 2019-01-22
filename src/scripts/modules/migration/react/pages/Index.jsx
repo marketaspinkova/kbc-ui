@@ -9,9 +9,10 @@ import InstalledComponentsActionCreators from '../../../components/InstalledComp
 import jobsApi from '../../../jobs/JobsApi';
 import {fromJS, List} from 'immutable';
 import {Loader} from '@keboola/indigo-ui';
-import {Link} from 'react-router/lib';
+import {Link} from 'react-router';
 import JobStatusLabel from '../../../../react/common/JobStatusLabel';
 import date from '../../../../utils/date';
+import {Col, Jumbotron, Row} from 'react-bootstrap';
 
 const MIGRATION_COMPONENT_ID = 'keboola.config-migration-tool';
 
@@ -83,20 +84,20 @@ export default React.createClass({
       <div className="container-fluid">
         <div className="kbc-main-content kbc-components-list">
           <div className="kbc-header">
-            <div className="jumbotron">
+            <Jumbotron>
               <h2>OAuth Credentials Migration</h2>
               <p>As we have introduced new version of our OAuth API, it is necessary to migrate configurations using OAuth authorization to this new API version.</p>
               <p>By clicking button below, all of the affected configurations will be migrated.</p>
               <hr />
-              <div className="row">
-                <div className="col-md-5">
+              <Row>
+                <Col md={7}>
                   {this.renderButton(configurationsToMigrateFlatten)}
-                </div>
-                <div className="col-md-7 text-right">
+                </Col>
+                <Col md={5} className="text-right">
                   {this.renderJobInfo()}
-                </div>
-              </div>
-            </div>
+                </Col>
+              </Row>
+            </Jumbotron>
           </div>
           {this.renderConfigurationsList(
             affectedComponents,
@@ -133,7 +134,7 @@ export default React.createClass({
     if (!job) {
       return (
         <div>
-          {this.state.isLoading ? <Loader /> : ''}
+          {this.state.isLoading && <Loader />}
           &nbsp;
           <small>
             Last Job: N/A
@@ -144,7 +145,7 @@ export default React.createClass({
 
     return (
       <div>
-        {this.state.isLoading ? <Loader /> : ''}
+        {this.state.isLoading && <Loader />}
         &nbsp;
         <strong>Last migration job: {' '}</strong>
         <Link to="jobDetail" params={{jobId: job.get('id')}}>
@@ -182,23 +183,23 @@ export default React.createClass({
 
   renderAffected(components) {
     return [
-      (<div className="row">
-        <div className="col-md-12">
+      (<Row>
+        <Col md={12}>
           <h2>Affected configurations</h2>
-        </div>
-      </div>),
+        </Col>
+      </Row>),
       this.renderRows(components)
     ];
   },
 
   renderIgnored(components) {
     return [
-      (<div className="row">
-        <div className="col-md-12">
+      (<Row>
+        <Col md={12}>
           <h2>Manual migration needed!</h2>
           <p>The configurations below need to be migrated manually. Please open each configuration and reset the authorization to migrate.</p>
-        </div>
-      </div>),
+        </Col>
+      </Row>),
       this.renderRows(components)
     ];
   },
