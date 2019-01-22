@@ -1,6 +1,7 @@
 import Immutable from 'immutable';
 
-export default (current, all) => {
+
+export function getConflictsForTransformation(current, all) {
   let conflicts = Immutable.List();
 
   // self conflicts
@@ -39,4 +40,21 @@ export default (current, all) => {
   }).map((groupedConflicts) => {
     return groupedConflicts.first();
   }).toList();
-};
+}
+
+export function getConflictsForBucket(transformations) {
+  let conflicts = Immutable.List();
+  transformations.forEach((transformation) => {
+    const transformationConflicts = getConflictsForTransformation(transformation, transformations);
+    transformationConflicts.forEach((transformationConflict) => {
+      conflicts = conflicts.push(transformationConflict);
+    });
+  });
+
+  // return deduplicated
+  return conflicts.groupBy((conflict) => {
+    return conflict.hashCode();
+  }).map((groupedConflicts) => {
+    return groupedConflicts.first();
+  }).toList();
+}

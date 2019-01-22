@@ -9,6 +9,7 @@ import componentsActions from '../../components/InstalledComponentsActionCreator
 import DeprecatedComponents from './DeprecatedComponents';
 import DeprecatedTransformations from './DeprecatedTransformations';
 import FileSize from '../../../react/common/FileSize';
+import TransformationParallelUnloads from './TransformationParallelUnloads';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import { showWizardModalFn } from '../../guide-mode/stores/ActionCreators.js';
 import WizardStore from '../../guide-mode/stores/WizardStore';
@@ -117,6 +118,9 @@ export default React.createClass({
             />
           )}
           <DeprecatedTransformations
+            transformations={this.state.transformations}
+          />
+          <TransformationParallelUnloads
             transformations={this.state.transformations}
           />
           <DeprecatedComponents

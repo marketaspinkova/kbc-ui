@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import { Alert } from 'react-bootstrap';
-import getConflicts from '../duplicite-output-mapping/detect';
+import { getConflictsForTransformation } from '../duplicite-output-mapping/detect';
 import ConflictList from './ConflictList';
 
 export default React.createClass({
@@ -11,7 +11,7 @@ export default React.createClass({
   },
 
   render() {
-    const conflicts = getConflicts(this.props.transformation, this.props.transformations);
+    const conflicts = getConflictsForTransformation(this.props.transformation, this.props.transformations);
     if (conflicts.size === 0) {
       return null;
     }
