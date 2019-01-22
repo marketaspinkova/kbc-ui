@@ -16,6 +16,7 @@ import AppUsageInfo from '../new-component-form/AppUsageInfo';
 import ComponentDescription from './ComponentDescription';
 import contactSupport from '../../../../../utils/contactSupport';
 import MigrationRow from '../../components/MigrationRow';
+import MigrationInfoPanel from '../../components/MigrationInfoPanel';
 
 export default React.createClass({
   mixins: [createStoreMixin(ComponentsStore, InstalledComponentsStore)],
@@ -56,6 +57,10 @@ export default React.createClass({
             replacementAppId={this.state.component.getIn(['uiOptions', 'replacementApp'])}
           />
         )}
+        <MigrationInfoPanel
+          component={this.state.component}
+          configurations={this.state.configurations}
+        />
         <div className="kbc-main-content">
           <FormHeader component={this.state.component} withButtons={false} />
           <div className="row">
