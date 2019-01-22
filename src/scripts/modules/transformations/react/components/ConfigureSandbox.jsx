@@ -25,7 +25,7 @@ export default React.createClass({
   renderSnowflakeSandboxInfo() {
     if (this.props.backend === 'snowflake') {
       return (
-        <p className="well">
+        <p>
           Tables are loaded into the Snowflake sandbox using
           {' '}
           <ExternalLink href="https://help.keboola.com/manipulation/transformations/snowflake/#clone-table">
@@ -34,11 +34,12 @@ export default React.createClass({
         </p>
       );
     }
+    return null;
   },
 
   renderRowsInput() {
     if (this.props.backend === 'snowflake') {
-      return;
+      return null;
     }
     return (
       <div className="form-group">
