@@ -74,14 +74,15 @@ export default React.createClass({
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.onConfirm(this.state.sharing).then(this.onHide);
+    this.props.onConfirm(this.state.sharing).then(this.props.onHide);
   },
 
   onHide() {
     this.setState({
       sharing: this.props.bucket.get('sharing')
+    }, () => {
+      this.props.onHide();
     });
-    this.props.onHide();
   },
 
   isDisabled() {
