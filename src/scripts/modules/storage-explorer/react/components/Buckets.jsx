@@ -44,11 +44,11 @@ export default React.createClass({
         {this.renderCreateBucketModal()}
         {this.canLinkBucket() && this.renderSharedBucketsModal()}
 
+        {this.renderBucketsButtons()}
         <SearchBar
           placeholder="Search bucket"
           query={this.state.searchQuery}
           onChange={this.handleQueryChange}
-          additionalActions={this.renderBucketsButtons()}
         />
         <BucketsList
           buckets={this.filteredBuckets()}
@@ -61,29 +61,36 @@ export default React.createClass({
 
   renderBucketsButtons() {
     return (
-      <ButtonGroup>
-        <Tooltip tooltip="Create new bucket" placement="top">
-          <Button onClick={this.openCreateBucketModal}>
-            <i className="fa fa-plus" />
+      <ButtonGroup justified>
+        <ButtonGroup>
+          <Button onClick={this.openCreateBucketModal} bsSize="sm">
+            <Tooltip tooltip="Create new bucket" placement="top">
+              <span><i className="fa fa-plus" /> Create</span>
+            </Tooltip>
           </Button>
-        </Tooltip>
+        </ButtonGroup>
         {this.canLinkBucket() && (
-          <Tooltip tooltip="Link shared bucket to project" placement="top">
-            <Button onClick={this.openBucketLinkModal}>
-              <i className="fa fa-random" />
+          <ButtonGroup>
+            <Button onClick={this.openBucketLinkModal} bsSize="sm">
+              <Tooltip tooltip="Link shared bucket to project" placement="top">
+                <span><i className="fa fa-random" /> Link</span>
+              </Tooltip>
             </Button>
-          </Tooltip>
+          </ButtonGroup>
         )}
-        <Tooltip tooltip="Refresh buckets" placement="top">
+        <ButtonGroup>
           <Button
             onClick={() => {
               reloadBuckets();
               loadSharedBuckets();
             }}
+            bsSize="sm"
           >
-            <RefreshIcon isLoading={this.state.isReloading} title="" />
+            <Tooltip tooltip="Refresh buckets" placement="top">
+              <span><RefreshIcon isLoading={this.state.isReloading} title="" /> Reload</span>
+            </Tooltip>
           </Button>
-        </Tooltip>
+        </ButtonGroup>
       </ButtonGroup>
     );
   },
