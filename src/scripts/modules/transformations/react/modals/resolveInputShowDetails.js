@@ -1,3 +1,5 @@
+import { getInitialDataTypes } from '../components/mapping/InputMappingRowSnowflakeEditorHelper';
+
 /**
  * Mysql advanced columns
  * @param {Object} mapping Map mapping
@@ -93,10 +95,6 @@ function snowflake(mapping) {
     return true;
   }
 
-  if (mapping.has('datatypes') && mapping.get('datatypes').size > 0) {
-    return true;
-  }
-
   if (mapping.get('days') > 0) {
     return true;
   }
@@ -112,6 +110,11 @@ function snowflake(mapping) {
   if (mapping.has('whereValues') && mapping.get('whereValues').size > 0) {
     return true;
   }
+
+  if (mapping.has('datatypes') && mapping.get('datatypes').size > 0) {
+    return !mapping.get('datatypes').equals(getInitialDataTypes(mapping.get('source')));
+  }
+
   return false;
 }
 
