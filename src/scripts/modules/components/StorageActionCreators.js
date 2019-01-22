@@ -276,6 +276,27 @@ module.exports = {
       });
   },
 
+  changeBucketSharingType: function(bucketId, params) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.STORAGE_BUCKET_CHANGE_SHARING_TYPE,
+      bucketId: bucketId
+    });
+    return storageApi.changeBucketSharingType(bucketId, params).then(() => {
+      dispatcher.handleViewAction({
+        type: constants.ActionTypes.STORAGE_BUCKET_CHANGE_SHARING_TYPE_SUCCESS,
+        bucketId: bucketId
+      });
+      return this.loadBucketsForce();
+    })
+      .catch(error => {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_BUCKET_CHANGE_SHARING_TYPE_ERROR,
+          bucketId: bucketId
+        });
+        throw error;
+      });
+  },
+
   sharedBuckets: function() {
     dispatcher.handleViewAction({
       type: constants.ActionTypes.STORAGE_SHARED_BUCKETS_LOAD

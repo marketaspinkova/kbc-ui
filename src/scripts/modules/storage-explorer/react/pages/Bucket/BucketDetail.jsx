@@ -30,6 +30,7 @@ export default React.createClass({
       deletingBuckets: BucketsStore.deletingBuckets().has(bucketId),
       isSharing: BucketsStore.isSharing(bucketId),
       isUnsharing: BucketsStore.isUnsharing(bucketId),
+      isChangingSharingType: BucketsStore.isChangingSharingType(bucketId),
       creatingTable: TablesStore.getIsCreatingTable(),
       creatingAliasTable: TablesStore.getIsCreatingAliasTable(),
       uploadingProgress: FilesStore.getUploadingProgress(bucketId) || 0
@@ -87,6 +88,7 @@ export default React.createClass({
                   sapiToken={this.state.sapiToken}
                   isSharing={this.state.isSharing}
                   isUnsharing={this.state.isUnsharing}
+                  isChangingSharingType={this.state.isChangingSharingType}
                 />
               </Tab.Pane>
               <Tab.Pane eventKey="tables">

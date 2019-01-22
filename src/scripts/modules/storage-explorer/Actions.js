@@ -195,6 +195,10 @@ const shareBucket = (bucketId, params) => {
   return StorageActionCreators.shareBucket(bucketId, params).then(loadSharedBuckets);
 };
 
+const changeBucketSharingType = (bucketId, params) => {
+  return StorageActionCreators.changeBucketSharingType(bucketId, params);
+};
+
 const unshareBucket = (bucketId) => {
   return StorageActionCreators.unshareBucket(bucketId).then(loadSharedBuckets);
 };
@@ -275,6 +279,7 @@ export {
   deleteSnapshot,
   shareBucket,
   unshareBucket,
+  changeBucketSharingType,
   uploadFile,
   deleteFile,
   loadFiles,

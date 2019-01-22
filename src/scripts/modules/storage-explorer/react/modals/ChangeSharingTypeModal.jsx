@@ -6,21 +6,19 @@ import RadioGroupInput from '../../../../react/common/RadioGroupInput';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import { bucketSharingTypes } from '../../Constants';
 
-const INITIAL_STATE = {
-  sharing: bucketSharingTypes.ORGANIZATION
-};
-
 export default React.createClass({
   propTypes: {
     show: PropTypes.bool.isRequired,
     bucket: PropTypes.object.isRequired,
-    isSharing: PropTypes.bool.isRequired,
+    isChangingSharingType: PropTypes.bool.isRequired,
     onConfirm: PropTypes.func.isRequired,
     onHide: PropTypes.func.isRequired
   },
 
   getInitialState() {
-    return INITIAL_STATE;
+    return {
+      sharing: this.props.bucket.get('sharing')
+    };
   },
 
   render() {
@@ -28,11 +26,11 @@ export default React.createClass({
       <Modal show={this.props.show} onHide={this.onHide}>
         <Form onSubmit={this.handleSubmit} horizontal>
           <Modal.Header closeButton>
-            <Modal.Title>Share Bucket</Modal.Title>
+            <Modal.Title>Change Bucket Sharing Type</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <p>
-              Bucket will be shared to organization. Please choose who will be able to link bucket to projects.
+              Please choose who will be able to link bucket to projects.
               <ExternalLink href="https://help.keboola.com/storage/buckets/sharing/">Learn more</ExternalLink>.
             </p>
 
@@ -55,9 +53,9 @@ export default React.createClass({
           </Modal.Body>
           <Modal.Footer>
             <ConfirmButtons
-              isSaving={this.props.isSharing}
+              isSaving={this.props.isChangingSharingType}
               isDisabled={this.isDisabled()}
-              saveLabel="Enable"
+              saveLabel="Change"
               onCancel={this.onHide}
               onSave={this.handleSubmit}
               saveButtonType="submit"
@@ -76,15 +74,18 @@ export default React.createClass({
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.onConfirm(this.state.sharing).then(this.onHide);
+    this.props.onConfirm(this.state.sharing).then(this.props.onHide);
   },
 
   onHide() {
-    this.setState(INITIAL_STATE);
-    this.props.onHide();
+    this.setState({
+      sharing: this.props.bucket.get('sharing')
+    }, () => {
+      this.props.onHide();
+    });
   },
 
   isDisabled() {
-    return this.props.isSharing || !!!this.state.sharing;
+    return this.props.isChangingSharingType || !!!this.state.sharing;
   }
 });

@@ -72,6 +72,10 @@ const StorageBucketsStore = StoreUtils.createStore({
     return _store.getIn(['pendingBuckets', 'unsharing', bucketId], false);
   },
 
+  isChangingSharingType(bucketId) {
+    return _store.getIn(['pendingBuckets', 'isChangingSharingType', bucketId], false);
+  },
+
   getBucketMetadata(bucketId) {
     return _store.get('buckets').getIn(bucketId, 'metadata');
   }
@@ -183,6 +187,15 @@ Dispatcher.register(function(payload) {
     case constants.ActionTypes.STORAGE_BUCKET_UNSHARE_SUCCESS:
     case constants.ActionTypes.STORAGE_BUCKET_UNSHARE_ERROR:
       _store = _store.removeIn(['pendingBuckets', 'unsharing', action.bucketId]);
+      return StorageBucketsStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_BUCKET_CHANGE_SHARING_TYPE:
+      _store = _store.setIn(['pendingBuckets', 'isChangingSharingType', action.bucketId], true);
+      return StorageBucketsStore.emitChange();
+
+    case constants.ActionTypes.STORAGE_BUCKET_CHANGE_SHARING_TYPE_SUCCESS:
+    case constants.ActionTypes.STORAGE_BUCKET_CHANGE_SHARING_TYPE_ERROR:
+      _store = _store.deleteIn(['pendingBuckets', 'isChangingSharingType', action.bucketId]);
       return StorageBucketsStore.emitChange();
 
     case constants.ActionTypes.STORAGE_SHARED_BUCKETS_LOAD_SUCCESS:

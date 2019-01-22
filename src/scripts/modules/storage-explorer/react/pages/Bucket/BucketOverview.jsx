@@ -11,20 +11,23 @@ import FileSize from '../../../../../react/common/FileSize';
 import Tooltip from '../../../../../react/common/Tooltip';
 import ConfirmModal from '../../../../../react/common/ConfirmModal';
 import ShareBucketModal from '../../modals/ShareBucketModal';
-import { shareBucket, unshareBucket } from '../../../Actions';
+import ChangeSharingTypeModal from '../../modals/ChangeSharingTypeModal';
+import { shareBucket, unshareBucket, changeBucketSharingType } from '../../../Actions';
 
 export default React.createClass({
   propTypes: {
     bucket: PropTypes.object.isRequired,
     sapiToken: PropTypes.object.isRequired,
     isSharing: PropTypes.bool.isRequired,
-    isUnsharing: PropTypes.bool.isRequired
+    isUnsharing: PropTypes.bool.isRequired,
+    isChangingSharingType: PropTypes.bool.isRequired
   },
 
   getInitialState() {
     return {
       openShareModal: false,
-      openUnshareModal: false
+      openUnshareModal: false,
+      openChangeSharingModal: false
     };
   },
 
@@ -112,6 +115,7 @@ export default React.createClass({
           <td>
             {this.sharingInfo(bucket)} {this.sharingButtons(bucket)}
             {this.renderShareModal()}
+            {this.renderChangeSharingTypeModal()}
             {this.renderUnshareModal()}
           </td>
         </tr>
@@ -175,6 +179,20 @@ export default React.createClass({
     );
   },
 
+  renderChangeSharingTypeModal() {
+    const bucketSharing = this.props.bucket.get('sharing', null);
+    return (
+      <ChangeSharingTypeModal
+        key={`${this.props.bucket.get('id')}-${bucketSharing !== null ? bucketSharing : 'not-shared'}`}
+        show={this.state.openChangeSharingModal}
+        bucket={this.props.bucket}
+        isChangingSharingType={this.props.isChangingSharingType}
+        onConfirm={this.handleChangeSharingType}
+        onHide={this.closeChangeSharingModal}
+      />
+    );
+  },
+
   renderUnshareModal() {
     return (
       <ConfirmModal
@@ -195,6 +213,13 @@ export default React.createClass({
     const params = { sharing: sharingType };
 
     return shareBucket(bucketId, params);
+  },
+
+  handleChangeSharingType(sharingType) {
+    const bucketId = this.props.bucket.get('id');
+    const params = { sharing: sharingType };
+
+    return changeBucketSharingType(bucketId, params);
   },
 
   handleUnshareBucket() {
@@ -230,25 +255,43 @@ export default React.createClass({
 
     if (sharing && canShareBucket && linked.count() === 0) {
       return (
-        <Button bsSize="small" onClick={this.openUnshareModal}>
-          {this.props.isUnsharing ? <Loader /> : <i className="fa fa-ban" />} Disable sharing
-        </Button>
+        <span>
+          {this.renderChangeSharingTypeButton()}{' '}
+          <Button bsSize="small" onClick={this.openUnshareModal}>
+            {this.props.isUnsharing ? <Loader /> : <i className="fa fa-ban" />} Disable sharing
+          </Button>
+        </span>
       );
     }
 
     if (sharing && canShareBucket && linked.count() > 0) {
       return (
-        <Button bsSize="small" onClick={() => null} disabled={true}>
-          <Tooltip tooltip="Please unlink linked buckets first" placement="top">
-            <span>
-              <i className="fa fa-ban" /> Disable sharing
-            </span>
-          </Tooltip>
-        </Button>
+        <span>
+          {this.renderChangeSharingTypeButton()}{' '}
+          <Button bsSize="small" onClick={() => null} disabled={true}>
+            <Tooltip tooltip="Please unlink linked buckets first" placement="top">
+              <span>
+                <i className="fa fa-ban" /> Disable sharing
+              </span>
+            </Tooltip>
+          </Button>
+        </span>
       );
     }
 
     return null;
+  },
+
+  renderChangeSharingTypeButton() {
+    return (
+      <Button
+        bsSize="small"
+        onClick={this.openChangeSharingModal}
+        disabled={this.props.isChangingSharingType || this.props.isSharing || this.props.isUnsharing}
+      >
+        {this.props.isChangingSharingType ? <Loader /> : <i className="fa fa-edit" />} Change sharing type
+      </Button>
+    );
   },
 
   openShareModal() {
@@ -274,6 +317,19 @@ export default React.createClass({
       openUnshareModal: false
     });
   },
+
+  openChangeSharingModal() {
+    this.setState({
+      openChangeSharingModal: true
+    });
+  },
+
+  closeChangeSharingModal() {
+    this.setState({
+      openChangeSharingModal: false
+    });
+  },
+
 
   isOrganizationMember() {
     return this.props.sapiToken.getIn(['admin', 'isOrganizationMember'], false);
