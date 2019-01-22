@@ -41,9 +41,9 @@ const getMetadataDataTypes = (columnMetadata) => {
   });
 };
 
-const getInitialDataTypes = sourceTableId => {
-  const sourceTable = TablesStore.getAll().find(table => table.get('id') === sourceTableId, null, Map());
-  const datatypes = getMetadataDataTypes(MetadataStore.getTableColumnsMetadata(sourceTableId));
+const getTableInitialDataTypes = tableId => {
+  const sourceTable = TablesStore.getAll().find(table => table.get('id') === tableId, null, Map());
+  const datatypes = getMetadataDataTypes(MetadataStore.getTableColumnsMetadata(tableId));
   const columns = sourceTable.get('columns', List());
   const primaryKeys = sourceTable.get('primaryKey', List());
 
@@ -59,5 +59,5 @@ const getInitialDataTypes = sourceTableId => {
 
 export {
   getMetadataDataTypes,
-  getInitialDataTypes
+  getTableInitialDataTypes
 };

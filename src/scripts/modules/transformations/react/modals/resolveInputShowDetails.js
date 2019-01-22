@@ -1,4 +1,4 @@
-import { getInitialDataTypes } from '../components/mapping/InputMappingRowSnowflakeEditorHelper';
+import { getTableInitialDataTypes } from '../components/mapping/InputMappingRowSnowflakeEditorHelper';
 
 /**
  * Mysql advanced columns
@@ -112,7 +112,7 @@ function snowflake(mapping) {
   }
 
   if (mapping.has('datatypes') && mapping.get('datatypes').size > 0) {
-    return !mapping.get('datatypes').equals(getInitialDataTypes(mapping.get('source')));
+    return !mapping.get('datatypes').equals(getTableInitialDataTypes(mapping.get('source')));
   }
 
   return false;
