@@ -42,7 +42,7 @@ const getMetadataDataTypes = (columnMetadata) => {
 };
 
 const getTableInitialDataTypes = tableId => {
-  const sourceTable = TablesStore.getAll().find(table => table.get('id') === tableId, null, Map());
+  const sourceTable = TablesStore.getAll().find(table => table.get('id') === tableId);
   const tableColumnsMetadata = MetadataStore.getTableColumnsMetadata(tableId);
 
   if (!sourceTable || !tableColumnsMetadata) {
