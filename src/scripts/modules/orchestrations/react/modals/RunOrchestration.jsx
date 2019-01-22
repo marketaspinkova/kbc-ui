@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { Modal, Button, Alert } from 'react-bootstrap';
 import Tooltip from '../../../../react/common/Tooltip';
@@ -9,16 +9,17 @@ import OrchestrationActionCreators from '../../ActionCreators';
 
 export default React.createClass({
   propTypes: {
-    orchestration: React.PropTypes.object.isRequired,
-    tasks: React.PropTypes.object,
-    onRequestRun: React.PropTypes.func.isRequired,
-    onRequestCancel: React.PropTypes.func,
-    isLoading: React.PropTypes.bool.isRequired,
-    tooltipPlacement: React.PropTypes.string,
-    onOpen: React.PropTypes.func,
-    buttonLabel: React.PropTypes.string,
-    buttonBlock: React.PropTypes.bool,
-    loadTasksFn: React.PropTypes.func
+    orchestration: PropTypes.object.isRequired,
+    onRequestRun: PropTypes.func.isRequired,
+    isLoading: PropTypes.bool.isRequired,
+    task: PropTypes.object,
+    tasks: PropTypes.object,
+    onRequestCancel: PropTypes.func,
+    tooltipPlacement: PropTypes.string,
+    onOpen: PropTypes.func,
+    buttonLabel: PropTypes.string,
+    buttonBlock: PropTypes.bool,
+    loadTasksFn: PropTypes.func
   },
 
   getInitialState() {
@@ -113,13 +114,15 @@ export default React.createClass({
             {' manually and the notifications will be sent only to you.'}
           </strong>
         </p>
-        <PanelWithDetails placement="top" labelCollapse="Hide Tasks" labelOpen="Show Tasks">
-          <TaskSelectTable
-            tasks={this.props.tasks}
-            onTaskUpdate={this._handleTaskUpdate}
-            onTasksUpdate={this._handleTasksUpdate}
-          />
-        </PanelWithDetails>
+        {this.props.tasks && (
+          <PanelWithDetails placement="top" labelCollapse="Hide Tasks" labelOpen="Show Tasks">
+            <TaskSelectTable
+              tasks={this.props.tasks}
+              onTaskUpdate={this._handleTaskUpdate}
+              onTasksUpdate={this._handleTasksUpdate}
+            />
+          </PanelWithDetails>
+        )}
       </div>
     );
   },
@@ -154,7 +157,7 @@ export default React.createClass({
   },
 
   hasTasks() {
-    return this.props.tasks && this.props.tasks.count() > 0;
+    return this.props.task || (this.props.tasks && this.props.tasks.count() > 0);
   },
 
   _handleOpenClick(e) {

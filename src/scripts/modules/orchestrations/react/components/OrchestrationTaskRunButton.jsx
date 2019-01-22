@@ -27,6 +27,7 @@ export default React.createClass({
     return (
       <RunOrchestrationModal
         orchestration={this.props.orchestration}
+        task={this.props.task}
         notify={this.props.notify}
         onRequestRun={this.handleRunStart}
         isLoading={this.state.isLoading}
