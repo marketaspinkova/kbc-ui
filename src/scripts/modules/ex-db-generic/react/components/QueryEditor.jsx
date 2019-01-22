@@ -167,7 +167,7 @@ export default React.createClass({
           value: candidate.get('name'),
           label: candidate.get('name')
         };
-      }).toJS();
+      }).toList().toJS();
     } else {
       return [];
     }
