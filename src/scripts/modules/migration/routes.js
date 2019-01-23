@@ -1,5 +1,4 @@
 import Index from './react/pages/Index';
-import ComponentReloaderButton from '../components/react/components/ComponentsReloaderButton';
 import oAuthComponents from '../components/utils/oAuthComponents';
 
 export default {
@@ -8,7 +7,6 @@ export default {
   path: 'migrations',
   isComponent: true,
   defaultRouteHandler: Index,
-  reloaderHandler: ComponentReloaderButton,
   requireData: [
     () => oAuthComponents.loadComponentsWithOAuth()
   ],
