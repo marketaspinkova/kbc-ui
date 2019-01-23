@@ -6,6 +6,7 @@ import ComponentConfigurationRowLink from '../../components/react/components/Com
 import { AlertBlock } from '@keboola/indigo-ui';
 import { getConflictsForBucket } from '../../transformations/react/components/duplicite-output-mapping/detect';
 import ApplicationStore from '../../../stores/ApplicationStore';
+import { ExternalLink } from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -50,7 +51,7 @@ export default React.createClass({
         <p>
           We cannot turn on parallel output mapping for this project as these transformations have duplicit output mappings
           (multiple output mappings writing to the same table in Storage). Please fix the transformations so we can turn on
-          faster output mapping for you.
+          faster output mapping for you. Read more <ExternalLink href="http://status.keboola.com/speeding-up-transformation-output-mappings-in-your-projects">here</ExternalLink>.
         </p>
         <div className="row">
           {duplicitTransformationsByBucket.map(function(bucketConflicts, bucketId) {
