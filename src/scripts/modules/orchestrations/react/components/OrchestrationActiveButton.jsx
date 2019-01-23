@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
 import OrchestrationActionCreators from '../../ActionCreators';
+import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
 import ActivateDeactivateSwitch from '../../../../react/common/ActivateDeactivateSwitch';
 
 export default createReactClass({
@@ -17,6 +18,20 @@ export default createReactClass({
   },
 
   render() {
+    if (this.props.mode === 'link') {
+      return (
+        <ActivateDeactivateButton
+          activateTooltip="Enable Orchestration"
+          deactivateTooltip="Disable Orchestration"
+          isActive={this.props.orchestration.get('active')}
+          isPending={this.props.isPending}
+          onChange={this._handleActiveChange}
+          tooltipPlacement={this.props.tooltipPlacement}
+          mode={this.props.mode}
+        />
+      );
+    }
+
     return (
       <ActivateDeactivateSwitch
         activateTooltip="Enable Orchestration"
@@ -25,7 +40,6 @@ export default createReactClass({
         isPending={this.props.isPending}
         onChange={this._handleActiveChange}
         tooltipPlacement={this.props.tooltipPlacement}
-        mode={this.props.mode}
       />
     );
   },

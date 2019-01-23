@@ -58,15 +58,15 @@ export default createReactClass({
             isPending={this.props.pendingActions.get('delete', false)}
             tooltipPlacement="top"
           />
-          <OrchestrationActiveButton
-            orchestration={this.props.orchestration}
-            isPending={this.props.pendingActions.get('active', false)}
-          />
           <OrchestrationRunButton
             orchestration={this.props.orchestration}
             notify={true}
             tooltipPlacement="top"
             tasks={this.props.tasks}
+          />
+          <OrchestrationActiveButton
+            orchestration={this.props.orchestration}
+            isPending={this.props.pendingActions.get('active', false)}
           />
         </span>
       </Link>

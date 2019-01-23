@@ -1,6 +1,7 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
+import classnames from 'classnames';
 import { Link } from 'react-router';
 import { Modal, Button, Alert } from 'react-bootstrap';
 import Tooltip from '../../../../react/common/Tooltip';
@@ -59,9 +60,7 @@ export default createReactClass({
           <Modal.Header closeButton={true}>
             <Modal.Title>{`Run orchestration ${this.props.orchestration.get('name')}`}</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
-            {this.renderTasksTable()}
-          </Modal.Body>
+          <Modal.Body>{this.renderTasksTable()}</Modal.Body>
           <Modal.Footer>
             <ConfirmButtons
               isDisabled={!this._isValid() || this.props.isLoading}
@@ -129,7 +128,7 @@ export default createReactClass({
   },
 
   renderOpenButton() {
-    if (this.props.tooltipPlacement) {
+    if (this.props.tooltipPlacement && this.props.orchestration.get('active')) {
       return (
         <Tooltip
           tooltip="Run orchestration"
@@ -144,15 +143,18 @@ export default createReactClass({
   },
 
   renderButton() {
+    const disabled = !this.props.orchestration.get('active');
+
     return (
-      <Button
-        onClick={this._handleOpenClick}
-        bsStyle="link"
-        block={this.props.buttonBlock}
-        disabled={this.props.isLoading}
-      >
-        {this.props.isLoading ? <Loader className="fa-fw" /> : <i className="fa fa-fw fa-play" />}
-        {this.props.buttonLabel && <span> {this.props.buttonLabel}</span>}
+      <Button onClick={this._handleOpenClick} bsStyle="link" block={this.props.buttonBlock} disabled={disabled}>
+        {this.props.isLoading ? (
+          <Loader className="fa-fw" />
+        ) : (
+          <i className={classnames('fa fa-fw fa-play', { 'text-muted': disabled })} />
+        )}
+        {this.props.buttonLabel && (
+          <span className={classnames({ 'text-muted': disabled })}> {this.props.buttonLabel}</span>
+        )}
       </Button>
     );
   },
