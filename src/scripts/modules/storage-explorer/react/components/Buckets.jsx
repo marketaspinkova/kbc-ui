@@ -7,16 +7,17 @@ import RoutesStore from '../../../../stores/RoutesStore';
 import ApplicationStore from '../../../../stores/ApplicationStore';
 import BucketsStore from '../../../components/stores/StorageBucketsStore';
 import TablesStore from '../../../components/stores/StorageTablesStore';
+import BucketsLocalStore from '../../BucketsLocalStore';
 
 import matchByWords from '../../../../utils/matchByWords';
 import Tooltip from '../../../../react/common/Tooltip';
 import CreateBucketModal from '../modals/CreateBucketModal';
 import SharedBucketsModal from '../modals/SharedBucketsModal';
 import BucketsList from './BucketsList';
-import { reloadBuckets, loadSharedBuckets, createBucket } from '../../Actions';
+import { reload, createBucket } from '../../Actions';
 
 export default React.createClass({
-  mixins: [createStoreMixin(ApplicationStore, RoutesStore, BucketsStore, TablesStore)],
+  mixins: [createStoreMixin(ApplicationStore, RoutesStore, BucketsLocalStore, BucketsStore, TablesStore)],
 
   getStateFromStores() {
     return {
@@ -24,7 +25,7 @@ export default React.createClass({
       allBuckets: BucketsStore.getAll(),
       allTables: TablesStore.getAll(),
       sharedBuckets: BucketsStore.getSharedBuckets(),
-      isReloading: BucketsStore.getIsReloading(),
+      isReloading: BucketsLocalStore.getIsReloading(),
       sapiToken: ApplicationStore.getSapiToken(),
       isCreatingBucket: BucketsStore.isCreatingBucket()
     };
@@ -79,14 +80,8 @@ export default React.createClass({
           </ButtonGroup>
         )}
         <ButtonGroup>
-          <Button
-            onClick={() => {
-              reloadBuckets();
-              loadSharedBuckets();
-            }}
-            bsSize="sm"
-          >
-            <Tooltip tooltip="Refresh buckets" placement="top">
+          <Button onClick={reload} bsSize="sm">
+            <Tooltip tooltip="Reload buckets &amp; tables" placement="top">
               <span><RefreshIcon isLoading={this.state.isReloading} title="" /> Reload</span>
             </Tooltip>
           </Button>

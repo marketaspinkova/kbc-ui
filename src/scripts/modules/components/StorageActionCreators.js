@@ -37,24 +37,6 @@ module.exports = {
       });
   },
 
-  reloadBuckets: function() {
-    dispatcher.handleViewAction({
-      type: constants.ActionTypes.STORAGE_BUCKETS_RELOAD
-    });
-    return storageApi.getBuckets().then(function(buckets) {
-      return dispatcher.handleViewAction({
-        type: constants.ActionTypes.STORAGE_BUCKETS_RELOAD_SUCCESS,
-        buckets: buckets
-      });
-    })
-      .catch(function(error) {
-        dispatcher.handleViewAction({
-          type: constants.ActionTypes.STORAGE_BUCKETS_RELOAD_ERROR
-        });
-        throw error;
-      });
-  },
-
   loadCredentialsForce: function(bucketId) {
     dispatcher.handleViewAction({
       type: constants.ActionTypes.STORAGE_BUCKET_CREDENTIALS_LOAD,

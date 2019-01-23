@@ -13,7 +13,6 @@ let _store = Map({
   buckets: Map(),
   isLoaded: false,
   isLoading: false,
-  isReloading: false,
   credentials: Map(), // bucketId
   pendingCredentials: Map(), // (loading, deleting, creating)
   pendingBuckets: Map(), // (creating)
@@ -31,10 +30,6 @@ const StorageBucketsStore = StoreUtils.createStore({
 
   getIsLoading() {
     return _store.get('isLoading');
-  },
-
-  getIsReloading() {
-    return _store.get('isReloading');
   },
 
   getIsLoaded() {
@@ -95,7 +90,6 @@ Dispatcher.register(function(payload) {
       return StorageBucketsStore.emitChange();
 
     case constants.ActionTypes.STORAGE_BUCKETS_LOAD_SUCCESS:
-    case constants.ActionTypes.STORAGE_BUCKETS_RELOAD_SUCCESS:
       _store = _store.withMutations(function(store) {
         let storeResult = store.setIn(['buckets'], Map());
         _.each(action.buckets, function(bucket) {
@@ -103,21 +97,12 @@ Dispatcher.register(function(payload) {
           return storeResult.setIn(['buckets', bObj.get('id')], bObj);
         });
         store.set('isLoading', false);
-        store.set('isReloading', false);
         store.set('isLoaded', true);
       });
       return StorageBucketsStore.emitChange();
 
     case constants.ActionTypes.STORAGE_BUCKETS_LOAD_ERROR:
       _store = _store.set('isLoading', false);
-      return StorageBucketsStore.emitChange();
-
-    case constants.ActionTypes.STORAGE_BUCKETS_RELOAD:
-      _store = _store.set('isReloading', true);
-      return StorageBucketsStore.emitChange();
-
-    case constants.ActionTypes.STORAGE_BUCKETS_RELOAD_ERROR:
-      _store = _store.set('isReloading', false);
       return StorageBucketsStore.emitChange();
 
     case constants.ActionTypes.STORAGE_BUCKET_CREDENTIALS_CREATE:
