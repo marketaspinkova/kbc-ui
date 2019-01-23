@@ -16,7 +16,10 @@ export default React.createClass({
     ).filter(component => !!component.count());
 
     return !oauthConfigurations.isEmpty() && (
-      <AlertBlock type="warning" title="Please migrate these configurations to a new version of OAuth Broker.">
+      <AlertBlock type="warning" title="Please migrate these configurations to a new version of OAuth Broker">
+        <p>
+          We have released new version of our OAuth Broker API. New features will soon be available in this new version like automatic refreshing of tokens, multiple client apps for better quota management and so on. All the configurations below will be migrated.
+        </p>
         <Row>
           {oauthConfigurations.entrySeq().map(function([componentId, configurations]) {
             return (
@@ -38,15 +41,11 @@ export default React.createClass({
             );
           })}
         </Row>
-        <Row>
-          <Col md={12}>
-            <Link to="migrations">
-              <Button bsStyle="primary">
-                Proceed to Migration
-              </Button>
-            </Link>
-          </Col>
-        </Row>
+        <Link to="migrations">
+          <Button bsStyle="primary">
+            Proceed to Migration
+          </Button>
+        </Link>
       </AlertBlock>
     );
   }
