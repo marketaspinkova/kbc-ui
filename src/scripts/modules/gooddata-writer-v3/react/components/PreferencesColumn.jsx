@@ -33,7 +33,7 @@ export default React.createClass({
            'Data Type',
            'dataType',
            Object.keys(DataTypes),
-           fields.dataTypeSize.show && this.renderInputWithAddod('dataTypeSize', <DataTypeSizeHint />)
+           fields.dataTypeSize.show && this.renderInputWithAddon('dataTypeSize', <DataTypeSizeHint />)
          )}
         {fields.dateDimension.show &&
          this.renderSelectGroup(
@@ -147,7 +147,7 @@ export default React.createClass({
       />);
   },
 
-  renderInputWithAddod(fieldName, addon) {
+  renderInputWithAddon(fieldName, addon) {
     return (
       <InputGroup>
         {this.renderInput(fieldName)}
@@ -159,7 +159,7 @@ export default React.createClass({
   renderInputGroupWithAddon(label, fieldName, addon) {
     return this.renderControlGroup(
       label,
-      this.renderInputWithAddod(fieldName, addon)
+      this.renderInputWithAddon(fieldName, addon)
     );
   },
 
