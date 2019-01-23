@@ -51,7 +51,7 @@ export default React.createClass({
         <p>
           We cannot turn on parallel output mapping for this project as these transformations have duplicit output mappings
           (multiple output mappings writing to the same table in Storage). Please fix the transformations so we can turn on
-          faster output mapping for you. Read more <ExternalLink href="http://status.keboola.com/speeding-up-transformation-output-mappings-in-your-projects">here</ExternalLink>.
+          faster output mapping for you.
         </p>
         <div className="row">
           {duplicitTransformationsByBucket.map(function(bucketConflicts, bucketId) {
@@ -80,6 +80,13 @@ export default React.createClass({
             );
           }).toSeq().toArray()}
         </div>
+        <p>
+          Read more about speeding up the output mapping by using
+          {' '}<ExternalLink
+            href="http://status.keboola.com/speeding-up-transformation-output-mappings-in-your-projects">
+            parallel unloads
+          </ExternalLink>.
+        </p>
       </AlertBlock>
     );
   }
