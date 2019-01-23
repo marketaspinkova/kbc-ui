@@ -4,7 +4,6 @@ import Credentials from './Credentials';
 import ProvisioningActions from '../../gooddataProvisioning/actions';
 import ProvisioningStore from '../../gooddataProvisioning/store';
 
-// import ProvisioningUtils, {TokenTypes} from '../../provisioning/utils';
 import ApplicationStore from '../../../../stores/ApplicationStore';
 
 export default React.createClass({
@@ -89,7 +88,6 @@ export default React.createClass({
         config={this.props.value}
         provisioning={this.state}
         onHandleCreate={this.handleCreate}
-        onToggleEnableAcess={this.handleToggleProjectAccess}
         onHandleResetProject={this.handleResetProject}
       />
     );
