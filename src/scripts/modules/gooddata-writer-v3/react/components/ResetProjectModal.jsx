@@ -14,7 +14,7 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      deleteProject: false
+      deleteProject: true
     };
   },
 
@@ -24,11 +24,11 @@ export default React.createClass({
       <Modal onHide={this.props.onHide} show={this.props.show}>
         <Modal.Header closeButton>
           <Modal.Title>
-            Disconnect GoodData Project
+            Reset Provisioned GoodData Project
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          You are about to disconnect GoodData Project {pid} from the configuration.
+          You are about to remove GoodData Project {pid} from the configuration.
           <Checkbox
             checked={this.state.deleteProject}
             onChange={(e) => this.setState({deleteProject: e.target.checked})}>
@@ -37,7 +37,7 @@ export default React.createClass({
         </Modal.Body>
         <Modal.Footer>
           <ConfirmButtons
-            saveLabel="Disconnect"
+            saveLabel="Reset"
             saveStyle="danger"
             isSaving={this.props.isReseting || this.props.disabled}
             onCancel={this.props.onHide}

@@ -171,7 +171,7 @@ export default React.createClass({
       <button type="button"
         onClick={() => this.setState({showResetProjectModal: true})}
         className="btn btn-danger pull-right">
-        Disconnect
+        Reset Provisioned Project
       </button>
     );
   },
