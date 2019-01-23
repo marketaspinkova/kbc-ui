@@ -3,6 +3,7 @@ import {AlertBlock} from '@keboola/indigo-ui';
 import oAuthMigration from '../../components/utils/oAuthMigration';
 import {Button, Col, Row} from 'react-bootstrap';
 import {Link} from 'react-router';
+import ComponentName from '../../../react/common/ComponentName';
 
 export default React.createClass({
   propTypes: {
@@ -26,12 +27,15 @@ export default React.createClass({
           We have released new version of our OAuth Broker API. New features will soon be available in this new version like automatic refreshing of tokens, multiple client apps for better quota management and so on. All the configurations below will be migrated.
         </p>
         <Row>
-          {oauthConfigurations.entrySeq().map(function([componentId, configurations]) {
+          {oauthConfigurations.entrySeq().map(([componentId, configurations]) => {
             const component = components.find(item => item.get('id') === componentId);
             return (
               <Col md={6} key={componentId}>
                 <h4>
-                  {component.get('name')}
+                  <ComponentName
+                    component={component}
+                    showType={true}
+                  />
                 </h4>
                 <ul className="list-unstyled">
                   {configurations.map((configuration) => {
