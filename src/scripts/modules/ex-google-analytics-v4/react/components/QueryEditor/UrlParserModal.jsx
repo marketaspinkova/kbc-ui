@@ -30,18 +30,16 @@ export default React.createClass({
           <Modal.Header closeButton>
             <Modal.Title>
               Parse Url and Set Query
-              <div>
-                <small>
-                  Create a query via{' '}
-                  <ExternalLink href="https://ga-dev-tools.appspot.com/query-explorer/">
-                    Google Analytics Query Explorer
-                  </ExternalLink>{' '}
-                  and paste the result url to reconstruct the query.
-                </small>
-              </div>
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
+            <p>
+              Create a query via{' '}
+              <ExternalLink href="https://ga-dev-tools.appspot.com/query-explorer/">
+                Google Analytics Query Explorer
+              </ExternalLink>{' '}
+              and paste the result url to reconstruct the query.
+            </p>
             <FormGroup>
               <Col sm={3} componentClass={ControlLabel}>
                 Url
