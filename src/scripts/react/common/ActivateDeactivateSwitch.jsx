@@ -1,17 +1,17 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Switch from 'rc-switch';
 import { Loader } from '@keboola/indigo-ui';
 import Tooltip from './Tooltip';
 
 export default React.createClass({
   propTypes: {
-    isActive: React.PropTypes.bool.isRequired,
-    isPending: React.PropTypes.bool.isRequired,
-    buttonDisabled: React.PropTypes.bool.isRequired,
-    onChange: React.PropTypes.func.isRequired,
-    tooltipPlacement: React.PropTypes.string,
-    activateTooltip: React.PropTypes.string,
-    deactivateTooltip: React.PropTypes.string
+    isActive: PropTypes.bool.isRequired,
+    isPending: PropTypes.bool.isRequired,
+    buttonDisabled: PropTypes.bool.isRequired,
+    onChange: PropTypes.func.isRequired,
+    tooltipPlacement: PropTypes.oneOf(['top', 'bottom', 'left', 'right']),
+    activateTooltip: PropTypes.string,
+    deactivateTooltip: PropTypes.string
   },
 
   getDefaultProps() {
@@ -25,21 +25,32 @@ export default React.createClass({
   },
 
   render() {
-    const tooltip = this.props.isActive ? this.props.deactivateTooltip : this.props.activateTooltip;
+    if (this.props.buttonDisabled) {
+      return this.renderSwitch();
+    }
 
     return (
-      <Tooltip placement={this.props.tooltipPlacement} tooltip={tooltip}>
-        <div className="switch-wrapper" onClick={this.handleOnClick}>
-          <Switch
-            prefixCls="switch"
-            defaultChecked={this.props.isActive}
-            checked={this.props.isActive}
-            disabled={this.props.buttonDisabled || this.props.isPending}
-            onChange={() => this.props.onChange(!this.props.isActive)}
-            loadingIcon={this.props.isPending && <Loader className="switch-spinner" />}
-          />
-        </div>
+      <Tooltip
+        placement={this.props.tooltipPlacement}
+        tooltip={this.props.isActive ? this.props.deactivateTooltip : this.props.activateTooltip}
+      >
+        {this.renderSwitch()}
       </Tooltip>
+    );
+  },
+
+  renderSwitch() {
+    return (
+      <div className="switch-wrapper" onClick={this.handleOnClick}>
+        <Switch
+          prefixCls="switch"
+          defaultChecked={this.props.isActive}
+          checked={this.props.isActive}
+          disabled={this.props.buttonDisabled || this.props.isPending}
+          onChange={() => this.props.onChange(!this.props.isActive)}
+          loadingIcon={this.props.isPending && <Loader className="switch-spinner" />}
+        />
+      </div>
     );
   },
 
