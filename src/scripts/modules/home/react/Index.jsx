@@ -36,7 +36,6 @@ export default React.createClass({
     const rowsCount = limits.find(function(limit) {
       return limit.get('id') === 'storage.rowsCount';
     }).get('metricValue');
-    const installed = InstalledComponentStore.getAll();
     return {
       tokens: tokenStats,
       projectId: currentProject.get('id'),
@@ -47,7 +46,7 @@ export default React.createClass({
       },
       limitsOverQuota: ApplicationStore.getLimitsOverQuota(),
       expires: ApplicationStore.getCurrentProject().get('expires'),
-      installedComponents: installed,
+      installedComponents: InstalledComponentStore.getAll(),
       transformations: TransformationsStore.getAllTransformations(),
       projectHasGuideModeOn: ApplicationStore.getKbcVars().get('projectHasGuideModeOn'),
       guideModeAchievedLessonId: WizardStore.getAchievedLessonId()
