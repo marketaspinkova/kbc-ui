@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import { Alert } from 'react-bootstrap';
 import { getConflictsForTransformation } from '../duplicite-output-mapping/detect';
 import ConflictList from './ConflictList';
+import { ExternalLink } from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -29,6 +30,13 @@ export default React.createClass({
           transformations={this.props.transformations}
           bucketId={this.props.bucketId}
         />
+        <p>
+          Read more about speeding up the output mapping by using
+          {' '}<ExternalLink
+            href="http://status.keboola.com/speeding-up-transformation-output-mappings-in-your-projects">
+            parallel unloads
+          </ExternalLink>.
+        </p>
       </Alert>
     );
   }

@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import ConflictItem from './ConflictItem';
+import Immutable from 'immutable';
 
 export default React.createClass({
   propTypes: {
@@ -9,19 +10,31 @@ export default React.createClass({
   },
 
   render() {
-    const items = this.props.conflicts.map((conflict, index) => {
-      const transformation = this.props.transformations.get(conflict.get('id'));
+    let reordered = Immutable.Map();
+    this.props.conflicts.forEach((conflict) => {
+      const tableId = conflict.get('destination');
+      const transformationId = conflict.get('id');
+      if (reordered.has(tableId)) {
+        let transformations = reordered.get(tableId);
+        transformations = transformations.push(transformationId);
+        reordered = reordered.set(tableId, transformations);
+      } else {
+        reordered = reordered.set(tableId, Immutable.List([transformationId]));
+      }
+    });
+
+    const tablesWithConflicts = reordered.map((transformations, tableId) => {
       return (
         <ConflictItem
-          key={index}
-          destination={conflict.get('destination')}
-          transformationName={transformation.get('name')}
-          transformationId={transformation.get('id')}
+          key={tableId}
+          destination={tableId}
+          transformations={this.props.transformations}
+          conflicts={transformations}
           bucketId={this.props.bucketId}
         />
       );
     }).toArray();
 
-    return (<ul>{items}</ul>);
+    return (<ul>{tablesWithConflicts}</ul>);
   }
 });
