@@ -2,9 +2,8 @@ import React, {PropTypes} from 'react';
 import {FormControl, Form, FormGroup, InputGroup, Col, ControlLabel} from 'react-bootstrap';
 import makeColumnDefinition from '../../helpers/makeColumnDefinition';
 import {DataTypes, Types} from '../../constants';
+import DataTypeSizeHint from './DataTypeSizeHint';
 import DateFormatHint from './DateFormatHint';
-
-// import ReactSelect from 'react-select';
 
 export default React.createClass({
   propTypes: {
@@ -34,7 +33,7 @@ export default React.createClass({
            'Data Type',
            'dataType',
            Object.keys(DataTypes),
-           fields.dataTypeSize.show && this.renderInput('dataTypeSize')
+           fields.dataTypeSize.show && this.renderInputWithAddod('dataTypeSize', <DataTypeSizeHint />)
          )}
         {fields.dateDimension.show &&
          this.renderSelectGroup(
@@ -148,16 +147,19 @@ export default React.createClass({
       />);
   },
 
-  renderInputGroupWithAddon(label, fieldName, addon) {
-    const control = (
+  renderInputWithAddod(fieldName, addon) {
+    return (
       <InputGroup>
         {this.renderInput(fieldName)}
         <InputGroup.Addon>{addon}</InputGroup.Addon>
       </InputGroup>
     );
+  },
+
+  renderInputGroupWithAddon(label, fieldName, addon) {
     return this.renderControlGroup(
       label,
-      control
+      this.renderInputWithAddod(fieldName, addon)
     );
   },
 
