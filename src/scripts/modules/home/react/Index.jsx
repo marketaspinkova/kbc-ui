@@ -16,6 +16,8 @@ import Desk from '../../guide-mode/react/Desk';
 import lessons from '../../guide-mode/WizardLessons';
 import { List } from 'immutable';
 import ProjectDescription from './ProjectDescription';
+import DeprecatedOAuth from './DeprecatedOAuth';
+// import oAuthComponents from '../../components/utils/oAuthComponents';
 
 export default React.createClass({
   mixins: [
@@ -56,6 +58,7 @@ export default React.createClass({
     if (ApplicationStore.hasCurrentProjectFeature('transformation-mysql')) {
       componentsActions.loadComponentConfigsData('transformation');
     }
+    // oAuthComponents.loadComponentsWithOAuth();
   },
 
   openLessonModal(lessonNumber) {
@@ -84,6 +87,12 @@ export default React.createClass({
     return componentCount;
   },
 
+  getComponentsWithOAuth() {
+    return this.state.installedComponents.filter(component => {
+      return component.get('flags').contains('genericDockerUI-authorization');
+    });
+  },
+
   render() {
     return (
       <div className="container-fluid">
@@ -103,6 +112,9 @@ export default React.createClass({
           />
           <DeprecatedComponents
             components={this.state.installedComponents}
+          />
+          <DeprecatedOAuth
+            components={this.getComponentsWithOAuth()}
           />
         </div>
         }

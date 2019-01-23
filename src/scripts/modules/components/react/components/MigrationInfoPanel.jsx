@@ -21,8 +21,6 @@ export default React.createClass({
     let hasOldConfig = false;
     const configsData = this.props.configurations;
     configsData.forEach((configuration) => {
-      console.log(configuration.toJS());
-
       hasOldConfig = !configuration.hasIn(['authorization', 'oauth_api', 'version'])
         || configuration.getIn(['authorization', 'oauth_api', 'version']) < OAUTH_LATEST_VERSION;
     });
