@@ -83,22 +83,20 @@ export default React.createClass({
     return (
       <div className="container-fluid">
         <div className="kbc-main-content kbc-components-list">
-          <div className="kbc-header">
-            <Jumbotron>
-              <h2>OAuth Credentials Migration</h2>
-              <p>As we have introduced new version of our OAuth API, it is necessary to migrate configurations using OAuth authorization to this new API version.</p>
-              <p>By clicking button below, all of the affected configurations will be migrated.</p>
-              <hr />
-              <Row>
-                <Col md={5}>
-                  {this.renderButton(configurationsToMigrateFlatten)}
-                </Col>
-                <Col md={7} className="text-right">
-                  {this.renderJobInfo()}
-                </Col>
-              </Row>
-            </Jumbotron>
-          </div>
+          <Jumbotron>
+            <h2>OAuth Credentials Migration</h2>
+            <p>As we have introduced new version of our OAuth API, it is necessary to migrate configurations using OAuth authorization to this new API version.</p>
+            <p>By clicking button below, all of the affected configurations will be migrated.</p>
+            <hr />
+            <Row>
+              <Col md={5}>
+                {this.renderButton(configurationsToMigrateFlatten)}
+              </Col>
+              <Col md={7} className="text-right">
+                {this.renderJobInfo()}
+              </Col>
+            </Row>
+          </Jumbotron>
           {this.renderConfigurationsList(
             affectedComponents,
             ignoredComponents,
@@ -183,23 +181,19 @@ export default React.createClass({
 
   renderAffected(components) {
     return [
-      (<Row>
-        <Col md={12}>
-          <h2>Affected configurations</h2>
-        </Col>
-      </Row>),
+      (<div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
+        <h2>Affected configurations</h2>
+      </div>),
       this.renderRows(components)
     ];
   },
 
   renderIgnored(components) {
     return [
-      (<Row>
-        <Col md={12}>
-          <h2>Manual migration needed!</h2>
-          <p>The configurations below need to be migrated manually. Please open each configuration and reset the authorization to migrate.</p>
-        </Col>
-      </Row>),
+      (<div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
+        <h2>Manual migration needed!</h2>
+        <p>The configurations below need to be migrated manually. Please open each configuration and reset the authorization to migrate.</p>
+      </div>),
       this.renderRows(components)
     ];
   },
