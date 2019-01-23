@@ -138,7 +138,9 @@ export default React.createClass({
       .substr(ANALYTICS_BASE_URL.length)
       .split('&');
     const paramsMap = params.reduce((total, value) => {
-      if (!value) return total;
+      if (!value || value.indexOf('=') === -1) {
+        return total;
+      }
       const pair = value.split('=');
       total[pair[0]] = decodeURIComponent(pair[1]);
       return total;
