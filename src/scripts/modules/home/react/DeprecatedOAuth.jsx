@@ -1,10 +1,9 @@
 import React, {PropTypes} from 'react';
 import {AlertBlock} from '@keboola/indigo-ui';
 import StringUtils from '../../../utils/string';
-// import moment from 'moment';
 import oAuthMigration from '../../components/utils/oAuthMigration';
-import ComponentConfigurationLink from '../../components/react/components/ComponentConfigurationLink';
-import descriptionExcerpt from '../../../utils/descriptionExcerpt';
+import {Button, Col, Row} from 'react-bootstrap';
+import {Link} from 'react-router';
 
 export default React.createClass({
   propTypes: {
@@ -12,56 +11,42 @@ export default React.createClass({
   },
 
   render() {
-    const oauthConfigurations = oAuthMigration.getConfigurationsFlatten(
-      oAuthMigration.getComponentsToMigrate(this.props.components)
-    );
+    const oauthConfigurations = this.props.components.map(
+      component => oAuthMigration.getConfigurationsToMigrate(component)
+    ).filter(component => !!component.count());
 
-    if (oauthConfigurations.isEmpty()) {
-      return null;
-    }
-
-    const grouped = oauthConfigurations.groupBy(item => item.componentId);
-
-    return (
-      <AlertBlock type="warning" title="Project contains configurations with OAuth credentials that need to be migrated to new OAuth Broker version">
-        <div className="row">
-          {grouped.entrySeq().map(function([componentId, configurations]) {
+    return !oauthConfigurations.isEmpty() && (
+      <AlertBlock type="warning" title="Please migrate these configurations to a new version of OAuth Broker.">
+        <Row>
+          {oauthConfigurations.entrySeq().map(function([componentId, configurations]) {
             return (
-              <div className="col-md-6" key={componentId}>
+              <Col md={6} key={componentId}>
                 <h4>
                   <span className={'kbc-' + componentId + '-icon'}/>
-                  {StringUtils.capitalize(componentId)}s
+                  {StringUtils.capitalize(componentId)}
                 </h4>
                 <ul className="list-unstyled">
-                  {configurations.entrySeq().map(function([index, configuration]) {
+                  {configurations.map((configuration) => {
                     return (
-                      <li key={index}>
-                        <ComponentConfigurationLink
-                          configId={configuration.id}
-                          componentId={configuration.componentId}
-                        >
-                          <span className="td">
-                            <strong>{configuration.name}</strong>
-                            <small>{descriptionExcerpt(configuration.description)}</small>
-                          </span>
-
-                          {/*
-                           < component={configuration} />
-                           {configuration.get('expiredOn') && (
-                            <span>
-                              {' '}(Deprecated in {moment(configuration.get('expiredOn')).format('MMM YYYY')})
-                            </span>
-                          )}
-                           */}
-                        </ComponentConfigurationLink>
+                      <li key={configuration.get('id')}>
+                        {configuration.get('name')}
                       </li>
                     );
                   })}
                 </ul>
-              </div>
+              </Col>
             );
           })}
-        </div>
+        </Row>
+        <Row>
+          <Col md={12}>
+            <Link to="migrations">
+              <Button bsStyle="primary">
+                Proceed to Migration
+              </Button>
+            </Link>
+          </Col>
+        </Row>
       </AlertBlock>
     );
   }

@@ -17,7 +17,7 @@ import lessons from '../../guide-mode/WizardLessons';
 import { List } from 'immutable';
 import ProjectDescription from './ProjectDescription';
 import DeprecatedOAuth from './DeprecatedOAuth';
-// import oAuthComponents from '../../components/utils/oAuthComponents';
+import oAuthComponents from '../../components/utils/oAuthComponents';
 
 export default React.createClass({
   mixins: [
@@ -36,6 +36,7 @@ export default React.createClass({
     const rowsCount = limits.find(function(limit) {
       return limit.get('id') === 'storage.rowsCount';
     }).get('metricValue');
+    const installed = InstalledComponentStore.getAll();
     return {
       tokens: tokenStats,
       projectId: currentProject.get('id'),
@@ -46,7 +47,7 @@ export default React.createClass({
       },
       limitsOverQuota: ApplicationStore.getLimitsOverQuota(),
       expires: ApplicationStore.getCurrentProject().get('expires'),
-      installedComponents: InstalledComponentStore.getAll(),
+      installedComponents: installed,
       transformations: TransformationsStore.getAllTransformations(),
       projectHasGuideModeOn: ApplicationStore.getKbcVars().get('projectHasGuideModeOn'),
       guideModeAchievedLessonId: WizardStore.getAchievedLessonId()
@@ -58,7 +59,8 @@ export default React.createClass({
     if (ApplicationStore.hasCurrentProjectFeature('transformation-mysql')) {
       componentsActions.loadComponentConfigsData('transformation');
     }
-    // oAuthComponents.loadComponentsWithOAuth();
+
+    oAuthComponents.loadComponentsWithOAuth();
   },
 
   openLessonModal(lessonNumber) {
@@ -88,8 +90,9 @@ export default React.createClass({
   },
 
   getComponentsWithOAuth() {
-    return this.state.installedComponents.filter(component => {
-      return component.get('flags').contains('genericDockerUI-authorization');
+    const installedComponents = this.state.installedComponents;
+    return installedComponents.filter(component => {
+      return !!component && !!component.get('flags') && component.get('flags').contains('genericDockerUI-authorization');
     });
   },
 
@@ -107,14 +110,14 @@ export default React.createClass({
           )}
           <Expiration expires={this.state.expires}/>
           <LimitsOverQuota limits={this.state.limitsOverQuota}/>
+          <DeprecatedOAuth
+            components={this.getComponentsWithOAuth()}
+          />
           <DeprecatedTransformations
             transformations={this.state.transformations}
           />
           <DeprecatedComponents
             components={this.state.installedComponents}
-          />
-          <DeprecatedOAuth
-            components={this.getComponentsWithOAuth()}
           />
         </div>
         }
