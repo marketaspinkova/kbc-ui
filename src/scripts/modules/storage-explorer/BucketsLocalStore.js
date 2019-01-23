@@ -7,7 +7,7 @@ let _store = Map({
   isReloading: false
 });
 
-const LocalStore = StoreUtils.createStore({
+const BucketsLocalStore = StoreUtils.createStore({
   getIsReloading() {
     return _store.get('isReloading', false);
   }
@@ -19,16 +19,16 @@ dispatcher.register(payload => {
   switch (action.type) {
     case constants.ActionTypes.RELOAD:
       _store = _store.set('isReloading', true);
-      return LocalStore.emitChange();
+      return BucketsLocalStore.emitChange();
 
     case constants.ActionTypes.RELOAD_SUCCESS:
     case constants.ActionTypes.RELOAD_ERROR:
       _store = _store.set('isReloading', false);
-      return LocalStore.emitChange();
+      return BucketsLocalStore.emitChange();
 
     default:
       break;
   }
 });
 
-export default LocalStore;
+export default BucketsLocalStore;

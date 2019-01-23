@@ -7,7 +7,7 @@ import RoutesStore from '../../../../stores/RoutesStore';
 import ApplicationStore from '../../../../stores/ApplicationStore';
 import BucketsStore from '../../../components/stores/StorageBucketsStore';
 import TablesStore from '../../../components/stores/StorageTablesStore';
-import LocalStore from '../../LocalStore';
+import BucketsLocalStore from '../../BucketsLocalStore';
 
 import matchByWords from '../../../../utils/matchByWords';
 import Tooltip from '../../../../react/common/Tooltip';
@@ -17,7 +17,7 @@ import BucketsList from './BucketsList';
 import { reload, createBucket } from '../../Actions';
 
 export default React.createClass({
-  mixins: [createStoreMixin(ApplicationStore, RoutesStore, LocalStore, BucketsStore, TablesStore)],
+  mixins: [createStoreMixin(ApplicationStore, RoutesStore, BucketsLocalStore, BucketsStore, TablesStore)],
 
   getStateFromStores() {
     return {
@@ -25,7 +25,7 @@ export default React.createClass({
       allBuckets: BucketsStore.getAll(),
       allTables: TablesStore.getAll(),
       sharedBuckets: BucketsStore.getSharedBuckets(),
-      isReloading: LocalStore.getIsReloading(),
+      isReloading: BucketsLocalStore.getIsReloading(),
       sapiToken: ApplicationStore.getSapiToken(),
       isCreatingBucket: BucketsStore.isCreatingBucket()
     };
