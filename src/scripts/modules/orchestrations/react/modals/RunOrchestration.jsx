@@ -62,7 +62,7 @@ export default React.createClass({
           </Modal.Body>
           <Modal.Footer>
             <ConfirmButtons
-              isDisabled={!this._isValid()}
+              isDisabled={!this._isValid() || this.props.isLoading}
               isSaving={false}
               saveLabel="Run"
               onCancel={this._handleCancel}
