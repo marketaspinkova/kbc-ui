@@ -13,6 +13,7 @@ import jobRoutes from './modules/jobs/Routes';
 import storageExplorerRouter from './modules/storage-explorer/Routes';
 import trashRoutes from './modules/trash/routes';
 import tables from './modules/table-browser/routes';
+import migrationRoutes from './modules/migration/routes';
 
 
 export default {
@@ -35,6 +36,7 @@ export default {
     tables,
     trashRoutes,
     tokensRoutes,
+    migrationRoutes,
     {
       name: 'data-takeout',
       title: 'Data Takeout',

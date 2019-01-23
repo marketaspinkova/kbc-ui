@@ -3353,7 +3353,8 @@ exports[`routes config should get router configuration 1`] = `
   <Route
     handler={[Function]}
     key="597"
-    name="data-takeout"
+    name="migrations"
+    path="migrations"
   >
     <DefaultRoute
       handler={[Function]}
@@ -3363,7 +3364,7 @@ exports[`routes config should get router configuration 1`] = `
   <Route
     handler={[Function]}
     key="599"
-    name="settings-limits"
+    name="data-takeout"
   >
     <DefaultRoute
       handler={[Function]}
@@ -3373,11 +3374,21 @@ exports[`routes config should get router configuration 1`] = `
   <Route
     handler={[Function]}
     key="601"
-    name="limits"
+    name="settings-limits"
   >
     <DefaultRoute
       handler={[Function]}
       key="600"
+    />
+  </Route>
+  <Route
+    handler={[Function]}
+    key="603"
+    name="limits"
+  >
+    <DefaultRoute
+      handler={[Function]}
+      key="602"
     />
   </Route>
 </span>
