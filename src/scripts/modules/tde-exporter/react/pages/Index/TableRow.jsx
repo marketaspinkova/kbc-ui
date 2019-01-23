@@ -1,8 +1,8 @@
 import React from 'react';
-import filesize from 'filesize';
 import { Link } from 'react-router';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import Confirm from '../../../../../react/common/Confirm';
+import FileSize from '../../../../../react/common/FileSize';
 import date from '../../../../../utils/date';
 import RunButtonModal from '../../../../components/react/components/RunComponentButton';
 import SapiTableLinkEx from '../../../../components/react/components/StorageApiTableLinkEx';
@@ -34,7 +34,7 @@ export default React.createClass({
                 <Tooltip id={this.props.tdeFile.get('id')}>
                   <div>{this.props.tdeFile.getIn(['creatorToken', 'description'])}</div>
                   <div>{date.format(this.props.tdeFile.get('created'))}</div>
-                  <div>{filesize(this.props.tdeFile.get('sizeBytes'))}</div>
+                  <div><FileSize size={this.props.tdeFile.get('sizeBytes')} /></div>
                 </Tooltip>
               }
               placement="top"

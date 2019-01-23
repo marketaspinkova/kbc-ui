@@ -1,5 +1,5 @@
 import React from 'react';
-import filesize from 'filesize';
+import FileSize from '../../../react/common/FileSize';
 import ModalHandler from '../sliced-files-downloader/ModalHandler';
 
 export default React.createClass({
@@ -51,6 +51,6 @@ export default React.createClass({
       return null;
     }
 
-    return <span>({filesize(this.props.file.get('sizeBytes'))})</span>;
+    return <span><FileSize size={this.props.file.get('sizeBytes')} /></span>;
   }
 });

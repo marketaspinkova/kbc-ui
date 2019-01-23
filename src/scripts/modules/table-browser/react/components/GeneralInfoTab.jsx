@@ -6,7 +6,7 @@ import _ from 'underscore';
 import {Table} from 'react-bootstrap';
 import immutableMixin from 'react-immutable-render-mixin';
 import EmptyState from '../../../components/react/components/ComponentEmptyState';
-import filesize from 'filesize';
+import FileSize from '../../../../react/common/FileSize';
 import TableUpdatedByComponentInfo from '../../../../react/common/TableUpdatedByComponentInfo';
 import formatCardinalNumber from '../../../../utils/formatCardinalNumber';
 
@@ -56,7 +56,7 @@ export default React.createClass({
             {this.renderTableRow('Last Change', this.renderTimefromNow(table.get('lastChangeDate')))}
             {this.renderTableRow('Last updated by', <TableUpdatedByComponentInfo table={table}/>)}
             {this.renderTableRow('Rows Count', this.renderRowsCount(table.get('rowsCount')))}
-            {this.renderTableRow('Data Size', this.renderDataSize(table.get('dataSizeBytes')))}
+            {this.renderTableRow('Data Size', <FileSize size={table.get('dataSizeBytes')} />)}
             {this.renderTableRow('Columns', table.get('columns').count() + ' columns: ' + table.get('columns').join(', '))}
           </tbody>
         </Table>
@@ -66,13 +66,6 @@ export default React.createClass({
 
   renderRowsCount(value) {
     return formatCardinalNumber(value) + ' rows';
-  },
-
-  renderDataSize(value) {
-    if (value === null) {
-      return 'N/A';
-    }
-    return filesize(value);
   },
 
   renderTimefromNow(value) {

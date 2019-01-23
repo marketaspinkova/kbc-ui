@@ -1,6 +1,5 @@
 import React from 'react';
 import ApplicationStore from '../../../stores/ApplicationStore';
-import filesize from 'filesize';
 import underscoreString from 'underscore.string';
 import LimitsOverQuota from './LimitsOverQuota';
 import Expiration from './Expiration';
@@ -9,6 +8,7 @@ import TransformationsStore from '../../transformations/stores/TransformationsSt
 import componentsActions from '../../components/InstalledComponentsActionCreators';
 import DeprecatedComponents from './DeprecatedComponents';
 import DeprecatedTransformations from './DeprecatedTransformations';
+import FileSize from '../../../react/common/FileSize';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import { showWizardModalFn } from '../../guide-mode/stores/ActionCreators.js';
 import WizardStore from '../../guide-mode/stores/WizardStore';
@@ -117,7 +117,7 @@ export default React.createClass({
               <div className="tr">
                 <div className="td">
                   <h2>Storage</h2>
-                  <h3 style={ {fontSize: '42px'} }>{filesize(this.state.data.sizeBytes)}</h3>
+                  <h3 style={ {fontSize: '42px'} }><FileSize size={this.state.data.sizeBytes} /></h3>
                   <h3 style={ {fontSize: '24px'} }>{underscoreString.numberFormat(this.state.data.rowsCount)} <small>Rows</small>
                   </h3>
                 </div>

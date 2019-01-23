@@ -3,7 +3,6 @@ import Immutable, {List, Map} from 'immutable';
 import _ from 'underscore';
 import Promise from 'bluebird';
 import moment from 'moment';
-import filesize from 'filesize';
 
 import storageActions from '../../StorageActionCreators';
 import storageApi from '../../StorageApi';
@@ -12,6 +11,7 @@ import tablesStore from '../../stores/StorageTablesStore';
 import TableLinkModalDialog from './StorageApiTableLinkExComponents/ModalDialog';
 
 import Tooltip from '../../../../react/common/Tooltip';
+import FileSize from '../../../../react/common/FileSize';
 
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import {factory as eventsFactory} from '../../../sapi-events/EventsService';
@@ -147,7 +147,7 @@ export default React.createClass({
           {moment(table.get('lastChangeDate')).fromNow()}
         </div>
         <div>
-          {filesize(table.get('dataSizeBytes', 'N/A'))}
+          <FileSize size={table.get('dataSizeBytes')} />
         </div>
         <div>
           {formatCardinalNumber(table.get('rowsCount'))} rows

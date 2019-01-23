@@ -17,7 +17,7 @@
     "deep-equal": "^1.0.1",
     "diff": "^4.0.1",
     "dimple": "git+https://github.com/PMSI-AlignAlytics/dimple.git",
-    "filesize": "~2.0.4",
+    "filesize": "^3.6.1",
     "flux": "^2.0.0",
     "fuzzaldrin": "^2.1.0",
     "fuzzy": "~0.1.0",
