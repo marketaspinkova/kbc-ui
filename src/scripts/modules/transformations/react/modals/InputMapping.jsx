@@ -118,7 +118,7 @@ export default React.createClass({
       tables: this.props.tables,
       disabled: this.state.isSaving,
       onChange: this.props.onChange,
-      initialShowDetails: resolveInputShowDetails(this.props.backend, this.props.type, this.props.mapping),
+      initialShowDetails: resolveInputShowDetails(this.props.backend, this.props.type, this.props.mapping, this.props.tables),
       isDestinationDuplicate: this.isDestinationDuplicate(),
       definition: this.props.definition
     };

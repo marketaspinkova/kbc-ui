@@ -1,3 +1,4 @@
+import { Map } from 'immutable';
 import { getTableInitialDataTypes } from '../components/mapping/InputMappingRowSnowflakeEditorHelper';
 
 /**
@@ -88,9 +89,10 @@ function redshift(mapping) {
 /**
  * Redshift advanced columns
  * @param {Object} mapping Map mapping
+ * @param {Object} tables Map tables
  * @return {boolean} Show details
  */
-function snowflake(mapping) {
+function snowflake(mapping, tables) {
   if (mapping.has('columns') && mapping.get('columns').count() > 0) {
     return true;
   }
@@ -112,7 +114,8 @@ function snowflake(mapping) {
   }
 
   if (mapping.has('datatypes') && mapping.get('datatypes').size > 0) {
-    return !mapping.get('datatypes').equals(getTableInitialDataTypes(mapping.get('source')));
+    const sourceTable = tables.find(table => table.get('id') === mapping.get('source'), null, Map());
+    return !mapping.get('datatypes').equals(getTableInitialDataTypes(sourceTable));
   }
 
   return false;
@@ -127,7 +130,7 @@ function docker(mapping) {
   return mysql(mapping);
 }
 
-export default function(backend, type, mapping) {
+export default function(backend, type, mapping, tables) {
   if (backend === 'mysql' && type === 'simple') {
     return mysql(mapping);
   } else if (backend === 'redshift' && type === 'simple') {
@@ -135,7 +138,7 @@ export default function(backend, type, mapping) {
   } else if (backend === 'docker') {
     return docker(mapping);
   } else if (backend === 'snowflake') {
-    return snowflake(mapping);
+    return snowflake(mapping, tables);
   } else {
     return false;
   }

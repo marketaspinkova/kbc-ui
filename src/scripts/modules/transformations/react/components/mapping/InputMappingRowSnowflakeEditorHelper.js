@@ -1,7 +1,5 @@
 import { fromJS, Map, List } from 'immutable';
 import { SnowflakeDataTypesMapping } from '../../../Constants';
-import MetadataStore from '../../../../components/stores/MetadataStore';
-import TablesStore from '../../../../components/stores/StorageTablesStore';
 
 const getMetadataDataTypes = (columnMetadata) => {
   return columnMetadata.map((metadata, colname) => {
@@ -41,14 +39,12 @@ const getMetadataDataTypes = (columnMetadata) => {
   });
 };
 
-const getTableInitialDataTypes = tableId => {
-  const sourceTable = TablesStore.getAll().find(table => table.get('id') === tableId, null, Map());
-  const tableColumnsMetadata = MetadataStore.getTableColumnsMetadata(tableId) || Map();
+const getTableInitialDataTypes = sourceTable => {
+  const tableColumnsMetadata = sourceTable.get('columnMetadata') || Map();
   const datatypes = getMetadataDataTypes(tableColumnsMetadata);
-  const columns = sourceTable.get('columns', List());
   const primaryKeys = sourceTable.get('primaryKey', List());
 
-  return columns.reduce((memo, column) => {
+  return sourceTable.get('columns', List()).reduce((memo, column) => {
     return memo.set(column, datatypes.get(column, fromJS({
       column: column,
       type: 'VARCHAR',
