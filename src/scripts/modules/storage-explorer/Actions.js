@@ -1,3 +1,4 @@
+import Promise from 'bluebird';
 import dispatcher from '../../Dispatcher';
 import * as constants from '../components/Constants';
 import * as localConstants from './Constants';
@@ -17,6 +18,26 @@ const errorNotification = (message) => {
   });
 };
 
+const reload = () => {
+  dispatcher.handleViewAction({
+    type: localConstants.ActionTypes.RELOAD
+  });
+  return Promise.all([
+    StorageActionCreators.loadBucketsForce(),
+    StorageActionCreators.loadTablesForce(),
+    StorageActionCreators.sharedBuckets()
+  ])
+    .then(() => {
+      dispatcher.handleViewAction({
+        type: localConstants.ActionTypes.RELOAD_SUCCESS
+      });
+    }).catch(() => {
+      dispatcher.handleViewAction({
+        type: localConstants.ActionTypes.RELOAD_ERROR
+      });
+    });
+};
+
 const loadJobs = (params) => {
   return StorageActionCreators.loadJobs(params);
 };
@@ -25,12 +46,8 @@ const loadMoreJobs = (params) => {
   return StorageActionCreators.loadMoreJobs(params);
 };
 
-const reloadBuckets = () => {
-  return StorageActionCreators.reloadBuckets();
-};
-
 const loadBuckets = () => {
-  return StorageActionCreators.loadBucketsForce();
+  return StorageActionCreators.loadBuckets();
 };
 
 const loadSharedBuckets = () => {
@@ -255,9 +272,9 @@ const resetFilesSearchQuery = () => {
 };
 
 export {
+  reload,
   loadJobs,
   loadMoreJobs,
-  reloadBuckets,
   loadBuckets,
   loadSharedBuckets,
   loadTable,
