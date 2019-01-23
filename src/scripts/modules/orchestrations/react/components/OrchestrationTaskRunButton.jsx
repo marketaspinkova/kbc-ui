@@ -1,5 +1,5 @@
 import React from 'react';
-import RunOrchestrationModal from '../modals/RunOrchestration';
+import RunOrchestrationModal from '../modals/RunOrchestrationTask';
 
 export default React.createClass({
   propTypes: {
@@ -27,7 +27,7 @@ export default React.createClass({
     return (
       <RunOrchestrationModal
         orchestration={this.props.orchestration}
-        notify={this.props.notify}
+        task={this.props.task}
         onRequestRun={this.handleRunStart}
         isLoading={this.state.isLoading}
         tooltipPlacement={this.props.tooltipPlacement}

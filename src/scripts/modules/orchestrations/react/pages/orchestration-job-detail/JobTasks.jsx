@@ -59,7 +59,7 @@ export default React.createClass({
                 <Duration startTime={task.get('startTime')} endTime={task.get('endTime')} />
               </span>
               <span className="td col-xs-2 text-right">
-                {task.has('status') && <JobStatusLabel status={task.get('status')} />}
+                {task.get('status', false) && <JobStatusLabel status={task.get('status')} />}
               </span>
             </span>
           </span>
