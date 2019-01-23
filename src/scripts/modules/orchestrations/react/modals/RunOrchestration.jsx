@@ -12,7 +12,6 @@ export default React.createClass({
     orchestration: PropTypes.object.isRequired,
     onRequestRun: PropTypes.func.isRequired,
     isLoading: PropTypes.bool.isRequired,
-    task: PropTypes.object,
     tasks: PropTypes.object,
     onRequestCancel: PropTypes.func,
     tooltipPlacement: PropTypes.string,
@@ -157,7 +156,7 @@ export default React.createClass({
   },
 
   hasTasks() {
-    return this.props.task || (this.props.tasks && this.props.tasks.count() > 0);
+    return this.props.tasks && this.props.tasks.count() > 0;
   },
 
   _handleOpenClick(e) {
