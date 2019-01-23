@@ -27,7 +27,8 @@ export default {
       return this.getConfigurationsToMigrate(component)
         .map(config => ({
           id: config.get('id'),
-          componentId: component.get('id')
+          componentId: component.get('id'),
+          oauthId: config.getIn(['configuration', 'authorization', 'oauth_api', 'id'])
         }));
     }).flatten(1);
   }

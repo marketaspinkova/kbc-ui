@@ -211,7 +211,7 @@ export default React.createClass({
 
   onMigrate() {
     const configurations = oAuthMigration.getConfigurationsFlatten(
-      this.getComponentsToMigrate(this.getComponentsWithOAuth())
+      oAuthMigration.getComponentsToMigrate(this.getComponentsWithOAuth())
     );
 
     this.setState({
