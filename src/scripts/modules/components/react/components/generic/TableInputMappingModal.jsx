@@ -129,17 +129,18 @@ export default React.createClass({
   },
 
   editor() {
-    const props = {
-      value: this.props.mapping,
-      tables: this.props.tables,
-      disabled: this.state.isSaving,
-      onChange: this.props.onChange,
-      initialShowDetails: resolveTableInputShowDetails(this.props.mapping),
-      isDestinationDuplicate: this.isDestinationDuplicate(),
-      showFileHint: this.props.showFileHint,
-      definition: this.props.definition
-    };
-    return React.createElement(Editor, props);
+    return (
+      <Editor
+        value={this.props.mapping}
+        tables={this.props.tables}
+        disabled={this.state.isSaving}
+        onChange={this.props.onChange}
+        initialShowDetails={resolveTableInputShowDetails(this.props.mapping)}
+        isDestinationDuplicate={this.isDestinationDuplicate()}
+        showFileHint={this.props.showFileHint}
+        definition={this.props.definition}
+      />
+    );
   },
 
   handleCancel() {

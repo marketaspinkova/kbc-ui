@@ -1,7 +1,7 @@
 import React from 'react';
 import { Map, List } from 'immutable';
 import { PanelWithDetails } from '@keboola/indigo-ui';
-import { HelpBlock } from 'react-bootstrap';
+import { Alert, HelpBlock } from 'react-bootstrap';
 import { Input } from '../../../../../react/common/KbcBootstrap';
 import SapiTableSelector from '../SapiTableSelector';
 import ChangedSinceFilterInput from './ChangedSinceFilterInput';
@@ -27,7 +27,87 @@ export default React.createClass({
     };
   },
 
-  _handleChangeSource(value) {
+  render() {
+    return (
+      <div className="form-horizontal">
+        <div className="form-group">
+          <label className="col-xs-2 control-label">Source</label>
+          <div className="col-xs-10">
+            <SapiTableSelector
+              value={this.props.value.get('source')}
+              disabled={this.props.disabled}
+              placeholder="Source table"
+              onSelectTableFn={this.handleChangeSource}
+              autoFocus={true}
+            />
+          </div>
+        </div>
+        {!this.props.definition.has('destination') && (
+          <Input
+            type="text"
+            label="File name"
+            value={this.props.value.get('destination')}
+            disabled={this.props.disabled}
+            placeholder="File name"
+            onChange={this.handleChangeDestination}
+            labelClassName="col-xs-2"
+            wrapperClassName="col-xs-10"
+            bsStyle={this.props.isDestinationDuplicate ? 'error' : null}
+            help={
+              this.props.isDestinationDuplicate ? (
+                <small className="error">
+                  {'Duplicate destination '}
+                  <code>{this.props.value.get('destination')}</code>.
+                </small>
+              ) : (
+                <HelpBlock>
+                  {this.props.showFileHint && (
+                    <span>
+                        File will be available at
+                      <code>{`/data/in/tables/${this.getFileName()}`}</code>
+                    </span>
+                  )}
+                </HelpBlock>
+              )
+            }
+          />
+        )}
+        {this.existTable() ? (
+          <PanelWithDetails defaultExpanded={this.props.initialShowDetails}>
+            <ColumnsSelectRow
+              value={this.props.value}
+              disabled={this.props.disabled}
+              onChange={this.props.onChange}
+              allTables={this.props.tables}
+            />
+            <ChangedSinceFilterInput
+              mapping={this.props.value}
+              disabled={this.props.disabled}
+              onChange={this.props.onChange}
+            />
+            <DataFilterRow
+              value={this.props.value}
+              disabled={this.props.disabled}
+              onChange={this.props.onChange}
+              allTables={this.props.tables}
+            />
+          </PanelWithDetails>
+        ) : (
+          <Alert bsStyle="warning">
+            Current source table is not found.
+          </Alert>
+        )}
+      </div>
+    );
+  },
+
+  existTable() {
+    const sourceId = this.props.value.get('source');
+    const sourceTable = this.props.tables.find(table => table.get('id') === sourceId, null, Map());
+    return sourceTable.count() > 0;
+  },
+
+  handleChangeSource(value) {
     // use only table name from the table identifier
     const immutable = this.props.value.withMutations(mapping => {
       let destination;
@@ -47,12 +127,12 @@ export default React.createClass({
     return this.props.onChange(immutable);
   },
 
-  _handleChangeDestination(e) {
+  handleChangeDestination(e) {
     const value = this.props.value.set('destination', e.target.value.trim());
     return this.props.onChange(value);
   },
 
-  _getFileName() {
+  getFileName() {
     if (this.props.value.get('destination') && this.props.value.get('destination') !== '') {
       return this.props.value.get('destination');
     }
@@ -62,73 +142,5 @@ export default React.createClass({
     }
 
     return '';
-  },
-
-  render() {
-    return (
-      <div className="form-horizontal">
-        <div className="form-group">
-          <label className="col-xs-2 control-label">Source</label>
-          <div className="col-xs-10">
-            <SapiTableSelector
-              value={this.props.value.get('source')}
-              disabled={this.props.disabled}
-              placeholder="Source table"
-              onSelectTableFn={this._handleChangeSource}
-              autoFocus={true}
-            />
-          </div>
-        </div>
-        {!this.props.definition.has('destination') && (
-          <Input
-            type="text"
-            label="File name"
-            value={this.props.value.get('destination')}
-            disabled={this.props.disabled}
-            placeholder="File name"
-            onChange={this._handleChangeDestination}
-            labelClassName="col-xs-2"
-            wrapperClassName="col-xs-10"
-            bsStyle={this.props.isDestinationDuplicate ? 'error' : null}
-            help={
-              this.props.isDestinationDuplicate ? (
-                <small className="error">
-                  {'Duplicate destination '}
-                  <code>{this.props.value.get('destination')}</code>.
-                </small>
-              ) : (
-                <HelpBlock>
-                  {this.props.showFileHint && (
-                    <span>
-                        File will be available at
-                      <code>{`/data/in/tables/${this._getFileName()}`}</code>
-                    </span>
-                  )}
-                </HelpBlock>
-              )
-            }
-          />
-        )}
-        <PanelWithDetails defaultExpanded={this.props.initialShowDetails}>
-          <ColumnsSelectRow
-            value={this.props.value}
-            disabled={this.props.disabled}
-            onChange={this.props.onChange}
-            allTables={this.props.tables}
-          />
-          <ChangedSinceFilterInput
-            mapping={this.props.value}
-            disabled={this.props.disabled}
-            onChange={this.props.onChange}
-          />
-          <DataFilterRow
-            value={this.props.value}
-            disabled={this.props.disabled}
-            onChange={this.props.onChange}
-            allTables={this.props.tables}
-          />
-        </PanelWithDetails>
-      </div>
-    );
   }
 });
