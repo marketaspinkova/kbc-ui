@@ -39,7 +39,7 @@ export default React.createClass({
       return (
         <AlertBlock type="warning" title="Speed up output mapping of your transformations">
           <p>
-            Your project is ready, if you are eager to parallelize output mapping of your transformations,
+            Your project is ready, if you are eager to parallelize output mapping for your transformations,
             please use the support button to let us know.
           </p>
         </AlertBlock>
@@ -49,9 +49,9 @@ export default React.createClass({
     return (
       <AlertBlock type="warning" title="Transformations slowing down your output mappings">
         <p>
-          We cannot turn on parallel output mapping for this project as these transformations have duplicit output mappings
+          We cannot turn on parallel output mapping for this project as these transformations have duplicate output mappings
           (multiple output mappings writing to the same table in Storage). Please fix the transformations so we can turn on
-          faster output mapping for you.
+          faster output mapping for this project.
         </p>
         <div className="row">
           {duplicitTransformationsByBucket.map(function(bucketConflicts, bucketId) {
