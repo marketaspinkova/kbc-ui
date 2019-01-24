@@ -90,7 +90,7 @@ export default React.createClass({
               isSaving={this.state.isSaving}
               onCancel={this.handleCancel}
               onSave={this.handleSave}
-              isDisabled={!this.isValid() || !this.existSelectedSourceTable()}
+              isDisabled={!this.isValid() || this.editingNonExistentTable()}
             />
           </Modal.Footer>
         </Modal>
@@ -133,19 +133,20 @@ export default React.createClass({
       <Editor
         value={this.props.mapping}
         tables={this.props.tables}
-        disabled={this.state.isSaving || !this.existSelectedSourceTable()}
+        disabled={this.state.isSaving || this.editingNonExistentTable()}
         onChange={this.props.onChange}
         initialShowDetails={resolveTableInputShowDetails(this.props.mapping)}
         isDestinationDuplicate={this.isDestinationDuplicate()}
         showFileHint={this.props.showFileHint}
         definition={this.props.definition}
-        tableExists={this.existSelectedSourceTable()}
+        editingNonExistentTable={this.editingNonExistentTable()}
       />
     );
   },
 
-  existSelectedSourceTable() {
-    return this.props.tables.get(this.props.mapping.get('source'), Map()).count() > 0;
+  editingNonExistentTable() {
+    return this.props.mode === MODE_EDIT
+      && this.props.tables.get(this.props.mapping.get('source'), Map()).count() === 0;
   },
 
   handleCancel() {

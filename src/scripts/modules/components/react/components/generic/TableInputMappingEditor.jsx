@@ -14,7 +14,7 @@ export default React.createClass({
     tables: React.PropTypes.object.isRequired,
     onChange: React.PropTypes.func.isRequired,
     disabled: React.PropTypes.bool.isRequired,
-    tableExists: React.PropTypes.bool.isRequired,
+    editingNonExistentTable: React.PropTypes.bool.isRequired,
     initialShowDetails: React.PropTypes.bool.isRequired,
     showFileHint: React.PropTypes.bool,
     isDestinationDuplicate: React.PropTypes.bool.isRequired,
@@ -31,7 +31,7 @@ export default React.createClass({
   render() {
     return (
       <div className="form-horizontal">
-        {!this.props.tableExists && (
+        {this.props.editingNonExistentTable && (
           <Alert bsStyle="warning">
             Source table does not exist.
           </Alert>
