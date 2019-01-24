@@ -102,9 +102,7 @@ export default React.createClass({
   },
 
   existSelectedSourceTable() {
-    const sourceId = this.props.value.get('source');
-    const sourceTable = this.props.tables.find(table => table.get('id') === sourceId, null, Map());
-    return sourceTable.count() > 0;
+    return this.props.tables.get(this.props.value.get('source'), Map()).count() > 0;
   },
 
   handleChangeSource(value) {
