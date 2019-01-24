@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import Select from '../../../../../react/common/Select';
 import whereOperatorConstants from '../../../../../react/common/whereOperatorConstants';
 import ReactSelect from 'react-select';
+import { List, Map } from 'immutable';
 import _ from 'underscore';
 
 export default React.createClass({
@@ -71,8 +72,10 @@ export default React.createClass({
       return [];
     }
     const props = this.props;
-    const table = this.props.allTables.find((t) => t.get('id') === props.value.get('source'));
-    return table.get('columns').toJS();
+    const table = this.props.allTables.find((t) => {
+      return t.get('id') === props.value.get('source');
+    }, null, Map());
+    return table.get('columns', List()).toJS();
   },
 
   _getColumnsOptions() {

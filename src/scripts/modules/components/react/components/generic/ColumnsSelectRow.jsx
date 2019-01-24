@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import _ from 'underscore';
-import {List} from 'immutable';
+import { List, Map } from 'immutable';
 import Select from '../../../../../react/common/Select';
 
 export default React.createClass({
@@ -52,8 +52,8 @@ export default React.createClass({
     const props = this.props;
     const table = this.props.allTables.find((t) => {
       return t.get('id') === props.value.get('source');
-    });
-    return table.get('columns').toJS();
+    }, null, Map());
+    return table.get('columns', List()).toJS();
   },
 
   _getColumnsOptions() {
