@@ -9,6 +9,7 @@ import ConfigurationForm from './react/components/Configuration';
 import CredentialsForm from './react/components/Credentials';
 import React from 'react';
 import {CollapsibleSection} from '../configurations/utils/renderHelpers';
+import { conform } from './adapters/conform';
 
 import {
   createConfiguration as rowCreateConfiguration,
@@ -34,6 +35,7 @@ const routeSettings = {
     ]
   },
   row: {
+    onConform: conform,
     name: {
       singular: 'Entity',
       plural: 'Entities'
