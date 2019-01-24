@@ -24,15 +24,15 @@ describe('row', function() {
     const newCases = specDefinition.newCases;
     Object.keys(newCases).forEach(function(key) {
       it('should return a correct localState with ' + key + ' configuration', function() {
-        expect(parseConfiguration(fromJS(newCases[key].configuration))).toEqual(
-          fromJS(newCases[key].localState)
-        );
+        expect(
+          parseConfiguration(fromJS(newCases[key].configuration), fromJS(newCases[key].context))
+        ).toEqual(fromJS(newCases[key].localState));
       });
     });
 
     it('should return a correct localState with mixed configuration', function() {
       const spec = specDefinition.mixedCasesFromConfiguration.mixedOldAndNew;
-      expect(parseConfiguration(conform(fromJS(spec.configuration)))).toEqual(
+      expect(parseConfiguration(conform(fromJS(spec.configuration)), fromJS(spec.context))).toEqual(
         fromJS(spec.localState)
       );
     });
@@ -40,9 +40,12 @@ describe('row', function() {
     const orginalCases = specDefinition.originalCasesForParseConfiguration;
     Object.keys(orginalCases).forEach(function(key) {
       it('should parse original configuration to new format when conformed', function() {
-        expect(parseConfiguration(conform(fromJS(orginalCases[key].configuration)))).toEqual(
-          fromJS(orginalCases[key].localState)
-        );
+        expect(
+          parseConfiguration(
+            conform(fromJS(orginalCases[key].configuration)),
+            fromJS(orginalCases[key].context)
+          )
+        ).toEqual(fromJS(orginalCases[key].localState));
       });
     });
   });

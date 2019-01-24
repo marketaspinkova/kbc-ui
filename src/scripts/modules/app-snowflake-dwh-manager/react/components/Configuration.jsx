@@ -94,10 +94,10 @@ export default React.createClass({
               <ControlLabel className="col-xs-4">Read schemas</ControlLabel>
               <div className="col-xs-8">
                 <Select
-                  allowCreate
                   multi
                   value={value.schemas_read}
                   delimiter=","
+                  options={value.existingSchemas}
                   onChange={(newValue) => onChange({ schemas_read: newValue })}
                   disabled={this.props.disabled}
                   help="List of schemas the user will have read-only access to. There is no validation yet, so make sure that there are no typos and schemas exist before creating the user."
@@ -108,10 +108,10 @@ export default React.createClass({
               <ControlLabel className="col-xs-4">Write schemas</ControlLabel>
               <div className="col-xs-8">
                 <Select
-                  allowCreate
                   multi
                   value={value.schemas_write}
                   delimiter=","
+                  options={value.existingSchemas}
                   onChange={(newValue) => onChange({ schemas_write: newValue })}
                   disabled={this.props.disabled}
                   help="List of schemas the user will have read and write access to. There is no validation yet, so make sure that there are no typos and schemas exist before creating the user."

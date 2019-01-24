@@ -34,11 +34,14 @@ export function createConfiguration(localState) {
   }
 }
 
-export function parseConfiguration(configuration) {
+export function parseConfiguration(configuration, context) {
   const isUser = configuration.getIn(['parameters', 'user'], false) !== false;
   const isSchema = configuration.getIn(['parameters', 'business_schema'], false) !== false;
 
   if (isUser) {
+    const existingSchemas = convertRowsToSchemaNames(context.get('rows')).map((schema) => {
+      return Immutable.Map({ value: schema, label: schema });
+    });
     const schemasInConfig = configuration.getIn(
       ['parameters', 'user', 'schemas'],
       Immutable.List()
@@ -57,7 +60,8 @@ export function parseConfiguration(configuration) {
       email: configuration.getIn(['parameters', 'user', 'email'], ''),
       schemas_read: schemasRead,
       schemas_write: schemasWrite,
-      disabled: configuration.getIn(['parameters', 'user', 'disabled'], false)
+      disabled: configuration.getIn(['parameters', 'user', 'disabled'], false),
+      existingSchemas
     });
   }
   if (isSchema) {
@@ -76,3 +80,9 @@ export function parseConfiguration(configuration) {
 export function createEmptyConfiguration(name) {
   return createConfiguration(Immutable.fromJS({ type: 'schema', schema_name: name }));
 }
+
+const convertRowsToSchemaNames = (rows) => {
+  return rows
+    .filter((row) => row.get('parameters').has('business_schema'))
+    .map((row) => row.getIn(['parameters', 'business_schema', 'schema_name']));
+};
