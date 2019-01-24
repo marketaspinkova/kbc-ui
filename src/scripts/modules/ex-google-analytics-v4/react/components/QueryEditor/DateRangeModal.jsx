@@ -110,8 +110,6 @@ export default React.createClass({
   },
 
   renderAbsolute() {
-    const isStartValid = moment(this.state.absoluteStart).isValid();
-    const isEndValid = moment(this.state.absoluteEnd).isValid();
 
     return (
       <Form horizontal>
@@ -126,7 +124,7 @@ export default React.createClass({
               timeFormat={false}
               value={this.state.absoluteStart}
               onChange={val => this.setState({ absoluteStart: val })}
-              isValidDate={current => !isEndValid || current.isBefore(this.state.absoluteEnd)}
+              isValidDate={current => !moment(this.state.absoluteEnd, 'YYYY-MM-DD', true).isValid() || (current.isBefore(this.state.absoluteEnd))}
             />
           </Col>
         </FormGroup>
@@ -141,7 +139,7 @@ export default React.createClass({
               timeFormat={false}
               value={this.state.absoluteEnd}
               onChange={val => this.setState({ absoluteEnd: val })}
-              isValidDate={current => !isStartValid || current.isAfter(this.state.absoluteStart)}
+              isValidDate={current => !moment(this.state.absoluteStart, 'YYYY-MM-DD', true).isValid() || (current.isAfter(this.state.absoluteStart))}
             />
           </Col>
         </FormGroup>
