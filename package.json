@@ -39,7 +39,7 @@
     "react-bootstrap": "^0.31.5",
     "react-clipboard.js": "^0.1.5",
     "react-code-mirror": "~3.0.4",
-    "react-datetime": "2.10.2",
+    "react-datetime": "git+https://git@github.com/keboola/react-datetime.git#v2.10.3-fix",
     "react-dnd": "~2.2.0",
     "react-dnd-html5-backend": "~2.2.0",
     "react-document-title": "~1.0.2",

@@ -6686,10 +6686,9 @@ react-code-mirror@~3.0.4:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/react-code-mirror/-/react-code-mirror-3.0.6.tgz#65e95abb479165e1678e3ee9837fb4d0438868f1"
 
-react-datetime@2.10.2:
-  version "2.10.2"
-  resolved "https://registry.yarnpkg.com/react-datetime/-/react-datetime-2.10.2.tgz#0a91819c8068f6f3f24bbc687c0039820145a43e"
-  integrity sha512-tErw6Yp6fGRX6BQ1vTgSqDabWLpCovxLoMaohWB41yv5K1umf8JrxAZLt1JjKVDYdU0aBC+nH1/K9x4CLEq7rA==
+"react-datetime@git+https://git@github.com/keboola/react-datetime.git#v2.10.3-fix":
+  version "2.10.3-fix"
+  resolved "git+https://git@github.com/keboola/react-datetime.git#04bd1d24c94c3f3b31220d6fe67f206cd5daef11"
   dependencies:
     create-react-class "^15.5.2"
     object-assign "^3.0.0"
