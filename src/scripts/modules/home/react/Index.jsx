@@ -59,7 +59,9 @@ export default React.createClass({
       componentsActions.loadComponentConfigsData('transformation');
     }
 
-    oAuthComponents.loadComponentsWithOAuth();
+    if (ApplicationStore.hasCurrentProjectFeature('oauth-migration')) {
+      oAuthComponents.loadComponentsWithOAuth();
+    }
   },
 
   openLessonModal(lessonNumber) {
@@ -109,9 +111,11 @@ export default React.createClass({
           )}
           <Expiration expires={this.state.expires}/>
           <LimitsOverQuota limits={this.state.limitsOverQuota}/>
-          <DeprecatedOAuth
-            components={this.getComponentsWithOAuth()}
-          />
+          {ApplicationStore.hasCurrentProjectFeature('oauth-migration') && (
+            <DeprecatedOAuth
+              components={this.getComponentsWithOAuth()}
+            />
+          )}
           <DeprecatedTransformations
             transformations={this.state.transformations}
           />
