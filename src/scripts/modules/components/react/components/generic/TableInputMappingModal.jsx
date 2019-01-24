@@ -4,7 +4,7 @@ import Tooltip from './../../../../../react/common/Tooltip';
 import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
 import Editor from './TableInputMappingEditor';
 import {resolveTableInputShowDetails} from './resolveInputShowDetails';
-import Immutable, { Map } from 'immutable';
+import { Map } from 'immutable';
 
 const MODE_CREATE = 'create', MODE_EDIT = 'edit';
 
@@ -30,7 +30,7 @@ export default React.createClass({
   getDefaultProps() {
     return {
       showFileHint: true,
-      definition: Immutable.Map()
+      definition: Map()
     };
   },
 
