@@ -4,7 +4,7 @@ import { SnowflakeDataTypesMapping } from '../../transformations/Constants';
 
 export function prepareColumnsTypes(componentId, table) {
   if (!DataTypes[componentId]) {
-    return null;
+    return List();
   }
 
   const defaultType = fromJS(DataTypes[componentId].default || {});
