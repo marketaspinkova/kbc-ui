@@ -72,7 +72,7 @@ export default React.createClass({
             }
           />
         )}
-        {this.existTable() ? (
+        {!this.props.value.get('source') || this.existSelectedSourceTable() ? (
           <PanelWithDetails defaultExpanded={this.props.initialShowDetails}>
             <ColumnsSelectRow
               value={this.props.value}
@@ -101,7 +101,7 @@ export default React.createClass({
     );
   },
 
-  existTable() {
+  existSelectedSourceTable() {
     const sourceId = this.props.value.get('source');
     const sourceTable = this.props.tables.find(table => table.get('id') === sourceId, null, Map());
     return sourceTable.count() > 0;
