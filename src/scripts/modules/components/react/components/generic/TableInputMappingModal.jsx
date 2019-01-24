@@ -4,7 +4,7 @@ import Tooltip from './../../../../../react/common/Tooltip';
 import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
 import Editor from './TableInputMappingEditor';
 import {resolveTableInputShowDetails} from './resolveInputShowDetails';
-import Immutable from 'immutable';
+import Immutable, { Map } from 'immutable';
 
 const MODE_CREATE = 'create', MODE_EDIT = 'edit';
 
@@ -90,7 +90,7 @@ export default React.createClass({
               isSaving={this.state.isSaving}
               onCancel={this.handleCancel}
               onSave={this.handleSave}
-              isDisabled={!this.isValid()}
+              isDisabled={!this.isValid() || !this.existSelectedSourceTable()}
             />
           </Modal.Footer>
         </Modal>
@@ -133,14 +133,19 @@ export default React.createClass({
       <Editor
         value={this.props.mapping}
         tables={this.props.tables}
-        disabled={this.state.isSaving}
+        disabled={this.state.isSaving || !this.existSelectedSourceTable()}
         onChange={this.props.onChange}
         initialShowDetails={resolveTableInputShowDetails(this.props.mapping)}
         isDestinationDuplicate={this.isDestinationDuplicate()}
         showFileHint={this.props.showFileHint}
         definition={this.props.definition}
+        tableExists={this.existSelectedSourceTable()}
       />
     );
+  },
+
+  existSelectedSourceTable() {
+    return this.props.tables.get(this.props.mapping.get('source'), Map()).count() > 0;
   },
 
   handleCancel() {

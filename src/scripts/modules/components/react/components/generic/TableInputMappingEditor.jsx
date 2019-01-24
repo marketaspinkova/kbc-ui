@@ -14,6 +14,7 @@ export default React.createClass({
     tables: React.PropTypes.object.isRequired,
     onChange: React.PropTypes.func.isRequired,
     disabled: React.PropTypes.bool.isRequired,
+    tableExists: React.PropTypes.bool.isRequired,
     initialShowDetails: React.PropTypes.bool.isRequired,
     showFileHint: React.PropTypes.bool,
     isDestinationDuplicate: React.PropTypes.bool.isRequired,
@@ -30,6 +31,11 @@ export default React.createClass({
   render() {
     return (
       <div className="form-horizontal">
+        {!this.props.tableExists && (
+          <Alert bsStyle="warning">
+            Source table does not exist.
+          </Alert>
+        )}
         <div className="form-group">
           <label className="col-xs-2 control-label">Source</label>
           <div className="col-xs-10">
@@ -72,37 +78,27 @@ export default React.createClass({
             }
           />
         )}
-        {!this.props.value.get('source') || this.existSelectedSourceTable() ? (
-          <PanelWithDetails defaultExpanded={this.props.initialShowDetails}>
-            <ColumnsSelectRow
-              value={this.props.value}
-              disabled={this.props.disabled}
-              onChange={this.props.onChange}
-              allTables={this.props.tables}
-            />
-            <ChangedSinceFilterInput
-              mapping={this.props.value}
-              disabled={this.props.disabled}
-              onChange={this.props.onChange}
-            />
-            <DataFilterRow
-              value={this.props.value}
-              disabled={this.props.disabled}
-              onChange={this.props.onChange}
-              allTables={this.props.tables}
-            />
-          </PanelWithDetails>
-        ) : (
-          <Alert bsStyle="warning">
-            Source table does not exist.
-          </Alert>
-        )}
+        <PanelWithDetails defaultExpanded={this.props.initialShowDetails}>
+          <ColumnsSelectRow
+            value={this.props.value}
+            disabled={this.props.disabled}
+            onChange={this.props.onChange}
+            allTables={this.props.tables}
+          />
+          <ChangedSinceFilterInput
+            mapping={this.props.value}
+            disabled={this.props.disabled}
+            onChange={this.props.onChange}
+          />
+          <DataFilterRow
+            value={this.props.value}
+            disabled={this.props.disabled}
+            onChange={this.props.onChange}
+            allTables={this.props.tables}
+          />
+        </PanelWithDetails>
       </div>
     );
-  },
-
-  existSelectedSourceTable() {
-    return this.props.tables.get(this.props.value.get('source'), Map()).count() > 0;
   },
 
   handleChangeSource(value) {
