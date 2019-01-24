@@ -18,11 +18,11 @@ export default React.createClass({
     }
     return (
       <Alert bsStyle="warning">
-        <h3>Output Mapping Warning</h3>
+        <h3>Output Warning</h3>
         <p>
-          Output mapping of this transformation contains some duplicities with transformations in the same phase.
-          Execution order of all output mappings in a single phase is not guaranteed and may change.
-          Please adjust the output mappings to avoid data loss or confusion, e.g. split the transformation(s)
+          Outputs of this transformation contains some duplicities with transformations in the same phase.
+          Execution order of all outputs in a single phase is not guaranteed and may change.
+          Please adjust the outputs to avoid data loss or confusion, e.g. split the transformation(s)
           into multiple phases.
         </p>
         <ConflictList
@@ -31,7 +31,7 @@ export default React.createClass({
           bucketId={this.props.bucketId}
         />
         <p>
-          Read more about speeding up the output mapping by using
+          Read more about speeding up the output by using
           {' '}<ExternalLink
             href="http://status.keboola.com/speeding-up-transformation-output-mappings-in-your-projects">
             parallel unloads

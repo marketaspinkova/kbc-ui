@@ -37,9 +37,9 @@ export default React.createClass({
 
     if (duplicitTransformationsByBucket.isEmpty() && !projectHasFeature) {
       return (
-        <AlertBlock type="warning" title="Speed up output mapping of your transformations">
+        <AlertBlock type="warning" title="Speed up output of your transformations">
           <p>
-            Your project is ready, if you are eager to parallelize output mapping for your transformations,
+            Your project is ready, if you are eager to parallelize outputs for your transformations,
             please use the support button to let us know.
           </p>
         </AlertBlock>
@@ -47,11 +47,11 @@ export default React.createClass({
     }
 
     return (
-      <AlertBlock type="warning" title="Transformations slowing down your output mappings">
+      <AlertBlock type="warning" title="Transformations slowing down your output">
         <p>
-          We cannot turn on parallel output mapping for this project as these transformations have duplicate output mappings
-          (multiple output mappings writing to the same table in Storage). Please fix the transformations so we can turn on
-          faster output mapping for this project.
+          We cannot turn on parallel output processing for this project as these transformations have duplicate outputs
+          (multiple outputs writing to the same table in Storage). Please fix the transformations so we can turn on
+          faster output processing for this project.
         </p>
         <div className="row">
           {duplicitTransformationsByBucket.map(function(bucketConflicts, bucketId) {
@@ -81,7 +81,7 @@ export default React.createClass({
           }).toSeq().toArray()}
         </div>
         <p>
-          Read more about speeding up the output mapping by using
+          Read more about speeding up the output by using
           {' '}<ExternalLink
             href="http://status.keboola.com/speeding-up-transformation-output-mappings-in-your-projects">
             parallel unloads
