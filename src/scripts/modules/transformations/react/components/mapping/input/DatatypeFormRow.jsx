@@ -37,7 +37,7 @@ export default React.createClass({
   },
 
   handleLengthChange(e) {
-    this.props.onChange(this.props.datatype.set('length', e.target.value));
+    this.props.onChange(this.props.datatype.set('length', e.target.value || null));
   },
 
   handleNullableChange(e) {
