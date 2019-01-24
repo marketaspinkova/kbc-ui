@@ -12,6 +12,8 @@ export default React.createClass({
     value: PropTypes.shape({
       type: PropTypes.string.isRequired,
       email: PropTypes.string,
+      schemas_read: PropTypes.array,
+      schemas_write: PropTypes.array,
       business_schemas: PropTypes.array,
       disabled: PropTypes.bool,
       schema_name: PropTypes.string
@@ -82,20 +84,33 @@ export default React.createClass({
           disabled={this.props.disabled}
           help="Username will be generated from the email address." />}
         {value.type === 'user' &&
-        <FormGroup> <ControlLabel className="col-xs-4">
-          {'Schemas'}
+        <div><FormGroup> <ControlLabel className="col-xs-4">
+          {'Read schemas'}
         </ControlLabel>
         <div className="col-xs-8">
           <Select
             allowCreate={true}
-            multi={true}
-            value={value.business_schemas}
+            multi
+            value={value.schemas_read}
             delimiter=","
-            onChange={newValue => onChange({business_schemas: newValue})}
+            onChange={newValue => onChange({schemas_read: newValue})}
             disabled={this.props.disabled}
             help="List of schemas the user will have read-only access to. There is no validation yet, so make sure that there are no typos and schemas exist before creating the user." />
         </div>
-        </FormGroup>}
+        </FormGroup><FormGroup> <ControlLabel className="col-xs-4">
+          {'Write schemas'}
+        </ControlLabel>
+        <div className="col-xs-8">
+          <Select
+            allowCreate={true}
+            multi
+            value={value.schemas_write}
+            delimiter=","
+            onChange={newValue => onChange({schemas_write: newValue})}
+            disabled={this.props.disabled}
+            help="List of schemas the user will have read and write access to. There is no validation yet, so make sure that there are no typos and schemas exist before creating the user." />
+        </div>
+        </FormGroup></div>}
         {value.type === 'user' &&
         <Input
           type="checkbox"
