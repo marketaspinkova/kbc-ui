@@ -80,21 +80,23 @@ export default React.createClass({
 
   renderControlGroup(label, control, extraControl) {
     return (
-      <FormGroup  bsSize="small" className="col-sm-12">
+      <FormGroup bsSize="small">
         <Col sm={4} componentClass={ControlLabel}>
           <span className="pull-right text-right">{label}</span>
         </Col>
         <Col sm={8}>
           {
             extraControl ?
-              [
-                <Col sm={8} key="control" style={{padding: '0'}}>
-                  {control}
-                </Col>,
-                <Col sm={4} key="extracontrol" style={{paddingRight: '0'}}>
-                  {extraControl}
-                </Col>
-              ]
+              (
+                <FormGroup>
+                  <Col lg={6} key="control">
+                    {control}
+                  </Col>
+                  <Col lg={6} key="extracontrol">
+                    {extraControl}
+                  </Col>
+                </FormGroup>
+              )
               : control
           }
         </Col>
