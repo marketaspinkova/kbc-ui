@@ -94,7 +94,7 @@ export default React.createClass({
           </PanelWithDetails>
         ) : (
           <Alert bsStyle="warning">
-            Current source table is not found.
+            Source table does not exist.
           </Alert>
         )}
       </div>
