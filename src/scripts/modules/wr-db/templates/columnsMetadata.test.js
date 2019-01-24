@@ -1,4 +1,4 @@
-import { fromJS } from 'immutable';
+import { fromJS, List } from 'immutable';
 import { prepareColumnsTypes } from './columnsMetadata';
 
 const SnowflakeComponentId = 'keboola.wr-db-snowflake';
@@ -31,8 +31,8 @@ function defaultMysqlType(column) {
 }
 
 describe('prepareColumnsTypes', function() {
-  it('it return null for unknown componentId', () => {
-    expect(null).toEqual(prepareColumnsTypes('keboola.wr-db-unknown', table));
+  it('it return empty list for unknown componentId', () => {
+    expect(List()).toEqual(prepareColumnsTypes('keboola.wr-db-unknown', table));
   });
 
   it('only table with snowflake backend can read metadata, default values is returned for others backend', () => {
