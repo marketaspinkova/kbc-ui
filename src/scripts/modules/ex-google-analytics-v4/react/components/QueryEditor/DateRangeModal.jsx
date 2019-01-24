@@ -110,7 +110,6 @@ export default React.createClass({
   },
 
   renderAbsolute() {
-
     return (
       <Form horizontal>
         <FormGroup>
