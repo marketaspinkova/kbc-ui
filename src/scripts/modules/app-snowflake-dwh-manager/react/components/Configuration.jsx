@@ -29,6 +29,14 @@ export default React.createClass({
 
   render() {
     const { onChange, value } = this.props;
+    let notUsedSchemas = [];
+    if (value.type === 'user') {
+      notUsedSchemas = this.filterUsedSchemasFromExisting(
+        value.existingSchemas,
+        value.schemas_read,
+        value.schemas_write
+      );
+    }
     return (
       <div className="form-horizontal">
         <h2>Entity</h2>
@@ -97,7 +105,7 @@ export default React.createClass({
                   multi
                   value={value.schemas_read}
                   delimiter=","
-                  options={value.existingSchemas}
+                  options={notUsedSchemas}
                   onChange={(newValue) => onChange({ schemas_read: newValue })}
                   disabled={this.props.disabled}
                   help="List of schemas the user will have read-only access to. There is no validation yet, so make sure that there are no typos and schemas exist before creating the user."
@@ -111,7 +119,7 @@ export default React.createClass({
                   multi
                   value={value.schemas_write}
                   delimiter=","
-                  options={value.existingSchemas}
+                  options={notUsedSchemas}
                   onChange={(newValue) => onChange({ schemas_write: newValue })}
                   disabled={this.props.disabled}
                   help="List of schemas the user will have read and write access to. There is no validation yet, so make sure that there are no typos and schemas exist before creating the user."
@@ -133,5 +141,10 @@ export default React.createClass({
         )}
       </div>
     );
+  },
+  filterUsedSchemasFromExisting(existing, schemasRead, schemasWrite) {
+    return existing.filter((item) => {
+      return !(schemasRead.includes(item.value) || schemasWrite.includes(item.value));
+    });
   }
 });
