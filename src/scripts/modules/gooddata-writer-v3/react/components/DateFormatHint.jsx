@@ -12,11 +12,8 @@ export default React.createClass({
 
   _renderPopover() {
     return (
-      <Popover
-        title="Supported Date Formats"
-        id="gooddata-writer-v3-date-format-hint"
-      >
-        <ul>
+      <Popover title="Supported Date Formats" id="gooddata-writer-v3-date-format-hint">
+        <ul className="container-fluid">
           <li>yyyy – year (e.g. 2010)</li>
           <li>MM – month (01 - 12)</li>
           <li>dd – day (01 - 31)</li>

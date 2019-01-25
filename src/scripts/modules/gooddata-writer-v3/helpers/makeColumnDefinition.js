@@ -13,13 +13,27 @@ function checkEmpty(value, label) {
 }
 
 function checkDataTypeSize(dataType, dataTypeSize) {
-  if (dataType === DataTypes.VARCHAR && isNaN(dataTypeSize)) {
-    return 'Data size must by valid number: ' + dataTypeSize;
+  switch (dataType) {
+    case DataTypes.VARCHAR:
+      const size = Number(dataTypeSize);
+      if (isNaN(size) || size < 1 || size > 255) {
+        return 'Data size must by valid number between 1 and 255: ' + dataTypeSize;
+      }
+      return false;
+
+    case DataTypes.DECIMAL:
+      if (!/^\d+,\d+$/.test(dataTypeSize)) {
+        return 'Ivalid decimal format' + dataTypeSize;
+      }
+      const [ digits, decimal ] = dataTypeSize.split(',').map(Number);
+      if (digits < 1 || digits > 15 || decimal < 0 || decimal > 6) {
+        return 'Maximum possible value is 15,6: ' + dataTypeSize;
+      }
+      return false;
+
+    default:
+      return false;
   }
-  if (dataType === DataTypes.DECIMAL && !/^\d+,\d+$/.test(dataTypeSize)) {
-    return 'Ivalid decimal format' + dataTypeSize;
-  }
-  return false;
 }
 
 function prepareFields(column) {

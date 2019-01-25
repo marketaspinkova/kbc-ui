@@ -2,9 +2,8 @@ import React, {PropTypes} from 'react';
 import {FormControl, Form, FormGroup, InputGroup, Col, ControlLabel} from 'react-bootstrap';
 import makeColumnDefinition from '../../helpers/makeColumnDefinition';
 import {DataTypes, Types} from '../../constants';
+import DataTypeSizeHint from './DataTypeSizeHint';
 import DateFormatHint from './DateFormatHint';
-
-// import ReactSelect from 'react-select';
 
 export default React.createClass({
   propTypes: {
@@ -34,7 +33,7 @@ export default React.createClass({
            'Data Type',
            'dataType',
            Object.keys(DataTypes),
-           fields.dataTypeSize.show && this.renderInput('dataTypeSize')
+           fields.dataTypeSize.show && this.renderInputWithAddon('dataTypeSize', <DataTypeSizeHint />)
          )}
         {fields.dateDimension.show &&
          this.renderSelectGroup(
@@ -81,21 +80,23 @@ export default React.createClass({
 
   renderControlGroup(label, control, extraControl) {
     return (
-      <FormGroup  bsSize="small" className="col-sm-12">
+      <FormGroup bsSize="small">
         <Col sm={4} componentClass={ControlLabel}>
           <span className="pull-right text-right">{label}</span>
         </Col>
         <Col sm={8}>
           {
             extraControl ?
-              [
-                <Col sm={8} key="control" style={{padding: '0'}}>
-                  {control}
-                </Col>,
-                <Col sm={4} key="extracontrol" style={{paddingRight: '0'}}>
-                  {extraControl}
-                </Col>
-              ]
+              (
+                <FormGroup>
+                  <Col lg={6} key="control">
+                    {control}
+                  </Col>
+                  <Col lg={6} key="extracontrol">
+                    {extraControl}
+                  </Col>
+                </FormGroup>
+              )
               : control
           }
         </Col>
@@ -148,16 +149,19 @@ export default React.createClass({
       />);
   },
 
-  renderInputGroupWithAddon(label, fieldName, addon) {
-    const control = (
+  renderInputWithAddon(fieldName, addon) {
+    return (
       <InputGroup>
         {this.renderInput(fieldName)}
         <InputGroup.Addon>{addon}</InputGroup.Addon>
       </InputGroup>
     );
+  },
+
+  renderInputGroupWithAddon(label, fieldName, addon) {
     return this.renderControlGroup(
       label,
-      control
+      this.renderInputWithAddon(fieldName, addon)
     );
   },
 
