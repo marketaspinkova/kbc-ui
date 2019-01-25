@@ -1,13 +1,10 @@
 import React from 'react';
-import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { Map } from 'immutable';
 import DeleteButton from '../../../../../react/common/DeleteButton';
 import TableSizeLabel from '../../../../transformations/react/components/TableSizeLabel';
 import TableInputMappingModal from './TableInputMappingModal';
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin],
-
   propTypes: {
     value: React.PropTypes.object.isRequired,
     editingValue: React.PropTypes.object.isRequired,

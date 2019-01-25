@@ -1,12 +1,15 @@
 import React, {PropTypes} from 'react';
+import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import {Map} from 'immutable';
+import {Panel} from 'react-bootstrap';
+import InstalledComponentsActions from '../../../InstalledComponentsActionCreators';
 import Detail from './FileInputMappingDetail';
 import Header from './FileInputMappingHeader';
-import {Panel} from 'react-bootstrap';
-import Immutable from 'immutable';
-import InstalledComponentsActions from '../../../InstalledComponentsActionCreators';
 import Add from './AddFileInputMapping';
 
 export default React.createClass({
+  mixins: [ImmutableRenderMixin],
+
   propTypes: {
     componentId: PropTypes.string.isRequired,
     configId: PropTypes.string.isRequired,
@@ -17,26 +20,84 @@ export default React.createClass({
   },
 
   render() {
-    var addButton;
+    return (
+      <div>
+        <h2>File Input Mapping {this.renderAddButton()}</h2>
+        <small className="help-block">
+          Multiple files may match the given criteria. All files will be stored in <code>/data/in/files/</code> with their IDs as file names.
+          <br />All metadata will be stored in a manifest file.
+        </small>
+        {this.renderContent()}
+      </div>
+    );
+  },
+
+  renderAddButton() {
+    if (!this.props.value.count()) {
+      return null;
+    }
+
+    return (
+      <span className="pull-right">
+        <Add
+          componentId={this.props.componentId}
+          configId={this.props.configId}
+          mapping={this.props.editingValue.toMap().get('new-mapping', Map())}
+        />
+      </span>
+    );
+  },
+
+  renderContent() {
     if (this.props.value.count() >= 1) {
-      addButton = (
-        <span className="pull-right">
-          <Add
-            componentId={this.props.componentId}
-            configId={this.props.configId}
-            mapping={this.props.editingValue.toMap().get('new-mapping', Immutable.Map())}
-          />
+      return (
+        <span>
+          {this.props.value.map(this.renderPanel).toArray()}
         </span>
       );
     }
+
     return (
-      <div>
-        <h2>File Input Mapping
-          {addButton}
-        </h2>
-        <small className="help-block">Multiple files may match the given criteria. All files will be stored in <code>/data/in/files/</code> with their IDs as file names.
-          <br />All metadata will be stored in a manifest file.</small>
-        {this.content()}
+      <div className="well text-center">
+        <p>No file input mapping assigned.</p>
+        <Add
+          componentId={this.props.componentId}
+          configId={this.props.configId}
+          mapping={this.props.editingValue.toMap().get('new-mapping', Map())}
+        />
+      </div>
+    );
+  },
+
+  renderPanel(input, key) {
+    return (
+      <Panel
+        key={key}
+        eventKey={key}
+        collapsible
+        className="kbc-panel-heading-with-table"
+        expanded={this.props.openMappings.get('file-input-' + key, false)}
+        header={this.renderHeader(input, key)}
+      >
+        <Detail fill value={input} />
+      </Panel>
+    );
+  },
+
+  renderHeader(input, key) {
+    return (
+      <div onClick={() => this.toggleMapping(key)}>
+        <Header
+          value={input}
+          editingValue={this.props.editingValue.get(key, Map())}
+          mappingIndex={key}
+          pendingActions={this.props.pendingActions}
+          onEditStart={() => this.onEditStart(key)}
+          onChange={(value) => this.onChangeMapping(key, value)}
+          onSave={() => this.onSaveMapping(key)}
+          onCancel={() => this.onCancelEditMapping(key)}
+          onDelete={() => this.onDeleteMapping(key)}
+        />
       </div>
     );
   },
@@ -63,71 +124,5 @@ export default React.createClass({
 
   onDeleteMapping(key) {
     return InstalledComponentsActions.deleteMapping(this.props.componentId, this.props.configId, 'input', 'files', key, 'Delete file input');
-  },
-
-  content() {
-    var component = this;
-    if (this.props.value.count() >= 1) {
-      var mappings = this.props.value.map(function(input, key) {
-        return React.createElement(Panel,
-          {
-            className: 'kbc-panel-heading-with-table',
-            key: key,
-            collapsible: true,
-            eventKey: key,
-            expanded: component.props.openMappings.get('file-input-' + key, false),
-            header: React.createElement('div',
-              {
-                onClick: function() {
-                  component.toggleMapping(key);
-                }
-              }, React.createElement(Header,
-                {
-                  value: input,
-                  editingValue: component.props.editingValue.get(key, Immutable.Map()),
-                  mappingIndex: key,
-                  pendingActions: component.props.pendingActions,
-                  onEditStart: function() {
-                    return component.onEditStart(key);
-                  },
-                  onChange: function(value) {
-                    return component.onChangeMapping(key, value);
-                  },
-                  onSave: function() {
-                    return component.onSaveMapping(key);
-                  },
-                  onCancel: function() {
-                    return component.onCancelEditMapping(key);
-                  },
-                  onDelete: function() {
-                    return component.onDeleteMapping(key);
-                  }
-                }))
-          },
-          React.createElement(Detail,
-            {
-              fill: true,
-              value: input
-            }
-          )
-        );
-      }).toJS();
-      return (
-        <span>
-          {mappings}
-        </span>
-      );
-    } else {
-      return (
-        <div className="well text-center">
-          <p>No file input mapping assigned.</p>
-          <Add
-            componentId={this.props.componentId}
-            configId={this.props.configId}
-            mapping={this.props.editingValue.toMap().get('new-mapping', Immutable.Map())}
-          />
-        </div>
-      );
-    }
   }
 });

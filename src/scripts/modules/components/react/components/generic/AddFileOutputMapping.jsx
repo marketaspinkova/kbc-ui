@@ -1,6 +1,6 @@
 import React from 'react';
-import FileOutputMappingModal from './FileOutputMappingModal';
 import actionCreators from '../../../InstalledComponentsActionCreators';
+import FileOutputMappingModal from './FileOutputMappingModal';
 
 export default React.createClass({
   propTypes: {
@@ -10,16 +10,17 @@ export default React.createClass({
   },
 
   render() {
-    return React.createElement(FileOutputMappingModal, {
-      mode: 'create',
-      mapping: this.props.mapping,
-      onChange: this.handleChange,
-      onCancel: this.handleCancel,
-      onSave: this.handleSave
-    });
+    return (
+      <FileOutputMappingModal
+        mode="create"
+        mapping={this.props.mapping}
+        onChange={this.handleChange}
+        onCancel={this.handleCancel}
+        onSave={this.handleSave}
+      />
+    );
   },
 
-  /* eslint camelcase: 0 */
   handleChange(newMapping) {
     actionCreators.changeEditingMapping(this.props.componentId,
       this.props.configId,
@@ -40,7 +41,6 @@ export default React.createClass({
   },
 
   handleSave() {
-    // returns promise
     return actionCreators.saveEditingMapping(this.props.componentId,
       this.props.configId,
       'output',
@@ -49,5 +49,4 @@ export default React.createClass({
       'Add file output'
     );
   }
-
 });

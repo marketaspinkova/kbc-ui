@@ -1,10 +1,10 @@
 import React, {PropTypes} from 'react';
+import { Map } from 'immutable';
 import {Modal, Button} from 'react-bootstrap';
 import Tooltip from './../../../../../react/common/Tooltip';
 import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
+import { resolveTableInputShowDetails } from './resolveInputShowDetails';
 import Editor from './TableInputMappingEditor';
-import {resolveTableInputShowDetails} from './resolveInputShowDetails';
-import { Map } from 'immutable';
 
 const MODE_CREATE = 'create', MODE_EDIT = 'edit';
 
@@ -16,12 +16,10 @@ export default React.createClass({
     onChange: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
-    onEditStart: PropTypes.func,
-    title: PropTypes.string,
     otherDestinations: PropTypes.object.isRequired,
-    showFileHint: PropTypes.bool,
+    onEditStart: PropTypes.func,
     definition: PropTypes.object,
-
+    showFileHint: PropTypes.bool,
     buttonBsStyle: PropTypes.string,
     buttonLabel: PropTypes.string,
     tooltipText: PropTypes.string
@@ -30,7 +28,10 @@ export default React.createClass({
   getDefaultProps() {
     return {
       showFileHint: true,
-      definition: Map()
+      definition: Map(),
+      buttonBsStyle: 'success',
+      buttonLabel: 'New Table Input',
+      tooltipText: 'Edit Input'
     };
   },
 
@@ -68,17 +69,13 @@ export default React.createClass({
   },
 
   render() {
-    let title = 'Input Mapping';
-    if (this.props.definition.get('label')) {
-      title = this.props.definition.get('label');
-    }
     return (
       <span>
         { this.renderOpenButton() }
         <Modal onHide={this.handleCancel} show={this.state.showModal} bsSize="large">
-          <Modal.Header closeButton={true}>
+          <Modal.Header closeButton>
             <Modal.Title>
-              {title}
+              {this.props.definition.get('label') || 'Input Mapping'}
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -100,23 +97,20 @@ export default React.createClass({
 
   renderOpenButton() {
     if (this.props.mode === MODE_EDIT) {
-      const tooltipText = this.props.tooltipText ? this.props.tooltipText : 'Edit Input';
       return (
-        <Tooltip tooltip={tooltipText} placement="top">
+        <Tooltip tooltip={this.props.tooltipText} placement="top">
           <Button bsStyle="link" onClick={this.handleEditButtonClick}>
             <span className="fa fa-pencil" />
           </Button>
         </Tooltip>
       );
-    } else {
-      let buttonBsStyle = this.props.buttonBsStyle ? this.props.buttonBsStyle : 'success';
-      let buttonLabel = this.props.buttonLabel ? this.props.buttonLabel : 'New Table Input';
-      return (
-        <Button bsStyle={buttonBsStyle} onClick={this.open}>
-          <i className="kbc-icon-plus" />{buttonLabel}
-        </Button>
-      );
     }
+
+    return (
+      <Button bsStyle={this.props.buttonBsStyle} onClick={this.open}>
+        <i className="kbc-icon-plus" />{this.props.buttonLabel}
+      </Button>
+    );
   },
 
   handleEditButtonClick(e) {
@@ -173,5 +167,4 @@ export default React.createClass({
         throw e;
       });
   }
-
 });

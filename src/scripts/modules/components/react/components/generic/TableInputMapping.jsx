@@ -1,13 +1,16 @@
 import React, {PropTypes} from 'react';
+import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import {Map, List} from 'immutable';
+import {Panel} from 'react-bootstrap';
+import {getInputMappingValue, findInputMappingDefinition} from '../../../utils/mappingDefinitions';
+import InstalledComponentsActions from '../../../InstalledComponentsActionCreators';
 import Detail from './TableInputMappingDetail';
 import Header from './TableInputMappingHeader';
-import {Panel} from 'react-bootstrap';
-import Immutable from 'immutable';
-import InstalledComponentsActions from '../../../InstalledComponentsActionCreators';
 import Add from './AddTableInputMapping';
-import {getInputMappingValue, findInputMappingDefinition} from '../../../utils/mappingDefinitions';
 
 export default React.createClass({
+  mixins: [ImmutableRenderMixin],
+
   propTypes: {
     componentId: PropTypes.string.isRequired,
     configId: PropTypes.string.isRequired,
@@ -19,45 +22,112 @@ export default React.createClass({
     definitions: PropTypes.object
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
-      definitions: Immutable.List()
+      definitions: List()
     };
   },
 
-  inputMappingDestinations(exclude) {
-    return this.getValue().map(function(mapping, key) {
-      if (key !== exclude) {
-        return mapping.get('destination').toLowerCase();
-      }
-    }).filter(function(destination) {
-      return typeof destination !== 'undefined';
-    });
+  render() {
+    return (
+      <div>
+        <h2>Table Input Mapping {this.renderAddButton()}</h2>
+        {this.renderContent()}
+      </div>
+    );
   },
 
-  render() {
-    var addButton;
-    if (this.getValue().count() >= 1 && this.props.definitions.count() === 0) {
-      addButton = (
-        <span className="pull-right">
-          <Add
-            tables={this.props.tables}
-            componentId={this.props.componentId}
-            configId={this.props.configId}
-            mapping={this.props.editingValue.toMap().get('new-mapping', Immutable.Map())}
-            otherDestinations={this.inputMappingDestinations()}
-          />
+  renderAddButton() {
+    if (!this.getValue().count() || this.props.definitions.count()) {
+      return null;
+    }
+
+    return (
+      <span className="pull-right">
+        <Add
+          tables={this.props.tables}
+          componentId={this.props.componentId}
+          configId={this.props.configId}
+          mapping={this.props.editingValue.toMap().get('new-mapping', Map())}
+          otherDestinations={this.inputMappingDestinations()}
+        />
+      </span>
+    );
+  },
+
+  renderContent() {
+    if (this.getValue().count() >= 1) {
+      return (
+        <span>
+          {this.getValue().map(this.renderPanel).toArray()}
         </span>
       );
     }
+
     return (
-      <div>
-        <h2>Table Input Mapping
-          {addButton}
-        </h2>
-        {this.content()}
+      <div className="well text-center">
+        <p>No table input mapping assigned.</p>
+        <Add
+          tables={this.props.tables}
+          componentId={this.props.componentId}
+          configId={this.props.configId}
+          mapping={this.props.editingValue.toMap().get('new-mapping', Map())}
+          otherDestinations={this.inputMappingDestinations()}
+        />
       </div>
     );
+  },
+
+  renderPanel(input, key) {
+    return (
+      <Panel
+        key={key}
+        eventKey={key}
+        collapsible
+        className="kbc-panel-heading-with-table"
+        expanded={this.props.openMappings.get('table-input-' + key, false)}
+        header={this.renderHeader(input, key)}
+      >
+        <Detail value={input} />
+      </Panel>
+    );
+  },
+
+  renderHeader(input, key) {
+    const definition = findInputMappingDefinition(this.props.definitions, input);
+
+    return (
+      <div onClick={() => this.toggleMapping(key)}>
+        <Header
+          value={input}
+          editingValue={this.props.editingValue.get(key, Map())}
+          tables={this.props.tables}
+          mappingIndex={key}
+          pendingActions={this.props.pendingActions}
+          otherDestinations={this.inputMappingDestinations(key)}
+          definition={definition}
+          onEditStart={() => this.onEditStart(key)}
+          onChange={(value) => {
+            let modifiedValue = value;
+            if (definition.has('destination')) {
+              modifiedValue = modifiedValue.set('destination', definition.get('destination'));
+            }
+            return this.onChangeMapping(key, modifiedValue);
+          }}
+          onSave={() => this.onSaveMapping(key)}
+          onCancel={() => this.onCancelEditMapping(key)}
+          onDelete={() => this.onDeleteMapping(key)}
+        />
+      </div>
+    );
+  },
+
+  inputMappingDestinations(exclude) {
+    return this.getValue().map((mapping, key) => {
+      if (key !== exclude) {
+        return mapping.get('destination').toLowerCase();
+      }
+    }).filter((destination) => typeof destination !== 'undefined');
   },
 
   toggleMapping(key) {
@@ -88,80 +158,5 @@ export default React.createClass({
 
   getValue() {
     return getInputMappingValue(this.props.definitions, this.props.value);
-  },
-
-  content() {
-    var component = this;
-    if (this.getValue().count() >= 1) {
-      var mappings = this.getValue().map(function(input, key) {
-        const definition = findInputMappingDefinition(component.props.definitions, input);
-        return React.createElement(Panel,
-          {
-            className: 'kbc-panel-heading-with-table',
-            key: key,
-            collapsible: true,
-            eventKey: key,
-            expanded: component.props.openMappings.get('table-input-' + key, false),
-            header: React.createElement('div',
-              {
-                onClick: function() {
-                  component.toggleMapping(key);
-                }
-              }, React.createElement(Header,
-                {
-                  value: input,
-                  editingValue: component.props.editingValue.get(key, Immutable.Map()),
-                  tables: component.props.tables,
-                  mappingIndex: key,
-                  pendingActions: component.props.pendingActions,
-                  otherDestinations: component.inputMappingDestinations(key),
-                  definition: definition,
-                  onEditStart: function() {
-                    return component.onEditStart(key);
-                  },
-                  onChange: function(value) {
-                    var modifiedValue = value;
-                    if (definition.has('destination')) {
-                      modifiedValue = modifiedValue.set('destination', definition.get('destination'));
-                    }
-                    return component.onChangeMapping(key, modifiedValue);
-                  },
-                  onSave: function() {
-                    return component.onSaveMapping(key);
-                  },
-                  onCancel: function() {
-                    return component.onCancelEditMapping(key);
-                  },
-                  onDelete: function() {
-                    return component.onDeleteMapping(key);
-                  }
-                }))
-          },
-          React.createElement(Detail,
-            {
-              value: input
-            }
-          )
-        );
-      }).toJS();
-      return (
-        <span>
-          {mappings}
-        </span>
-      );
-    } else {
-      return (
-        <div className="well text-center">
-          <p>No table input mapping assigned.</p>
-          <Add
-            tables={this.props.tables}
-            componentId={this.props.componentId}
-            configId={this.props.configId}
-            mapping={this.props.editingValue.toMap().get('new-mapping', Immutable.Map())}
-            otherDestinations={this.inputMappingDestinations()}
-          />
-        </div>
-      );
-    }
   }
 });
