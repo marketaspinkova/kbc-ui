@@ -2,7 +2,8 @@ import React from 'react';
 import later from 'later';
 import _ from 'underscore';
 import Select from 'react-select';
-import moment from 'moment-timezone';
+// https://github.com/moment/moment-timezone/issues/697
+import moment from 'moment-timezone/builds/moment-timezone-with-data-2012-2022';
 import date from '../../utils/date';
 
 const PERIOD_OPTIONS = [
