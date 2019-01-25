@@ -22,8 +22,7 @@ export default React.createClass({
         <p>
           This transformation contains some duplicate outputs with other transformations in the same phase.
           Execution order of outputs in a single phase is not guaranteed and may change.
-          Please adjust the outputs to avoid data loss or confusion, e.g. split the transformation(s)
-          into multiple phases.
+          Please adjust the outputs to avoid data loss or confusion.
         </p>
         <ConflictList
           conflicts={conflicts}
