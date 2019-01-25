@@ -24,7 +24,7 @@ export default React.createClass({
     return (
       <AlertBlock type="warning" title="Please migrate these configurations to a new version of OAuth Broker">
         <p>
-          We have released new version of our OAuth Broker API. New features will soon be available in this new version like automatic refreshing of tokens, multiple client apps for better quota management and so on. All the configurations below will be migrated.
+          We have released new version of our OAuth Broker API. New features will soon be available in this new version like automatic refreshing of tokens, multiple client apps for better quota management and so on. Configurations requiring migration are listed below.
         </p>
         <Row>
           {oauthConfigurations.entrySeq().map(([componentId, configurations]) => {
