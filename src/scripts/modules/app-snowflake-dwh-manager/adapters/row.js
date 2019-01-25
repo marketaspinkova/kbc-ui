@@ -6,14 +6,12 @@ export function createConfiguration(localState) {
   if (isUser) {
     const schemasReadState = localState.get('schemas_read', Immutable.List());
     const schemasWriteState = localState.get('schemas_write', Immutable.List());
-    const schemasRead = schemasReadState.toJS()
-      .map(schemaName => {
-        return {name: schemaName, permission: 'read'};
-      });
-    const schemasWrite = schemasWriteState.toJS()
-      .map(schemaName => {
-        return {name: schemaName, permission: 'write'};
-      });
+    const schemasRead = schemasReadState.toJS().map((schemaName) => {
+      return { name: schemaName, permission: 'read' };
+    });
+    const schemasWrite = schemasWriteState.toJS().map((schemaName) => {
+      return { name: schemaName, permission: 'write' };
+    });
 
     return Immutable.fromJS({
       parameters: {
@@ -36,27 +34,34 @@ export function createConfiguration(localState) {
   }
 }
 
-export function parseConfiguration(configuration) {
+export function parseConfiguration(configuration, context) {
   const isUser = configuration.getIn(['parameters', 'user'], false) !== false;
   const isSchema = configuration.getIn(['parameters', 'business_schema'], false) !== false;
 
   if (isUser) {
-    const schemasInConfig = configuration.getIn(['parameters', 'user', 'schemas'], Immutable.List());
+    const existingSchemas = convertRowsToSchemaNames(context.get('rows')).map((schema) => {
+      return Immutable.Map({ value: schema, label: schema });
+    });
+    const schemasInConfig = configuration.getIn(
+      ['parameters', 'user', 'schemas'],
+      Immutable.List()
+    );
     const schemasRead = schemasInConfig
       .toJS()
-      .filter(spec => spec.permission === 'read')
-      .map(spec => spec.name);
+      .filter((spec) => spec.permission === 'read')
+      .map((spec) => spec.name);
     const schemasWrite = schemasInConfig
       .toJS()
-      .filter(spec => spec.permission === 'write')
-      .map(spec => spec.name);
+      .filter((spec) => spec.permission === 'write')
+      .map((spec) => spec.name);
 
     return Immutable.fromJS({
       type: 'user',
       email: configuration.getIn(['parameters', 'user', 'email'], ''),
       schemas_read: schemasRead,
       schemas_write: schemasWrite,
-      disabled: configuration.getIn(['parameters', 'user', 'disabled'], false)
+      disabled: configuration.getIn(['parameters', 'user', 'disabled'], false),
+      existingSchemas
     });
   }
   if (isSchema) {
@@ -73,5 +78,11 @@ export function parseConfiguration(configuration) {
 }
 
 export function createEmptyConfiguration(name) {
-  return createConfiguration(Immutable.fromJS({type: 'schema', schema_name: name}));
+  return createConfiguration(Immutable.fromJS({ type: 'schema', schema_name: name }));
 }
+
+const convertRowsToSchemaNames = (rows) => {
+  return rows
+    .filter((row) => row.get('parameters').has('business_schema'))
+    .map((row) => row.getIn(['parameters', 'business_schema', 'schema_name']));
+};

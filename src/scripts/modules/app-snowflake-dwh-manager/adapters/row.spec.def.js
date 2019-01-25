@@ -10,7 +10,8 @@ const originalCasesForParseConfiguration = {
           schema_name: 'accounting'
         }
       }
-    }
+    },
+    context: { rows: [] }
   },
   schemaNameEmptyString: {
     localState: {
@@ -23,7 +24,8 @@ const originalCasesForParseConfiguration = {
           schema_name: ''
         }
       }
-    }
+    },
+    context: { rows: [] }
   },
   user: {
     localState: {
@@ -31,19 +33,19 @@ const originalCasesForParseConfiguration = {
       email: 'tomas.fejfar@keboola.com',
       schemas_read: ['accounting', 'sales'],
       schemas_write: [],
-      disabled: false
+      disabled: false,
+      existingSchemas: []
     },
     configuration: {
       parameters: {
         user: {
           email: 'tomas.fejfar@keboola.com',
-          business_schemas: [
-            'accounting', 'sales'
-          ],
+          business_schemas: ['accounting', 'sales'],
           disabled: false
         }
       }
-    }
+    },
+    context: { rows: [] }
   },
   userEmailEmptyString: {
     localState: {
@@ -51,18 +53,44 @@ const originalCasesForParseConfiguration = {
       email: '',
       schemas_read: ['accounting', 'sales'],
       schemas_write: [],
-      disabled: false
+      disabled: false,
+      existingSchemas: [
+        {
+          value: 'accounting',
+          label: 'accounting'
+        },
+        {
+          value: 'dev',
+          label: 'dev'
+        }
+      ]
     },
     configuration: {
       parameters: {
         user: {
           email: '',
-          business_schemas: [
-            'accounting', 'sales'
-          ],
+          business_schemas: ['accounting', 'sales'],
           disabled: false
         }
       }
+    },
+    context: {
+      rows: [
+        {
+          parameters: {
+            business_schema: {
+              schema_name: 'accounting'
+            }
+          }
+        },
+        {
+          parameters: {
+            business_schema: {
+              schema_name: 'dev'
+            }
+          }
+        }
+      ]
     }
   }
 };
@@ -74,20 +102,22 @@ const newCases = {
       email: 'dev@keboola.com',
       schemas_read: ['accounting', 'sales'],
       schemas_write: [],
-      disabled: false
+      disabled: false,
+      existingSchemas: []
     },
     configuration: {
       parameters: {
         user: {
           email: 'dev@keboola.com',
           schemas: [
-            {'name': 'accounting', 'permission': 'read'},
-            {'name': 'sales', 'permission': 'read'}
+            { name: 'accounting', permission: 'read' },
+            { name: 'sales', permission: 'read' }
           ],
           disabled: false
         }
       }
-    }
+    },
+    context: { rows: [] }
   },
   emptyReadSchemas: {
     localState: {
@@ -95,20 +125,22 @@ const newCases = {
       email: 'dev@keboola.com',
       schemas_read: [],
       schemas_write: ['accounting', 'sales'],
-      disabled: false
+      disabled: false,
+      existingSchemas: []
     },
     configuration: {
       parameters: {
         user: {
           email: 'dev@keboola.com',
           schemas: [
-            {'name': 'accounting', 'permission': 'write'},
-            {'name': 'sales', 'permission': 'write'}
+            { name: 'accounting', permission: 'write' },
+            { name: 'sales', permission: 'write' }
           ],
           disabled: false
         }
       }
-    }
+    },
+    context: { rows: [] }
   },
   combinationOfReadAndWrite: {
     localState: {
@@ -116,22 +148,24 @@ const newCases = {
       email: 'dev@keboola.com',
       schemas_read: ['accounting', 'sales'],
       schemas_write: ['development', 'local'],
-      disabled: false
+      disabled: false,
+      existingSchemas: []
     },
     configuration: {
       parameters: {
         user: {
           email: 'dev@keboola.com',
           schemas: [
-            {'name': 'accounting', 'permission': 'read'},
-            {'name': 'sales', 'permission': 'read'},
-            {'name': 'development', 'permission': 'write'},
-            {'name': 'local', 'permission': 'write'}
+            { name: 'accounting', permission: 'read' },
+            { name: 'sales', permission: 'read' },
+            { name: 'development', permission: 'write' },
+            { name: 'local', permission: 'write' }
           ],
           disabled: false
         }
       }
-    }
+    },
+    context: { rows: [] }
   },
   emptyReadAndWrite: {
     localState: {
@@ -139,7 +173,8 @@ const newCases = {
       email: 'dev@keboola.com',
       schemas_read: [],
       schemas_write: [],
-      disabled: false
+      disabled: false,
+      existingSchemas: []
     },
     configuration: {
       parameters: {
@@ -149,7 +184,8 @@ const newCases = {
           disabled: false
         }
       }
-    }
+    },
+    context: { rows: [] }
   }
 };
 
@@ -160,23 +196,23 @@ const mixedCasesFromConfiguration = {
       email: 'dev@keboola.com',
       schemas_read: ['development', 'accounting', 'sales'],
       schemas_write: ['local'],
-      disabled: false
+      disabled: false,
+      existingSchemas: []
     },
     configuration: {
       parameters: {
         user: {
           email: 'dev@keboola.com',
-          business_schemas: [
-            'accounting', 'sales'
-          ],
+          business_schemas: ['accounting', 'sales'],
           schemas: [
-            {'name': 'development', 'permission': 'read'},
-            {'name': 'local', 'permission': 'write'}
+            { name: 'development', permission: 'read' },
+            { name: 'local', permission: 'write' }
           ],
           disabled: false
         }
       }
-    }
+    },
+    context: { rows: [] }
   }
 };
 
@@ -187,22 +223,24 @@ const mixedCasesFromLocalstate = {
       email: 'dev@keboola.com',
       schemas_read: ['accounting', 'sales', 'development'],
       schemas_write: ['local'],
-      disabled: false
+      disabled: false,
+      existingSchemas: []
     },
     configuration: {
       parameters: {
         user: {
           email: 'dev@keboola.com',
           schemas: [
-            {'name': 'accounting', 'permission': 'read'},
-            {'name': 'sales', 'permission': 'read'},
-            {'name': 'development', 'permission': 'read'},
-            {'name': 'local', 'permission': 'write'}
+            { name: 'accounting', permission: 'read' },
+            { name: 'sales', permission: 'read' },
+            { name: 'development', permission: 'read' },
+            { name: 'local', permission: 'write' }
           ],
           disabled: false
         }
       }
-    }
+    },
+    context: { rows: [] }
   }
 };
 
