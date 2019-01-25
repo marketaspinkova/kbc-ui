@@ -1,8 +1,6 @@
 language: node_js
 node_js: "8"
-branches:
-  only:
-    - master
+
 before_script:
   - git --version
   - git describe --tags --always --long
@@ -26,6 +24,7 @@ deploy:
   cache_control: max-age=31536000
   detect_encoding: true
   on:
+    branch: master
     repo: keboola/kbc-ui
 after_deploy:
 - echo $KBC_REVISION
