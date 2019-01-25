@@ -67,7 +67,7 @@ Just run:
 ## Prettier
 
 - no automation (e.g. using hook) is set up yet
-- check `.prettier.js` for
+- check `.prettierrc.js` for
 - run manually using `yarn prettier` command
 - example: `yarn prettier --config .prettierrc.js --write src/scripts/modules/app-snowflake-dwh-manager/react/components/Configuration.jsx`
 
