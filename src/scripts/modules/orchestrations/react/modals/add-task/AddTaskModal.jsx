@@ -1,5 +1,8 @@
 import React from 'react';
+import immutableMixin from 'react-immutable-render-mixin';
 import { Modal, ButtonToolbar, Button } from 'react-bootstrap';
+import { SearchBar } from '@keboola/indigo-ui';
+
 import ComponentSelect from './ComponentSelect';
 import ConfigurationSelect from './ConfigurationSelect';
 import OrchestrationSelect from './OrchestrationSelect';
@@ -8,9 +11,7 @@ import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import InstalledComponentsStore from '../../../../components/stores/InstalledComponentsStore';
 import RoutesStore from '../../../../../stores/RoutesStore';
 import OrchestrationStore from '../../../stores/OrchestrationsStore';
-import { SearchBar } from '@keboola/indigo-ui';
-import fuzzy from 'fuzzy';
-import immutableMixin from 'react-immutable-render-mixin';
+import matchByWords from '../../../../../utils/matchByWords';
 
 const STEP_COMPONENT_SELECT = 'componentSelect';
 const STEP_CONFIGURATION_SELECT = 'configurationSelect';
@@ -49,15 +50,17 @@ export default React.createClass({
   },
 
   _getFilteredComponents() {
-    const filter = this.props.searchQuery;
-    return this.state.components.filter(
-      c => fuzzy.match(filter, c.get('name', '')) || fuzzy.match(filter, c.get('id', ''))
-    );
+    const filter = this.props.searchQuery.toLowerCase();
+    return this.state.components.filter(component => {
+      const name = component.get('name', '').toLowerCase();
+      const id = component.get('id', '').toLowerCase();
+      return matchByWords(name, filter) || matchByWords(id, filter);
+    });
   },
 
   _getFilteredOrchestrations() {
-    const filter = this.props.searchQuery;
-    return this.state.orchestrations.filter(() => fuzzy.match(filter, 'orchestrator'));
+    const filter = this.props.searchQuery.toLowerCase();
+    return this.state.orchestrations.filter(() => matchByWords('orchestrator', filter));
   },
 
   _handleOnHide() {
