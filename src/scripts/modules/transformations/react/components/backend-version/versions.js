@@ -7,25 +7,30 @@ const versions = {
       version: ''
     },
     {
-      label: '1.2.8',
-      version: '1.2.8',
-      until: '2019-01-01'
+      label: '1.2.10 (R 3.5.2 without TCL/TK)',
+      version: '1.2.10',
+      until: '2019-02-01'
     },
     {
       label: '1.2.9 (R 3.5.0)',
       version: '1.2.9',
       until: '2019-01-30'
-    },
+    },    
     {
-      label: '1.2.10 (R 3.5.2 without TCL/TK)',
-      version: '1.2.10',
-      until: '2019-02-01'
-    }
+      label: '1.2.8',
+      version: '1.2.8',
+      until: '2019-01-01'
+    },
   ],
   python: [
     {
       label: 'Latest (recommended and up to date environment)',
       version: ''
+    },
+    {
+      label: '1.1.12 (Python 3.6.4)',
+      version: '1.1.12',
+      until: '2019-02-11'
     },
     {
       label: '1.1.9',
