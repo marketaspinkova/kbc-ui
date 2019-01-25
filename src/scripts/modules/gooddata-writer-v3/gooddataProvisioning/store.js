@@ -37,27 +37,6 @@ dispatcher.register(payload => {
       _store = _store.setIn(['isLoading', pid], false);
       return ProvisioningStore.emitChange();
     }
-    case ProvisioningActionTypes.GD_PROVISIONING_TOGGLESSO_START: {
-      const {pid} = action;
-      _store = _store.setIn(['isLoading', pid], true);
-      return ProvisioningStore.emitChange();
-    }
-    case ProvisioningActionTypes.GD_PROVISIONING_TOGGLESSO_SUCCESS: {
-      const {pid} = action;
-      const {enable} = action;
-      _store = _store.setIn(['isLoading', pid], false);
-      if (enable) {
-        _store = _store.setIn(['provisioning', pid, 'sso'], fromJS(action.data));
-      } else {
-        _store = _store.deleteIn(['provisioning', pid, 'sso']);
-      }
-      return ProvisioningStore.emitChange();
-    }
-    case ProvisioningActionTypes.GD_PROVISIONING_TOGGLESSO_ERROR: {
-      const {pid} = action;
-      _store = _store.setIn(['isLoading', pid], false);
-      return ProvisioningStore.emitChange();
-    }
     case ProvisioningActionTypes.GD_PROVISIONING_CREATE_START: {
       _store = _store.setIn(['isCreating'], true);
       return ProvisioningStore.emitChange();

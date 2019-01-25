@@ -4,7 +4,6 @@ import Credentials from './Credentials';
 import ProvisioningActions from '../../gooddataProvisioning/actions';
 import ProvisioningStore from '../../gooddataProvisioning/store';
 
-// import ProvisioningUtils, {TokenTypes} from '../../provisioning/utils';
 import ApplicationStore from '../../../../stores/ApplicationStore';
 
 export default React.createClass({
@@ -47,19 +46,14 @@ export default React.createClass({
     }
   },
 
-  handleToggleProjectAccess(pid, enable) {
-    return ProvisioningActions.toggleProjectAccess(pid, enable).then(() => {
-      if (enable) {
-        ProvisioningActions.loadProvisioningData(pid);
-      }
-    });
-  },
-
   handleCreate(newProject) {
     if (newProject.isCreateNewProject) {
       const {name, tokenType, customToken} = newProject;
       return ProvisioningActions.createProject(name, tokenType, customToken).then(
-        ({pid, login, password}) => this.props.onSave({pid, login, password})
+        ({pid, login, password}) => {
+          ProvisioningActions.loadProvisioningData(pid);
+          return this.props.onSave({pid, login, password});
+        }
       );
     } else {
       const {pid, login, password} = newProject;
@@ -89,7 +83,6 @@ export default React.createClass({
         config={this.props.value}
         provisioning={this.state}
         onHandleCreate={this.handleCreate}
-        onToggleEnableAcess={this.handleToggleProjectAccess}
         onHandleResetProject={this.handleResetProject}
       />
     );

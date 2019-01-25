@@ -1,6 +1,6 @@
 import {ProvisioningActionTypes} from '../constants';
 import dispatcher from '../../../Dispatcher';
-import {isCustomToken, loadProvisioningData} from './utils';
+import * as utils from './utils';
 import api from './api';
 import HttpError from '../../../utils/HttpError';
 
@@ -18,7 +18,7 @@ export default {
       type: ProvisioningActionTypes.GD_PROVISIONING_LOAD_START,
       pid
     });
-    return loadProvisioningData(pid).then(
+    return utils.loadProvisioningData(pid).then(
       data => dispatcher.handleViewAction({
         type: ProvisioningActionTypes.GD_PROVISIONING_LOAD_SUCCESS,
         data,
@@ -56,7 +56,7 @@ export default {
     dispatcher.handleViewAction({
       type: ProvisioningActionTypes.GD_PROVISIONING_CREATE_START
     });
-    const token = isCustomToken(tokenType) ? customToken : tokenType;
+    const token = utils.isCustomToken(tokenType) ? customToken : tokenType;
     return api.createProjectAndUser(name, token).then(
       data => {
         data.token = token;
@@ -73,27 +73,5 @@ export default {
       handleError(err);
     }
     );
-  },
-
-  toggleProjectAccess(pid, enable) {
-    dispatcher.handleViewAction({
-      type: ProvisioningActionTypes.GD_PROVISIONING_TOGGLESSO_START,
-      pid
-    });
-    const apiPromise = enable ? api.enableSSOAccess(pid) : api.disableSSOAccess(pid);
-    return apiPromise.then(
-      data => dispatcher.handleViewAction({
-        type: ProvisioningActionTypes.GD_PROVISIONING_TOGGLESSO_SUCCESS,
-        pid,
-        enable,
-        data
-      })).catch(err => {
-      dispatcher.handleViewAction({
-        type: ProvisioningActionTypes.GD_PROVISIONING_TOGGLESSO_ERROR,
-        pid,
-        error: err
-      });
-      handleError(err);
-    });
   }
 };

@@ -20,7 +20,6 @@ export default React.createClass({
     }),
     disabled: PropTypes.bool.isRequired,
     onHandleCreate: PropTypes.func.isRequired,
-    onToggleEnableAcess: PropTypes.func.isRequired,
     onHandleResetProject: PropTypes.func.isRequired
   },
 
@@ -133,7 +132,7 @@ export default React.createClass({
 
   renderActionsRow() {
     const isProvisioned = this.isKeboolaProvisioned();
-    const hasSso = this.isSsoEnabled();
+    const hasSsoLink = isProvisioned && !!this.props.provisioning.data.get('sso');
     return (
       <div className="btn-toolbar form-group">
         {!isProvisioned &&
@@ -145,9 +144,7 @@ export default React.createClass({
         {!isProvisioned && this.renderGoToProjectLink()}
 
         {isProvisioned && this.renderResetProjectButton()}
-        {isProvisioned && !hasSso && this.renderEnableAccessButton()}
-        {isProvisioned &&  hasSso && this.renderDisableAccessButton()}
-        {isProvisioned &&  hasSso && this.renderLoginToProjectLink()}
+        {hasSsoLink && this.renderLoginToProjectLink()}
 
       </div>
     );
@@ -160,11 +157,6 @@ export default React.createClass({
   isKeboolaProvisioned() {
     return this.isConnected() && !!this.props.provisioning.data;
   },
-
-  isSsoEnabled() {
-    return this.isKeboolaProvisioned() && !!this.props.provisioning.data.get('sso');
-  },
-
 
   renderResetProjectButton() {
     return (
@@ -222,29 +214,6 @@ export default React.createClass({
           Go To Project
         </button>
       </form>
-    );
-  },
-
-
-  renderDisableAccessButton() {
-    return (
-      <button type="button"
-        className="btn btn-link pull-right"
-        onClick={() => this.props.onToggleEnableAcess(this.props.config.pid, false)}>
-        <span className="fa fa-unlink fa-fw" />
-        Disable Access To Project
-      </button>
-    );
-  },
-
-  renderEnableAccessButton() {
-    return (
-      <button type="button"
-        className="btn btn-link pull-right"
-        onClick={() => this.props.onToggleEnableAcess(this.props.config.pid, true)}>
-        <span className="fa fa-link fa-fw" />
-        Enable Access To Project
-      </button>
     );
   },
 

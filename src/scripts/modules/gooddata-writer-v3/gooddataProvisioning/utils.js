@@ -24,7 +24,7 @@ export function loadProvisioningData(pid) {
     ({ token }) => {
       return api.getSSOAccess(pid).then(
         sso => ({ sso, token }),
-        () => ({ token })
+        err => Promise.reject({ error: err.message || err })
       );
     },
     err => {
