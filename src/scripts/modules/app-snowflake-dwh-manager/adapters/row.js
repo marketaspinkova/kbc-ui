@@ -6,14 +6,12 @@ export function createConfiguration(localState) {
   if (isUser) {
     const schemasReadState = localState.get('schemas_read', Immutable.List());
     const schemasWriteState = localState.get('schemas_write', Immutable.List());
-    const schemasRead = schemasReadState.toJS()
-      .map(schemaName => {
-        return {name: schemaName, permission: 'read'};
-      });
-    const schemasWrite = schemasWriteState.toJS()
-      .map(schemaName => {
-        return {name: schemaName, permission: 'write'};
-      });
+    const schemasRead = schemasReadState.toJS().map((schemaName) => {
+      return { name: schemaName, permission: 'read' };
+    });
+    const schemasWrite = schemasWriteState.toJS().map((schemaName) => {
+      return { name: schemaName, permission: 'write' };
+    });
 
     return Immutable.fromJS({
       parameters: {
@@ -41,15 +39,18 @@ export function parseConfiguration(configuration) {
   const isSchema = configuration.getIn(['parameters', 'business_schema'], false) !== false;
 
   if (isUser) {
-    const schemasInConfig = configuration.getIn(['parameters', 'user', 'schemas'], Immutable.List());
+    const schemasInConfig = configuration.getIn(
+      ['parameters', 'user', 'schemas'],
+      Immutable.List()
+    );
     const schemasRead = schemasInConfig
       .toJS()
-      .filter(spec => spec.permission === 'read')
-      .map(spec => spec.name);
+      .filter((spec) => spec.permission === 'read')
+      .map((spec) => spec.name);
     const schemasWrite = schemasInConfig
       .toJS()
-      .filter(spec => spec.permission === 'write')
-      .map(spec => spec.name);
+      .filter((spec) => spec.permission === 'write')
+      .map((spec) => spec.name);
 
     return Immutable.fromJS({
       type: 'user',
@@ -73,5 +74,5 @@ export function parseConfiguration(configuration) {
 }
 
 export function createEmptyConfiguration(name) {
-  return createConfiguration(Immutable.fromJS({type: 'schema', schema_name: name}));
+  return createConfiguration(Immutable.fromJS({ type: 'schema', schema_name: name }));
 }

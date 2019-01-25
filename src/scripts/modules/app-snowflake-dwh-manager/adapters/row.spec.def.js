@@ -37,9 +37,7 @@ const originalCasesForParseConfiguration = {
       parameters: {
         user: {
           email: 'tomas.fejfar@keboola.com',
-          business_schemas: [
-            'accounting', 'sales'
-          ],
+          business_schemas: ['accounting', 'sales'],
           disabled: false
         }
       }
@@ -57,9 +55,7 @@ const originalCasesForParseConfiguration = {
       parameters: {
         user: {
           email: '',
-          business_schemas: [
-            'accounting', 'sales'
-          ],
+          business_schemas: ['accounting', 'sales'],
           disabled: false
         }
       }
@@ -81,8 +77,8 @@ const newCases = {
         user: {
           email: 'dev@keboola.com',
           schemas: [
-            {'name': 'accounting', 'permission': 'read'},
-            {'name': 'sales', 'permission': 'read'}
+            { name: 'accounting', permission: 'read' },
+            { name: 'sales', permission: 'read' }
           ],
           disabled: false
         }
@@ -102,8 +98,8 @@ const newCases = {
         user: {
           email: 'dev@keboola.com',
           schemas: [
-            {'name': 'accounting', 'permission': 'write'},
-            {'name': 'sales', 'permission': 'write'}
+            { name: 'accounting', permission: 'write' },
+            { name: 'sales', permission: 'write' }
           ],
           disabled: false
         }
@@ -123,10 +119,10 @@ const newCases = {
         user: {
           email: 'dev@keboola.com',
           schemas: [
-            {'name': 'accounting', 'permission': 'read'},
-            {'name': 'sales', 'permission': 'read'},
-            {'name': 'development', 'permission': 'write'},
-            {'name': 'local', 'permission': 'write'}
+            { name: 'accounting', permission: 'read' },
+            { name: 'sales', permission: 'read' },
+            { name: 'development', permission: 'write' },
+            { name: 'local', permission: 'write' }
           ],
           disabled: false
         }
@@ -166,12 +162,10 @@ const mixedCasesFromConfiguration = {
       parameters: {
         user: {
           email: 'dev@keboola.com',
-          business_schemas: [
-            'accounting', 'sales'
-          ],
+          business_schemas: ['accounting', 'sales'],
           schemas: [
-            {'name': 'development', 'permission': 'read'},
-            {'name': 'local', 'permission': 'write'}
+            { name: 'development', permission: 'read' },
+            { name: 'local', permission: 'write' }
           ],
           disabled: false
         }
@@ -194,10 +188,10 @@ const mixedCasesFromLocalstate = {
         user: {
           email: 'dev@keboola.com',
           schemas: [
-            {'name': 'accounting', 'permission': 'read'},
-            {'name': 'sales', 'permission': 'read'},
-            {'name': 'development', 'permission': 'read'},
-            {'name': 'local', 'permission': 'write'}
+            { name: 'accounting', permission: 'read' },
+            { name: 'sales', permission: 'read' },
+            { name: 'development', permission: 'read' },
+            { name: 'local', permission: 'write' }
           ],
           disabled: false
         }
