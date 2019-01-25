@@ -4,7 +4,7 @@ import Tooltip from './../../../../../react/common/Tooltip';
 import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
 import Editor from './TableInputMappingEditor';
 import {resolveTableInputShowDetails} from './resolveInputShowDetails';
-import Immutable from 'immutable';
+import { Map } from 'immutable';
 
 const MODE_CREATE = 'create', MODE_EDIT = 'edit';
 
@@ -30,7 +30,7 @@ export default React.createClass({
   getDefaultProps() {
     return {
       showFileHint: true,
-      definition: Immutable.Map()
+      definition: Map()
     };
   },
 
@@ -90,7 +90,7 @@ export default React.createClass({
               isSaving={this.state.isSaving}
               onCancel={this.handleCancel}
               onSave={this.handleSave}
-              isDisabled={!this.isValid()}
+              isDisabled={!this.isValid() || this.editingNonExistentTable()}
             />
           </Modal.Footer>
         </Modal>
@@ -129,17 +129,24 @@ export default React.createClass({
   },
 
   editor() {
-    const props = {
-      value: this.props.mapping,
-      tables: this.props.tables,
-      disabled: this.state.isSaving,
-      onChange: this.props.onChange,
-      initialShowDetails: resolveTableInputShowDetails(this.props.mapping),
-      isDestinationDuplicate: this.isDestinationDuplicate(),
-      showFileHint: this.props.showFileHint,
-      definition: this.props.definition
-    };
-    return React.createElement(Editor, props);
+    return (
+      <Editor
+        value={this.props.mapping}
+        tables={this.props.tables}
+        disabled={this.state.isSaving || this.editingNonExistentTable()}
+        onChange={this.props.onChange}
+        initialShowDetails={resolveTableInputShowDetails(this.props.mapping)}
+        isDestinationDuplicate={this.isDestinationDuplicate()}
+        showFileHint={this.props.showFileHint}
+        definition={this.props.definition}
+        editingNonExistentTable={this.editingNonExistentTable()}
+      />
+    );
+  },
+
+  editingNonExistentTable() {
+    return this.props.mode === MODE_EDIT
+      && this.props.tables.get(this.props.mapping.get('source'), Map()).count() === 0;
   },
 
   handleCancel() {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Map, List } from 'immutable';
 import { PanelWithDetails } from '@keboola/indigo-ui';
-import { HelpBlock } from 'react-bootstrap';
+import { Alert, HelpBlock } from 'react-bootstrap';
 import { Input } from '../../../../../react/common/KbcBootstrap';
 import SapiTableSelector from '../SapiTableSelector';
 import ChangedSinceFilterInput from './ChangedSinceFilterInput';
@@ -14,6 +14,7 @@ export default React.createClass({
     tables: React.PropTypes.object.isRequired,
     onChange: React.PropTypes.func.isRequired,
     disabled: React.PropTypes.bool.isRequired,
+    editingNonExistentTable: React.PropTypes.bool.isRequired,
     initialShowDetails: React.PropTypes.bool.isRequired,
     showFileHint: React.PropTypes.bool,
     isDestinationDuplicate: React.PropTypes.bool.isRequired,
@@ -27,46 +28,14 @@ export default React.createClass({
     };
   },
 
-  _handleChangeSource(value) {
-    // use only table name from the table identifier
-    const immutable = this.props.value.withMutations(mapping => {
-      let destination;
-      mapping.set('source', value);
-      if (value) {
-        destination = value.substr(value.lastIndexOf('.') + 1) + '.csv';
-      } else {
-        destination = '';
-      }
-      mapping.set('destination', destination);
-      mapping.set('where_column', '');
-      mapping.set('where_values', List());
-      mapping.set('where_operator', 'eq');
-      mapping.set('columns', List());
-    });
-
-    return this.props.onChange(immutable);
-  },
-
-  _handleChangeDestination(e) {
-    const value = this.props.value.set('destination', e.target.value.trim());
-    return this.props.onChange(value);
-  },
-
-  _getFileName() {
-    if (this.props.value.get('destination') && this.props.value.get('destination') !== '') {
-      return this.props.value.get('destination');
-    }
-
-    if (this.props.value.get('source') && this.props.value.get('source') !== '') {
-      return this.props.value.get('source');
-    }
-
-    return '';
-  },
-
   render() {
     return (
       <div className="form-horizontal">
+        {this.props.editingNonExistentTable && (
+          <Alert bsStyle="warning">
+            Source table does not exist.
+          </Alert>
+        )}
         <div className="form-group">
           <label className="col-xs-2 control-label">Source</label>
           <div className="col-xs-10">
@@ -74,7 +43,7 @@ export default React.createClass({
               value={this.props.value.get('source')}
               disabled={this.props.disabled}
               placeholder="Source table"
-              onSelectTableFn={this._handleChangeSource}
+              onSelectTableFn={this.handleChangeSource}
               autoFocus={true}
             />
           </div>
@@ -86,7 +55,7 @@ export default React.createClass({
             value={this.props.value.get('destination')}
             disabled={this.props.disabled}
             placeholder="File name"
-            onChange={this._handleChangeDestination}
+            onChange={this.handleChangeDestination}
             labelClassName="col-xs-2"
             wrapperClassName="col-xs-10"
             bsStyle={this.props.isDestinationDuplicate ? 'error' : null}
@@ -101,7 +70,7 @@ export default React.createClass({
                   {this.props.showFileHint && (
                     <span>
                         File will be available at
-                      <code>{`/data/in/tables/${this._getFileName()}`}</code>
+                      <code>{`/data/in/tables/${this.getFileName()}`}</code>
                     </span>
                   )}
                 </HelpBlock>
@@ -130,5 +99,42 @@ export default React.createClass({
         </PanelWithDetails>
       </div>
     );
+  },
+
+  handleChangeSource(value) {
+    // use only table name from the table identifier
+    const immutable = this.props.value.withMutations(mapping => {
+      let destination;
+      mapping.set('source', value);
+      if (value) {
+        destination = value.substr(value.lastIndexOf('.') + 1) + '.csv';
+      } else {
+        destination = '';
+      }
+      mapping.set('destination', destination);
+      mapping.set('where_column', '');
+      mapping.set('where_values', List());
+      mapping.set('where_operator', 'eq');
+      mapping.set('columns', List());
+    });
+
+    return this.props.onChange(immutable);
+  },
+
+  handleChangeDestination(e) {
+    const value = this.props.value.set('destination', e.target.value.trim());
+    return this.props.onChange(value);
+  },
+
+  getFileName() {
+    if (this.props.value.get('destination') && this.props.value.get('destination') !== '') {
+      return this.props.value.get('destination');
+    }
+
+    if (this.props.value.get('source') && this.props.value.get('source') !== '') {
+      return this.props.value.get('source');
+    }
+
+    return '';
   }
 });
