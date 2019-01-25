@@ -15,7 +15,7 @@ const versions = {
       label: '1.2.9 (R 3.5.0)',
       version: '1.2.9',
       until: '2019-01-30'
-    },    
+    },
     {
       label: '1.2.8',
       version: '1.2.8',
