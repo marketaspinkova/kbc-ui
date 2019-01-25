@@ -48,7 +48,7 @@ export default React.createClass({
           tables={this.props.tables}
           componentId={this.props.componentId}
           configId={this.props.configId}
-          mapping={this.props.editingValue.toMap().get('new-mapping', Map())}
+          mapping={this.props.editingValue.get('new-mapping', Map())}
           otherDestinations={this.inputMappingDestinations()}
         />
       </span>
@@ -71,7 +71,7 @@ export default React.createClass({
           tables={this.props.tables}
           componentId={this.props.componentId}
           configId={this.props.configId}
-          mapping={this.props.editingValue.toMap().get('new-mapping', Map())}
+          mapping={this.props.editingValue.get('new-mapping', Map())}
           otherDestinations={this.inputMappingDestinations()}
         />
       </div>

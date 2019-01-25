@@ -42,7 +42,7 @@ export default React.createClass({
         <Add
           componentId={this.props.componentId}
           configId={this.props.configId}
-          mapping={this.props.editingValue.toMap().get('new-mapping', Map())}
+          mapping={this.props.editingValue.get('new-mapping', Map())}
         />
       </span>
     );
@@ -63,7 +63,7 @@ export default React.createClass({
         <Add
           componentId={this.props.componentId}
           configId={this.props.configId}
-          mapping={this.props.editingValue.toMap().get('new-mapping', Map())}
+          mapping={this.props.editingValue.get('new-mapping', Map())}
         />
       </div>
     );

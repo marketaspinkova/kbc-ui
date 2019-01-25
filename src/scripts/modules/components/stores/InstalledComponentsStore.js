@@ -1,6 +1,6 @@
 import Dispatcher from '../../../Dispatcher';
 import * as constants from '../Constants';
-import { Map, List, fromJS } from 'immutable';
+import { Map, fromJS } from 'immutable';
 import TemplatesStore from './TemplatesStore';
 import ComponentsStore from './ComponentsStore';
 import StoreUtils from '../../../utils/StoreUtils';
@@ -819,24 +819,7 @@ Dispatcher.register(function(payload) {
         action.storage,
         action.index
       ];
-      var pathList = [
-        'configDataEditingObject',
-        action.componentId,
-        action.configId,
-        'storage',
-        action.mappingType,
-        action.storage
-      ];
-
-      if (!_store.hasIn(pathList)) {
-        _store = _store.setIn(pathList, List());
-      }
       _store = _store.setIn(path, currentMapping);
-
-      // editing mappings List may contain undefined values, make sure it contains empty Maps at least
-      // https://github.com/keboola/kbc-ui/pull/1623#issuecomment-381090091
-      var mappingsList = _store.getIn(pathList, List()).map(m => m || Map());
-      _store = _store.setIn(pathList, mappingsList);
       return InstalledComponentsStore.emitChange();
 
     case constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_MAPPING_EDITING_CANCEL:
