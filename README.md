@@ -64,6 +64,13 @@ Just run:
    * Render the page when the primary data are available.
    * Some additionally data can be fetched later, loader should be shown when data are not yet loaded.
 
+## Prettier
+
+- no automation (e.g. using hook) is set up yet
+- check `.prettier.js` for
+- run manually using `yarn prettier` command
+- example: `yarn prettier --config .prettierrc.js --write src/scripts/modules/app-snowflake-dwh-manager/react/components/Configuration.jsx`
+
 ## Code linting
 
 We are using popular [Eslint](http://eslint.org/) with custom `.eslintrc` file
