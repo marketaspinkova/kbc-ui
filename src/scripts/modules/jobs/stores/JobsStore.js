@@ -12,7 +12,7 @@ let _store = Map({
   isLoaded: false,
   isLoadMore: true,
   loadJobsErrorCnt: 0,
-  limit: 5,
+  limit: 50,
   offset: 0
 });
 
