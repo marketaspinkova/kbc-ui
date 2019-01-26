@@ -39,7 +39,7 @@ export default React.createClass({
       return (
         <AlertBlock type="warning" title="Speed up output of your transformations">
           <p>
-            Your project is ready, if you are eager to parallelize outputs for your transformations,
+            Your project is ready, if you are eager to parallelize output processing for your transformations,
             please use the support button to let us know.
           </p>
         </AlertBlock>
@@ -49,8 +49,8 @@ export default React.createClass({
     return (
       <AlertBlock type="warning" title="Transformations slowing down your output">
         <p>
-          We cannot turn on parallel output processing for this project as these transformations have duplicate outputs
-          (multiple outputs writing to the same table in Storage). Please fix the transformations so we can turn on
+          We cannot turn on parallel output processing for this project as these transformations write outputs
+          to the same table in Storage. Please fix the transformations so we can turn on
           faster output processing for this project.
         </p>
         <div className="row">

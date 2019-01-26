@@ -20,8 +20,8 @@ export default React.createClass({
       <Alert bsStyle="warning">
         <h3>Output Warning</h3>
         <p>
-          This transformation contains some duplicate outputs with other transformations in the same phase.
-          Execution order of outputs in a single phase is not guaranteed and may change.
+          This transformation shares its outputs with other transformations in the same phase.
+          The execution order of outputs in a single phase is not guaranteed and may change.
           Please adjust the outputs to avoid data loss or confusion.
         </p>
         <ConflictList
