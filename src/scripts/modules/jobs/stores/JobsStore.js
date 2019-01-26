@@ -12,7 +12,7 @@ let _store = Map({
   isLoaded: false,
   isLoadMore: true,
   loadJobsErrorCnt: 0,
-  limit: 50,
+  limit: 5,
   offset: 0
 });
 
@@ -130,11 +130,11 @@ JobsStore.dispatchToken = Dispatcher.register(payload => {
 
     case constants.ActionTypes.JOB_LOAD_SUCCESS:
       _store = _store.withMutations(store => {
-        const job = fromJS(action.job);
-        job.set('id', parseInt(job.get('id'), 10));
+        const jobId = parseInt(action.job.id, 10);
+        const job = fromJS(action.job).set('id', jobId);
         store
-          .setIn(['jobsById', action.job.id], job)
-          .update('loadingJobs', loadingJobs => loadingJobs.remove(loadingJobs.indexOf(action.job.id)));
+          .setIn(['jobsById', jobId], job)
+          .update('loadingJobs', loadingJobs => loadingJobs.remove(loadingJobs.indexOf(jobId)));
       });
 
       return JobsStore.emitChange();
