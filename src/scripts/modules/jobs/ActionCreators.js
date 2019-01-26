@@ -32,7 +32,7 @@ export default {
   // poll for not finished jobs
   reloadNotFinishedJobs() {
     const allJobs = JobsStore.getAll()
-      .filter(job => job.has('isFinished') && !job.get('isFinished'))
+      .filter(job => !job.get('isFinished'))
       .map(j => j.get('id'))
       .toArray();
     if (allJobs.length === 0) {
