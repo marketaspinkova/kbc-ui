@@ -20,7 +20,7 @@ const versions = {
       label: '1.2.8',
       version: '1.2.8',
       until: '2019-01-01'
-    },
+    }
   ],
   python: [
     {
