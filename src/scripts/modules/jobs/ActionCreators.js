@@ -30,7 +30,7 @@ export default {
   },
 
   // poll for not finished jobs
-  reloadNotFinishedJobs(self) {
+  reloadNotFinishedJobs() {
     const allJobs = JobsStore.getAll()
       .filter(job => !job.get('isFinished'))
       .map(j => j.get('id'))
@@ -39,12 +39,14 @@ export default {
       return Promise.resolve();
     }
     const query = `(id:${allJobs.join(' OR id:')})`;
-    return self.loadJobsForce(0, false, true, query);
+    return this.loadJobsForce(0, false, true, query);
   },
 
   reloadJobs() {
     if (JobsStore.loadJobsErrorCount() < 10) {
-      return this.loadJobsForce(0, false, true).then(this.reloadNotFinishedJobs(this));
+      return this.loadJobsForce(0, false, true).then(() => {
+        this.reloadNotFinishedJobs();
+      });
     }
   },
 
