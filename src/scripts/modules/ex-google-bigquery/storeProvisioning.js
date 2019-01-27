@@ -1,9 +1,10 @@
 import {List, Map} from 'immutable';
+import _ from 'underscore';
 import fuzzy from 'fuzzy';
 import string from '../../utils/string';
+import generateId from '../../utils/generateId';
 
 import {getDefaultBucket} from './common';
-import _ from 'underscore';
 import InstalledComponentStore from '../components/stores/InstalledComponentsStore';
 import OauthStore from '../oauth-v2/Store';
 
@@ -56,15 +57,6 @@ export default function(configId) {
       useLegacySql: true,
       primaryKey: List()
     });
-  }
-
-  function generateId(existingIds) {
-    const randomNumber = () => Math.floor((Math.random() * 100000) + 1);
-    let newId = randomNumber();
-    while (existingIds.indexOf(newId) >= 0) {
-      newId = randomNumber();
-    }
-    return newId;
   }
 
   return {

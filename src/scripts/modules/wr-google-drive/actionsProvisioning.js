@@ -4,6 +4,7 @@ import {fromJS, List, Map} from 'immutable';
 import InstalledComponentStore from '../components/stores/InstalledComponentsStore';
 import componentsActions from '../components/InstalledComponentsActionCreators';
 import callDockerAction from '../components/DockerActionsApi';
+import generateId from '../../utils/generateId';
 
 export default function(COMPONENT_ID, configId) {
   const store = storeProvisioning(COMPONENT_ID, configId);
@@ -42,19 +43,11 @@ export default function(COMPONENT_ID, configId) {
     return InstalledComponentStore.getConfigData(COMPONENT_ID, configId) || Map();
   }
 
-  function generateId() {
-    const existingIds = store.tables.map((q) => q.get('id'));
-    const randomNumber = () => Math.floor((Math.random() * 100000) + 1);
-    let newId = randomNumber();
-    while (existingIds.indexOf(newId) >= 0) {
-      newId = randomNumber();
-    }
-    return newId;
-  }
-
   function touchFile() {
+    const existingIds = store.tables.map((q) => q.get('id'));
+
     return fromJS({
-      'id': generateId(),
+      'id': generateId(existingIds),
       'action': 'update',
       'enabled': true,
       'convert': false

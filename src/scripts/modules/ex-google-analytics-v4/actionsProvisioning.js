@@ -1,9 +1,10 @@
-import storeProvisioning from './storeProvisioning';
+import _ from 'underscore';
 import {Map, fromJS} from 'immutable';
+import storeProvisioning from './storeProvisioning';
 import * as common from './common';
 import componentsActions from '../components/InstalledComponentsActionCreators';
 import callDockerAction from '../components/DockerActionsApi';
-import _ from 'underscore';
+import generateId from '../../utils/generateId';
 
 export default function(configId, componentId) {
   const store = storeProvisioning(configId, componentId);
@@ -46,16 +47,6 @@ export default function(configId, componentId) {
     };
   }
 
-  function generateId() {
-    const existingIds = store.queries.map((q) => q.get('id'));
-    const randomNumber = () => Math.floor((Math.random() * 100000) + 1);
-    let newId = randomNumber();
-    while (existingIds.indexOf(newId) >= 0) {
-      newId = randomNumber();
-    }
-    return newId;
-  }
-
   function saveQueries(newQueries, savingPath, changeDescription) {
     const msg = changeDescription || 'Update queries';
     const data = store.configData.setIn(['parameters', 'queries'], newQueries);
@@ -89,7 +80,8 @@ export default function(configId, componentId) {
     },
 
     saveNewQuery() {
-      let newQuery = store.getNewQuery().set('id', generateId());
+      const existingIds = store.queries.map((q) => q.get('id'));
+      let newQuery = store.getNewQuery().set('id', generateId(existingIds));
       if (!newQuery.get('outputTable')) {
         const name = newQuery.get('name');
         newQuery = newQuery.set('outputTable', common.sanitizeTableName(name));

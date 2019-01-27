@@ -5,6 +5,7 @@ import * as templateFields from './templates/credentials';
 import hasSshTunnel from './templates/hasSshTunnel';
 import _ from 'underscore';
 import string from '../../utils/string';
+import generateId from '../../utils/generateId';
 import getDefaultPort from './templates/defaultPorts';
 import {componentSupportsConfigRows} from './actionsProvisioning';
 import { getAllCustomFieldsNames } from './templates/customFields';
@@ -72,15 +73,6 @@ function fetch(componentId, configId) {
     localState: store.getLocalState(componentId, configId) || Map(),
     configurationType: STANDARD_CONFIGURATION_TYPE
   };
-}
-
-function generateId(existingIds) {
-  const randomNumber = () => Math.floor((Math.random() * 100000) + 1);
-  let newId = randomNumber();
-  while (existingIds.indexOf(newId) >= 0) {
-    newId = randomNumber();
-  }
-  return newId;
 }
 
 function isValidQuery(query) {

@@ -4,6 +4,7 @@ import {fromJS} from 'immutable';
 import componentsActions from '../components/InstalledComponentsActionCreators';
 import callDockerAction from '../components/DockerActionsApi';
 import accountDescriptionTemplate from './templates/accountDescription';
+import generateId from '../../utils/generateId';
 
 // PROPTYPES HELPER:
 /*
@@ -55,19 +56,11 @@ export default function(COMPONENT_ID, configId) {
     };
   }
 
-  function generateId() {
-    const existingIds = store.queries.map((q) => q.get('id'));
-    const randomNumber = () => Math.floor((Math.random() * 100000) + 1);
-    let newId = randomNumber();
-    while (existingIds.indexOf(newId) >= 0) {
-      newId = randomNumber();
-    }
-    return newId;
-  }
-
   function touchQuery() {
+    const existingIds = store.queries.map((q) => q.get('id'));
+
     return fromJS({
-      'id': generateId(),
+      'id': generateId(existingIds),
       'type': 'nested-query',
       'name': '',
       'query': {

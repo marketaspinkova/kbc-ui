@@ -4,6 +4,7 @@ import fuzzy from 'fuzzy';
 import * as templateFields from './credentials';
 import _ from 'underscore';
 import string from '../../utils/string';
+import generateId from '../../utils/generateId';
 import getDefaultPort from './defaultPorts';
 
 const defaultSshPort = 22;
@@ -15,15 +16,6 @@ function fetch(componentId, configId) {
     parameters: config.get('parameters', Map()),
     localState: store.getLocalState(componentId, configId) || Map()
   };
-}
-
-function generateId(existingIds) {
-  const randomNumber = () => Math.floor((Math.random() * 100000) + 1);
-  let newId = randomNumber();
-  while (existingIds.indexOf(newId) >= 0) {
-    newId = randomNumber();
-  }
-  return newId;
 }
 
 export function isJsonValid(jsonString) {
