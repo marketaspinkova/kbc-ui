@@ -37,61 +37,47 @@ export default React.createClass({
 
   render() {
     if (this.props.componentId === 'transformation') {
-      return this.renderLink({
-        to: 'transformationDetail',
-        params: {
-          config: this.props.configId,
-          row: this.props.rowId
-        }
+      return this.renderLink('transformationDetail', {
+        config: this.props.configId,
+        row: this.props.rowId
       });
     }
 
     if (ExAnalyticsComponents.includes(this.props.componentId)) {
-      return this.renderLink({
-        to: this.props.componentId + '-query-detail',
-        params: {
-          config: this.props.configId,
-          queryId: this.props.rowId
-        }
+      return this.renderLink(this.props.componentId + '-query-detail', {
+        config: this.props.configId,
+        queryId: this.props.rowId
       });
     }
 
     if (ExDbGenericComponents.includes(this.props.componentId)) {
-      return this.renderLink({
-        to: 'ex-db-generic-' + this.props.componentId + '-query',
-        params: {
-          config: this.props.configId,
-          query: this.props.rowId
-        }
+      return this.renderLink('ex-db-generic-' + this.props.componentId + '-query', {
+        config: this.props.configId,
+        query: this.props.rowId
       });
     }
 
     if (this.props.componentId === 'ex-mongodb') {
-      return this.renderLink({
-        to: this.props.componentId + '-query',
-        params: {
-          config: this.props.configId,
-          query: this.props.rowId
-        }
+      return this.renderLink(this.props.componentId + '-query', {
+        config: this.props.configId,
+        query: this.props.rowId
       });
     }
 
-    return this.renderLink({
-      to: this.props.componentId + '-row',
-      params: {
-        config: this.props.configId,
-        row: this.props.rowId
-      }
+    return this.renderLink(this.props.componentId + '-row', {
+      config: this.props.configId,
+      row: this.props.rowId
     });
   },
 
-  renderLink(props) {
+  renderLink(to, params) {
     return (
       <Link
         className={this.props.className}
         query={this.props.query}
         onClick={this.props.onClick}
-        {...props}
+        to={to}
+        params={params}
       >
         {this.props.children}
       </Link>
