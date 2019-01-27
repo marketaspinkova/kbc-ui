@@ -1,21 +1,50 @@
-import React from 'react';
-import {Link} from 'react-router';
+import React, { PropTypes } from 'react';
+import { Link } from 'react-router';
 
-module.exports = React.createClass({
-  displayName: 'ComponentConfigurationRowLink',
+const COMPONENTS_WITH_QUERIES = [
+  'keboola.ex-db-pgsql',
+  'keboola.ex-db-redshift',
+  'keboola.ex-db-redshift-cursors',
+  'keboola.ex-db-firebird',
+  'keboola.ex-db-db2',
+  'keboola.ex-db-db2-bata',
+  'keboola.ex-db-mssql',
+  'keboola.ex-db-mysql',
+  'keboola.ex-db-mysql-custom',
+  'keboola.ex-db-oracle',
+  'keboola.ex-db-snowflake',
+  'keboola.ex-db-impala',
+  'ex-mongodb',
+  'keboola.ex-google-bigquery',
+  'keboola.ex-teradata'
+];
+
+export default React.createClass({
   propTypes: {
-    componentId: React.PropTypes.string.isRequired,
-    configId: React.PropTypes.string.isRequired,
-    rowId: React.PropTypes.string.isRequired,
-    className: React.PropTypes.string,
-    query: React.PropTypes.object,
-    children: React.PropTypes.node.isRequired,
-    onClick: React.PropTypes.func
+    componentId: PropTypes.string.isRequired,
+    configId: PropTypes.string.isRequired,
+    rowId: PropTypes.string.isRequired,
+    className: PropTypes.string,
+    query: PropTypes.object,
+    children: PropTypes.node.isRequired,
+    onClick: PropTypes.func
   },
 
-  render: function() {
+  render() {
     if (this.props.componentId === 'transformation') {
-      return (<Link
+      return this.renderTransformationLink();
+    }
+
+    if (COMPONENTS_WITH_QUERIES.includes(this.props.componentId)) {
+      return this.renderQueryLink();
+    }
+
+    return this.renderRowLink();
+  },
+
+  renderTransformationLink() {
+    return (
+      <Link
         className={this.props.className}
         to="transformationDetail"
         params={{
@@ -24,9 +53,15 @@ module.exports = React.createClass({
         }}
         query={this.props.query}
         onClick={this.props.onClick}
-      >{this.props.children}</Link>);
-    } else if (this.props.componentId === 'keboola.ex-db-mysql' || this.props.componentId === 'keboola.ex-teradata') {
-      return (<Link
+      >
+        {this.props.children}
+      </Link>
+    );
+  },
+
+  renderQueryLink() {
+    return (
+      <Link
         className={this.props.className}
         to={'ex-db-generic-' + this.props.componentId + '-query'}
         params={{
@@ -35,17 +70,26 @@ module.exports = React.createClass({
         }}
         query={this.props.query}
         onClick={this.props.onClick}
-      >{this.props.children}</Link>);
-    }
-    return (<Link
-      className={this.props.className}
-      to={this.props.componentId + '-row'}
-      params={{
-        config: this.props.configId,
-        row: this.props.rowId
-      }}
-      query={this.props.query}
-      onClick={this.props.onClick}
-    >{this.props.children}</Link>);
+      >
+        {this.props.children}
+      </Link>
+    );
+  },
+
+  renderRowLink() {
+    return (
+      <Link
+        className={this.props.className}
+        to={this.props.componentId + '-row'}
+        params={{
+          config: this.props.configId,
+          row: this.props.rowId
+        }}
+        query={this.props.query}
+        onClick={this.props.onClick}
+      >
+        {this.props.children}
+      </Link>
+    );
   }
 });
