@@ -487,10 +487,10 @@ Dispatcher.register(function(payload) {
     case constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGDATA_LOAD_SUCCESS:
       _store = _store.withMutations((store) => {
         store.deleteIn(['configDataLoading', action.componentId, action.configId]);
-        store.setIn(['configData', action.componentId, action.configId], fromJSOrdered(action.data.configuration));
-        store.setIn(['components', action.componentId, 'configurations', action.configId], fromJSOrdered(action.data));
         store.deleteIn(['configRowsData', action.componentId, action.configId]);
         store.deleteIn(['configRows', action.componentId, action.configId]);
+        store.setIn(['configData', action.componentId, action.configId], fromJSOrdered(action.data.configuration));
+        store.setIn(['components', action.componentId, 'configurations', action.configId], fromJSOrdered(action.data));
         action.data.rows.forEach(row => {
           store.setIn(['configRowsData', action.componentId, action.configId, row.id], fromJSOrdered(row.configuration));
           store.setIn(['configRows', action.componentId, action.configId, row.id], fromJS(row));
@@ -511,9 +511,9 @@ Dispatcher.register(function(payload) {
         store.deleteIn(['configsDataLoading', action.componentId]);
         store.setIn(['configsDataLoaded', action.componentId], true);
         action.configData.forEach(configuration => {
-          store.setIn(['components', action.componentId, 'configurations', configuration.id], fromJSOrdered(configuration));
           store.deleteIn(['configRowsData', action.componentId, configuration.id]);
           store.deleteIn(['configRows', action.componentId, configuration.id]);
+          store.setIn(['components', action.componentId, 'configurations', configuration.id], fromJSOrdered(configuration));
           configuration.rows.forEach(row => {
             store.setIn(['configRowsData', action.componentId, configuration.id, row.id], fromJSOrdered(row.configuration));
             store.setIn(['configRows', action.componentId, configuration.id, row.id], fromJS(row));
