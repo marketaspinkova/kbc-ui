@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 
-const COMPONENTS_WITH_QUERIES = [
+const ExDbGenericComponents = [
   'keboola.ex-db-pgsql',
   'keboola.ex-db-redshift',
   'keboola.ex-db-redshift-cursors',
@@ -14,9 +14,14 @@ const COMPONENTS_WITH_QUERIES = [
   'keboola.ex-db-oracle',
   'keboola.ex-db-snowflake',
   'keboola.ex-db-impala',
-  'ex-mongodb',
   'keboola.ex-google-bigquery',
   'keboola.ex-teradata'
+];
+
+const ExAnalyticsComponents = [
+  'ex-google-analytics',
+  'ex-google-analytics-v4',
+  'ex-google-analytics-v5'
 ];
 
 export default React.createClass({
@@ -32,61 +37,61 @@ export default React.createClass({
 
   render() {
     if (this.props.componentId === 'transformation') {
-      return this.renderTransformationLink();
-    }
-
-    if (COMPONENTS_WITH_QUERIES.includes(this.props.componentId)) {
-      return this.renderQueryLink();
-    }
-
-    return this.renderRowLink();
-  },
-
-  renderTransformationLink() {
-    return (
-      <Link
-        className={this.props.className}
-        to="transformationDetail"
-        params={{
+      return this.renderLink({
+        to: 'transformationDetail',
+        params: {
           config: this.props.configId,
           row: this.props.rowId
-        }}
-        query={this.props.query}
-        onClick={this.props.onClick}
-      >
-        {this.props.children}
-      </Link>
-    );
-  },
+        }
+      });
+    }
 
-  renderQueryLink() {
-    return (
-      <Link
-        className={this.props.className}
-        to={'ex-db-generic-' + this.props.componentId + '-query'}
-        params={{
+    if (ExAnalyticsComponents.includes(this.props.componentId)) {
+      return this.renderLink({
+        to: this.props.componentId + '-query-detail',
+        params: {
+          config: this.props.configId,
+          queryId: this.props.rowId
+        }
+      });
+    }
+
+    if (ExDbGenericComponents.includes(this.props.componentId)) {
+      return this.renderLink({
+        to: 'ex-db-generic-' + this.props.componentId + '-query',
+        params: {
           config: this.props.configId,
           query: this.props.rowId
-        }}
-        query={this.props.query}
-        onClick={this.props.onClick}
-      >
-        {this.props.children}
-      </Link>
-    );
+        }
+      });
+    }
+
+    if (this.props.componentId === 'ex-mongodb') {
+      return this.renderLink({
+        to: this.props.componentId + '-query',
+        params: {
+          config: this.props.configId,
+          query: this.props.rowId
+        }
+      });
+    }
+
+    return this.renderLink({
+      to: this.props.componentId + '-row',
+      params: {
+        config: this.props.configId,
+        row: this.props.rowId
+      }
+    });
   },
 
-  renderRowLink() {
+  renderLink(props) {
     return (
       <Link
         className={this.props.className}
-        to={this.props.componentId + '-row'}
-        params={{
-          config: this.props.configId,
-          row: this.props.rowId
-        }}
         query={this.props.query}
         onClick={this.props.onClick}
+        {...props}
       >
         {this.props.children}
       </Link>
