@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'react-bootstrap';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import JobsStore from '../../../stores/JobsStore';
 import ActionCreators from '../../../ActionCreators';
@@ -16,25 +17,17 @@ export default React.createClass({
     };
   },
 
-  _search(query) {
-    return ActionCreators.filterJobs(query);
-  },
-
-  _loadMore() {
-    return ActionCreators.loadMoreJobs();
-  },
-
   render() {
     return (
       <div className="container-fluid">
         <div className="kbc-main-content">
-          <QueryRow onSearch={this._search} query={this.state.query} />
-          {this._renderTable()}
+          <QueryRow onSearch={this.handleSearch} query={this.state.query} />
+          {this.renderTable()}
           {this.state.isLoadMore && (
             <div className="kbc-block-with-padding">
-              <button onClick={this._loadMore} className="btn btn-default btn-large text-center">
+              <Button bsSize="large" onClick={this.handleLoadMore} className="text-center">
                 More...
-              </button>
+              </Button>
             </div>
           )}
         </div>
@@ -42,7 +35,18 @@ export default React.createClass({
     );
   },
 
-  _renderTableHeader() {
+  renderTable() {
+    return (
+      <div className="table table-striped table-hover">
+        {this.renderTableHeader()}
+        <div className="tbody">
+          {this.state.jobs.map(this.renderJob).toArray()}
+        </div>
+      </div>
+    );
+  },
+
+  renderTableHeader() {
     return (
       <div className="thead">
         <div className="tr">
@@ -69,18 +73,15 @@ export default React.createClass({
     );
   },
 
-  _renderTable() {
-    return (
-      <div className="table table-striped table-hover">
-        {this._renderTableHeader()}
-        <div className="tbody">
-          {this.state.jobs
-            .map(job => {
-              return <JobRow job={job} key={job.get('id')} query={this.state.query} />;
-            })
-            .toArray()}
-        </div>
-      </div>
-    );
+  renderJob(job) {
+    return <JobRow job={job} key={job.get('id')} query={this.state.query} />;
+  },
+
+  handleSearch(query) {
+    return ActionCreators.filterJobs(query);
+  },
+
+  handleLoadMore() {
+    return ActionCreators.loadMoreJobs();
   }
 });
