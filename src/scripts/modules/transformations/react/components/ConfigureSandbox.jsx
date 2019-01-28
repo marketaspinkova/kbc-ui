@@ -1,6 +1,8 @@
 import React from 'react';
 import Select from 'react-select';
 import _ from 'underscore';
+import {ExternalLink} from '@keboola/indigo-ui';
+
 
 export default React.createClass({
   propTypes: {
@@ -20,9 +22,46 @@ export default React.createClass({
     };
   },
 
+  renderSnowflakeSandboxInfo() {
+    if (this.props.backend === 'snowflake') {
+      return (
+        <p>
+          Tables are loaded into the Snowflake sandbox using
+          {' '}
+          <ExternalLink href="https://help.keboola.com/manipulation/transformations/snowflake/#clone-table">
+            <code>CLONE TABLE</code> load type
+          </ExternalLink>.
+        </p>
+      );
+    }
+    return null;
+  },
+
+  renderRowsInput() {
+    if (this.props.backend === 'snowflake') {
+      return null;
+    }
+    return (
+      <div className="form-group">
+        <label className="col-sm-3 control-label">Sample rows</label>
+        <div className="col-sm-9">
+          <input
+            type="number"
+            placeholder="Number of rows"
+            className="form-control"
+            value={this.state.rows}
+            onChange={this._setRows}
+            ref="exclude"
+          />
+        </div>
+      </div>
+    );
+  },
+
   render() {
     return (
       <form className="form-horizontal">
+        {this.renderSnowflakeSandboxInfo()}
         <div className="form-group">
           <label className="col-sm-3 control-label">Backend</label>
           <div className="col-sm-9">
@@ -43,19 +82,7 @@ export default React.createClass({
             />
           </div>
         </div>
-        <div className="form-group">
-          <label className="col-sm-3 control-label">Sample rows</label>
-          <div className="col-sm-9">
-            <input
-              type="number"
-              placeholder="Number of rows"
-              className="form-control"
-              value={this.state.rows}
-              onChange={this._setRows}
-              ref="exclude"
-            />
-          </div>
-        </div>
+        {this.renderRowsInput()}
         <div className="form-group">
           <label className="col-sm-3 control-label" />
           <div className="col-sm-9">
