@@ -530,9 +530,9 @@ export default React.createClass({
                 this.handleChangeColumns(allColumns);
               }}
             >
-              select all
+              add all columns
             </Button>{' '}
-            columns and then exclude some.
+            and then exclude some of them.
           </HelpBlock>
         </Col>
       </FormGroup>
