@@ -520,7 +520,7 @@ export default React.createClass({
             options={columnsOptions}
           />
           <HelpBlock>
-            When you need excluding few columns from many. You can{' '}
+            If you only need to exclude a couple columns, you can{' '}
             <Button
               bsStyle="link"
               className="btn-link-inline"
@@ -532,7 +532,7 @@ export default React.createClass({
             >
               add all columns
             </Button>{' '}
-            and then exclude some of them.
+            and then remove the ones you don't want.
           </HelpBlock>
         </Col>
       </FormGroup>
