@@ -1,7 +1,7 @@
 import React from 'react';
 import Immutable from 'immutable';
 import _ from 'underscore';
-import { Alert, FormGroup, HelpBlock, Checkbox, Col } from 'react-bootstrap';
+import { Button, Alert, FormGroup, ControlLabel, HelpBlock, Checkbox, Col } from 'react-bootstrap';
 
 import CodeEditor from '../../../../react/common/CodeEditor';
 import Select from '../../../../react/common/Select';
@@ -499,26 +499,44 @@ export default React.createClass({
   },
 
   renderSimpleColumns() {
-    if (this.props.showSimple && !this.props.query.get('advancedMode')) {
-      var columnSelect = (
-        <Select
-          multi={true}
-          name="columns"
-          value={this.props.query.get('columns', Immutable.List())}
-          disabled={this.props.disabled || !this.props.query.get('table')}
-          placeholder="All columns will be imported"
-          onChange={this.handleChangeColumns}
-          options={this.getColumnsOptions()}/>
-      );
-      return (
-        <div className="form-group">
-          <label className="col-md-3 control-label">Columns</label>
-          <div className="col-md-9">
-            { columnSelect }
-          </div>
-        </div>
-      );
+    if (!this.props.showSimple || this.props.query.get('advancedMode')) {
+      return null;
     }
+
+    const columnsOptions = this.getColumnsOptions();
+    const isDisabled = this.props.disabled || !this.props.query.get('table');
+
+    return (
+      <FormGroup>
+        <Col componentClass={ControlLabel} md={3}>Columns</Col>
+        <Col md={9}>
+          <Select
+            multi
+            name="columns"
+            value={this.props.query.get('columns', Immutable.List())}
+            disabled={isDisabled}
+            placeholder="All columns will be imported"
+            onChange={this.handleChangeColumns}
+            options={columnsOptions}
+          />
+          <HelpBlock>
+            When you need excluding few columns from many. You can{' '}
+            <Button
+              bsStyle="link"
+              className="btn-link-inline"
+              disabled={isDisabled}
+              onClick={() => {
+                const allColumns = columnsOptions.map(option => option.value);
+                this.handleChangeColumns(allColumns);
+              }}
+            >
+              select all
+            </Button>{' '}
+            columns and then exclude some.
+          </HelpBlock>
+        </Col>
+      </FormGroup>
+    );
   },
 
   renderQueryHelpBlock() {
