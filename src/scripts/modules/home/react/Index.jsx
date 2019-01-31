@@ -16,6 +16,8 @@ import Desk from '../../guide-mode/react/Desk';
 import lessons from '../../guide-mode/WizardLessons';
 import { List } from 'immutable';
 import ProjectDescription from './ProjectDescription';
+import DeprecatedOAuth from './DeprecatedOAuth';
+import oAuthComponents from '../../components/utils/oAuthComponents';
 
 export default React.createClass({
   mixins: [
@@ -56,6 +58,10 @@ export default React.createClass({
     if (ApplicationStore.hasCurrentProjectFeature('transformation-mysql')) {
       componentsActions.loadComponentConfigsData('transformation');
     }
+
+    if (ApplicationStore.hasCurrentProjectFeature('oauth-migration')) {
+      oAuthComponents.loadComponentsWithOAuth();
+    }
   },
 
   openLessonModal(lessonNumber) {
@@ -84,6 +90,13 @@ export default React.createClass({
     return componentCount;
   },
 
+  getComponentsWithOAuth() {
+    const installedComponents = this.state.installedComponents;
+    return installedComponents.filter(component => {
+      return component.get('flags', List()).contains('genericDockerUI-authorization');
+    });
+  },
+
   render() {
     return (
       <div className="container-fluid">
@@ -98,6 +111,11 @@ export default React.createClass({
           )}
           <Expiration expires={this.state.expires}/>
           <LimitsOverQuota limits={this.state.limitsOverQuota}/>
+          {ApplicationStore.hasCurrentProjectFeature('oauth-migration') && (
+            <DeprecatedOAuth
+              components={this.getComponentsWithOAuth()}
+            />
+          )}
           <DeprecatedTransformations
             transformations={this.state.transformations}
           />

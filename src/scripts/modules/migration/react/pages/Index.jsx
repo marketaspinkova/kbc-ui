@@ -13,14 +13,9 @@ import {Link} from 'react-router';
 import JobStatusLabel from '../../../../react/common/JobStatusLabel';
 import date from '../../../../utils/date';
 import {Col, Jumbotron, Row} from 'react-bootstrap';
+import oAuthMigration from '../../../components/utils/oAuthMigration';
 
 const MIGRATION_COMPONENT_ID = 'keboola.config-migration-tool';
-
-const ignoreComponents = [
-  'esnerda.wr-zoho-crm',
-  'keboola.ex-github',
-  'esnerda.ex-twitter-ads'
-];
 
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore, OAuthStore)],
@@ -75,10 +70,10 @@ export default React.createClass({
 
   render() {
     const components = this.getComponentsWithOAuth();
-    const affectedComponents = this.getComponentsToMigrate(components);
-    const ignoredComponents = this.getIgnoredComponents(components);
-    const configurationsToMigrateFlatten = this.getConfigurationsFlatten(affectedComponents);
-    const ignoredConfigurationsFlatten = this.getConfigurationsFlatten(ignoredComponents);
+    const affectedComponents = oAuthMigration.getComponentsToMigrate(components);
+    const ignoredComponents = oAuthMigration.getIgnoredComponents(components);
+    const configurationsToMigrateFlatten = oAuthMigration.getConfigurationsFlatten(affectedComponents);
+    const ignoredConfigurationsFlatten = oAuthMigration.getConfigurationsFlatten(ignoredComponents);
 
     return (
       <div className="container-fluid">
@@ -202,7 +197,7 @@ export default React.createClass({
     return components.map(component => (
       <MigrationComponentRow
         component={component}
-        configurations={this.getConfigurationsToMigrate(component)}
+        configurations={oAuthMigration.getConfigurationsToMigrate(component)}
         key={component.id}
       />
     )).toArray();
@@ -214,35 +209,9 @@ export default React.createClass({
     });
   },
 
-  getComponentsToMigrate(components) {
-    return components.filter(component => !ignoreComponents.includes(component.get('id')));
-  },
-
-  getIgnoredComponents(components) {
-    return components.filter(component => ignoreComponents.includes(component.get('id')));
-  },
-
-  getConfigurationsToMigrate(component) {
-    return component.get('configurations')
-      .filter(config => {
-        return (config.hasIn(['configuration', 'authorization', 'oauth_api', 'id']) &&
-          config.getIn(['configuration', 'authorization', 'oauth_api', 'version']) !== 3);
-      });
-  },
-
-  getConfigurationsFlatten(components) {
-    return components.map(component => {
-      return this.getConfigurationsToMigrate(component)
-        .map(config => ({
-          id: config.get('id'),
-          componentId: component.get('id')
-        }));
-    }).flatten(1);
-  },
-
   onMigrate() {
-    const configurations = this.getConfigurationsFlatten(
-      this.getComponentsToMigrate(this.getComponentsWithOAuth())
+    const configurations = oAuthMigration.getConfigurationsFlatten(
+      oAuthMigration.getComponentsToMigrate(this.getComponentsWithOAuth())
     );
 
     this.setState({

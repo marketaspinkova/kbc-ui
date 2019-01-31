@@ -11,7 +11,7 @@ export default React.createClass({
   render() {
     return (
       <Confirm
-        title="Migrate"
+        title="OAuth Credentials Migration"
         text={this.deleteConfirmMessage()}
         buttonLabel="Start migration"
         onConfirm={this.props.onClick}

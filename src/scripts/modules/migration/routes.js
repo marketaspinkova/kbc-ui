@@ -1,17 +1,5 @@
 import Index from './react/pages/Index';
-import InstalledComponentsActions from '../components/InstalledComponentsActionCreators';
-import ComponentReloaderButton from '../components/react/components/ComponentsReloaderButton';
-import InstalledComponentsStore from '../components/stores/InstalledComponentsStore';
-
-function loadComponentsWithOauth() {
-  return InstalledComponentsActions.loadComponents()
-    .then(() => InstalledComponentsStore.getAll().filter(component => {
-      return component.get('flags').contains('genericDockerUI-authorization');
-    }))
-    .then(componentsWithOauth => componentsWithOauth.map(component => {
-      return InstalledComponentsActions.loadComponentConfigsData(component.get('id'));
-    }));
-}
+import oAuthComponents from '../components/utils/oAuthComponents';
 
 export default {
   name: 'migrations',
@@ -19,13 +7,12 @@ export default {
   path: 'migrations',
   isComponent: true,
   defaultRouteHandler: Index,
-  reloaderHandler: ComponentReloaderButton,
   requireData: [
-    () => loadComponentsWithOauth()
+    () => oAuthComponents.loadComponentsWithOAuth()
   ],
   poll: {
     interval: 10,
-    action: () => loadComponentsWithOauth()
+    action: () => oAuthComponents.loadComponentsWithOAuth()
   },
   childRoutes: [
   ]
