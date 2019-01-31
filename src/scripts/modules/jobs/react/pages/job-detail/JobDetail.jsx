@@ -458,7 +458,7 @@ export default React.createClass({
       <div>
         <div className="col-md-6" style={{ wordWrap: 'break-word' }}>
           <h4>{'Parameters '}</h4>
-          <Tree data={job.get('params', Map())} />
+          <Tree data={job.get('params')} />
         </div>
         <div className="col-md-6">
           <h4>{'Results '}</h4>
