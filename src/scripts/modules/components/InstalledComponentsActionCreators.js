@@ -543,8 +543,6 @@ module.exports = {
         loadJobDataPromise = JobsActionCreators.reloadJobs().then(function() {
           return runJobResult;
         });
-      } else {
-        JobsActionCreators.recieveJobDetail(runJobResult);
       }
       return loadJobDataPromise.then(function(job) {
         if (paramsProcessed.notify) {
