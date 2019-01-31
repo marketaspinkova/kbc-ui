@@ -93,7 +93,7 @@ export default React.createClass({
   getComponentsWithOAuth() {
     const installedComponents = this.state.installedComponents;
     return installedComponents.filter(component => {
-      return !!component && !!component.get('flags') && component.get('flags').contains('genericDockerUI-authorization');
+      return component.get('flags', List()).contains('genericDockerUI-authorization');
     });
   },
 
