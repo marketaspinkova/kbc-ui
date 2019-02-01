@@ -289,9 +289,9 @@ export function createActions(componentId) {
       const store = getStore(configId);
       const newQueries = store.getQueries().map((q) => {
         if (q.get('id') === qid) {
-          return q.set('enabled', newValue);
+          return q.set('enabled', newValue).delete('advancedMode');
         } else {
-          return q;
+          return q.delete('advancedMode');
         }
       });
       const prefixMsg = !!newValue ? 'Enable' : 'Disable';
