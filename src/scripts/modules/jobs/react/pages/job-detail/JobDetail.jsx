@@ -428,18 +428,13 @@ export default React.createClass({
         >
           {this._renderParamsRow(job)}
         </Panel>
-        {job.has('runId') && (
-          <Panel
-            header={this._renderAccordionHeader('Mapping', this.state.activeAccordion === 'stats')}
-            eventKey="stats"
-          >
-            <JobStatsContainer
-              runId={job.get('runId')}
-              autoRefresh={!job.get('endTime')}
-              jobMetrics={job.get('metrics') ? job.get('metrics') : fromJS({})}
-            />
-          </Panel>
-        )}
+        <Panel header={this._renderAccordionHeader('Mapping', this.state.activeAccordion === 'stats')} eventKey="stats">
+          <JobStatsContainer
+            runId={job.get('runId')}
+            autoRefresh={!job.get('endTime')}
+            jobMetrics={job.get('metrics') ? job.get('metrics') : fromJS({})}
+          />
+        </Panel>
       </PanelGroup>
     );
   },
@@ -458,7 +453,7 @@ export default React.createClass({
       <div>
         <div className="col-md-6" style={{ wordWrap: 'break-word' }}>
           <h4>{'Parameters '}</h4>
-          <Tree data={job.get('params', Map())} />
+          <Tree data={job.get('params')} />
         </div>
         <div className="col-md-6">
           <h4>{'Results '}</h4>
