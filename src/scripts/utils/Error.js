@@ -82,7 +82,7 @@ var createFromXhrError = httpError => {
     httpError.response.body !== null ? httpError.response.body.exceptionId : null
   );
 
-  if ([400, 401, 403, 404].includes(httpError.response.status)) {
+  if ([400, 401, 403, 404, 409].includes(httpError.response.status)) {
     error.isUserError = true;
   }
 
