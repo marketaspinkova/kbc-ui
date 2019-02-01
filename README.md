@@ -27,28 +27,28 @@ Application will be opened in your browser and will be hot reloaded after each c
 
 Just run:
 
-- `docker-compose run --rm --service-ports node`
+- `docker-compose run --rm --service-ports node` or `docker-compose up node`
 - then `yarn` and `yarn start`
 - open same URL as in section above
 
 ### Build dist package
 
-* `yarn build` (`npm run build`) (It is executed by Travis after each push)
+* `yarn build` (It is executed by Travis after each push)
 
 ##  Application Architecture
 
  * Single page application running in browser data fetching from Keboola REST APIs.
- * Written in [ES2015](https://babeljs.io/docs/learn-es2015/) (ES6) compiled to JS using [Babel](https://babeljs.io/) (older parts are written in Coffeescript).
+ * Written in [ES2015](https://babeljs.io/docs/learn-es2015/) (ES6) compiled to JS using [Babel](https://babeljs.io/).
  * Bundled by [Webpack](https://webpack.github.io/).
  * View layer is composed by [React](http://facebook.github.io/react/) components
  * [Flux Architecture](https://facebook.github.io/flux/docs/overview.html) with unidirectional data flow controlling whole application. Vanilla Flux implementation is used.
  * [React Router](http://rackt.github.io/react-router/) for routing
- * [Keboola Bootstrap](https://github.com/keboola/kbc-bootstrap) for UI components style. It is based on [Twitter Bootstrap](http://getbootstrap.com/)
+ * [Indigo UI](https://github.com/keboola/indigo-ui) for UI components style.
 
 ### React Components Best Practices
 
  * It has to be pure it means rendered result is dependent only on components `props` and `state`. [PureRenderer mixin](https://facebook.github.io/react/docs/pure-render-mixin.html) can be then utilized
- * Component props and state should be [Immutable](http://facebook.github.io/immutable-js/) structures
+ * Component props and state can be [Immutable](http://facebook.github.io/immutable-js/) structures
  * Define [Prop Types](https://facebook.github.io/react/docs/reusable-components.html#prop-validation) form component. It is validated in development runtime and also in build step using [ESlint](http://eslint.org/)
  * Separate component which involves some data fetching to container components holding the fetched state and simple component rendering the data received using `props`. [Read more about this pattern](https://medium.com/@learnreact/container-components-c0e67432e005)
    * Most of component should be "dumb" only with `props`, these are easiest to understand and most reusabled. Only top level components and container component should be connected to Flux stores. `state` can be of course used for things like open modal or acccordion status or temporary edit values in modal.
@@ -56,7 +56,7 @@ Just run:
 
 ## UX Guidelines
 
- * Try to reuse components from [KBC Bootstrap](http://kbc-bootstrap-jakub-devel.keboola.com/examples/)
+ * Try to reuse components from [Indigo UI](https://indigo.keboola.com)
  * Provide instant feedback for all actions.
  * Provide confirmation and explanation for possibly destructive actions (delete configuration, run job)
  * UI should be self explainable and it should guide you to required actions. e.q. Database extractor configuration flow.
@@ -66,19 +66,19 @@ Just run:
 
 ## Prettier
 
-- no automation (e.g. using hook) is set up yet
-- check `.prettierrc.js` for
-- run manually using `yarn prettier` command
-- example: `yarn prettier --config .prettierrc.js --write src/scripts/modules/app-snowflake-dwh-manager/react/components/Configuration.jsx`
+- No automation (e.g. using hook) is set up yet
+- Check `.prettierrc.js` for
+- Run manually using `yarn prettier` command
+- Example: `yarn prettier --config .prettierrc.js --write src/scripts/modules/app-snowflake-dwh-manager/react/components/Configuration.jsx`
 
 ## Code linting
 
 We are using popular [Eslint](http://eslint.org/) with custom `.eslintrc` file
 
   * Linting is automatically run before test task
-  * run `yarn lint` (`npm run lint`) - to run linting
-  * run `yarn lint:fix` (`npm run lint:fix`) - to run linting with fixes (when fix is possible)
-  * run `yarn lint[:fix] -- VersionsDiffModal` (`npm run lint[:fix] -- VersionsDiffModal`) - to run lint only on files with this pattern (it is pretty fuzzy, maybe will match more files then you expect)
+  * run `yarn lint` - to run linting
+  * run `yarn lint:fix` - to run linting with fixes (when fix is possible)
+  * run `yarn lint[:fix] -- VersionsDiffModal` - to run lint only on files with this pattern (it is pretty fuzzy, maybe will match more files then you expect)
 
 ## Tests
 
@@ -104,20 +104,3 @@ Assets should be loaded by `require` or `import` function.
  * [CSS include](https://github.com/keboola/kbc-ui/blob/master/src/scripts/react/layout/App.jsx#L16)
  * [Image](https://github.com/keboola/kbc-ui/blob/master/src/scripts/react/common/JobStatusCircle.jsx#L5)
  * [mp3](https://github.com/keboola/kbc-ui/blob/master/src/scripts/utils/SoundNotifications.js#L3)
-
-
-### Add New Component (extractor, writer or application)
-
-  * Component has to be first registered in Keboola Connection
-    * Ask someone from Keboola to register the component (there will be API one day)
-    * Registered component is available in components list https://connection.keboola.com/v2/storage
-    * During development component should have flag `excludeFromNewList`. The component will not be listed on New Extractor page.
-    * Working backend is not required, we can register empty component
-  * When the component is registered cached components list in ui should be updated
-    * Copy content of `components` array and paste it to [index.html](https://github.com/keboola/kbc-ui/blob/77ab46b41a473cf3ad8bab01b807f9bf74d7da47/index.html#L21)
-  * Create test configuration of your component
-    * Use curl or some http client to trigger [Create Config API call](http://docs.keboola.apiary.io/#post-%2Fv2%2Fstorage%2Fcomponents%2F%7Bcomponent_id%7D%2Fconfigs)
-    * cUrl example `curl -H "X-StorageApi-Token:YOUR_STORAGE_API_TOKEN" -d "name=My First Dropbox" https://connection.keboola.com/v2/storage/components/ex-dropbox/configs`
-  * Create and register routes for new component
-    * Components routes, you can just copy and modify `ex-adform` routes https://github.com/keboola/kbc-ui/blob/master/src/scripts/modules/ex-adform/routes.js
-    * Register routes https://github.com/keboola/kbc-ui/blob/master/src/scripts/modules/components/Routes.js#L91
