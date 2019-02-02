@@ -52,7 +52,9 @@ export default React.createClass({
         </div>
       );
     }
+
     const linkedBuckets = this.state.bucket.get('linkedBy', Map());
+    const canManageBucket = this.canManageBucket();
 
     return (
       <div>
@@ -71,7 +73,7 @@ export default React.createClass({
                 <MenuItem
                   eventKey="delete"
                   onSelect={this.openDeleteBucketModal}
-                  disabled={linkedBuckets.count() > 0}
+                  disabled={!canManageBucket || linkedBuckets.count() > 0}
                 >
                   {linkedBuckets.count() > 0 ? (
                     <Tooltip tooltip="Please unlink linked buckets first" placement="top">
@@ -113,7 +115,7 @@ export default React.createClass({
           </div>
         </Tab.Container>
 
-        {this.renderDeleteBucketModal()}
+        {canManageBucket && this.renderDeleteBucketModal()}
       </div>
     );
   },
@@ -159,6 +161,11 @@ export default React.createClass({
         activeTab: tab
       });
     }
+  },
+
+  canManageBucket() {
+    const permission = this.state.sapiToken.getIn(['bucketPermissions', this.state.bucket.get('id')], '');
+    return permission === 'manage';
   },
 
   openDeleteBucketModal() {

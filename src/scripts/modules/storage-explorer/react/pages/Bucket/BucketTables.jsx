@@ -37,15 +37,17 @@ export default React.createClass({
         <div className="clearfix">
           <div className="kbc-buttons pull-right">
             <ButtonToolbar>
-              <Button bsStyle="success" onClick={this.openCreateTableModal}>
-                {creatingTable ? (
-                  <span>
-                    <Loader /> Creating table...
-                  </span>
-                ) : (
-                  <span>Create table</span>
-                )}
-              </Button>
+              {this.canWriteBucket() && (
+                <Button bsStyle="success" onClick={this.openCreateTableModal}>
+                  {creatingTable ? (
+                    <span>
+                      <Loader /> Creating table...
+                    </span>
+                  ) : (
+                    <span>Create table</span>
+                  )}
+                </Button>
+              )}
               {this.canCreateAliasTable() && (
                 <Button
                   bsStyle="success"
