@@ -6,24 +6,21 @@
 // Also supporting React Hot Reload!
 
 import React from 'react';
+import { Map } from 'immutable';
 
+const statelessComponentsMap = new Map();
 let errorPlaceholder = <noscript/>;
 
 if (process.env.__DEV__) {
   errorPlaceholder = (
-    <span
-      style={{
-        background: 'red',
-        color: 'white'
-      }}
-    >
+    <span style={{ background: 'red', color: 'white'}}>
       Render error!
     </span>
   );
 }
 
 function logError(Component, error) {
-  const errorMsg = `Error. Check render() method of component '${Component.displayName || Component.name || '[unidentified]'}'.`;
+  const errorMsg = `Check render() method of component '${Component.displayName || Component.name || '[unidentified]'}'.`;
 
   console.error(errorMsg, 'Error details:', error); // eslint-disable-line
 
@@ -57,29 +54,35 @@ function monkeypatchRender(prototype) {
 
 const originalCreateElement = React.createElement;
 React.createElement = (Component, ...rest) => {
-  let newComponent = Component;
-  if (typeof Component === 'function') {
-    if (typeof Component.prototype.render === 'function') {
-      monkeypatchRender(Component.prototype);
+  let NewComponent = Component;
+  if (typeof NewComponent === 'function') {
+    if (NewComponent.prototype && typeof NewComponent.prototype.render === 'function') {
+      monkeypatchRender(NewComponent.prototype);
     }
     // stateless functional component
-    if (!Component.prototype.render) {
-      const originalStatelessComponent = Component;
-      newComponent = (...args) => {
-        try {
-          return originalStatelessComponent(...args);
-        } catch (error) {
-          logError(originalStatelessComponent, error);
+    if (!NewComponent.prototype || !NewComponent.prototype.render) {
+      const originalStatelessComponent = NewComponent;
+      if (statelessComponentsMap.has(originalStatelessComponent)) { // load from cache
+        NewComponent = statelessComponentsMap.get(originalStatelessComponent);
+      } else {
+        NewComponent = (...args) => {
+          try {
+            return originalStatelessComponent(...args);
+          } catch (error) {
+            logError(originalStatelessComponent, error);
 
-          return errorPlaceholder;
-        }
-      };
+            return errorPlaceholder;
+          }
+        };
+
+        Object.assign(NewComponent, originalStatelessComponent); // copy all properties like propTypes, defaultProps etc.
+        statelessComponentsMap.set(originalStatelessComponent, NewComponent); // save to cache, so we don't generate new monkeypatched functions every time.
+      }
     }
   }
 
-  return originalCreateElement.call(React, newComponent, ...rest);
+  return originalCreateElement.call(React, NewComponent, ...rest);
 };
-
 
 // allowing hot reload
 const originalForceUpdate = React.Component.prototype.forceUpdate;
