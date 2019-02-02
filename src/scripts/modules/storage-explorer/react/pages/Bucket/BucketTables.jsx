@@ -149,8 +149,8 @@ export default React.createClass({
 
   canWriteBucket() {
     const bucketId = this.props.bucket.get('id');
-    const permissions = this.props.sapiToken.getIn(['bucketPermissions', bucketId], '');
-    return ['write', 'manage'].includes(permissions);
+    const permission = this.props.sapiToken.getIn(['bucketPermissions', bucketId], '');
+    return ['write', 'manage'].includes(permission);
   },
 
   openCreateTableModal() {
