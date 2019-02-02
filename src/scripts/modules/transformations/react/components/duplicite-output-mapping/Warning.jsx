@@ -32,7 +32,7 @@ export default React.createClass({
         <p>
           Read more about speeding up the output by using
           {' '}<ExternalLink
-            href="http://status.keboola.com/speeding-up-transformation-output-mappings-in-your-projects">
+            href="https://status.keboola.com/speeding-up-transformation-output-mappings-in-your-projects">
             parallel unloads
           </ExternalLink>.
         </p>
