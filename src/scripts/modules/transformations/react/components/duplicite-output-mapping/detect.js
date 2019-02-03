@@ -18,7 +18,7 @@ export function getConflictsForTransformation(current, all) {
 
   // sibling conflicts
   const siblings = all.filter((possibleSibling) => {
-    return possibleSibling.get('phase') === current.get('phase') && possibleSibling.get('id') !== current.get('id');
+    return possibleSibling.get('phase').toString() === current.get('phase').toString() && possibleSibling.get('id') !== current.get('id');
   }).toList();
 
   siblings.forEach((sibling) => {

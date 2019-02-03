@@ -175,6 +175,20 @@ describe('getConflictsForTransformation', () => {
       }
     ]).toEqual(getConflictsForTransformation(t3, Immutable.fromJS({'3': t3})).toJS());
   });
+  it('should ignore different phase variable types', () => {
+    const t1PhaseAsString = t1.set('phase', '1');
+    expect([
+      {
+        'id': '1a',
+        'destination': 'out.c-duplicite-output-mapping.test'
+      },
+      {
+        'id': '1a',
+        'destination': 'out.c-duplicite-output-mapping.different_source'
+      }
+    ]).toEqual(getConflictsForTransformation(t1PhaseAsString, Immutable.fromJS({'1': t1PhaseAsString, '1a': t1a})).toJS());
+  });
+
 });
 
 describe('getConflictsForBucket', () => {
