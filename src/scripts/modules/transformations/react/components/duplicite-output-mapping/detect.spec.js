@@ -188,7 +188,6 @@ describe('getConflictsForTransformation', () => {
       }
     ]).toEqual(getConflictsForTransformation(t1PhaseAsString, Immutable.fromJS({'1': t1PhaseAsString, '1a': t1a})).toJS());
   });
-
 });
 
 describe('getConflictsForBucket', () => {
