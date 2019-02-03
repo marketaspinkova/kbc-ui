@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
 import Immutable from 'immutable';
 import TransformationBucketsStore from '../../transformations/stores/TransformationBucketsStore';
-import TransformationsStore from '../../transformations/stores/TransformationsStore';
 import ComponentConfigurationRowLink from '../../components/react/components/ComponentConfigurationRowLink';
 import { AlertBlock } from '@keboola/indigo-ui';
 import { getConflictsForBucket } from '../../transformations/react/components/duplicite-output-mapping/detect';
@@ -46,6 +45,7 @@ export default React.createClass({
       );
     }
 
+    const transformations = this.props.transformations;
     return (
       <AlertBlock type="warning" title="Transformations slowing down your output">
         <p>
@@ -70,7 +70,7 @@ export default React.createClass({
                           configId={bucketId}
                           rowId={conflict.get('id')}
                         >
-                          {TransformationsStore.getTransformation(bucketId, conflict.get('id')).get('name', conflict.get('id'))}
+                          {transformations.getIn([bucketId, conflict.get('id'), 'name'], conflict.get('id'))}
                         </ComponentConfigurationRowLink>
                       </li>
                     );
