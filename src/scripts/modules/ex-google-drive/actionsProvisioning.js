@@ -1,8 +1,10 @@
-import storeProvisioning from './storeProvisioning';
+import _ from 'underscore';
 import {Map} from 'immutable';
 import * as common from './common';
+import storeProvisioning from './storeProvisioning';
 import componentsActions from '../components/InstalledComponentsActionCreators';
-import _ from 'underscore';
+import generateId from '../../utils/generateId';
+
 const COMPONENT_ID = 'keboola.ex-google-drive';
 
 // PROPTYPES HELPER:
@@ -54,16 +56,6 @@ export default function(configId) {
     };
   }
 
-  function generateId() {
-    const existingIds = store.sheets.map((q) => q.get('id'));
-    const randomNumber = () => Math.floor((Math.random() * 100000) + 1);
-    let newId = randomNumber();
-    while (existingIds.indexOf(newId) >= 0) {
-      newId = randomNumber();
-    }
-    return newId;
-  }
-
   function getFilenameFromSheet(sheet) {
     return `${sheet.get('fileId')}_${sheet.get('sheetId')}.csv`;
   }
@@ -105,8 +97,9 @@ export default function(configId) {
     saveNewSheets(newSheets) {
       const sheetsToAdd = newSheets.map((s) => {
         const name = common.sanitizeTableName(getFullName(s, '-'));
+        const existingIds = store.sheets.map((q) => q.get('id'));
         return s
-          .set('id', generateId())
+          .set('id', generateId(existingIds))
           .set('enabled', true)
           .setIn(['header', 'rows'], 1)
           .set('outputTable', name);
