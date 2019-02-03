@@ -3,7 +3,6 @@ import Immutable from 'immutable';
 import ComponentConfigurationRowLink from '../../components/react/components/ComponentConfigurationRowLink';
 import { AlertBlock } from '@keboola/indigo-ui';
 import { getConflictsForBucket } from '../../transformations/react/components/duplicite-output-mapping/detect';
-import ApplicationStore from '../../../stores/ApplicationStore';
 import { ExternalLink } from '@keboola/indigo-ui';
 
 export default React.createClass({
@@ -14,10 +13,6 @@ export default React.createClass({
 
   render() {
     if (!this.props.transformations) {
-      return null;
-    }
-    const projectHasFeature = ApplicationStore.getCurrentProjectFeatures().includes('transformation-parallel-unloads');
-    if (projectHasFeature) {
       return null;
     }
     let duplicitTransformationsByBucket = new Immutable.Map();
@@ -34,7 +29,7 @@ export default React.createClass({
       }
     });
 
-    if (duplicitTransformationsByBucket.isEmpty() && !projectHasFeature) {
+    if (duplicitTransformationsByBucket.isEmpty()) {
       return (
         <AlertBlock type="warning" title="Speed up output of your transformations">
           <p>

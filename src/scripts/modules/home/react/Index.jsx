@@ -122,10 +122,12 @@ export default React.createClass({
           <DeprecatedTransformations
             transformations={this.state.transformations}
           />
-          <TransformationParallelUnloads
-            transformationBuckets={this.state.transformationBuckets}
-            transformations={this.state.transformations}
-          />
+          {!ApplicationStore.hasCurrentProjectFeature('transformation-parallel-unloads') && (
+            <TransformationParallelUnloads
+              transformationBuckets={this.state.transformationBuckets}
+              transformations={this.state.transformations}
+            />
+          )}
           <DeprecatedComponents
             components={this.state.installedComponents}
           />
