@@ -28,7 +28,7 @@ export default React.createClass({
     return this.props.conflicts.map((transformationId, index) => {
       const transformationName = this.props.transformations.get(transformationId).get('name');
       return (
-        <span>
+        <span key={index}>
           {index > 0 && ', '}
           <ComponentConfigurationRowLink
             componentId="transformation"
