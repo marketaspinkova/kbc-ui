@@ -5,6 +5,7 @@ import LimitsOverQuota from './LimitsOverQuota';
 import Expiration from './Expiration';
 import InstalledComponentStore from '../../components/stores/InstalledComponentsStore';
 import TransformationsStore from '../../transformations/stores/TransformationsStore';
+import TransformationBucketsStore from '../../transformations/stores/TransformationBucketsStore';
 import componentsActions from '../../components/InstalledComponentsActionCreators';
 import DeprecatedComponents from './DeprecatedComponents';
 import DeprecatedTransformations from './DeprecatedTransformations';
@@ -22,7 +23,7 @@ import oAuthComponents from '../../components/utils/oAuthComponents';
 
 export default React.createClass({
   mixins: [
-    createStoreMixin(InstalledComponentStore, TransformationsStore, WizardStore)
+    createStoreMixin(InstalledComponentStore, TransformationsStore, WizardStore, TransformationBucketsStore)
   ],
 
   getStateFromStores() {
@@ -49,6 +50,7 @@ export default React.createClass({
       expires: ApplicationStore.getCurrentProject().get('expires'),
       installedComponents: InstalledComponentStore.getAll(),
       transformations: TransformationsStore.getAllTransformations(),
+      transformationBuckets: TransformationBucketsStore.getAll(),
       projectHasGuideModeOn: ApplicationStore.getKbcVars().get('projectHasGuideModeOn'),
       guideModeAchievedLessonId: WizardStore.getAchievedLessonId()
     };
@@ -121,6 +123,7 @@ export default React.createClass({
             transformations={this.state.transformations}
           />
           <TransformationParallelUnloads
+            transformationBuckets={this.state.transformationBuckets}
             transformations={this.state.transformations}
           />
           <DeprecatedComponents
