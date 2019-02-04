@@ -80,7 +80,7 @@ export default React.createClass({
         <div className="kbc-main-content kbc-components-list">
           <Jumbotron>
             <h2>OAuth Credentials Migration</h2>
-            <p>As we have introduced new version of our OAuth API, it is necessary to migrate configurations using OAuth authorization to this new API version.</p>
+            <p>As we have introduced new version of our OAuth Broker API, it is necessary to migrate configurations using OAuth authorization to this new version.</p>
             <p>By clicking button below, all of the affected configurations will be migrated.</p>
             <hr />
             <Row>
