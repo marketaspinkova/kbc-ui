@@ -13,4 +13,4 @@ RUN apt-get update -q \
   && apt-get update && apt-get install yarn -y \
   && yarn --version
 
-RUN yarn global add decaffeinate jscodeshift
+RUN yarn global add jscodeshift
