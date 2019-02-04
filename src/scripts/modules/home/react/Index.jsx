@@ -58,9 +58,7 @@ export default React.createClass({
 
   componentDidMount() {
     componentsActions.loadComponents();
-    if (ApplicationStore.hasCurrentProjectFeature('transformation-mysql')) {
-      componentsActions.loadComponentConfigsData('transformation');
-    }
+    componentsActions.loadComponentConfigsData('transformation');
 
     if (ApplicationStore.hasCurrentProjectFeature('oauth-migration')) {
       oAuthComponents.loadComponentsWithOAuth();
