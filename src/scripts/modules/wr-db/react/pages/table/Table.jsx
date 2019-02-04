@@ -185,9 +185,10 @@ export default componentId => {
     _validateColumn(column) {
       const type = column.get('type');
       const size = column.get('size');
-      const valid = columnTypeValidation.validate(type, size);
+      const shouldHaveSize = this._getSizeParam(type);
+      const sizeValid = columnTypeValidation.validate(type, size);
 
-      return this._setValidateColumn(column.get('name'), valid);
+      return this._setValidateColumn(column.get('name'), !shouldHaveSize || sizeValid);
     },
 
     _showIncrementalSetupModal() {
