@@ -1,6 +1,7 @@
 import React from 'react';
 import { Map } from 'immutable';
 import { Loader } from '@keboola/indigo-ui';
+import { Button } from 'react-bootstrap';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import WrDbStore from '../../store';
 import RoutesStore from '../../../../stores/RoutesStore';
@@ -8,6 +9,8 @@ import ActionCreators from '../../actionCreators';
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
 import InstalledComponentsActions from '../../../components/InstalledComponentsActionCreators';
 import { States } from '../pages/credentials/StateConstants';
+
+const renderForState = [States.SHOW_STORED_CREDS, States.CREATE_NEW_CREDS, States.SAVING_NEW_CREDS];
 
 export default (componentId, isProvisioning) => {
   return React.createClass({
@@ -32,19 +35,16 @@ export default (componentId, isProvisioning) => {
     render() {
       const state = this.state.localState.get('credentialsState');
 
-      if (
-        !isProvisioning ||
-        ![States.SHOW_STORED_CREDS, States.CREATE_NEW_CREDS, States.SAVING_NEW_CREDS].includes(state)
-      ) {
+      if (!isProvisioning || !renderForState.includes(state)) {
         return null;
       }
 
       return (
         <div>
-          <button onClick={this.handleReset} disabled={this.state.isLoading} className="btn btn-link">
-            {this.state.isLoading ? <Loader /> : <span className="fa fa-fw fa-times" />}
+          <Button bsStyle="link" onClick={this.handleReset} disabled={this.state.isLoading}>
+            {this.state.isLoading ? <Loader /> : <i className="fa fa-fw fa-times" />}
             {' Reset Credentials'}
-          </button>
+          </Button>
         </div>
       );
     },
