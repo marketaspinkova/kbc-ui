@@ -169,7 +169,7 @@ export default React.createClass({
             props.onChange({enclosure: e.target.value});
           }}
           disabled={this.props.disabled}
-          help={(<span>Field enclosure used in CSV file. Default value is <code>"</code>.</span>)}
+          help={<span>Field enclosure used in CSV file.</span>}
         />
         <div className="form-group">
           <div className="col-xs-4 control-label">Header</div>
