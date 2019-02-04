@@ -5,10 +5,12 @@ import LimitsOverQuota from './LimitsOverQuota';
 import Expiration from './Expiration';
 import InstalledComponentStore from '../../components/stores/InstalledComponentsStore';
 import TransformationsStore from '../../transformations/stores/TransformationsStore';
+import TransformationBucketsStore from '../../transformations/stores/TransformationBucketsStore';
 import componentsActions from '../../components/InstalledComponentsActionCreators';
 import DeprecatedComponents from './DeprecatedComponents';
 import DeprecatedTransformations from './DeprecatedTransformations';
 import FileSize from '../../../react/common/FileSize';
+import TransformationParallelUnloads from './TransformationParallelUnloads';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import { showWizardModalFn } from '../../guide-mode/stores/ActionCreators.js';
 import WizardStore from '../../guide-mode/stores/WizardStore';
@@ -21,7 +23,7 @@ import oAuthComponents from '../../components/utils/oAuthComponents';
 
 export default React.createClass({
   mixins: [
-    createStoreMixin(InstalledComponentStore, TransformationsStore, WizardStore)
+    createStoreMixin(InstalledComponentStore, TransformationsStore, WizardStore, TransformationBucketsStore)
   ],
 
   getStateFromStores() {
@@ -48,6 +50,7 @@ export default React.createClass({
       expires: ApplicationStore.getCurrentProject().get('expires'),
       installedComponents: InstalledComponentStore.getAll(),
       transformations: TransformationsStore.getAllTransformations(),
+      transformationBuckets: TransformationBucketsStore.getAll(),
       projectHasGuideModeOn: ApplicationStore.getKbcVars().get('projectHasGuideModeOn'),
       guideModeAchievedLessonId: WizardStore.getAchievedLessonId()
     };
@@ -119,6 +122,12 @@ export default React.createClass({
           <DeprecatedTransformations
             transformations={this.state.transformations}
           />
+          {!ApplicationStore.hasCurrentProjectFeature('transformation-parallel-unloads') && (
+            <TransformationParallelUnloads
+              transformationBuckets={this.state.transformationBuckets}
+              transformations={this.state.transformations}
+            />
+          )}
           <DeprecatedComponents
             components={this.state.installedComponents}
           />
