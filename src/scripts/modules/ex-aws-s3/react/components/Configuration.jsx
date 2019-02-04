@@ -168,7 +168,6 @@ export default React.createClass({
           onChange={function(e) {
             props.onChange({enclosure: e.target.value});
           }}
-          placeholder={'"'}
           disabled={this.props.disabled}
           help={(<span>Field enclosure used in CSV file. Default value is <code>"</code>.</span>)}
         />
