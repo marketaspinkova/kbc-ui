@@ -1,7 +1,8 @@
 import React, {PropTypes} from 'react';
 import { Alert } from 'react-bootstrap';
-import getConflicts from '../duplicite-output-mapping/detect';
+import { getConflictsForTransformation } from '../duplicite-output-mapping/detect';
 import ConflictList from './ConflictList';
+import { ExternalLink } from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -11,24 +12,30 @@ export default React.createClass({
   },
 
   render() {
-    const conflicts = getConflicts(this.props.transformation, this.props.transformations);
+    const conflicts = getConflictsForTransformation(this.props.transformation, this.props.transformations);
     if (conflicts.size === 0) {
       return null;
     }
     return (
       <Alert bsStyle="warning">
-        <h3>Output Mapping Warning</h3>
+        <h3>Output Warning</h3>
         <p>
-          Output mapping of this transformation contains some duplicities with transformations in the same phase.
-          Execution order of all output mappings in a single phase is not guaranteed and may change.
-          Please adjust the output mappings to avoid data loss or confusion, e.g. split the transformation(s)
-          into multiple phases.
+          This transformation shares its outputs with other transformations in the same phase.
+          The execution order of outputs in a single phase is not guaranteed and may change.
+          Please adjust the outputs to avoid data loss or confusion.
         </p>
         <ConflictList
           conflicts={conflicts}
           transformations={this.props.transformations}
           bucketId={this.props.bucketId}
         />
+        <p>
+          Read more about speeding up the output by using
+          {' '}<ExternalLink
+            href="https://status.keboola.com/speeding-up-transformation-output-mappings-in-your-projects">
+            parallel unloads
+          </ExternalLink>.
+        </p>
       </Alert>
     );
   }
