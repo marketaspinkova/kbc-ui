@@ -1,7 +1,7 @@
 import Immutable from 'immutable';
-import { getConflictsForTransformation, getConflictsForBucket }  from './detect';
+import getConflicts from './detect';
 
-const t1 = Immutable.fromJS({
+const t1 = {
   'output': [
     {
       'destination': 'out.c-duplicite-output-mapping.test',
@@ -28,9 +28,9 @@ const t1 = Immutable.fromJS({
   'phase': 1,
   'disabled': false,
   'description': ''
-});
+};
 
-const t2 = Immutable.fromJS({
+const t2 = {
   'output': [
     {
       'destination': 'out.c-duplicite-output-mapping.test',
@@ -57,9 +57,9 @@ const t2 = Immutable.fromJS({
   'phase': 2,
   'disabled': false,
   'description': ''
-});
+};
 
-const t1a = Immutable.fromJS({
+const t1a = {
   'output': [
     {
       'destination': 'out.c-duplicite-output-mapping.test',
@@ -82,9 +82,9 @@ const t1a = Immutable.fromJS({
   'phase': 1,
   'disabled': false,
   'description': ''
-});
+};
 
-const t1b = Immutable.fromJS({
+const t1b = {
   'output': [
     {
       'destination': 'out.c-duplicite-output-mapping.no_conflict',
@@ -103,9 +103,9 @@ const t1b = Immutable.fromJS({
   'phase': 1,
   'disabled': false,
   'description': ''
-});
+};
 
-const t3 = Immutable.fromJS({
+const t3 = {
   'output': [
     {
       'destination': 'out.c-duplicite-output-mapping.conflict',
@@ -132,14 +132,14 @@ const t3 = Immutable.fromJS({
   'phase': 1,
   'disabled': false,
   'description': ''
-});
+};
 
-describe('getConflictsForTransformation', () => {
+describe('getConflicts', () => {
   it('should return empty array for a single transformation', () => {
-    expect([]).toEqual(getConflictsForTransformation(t1, Immutable.fromJS({'1': t1})).toJS());
+    expect([]).toEqual(getConflicts(Immutable.fromJS(t1), Immutable.fromJS({'1': t1})).toJS());
   });
   it('should return empty array for conflict in different phases', () => {
-    expect([]).toEqual(getConflictsForTransformation(t1, Immutable.fromJS({'1': t1, '2': t2})).toJS());
+    expect([]).toEqual(getConflicts(Immutable.fromJS(t1), Immutable.fromJS({'1': t1, '2': t2})).toJS());
   });
   it('should return conflicting transformations', () => {
     expect([
@@ -151,7 +151,7 @@ describe('getConflictsForTransformation', () => {
         'id': '1a',
         'destination': 'out.c-duplicite-output-mapping.different_source'
       }
-    ]).toEqual(getConflictsForTransformation(t1, Immutable.fromJS({'1': t1, '1a': t1a, '1b': t1b})).toJS());
+    ]).toEqual(getConflicts(Immutable.fromJS(t1), Immutable.fromJS({'1': t1, '1a': t1a, '1b': t1b})).toJS());
     expect([
       {
         'id': '1',
@@ -161,11 +161,11 @@ describe('getConflictsForTransformation', () => {
         'id': '1',
         'destination': 'out.c-duplicite-output-mapping.different_source'
       }
-    ]).toEqual(getConflictsForTransformation(t1a, Immutable.fromJS({'1': t1, '1a': t1a, '1b': t1b})).toJS());
+    ]).toEqual(getConflicts(Immutable.fromJS(t1a), Immutable.fromJS({'1': t1, '1a': t1a, '1b': t1b})).toJS());
   });
   it('should return empty array for no conflicts', () => {
-    expect([]).toEqual(getConflictsForTransformation(t1, Immutable.fromJS({'1': t1, '1b': t1b})).toJS());
-    expect([]).toEqual(getConflictsForTransformation(t1a, Immutable.fromJS({'1a': t1a, '1b': t1b})).toJS());
+    expect([]).toEqual(getConflicts(Immutable.fromJS(t1), Immutable.fromJS({'1': t1, '1b': t1b})).toJS());
+    expect([]).toEqual(getConflicts(Immutable.fromJS(t1a), Immutable.fromJS({'1a': t1a, '1b': t1b})).toJS());
   });
   it('should detect self conflicts', () => {
     expect([
@@ -173,60 +173,6 @@ describe('getConflictsForTransformation', () => {
         'id': '3',
         'destination': 'out.c-duplicite-output-mapping.conflict'
       }
-    ]).toEqual(getConflictsForTransformation(t3, Immutable.fromJS({'3': t3})).toJS());
-  });
-  it('should ignore different phase variable types', () => {
-    const t1PhaseAsString = t1.set('phase', '1');
-    expect([
-      {
-        'id': '1a',
-        'destination': 'out.c-duplicite-output-mapping.test'
-      },
-      {
-        'id': '1a',
-        'destination': 'out.c-duplicite-output-mapping.different_source'
-      }
-    ]).toEqual(getConflictsForTransformation(t1PhaseAsString, Immutable.fromJS({'1': t1PhaseAsString, '1a': t1a})).toJS());
-  });
-});
-
-describe('getConflictsForBucket', () => {
-  it('should return empty array for a single transformation', () => {
-    expect([]).toEqual(getConflictsForBucket(Immutable.fromJS({'1': t1})).toJS());
-  });
-  it('should return empty array for conflict in different phases', () => {
-    expect([]).toEqual(getConflictsForBucket(Immutable.fromJS({'1': t1, '2': t2})).toJS());
-  });
-  it('should return conflicting transformations', () => {
-    expect([
-      {
-        'id': '1a',
-        'destination': 'out.c-duplicite-output-mapping.test'
-      },
-      {
-        'id': '1a',
-        'destination': 'out.c-duplicite-output-mapping.different_source'
-      },
-      {
-        'id': '1',
-        'destination': 'out.c-duplicite-output-mapping.test'
-      },
-      {
-        'id': '1',
-        'destination': 'out.c-duplicite-output-mapping.different_source'
-      }
-    ]).toEqual(getConflictsForBucket(Immutable.fromJS({'1': t1, '1a': t1a, '1b': t1b})).toJS());
-  });
-  it('should return empty array for no conflicts', () => {
-    expect([]).toEqual(getConflictsForBucket(Immutable.fromJS({'1': t1, '1b': t1b})).toJS());
-    expect([]).toEqual(getConflictsForBucket(Immutable.fromJS({'1a': t1a, '1b': t1b})).toJS());
-  });
-  it('should detect self conflicts', () => {
-    expect([
-      {
-        'id': '3',
-        'destination': 'out.c-duplicite-output-mapping.conflict'
-      }
-    ]).toEqual(getConflictsForBucket(Immutable.fromJS({'3': t3})).toJS());
+    ]).toEqual(getConflicts(Immutable.fromJS(t3), Immutable.fromJS({'3': t3})).toJS());
   });
 });
