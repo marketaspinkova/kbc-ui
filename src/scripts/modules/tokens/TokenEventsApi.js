@@ -12,7 +12,7 @@ export default (tokenId) => {
     listEvents(params) {
       return createRequest('GET', 'events')
         .query(params)
-        .timeout(4000)
+        .timeout(10000)
         .promise()
         .then(response => response.body);
     },
