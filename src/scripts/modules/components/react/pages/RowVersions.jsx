@@ -74,7 +74,7 @@ export default function(componentIdValue, readOnlyMode = false) {
 
     renderBody() {
       if (this.state.filteredVersions.count() === 0 && this.state.versions.count() > 0) {
-        return <p className="row text-center">No results found.</p>;
+        return <p className="kbc-inner-padding text-center">No results found.</p>;
       }
 
       return (
