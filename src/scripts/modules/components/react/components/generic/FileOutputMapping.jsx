@@ -24,7 +24,7 @@ export default React.createClass({
           <Add
             componentId={this.props.componentId}
             configId={this.props.configId}
-            mapping={this.props.editingValue.toMap().get('new-mapping', Immutable.Map())}
+            mapping={this.props.editingValue.get('new-mapping', Immutable.Map())}
           />
         </span>
       );
@@ -123,7 +123,7 @@ export default React.createClass({
           <Add
             componentId={this.props.componentId}
             configId={this.props.configId}
-            mapping={this.props.editingValue.toMap().get('new-mapping', Immutable.Map())}
+            mapping={this.props.editingValue.get('new-mapping', Immutable.Map())}
           />
         </div>
       );

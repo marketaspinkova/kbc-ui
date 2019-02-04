@@ -1,4 +1,4 @@
-var  Immutable = require('immutable');
+var Immutable = require('immutable');
 
 var mergeValueAndDefinition = function(compareKey, definitions, value) {
   if (definitions.size > 0) {
@@ -26,7 +26,7 @@ var mergeValueAndDefinition = function(compareKey, definitions, value) {
 var findDefinition = function(compareKey, definitions, value) {
   return definitions.find(function(definition) {
     return definition.get(compareKey) === value.get(compareKey);
-  }) || new Immutable.Map();
+  }, null, Immutable.Map());
 };
 
 module.exports = {

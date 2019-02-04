@@ -1,6 +1,6 @@
 import React from 'react';
-import TableOutputMappingModal from './TableOutputMappingModal';
 import actionCreators from '../../../InstalledComponentsActionCreators';
+import TableOutputMappingModal from './TableOutputMappingModal';
 
 export default React.createClass({
   propTypes: {
@@ -12,18 +12,19 @@ export default React.createClass({
   },
 
   render() {
-    return React.createElement(TableOutputMappingModal, {
-      mode: 'create',
-      mapping: this.props.mapping,
-      tables: this.props.tables,
-      buckets: this.props.buckets,
-      onChange: this.handleChange,
-      onCancel: this.handleCancel,
-      onSave: this.handleSave
-    });
+    return (
+      <TableOutputMappingModal
+        mode="create"
+        mapping={this.props.mapping}
+        tables={this.props.tables}
+        buckets={this.props.buckets}
+        onChange={this.handleChange}
+        onCancel={this.handleCancel}
+        onSave={this.handleSave}
+      />
+    );
   },
 
-  /* eslint camelcase: 0 */
   handleChange(newMapping) {
     actionCreators.changeEditingMapping(this.props.componentId,
       this.props.configId,
@@ -45,7 +46,6 @@ export default React.createClass({
 
   handleSave() {
     const newTableId = this.props.mapping.get('destination');
-    // returns promise
     return actionCreators.saveEditingMapping(this.props.componentId,
       this.props.configId,
       'output',
@@ -54,5 +54,4 @@ export default React.createClass({
       `Add output table ${newTableId}`
     );
   }
-
 });

@@ -99,7 +99,7 @@ export default React.createClass({
           componentId={this.state.componentId}
           configId={this.state.config.get('id')}
           value={this.state.configData.getIn(['storage', 'input', 'tables'], List())}
-          editingValue={this.state.editingConfigData.getIn(['storage', 'input', 'tables'], List())}
+          editingValue={this.state.editingConfigData.getIn(['storage', 'input', 'tables'], Map())}
           tables={this.state.tables}
           pendingActions={this.state.pendingActions}
           openMappings={this.state.openMappings}
@@ -117,7 +117,7 @@ export default React.createClass({
           componentId={this.state.componentId}
           configId={this.state.config.get('id')}
           value={this.state.configData.getIn(['storage', 'input', 'files'], List())}
-          editingValue={this.state.editingConfigData.getIn(['storage', 'input', 'files'], List())}
+          editingValue={this.state.editingConfigData.getIn(['storage', 'input', 'files'], Map())}
           pendingActions={this.state.pendingActions}
           openMappings={this.state.openMappings}
         />
@@ -134,7 +134,7 @@ export default React.createClass({
           componentId={this.state.componentId}
           configId={this.state.config.get('id')}
           value={this.state.configData.getIn(['storage', 'output', 'tables'], List())}
-          editingValue={this.state.editingConfigData.getIn(['storage', 'output', 'tables'], List())}
+          editingValue={this.state.editingConfigData.getIn(['storage', 'output', 'tables'], Map())}
           tables={this.state.tables}
           buckets={this.state.buckets}
           pendingActions={this.state.pendingActions}
@@ -153,7 +153,7 @@ export default React.createClass({
           componentId={this.state.componentId}
           configId={this.state.config.get('id')}
           value={this.state.configData.getIn(['storage', 'output', 'files'], List())}
-          editingValue={this.state.editingConfigData.getIn(['storage', 'output', 'files'], List())}
+          editingValue={this.state.editingConfigData.getIn(['storage', 'output', 'files'], Map())}
           pendingActions={this.state.pendingActions}
           openMappings={this.state.openMappings}
         />

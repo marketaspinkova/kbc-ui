@@ -70,7 +70,7 @@ export default React.createClass({
               tables={this.state.tables}
               pendingActions={this.state.pendingActions}
               openMappings={this.state.openMappings}
-              editingValue={this.state.editingConfigData.getIn(['storage', 'input', 'tables'], List())}
+              editingValue={this.state.editingConfigData.getIn(['storage', 'input', 'tables'], Map())}
               configId={this.state.configId}
               value={this.state.configData.getIn(['storage', 'input', 'tables'], List())}/>
           </div>
