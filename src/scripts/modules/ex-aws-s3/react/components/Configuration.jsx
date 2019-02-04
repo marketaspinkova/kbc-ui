@@ -158,6 +158,7 @@ export default React.createClass({
             props.onChange({delimiter: value});
           }}
           disabled={this.props.disabled}
+          help={<span>Field delimiter used in CSV file. Use <code>\t</code> for tabulator.</span>}
         />
         <Input
           type="text"
