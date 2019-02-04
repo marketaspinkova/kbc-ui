@@ -158,6 +158,7 @@ export default React.createClass({
             props.onChange({delimiter: value});
           }}
           disabled={this.props.disabled}
+          help={<span>Field delimiter used in CSV file. Use <code>\t</code> for tabulator.</span>}
         />
         <Input
           type="text"
@@ -168,9 +169,8 @@ export default React.createClass({
           onChange={function(e) {
             props.onChange({enclosure: e.target.value});
           }}
-          placeholder={'"'}
           disabled={this.props.disabled}
-          help={(<span>Field enclosure used in CSV file. Default value is <code>"</code>.</span>)}
+          help={<span>Field enclosure used in CSV file.</span>}
         />
         <div className="form-group">
           <div className="col-xs-4 control-label">Header</div>
