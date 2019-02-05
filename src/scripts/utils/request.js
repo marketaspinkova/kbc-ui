@@ -1,6 +1,5 @@
-import request from 'superagent';
+import request, { Request } from 'superagent';
 import Promise from 'bluebird';
-import {Request} from 'superagent';
 import HttpError from './HttpError';
 import qs from 'qs';
 
