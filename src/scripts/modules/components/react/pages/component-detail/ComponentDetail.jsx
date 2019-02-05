@@ -132,21 +132,6 @@ export default React.createClass({
   },
 
   _renderConfigurations() {
-    const hasRedshift = ApplicationStore.getSapiToken().getIn(['owner', 'hasRedshift']);
-    const needsRedshift = this.state.component.get('flags').includes('appInfo.redshiftOnly');
-
-    if (needsRedshift && !hasRedshift) {
-      return (
-        <div className="row">
-          <span>
-            {'Redshift is not enabled for this project, please '}
-            <a onClick={this._openSupportModal}>contact us</a>
-            {' to get more info.'}
-          </span>
-        </div>
-      );
-    }
-
     if (this.state.configurations.count()) {
       if (this._getFilteredConfigurations().count()) {
         return (

@@ -76,14 +76,6 @@ const getComponentBadges = (component) => {
       key: 'fee'
     });
   }
-  if (flags.contains('appInfo.redshiftOnly')) {
-    badges.push({
-      title: <span><i className="fa fa-database fa-fw"/></span>,
-      description: `A Redshift backend is required to use this ${componentType}.`,
-      descriptionPlain: `A Redshift backend is required to use this ${componentType}.`,
-      key: 'redshift'
-    });
-  }
   if (flags.contains('appInfo.fullAccess')) {
     badges.push({
       title: <span><i className="fa fa-key fa-fw"/></span>,
