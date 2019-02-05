@@ -1,3 +1,5 @@
+sudo: false
+
 language: node_js
 
 node_js: "10"
@@ -14,8 +16,6 @@ before_script:
 script:
  - yarn test
  - yarn build
-
-sudo: false
 
 cache:
   yarn: true
