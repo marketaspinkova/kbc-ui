@@ -485,25 +485,16 @@ Dispatcher.register(function(payload) {
       return InstalledComponentsStore.emitChange();
 
     case constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGDATA_LOAD_SUCCESS:
-      _store = _store.withMutations(function(store) {
-        let result = store.deleteIn(['configDataLoading', action.componentId, action.configId]);
-        let storePath = ['configData', action.componentId, action.configId];
-        result = result.setIn(storePath, fromJSOrdered(action.data.configuration));
-        storePath = ['components', action.componentId, 'configurations', action.configId.toString()];
-        result = result.setIn(storePath, fromJSOrdered(action.data));
-        let j = 0;
-        while (j < action.data.rows.length) {
-          result = result.setIn(
-            ['configRowsData', action.componentId, action.configId, action.data.rows[j].id],
-            fromJSOrdered(action.data.rows[j].configuration)
-          );
-          result = result.setIn(
-            ['configRows', action.componentId, action.configId, action.data.rows[j].id],
-            fromJS(action.data.rows[j])
-          );
-          j++;
-        }
-        return result;
+      _store = _store.withMutations((store) => {
+        store.deleteIn(['configDataLoading', action.componentId, action.configId]);
+        store.deleteIn(['configRowsData', action.componentId, action.configId]);
+        store.deleteIn(['configRows', action.componentId, action.configId]);
+        store.setIn(['configData', action.componentId, action.configId], fromJSOrdered(action.data.configuration));
+        store.setIn(['components', action.componentId, 'configurations', action.configId], fromJSOrdered(action.data));
+        action.data.rows.forEach(row => {
+          store.setIn(['configRowsData', action.componentId, action.configId, row.id], fromJSOrdered(row.configuration));
+          store.setIn(['configRows', action.componentId, action.configId, row.id], fromJS(row));
+        });
       });
       return InstalledComponentsStore.emitChange();
 
@@ -516,37 +507,19 @@ Dispatcher.register(function(payload) {
       return InstalledComponentsStore.emitChange();
 
     case constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGSDATA_LOAD_SUCCESS:
-      _store = _store.withMutations(function(store) {
-        let storeResult = store
-          .deleteIn(['configsDataLoading', action.componentId])
-          .setIn(['configsDataLoaded', action.componentId], true);
-
-        let i = 0;
-        return (() => {
-          const result = [];
-          while (i < action.configData.length) {
-            storeResult = storeResult.setIn(
-              ['components', action.componentId, 'configurations', action.configData[i].id],
-              fromJSOrdered(action.configData[i])
-            );
-            let j = 0;
-            while (j < action.configData[i].rows.length) {
-              storeResult = storeResult.setIn(
-                ['configRowsData', action.componentId, action.configData[i].id, action.configData[i].rows[j].id],
-                fromJSOrdered(action.configData[i].rows[j].configuration)
-              );
-              storeResult = storeResult.setIn(
-                ['configRows', action.componentId, action.configData[i].id, action.configData[i].rows[j].id],
-                fromJS(action.configData[i].rows[j])
-              );
-              j++;
-            }
-            result.push(i++);
-          }
-          return result;
-        })();
+      _store = _store.withMutations((store) => {
+        store.deleteIn(['configsDataLoading', action.componentId]);
+        store.setIn(['configsDataLoaded', action.componentId], true);
+        action.configData.forEach(configuration => {
+          store.deleteIn(['configRowsData', action.componentId, configuration.id]);
+          store.deleteIn(['configRows', action.componentId, configuration.id]);
+          store.setIn(['components', action.componentId, 'configurations', configuration.id], fromJSOrdered(configuration));
+          configuration.rows.forEach(row => {
+            store.setIn(['configRowsData', action.componentId, configuration.id, row.id], fromJSOrdered(row.configuration));
+            store.setIn(['configRows', action.componentId, configuration.id, row.id], fromJS(row));
+          });
+        });
       });
-
       return InstalledComponentsStore.emitChange();
 
     case constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGSDATA_LOAD_ERROR:
