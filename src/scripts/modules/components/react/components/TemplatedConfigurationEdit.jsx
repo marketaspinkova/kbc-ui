@@ -1,13 +1,10 @@
 import React, {PropTypes} from 'react';
 import { ExternalLink } from '@keboola/indigo-ui';
-// import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import JSONSchemaEditor from './JSONSchemaEditor';
 import TemplateSelector from './ConfigurationTemplateSelector';
-import CodeMirror from 'react-code-mirror';
 import SaveButtons from '../../../../react/common/SaveButtons';
-
-require('codemirror/addon/lint/lint');
-require('../../../../utils/codemirror/json-lint');
+import CodeMirror from 'react-code-mirror';
+import '../../../../utils/codemirror/json-lint';
 
 export default React.createClass({
 

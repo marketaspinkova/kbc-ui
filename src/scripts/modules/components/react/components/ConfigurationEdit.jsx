@@ -1,13 +1,10 @@
 import React, {PropTypes} from 'react';
 // import ConfirmButtons from '../../../../react/common/ConfirmButtons';
-import CodeMirror from 'react-code-mirror';
 import JSONSchemaEditor from './JSONSchemaEditor';
 import Immutable from 'immutable';
 import SaveButtons from '../../../../react/common/SaveButtons';
-
-/* global require */
-require('codemirror/addon/lint/lint');
-require('../../../../utils/codemirror/json-lint');
+import CodeMirror from 'react-code-mirror';
+import '../../../../utils/codemirror/json-lint';
 
 export default React.createClass({
   propTypes: {

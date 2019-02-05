@@ -1,9 +1,7 @@
 import React from 'react';
 import { Modal, ButtonToolbar, Button } from 'react-bootstrap';
-import CodeMirror from 'react-code-mirror';
 import Tooltip from '../../../../react/common/Tooltip';
-
-import 'codemirror/addon/lint/lint';
+import CodeMirror from 'react-code-mirror';
 import '../../../../utils/codemirror/json-lint';
 
 export default React.createClass({
