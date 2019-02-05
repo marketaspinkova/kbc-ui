@@ -4,6 +4,9 @@ language: node_js
 
 node_js: "10"
 
+env:
+  - NODE_OPTIONS="--max-old-space-size=2048"
+
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - export PATH=$HOME/.yarn/bin:$PATH
