@@ -683,10 +683,10 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@json-editor/json-editor@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@json-editor/json-editor/-/json-editor-1.2.1.tgz#ef09bfea5a733a261401ec3d4b5ba481b9a3dca6"
-  integrity sha512-4QOqj3ZmZ+10A43v0Cu2zLPbQcrJuGPa7cJ91APWEiEtCXGRAov/6IyCuPmeXfiWVk32WXI20qeXE10keHEmNw==
+"@json-editor/json-editor@^1.3.3":
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/@json-editor/json-editor/-/json-editor-1.3.3.tgz#0d9fb4f096ab7c630ccc15bfc02cefcd001fe220"
+  integrity sha512-uMIlz//Er0HZlBghx4Fzr1adViVz23uBUw+kd/DGvgO4sY/xsBWo98mla/9dYlOh/BbpBdOHROv7YF4i9H4pkQ==
 
 "@keboola/indigo-ui@^7.5.2":
   version "7.5.2"
