@@ -6,7 +6,6 @@ import RoutesStore from '../../../../../stores/RoutesStore';
 import ComponentsStore from '../../../stores/ComponentsStore';
 import InstalledComponentsStore from '../../../stores/InstalledComponentsStore';
 import InstalledComponentsActionCreators from '../../../InstalledComponentsActionCreators';
-import ApplicationStore from '../../../../../stores/ApplicationStore';
 import VendorInfo from './VendorInfo';
 import ConfigurationRow from '../ConfigurationRow';
 import ComponentEmptyState from '../../components/ComponentEmptyState';
