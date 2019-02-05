@@ -1,35 +1,31 @@
-import request from 'superagent';
+import request, { Request } from 'superagent';
 import Promise from 'bluebird';
-import {Request} from 'superagent';
 import HttpError from './HttpError';
 import qs from 'qs';
 
-request.serialize['application/x-www-form-urlencoded'] = function(data) {
+request.serialize['application/x-www-form-urlencoded'] = (data) => {
   return qs.stringify(data);
 };
 
 Request.prototype.promise = function() {
-  const req = this;
-  return new Promise(function(resolve, reject) {
-    return req
-      .then(
-        responseOk => {
-          return resolve(responseOk);
-        },
-        responseNotOk => {
-          if (responseNotOk.response) {
-            return reject(new HttpError(responseNotOk.response));
-          } else {
-            return reject(responseNotOk);
-          }
+  return new Promise((resolve, reject) => {
+    return this.then(
+      (responseOk) => {
+        return resolve(responseOk);
+      },
+      (responseNotOk) => {
+        if (responseNotOk.response) {
+          return reject(new HttpError(responseNotOk.response));
+        } else {
+          return reject(responseNotOk);
         }
-      )
-      .catch(error => {
-        return reject(error);
-      });
+      }
+    ).catch((error) => {
+      return reject(error);
+    });
   });
 };
 
-module.exports = function(method, url) {
+module.exports = (method, url) => {
   return request(method, url).timeout(60000);
 };

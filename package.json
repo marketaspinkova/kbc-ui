@@ -53,7 +53,7 @@
     "react-textarea-autosize": "^7.0.0",
     "remove-markdown": "^0.1.0",
     "sortablejs": "^1.7.0",
-    "superagent": "~3.8.3",
+    "superagent": "^4.1.0",
     "underscore": "^1.9.0",
     "underscore.string": "^3.3.4"
   },
