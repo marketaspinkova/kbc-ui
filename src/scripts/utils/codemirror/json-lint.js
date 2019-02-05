@@ -1,6 +1,6 @@
 import CodeMirror from 'codemirror';
+import jsonlint from '.parser';
 import 'codemirror/addon/lint/lint';
-import jsonlint from 'jsonlint-mod';
 
 CodeMirror.registerHelper('lint', 'json', text => {
   const found = [];
