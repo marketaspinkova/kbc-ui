@@ -2,6 +2,7 @@ export const cases = {
   emptyWithDefaults: {
     localState: {
       oauthId: '',
+      oauthVersion: 2,
       componentId: '',
       configurationId: ''
     },
@@ -20,6 +21,7 @@ export const cases = {
   simple: {
     localState: {
       oauthId: '1234',
+      oauthVersion: 2,
       componentId: '567',
       configurationId: '789'
     },
@@ -27,6 +29,26 @@ export const cases = {
       authorization: {
         oauth_api: {
           id: '1234'
+        }
+      }
+    },
+    context: {
+      componentId: '567',
+      configurationId: '789'
+    }
+  },
+  version3: {
+    localState: {
+      oauthId: '1234',
+      oauthVersion: 3,
+      componentId: '567',
+      configurationId: '789'
+    },
+    configuration: {
+      authorization: {
+        oauth_api: {
+          id: '1234',
+          version: 3
         }
       }
     },

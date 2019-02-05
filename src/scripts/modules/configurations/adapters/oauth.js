@@ -1,8 +1,5 @@
 import Immutable from 'immutable';
-
-const OAUTH_FALLBACK_VERSION = 2;
-
-const OAUTH_V3 = 3;
+import { Constants } from '../../oauth-v2/Constants';
 
 const createConfiguration = function(localState) {
   const config = Immutable.fromJS({
@@ -13,8 +10,8 @@ const createConfiguration = function(localState) {
     }
   });
 
-  if (localState.has('oauthVersion') && localState.get('oauthVersion') === OAUTH_V3) {
-    return config.setIn(['authorization', 'oauth_api', 'version'], OAUTH_V3);
+  if (localState.get('oauthVersion') === Constants.OAUTH_VERSION_3) {
+    return config.setIn(['authorization', 'oauth_api', 'version'], Constants.OAUTH_VERSION_3);
   }
 
   return config;
@@ -23,7 +20,7 @@ const createConfiguration = function(localState) {
 const parseConfiguration = function(configuration, context) {
   return Immutable.fromJS({
     oauthId: configuration.getIn(['authorization', 'oauth_api', 'id'], ''),
-    oauthVersion: configuration.getIn(['authorization', 'oauth_api', 'version'], OAUTH_FALLBACK_VERSION),
+    oauthVersion: configuration.getIn(['authorization', 'oauth_api', 'version'], Constants.OAUTH_VERSION_FALLBACK),
     componentId: context.get('componentId', ''),
     configurationId: context.get('configurationId', '')
   });
