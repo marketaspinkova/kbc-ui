@@ -6,7 +6,7 @@ User interface for Keboola Connection
 
 ## Development
 
-* Make sure you have Node 8 installed (`node -v`)
+* Make sure you have Node 10 installed (`node -v`)
 * Clone this repository
 * We are using [Yarn](https://yarnpkg.com/) instead of NPM.
   * It has many [advantages](https://medium.com/@nikjohn/facebooks-yarn-vs-npm-is-yarn-really-better-1890b3ea6515#.7p88qfh2o)

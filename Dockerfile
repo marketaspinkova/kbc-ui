@@ -1,4 +1,4 @@
-FROM node:8
+FROM node:10
 
 # remove yarn provided by official image
 RUN rm /usr/local/bin/yarn \
