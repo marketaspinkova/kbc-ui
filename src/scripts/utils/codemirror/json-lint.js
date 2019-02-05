@@ -1,5 +1,5 @@
 import CodeMirror from 'codemirror';
-import jsonlint from '.parser';
+import jsonlint from './parser';
 import 'codemirror/addon/lint/lint';
 
 CodeMirror.registerHelper('lint', 'json', text => {
