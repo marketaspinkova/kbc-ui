@@ -41,7 +41,7 @@ export default React.createClass({
         tooltip="Delete date dimension"
         isPending={this.props.dimension.get('pendingActions').contains('delete')}
         confirm={{
-          title: 'Delete date dimension',
+          title: 'Delete Date Dimension',
           text: this.deleteText(),
           onConfirm: this.handleDelete
         }}

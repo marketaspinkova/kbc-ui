@@ -152,7 +152,7 @@ export default React.createClass({
         />
       );
     } else {
-      return React.createElement(WizardButtons, defaults.merge(Map(options)).toJS());
+      return <WizardButtons {...defaults.merge(Map(options)).toJS()} />;
     }
   },
 

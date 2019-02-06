@@ -86,53 +86,47 @@ export default React.createClass({
     if (this.getValue().count() >= 1) {
       var mappings = this.getValue().map(function(output, key) {
         const definition = findOutputMappingDefinition(component.props.definitions, output);
-        return React.createElement(Panel,
-          {
-            className: 'kbc-panel-heading-with-table',
-            key: key,
-            collapsible: true,
-            eventKey: key,
-            expanded: component.props.openMappings.get('table-output-' + key, false),
-            header: React.createElement('div',
-              {
-                onClick: function() {
-                  component.toggleMapping(key);
-                }
-              }, React.createElement(Header,
-                {
-                  value: output,
-                  editingValue: component.props.editingValue.get(key, Immutable.Map()),
-                  tables: component.props.tables,
-                  buckets: component.props.buckets,
-                  mappingIndex: key,
-                  pendingActions: component.props.pendingActions,
-                  definition: definition,
-                  onEditStart: function() {
-                    return component.onEditStart(key);
-                  },
-                  onChange: function(value) {
-                    var modifiedValue = value;
-                    if (definition.has('source')) {
-                      modifiedValue = modifiedValue.set('source', definition.get('source'));
-                    }
-                    return component.onChangeMapping(key, modifiedValue);
-                  },
-                  onSave: function() {
-                    return component.onSaveMapping(key);
-                  },
-                  onCancel: function() {
-                    return component.onCancelEditMapping(key);
-                  },
-                  onDelete: function() {
-                    return component.onDeleteMapping(key);
+        return (
+          <Panel
+            className="kbc-panel-heading-with-table"
+            key={key}
+            collapsible={true}
+            eventKey={key}
+            expanded={component.props.openMappings.get('table-output-' + key, false)}
+            header={<div
+              onClick={function() {
+                component.toggleMapping(key);
+              }}>
+              {<Header
+                value={output}
+                editingValue={component.props.editingValue.get(key, Immutable.Map())}
+                tables={component.props.tables}
+                buckets={component.props.buckets}
+                mappingIndex={key}
+                pendingActions={component.props.pendingActions}
+                definition={definition}
+                onEditStart={function() {
+                  return component.onEditStart(key);
+                }}
+                onChange={function(value) {
+                  var modifiedValue = value;
+                  if (definition.has('source')) {
+                    modifiedValue = modifiedValue.set('source', definition.get('source'));
                   }
-                }))
-          },
-          React.createElement(Detail,
-            {
-              value: output
-            }
-          )
+                  return component.onChangeMapping(key, modifiedValue);
+                }}
+                onSave={function() {
+                  return component.onSaveMapping(key);
+                }}
+                onCancel={function() {
+                  return component.onCancelEditMapping(key);
+                }}
+                onDelete={function() {
+                  return component.onDeleteMapping(key);
+                }} />}
+            </div>}>
+            <Detail value={output} />
+          </Panel>
         );
       }).toJS();
       return (

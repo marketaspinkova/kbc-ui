@@ -68,47 +68,40 @@ export default React.createClass({
     var component = this;
     if (this.props.value.count() >= 1) {
       var mappings = this.props.value.map(function(output, key) {
-        return React.createElement(Panel,
-          {
-            className: 'kbc-panel-heading-with-table',
-            key: key,
-            collapsible: true,
-            eventKey: key,
-            expanded: component.props.openMappings.get('file-output-' + key, false),
-            header: React.createElement('div',
-              {
-                onClick: function() {
-                  component.toggleMapping(key);
-                }
-              }, React.createElement(Header,
-                {
-                  value: output,
-                  editingValue: component.props.editingValue.get(key, Immutable.Map()),
-                  mappingIndex: key,
-                  pendingActions: component.props.pendingActions,
-                  onEditStart: function() {
-                    return component.onEditStart(key);
-                  },
-                  onChange: function(value) {
-                    return component.onChangeMapping(key, value);
-                  },
-                  onSave: function() {
-                    return component.onSaveMapping(key);
-                  },
-                  onCancel: function() {
-                    return component.onCancelEditMapping(key);
-                  },
-                  onDelete: function() {
-                    return component.onDeleteMapping(key);
-                  }
-                }))
-          },
-          React.createElement(Detail,
-            {
-              fill: true,
-              value: output
-            }
-          )
+        return (
+          <Panel
+            className="kbc-panel-heading-with-table"
+            key={key}
+            collapsible={true}
+            eventKey={key}
+            expanded={component.props.openMappings.get('file-output-' + key, false)}
+            header={<div
+              onClick={function() {
+                component.toggleMapping(key);
+              }}>
+              {<Header
+                value={output}
+                editingValue={component.props.editingValue.get(key, Immutable.Map())}
+                mappingIndex={key}
+                pendingActions={component.props.pendingActions}
+                onEditStart={function() {
+                  return component.onEditStart(key);
+                }}
+                onChange={function(value) {
+                  return component.onChangeMapping(key, value);
+                }}
+                onSave={function() {
+                  return component.onSaveMapping(key);
+                }}
+                onCancel={function() {
+                  return component.onCancelEditMapping(key);
+                }}
+                onDelete={function() {
+                  return component.onDeleteMapping(key);
+                }} />}
+            </div>}>
+            <Detail fill={true} value={output} />
+          </Panel>
         );
       }).toJS();
       return (
