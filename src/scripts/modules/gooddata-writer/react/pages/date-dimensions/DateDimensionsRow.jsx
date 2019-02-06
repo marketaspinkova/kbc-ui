@@ -36,15 +36,17 @@ export default React.createClass({
   },
 
   deleteButton() {
-    return React.createElement(DeleteButton, {
-      tooltip: 'Delete date dimension',
-      isPending: this.props.dimension.get('pendingActions').contains('delete'),
-      confirm: {
-        title: 'Delete Date Dimension',
-        text: this.deleteText(),
-        onConfirm: this.handleDelete
-      }
-    });
+    return (
+      <DeleteButton
+        tooltip="Delete date dimension"
+        isPending={this.props.dimension.get('pendingActions').contains('delete')}
+        confirm={{
+          title: 'Delete date dimension',
+          text: this.deleteText(),
+          onConfirm: this.handleDelete
+        }}
+      />
+    );
   },
 
   uploadButton() {

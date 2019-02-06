@@ -52,10 +52,8 @@ export default {
         return 'Query ' + ExDbStore.getConfigQuery(parseInt(queryId, 10)).get('name');
       },
       nameEdit: function(params) {
-        return React.createElement(ExDbQueryName(storeProvisioning), {
-          configId: params.config,
-          queryId: parseInt(params.query, 10)
-        });
+        const EditComponent = ExDbQueryName(storeProvisioning);
+        return <EditComponent configId={params.config} queryId={parseInt(params.query, 10)} />;
       },
       requireData: [
         function() {

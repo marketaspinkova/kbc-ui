@@ -78,17 +78,18 @@ export default React.createClass({
   },
 
   editor() {
-    const props = {
-      value: this.props.mapping,
-      tables: this.props.tables,
-      buckets: this.props.buckets,
-      disabled: this.state.isSaving,
-      onChange: this.props.onChange,
-      backend: 'docker',
-      definition: this.props.definition,
-      initialShowDetails: resolveOutputShowDetails(this.props.mapping)
-    };
-    return React.createElement(Editor, props);
+    return (
+      <Editor
+        backend="docker"
+        value={this.props.mapping}
+        tables={this.props.tables}
+        buckets={this.props.buckets}
+        disabled={this.state.isSaving}
+        onChange={this.props.onChange}
+        definition={this.props.definition}
+        initialShowDetails={resolveOutputShowDetails(this.props.mapping)}
+      />
+    );
   },
 
   handleCancel() {

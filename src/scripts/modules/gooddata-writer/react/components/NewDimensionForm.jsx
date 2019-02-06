@@ -142,14 +142,16 @@ export default React.createClass({
     if (this.props.dimension.get('template') !== DateDimensionTemplates.CUSTOM) {
       return null;
     }
-    return React.createElement(Input, {
-      type: 'text',
-      placeholder: 'Your template id',
-      value: this.props.dimension.get('customTemplate'),
-      onChange: this.handleInputChange.bind(this, 'customTemplate'),
-      wrapperClassName: 'col-sm-offset-3 col-sm-9',
-      bsSize: 'small'
-    });
+    return (
+      <Input
+        type="text"
+        bsSize="small"
+        placeholder="Your template id"
+        wrapperClassName="col-sm-offset-3 col-sm-9"
+        value={this.props.dimension.get('customTemplate')}
+        onChange={this.handleInputChange.bind(this, 'customTemplate')}
+      />
+    );
   },
 
   isValid() {

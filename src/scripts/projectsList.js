@@ -55,17 +55,17 @@ module.exports = {
   start: function(appOptions) {
     document.body.className = 'kbc-outer-page kbc-projects-list';
     return ReactDOM.render(
-      React.createElement(App, {
-        user: Immutable.fromJS(appOptions.data.kbc.admin),
-        urlTemplates: Immutable.fromJS(appOptions.data.kbc.urlTemplates),
-        projectTemplates: Immutable.fromJS(appOptions.data.projectTemplates),
-        maintainers: Immutable.fromJS(appOptions.data.maintainers),
-        organizations: Immutable.fromJS(appOptions.data.organizations),
-        invitationsCount: appOptions.data.invitations && appOptions.data.invitations.totalCount
+      <App
+        user={Immutable.fromJS(appOptions.data.kbc.admin)}
+        urlTemplates={Immutable.fromJS(appOptions.data.kbc.urlTemplates)}
+        projectTemplates={Immutable.fromJS(appOptions.data.projectTemplates)}
+        maintainers={Immutable.fromJS(appOptions.data.maintainers)}
+        organizations={Immutable.fromJS(appOptions.data.organizations)}
+        invitationsCount={appOptions.data.invitations && appOptions.data.invitations.totalCount
           ? appOptions.data.invitations.totalCount
-          : 0,
-        canCreateProject: appOptions.data.kbc.canCreateProject
-      }),
+          : 0}
+        canCreateProject={appOptions.data.kbc.canCreateProject}
+      />,
       document.body
     );
   },

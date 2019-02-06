@@ -180,11 +180,13 @@ module.exports = {
             },
 
             render() {
-              return React.createElement(ConfigurationCopiedNotification, {
-                componentId: componentId,
-                configId: result.id,
-                onClick: this.props.onClick
-              });
+              return (
+                <ConfigurationCopiedNotification
+                  componentId={componentId}
+                  configId={result.id}
+                  onClick={this.props.onClick}
+                />
+              );
             }
           })
         });

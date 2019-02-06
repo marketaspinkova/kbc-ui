@@ -65,17 +65,15 @@ export default React.createClass({
   },
 
   renderModal() {
-    return React.createElement(CreateSandboxModal, {
-      show: this.state.isModalOpen,
-      onHide: () => {
-        this.setState({
-          isModalOpen: false
-        });
-      },
-      defaultMode: 'prepare',
-      backend: this.props.backend,
-      transformationType: this.props.transformationType,
-      runParams: this.props.runParams
-    });
+    return (
+      <CreateSandboxModal
+        defaultMode="prepare"
+        show={this.state.isModalOpen}
+        onHide={() => this.setState({ isModalOpen: false })}
+        backend={this.props.backend}
+        transformationType={this.props.transformationType}
+        runParams={this.props.runParams}
+      />
+    );
   }
 });

@@ -64,12 +64,13 @@ export default React.createClass({
   },
 
   editor() {
-    const props = {
-      value: this.props.mapping,
-      disabled: this.state.isSaving,
-      onChange: this.props.onChange
-    };
-    return React.createElement(Editor, props);
+    return (
+      <Editor
+        value={this.props.mapping}
+        disabled={this.state.isSaving}
+        onChange={this.props.onChange}
+      />
+    );
   },
 
   handleCancel() {
