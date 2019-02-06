@@ -1,18 +1,26 @@
 import Immutable from 'immutable';
+import { Constants } from '../../oauth-v2/Constants';
 
 const createConfiguration = function(localState) {
-  return Immutable.fromJS({
+  const config = Immutable.fromJS({
     authorization: {
       oauth_api: {
         id: localState.get('oauthId', '')
       }
     }
   });
+
+  if (localState.get('oauthVersion') === Constants.OAUTH_VERSION_3) {
+    return config.setIn(['authorization', 'oauth_api', 'version'], Constants.OAUTH_VERSION_3);
+  }
+
+  return config;
 };
 
 const parseConfiguration = function(configuration, context) {
   return Immutable.fromJS({
     oauthId: configuration.getIn(['authorization', 'oauth_api', 'id'], ''),
+    oauthVersion: configuration.getIn(['authorization', 'oauth_api', 'version'], Constants.OAUTH_VERSION_FALLBACK),
     componentId: context.get('componentId', ''),
     configurationId: context.get('configurationId', '')
   });
