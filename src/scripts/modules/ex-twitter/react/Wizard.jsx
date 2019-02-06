@@ -106,13 +106,17 @@ export default React.createClass({
     if (this.props.isConfigured) {
       return null;
     }
-    const buttons = React.createElement(WizardButtons, {
-      isSaving: this.props.isSaving,
-      componentId: this.props.componentId,
-      configId: this.props.configId,
-      nextAction: this.goToUserTimeline,
-      nextActionEnabled: this.props.oauthCredentials
-    });
+
+    const buttons = (
+      <WizardButtons
+        isSaving={this.props.isSaving}
+        componentId={this.props.componentId}
+        configId={this.props.configId}
+        nextAction={this.goToUserTimeline}
+        nextActionEnabled={this.props.oauthCredentials}
+      />
+    );
+
     return (
       <WizardStep step={Steps.STEP_AUTHORIZATION} title="Authorization" buttons={buttons}>
         <div className="col-md-12">
@@ -137,16 +141,18 @@ export default React.createClass({
       configId: this.props.configId
     });
     if (this.props.isConfigured) {
-      return React.createElement(EditButtons, {
-        isEditing: this.props.isEditing,
-        isSaving: this.props.isSaving,
-        editLabel: 'Edit Settings',
-        onCancel: this.props.onEditCancel,
-        onSave: this.props.onSave,
-        onEditStart: this.props.onEditStart
-      });
+      return (
+        <EditButtons
+          editLabel="Edit Settings"
+          isEditing={this.props.isEditing}
+          isSaving={this.props.isSaving}
+          onCancel={this.props.onEditCancel}
+          onSave={this.props.onSave}
+          onEditStart={this.props.onEditStart}
+        />
+      );
     } else {
-      return React.createElement(WizardButtons, defaults.merge(Map(options)).toJS());
+      return <WizardButtons {...defaults.merge(Map(options)).toJS()} />;
     }
   },
 

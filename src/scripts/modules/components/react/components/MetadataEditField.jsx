@@ -78,19 +78,21 @@ export default React.createClass({
   },
 
   render() {
+    const EditElement = this.props.editElement;
+
     return (
-      React.createElement(this.props.editElement, {
-        text: (this.state.isEditing) ? this.state.editValue : this.state.value,
-        placeholder: this.props.placeholder,
-        tooltipPlacement: this.props.tooltipPlacement,
-        isSaving: this.state.isSaving,
-        isEditing: this.state.isEditing,
-        isValid: this.state.isValid,
-        onEditStart: this._handleEditStart,
-        onEditChange: this._handleEditChange,
-        onEditSubmit: this._handleEditSubmit,
-        onEditCancel: this._handleEditCancel
-      })
+      <EditElement
+        text={this.state.isEditing ? this.state.editValue : this.state.value}
+        placeholder={this.props.placeholder}
+        tooltipPlacement={this.props.tooltipPlacement}
+        isSaving={this.state.isSaving}
+        isEditing={this.state.isEditing}
+        isValid={this.state.isValid}
+        onEditStart={this._handleEditStart}
+        onEditChange={this._handleEditChange}
+        onEditSubmit={this._handleEditSubmit}
+        onEditCancel={this._handleEditCancel}
+      />
     );
   }
 });

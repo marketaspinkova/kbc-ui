@@ -15,14 +15,16 @@ export default React.createClass({
     };
   },
   render: function() {
-    return React.createElement(ConfigurationRowEditField, {
-      componentId: this.props.componentId,
-      configId: this.props.configId,
-      rowId: this.props.rowId,
-      fieldName: 'description',
-      editElement: InlineEditTextArea,
-      placeholder: this.props.placeholder,
-      tooltipPlacement: 'bottom'
-    });
+    return (
+      <ConfigurationRowEditField
+        componentId={this.props.componentId}
+        configId={this.props.configId}
+        rowId={this.props.rowId}
+        fieldName="description"
+        editElement={InlineEditTextArea}
+        placeholder={this.props.placeholder}
+        tooltipPlacement="bottom"
+      />
+    );
   }
 });

@@ -17,13 +17,15 @@ export default React.createClass({
     return (
       <div className="kbc-notifications">
         {this.state.notifications.map((notification) => {
-          return React.createElement(Notification, {
-            key: notification.get('id'),
-            notification: notification,
-            onCancel: this.handleCancel,
-            onMouseEnter: this.handleEnter,
-            onMouseLeave: this.handleLeave
-          });
+          return (
+            <Notification
+              key={notification.get('id')}
+              notification={notification}
+              onCancel={this.handleCancel}
+              onMouseEnter={this.handleEnter}
+              onMouseLeave={this.handleLeave}
+            />
+          );
         })}
       </div>
     );

@@ -56,15 +56,18 @@ export default React.createClass({
   },
 
   renderAuth() {
-    return React.createElement(this.props.innerComponent, null,
-      [(<p>No Account authorized</p>),
-        (<button
+    const InnerComponent = this.props.innerComponent;
+
+    return (
+      <InnerComponent>
+        <p>No Account authorized</p>
+        <button
           onClick={this.showModal}
           className="btn btn-success">
           <i className="fa fa-fw fa-user"/>
           Authorize Account
-        </button>)
-      ]
+        </button>
+      </InnerComponent>
     );
   },
 

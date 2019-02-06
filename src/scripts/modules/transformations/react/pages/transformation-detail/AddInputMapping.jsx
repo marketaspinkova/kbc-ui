@@ -12,17 +12,19 @@ export default React.createClass({
   },
 
   render() {
-    return React.createElement(InputMappingModal, {
-      mode: 'create',
-      mapping: this.props.mapping,
-      tables: this.props.tables,
-      backend: this.props.transformation.get('backend'),
-      type: this.props.transformation.get('type'),
-      onChange: this.handleChange,
-      onCancel: this.handleCancel,
-      onSave: this.handleSave,
-      otherDestinations: this.props.otherDestinations
-    });
+    return (
+      <InputMappingModal
+        mode="create"
+        mapping={this.props.mapping}
+        tables={this.props.tables}
+        backend={this.props.transformation.get('backend')}
+        type={this.props.transformation.get('type')}
+        onChange={this.handleChange}
+        onCancel={this.handleCancel}
+        onSave={this.handleSave}
+        otherDestinations={this.props.otherDestinations}
+      />
+    );
   },
 
   handleChange(newMapping) {

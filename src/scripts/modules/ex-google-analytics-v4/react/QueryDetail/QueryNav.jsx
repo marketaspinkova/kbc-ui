@@ -30,12 +30,14 @@ export default React.createClass({
   rows() {
     if (this.props.queries.count()) {
       return this.props.queries.map((query, idx) => {
-        return React.createElement(NavRow, {
-          key: idx,
-          query: query,
-          configurationId: this.props.configurationId,
-          componentId: this.props.componentId
-        });
+        return (
+          <NavRow
+            key={idx}
+            query={query}
+            configurationId={this.props.configurationId}
+            componentId={this.props.componentId}
+          />
+        );
       });
     } else {
       return (

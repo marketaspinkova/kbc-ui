@@ -57,17 +57,19 @@ export default React.createClass({
   },
 
   input(label, field, placeholder, type = 'text', autoFocus = false) {
-    return React.createElement(Input, {
-      type: type,
-      label: label,
-      ref: field,
-      placeholder: placeholder,
-      value: this.props.parameters.get(field),
-      onChange: this.handleChange.bind(this, field),
-      labelClassName: 'col-xs-4',
-      wrapperClassName: 'col-xs-8',
-      autoFocus: autoFocus
-    });
+    return (
+      <Input
+        type={type}
+        label={label}
+        ref={field}
+        placeholder={placeholder}
+        value={this.props.parameters.get(field)}
+        onChange={this.handleChange.bind(this, field)}
+        labelClassName="col-xs-4"
+        wrapperClassName="col-xs-8"
+        autoFocus={autoFocus}
+      />
+    );
   },
 
   s3Path() {
@@ -105,7 +107,7 @@ export default React.createClass({
   },
 
   loader() {
-    return this.props.isSaving ? React.createElement(Loader) : null;
+    return this.props.isSaving ? <Loader /> : null;
   },
 
   handleChange(field, event) {

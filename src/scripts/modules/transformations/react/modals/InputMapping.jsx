@@ -123,13 +123,13 @@ export default React.createClass({
       definition: this.props.definition
     };
     if (this.props.backend === 'mysql' && this.props.type === 'simple') {
-      return React.createElement(InputMappingRowMySqlEditor, props);
+      return <InputMappingRowMySqlEditor {...props} />;
     } else if (this.props.backend === 'redshift' && this.props.type === 'simple') {
-      return React.createElement(InputMappingRowRedshiftEditor, props);
+      return <InputMappingRowRedshiftEditor {...props} />;
     } else if (this.props.backend === 'snowflake' && this.props.type === 'simple') {
-      return React.createElement(InputMappingRowSnowflakeEditor, props);
+      return <InputMappingRowSnowflakeEditor {...props} />;
     } else if (this.props.backend === 'docker') {
-      return React.createElement(InputMappingRowDockerEditor, props);
+      return <InputMappingRowDockerEditor {...props} />;
     }
     return null;
   },

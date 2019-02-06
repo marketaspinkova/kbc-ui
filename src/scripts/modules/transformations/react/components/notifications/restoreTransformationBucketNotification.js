@@ -9,13 +9,15 @@ export default (bucketId, bucketName) => {
       onClick: React.PropTypes.func.isRequired
     },
     render: function() {
-      return React.createElement(ConfigurationCopiedNotification, {
-        message: 'Bucket ' + bucketName + ' was ',
-        linkLabel: 'restored',
-        componentId: 'transformation',
-        configId: bucketId,
-        onClick: this.props.onClick
-      });
+      return (
+        <ConfigurationCopiedNotification
+          linkLabel="restored"
+          componentId="transformation"
+          message={'Bucket ' + bucketName + ' was '}
+          configId={bucketId}
+          onClick={this.props.onClick}
+        />
+      );
     }
   });
 };

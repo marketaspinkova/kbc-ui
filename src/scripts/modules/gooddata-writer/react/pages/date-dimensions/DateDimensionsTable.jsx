@@ -30,11 +30,13 @@ export default React.createClass({
   },
 
   renderRow(dimension) {
-    return React.createElement(Row, {
-      key: dimension.get('id'),
-      dimension: dimension,
-      configurationId: this.props.configurationId,
-      pid: this.props.pid
-    });
+    return (
+      <Row
+        key={dimension.get('id')}
+        dimension={dimension}
+        configurationId={this.props.configurationId}
+        pid={this.props.pid}
+      />
+    );
   }
 });

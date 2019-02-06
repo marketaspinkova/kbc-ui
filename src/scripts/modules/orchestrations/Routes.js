@@ -46,7 +46,7 @@ const routes = {
     {
       name: 'orchestration',
       nameEdit(params) {
-        return React.createElement(OrchestrationNameEdit, { orchestrationId: parseInt(params.orchestrationId, 10) });
+        return <OrchestrationNameEdit orchestrationId={parseInt(params.orchestrationId, 10)} />;
       },
       path: ':orchestrationId',
       reloaderHandler: OrchestrationReloaderButton,

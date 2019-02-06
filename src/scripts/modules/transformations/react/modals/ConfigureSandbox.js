@@ -46,26 +46,27 @@ export default React.createClass({
   },
 
   render() {
-    const {backend} = this.props;
-    return React.createElement(ConfigureSandboxModal, {
-      mysqlCredentials: this.state.mysqlCredentials,
-      redshiftCredentials: this.state.redshiftCredentials,
-      dockerCredentials: this.state.dockerCredentials,
-      isLoadingDockerCredentials: this.state.isLoadingDockerCredentials,
-      snowflakeCredentials: this.state.snowflakeCredentials,
-      onHide: this.handleModalClose,
-      show: this.props.show,
-      backend: this.props.backend,
-      transformationType: this.props.transformationType,
-      mode: this.state.mode,
-      jobId: this.state.jobId,
-      progress: this.state.progress,
-      progressStatus: this.state.progressStatus,
-      isRunning: this.state.isRunning,
-      isCreated: this.state.isCreated,
-      onModeChange: this.handleModeChange,
-      onCreateStart: backend === 'docker' ? this.handleDockerSandboxCreate : this.handleSandboxCreate
-    });
+    return (
+      <ConfigureSandboxModal
+        mysqlCredentials={this.state.mysqlCredentials}
+        redshiftCredentials={this.state.redshiftCredentials}
+        dockerCredentials={this.state.dockerCredentials}
+        isLoadingDockerCredentials={this.state.isLoadingDockerCredentials}
+        snowflakeCredentials={this.state.snowflakeCredentials}
+        onHide={this.handleModalClose}
+        show={this.props.show}
+        backend={this.props.backend}
+        transformationType={this.props.transformationType}
+        mode={this.state.mode}
+        jobId={this.state.jobId}
+        progress={this.state.progress}
+        progressStatus={this.state.progressStatus}
+        isRunning={this.state.isRunning}
+        isCreated={this.state.isCreated}
+        onModeChange={this.handleModeChange}
+        onCreateStart={this.props.backend === 'docker' ? this.handleDockerSandboxCreate : this.handleSandboxCreate}
+      />
+    );
   },
 
   handleModeChange(mode) {
