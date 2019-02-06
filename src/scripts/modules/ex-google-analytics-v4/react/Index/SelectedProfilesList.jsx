@@ -1,9 +1,10 @@
 import React, {PropTypes} from 'react';
 import ProfileInfo from '../ProfileInfo';
+
 export default React.createClass({
   propTypes: {
     allProfiles: PropTypes.object.isRequired,
-    profileIds: PropTypes.object
+    profileIds: PropTypes.array
   },
 
   getProfile(profileId) {
@@ -24,18 +25,19 @@ export default React.createClass({
 
   renderProfile(profileId) {
     const profile = this.getProfile(profileId);
+
     if (!profile) {
       return (
-        <span>
+        <span key={profileId}>
           Unknown Profile({profileId})
         </span>
       );
-    } else {
-      return (
-        <small>
-          <ProfileInfo profile={profile} />
-        </small>
-      );
     }
+
+    return (
+      <small key={profileId}>
+        <ProfileInfo profile={profile} />
+      </small>
+    );
   }
 });
