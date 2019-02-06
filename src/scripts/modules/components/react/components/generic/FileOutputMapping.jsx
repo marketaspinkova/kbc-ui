@@ -65,61 +65,56 @@ export default React.createClass({
   },
 
   content() {
-    var component = this;
     if (this.props.value.count() >= 1) {
-      var mappings = this.props.value.map(function(output, key) {
-        return (
-          <Panel
-            className="kbc-panel-heading-with-table"
-            key={key}
-            collapsible={true}
-            eventKey={key}
-            expanded={component.props.openMappings.get('file-output-' + key, false)}
-            header={<div
-              onClick={function() {
-                component.toggleMapping(key);
-              }}>
-              {<Header
-                value={output}
-                editingValue={component.props.editingValue.get(key, Immutable.Map())}
-                mappingIndex={key}
-                pendingActions={component.props.pendingActions}
-                onEditStart={function() {
-                  return component.onEditStart(key);
-                }}
-                onChange={function(value) {
-                  return component.onChangeMapping(key, value);
-                }}
-                onSave={function() {
-                  return component.onSaveMapping(key);
-                }}
-                onCancel={function() {
-                  return component.onCancelEditMapping(key);
-                }}
-                onDelete={function() {
-                  return component.onDeleteMapping(key);
-                }} />}
-            </div>}>
-            <Detail fill={true} value={output} />
-          </Panel>
-        );
-      }).toJS();
       return (
         <span>
-          {mappings}
+          {this.props.value.map(this.renderPanel).toArray()}
         </span>
       );
-    } else {
-      return (
-        <div className="well text-center">
-          <p>No file output mapping assigned.</p>
-          <Add
-            componentId={this.props.componentId}
-            configId={this.props.configId}
-            mapping={this.props.editingValue.get('new-mapping', Immutable.Map())}
-          />
-        </div>
-      );
     }
+
+    return (
+      <div className="well text-center">
+        <p>No file output mapping assigned.</p>
+        <Add
+          componentId={this.props.componentId}
+          configId={this.props.configId}
+          mapping={this.props.editingValue.get('new-mapping', Immutable.Map())}
+        />
+      </div>
+    );
+  },
+
+  renderPanel(output, key) {
+    return (
+      <Panel
+        collapsible
+        className="kbc-panel-heading-with-table"
+        key={key}
+        eventKey={key}
+        expanded={this.props.openMappings.get('file-output-' + key, false)}
+        header={this.renderHeader(output, key)}
+      >
+        <Detail fill value={output} />
+      </Panel>
+    );
+  },
+
+  renderHeader(output, key) {
+    return (
+      <div onClick={this.toggleMapping(key)}>
+        <Header
+          value={output}
+          editingValue={this.props.editingValue.get(key, Immutable.Map())}
+          mappingIndex={key}
+          pendingActions={this.props.pendingActions}
+          onEditStart={() => this.onEditStart(key)}
+          onChange={(value) => this.onChangeMapping(key, value)}
+          onSave={() => this.onSaveMapping(key)}
+          onCancel={() => this.onCancelEditMapping(key)}
+          onDelete={() => this.onDeleteMapping(key)}
+        />
+      </div>
+    );
   }
 });

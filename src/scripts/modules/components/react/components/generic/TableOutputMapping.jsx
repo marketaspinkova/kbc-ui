@@ -82,71 +82,69 @@ export default React.createClass({
   },
 
   content() {
-    var component = this;
     if (this.getValue().count() >= 1) {
-      var mappings = this.getValue().map(function(output, key) {
-        const definition = findOutputMappingDefinition(component.props.definitions, output);
-        return (
-          <Panel
-            className="kbc-panel-heading-with-table"
-            key={key}
-            collapsible={true}
-            eventKey={key}
-            expanded={component.props.openMappings.get('table-output-' + key, false)}
-            header={<div
-              onClick={function() {
-                component.toggleMapping(key);
-              }}>
-              {<Header
-                value={output}
-                editingValue={component.props.editingValue.get(key, Immutable.Map())}
-                tables={component.props.tables}
-                buckets={component.props.buckets}
-                mappingIndex={key}
-                pendingActions={component.props.pendingActions}
-                definition={definition}
-                onEditStart={function() {
-                  return component.onEditStart(key);
-                }}
-                onChange={function(value) {
-                  var modifiedValue = value;
-                  if (definition.has('source')) {
-                    modifiedValue = modifiedValue.set('source', definition.get('source'));
-                  }
-                  return component.onChangeMapping(key, modifiedValue);
-                }}
-                onSave={function() {
-                  return component.onSaveMapping(key);
-                }}
-                onCancel={function() {
-                  return component.onCancelEditMapping(key);
-                }}
-                onDelete={function() {
-                  return component.onDeleteMapping(key);
-                }} />}
-            </div>}>
-            <Detail value={output} />
-          </Panel>
-        );
-      }).toJS();
       return (
         <span>
-          {mappings}
+          {this.getValue().map(this.renderPanel).toArray()}
         </span>
       );
-    } else {
-      return (
-        <div className="well text-center">
-          <p>No table output mapping assigned.</p>
-          <Add
-            tables={this.props.tables}
-            buckets={this.props.buckets}
-            componentId={this.props.componentId}
-            configId={this.props.configId}
-            mapping={this.props.editingValue.get('new-mapping', Immutable.Map())}
-          />
-        </div>
-      );
     }
+
+    return (
+      <div className="well text-center">
+        <p>No table output mapping assigned.</p>
+        <Add
+          tables={this.props.tables}
+          buckets={this.props.buckets}
+          componentId={this.props.componentId}
+          configId={this.props.configId}
+          mapping={this.props.editingValue.get('new-mapping', Immutable.Map())}
+        />
+      </div>
+    );
+  },
+
+  renderPanel(output, key) {
+    return (
+      <Panel
+        collapsible
+        className="kbc-panel-heading-with-table"
+        key={key}
+        eventKey={key}
+        expanded={this.props.openMappings.get('table-output-' + key, false)}
+        header={this.renderHeader(output, key)}
+      >
+        <Detail value={output} />
+      </Panel>
+    );
+  },
+
+  renderHeader(output, key) {
+    const definition = findOutputMappingDefinition(this.props.definitions, output);
+
+    return (
+      <div onClick={() => this.toggleMapping(key)}>
+        <Header
+          value={output}
+          editingValue={this.props.editingValue.get(key, Immutable.Map())}
+          tables={this.props.tables}
+          buckets={this.props.buckets}
+          mappingIndex={key}
+          pendingActions={this.props.pendingActions}
+          definition={definition}
+          onEditStart={() => this.onEditStart(key)}
+          onChange={(value) => {
+            let modifiedValue = value;
+            if (definition.has('source')) {
+              modifiedValue = modifiedValue.set('source', definition.get('source'));
+            }
+            return this.onChangeMapping(key, modifiedValue);
+          }}
+          onSave={() => this.onSaveMapping(key)}
+          onCancel={() => this.onCancelEditMapping(key)}
+          onDelete={() => this.onDeleteMapping(key)}
+        />
+      </div>
+    );
   }
 });
