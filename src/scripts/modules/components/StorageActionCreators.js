@@ -3,7 +3,7 @@ import _ from 'underscore';
 import ApplicationStore from '../../stores/ApplicationStore';
 import dispatcher from '../../Dispatcher';
 import * as constants from './Constants';
-import * as applicationConstatns from '../../constants/KbcConstants';
+import * as applicationConstants from '../../constants/KbcConstants';
 import StorageBucketsStore from './stores/StorageBucketsStore';
 import StorageTablesStore from './stores/StorageTablesStore';
 
@@ -21,7 +21,7 @@ module.exports = {
   tokenVerify: function() {
     return storageApi.verifyToken().then((sapiToken) => {
       return dispatcher.handleViewAction({
-        type: applicationConstatns.ActionTypes.SAPI_TOKEN_RECEIVED,
+        type: applicationConstants.ActionTypes.SAPI_TOKEN_RECEIVED,
         sapiToken
       });
     });
