@@ -102,7 +102,7 @@ export default React.createClass({
 
   renderHeader(output, key) {
     return (
-      <div onClick={this.toggleMapping(key)}>
+      <div onClick={() => this.toggleMapping(key)}>
         <Header
           value={output}
           editingValue={this.props.editingValue.get(key, Immutable.Map())}
