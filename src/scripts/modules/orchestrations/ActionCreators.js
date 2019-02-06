@@ -519,12 +519,13 @@ export default {
   */
 
   runOrchestration(id, tasks, notify = false) {
-    let data = {};
+    let data = { config: id };
+
     if (tasks) {
-      data = { tasks: dephaseTasks(tasks) };
+      data.tasks = dephaseTasks(tasks);
     }
 
-    return orchestrationsApi.runOrchestration(id, data).then(newJob => {
+    return orchestrationsApi.runOrchestration(data).then(newJob => {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.ORCHESTRATION_JOB_LOAD_SUCCESS,
         orchestrationId: newJob.orchestrationId,

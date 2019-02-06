@@ -34,8 +34,8 @@ export default {
     return createRequest('DELETE', `orchestrations/${id}`).promise();
   },
 
-  runOrchestration(id, data) {
-    return createRequest('POST', `orchestrations/${id}/jobs`)
+  runOrchestration(data) {
+    return createRequest('POST', 'run')
       .send(data)
       .promise()
       .then(response => response.body);
