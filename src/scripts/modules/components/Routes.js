@@ -20,7 +20,6 @@ import goodDataWriterRoutes from '../gooddata-writer/routes';
 import dropoxExtractorRoutes from '../ex-dropbox/routes';
 import dropoxExtractorRoutesV2 from '../ex-dropbox-v2/routes';
 import emailAttachmentsExtractorRoutes from '../ex-email-attachments/routes';
-import wrPortalCreateRouteFn from '../wr-portal/Routes';
 import createDbWriterRoutes from '../wr-db/routes';
 import createGenericDetailRoute from './createGenericDetailRoute';
 import createComponentRoute from './createComponentRoute';
@@ -171,8 +170,6 @@ module.exports = {
       createComponentRoute('keboola.wr-thoughtspot', [
         createDbWriterRoutes('keboola.wr-thoughtspot', 'thoughtspot', false)
       ]),
-      createComponentRoute('wr-portal-sas', [wrPortalCreateRouteFn('wr-portal-sas')]),
-      createComponentRoute('keboola.wr-portal-periscope', [wrPortalCreateRouteFn('keboola.wr-portal-periscope')]),
       createComponentRoute('keboola.gooddata-writer', [gooddataWriterV3Routes]),
       createComponentRoute('keboola.wr-storage', [wrStorageRoutes]),
       createComponentRoute('keboola.wr-aws-s3', [wrAwsS3Routes]),
