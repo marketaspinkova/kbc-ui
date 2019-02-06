@@ -49,36 +49,35 @@ module.exports = React.createClass({
     };
   },
 
+  componentWillUnmount() {
+    this.cancellablePromise && this.cancellablePromise.cancel();
+  },
+
   _handleRunStart: function() {
-    var params;
     this.setState({
       isLoading: true
     });
-    params = {
+    const params = {
       method: this.props.method,
       component: this.props.component,
       data: this.props.runParams(),
       notify: !this.props.redirect
     };
 
-    return InstalledComponentsActionCreators.runComponent(params)
+    this.cancellablePromise = InstalledComponentsActionCreators.runComponent(params)
       .then(this._handleStarted)
-      .catch((function(_this) {
-        return function(error) {
-          _this.setState({
-            isLoading: false
-          });
-          throw error;
-        };
-      })(this));
+      .catch((error) => {
+        this.setState({
+          isLoading: false
+        });
+        throw error;
+      });
   },
 
   _handleStarted: function(response) {
-    if (this.isMounted()) {
-      this.setState({
-        isLoading: false
-      });
-    }
+    this.setState({
+      isLoading: false
+    });
     if (this.props.redirect) {
       return RoutesStore.getRouter().transitionTo('jobDetail', {
         jobId: response.id

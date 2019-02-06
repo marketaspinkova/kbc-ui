@@ -23,6 +23,10 @@ export default React.createClass({
     };
   },
 
+  componentWillUnmount() {
+    this.cancellablePromise && this.cancellablePromise.cancel();
+  },
+
   render() {
     return (
       <RunOrchestrationModal
@@ -36,15 +40,10 @@ export default React.createClass({
   },
 
   handleRunStart() {
-    this.setState({
-      isLoading: true
-    });
-
-    return this.props.onRun(this.props.task).finally(() => {
-      if (this.isMounted()) {
-        this.setState({
-          isLoading: false
-        });
+    this.setState({ isLoading: true });
+    this.cancellablePromise = this.props.onRun(this.props.task).finally(() => {
+      if (!this.cancellablePromise.isCancelled()) {
+        this.setState({ isLoading: false });
       }
     });
   }

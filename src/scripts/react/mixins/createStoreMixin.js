@@ -17,9 +17,7 @@ const createStoreMixin = (...stores) => {
     },
 
     _handleStoreChanged() {
-      if (this.isMounted()) {
-        return this.setState(this.getStateFromStores(this.props));
-      }
+      return this.setState(this.getStateFromStores(this.props));
     }
   };
 

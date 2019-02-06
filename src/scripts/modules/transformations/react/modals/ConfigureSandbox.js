@@ -45,6 +45,11 @@ export default React.createClass({
     };
   },
 
+  componentWillUnmount() {
+    this.cancellablePromiseRunComponent && this.cancellablePromiseRunComponent.cancel();
+    this.cancellablePromiseJobDetail && this.cancellablePromiseJobDetail.cancel();
+  },
+
   render() {
     return (
       <ConfigureSandboxModal
@@ -120,7 +125,8 @@ export default React.createClass({
       progress: 'Waiting for load to start.',
       progressStatus: null
     });
-    actionCreators.runComponent({
+
+    this.cancellablePromiseRunComponent = actionCreators.runComponent({
       component: 'transformation',
       notify: false,
       data: this.props.runParams.set('mode', this.state.mode).toJS()
@@ -133,9 +139,6 @@ export default React.createClass({
   },
 
   handleJobReceive(job) {
-    if (!this.isMounted()) {
-      return;
-    }
     if (job.isFinished) {
       if (job.status === 'success') {
         this.setState({
@@ -167,7 +170,8 @@ export default React.createClass({
     if (!this.state.jobId) {
       return;
     }
-    jobsApi
+
+    this.cancellablePromiseJobDetail = jobsApi
       .getJobDetail(this.state.jobId)
       .then(this.handleJobReceive)
       .catch((e) => {

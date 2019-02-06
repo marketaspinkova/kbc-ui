@@ -24,6 +24,11 @@ export default React.createClass({
     };
   },
 
+  componentWillUnmount() {
+    this.cancellablePromiseRunComponent && this.cancellablePromiseRunComponent.cancel();
+    this.cancellablePromiseJobDetail && this.cancellablePromiseJobDetail.cancel();
+  },
+
   render() {
     const {file, children} = this.props;
     return (
@@ -50,7 +55,8 @@ export default React.createClass({
       progress: 'Waiting for start...',
       progressStatus: null
     });
-    actionCreators.runComponent({
+
+    this.cancellablePromiseRunComponent = actionCreators.runComponent({
       component: SLICED_FILES_DOWNLOADER_COMPONENT,
       notify: false,
       data: {
@@ -75,9 +81,6 @@ export default React.createClass({
   },
 
   handleJobReceive(job) {
-    if (!this.isMounted()) {
-      return;
-    }
     if (job.isFinished) {
       if (job.status === 'success') {
         setTimeout(
@@ -126,7 +129,8 @@ export default React.createClass({
     if (!this.state.jobId) {
       return;
     }
-    jobsApi
+
+    this.cancellablePromiseJobDetail = jobsApi
       .getJobDetail(this.state.jobId)
       .then(this.handleJobReceive)
       .catch((e) => {
@@ -148,5 +152,4 @@ export default React.createClass({
       isModalOpen: false
     });
   }
-
 });
