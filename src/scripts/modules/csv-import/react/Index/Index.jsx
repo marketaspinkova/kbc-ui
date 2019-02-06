@@ -1,4 +1,5 @@
 import React from 'react';
+import { Alert } from 'react-bootstrap';
 
 // stores
 import ComponentStore from '../../../components/stores/ComponentsStore';
@@ -26,7 +27,6 @@ import LatestVersions from '../../../components/react/components/SidebarVersions
 
 // utils
 import {getDefaultTable} from '../../utils';
-// import {Map} from 'immutable';
 
 // CONSTS
 const COMPONENT_ID = 'keboola.csv-import';
@@ -65,18 +65,20 @@ export default React.createClass({
     const resultMessage = this.state.localState.get('resultMessage', '');
     const resultState = this.state.localState.get('resultState', '');
     if (resultMessage) {
-      var alertClassName = 'alert ';
+      var alertStyle = 'info';
       if (resultState === 'error') {
-        alertClassName += 'alert-danger';
+        alertStyle = 'danger';
       } else if (resultState === 'success') {
-        alertClassName += 'alert-success';
+        alertStyle = 'success';
       }
       return (
-        <div className={alertClassName} role="alert">
-          <button type="button" className="close" onClick={this.state.actions.dismissResult}><span aria-hidden="true">×</span><span
-            className="sr-only">Close</span></button>
+        <Alert bsStyle={alertStyle}>
+          <button type="button" className="close" onClick={this.state.actions.dismissResult}>
+            <span aria-hidden="true">×</span>
+            <span className="sr-only">Close</span>
+          </button>
           {resultMessage}
-        </div>
+        </Alert>
       );
     }
     return null;

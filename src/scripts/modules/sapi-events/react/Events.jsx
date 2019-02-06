@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button} from 'react-bootstrap';
+import {Alert, Button} from 'react-bootstrap';
 import Immutable from 'immutable';
 import PureRendererMixin from 'react-immutable-render-mixin';
 import _ from 'underscore';
@@ -140,9 +140,9 @@ export default React.createClass({
   _renderEventsList() {
     if (this.state.errorMessage) {
       return (
-        <div className="alert alert-danger">
+        <Alert bsStyle="danger">
           {this.state.errorMessage}
-        </div>
+        </Alert>
       );
     }
     if (this.state.events.count()) {

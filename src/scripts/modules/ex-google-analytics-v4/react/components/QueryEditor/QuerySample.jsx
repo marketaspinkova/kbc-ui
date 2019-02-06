@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 // import EmptyState from '../../../../components/react/components/ComponentEmptyState';
-import {Table} from 'react-bootstrap';
+import {Table, Alert} from 'react-bootstrap';
 import {Loader} from '@keboola/indigo-ui';
 import EmptyState from '../../../../components/react/components/ComponentEmptyState';
 
@@ -102,12 +102,10 @@ export default React.createClass({
       }
     }
     return (
-      <div className="alert alert-danger">
-        {message}
-        <div>
-          {code >= 500 ? error.get('exceptionId') : null}
-        </div>
-      </div>
+      <Alert bsStyle="danger">
+        <p>{message}</p>
+        {code >= 500 ? <div>{error.get('exceptionId')}</div> : null}
+      </Alert>
     );
   },
 

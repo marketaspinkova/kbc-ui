@@ -9,7 +9,7 @@ import InputMappingRow from './InputMappingRow';
 import InputMappingDetail from './InputMappingDetail';
 import OutputMappingRow from './OutputMappingRow';
 import OutputMappingDetail from './OutputMappingDetail';
-import { Panel } from 'react-bootstrap';
+import { Alert, Panel } from 'react-bootstrap';
 import TransformationTypeAndVersionLabel from '../../components/TransformationTypeAndVersionLabel';
 import Requires from './Requires';
 import Packages from './Packages';
@@ -250,21 +250,19 @@ export default React.createClass({
             </div>
           ]}
           {this._isMySqlTransformation() && (
-            <div className="alert alert-warning">
-              <h3>MySQL Deprecation Warning</h3>
-              <div className="help-block">
-                <span>
-                  {'MySQL transformations are deprecated. '}
-                  {'Please migrate this transformation to Snowflake. '}
-                  {'If you encounter any issues, please contact us using the Support button in the menu on the left. '}
-                  {'Learn more about the MySQL transformation deprecation '}
-                  <ExternalLink href="http://status.keboola.com/deprecating-mysql-storage-and-transformations">
-                    timeline and reasons
-                  </ExternalLink>
-                  .
-                </span>
-              </div>
-            </div>
+            <Alert bsStyle="warning">
+              <h4>MySQL Deprecation Warning</h4>
+              <p>
+                {'MySQL transformations are deprecated. '}
+                {'Please migrate this transformation to Snowflake. '}
+                {'If you encounter any issues, please contact us using the Support button in the menu on the left. '}
+                {'Learn more about the MySQL transformation deprecation '}
+                <ExternalLink href="http://status.keboola.com/deprecating-mysql-storage-and-transformations">
+                  timeline and reasons
+                </ExternalLink>
+                .
+              </p>
+            </Alert>
           )}
           <ConfigurationRowEditField
             componentId="transformation"

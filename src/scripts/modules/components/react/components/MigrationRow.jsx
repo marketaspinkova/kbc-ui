@@ -1,7 +1,7 @@
 import React from 'react';
 import Promise from 'bluebird';
 import _ from 'underscore';
-import {Modal, Table, Tabs, Tab, Row, Col, Button} from 'react-bootstrap';
+import {Modal, Alert, Table, Tabs, Tab, Row, Col, Button} from 'react-bootstrap';
 import {AlertBlock} from '@keboola/indigo-ui';
 import {Check, Loader, RefreshIcon} from '@keboola/indigo-ui';
 import {fromJS, List, Map} from 'immutable';
@@ -166,9 +166,9 @@ export default React.createClass({
     const body = !this.state.loadingStatus ? (
       <span>
         {this.state.error ?
-          <p className="alert alert-danger">
-           Error Loading status: {this.state.error}
-          </p>
+          <Alert bsStyle="danger">
+            Error Loading status: {this.state.error}
+          </Alert>
           :
           <div>
             <Tabs className="tabs-inside-modal" defaultActiveKey="general" animation={false} id="components-migration-row-tabs">

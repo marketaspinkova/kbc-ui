@@ -20,7 +20,7 @@ import Duration from '../../../../../react/common/Duration';
 import JobRunId from '../../../../../react/common/JobRunId';
 import JobStatsContainer from './JobStatsContainer';
 import GoodDataStatsContainer from './GoodDataStatsContainer';
-import { PanelGroup, Panel } from 'react-bootstrap';
+import { Alert, PanelGroup, Panel } from 'react-bootstrap';
 import getComponentId from '../../../getJobComponentId';
 import JobStatusLabel from '../../../../../react/common/JobStatusLabel';
 
@@ -227,8 +227,8 @@ export default React.createClass({
   _renderErrorResultRow(job) {
     return (
       <div className="row row-alert">
-        <div
-          className="alert alert-danger"
+        <Alert
+          bsStyle="danger"
           style={{
             marginBottom: 0,
             paddingLeft: '50px',
@@ -237,7 +237,7 @@ export default React.createClass({
           }}
         >
           {this._renderErrorDetails(job)}
-        </div>
+        </Alert>
       </div>
     );
   },
@@ -458,10 +458,10 @@ export default React.createClass({
         <div className="col-md-6">
           <h4>{'Results '}</h4>
           {status === 'error' && (
-            <div className="alert alert-danger">
+            <Alert bsStyle="danger">
               {exceptionId && <span>{`ExceptionId ${exceptionId}`}</span>}
               <p>{message}</p>
-            </div>
+            </Alert>
           )}
           {status !== 'error' && result && <Tree data={result} />}
         </div>

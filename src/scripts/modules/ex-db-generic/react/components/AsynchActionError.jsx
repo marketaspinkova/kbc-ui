@@ -1,5 +1,6 @@
 import React from 'react';
 import { Loader } from '@keboola/indigo-ui';
+import { Alert } from 'react-bootstrap';
 
 import { loadSourceTables } from '../../actionsProvisioning';
 
@@ -24,23 +25,21 @@ export default React.createClass({
     } = this.props;
     if (connectionError) {
       return (
-        <div>
-          <div className="alert alert-warning">
-            <h4>Connecting to the database failed, please check database credentials</h4>
-            <p>{connectionError}</p>
-            <p>
-              {connectionTesting && (
-                <span>
-                  <Loader /> Retrying the database connection
-                </span>
-              )}
-            </p>
-          </div>
-        </div>
+        <Alert bsStyle="warning">
+          <h4>Connecting to the database failed, please check database credentials</h4>
+          <p>{connectionError}</p>
+          <p>
+            {connectionTesting && (
+              <span>
+                <Loader /> Retrying the database connection
+              </span>
+            )}
+          </p>
+        </Alert>
       );
     } else if (sourceTablesError) {
       return (
-        <div className="alert alert-danger">
+        <Alert bsStyle="danger">
           <h4>An Error occurred fetching table listing</h4>
           <p>{sourceTablesError}</p>
           <p>
@@ -57,7 +56,7 @@ export default React.createClass({
               </button>
             )}
           </p>
-        </div>
+        </Alert>
       );
     }
     return null;
