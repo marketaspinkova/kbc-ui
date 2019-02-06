@@ -1,7 +1,7 @@
 import { OperationalError } from 'bluebird';
 import HttpError from './HttpError';
 
-const abortedCodes = ['ECONNABORTED', 'ABORTED'];
+const SUPER_AGENT_ABORTED = 'ABORTED';
 
 /*
   Error object used for presentation in error page
@@ -38,10 +38,15 @@ const createFromException = exception => {
 
   if (error instanceof HttpError) {
     return createFromXhrError(error);
-  } else if (error.timeout || abortedCodes.includes(error.code)) {
-    error = new Error('Request aborted', 'Slow network detected. Application may not work properly.');
+  } else if (error.timeout) {
+    error = new Error('Request timeout', error.message);
     error.isUserError = true;
     error.id = 'connectTimeout';
+    return error;
+  } else if (error.code === SUPER_AGENT_ABORTED) {
+    error = new Error('Request timed out', 'Please try again later.');
+    error.isUserError = true;
+    error.id = 'connectTimeoutRequestAborted';
     return error;
   } else if (error.crossDomain) {
     error = new Error('Not connected to internet', 'Please try again later.');
