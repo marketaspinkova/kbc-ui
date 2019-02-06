@@ -12,6 +12,7 @@ export default (tokenId) => {
     listEvents(params) {
       return createRequest('GET', 'events')
         .query(params)
+        .timeout(10000)
         .promise()
         .then(response => response.body);
     },

@@ -12,6 +12,7 @@ export default {
   listEvents(params) {
     return createRequest('GET', 'events')
       .query(params)
+      .timeout(10000)
       .promise()
       .then(response => response.body);
   },
@@ -19,6 +20,7 @@ export default {
   listTableEvents(tableId, params) {
     return createRequest('GET', 'tables/' + tableId + '/events')
       .query(params)
+      .timeout(10000)
       .promise()
       .then(response => response.body);
   },
@@ -32,6 +34,7 @@ export default {
   listBucketEvents(buckedId, params) {
     return createRequest('GET', 'buckets/' + buckedId + '/events')
       .query(params)
+      .timeout(10000)
       .promise()
       .then(response => response.body);
   }
