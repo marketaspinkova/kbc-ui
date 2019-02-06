@@ -13,6 +13,12 @@ var createRequest = function(method, path) {
 
 var storageApi = {
 
+  verifyToken: function() {
+    return createRequest('GET', 'tokens/verify').promise().then(function(response) {
+      return response.body;
+    });
+  },
+
   getBuckets: function() {
     return createRequest('GET', 'buckets?include=metadata,linkedBuckets').promise().then(function(response) {
       return response.body;

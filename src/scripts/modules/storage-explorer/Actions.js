@@ -38,6 +38,10 @@ const reload = () => {
     });
 };
 
+const tokenVerify = () => {
+  return StorageActionCreators.tokenVerify();
+};
+
 const loadJobs = (params) => {
   return StorageActionCreators.loadJobs(params);
 };
@@ -273,6 +277,7 @@ const resetFilesSearchQuery = () => {
 
 export {
   reload,
+  tokenVerify,
   loadJobs,
   loadMoreJobs,
   loadBuckets,

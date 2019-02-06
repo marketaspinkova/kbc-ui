@@ -17,6 +17,15 @@ const AWS = window.AWS;
 
 module.exports = {
 
+  tokenVerify: function() {
+    return storageApi.verifyToken().then((sapiToken) => {
+      return dispatcher.handleViewAction({
+        type: constants.ActionTypes.SAPI_TOKEN_RECEIVED,
+        sapiToken
+      });
+    });
+  },
+
   loadBucketsForce: function() {
     dispatcher.handleViewAction({
       type: constants.ActionTypes.STORAGE_BUCKETS_LOAD
