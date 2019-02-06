@@ -27,5 +27,8 @@ Request.prototype.promise = function() {
 };
 
 module.exports = (method, url) => {
-  return request(method, url).timeout(60000);
+  return request(method, url).timeout({
+    response: 10000,
+    deadline: 60000
+  });
 };
