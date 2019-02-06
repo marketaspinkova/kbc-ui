@@ -11,13 +11,19 @@ export default (bucket, restoreTransformationBucketFn) => {
       return this.props.onClick();
     },
     render: function() {
-      return React.DOM.span(null, 'Bucket ' + (bucket.get('name')) + ' was moved to ',
+      return React.createElement(
+        'span',
+        null,
+        'Bucket ' + (bucket.get('name')) + ' was moved to ',
         React.createElement(Link, {
           to: 'settings-trash',
           onClick: this.props.onClick
-        }, 'Trash'), '. ', React.DOM.a({
+        }, 'Trash'),
+        '. ',
+        React.createElement('a', {
           onClick: this.revertConfigRemove
-        }, 'Restore'));
+        }, 'Restore')
+      );
     }
   });
 };

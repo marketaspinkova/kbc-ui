@@ -36,13 +36,10 @@ export default componentType => {
           return IntalledComponentsStore.getConfig(component, configId).get('name');
         },
         nameEdit(params) {
-          return React.DOM.span(
-            null,
-            React.createElement(ComponentNameEdit, {
-              componentId: params.component,
-              configId: params.config
-            })
-          );
+          return React.createElement('span', null, React.createElement(ComponentNameEdit, {
+            componentId: params.component,
+            configId: params.config
+          }));
         },
         defaultRouteHandler: GenericDetail,
         path: ':config',
