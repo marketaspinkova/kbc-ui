@@ -150,6 +150,10 @@ Dispatcher.register(payload => {
           .set('projectTemplates', fromJS(action.applicationData.projectTemplates))
       ));
 
+    case Constants.ActionTypes.SAPI_TOKEN_RECEIVED:
+      _store = _store.set('sapiToken', fromJS(action.sapiToken));
+      return ApplicationStore.emitChange();
+
     default:
       break;
   }

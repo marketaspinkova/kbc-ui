@@ -3,6 +3,7 @@ import _ from 'underscore';
 import ApplicationStore from '../../stores/ApplicationStore';
 import dispatcher from '../../Dispatcher';
 import * as constants from './Constants';
+import * as applicationConstants from '../../constants/KbcConstants';
 import StorageBucketsStore from './stores/StorageBucketsStore';
 import StorageTablesStore from './stores/StorageTablesStore';
 
@@ -16,6 +17,15 @@ import 'aws-sdk/dist/aws-sdk';
 const AWS = window.AWS;
 
 module.exports = {
+
+  tokenVerify: function() {
+    return storageApi.verifyToken().then((sapiToken) => {
+      return dispatcher.handleViewAction({
+        type: applicationConstants.ActionTypes.SAPI_TOKEN_RECEIVED,
+        sapiToken
+      });
+    });
+  },
 
   loadBucketsForce: function() {
     dispatcher.handleViewAction({
