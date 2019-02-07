@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {ExternalLink} from '@keboola/indigo-ui';
-import helpers from './helpers';
+import * as helpers from './helpers';
 
 const App = React.createClass({
   render() {

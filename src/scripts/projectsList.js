@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Immutable from 'immutable';
 import CurrentUser from './react/layout/CurrentUser';
 import ProjectsList from './react/layout/project-select/List';
-import helpers from './helpers';
+import * as helpers from './helpers';
 
 const App = React.createClass({
   propTypes: {
