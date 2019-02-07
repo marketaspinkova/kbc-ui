@@ -58,6 +58,7 @@ module.exports = function(options) {
         path: path.resolve(__dirname, isDevelopment ? '../dist' : '../dist/' + process.env.KBC_REVISION),
         filename: isDevelopment ? '[name].js' : '[name].min.js',
         publicPath: isDevelopment ? '/scripts/' : '',
+        libraryExport: 'default',
         library: 'kbcApp'
       },
       isDevelopment ? { globalObject: 'this' } : {}
