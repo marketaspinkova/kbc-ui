@@ -22,19 +22,17 @@ export default React.createClass({
   _handleChange() {
     const currentEventId = RoutesStore.getRouterState().getIn(['query', 'eventId']);
 
-    if (this.isMounted()) {
-      return this.setState({
-        searchQuery: this._events.getQuery(),
-        events: this._events.getEvents(),
-        currentEventId,
-        currentEvent: this._events.getEvent(currentEventId),
-        isLoadingCurrentEvent: this._events.getIsLoadingEvent(currentEventId),
-        isLoading: this._events.getIsLoading(),
-        isLoadingOlder: this._events.getIsLoadingOlder(),
-        hasMore: this._events.getHasMore(),
-        errorMessage: this._events.getErrorMessage()
-      });
-    }
+    return this.setState({
+      searchQuery: this._events.getQuery(),
+      events: this._events.getEvents(),
+      currentEventId,
+      currentEvent: this._events.getEvent(currentEventId),
+      isLoadingCurrentEvent: this._events.getIsLoadingEvent(currentEventId),
+      isLoading: this._events.getIsLoading(),
+      isLoadingOlder: this._events.getIsLoadingOlder(),
+      hasMore: this._events.getHasMore(),
+      errorMessage: this._events.getErrorMessage()
+    });
   },
 
   getInitialState() {

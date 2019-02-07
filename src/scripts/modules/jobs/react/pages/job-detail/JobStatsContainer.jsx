@@ -52,23 +52,23 @@ export default React.createClass({
     if (this.timeout) {
       this.timeout.clear();
     }
+    if (this.cancellablePromise) {
+      this.cancellablePromise.cancel();
+    }
   },
 
   collectStats(runId) {
     this.setState({
       isLoading: true
     });
-    getRunIdStats(runId)
-      .then(this.receiveStats);
+    this.cancellablePromise = getRunIdStats(runId).then(this.receiveStats);
   },
 
   receiveStats(stats) {
-    if (this.isMounted()) {
-      this.setState({
-        stats: Immutable.fromJS(stats),
-        isLoading: false
-      });
-    }
+    this.setState({
+      stats: Immutable.fromJS(stats),
+      isLoading: false
+    });
   },
 
   getInitialState() {
