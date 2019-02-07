@@ -47,4 +47,4 @@ dispatcher.register(function(payload) {
   }
 });
 
-module.exports = OAuthStore;
+export default OAuthStore;

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Modal, ButtonToolbar, Button} from 'react-bootstrap';
 
-module.exports = React.createClass({
+export default React.createClass({
   propTypes: {
     onHide: React.PropTypes.func.isRequired,
     onRequestRun: React.PropTypes.func.isRequired,

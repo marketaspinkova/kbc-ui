@@ -291,4 +291,4 @@ Dispatcher.register(function(payload) {
   }
 });
 
-module.exports = ConfigurationRowsStore;
+export default ConfigurationRowsStore;

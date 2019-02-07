@@ -5,11 +5,10 @@ import { fromJS, List, Map } from 'immutable';
 import * as tdeCommon from '../../tdeCommon';
 import InstalledComponentsActions from '../../../components/InstalledComponentsActionCreators';
 import EditButtons from '../../../../react/common/EditButtons';
-
-const createStoreMixin = require('../../../../react/mixins/createStoreMixin').default;
-const RoutesStore = require('../../../../stores/RoutesStore').default;
-const StorageTablesStore = require('../../../components/stores/StorageTablesStore').default;
-const InstalledComponentsStore = require('../../../components/stores/InstalledComponentsStore').default;
+import createStoreMixin from '../../../../react/mixins/createStoreMixin';
+import RoutesStore from '../../../../stores/RoutesStore';
+import StorageTablesStore from '../../../components/stores/StorageTablesStore';
+import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
 
 const componentId = 'tde-exporter';
 

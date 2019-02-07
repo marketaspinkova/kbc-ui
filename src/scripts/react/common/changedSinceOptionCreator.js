@@ -10,7 +10,7 @@ const validTimeDimensionsPlural = [
   'days'
 ];
 
-module.exports = function(value) {
+export default function(value) {
   // has to be a string
   if (typeof value !== 'string') {
     return false;
@@ -61,5 +61,5 @@ module.exports = function(value) {
 
   // return absolute number + dimension
   return Math.abs(numberPart).toString() + ' ' + dimensionPartFull;
-};
+}
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import Select from 'react-select';
 import storageActionCreators from '../../StorageActionCreators';
-const createStoreMixin = require('../../../../react/mixins/createStoreMixin').default;
-const storageTablesStore = require('../../stores/StorageTablesStore').default;
+import createStoreMixin from '../../../../react/mixins/createStoreMixin';
+import storageTablesStore from '../../stores/StorageTablesStore';
 
 export default React.createClass({
   mixins: [createStoreMixin(storageTablesStore)],

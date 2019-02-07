@@ -2,8 +2,7 @@ import React from 'react';
 import {Button, Modal} from 'react-bootstrap';
 import CreateDockerSandboxForm from '../components/CreateDockerSandboxForm';
 
-module.exports = React.createClass({
-  displayName: 'CreateDockerSandboxModal',
+export default React.createClass({
   propTypes: {
     show: React.PropTypes.bool.isRequired,
     close: React.PropTypes.func.isRequired,

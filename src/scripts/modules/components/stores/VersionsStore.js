@@ -138,4 +138,4 @@ dispatcher.register(function(payload) {
   }
 });
 
-module.exports = VersionsStore;
+export default VersionsStore;

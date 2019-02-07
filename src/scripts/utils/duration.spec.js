@@ -1,4 +1,4 @@
-var timeInWords = require('./duration').timeInWords;
+import { timeInWords } from './duration';
 
 describe('duration', function() {
   describe('duration without round param - default', function() {

@@ -1,5 +1,5 @@
-var Immutable = require('immutable');
-var templateFinder = require('./templateFinder');
+import Immutable from 'immutable';
+import templateFinder from './templateFinder';
 
 var templates = Immutable.fromJS([
   {

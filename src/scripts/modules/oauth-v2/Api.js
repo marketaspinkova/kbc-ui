@@ -20,7 +20,7 @@ function createRequest(method, path, version) {
     .set('X-StorageApi-Token', ApplicationStore.getSapiTokenString());
 }
 
-module.exports = {
+export default {
   getCredentials: function(componentId, id, version) {
     return createRequest('GET', 'credentials/' + componentId + '/' + id, version)
       .promise().then(function(response) {

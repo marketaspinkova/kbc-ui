@@ -5,7 +5,7 @@ import oauthApi from './OAuthApi';
 import Constants from './OAuthConstants';
 import Immutable from 'immutable';
 
-module.exports = {
+export default {
   loadCredentials: function(componentId, configId) {
     if (oauthStore.hasCredentials(componentId, configId)) {
       return Promise.resolve();

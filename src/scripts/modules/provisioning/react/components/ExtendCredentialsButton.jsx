@@ -1,9 +1,7 @@
 import React from 'react';
 import {Loader} from '@keboola/indigo-ui';
 
-module.exports = React.createClass({
-  displayName: 'ExtendCredentials',
-
+export default React.createClass({
   propTypes: {
     isExtending: React.PropTypes.bool.isRequired,
     onExtend: React.PropTypes.func.isRequired,

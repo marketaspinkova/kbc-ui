@@ -1,6 +1,6 @@
-const { Map } = require('immutable');
+import { Map } from 'immutable';
 
-module.exports = function(datatype) {
+export default function(datatype) {
   var str;
   if (!Map.isMap(datatype)) {
     return datatype;
@@ -13,4 +13,4 @@ module.exports = function(datatype) {
     str += ' ENCODE ' + datatype.get('compression');
   }
   return str;
-};
+}

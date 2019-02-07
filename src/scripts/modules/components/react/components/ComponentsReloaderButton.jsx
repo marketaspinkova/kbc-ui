@@ -1,8 +1,8 @@
 import React from 'react';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
 import { RefreshIcon } from '@keboola/indigo-ui';
-const createStoreMixin = require('../../../../react/mixins/createStoreMixin').default;
-const InstalledComponentsStore = require('../../stores/InstalledComponentsStore').default;
+import createStoreMixin from '../../../../react/mixins/createStoreMixin';
+import InstalledComponentsStore from '../../stores/InstalledComponentsStore';
 
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore)],

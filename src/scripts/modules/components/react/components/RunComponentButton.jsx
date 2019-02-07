@@ -7,9 +7,7 @@ import RoutesStore from '../../../../stores/RoutesStore';
 import classnames from 'classnames';
 import RunModal from './RunComponentButtonModal';
 
-module.exports = React.createClass({
-  displayName: 'RunComponentButton',
-
+export default React.createClass({
   propTypes: {
     title: React.PropTypes.string.isRequired,
     mode: React.PropTypes.oneOf(['button', 'link']),

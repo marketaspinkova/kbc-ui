@@ -154,4 +154,4 @@ var RStudioSandbox = React.createClass({
   }
 });
 
-module.exports = RStudioSandbox;
+export default RStudioSandbox;

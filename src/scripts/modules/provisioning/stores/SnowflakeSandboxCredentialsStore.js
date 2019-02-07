@@ -79,4 +79,4 @@ Dispatcher.register(function(payload) {
   }
 });
 
-module.exports = SnowflakeSandboxCredentialsStore;
+export default SnowflakeSandboxCredentialsStore;

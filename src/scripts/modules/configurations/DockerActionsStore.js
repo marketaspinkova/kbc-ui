@@ -75,4 +75,4 @@ dispatcher.register(function(payload) {
   }
 });
 
-module.exports = DockerActionsStore;
+export default DockerActionsStore;

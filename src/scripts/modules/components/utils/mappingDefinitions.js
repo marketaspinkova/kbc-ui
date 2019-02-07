@@ -1,4 +1,4 @@
-var Immutable = require('immutable');
+import Immutable from 'immutable';
 
 var mergeValueAndDefinition = function(compareKey, definitions, value) {
   if (definitions.size > 0) {
@@ -29,7 +29,7 @@ var findDefinition = function(compareKey, definitions, value) {
   }, null, Immutable.Map());
 };
 
-module.exports = {
+export default {
   getInputMappingValue: function(definitions, value) {
     return mergeValueAndDefinition('destination', definitions, value);
   },

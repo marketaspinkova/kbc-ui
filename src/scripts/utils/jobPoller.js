@@ -1,8 +1,9 @@
 import Promise from 'bluebird';
 import request from './request';
+
 const _pollStatuses = ['processing', 'waiting'];
 
-module.exports = {
+export default {
   poll: function(token, url, interval) {
     var timeOutInterval = 5000;
     if (parseInt(interval, 10) > 0) {

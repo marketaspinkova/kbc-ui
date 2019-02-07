@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Immutable from 'immutable';
 import CurrentUser from './react/layout/CurrentUser';
 import ProjectsList from './react/layout/project-select/List';
+import helpers from './helpers';
 
 const App = React.createClass({
   propTypes: {
@@ -51,7 +52,7 @@ const App = React.createClass({
   }
 });
 
-module.exports = {
+export default {
   start: function(appOptions) {
     document.body.className = 'kbc-outer-page kbc-projects-list';
     ReactDOM.render(
@@ -69,5 +70,5 @@ module.exports = {
       document.body
     );
   },
-  helpers: require('./helpers')
+  helpers
 };

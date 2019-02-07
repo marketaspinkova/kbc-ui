@@ -3,13 +3,14 @@ import CreatedWithIcon from '../../../../react/common/CreatedWithIcon';
 import ImmutableRendererMixin from 'react-immutable-render-mixin';
 import VersionIcon from './VersionIcon';
 
-module.exports = React.createClass({
-  displayName: 'SidebarVersionsRow',
+export default React.createClass({
   mixins: [ImmutableRendererMixin],
+
   propTypes: {
     version: React.PropTypes.object.isRequired,
     isLast: React.PropTypes.bool
   },
+
   getDefaultProps: function() {
     return {
       isLast: false

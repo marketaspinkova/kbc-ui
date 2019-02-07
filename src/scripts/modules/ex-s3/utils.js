@@ -1,4 +1,4 @@
-var Immutable = require('immutable');
+import Immutable from 'immutable';
 
 const getDefaultBucket = function(configId) {
   return 'in.c-keboola-ex-s3-' + configId;
@@ -86,7 +86,7 @@ function parseConfiguration(configuration, configId) {
   };
 }
 
-module.exports = {
+export default {
   getDefaultTable: getDefaultTable,
   getDefaultBucket: getDefaultBucket,
   hasWildcard: hasWildcard,

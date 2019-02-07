@@ -9,7 +9,7 @@ import WrDbCredentialsStore from './stores/WrDbCredentialsStore';
 import Promise from 'bluebird';
 import HttpError from '../../utils/HttpError';
 
-module.exports = {
+export default {
   getRedshiftBackend: function() {
     return 'redshift-workspace';
   },

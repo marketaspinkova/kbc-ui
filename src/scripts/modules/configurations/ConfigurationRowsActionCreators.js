@@ -27,7 +27,7 @@ const storeEncodedConfigurationRow = function(componentId, configurationId, rowI
   });
 };
 
-module.exports = {
+export default {
   create: function(componentId, configurationId, name, friendlyName, description, emptyConfigFn, createCallback, changeDescription) {
     Dispatcher.handleViewAction({
       type: Constants.ActionTypes.CONFIGURATION_ROWS_CREATE_START,

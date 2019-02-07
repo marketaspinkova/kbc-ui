@@ -7,8 +7,7 @@ import Immutable from 'immutable';
 
 var Map = Immutable.Map;
 
-module.exports = {
-
+export default {
   startMetadataEdit: function(objectType, objectId, metadataKey) {
     dispatcher.handleViewAction({
       type: Constants.ActionTypes.METADATA_EDIT_START,

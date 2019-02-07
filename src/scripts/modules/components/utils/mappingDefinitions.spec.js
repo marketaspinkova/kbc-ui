@@ -1,5 +1,5 @@
-var mappingDefinitions = require('./mappingDefinitions');
-var Immutable = require('immutable');
+import Immutable from 'immutable';
+import mappingDefinitions from './mappingDefinitions';
 
 const inputMappingDefinition =  Immutable.fromJS({
   'label': 'Load data from table',

@@ -1,5 +1,5 @@
-var Immutable = require('immutable');
-var getDatatypeLabel = require('./getDatatypeLabel');
+import Immutable from 'immutable';
+import getDatatypeLabel from './getDatatypeLabel';
 
 describe('getDatatypeLabel', function() {
   describe('#getDatatypeLabel()', function() {

@@ -11,7 +11,7 @@ var createRequest = function(method, path) {
   return request(method, createUrl(path)).set('X-StorageApi-Token', ApplicationStore.getSapiTokenString());
 };
 
-var storageApi = {
+export default {
 
   verifyToken: function() {
     return createRequest('GET', 'tokens/verify').promise().then(function(response) {
@@ -336,5 +336,3 @@ var storageApi = {
     };
   }
 };
-
-module.exports = storageApi;

@@ -7,7 +7,7 @@ import ConfigurationsStore from './ConfigurationsStore';
 import ConfigurationRowsStore from './ConfigurationRowsStore';
 import Immutable from 'immutable';
 
-module.exports = {
+export default {
   callAction: function(componentId, actionName, body, cache) {
     dispatcher.handleViewAction({
       type: Constants.ActionTypes.DOCKER_RUNNER_SYNC_ACTION_RUN,

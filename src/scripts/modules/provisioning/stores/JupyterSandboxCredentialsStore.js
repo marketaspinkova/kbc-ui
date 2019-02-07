@@ -99,4 +99,4 @@ Dispatcher.register(function(payload) {
   }
 });
 
-module.exports = JupyterSandboxCredentialsStore;
+export default JupyterSandboxCredentialsStore;

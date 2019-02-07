@@ -4,9 +4,7 @@ import ActionCreators from '../../ActionCreators';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import ExtendCredentialsButton from './ExtendCredentialsButton';
 
-module.exports = React.createClass({
-  displayName: 'ExtendRStudioCredentials',
-
+export default React.createClass({
   mixins: [createStoreMixin(RStudioSandboxCredentialsStore)],
 
   getStateFromStores: function() {

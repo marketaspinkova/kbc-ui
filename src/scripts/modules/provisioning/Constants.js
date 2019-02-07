@@ -1,6 +1,6 @@
 import keyMirror from 'fbjs/lib/keyMirror';
 
-module.exports = {
+export default {
   ActionTypes: keyMirror({
     CREDENTIALS_REDSHIFT_SANDBOX_LOAD: null,
     CREDENTIALS_REDSHIFT_SANDBOX_LOAD_SUCCESS: null,

@@ -7,7 +7,7 @@ import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
 import React from 'react';
 import ConfigurationCopiedNotification from './react/components/ConfigurationCopiedNotification';
 
-module.exports = {
+export default {
   loadVersions: function(componentId, configId) {
     if (Store.hasVersions(componentId, configId)) {
       this.loadVersionsForce(componentId, configId);

@@ -3,8 +3,7 @@ import {Input} from './../../../../react/common/KbcBootstrap';
 import Immutable from 'immutable';
 import Select from 'react-select';
 
-module.exports = React.createClass({
-  displayName: 'CreateDockerSandboxForm',
+export default React.createClass({
   propTypes: {
     tables: React.PropTypes.object.isRequired,
     onChange: React.PropTypes.func.isRequired,

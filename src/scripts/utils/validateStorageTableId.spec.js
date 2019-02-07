@@ -1,4 +1,4 @@
-var validateStorageTableId = require('./validateStorageTableId');
+import validateStorageTableId from './validateStorageTableId';
 
 describe('validateStorageTableId', function() {
   describe('#validateStorageTableId()', function() {

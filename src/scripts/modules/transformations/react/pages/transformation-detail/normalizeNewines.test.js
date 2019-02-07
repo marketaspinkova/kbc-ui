@@ -1,4 +1,4 @@
-var normalizeNewlines = require('./normalizeNewlines').default;
+import normalizeNewlines from './normalizeNewlines';
 
 describe('normalizeNewlines', function() {
   it('it should replace CRLF with LF', function() {

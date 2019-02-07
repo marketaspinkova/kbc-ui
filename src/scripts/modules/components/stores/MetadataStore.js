@@ -190,4 +190,4 @@ dispatcher.register(function(payload) {
   }
 });
 
-module.exports = MetadataStore;
+export default MetadataStore;

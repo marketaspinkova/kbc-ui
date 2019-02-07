@@ -43,7 +43,7 @@ const extractor = injectProps({ type: 'extractor' });
 const writer = injectProps({ type: 'writer' });
 const application = injectProps({ type: 'application' });
 
-module.exports = {
+export default {
   applications: {
     name: 'applications',
     title: 'Applications',

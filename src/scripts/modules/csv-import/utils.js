@@ -36,7 +36,7 @@ const createConfiguration = function(settings, configId) {
   return config;
 };
 
-module.exports = {
+export default {
   getDefaultTable: getDefaultTable,
   createConfiguration: createConfiguration
 };

@@ -42,11 +42,11 @@ var preferEncryptedAttributesFromArray = function(data) {
   });
 };
 
-module.exports = function(configuration) {
+export default function(configuration) {
   if (isObject(configuration)) {
     preferEncryptedAttributesFromObject(configuration);
   } else if (Array.isArray(configuration)) {
     preferEncryptedAttributesFromArray(configuration);
   }
   return configuration;
-};
+}
