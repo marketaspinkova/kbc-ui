@@ -12,7 +12,7 @@ const hasWildcard = function(key) {
   return key.substring(key.length - 1, key.length) === '*';
 };
 
-function createConfiguration(localState, configId) {
+const createConfiguration = function(localState, configId) {
   var mapping = {};
   var s3Key = localState.get('s3Key', '');
 
@@ -67,9 +67,9 @@ function createConfiguration(localState, configId) {
     processors: processors
   };
   return config;
-}
+};
 
-function parseConfiguration(configuration, configId) {
+const parseConfiguration = function(configuration, configId) {
   const configData = Immutable.fromJS(configuration);
   const s3Key = configData.getIn(['parameters', 'key'], '');
   return {
@@ -84,12 +84,12 @@ function parseConfiguration(configuration, configId) {
     delimiter: configData.getIn(['storage', 'output', 'tables', 0, 'delimiter'], ','),
     enclosure: configData.getIn(['storage', 'output', 'tables', 0, 'enclosure'], '"')
   };
-}
+};
 
-export default {
-  getDefaultTable: getDefaultTable,
-  getDefaultBucket: getDefaultBucket,
-  hasWildcard: hasWildcard,
-  createConfiguration: createConfiguration,
-  parseConfiguration: parseConfiguration
+export {
+  getDefaultTable,
+  getDefaultBucket,
+  hasWildcard,
+  createConfiguration,
+  parseConfiguration
 };
