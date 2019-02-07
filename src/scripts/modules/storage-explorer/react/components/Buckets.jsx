@@ -63,13 +63,15 @@ export default React.createClass({
   renderBucketsButtons() {
     return (
       <ButtonGroup justified>
-        <ButtonGroup>
-          <Button onClick={this.openCreateBucketModal} bsSize="sm">
-            <Tooltip tooltip="Create new bucket" placement="top">
-              <span><i className="fa fa-plus" /> Create</span>
-            </Tooltip>
-          </Button>
-        </ButtonGroup>
+        {this.canCreateBucket() && (
+          <ButtonGroup>
+            <Button onClick={this.openCreateBucketModal} bsSize="sm">
+              <Tooltip tooltip="Create new bucket" placement="top">
+                <span><i className="fa fa-plus" /> Create</span>
+              </Tooltip>
+            </Button>
+          </ButtonGroup>
+        )}
         {this.canLinkBucket() && (
           <ButtonGroup>
             <Button onClick={this.openBucketLinkModal} bsSize="sm">
@@ -127,6 +129,10 @@ export default React.createClass({
     }
 
     return buckets;
+  },
+
+  canCreateBucket() {
+    return this.state.sapiToken.get('canManageBuckets', false);
   },
 
   canLinkBucket() {

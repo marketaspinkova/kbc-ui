@@ -79,7 +79,7 @@ export default React.createClass({
     }
 
     const loadingIntoTable = this.state.loadingIntoTable || this.state.uploadingProgress > 0;
-    const canWriteTable = this.canWriteTable(this.state.table, this.state.sapiToken);
+    const canWriteTable = this.canWriteTable();
 
     return (
       <div>
@@ -329,9 +329,9 @@ export default React.createClass({
     });
   },
 
-  canWriteTable(table, sapiToken) {
-    const bucketId = table.getIn(['bucket', 'id']);
-    const permission = sapiToken.getIn(['bucketPermissions', bucketId]);
+  canWriteTable() {
+    const bucketId = this.state.table.getIn(['bucket', 'id']);
+    const permission = this.state.sapiToken.getIn(['bucketPermissions', bucketId]);
     return ['write', 'manage'].includes(permission);
   },
 
