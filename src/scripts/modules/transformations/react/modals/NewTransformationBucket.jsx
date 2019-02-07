@@ -17,6 +17,10 @@ export default React.createClass({
     };
   },
 
+  componentWillUnmount() {
+    this.cancellablePromise && this.cancellablePromise.cancel();
+  },
+
   render() {
     return (
       <span>
@@ -106,7 +110,7 @@ export default React.createClass({
       isLoading: true
     });
 
-    return TransformationActionCreators.createTransformationBucket({
+    this.cancellablePromise = TransformationActionCreators.createTransformationBucket({
       name: this.state.name,
       description: this.state.description
     }).then(this._close);
