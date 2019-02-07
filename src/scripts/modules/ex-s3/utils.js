@@ -1,18 +1,18 @@
 import Immutable from 'immutable';
 
-const getDefaultBucket = function(configId) {
+export const getDefaultBucket = function(configId) {
   return 'in.c-keboola-ex-s3-' + configId;
 };
 
-const getDefaultTable = function(configId) {
+export const getDefaultTable = function(configId) {
   return getDefaultBucket(configId) + '.data';
 };
 
-const hasWildcard = function(key) {
+export const hasWildcard = function(key) {
   return key.substring(key.length - 1, key.length) === '*';
 };
 
-const createConfiguration = function(localState, configId) {
+export const createConfiguration = function(localState, configId) {
   var mapping = {};
   var s3Key = localState.get('s3Key', '');
 
@@ -69,7 +69,7 @@ const createConfiguration = function(localState, configId) {
   return config;
 };
 
-const parseConfiguration = function(configuration, configId) {
+export const parseConfiguration = function(configuration, configId) {
   const configData = Immutable.fromJS(configuration);
   const s3Key = configData.getIn(['parameters', 'key'], '');
   return {
@@ -86,7 +86,7 @@ const parseConfiguration = function(configuration, configId) {
   };
 };
 
-export {
+export default {
   getDefaultTable,
   getDefaultBucket,
   hasWildcard,

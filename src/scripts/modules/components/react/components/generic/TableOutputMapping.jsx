@@ -5,7 +5,7 @@ import {Panel} from 'react-bootstrap';
 import Immutable from 'immutable';
 import InstalledComponentsActions from '../../../InstalledComponentsActionCreators';
 import Add from './AddTableOutputMapping';
-import {getOutputMappingValue, findOutputMappingDefinition} from '../../../utils/mappingDefinitions';
+import mappingDefinitions from '../../../utils/mappingDefinitions';
 
 export default React.createClass({
   propTypes: {
@@ -78,7 +78,7 @@ export default React.createClass({
   },
 
   getValue() {
-    return getOutputMappingValue(this.props.definitions, this.props.value);
+    return mappingDefinitions.getOutputMappingValue(this.props.definitions, this.props.value);
   },
 
   content() {
@@ -120,7 +120,7 @@ export default React.createClass({
   },
 
   renderHeader(output, key) {
-    const definition = findOutputMappingDefinition(this.props.definitions, output);
+    const definition = mappingDefinitions.findOutputMappingDefinition(this.props.definitions, output);
 
     return (
       <div onClick={() => this.toggleMapping(key)}>

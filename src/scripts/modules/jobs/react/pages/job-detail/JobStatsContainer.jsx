@@ -3,7 +3,7 @@ import Immutable from 'immutable';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import later from 'later';
 
-import {getRunIdStats} from '../../../../components/StorageApi';
+import StorageApi from '../../../../components/StorageApi';
 import JobStats from './JobStats';
 
 
@@ -61,7 +61,8 @@ export default React.createClass({
     this.setState({
       isLoading: true
     });
-    this.cancellablePromise = getRunIdStats(runId).then(this.receiveStats);
+    this.cancellablePromise = StorageApi.getRunIdStats(runId)
+      .then(this.receiveStats);
   },
 
   receiveStats(stats) {

@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import {Map, List} from 'immutable';
 import {Panel} from 'react-bootstrap';
-import {getInputMappingValue, findInputMappingDefinition} from '../../../utils/mappingDefinitions';
+import mappingDefinitions from '../../../utils/mappingDefinitions';
 import InstalledComponentsActions from '../../../InstalledComponentsActionCreators';
 import Detail from './TableInputMappingDetail';
 import Header from './TableInputMappingHeader';
@@ -94,7 +94,7 @@ export default React.createClass({
   },
 
   renderHeader(input, key) {
-    const definition = findInputMappingDefinition(this.props.definitions, input);
+    const definition = mappingDefinitions.findInputMappingDefinition(this.props.definitions, input);
 
     return (
       <div onClick={() => this.toggleMapping(key)}>
@@ -157,6 +157,6 @@ export default React.createClass({
   },
 
   getValue() {
-    return getInputMappingValue(this.props.definitions, this.props.value);
+    return mappingDefinitions.getInputMappingValue(this.props.definitions, this.props.value);
   }
 });

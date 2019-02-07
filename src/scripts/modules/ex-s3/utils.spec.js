@@ -1,9 +1,6 @@
 import Immutable from 'immutable';
 import { getDefaultTable, hasWildcard, createConfiguration, parseConfiguration, getDefaultBucket } from './utils';
 
-console.log(getDefaultTable); // eslint-disable-line
-console.log(hasWildcard); // eslint-disable-line
-
 const emptyLocalState = {};
 const emptyConfiguration = {};
 

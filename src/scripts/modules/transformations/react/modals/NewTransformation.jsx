@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { Input } from './../../../../react/common/KbcBootstrap';
 import {Map} from 'immutable';
-import {createTransformation} from '../../ActionCreators';
+import ActionCreators from '../../ActionCreators';
 
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
@@ -244,7 +244,7 @@ export default React.createClass({
     this.setState({
       data: this.state.data.set('isSaving', true)
     });
-    createTransformation(this.props.bucket.get('id'), prepareDataForCreate(this.state.data))
+    ActionCreators.createTransformation(this.props.bucket.get('id'), prepareDataForCreate(this.state.data))
       .then(this.close)
       .catch(() => {
         this.setState({
