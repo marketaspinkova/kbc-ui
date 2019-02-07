@@ -2,14 +2,14 @@ import Promise from 'bluebird';
 import dispatcher from '../../Dispatcher';
 import * as constants from '../components/Constants';
 import * as localConstants from './Constants';
-import StorageActionCreators from '../components/StorageActionCreators';
-import StorageApi from '../components/StorageApi';
-import ApplicationStore from '../../stores/ApplicationStore';
-import jobPoller from '../../utils/jobPoller';
-import exportTableApi from './ExportTableApi';
 import RoutesStore from '../../stores/RoutesStore';
+import ApplicationStore from '../../stores/ApplicationStore';
+import StorageActionCreators from '../components/StorageActionCreators';
 import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
+import jobPoller from '../../utils/jobPoller';
 import HttpError from '../../utils/HttpError';
+import StorageApi from '../components/StorageApi';
+import exportTableApi from './ExportTableApi';
 
 const errorNotification = (message) => {
   ApplicationActionCreators.sendNotification({
@@ -39,6 +39,11 @@ const reload = () => {
 };
 
 const tokenVerify = () => {
+  if (ApplicationStore.getSapiToken().has('bucketPermissions')) {
+    StorageActionCreators.tokenVerify();
+    return Promise.resolve();
+  }
+
   return StorageActionCreators.tokenVerify();
 };
 
