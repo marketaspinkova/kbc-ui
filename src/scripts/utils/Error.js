@@ -1,4 +1,7 @@
+import { OperationalError } from 'bluebird';
 import HttpError from './HttpError';
+
+const SUPER_AGENT_ABORTED = 'ABORTED';
 
 /*
   Error object used for presentation in error page
@@ -40,12 +43,17 @@ const createFromException = exception => {
     error.isUserError = true;
     error.id = 'connectTimeout';
     return error;
+  } else if (error.code === SUPER_AGENT_ABORTED) {
+    error = new Error('Request timed out', 'Please try again later.');
+    error.isUserError = true;
+    error.id = 'connectTimeoutRequestAborted';
+    return error;
   } else if (error.crossDomain) {
     error = new Error('Not connected to internet', 'Please try again later.');
     error.id = 'couldNotConnect';
     error.isUserError = true;
     return error;
-  } else if (error.isOperational) {
+  } else if (error instanceof OperationalError || error.isOperational) {
     // error from bluebird
     return new Error('Connection error', error.message);
   }
