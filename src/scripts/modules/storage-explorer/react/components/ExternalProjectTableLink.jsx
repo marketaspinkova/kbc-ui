@@ -23,7 +23,7 @@ export default React.createClass({
         </ExternalLink>
         {' / '}
         <ExternalLink
-          href={`${_.template(urlTemplates.get('project'))({ projectId })}storage#/tables/${tableId}`}
+          href={`${_.template(urlTemplates.get('project'))({ projectId })}/storage#/tables/${tableId}`}
         >
           {tableId}
         </ExternalLink>

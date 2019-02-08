@@ -23,7 +23,7 @@ export default React.createClass({
         </ExternalLink>
         {' / '}
         <ExternalLink
-          href={`${_.template(urlTemplates.get('project'))({ projectId })}storage#/buckets/${bucketId}`}
+          href={`${_.template(urlTemplates.get('project'))({ projectId })}/storage#/buckets/${bucketId}`}
         >
           {bucketId}
         </ExternalLink>
