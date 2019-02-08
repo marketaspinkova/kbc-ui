@@ -1,5 +1,4 @@
 import api from './api';
-import Promise from 'bluebird';
 
 export const TokenTypes = {
   DEMO: 'demo',
@@ -20,20 +19,7 @@ export function isNewProjectValid({ name, isCreateNewProject, tokenType, customT
 }
 
 export function loadProvisioningData(pid) {
-  return api.getProjectDetail(pid).then(
-    ({ token }) => {
-      return api.getSSOAccess(pid).then(
-        sso => ({ sso, token }),
-        err => Promise.reject({ error: err.message || err })
-      );
-    },
-    err => {
-      let result = null;
-      const status = (err.response || {}).status;
-      if (status !== 404 && status !== 400) {
-        result = Promise.reject({ error: err.message || err });
-      }
-      return result;
-    }
-  );
+  return api.getProjectDetail(pid).then(({ token }) => {
+    return api.getSSOAccess(pid).then((sso) => ({ sso, token }));
+  });
 }
