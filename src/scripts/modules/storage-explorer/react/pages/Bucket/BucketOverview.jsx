@@ -130,7 +130,7 @@ export default React.createClass({
         <td>Source bucket</td>
         <td>
           {this.isOrganizationMember() ? (
-            this.renderSourceBucketLink(source)
+            this.renderBucketLink(source)
           ) : (
             <span>
               {source.getIn(['project', 'name'])} / {source.get('id')}
@@ -144,19 +144,19 @@ export default React.createClass({
     );
   },
 
-  renderSourceBucketLink(source) {
-    return this.props.sapiToken.getIn(['owner', 'id']) === source.getIn(['project', 'id']) ? (
+  renderBucketLink(bucket) {
+    return this.props.sapiToken.getIn(['owner', 'id']) === parseInt(bucket.getIn(['project', 'id']), 10) ? (
       <Link
         to="storage-explorer-bucket"
         params={{
-          bucketId: source.get('id')
+          bucketId: bucket.get('id')
         }}
       >
-        {source.get('id')}
+        {bucket.get('id')}
       </Link>
     ) : (
       <ExternalProjectBucketLink
-        bucket={source}
+        bucket={bucket}
         urlTemplates={this.props.urlTemplates}
       />
     );
@@ -167,10 +167,7 @@ export default React.createClass({
       <div key={index}>
         <CreatedWithIcon createdTime={linkedBucket.get('created')} relative={false} />{' '}
         {this.isOrganizationMember() ? (
-          <ExternalProjectBucketLink
-            bucket={linkedBucket}
-            urlTemplates={this.props.urlTemplates}
-          />
+          this.renderBucketLink(linkedBucket)
         ) : (
           <span>
             {linkedBucket.getIn(['project', 'name'])} / {linkedBucket.get('id')}
