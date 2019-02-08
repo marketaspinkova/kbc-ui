@@ -26,7 +26,8 @@ export default React.createClass({
     achievedStep: React.PropTypes.number.isRequired,
     lesson: React.PropTypes.object.isRequired,
     projectBaseUrl: React.PropTypes.string.isRequired,
-    scriptsBasePath: React.PropTypes.string.isRequired
+    scriptsBasePath: React.PropTypes.string.isRequired,
+    develPreview: React.PropTypes.bool.isRequired
   },
 
   getProjectPageUrlHref(path) {

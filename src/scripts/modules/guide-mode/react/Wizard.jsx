@@ -9,7 +9,14 @@ export default React.createClass({
 
   propTypes: {
     projectBaseUrl: React.PropTypes.string.isRequired,
-    scriptsBasePath: React.PropTypes.string.isRequired
+    scriptsBasePath: React.PropTypes.string.isRequired,
+    develPreview: React.PropTypes.bool.isRequired
+  },
+
+  getDefaultProps() {
+    return {
+      develPreview: false
+    };
   },
 
   mixins: [createStoreMixin(WizardStore)],
@@ -58,6 +65,7 @@ export default React.createClass({
           lesson={this.state.currentLesson}
           backdrop={true}
           scriptsBasePath={this.props.scriptsBasePath}
+          develPreview={this.props.develPreview}
         />
       );
     }
