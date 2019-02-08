@@ -1,3 +1,4 @@
+import Promise from 'bluebird';
 import api from './api';
 
 export const TokenTypes = {
@@ -20,6 +21,8 @@ export function isNewProjectValid({ name, isCreateNewProject, tokenType, customT
 
 export function loadProvisioningData(pid) {
   return api.getProjectDetail(pid).then(({ token }) => {
-    return api.getSSOAccess(pid).then((sso) => ({ sso, token }));
+    return Promise.delay(4000).then(() => {
+      return api.getSSOAccess(pid).then((sso) => ({ sso, token }));
+    });
   });
 }
