@@ -15,6 +15,8 @@ import UserLinks from './UserLinks';
 
 import '../../../styles/app.less';
 
+import { FEATURE_UI_DEVEL_PREVIEW } from '../../constants/KbcConstants';
+
 export default React.createClass({
   propTypes: {
     isError: React.PropTypes.bool,
@@ -37,7 +39,8 @@ export default React.createClass({
       homeUrl: ApplicationStore.getUrlTemplates().get('home'),
       projectFeatures: ApplicationStore.getCurrentProjectFeatures(),
       projectBaseUrl: ApplicationStore.getProjectBaseUrl(),
-      scriptsBasePath: ApplicationStore.getScriptsBasePath()
+      scriptsBasePath: ApplicationStore.getScriptsBasePath(),
+      develPreview: ApplicationStore.hasCurrentAdminFeature(FEATURE_UI_DEVEL_PREVIEW)
     };
   },
 
@@ -64,7 +67,9 @@ export default React.createClass({
                 canCreateProject={this.state.canCreateProject}
                 projectTemplates={this.state.projectTemplates}
               />
-              <SidebarNavigation />
+              <SidebarNavigation
+                develPreview={this.state.develPreview}
+              />
               <div className="kbc-sidebar-footer">
                 <CurrentUser
                   user={this.state.currentAdmin}

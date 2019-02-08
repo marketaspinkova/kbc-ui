@@ -1,6 +1,9 @@
 import React from 'react';
-import ApplicationStore from '../../../../stores/ApplicationStore';
+import { Link } from 'react-router';
 import { ExternalLink } from '@keboola/indigo-ui';
+import ApplicationStore from '../../../../stores/ApplicationStore';
+import { parse as parseTable } from '../../../../utils/tableIdParser';
+import { FEATURE_UI_DEVEL_PREVIEW } from '../../../../constants/KbcConstants';
 
 export default React.createClass({
   propTypes: {
@@ -13,6 +16,20 @@ export default React.createClass({
   },
 
   render() {
+    if (ApplicationStore.hasCurrentAdminFeature(FEATURE_UI_DEVEL_PREVIEW)) {
+      const parsedTable = parseTable(this.props.tableId);
+      return (
+        <Link
+          to="storage-explorer-table"
+          params={{
+            bucketId: `${parsedTable.parts.stage}.${parsedTable.parts.bucket}`,
+            tableName: parsedTable.parts.table
+          }}
+        >
+          {this.props.children}
+        </Link>
+      );
+    }
     return (
       <ExternalLink href={this.tableUrl()}>{this.props.children}</ExternalLink>
     );

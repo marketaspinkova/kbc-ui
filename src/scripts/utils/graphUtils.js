@@ -1,8 +1,7 @@
 import RoutesStore from '../stores/RoutesStore';
 import { parse as parseTable } from './tableIdParser';
 import ApplicationStore from '../stores/ApplicationStore';
-
-const UI_DEVEL_PREVIEW_FEATURE = 'ui-devel-preview';
+import { FEATURE_UI_DEVEL_PREVIEW } from '../constants/KbcConstants';
 
 export default {
   addLinksToNodes(nodes) {
@@ -31,7 +30,7 @@ export default {
         }
 
         if (nodes[i].object.type === 'storage') {
-          if (ApplicationStore.hasCurrentAdminFeature(UI_DEVEL_PREVIEW_FEATURE)) {
+          if (ApplicationStore.hasCurrentAdminFeature(FEATURE_UI_DEVEL_PREVIEW)) {
             let tableData = parseTable(nodes[i].object.table);
             nodes[i].link = router.makeHref('storage-explorer-table', {
               bucketId: `${tableData.parts.stage}.${tableData.parts.bucket}`,
