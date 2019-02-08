@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import Edit from './QueriesEdit';
 import Clipboard from '../../../../../react/common/Clipboard';
 import SaveButton from '../../components/SaveButton';
 
 export default React.createClass({
-  mixins: [PureRenderMixin],
+  mixins: [ImmutableRenderMixin],
+
   propTypes: {
     bucketId: PropTypes.string.isRequired,
     transformation: PropTypes.object.isRequired,
