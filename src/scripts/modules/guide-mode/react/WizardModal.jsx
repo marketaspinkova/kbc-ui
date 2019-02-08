@@ -206,24 +206,37 @@ export default React.createClass({
     this.handleStep('prev');
     if (this.hasPreviousStep()) {
       if (this.isCurrentStepStorage()) {
-        redirectTo(this.getProjectPageUrlHref(this.getCurrentStep().previousLink));
-      } else if (this.isPrevStepStorage()) {
-        redirectTo(this.getProjectPageUrlHref(ROUTE_PATH_STORAGE));
-      } else if (this.hasPreviousStepRoute()) {
-        const previousStepRoute = this.getPreviousStepRoute();
-        let params = {};
-        previousStepRoute.params.forEach((param) => {
-          const value = RoutesStore.getCurrentRouteParam(param);
-          if (value) {
-            params[param] = value;
-          }
-        });
-        if (previousStepRoute.params.length === Object.keys(params).length) {
-          RoutesStore.getRouter().transitionTo(previousStepRoute.name, params);
+        if (this.props.develPreview) {
+          this.handlePrevStepTransition();
+        } else {
+          redirectTo(this.getProjectPageUrlHref(this.getCurrentStep().previousLink));
         }
+      } else if (this.isPrevStepStorage()) {
+        if (this.props.develPreview) {
+          RoutesStore.getRouter().transitionTo('storage-explorer');
+        } else {
+          redirectTo(this.getProjectPageUrlHref(ROUTE_PATH_STORAGE));
+        }
+      } else if (this.hasPreviousStepRoute()) {
+        this.handlePrevStepTransition();
       }
     }
   },
+
+  handlePrevStepTransition() {
+    const previousStepRoute = this.getPreviousStepRoute();
+    let params = {};
+    previousStepRoute.params.forEach((param) => {
+      const value = RoutesStore.getCurrentRouteParam(param);
+      if (value) {
+        params[param] = value;
+      }
+    });
+    if (previousStepRoute.params.length === Object.keys(params).length) {
+      RoutesStore.getRouter().transitionTo(previousStepRoute.name, params);
+    }
+  },
+
   renderButtonPrev() {
     const { step } = this.props.step;
     let buttonText =  <span><i className="fa fa-chevron-left"/> Back</span>;
@@ -240,24 +253,37 @@ export default React.createClass({
     this.handleStep('next');
     if (this.hasNextStep()) {
       if (this.isCurrentStepStorage()) {
-        redirectTo(this.getProjectPageUrlHref(this.getCurrentStep().nextLink));
-      } else if (this.isNextStepStorage()) {
-        redirectTo(this.getProjectPageUrlHref(ROUTE_PATH_STORAGE));
-      } else if (this.hasNextStepRoute()) {
-        const nextStepRoute = this.getNextStepRoute();
-        let params = {};
-        nextStepRoute.params.forEach((param) => {
-          const value = RoutesStore.getCurrentRouteParam(param);
-          if (value) {
-            params[param] = value;
-          }
-        });
-        if (nextStepRoute.params.length === Object.keys(params).length) {
-          RoutesStore.getRouter().transitionTo(nextStepRoute.name, params);
+        if (this.props.develPreview) {
+          this.handleNextStepTransition();
+        } else {
+          redirectTo(this.getProjectPageUrlHref(this.getCurrentStep().nextLink));
         }
+      } else if (this.isNextStepStorage()) {
+        if (this.props.develPreview) {
+          RoutesStore.getRouter().transitionTo('storage-explorer');
+        } else {
+          redirectTo(this.getProjectPageUrlHref(ROUTE_PATH_STORAGE));
+        }
+      } else if (this.hasNextStepRoute()) {
+        this.handleNextStepTransition();
       }
     }
   },
+
+  handleNextStepTransition() {
+    const nextStepRoute = this.getNextStepRoute();
+    let params = {};
+    nextStepRoute.params.forEach((param) => {
+      const value = RoutesStore.getCurrentRouteParam(param);
+      if (value) {
+        params[param] = value;
+      }
+    });
+    if (nextStepRoute.params.length === Object.keys(params).length) {
+      RoutesStore.getRouter().transitionTo(nextStepRoute.name, params);
+    }
+  },
+
   renderButtonNext() {
     let buttonText =  <span>Next step <i className="fa fa-chevron-right"/></span>;
     if (this.props.step === 0) {
