@@ -5,64 +5,17 @@ import Link from 'react-router/lib/components/Link';
 import ApplicationStore from '../../stores/ApplicationStore';
 import RoutesStore from '../../stores/RoutesStore';
 
-const _pages = [
-  {
-    id: 'home',
-    title: 'Overview',
-    icon: 'kbc-icon-overview'
-  },
-  {
-    id: 'extractors',
-    title: 'Extractors',
-    icon: 'kbc-icon-extractors'
-  },
-  {
-    id: 'transformations',
-    title: 'Transformations',
-    icon: 'kbc-icon-transformations'
-  },
-  {
-    id: 'writers',
-    title: 'Writers',
-    icon: 'kbc-icon-writers'
-  },
-  {
-    id: 'orchestrations',
-    title: 'Orchestrations',
-    icon: 'kbc-icon-orchestrations'
-  },
-  {
-    id: 'storage',
-    title: 'Storage',
-    icon: 'kbc-icon-storage'
-  },
-  {
-    id: 'jobs',
-    title: 'Jobs',
-    icon: 'kbc-icon-jobs'
-  },
-  {
-    id: 'applications',
-    title: 'Applications',
-    icon: 'kbc-icon-applications'
-  }
-];
-
-if (process.env.NODE_ENV === 'development') {
-  _pages.push({
-    id: 'storage-explorer',
-    title: 'Storage Explorer',
-    icon: 'kbc-icon-storage'
-  });
-}
-
 const SidebarNavigation = React.createClass({
   mixins: [State],
+
+  propTypes: {
+    develPreview: React.PropTypes.bool.isRequired
+  },
 
   render() {
     return (
       <ul className="kbc-nav-sidebar nav nav-sidebar">
-        {_pages.map(page => {
+        {this.getPages().map(page => {
           return (
             <li className={this.isActive(page.id) ? 'active' : ''} key={page.id}>
               {RoutesStore.hasRoute(page.id) ? (
@@ -81,6 +34,62 @@ const SidebarNavigation = React.createClass({
         })}
       </ul>
     );
+  },
+
+  getPages() {
+    return [
+      {
+        id: 'home',
+        title: 'Overview',
+        icon: 'kbc-icon-overview'
+      },
+      {
+        id: 'extractors',
+        title: 'Extractors',
+        icon: 'kbc-icon-extractors'
+      },
+      {
+        id: 'transformations',
+        title: 'Transformations',
+        icon: 'kbc-icon-transformations'
+      },
+      {
+        id: 'writers',
+        title: 'Writers',
+        icon: 'kbc-icon-writers'
+      },
+      {
+        id: 'orchestrations',
+        title: 'Orchestrations',
+        icon: 'kbc-icon-orchestrations'
+      },
+      this.getStoragePage(),
+      {
+        id: 'jobs',
+        title: 'Jobs',
+        icon: 'kbc-icon-jobs'
+      },
+      {
+        id: 'applications',
+        title: 'Applications',
+        icon: 'kbc-icon-applications'
+      }
+    ];
+  },
+
+  getStoragePage() {
+    if (this.props.develPreview) {
+      return {
+        id: 'storage-explorer',
+        title: 'Storage Explorer',
+        icon: 'kbc-icon-storage'
+      };
+    }
+    return {
+      id: 'storage',
+      title: 'Storage',
+      icon: 'kbc-icon-storage'
+    };
   }
 });
 
