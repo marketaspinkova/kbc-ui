@@ -26,6 +26,7 @@ export default React.createClass({
     return {
       bucket: BucketsStore.getAll().find(item => item.get('id') === bucketId),
       sapiToken: ApplicationStore.getSapiToken(),
+      urlTemplates: ApplicationStore.getUrlTemplates(),
       tables: TablesStore.getAll().filter(table => table.getIn(['bucket', 'id']) === bucketId),
       deletingBuckets: BucketsStore.deletingBuckets().has(bucketId),
       isSharing: BucketsStore.isSharing(bucketId),
@@ -87,6 +88,7 @@ export default React.createClass({
                 <BucketOverview
                   bucket={this.state.bucket}
                   sapiToken={this.state.sapiToken}
+                  urlTemplates={this.state.urlTemplates}
                   isSharing={this.state.isSharing}
                   isUnsharing={this.state.isUnsharing}
                   isChangingSharingType={this.state.isChangingSharingType}

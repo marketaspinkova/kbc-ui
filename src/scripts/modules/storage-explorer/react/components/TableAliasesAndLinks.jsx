@@ -9,6 +9,7 @@ export default React.createClass({
 
   propTypes: {
     sapiToken: PropTypes.object.isRequired,
+    urlTemplates: PropTypes.object.isRequired,
     tableAliases: PropTypes.array.isRequired,
     tableLinks: PropTypes.array.isRequired,
     onLinkClick: PropTypes.func.isRequired
@@ -45,7 +46,11 @@ export default React.createClass({
             {this.props.tableLinks.map(alias => (
               <tr key={`link-${alias.get('id')}`}>
                 <td>
-                  <ProjectAliasLink sapiToken={this.props.sapiToken} alias={alias} />
+                  <ProjectAliasLink
+                    sapiToken={this.props.sapiToken}
+                    urlTemplates={this.props.urlTemplates}
+                    alias={alias}
+                  />
                 </td>
               </tr>
             ))}

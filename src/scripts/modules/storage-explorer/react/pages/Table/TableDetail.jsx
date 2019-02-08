@@ -39,6 +39,7 @@ export default React.createClass({
     return {
       table,
       sapiToken: ApplicationStore.getSapiToken(),
+      urlTemplates: ApplicationStore.getUrlTemplates(),
       tables: TablesStore.getAll(),
       buckets: BucketsStore.getAll(),
       bucket: BucketsStore.getAll().find(item => item.get('id') === bucketId),
@@ -150,6 +151,7 @@ export default React.createClass({
                   tableAliases={this.getTableAliases()}
                   tableLinks={this.getTableLinks()}
                   sapiToken={this.state.sapiToken}
+                  urlTemplates={this.state.urlTemplates}
                   creatingPrimaryKey={this.state.creatingPrimaryKey}
                   deletingPrimaryKey={this.state.deletingPrimaryKey}
                   settingAliasFilter={this.state.settingAliasFilter}
@@ -168,6 +170,7 @@ export default React.createClass({
                   tableAliases={this.getTableAliases()}
                   tableLinks={this.getTableLinks()}
                   sapiToken={this.state.sapiToken}
+                  urlTemplates={this.state.urlTemplates}
                   creatingPrimaryKey={this.state.creatingPrimaryKey}
                   deletingPrimaryKey={this.state.deletingPrimaryKey}
                   addingColumn={this.state.addingColumn}

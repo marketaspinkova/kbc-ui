@@ -19,6 +19,7 @@ export default React.createClass({
   propTypes: {
     bucket: PropTypes.object.isRequired,
     sapiToken: PropTypes.object.isRequired,
+    urlTemplates: PropTypes.object.isRequired,
     isSharing: PropTypes.bool.isRequired,
     isUnsharing: PropTypes.bool.isRequired,
     isChangingSharingType: PropTypes.bool.isRequired
@@ -128,7 +129,10 @@ export default React.createClass({
         <td>Source bucket</td>
         <td>
           {this.isOrganizationMember() ? (
-            <ExternalProjectBucketLink bucket={source} />
+            <ExternalProjectBucketLink
+              bucket={source}
+              urlTemplates={this.props.urlTemplates}
+            />
           ) : (
             <span>
               {source.getIn(['project', 'name'])} / {source.get('id')}
@@ -145,7 +149,10 @@ export default React.createClass({
       <div key={index}>
         <CreatedWithIcon createdTime={linkedBucket.get('created')} relative={false} />{' '}
         {this.isOrganizationMember() ? (
-          <ExternalProjectBucketLink bucket={linkedBucket} />
+          <ExternalProjectBucketLink
+            bucket={linkedBucket}
+            urlTemplates={this.props.urlTemplates}
+          />
         ) : (
           <span>
             {linkedBucket.getIn(['project', 'name'])} / {linkedBucket.get('id')}
