@@ -28,7 +28,10 @@ const ActionTypes = keyMirror({
   ROUTER_ROUTER_CREATED: null
 });
 
+const FEATURE_UI_DEVEL_PREVIEW = 'ui-devel-preview';
+
 export {
   PayloadSources,
-  ActionTypes
+  ActionTypes,
+  FEATURE_UI_DEVEL_PREVIEW
 };

@@ -2,8 +2,7 @@ import React from 'react';
 import { ExternalLink } from '@keboola/indigo-ui';
 import { Link } from 'react-router';
 import ApplicationStore from '../../../../stores/ApplicationStore';
-
-const UI_DEVEL_PREVIEW_FEATURE = 'ui-devel-preview';
+import { FEATURE_UI_DEVEL_PREVIEW } from '../../../../constants/KbcConstants';
 
 export default React.createClass({
   propTypes: {
@@ -16,7 +15,7 @@ export default React.createClass({
   },
 
   render() {
-    if (ApplicationStore.hasCurrentAdminFeature(UI_DEVEL_PREVIEW_FEATURE)) {
+    if (ApplicationStore.hasCurrentAdminFeature(FEATURE_UI_DEVEL_PREVIEW)) {
       return (
         <Link
           to="storage-explorer-bucket"

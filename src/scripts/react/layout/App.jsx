@@ -15,7 +15,7 @@ import UserLinks from './UserLinks';
 
 import '../../../styles/app.less';
 
-const UI_DEVEL_PREVIEW_FEATURE = 'ui-devel-preview';
+import { FEATURE_UI_DEVEL_PREVIEW } from '../../constants/KbcConstants';
 
 export default React.createClass({
   propTypes: {
@@ -40,7 +40,7 @@ export default React.createClass({
       projectFeatures: ApplicationStore.getCurrentProjectFeatures(),
       projectBaseUrl: ApplicationStore.getProjectBaseUrl(),
       scriptsBasePath: ApplicationStore.getScriptsBasePath(),
-      develPreview: ApplicationStore.hasCurrentAdminFeature(UI_DEVEL_PREVIEW_FEATURE)
+      develPreview: ApplicationStore.hasCurrentAdminFeature(FEATURE_UI_DEVEL_PREVIEW)
     };
   },
 

@@ -3,8 +3,7 @@ import { Link } from 'react-router';
 import { ExternalLink } from '@keboola/indigo-ui';
 import ApplicationStore from '../../../../stores/ApplicationStore';
 import { parse as parseTable } from '../../../../utils/tableIdParser';
-
-const UI_DEVEL_PREVIEW_FEATURE = 'ui-devel-preview';
+import { FEATURE_UI_DEVEL_PREVIEW } from '../../../../constants/KbcConstants';
 
 export default React.createClass({
   propTypes: {
@@ -17,7 +16,7 @@ export default React.createClass({
   },
 
   render() {
-    if (ApplicationStore.hasCurrentAdminFeature(UI_DEVEL_PREVIEW_FEATURE)) {
+    if (ApplicationStore.hasCurrentAdminFeature(FEATURE_UI_DEVEL_PREVIEW)) {
       const parsedTable = parseTable(this.props.tableId);
       return (
         <Link
