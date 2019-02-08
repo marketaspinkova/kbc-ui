@@ -14,14 +14,9 @@ const configOauthPathVersion = ['authorization', 'oauth_api', 'version'];
 
 function createConfiguration(componentId, configId) {
   const configuration = installedComponentsStore.getConfigData(componentId, configId) || Map();
-
-  if (ApplicationStore.hasCurrentProjectFeature(Constants.OAUTH_V3_FEATURE)) {
-    return configuration
-      .setIn(configOauthPath, configId)
-      .setIn(configOauthPathVersion, Constants.OAUTH_VERSION_3);
-  }
-
-  return configuration.setIn(configOauthPath, configId);
+  return configuration
+    .setIn(configOauthPath, configId)
+    .setIn(configOauthPathVersion, Constants.OAUTH_VERSION_3);
 }
 
 function processRedirectData(componentId, credentialsId) {
