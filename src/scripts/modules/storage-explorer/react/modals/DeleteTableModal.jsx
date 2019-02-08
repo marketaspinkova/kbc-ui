@@ -8,6 +8,7 @@ export default React.createClass({
     show: PropTypes.bool.isRequired,
     table: PropTypes.object.isRequired,
     sapiToken: PropTypes.object.isRequired,
+    urlTemplates: PropTypes.object.isRequired,
     tableAliases: PropTypes.array.isRequired,
     tableLinks: PropTypes.array.isRequired,
     deleting: PropTypes.bool.isRequired,
@@ -42,6 +43,7 @@ export default React.createClass({
 
               <TableAliasesAndLinks
                 sapiToken={this.props.sapiToken}
+                urlTemplates={this.props.urlTemplates}
                 tableAliases={this.props.tableAliases}
                 tableLinks={this.props.tableLinks}
                 onLinkClick={this.props.onHide}

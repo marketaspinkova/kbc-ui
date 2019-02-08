@@ -228,6 +228,7 @@ export default React.createClass({
         show={!!(this.state.openActionModal && this.state.actionModalType === 'delete')}
         table={this.state.table}
         sapiToken={this.state.sapiToken}
+        urlTemplates={this.state.urlTemplates}
         tableAliases={this.getTableAliases()}
         tableLinks={this.getTableLinks()}
         deleting={this.state.deletingTable}
