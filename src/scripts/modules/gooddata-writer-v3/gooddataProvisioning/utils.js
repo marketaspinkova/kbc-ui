@@ -21,7 +21,7 @@ export function isNewProjectValid({ name, isCreateNewProject, tokenType, customT
 
 export function loadProvisioningData(pid) {
   return api.getProjectDetail(pid).then(({ token }) => {
-    return Promise.delay(4000).then(() => {
+    return Promise.delay(5000).then(() => {
       return api.getSSOAccess(pid).then((sso) => ({ sso, token }));
     });
   });
