@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { Map } from 'immutable';
 import { Table, Button, Row } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
+import { Link } from 'react-router';
 
 import MetadataEditField from '../../../../components/react/components/MetadataEditField';
 import InlineEditArea from '../../../../../react/common/InlineEditArea';
@@ -129,18 +130,35 @@ export default React.createClass({
         <td>Source bucket</td>
         <td>
           {this.isOrganizationMember() ? (
-            <ExternalProjectBucketLink
-              bucket={source}
-              urlTemplates={this.props.urlTemplates}
-            />
+            this.renderSourceBucketLink(source)
           ) : (
             <span>
               {source.getIn(['project', 'name'])} / {source.get('id')}
             </span>
           )}{' '}
-          <Hint title="Source bucket">Bucket is linked from other project.</Hint>
+          {this.props.sapiToken.getIn(['owner', 'id']) !== source.getIn(['project', 'id']) && (
+            <Hint title="Source bucket">Bucket is linked from other project.</Hint>
+          )}
         </td>
       </tr>
+    );
+  },
+
+  renderSourceBucketLink(source) {
+    return this.props.sapiToken.getIn(['owner', 'id']) === source.getIn(['project', 'id']) ? (
+      <Link
+        to="storage-explorer-bucket"
+        params={{
+          bucketId: source.get('id')
+        }}
+      >
+        {source.get('id')}
+      </Link>
+    ) : (
+      <ExternalProjectBucketLink
+        bucket={source}
+        urlTemplates={this.props.urlTemplates}
+      />
     );
   },
 
