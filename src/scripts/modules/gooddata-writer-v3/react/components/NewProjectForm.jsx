@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Form, Col, FormControl, ControlLabel, FormGroup, Radio, HelpBlock, Button, ButtonGroup} from 'react-bootstrap';
+import {Col, FormControl, ControlLabel, FormGroup, Radio, HelpBlock, Button, ButtonGroup} from 'react-bootstrap';
 import {TokenTypes} from '../../gooddataProvisioning/utils';
 
 export default React.createClass({
@@ -18,7 +18,7 @@ export default React.createClass({
     const {disabled, value} = this.props;
 
     return (
-      <Form horizontal>
+      <div>
         <FormGroup>
           <Col sm={12}>
             <ButtonGroup justified>
@@ -43,7 +43,7 @@ export default React.createClass({
           this.renderNewProjectGroup() :
           this.renderExistingProjectGroup()
         }
-      </Form>
+      </div>
     );
   },
 
