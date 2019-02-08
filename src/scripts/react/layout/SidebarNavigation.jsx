@@ -81,7 +81,7 @@ const SidebarNavigation = React.createClass({
     if (this.props.develPreview) {
       return {
         id: 'storage-explorer',
-        title: 'Storage Explorer',
+        title: 'Storage',
         icon: 'kbc-icon-storage'
       };
     }
