@@ -5,6 +5,7 @@ import ExternalProjectBucketLink from './ExternalProjectBucketLink';
 export default React.createClass({
   propTypes: {
     sapiToken: PropTypes.object.isRequired,
+    urlTemplates: PropTypes.object.isRequired,
     alias: PropTypes.object.isRequired
   },
 
@@ -23,7 +24,12 @@ export default React.createClass({
     }
 
     if (this.props.sapiToken.getIn(['admin', 'isOrganizationMember'])) {
-      return <ExternalProjectBucketLink bucket={this.props.alias} />;
+      return (
+        <ExternalProjectBucketLink
+          bucket={this.props.alias}
+          urlTemplates={this.props.urlTemplates}
+        />
+      );
     }
 
     return (

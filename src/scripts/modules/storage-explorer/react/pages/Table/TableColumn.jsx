@@ -14,6 +14,7 @@ export default React.createClass({
     tableAliases: PropTypes.array.isRequired,
     tableLinks: PropTypes.array.isRequired,
     sapiToken: PropTypes.object.isRequired,
+    urlTemplates: PropTypes.object.isRequired,
     addingColumn: PropTypes.object.isRequired,
     deletingColumn: PropTypes.object.isRequired,
     canWriteTable: PropTypes.bool.isRequired
@@ -124,6 +125,7 @@ export default React.createClass({
         onConfirm={this.handleDeleteColumn}
         onHide={this.closeDeleteColumnModal}
         sapiToken={this.props.sapiToken}
+        urlTemplates={this.props.urlTemplates}
       />
     );
   },

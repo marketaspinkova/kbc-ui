@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { Map } from 'immutable';
 import { Table, Button, Row } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
+import { Link } from 'react-router';
 
 import MetadataEditField from '../../../../components/react/components/MetadataEditField';
 import InlineEditArea from '../../../../../react/common/InlineEditArea';
@@ -19,6 +20,7 @@ export default React.createClass({
   propTypes: {
     bucket: PropTypes.object.isRequired,
     sapiToken: PropTypes.object.isRequired,
+    urlTemplates: PropTypes.object.isRequired,
     isSharing: PropTypes.bool.isRequired,
     isUnsharing: PropTypes.bool.isRequired,
     isChangingSharingType: PropTypes.bool.isRequired
@@ -128,15 +130,35 @@ export default React.createClass({
         <td>Source bucket</td>
         <td>
           {this.isOrganizationMember() ? (
-            <ExternalProjectBucketLink bucket={source} />
+            this.renderBucketLink(source)
           ) : (
             <span>
               {source.getIn(['project', 'name'])} / {source.get('id')}
             </span>
           )}{' '}
-          <Hint title="Source bucket">Bucket is linked from other project.</Hint>
+          {this.props.sapiToken.getIn(['owner', 'id']) !== source.getIn(['project', 'id']) && (
+            <Hint title="Source bucket">Bucket is linked from other project.</Hint>
+          )}
         </td>
       </tr>
+    );
+  },
+
+  renderBucketLink(bucket) {
+    return this.props.sapiToken.getIn(['owner', 'id']) === parseInt(bucket.getIn(['project', 'id']), 10) ? (
+      <Link
+        to="storage-explorer-bucket"
+        params={{
+          bucketId: bucket.get('id')
+        }}
+      >
+        {bucket.get('id')}
+      </Link>
+    ) : (
+      <ExternalProjectBucketLink
+        bucket={bucket}
+        urlTemplates={this.props.urlTemplates}
+      />
     );
   },
 
@@ -145,7 +167,7 @@ export default React.createClass({
       <div key={index}>
         <CreatedWithIcon createdTime={linkedBucket.get('created')} relative={false} />{' '}
         {this.isOrganizationMember() ? (
-          <ExternalProjectBucketLink bucket={linkedBucket} />
+          this.renderBucketLink(linkedBucket)
         ) : (
           <span>
             {linkedBucket.getIn(['project', 'name'])} / {linkedBucket.get('id')}
