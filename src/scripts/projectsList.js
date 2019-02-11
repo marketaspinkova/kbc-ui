@@ -54,7 +54,7 @@ const App = React.createClass({
 module.exports = {
   start: function(appOptions) {
     document.body.className = 'kbc-outer-page kbc-projects-list';
-    return ReactDOM.render(
+    ReactDOM.render(
       <App
         user={Immutable.fromJS(appOptions.data.kbc.admin)}
         urlTemplates={Immutable.fromJS(appOptions.data.kbc.urlTemplates)}

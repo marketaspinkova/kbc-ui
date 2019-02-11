@@ -82,7 +82,9 @@ const startApp = appOptions => {
   });
 
   // Show loading page before app is ready
-  const loading = _.once(Handler => ReactDOM.render(<Handler isLoading={true} />, appOptions.rootNode));
+  const loading = _.once(Handler => {
+    ReactDOM.render(<Handler isLoading={true} />, appOptions.rootNode)
+  });
 
   // registered pollers for previous page
   let registeredPollers = List();
@@ -135,7 +137,7 @@ const startApp = appOptions => {
         // render error page
         console.log('route change error', error);
         RouterActionCreators.routeChangeError(error);
-        return ReactDOM.render(<Handler isError={true} />, appOptions.rootNode);
+        ReactDOM.render(<Handler isError={true} />, appOptions.rootNode);
       })
     );
   });

@@ -23,7 +23,6 @@
     "react/display-name": 0,
     "react/no-find-dom-node": 0,
     "react/no-string-refs": 0,
-    "react/no-render-return-value": 0,
     "react/no-unescaped-entities": 0
   },
   "settings": {

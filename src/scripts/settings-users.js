@@ -354,7 +354,7 @@ const App = React.createClass({
 
 module.exports = {
   start: function() {
-    return ReactDOM.render(<App />, document.getElementById('react'));
+    ReactDOM.render(<App />, document.getElementById('react'));
   },
   helpers: require('./helpers')
 };
