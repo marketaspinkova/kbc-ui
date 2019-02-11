@@ -38,7 +38,13 @@ export default React.createClass({
             minHeight: '250px'
           }}
         >
-          <Tabs className="tabs-inside-modal" activeKey={step} defaultActiveKey={1} animation={false} id="wr-google-sheets-sheet-modal-tabs">
+          <Tabs
+            id="wr-google-sheets-sheet-modal-tabs"
+            className="tabs-inside-modal"
+            activeKey={step}
+            onSelect={() => null}
+            animation={false}
+          >
             <Tab title="Source" eventKey={1} disabled={step !== 1}>
               <InputTab
                 onSelect={this.onChangeInputMapping}
@@ -68,8 +74,8 @@ export default React.createClass({
               <SheetTab
                 onChangeSheetTitle={this.onChangeSheetTitle}
                 onChangeAction={(sheet) => this.updateLocalState(['sheet', 'action'], sheet)}
-                valueSheetTitle={this.sheet('sheetTitle')}
-                valueAction={this.sheet('action')}
+                valueSheetTitle={this.sheet('sheetTitle', '')}
+                valueAction={this.sheet('action', '')}
               />
             </Tab>
           </Tabs>
