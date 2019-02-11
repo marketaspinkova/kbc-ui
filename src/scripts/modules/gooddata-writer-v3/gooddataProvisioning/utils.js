@@ -29,5 +29,12 @@ export function loadProvisioningData(pid, newProject = false) {
     })
     .then((token) => {
       return api.getSSOAccess(pid).then((sso) => ({ sso, token }));
+    })
+    .catch((error) => {
+      if (error.message && error.message === `Project ${encodeURIComponent(pid)} not found in database`) {
+        return; // user use own existing gooddata project
+      }
+
+      throw error;
     });
 }
