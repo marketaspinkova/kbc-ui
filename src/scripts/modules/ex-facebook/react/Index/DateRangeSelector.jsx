@@ -66,11 +66,13 @@ export default React.createClass({
         title={this.state.text}
         id="modules-ex-facebook-react-index-date-range-selector-dropdown"
       >
-        {TEMPLATES.map((t) =>
-          <MenuItem eventKey={t.name}>
-            {t.name}
-          </MenuItem>
-        )}
+        {TEMPLATES.map((t) => {
+          return (
+            <MenuItem eventKey={t.name}>
+              {t.name}
+            </MenuItem>
+          );
+        })}
       </DropdownButton>
     );
   },

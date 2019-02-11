@@ -221,12 +221,13 @@ export default function(COMPONENT_ID) {
             </a>
             <div>
               {
-                accounts.take(showTreshold).map((a) =>
-                  <span>
-                    <AccountLink account={a} componentId={COMPONENT_ID}/>
-                    {' '}
-                  </span>
-                ).toArray()
+                accounts.take(showTreshold).map((a) => {
+                  return (
+                    <span>
+                      <AccountLink account={a} componentId={COMPONENT_ID}/>{' '}
+                    </span>
+                  );
+                }).toArray()
               }
               { showMorecount > 0 ?
                 <span>

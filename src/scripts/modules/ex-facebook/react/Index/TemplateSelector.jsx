@@ -22,11 +22,13 @@ export default React.createClass({
         title={this.state.text}
         id="modules-ex-facebook-react-index-template-selector-dropdown"
       >
-        {this.props.templates.map((t) =>
-          <MenuItem eventKey={t.get('id')}>
-            {t.get('name')}
-          </MenuItem>
-        ).toArray()}
+        {this.props.templates.map((t) => {
+          return (
+            <MenuItem eventKey={t.get('id')}>
+              {t.get('name')}
+            </MenuItem>
+          );
+        }).toArray()}
       </DropdownButton>
     );
   },

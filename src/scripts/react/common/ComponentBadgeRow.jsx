@@ -8,15 +8,17 @@ export default React.createClass({
   render() {
     return (
       <div className="badge-component-container">
-        {this.props.badges.map((badge) =>
-          <div
-            className={'badge badge-component-item badge-component-item-title badge-component-item-' + badge.key}
-            title={badge.descriptionPlain}
-            key={badge.key}
-          >
-            {badge.title}
-          </div>
-        )}
+        {this.props.badges.map((badge) => {
+          return (
+            <div
+              className={'badge badge-component-item badge-component-item-title badge-component-item-' + badge.key}
+              title={badge.descriptionPlain}
+              key={badge.key}
+            >
+              {badge.title}
+            </div>
+          );
+        })}
       </div>
     );
   }

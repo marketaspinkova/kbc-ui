@@ -82,18 +82,20 @@ export default React.createClass({
       return (
         <table className="table table-striped table-hover">
           <tbody>
-            {accounts.map((a) =>
-              <tr>
-                <td>
-                  {a.get('name') || 'Unknown'}
-                  <small><div>{a.get('id')}</div></small>
-                </td>
-                <td>
-                  <span onClick={this.deselectAccount.bind(this, a.get('id'))}
-                    className="kbc-icon-cup kbc-cursor-pointer" />
-                </td>
-              </tr>
-            ).toArray()}
+            {accounts.map((a) => {
+              return (
+                <tr>
+                  <td>
+                    {a.get('name') || 'Unknown'}
+                    <small><div>{a.get('id')}</div></small>
+                  </td>
+                  <td>
+                    <span onClick={this.deselectAccount.bind(this, a.get('id'))}
+                      className="kbc-icon-cup kbc-cursor-pointer" />
+                  </td>
+                </tr>
+              );
+            }).toArray()}
           </tbody>
         </table>
       );
@@ -163,23 +165,25 @@ export default React.createClass({
                   className="kbc-icon-arrow-right pull-right kbc-cursor-pointer" />
               </td>
             </tr>
-            {data.map((d) =>
-              <tr>
-                <td>
-                  <a
-                    key={d.get('id')}
-                    onClick={this.selectAccount.bind(this, d)}>
-                    {d.get('name')}
-                    <small><div>{d.get('id')}</div></small>
-                  </a>
-                </td>
-                <td>
-                  <span
-                    onClick={this.selectAccount.bind(this, d)}
-                    className="kbc-icon-arrow-right pull-right kbc-cursor-pointer" />
-                </td>
-              </tr>
-            ).toArray()}
+            {data.map((d) => {
+              return (
+                <tr>
+                  <td>
+                    <a
+                      key={d.get('id')}
+                      onClick={this.selectAccount.bind(this, d)}>
+                      {d.get('name')}
+                      <small><div>{d.get('id')}</div></small>
+                    </a>
+                  </td>
+                  <td>
+                    <span
+                      onClick={this.selectAccount.bind(this, d)}
+                      className="kbc-icon-arrow-right pull-right kbc-cursor-pointer" />
+                  </td>
+                </tr>
+              );
+            }).toArray()}
           </tbody>
         </table>
       );

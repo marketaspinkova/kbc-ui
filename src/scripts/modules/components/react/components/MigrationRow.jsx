@@ -319,19 +319,21 @@ export default React.createClass({
               </tr>
             </thead>
             <tbody>
-              {orchestrations.map((row) =>
-                <tr>
-                  <td>
-                    {this.renderOrchestrationLink(row.get('id'), row.get('name'))}
-                  </td>
-                  <td>
-                    <Check isChecked={row.get('hasOld')} />
-                  </td>
-                  <td>
-                    <Check isChecked={row.get('hasNew')} />
-                  </td>
-                </tr>
-              )}
+              {orchestrations.map((row) => {
+                return (
+                  <tr>
+                    <td>
+                      {this.renderOrchestrationLink(row.get('id'), row.get('name'))}
+                    </td>
+                    <td>
+                      <Check isChecked={row.get('hasOld')} />
+                    </td>
+                    <td>
+                      <Check isChecked={row.get('hasNew')} />
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </Table>
           :
@@ -387,27 +389,29 @@ export default React.createClass({
           </tr>
         </thead>
         <tbody>
-          {this.state.status.get('configurations', List()).map((row) =>
-            <tr>
-              <td>
-                {this.renderConfigLink(row.get('configId'), this.props.componentId, row.get('configName'))}
-              </td>
-              {isReplacementApp ? null :
+          {this.state.status.get('configurations', List()).map((row) => {
+            return (
+              <tr>
                 <td>
-                  {this.renderTableLink(row.get('tableId'))}
+                  {this.renderConfigLink(row.get('configId'), this.props.componentId, row.get('configName'))}
                 </td>
-              }
-              <td>
-                <i className="kbc-icon-arrow-right" />
-              </td>
-              <td>
-                {this.renderNewConfigLink(row)}
-              </td>
-              <td>
-                {this.renderRowStatus(row.get('status'))}
-              </td>
-            </tr>
-          )}
+                {isReplacementApp ? null :
+                  <td>
+                    {this.renderTableLink(row.get('tableId'))}
+                  </td>
+                }
+                <td>
+                  <i className="kbc-icon-arrow-right" />
+                </td>
+                <td>
+                  {this.renderNewConfigLink(row)}
+                </td>
+                <td>
+                  {this.renderRowStatus(row.get('status'))}
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </Table>
     );
