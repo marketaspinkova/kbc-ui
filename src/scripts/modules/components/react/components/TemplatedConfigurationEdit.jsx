@@ -4,7 +4,6 @@ import JSONSchemaEditor from './JSONSchemaEditor';
 import TemplateSelector from './ConfigurationTemplateSelector';
 import SaveButtons from '../../../../react/common/SaveButtons';
 import CodeMirror from 'react-code-mirror';
-import '../../../../utils/codemirror/json-lint';
 
 export default React.createClass({
 

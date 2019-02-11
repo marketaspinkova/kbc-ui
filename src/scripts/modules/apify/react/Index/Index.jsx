@@ -23,7 +23,6 @@ import LatestVersions from '../../../components/react/components/SidebarVersions
 import SetupModal from './SetupModal';
 import { ExternalLink } from '@keboola/indigo-ui';
 import CodeMirror from 'react-code-mirror';
-import '../../../../utils/codemirror/json-lint';
 
 const COMPONENT_ID = 'apify.apify';
 

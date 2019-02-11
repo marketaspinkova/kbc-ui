@@ -3,10 +3,6 @@ import Edit from './ScriptsEdit';
 import Clipboard from '../../../../../react/common/Clipboard';
 import SaveButton from '../../components/SaveButton';
 
-/* global require */
-require('codemirror/mode/r/r');
-require('codemirror/mode/python/python');
-
 export default React.createClass({
   propTypes: {
     bucketId: PropTypes.string.isRequired,

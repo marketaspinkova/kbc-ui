@@ -3,6 +3,7 @@ console.time('load');
 
 import './utils/react-shim';
 import './utils/ReactErrorHandler';
+import './utils/codemirror/setup';
 
 import React from 'react';
 import ReactDOM from 'react-dom';

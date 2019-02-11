@@ -4,9 +4,6 @@ import Edit from './QueriesEdit';
 import Clipboard from '../../../../../react/common/Clipboard';
 import SaveButton from '../../components/SaveButton';
 
-/* global require */
-require('codemirror/mode/sql/sql');
-
 export default React.createClass({
   mixins: [PureRenderMixin],
   propTypes: {

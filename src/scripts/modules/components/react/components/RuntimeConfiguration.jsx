@@ -1,9 +1,6 @@
 import React, {PropTypes} from 'react';
 import Edit from './RuntimeConfigurationEdit';
 
-/* global require */
-require('codemirror/mode/javascript/javascript');
-
 export default React.createClass({
   propTypes: {
     data: PropTypes.object.isRequired,

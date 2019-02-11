@@ -5,13 +5,8 @@ import RoutesStore from '../../../../stores/RoutesStore';
 import InstalledComponentsStore from '../../stores/InstalledComponentsStore';
 import ComponentsStore from '../../stores/ComponentsStore';
 import TemplatesStore from '../../stores/TemplatesStore';
-
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
-
 import Markdown from '../../../../react/common/Markdown';
-
-/* global require */
-require('codemirror/mode/javascript/javascript');
 
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore, ComponentsStore, TemplatesStore)],
