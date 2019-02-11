@@ -13,12 +13,12 @@ function handleError(error) {
 }
 
 export default {
-  loadProvisioningData(pid) {
+  loadProvisioningData(pid, newProject = false) {
     dispatcher.handleViewAction({
       type: ProvisioningActionTypes.GD_PROVISIONING_LOAD_START,
       pid
     });
-    return utils.loadProvisioningData(pid).then(
+    return utils.loadProvisioningData(pid, newProject).then(
       data => dispatcher.handleViewAction({
         type: ProvisioningActionTypes.GD_PROVISIONING_LOAD_SUCCESS,
         data,
