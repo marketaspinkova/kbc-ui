@@ -123,8 +123,8 @@ export default React.createClass({
     if (configTables.count() === 0) return 'n/a';
     return configTables.map((t) => {
       return (
-        <div>
-          <StorageTableLink tableId={t.get('id')}  linkLabel={t.get('name')} />
+        <div key={t.get('id')}>
+          <StorageTableLink tableId={t.get('id')} linkLabel={t.get('name')} />
         </div>
       );
     }).toArray();

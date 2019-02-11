@@ -4,10 +4,7 @@
     "node": true,
     "jest": true
   },
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended"
-  ],
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
   "globals": {
     "shallow": true,
     "render": true,
@@ -18,14 +15,11 @@
     "matchSnapshot": true
   },
   "parser": "babel-eslint",
-  "plugins": [
-    "react"
-  ],
+  "plugins": ["react"],
   "rules": {
     "no-case-declarations": 0,
     "no-extra-boolean-cast": 0,
     "no-useless-escape": 0,
-    "react/jsx-key": 0,
     "react/display-name": 0,
     "react/no-find-dom-node": 0,
     "react/no-string-refs": 0,
@@ -37,9 +31,6 @@
       "createClass": "createClass",
       "version": "0.14.9"
     },
-    "linkComponents": [
-      "Hyperlink",
-      {"name": "Link", "linkAttribute": "to"}
-    ]
+    "linkComponents": ["Hyperlink", { "name": "Link", "linkAttribute": "to" }]
   }
 }

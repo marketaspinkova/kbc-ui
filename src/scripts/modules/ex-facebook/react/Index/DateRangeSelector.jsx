@@ -68,7 +68,7 @@ export default React.createClass({
       >
         {TEMPLATES.map((t) => {
           return (
-            <MenuItem eventKey={t.name}>
+            <MenuItem key={t.name} eventKey={t.name}>
               {t.name}
             </MenuItem>
           );

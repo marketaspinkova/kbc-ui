@@ -84,7 +84,7 @@ export default React.createClass({
           <tbody>
             {accounts.map((a) => {
               return (
-                <tr>
+                <tr key={a.get('id')}>
                   <td>
                     {a.get('name') || 'Unknown'}
                     <small><div>{a.get('id')}</div></small>
@@ -167,11 +167,9 @@ export default React.createClass({
             </tr>
             {data.map((d) => {
               return (
-                <tr>
+                <tr key={d.get('id')}>
                   <td>
-                    <a
-                      key={d.get('id')}
-                      onClick={this.selectAccount.bind(this, d)}>
+                    <a onClick={this.selectAccount.bind(this, d)}>
                       {d.get('name')}
                       <small><div>{d.get('id')}</div></small>
                     </a>

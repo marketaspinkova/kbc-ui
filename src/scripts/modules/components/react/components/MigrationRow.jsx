@@ -321,7 +321,7 @@ export default React.createClass({
             <tbody>
               {orchestrations.map((row) => {
                 return (
-                  <tr>
+                  <tr key={row.get('id')}>
                     <td>
                       {this.renderOrchestrationLink(row.get('id'), row.get('name'))}
                     </td>
@@ -391,7 +391,7 @@ export default React.createClass({
         <tbody>
           {this.state.status.get('configurations', List()).map((row) => {
             return (
-              <tr>
+              <tr key={row.get('configId')}>
                 <td>
                   {this.renderConfigLink(row.get('configId'), this.props.componentId, row.get('configName'))}
                 </td>

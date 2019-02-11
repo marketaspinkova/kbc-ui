@@ -39,9 +39,13 @@ export default React.createClass({
         </th>
       );
     });
-    const rows = dataPreview.rows.map( (row, ridx) => {
-      const cols = row.map( (item) => {
-        return (<td> <StorageTableDataPreviewItem item={item} /> </td>);
+    const rows = dataPreview.rows.map((row, ridx) => {
+      const cols = row.map((item, index) => {
+        return (
+          <td key={index}>
+            <StorageTableDataPreviewItem item={item} />
+          </td>
+        );
       });
       return (
         <tr key={ridx}>

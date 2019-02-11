@@ -234,9 +234,9 @@ export default React.createClass({
             bucketId={this.props.bucketId}
           />
           {this._isOpenRefineTransformation() && [
-            <h2>OpenRefine Beta Warning</h2>,
+            <h2 key="header">OpenRefine Beta Warning</h2>,
 
-            <div className="help-block">
+            <div key="block" className="help-block">
               <span>
                 {'OpenRefine transformations are now in public beta. '}
                 {'Please be aware, that things may change before it makes to production. '}

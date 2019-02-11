@@ -24,7 +24,7 @@ export default React.createClass({
       >
         {this.props.templates.map((t) => {
           return (
-            <MenuItem eventKey={t.get('id')}>
+            <MenuItem key={t.get('id')} eventKey={t.get('id')}>
               {t.get('name')}
             </MenuItem>
           );

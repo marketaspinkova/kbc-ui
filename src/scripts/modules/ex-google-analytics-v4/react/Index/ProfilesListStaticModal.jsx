@@ -31,9 +31,7 @@ export default React.createClass({
   renderProfiles() {
     return (
       <div>
-        {this.props.profiles.map( (profile) =>
-          <ProfileInfo profile={profile} />
-        )}
+        {this.props.profiles.map((profile, index) => <ProfileInfo key={index} profile={profile} />)}
       </div>
     );
   }

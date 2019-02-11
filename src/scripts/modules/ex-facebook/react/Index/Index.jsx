@@ -221,9 +221,9 @@ export default function(COMPONENT_ID) {
             </a>
             <div>
               {
-                accounts.take(showTreshold).map((a) => {
+                accounts.take(showTreshold).map((a, index) => {
                   return (
-                    <span>
+                    <span key={index}>
                       <AccountLink account={a} componentId={COMPONENT_ID}/>{' '}
                     </span>
                   );

@@ -114,9 +114,10 @@ export default React.createClass({
         </h3>
         <div className="kbc-accordion kbc-panel-heading-with-table kbc-panel-heading-with-table">
           {files.count() > 0 ?
-            files.map((file) => {
+            files.map((file, index) => {
               return (
                 <SheetsSelector
+                  key={index}
                   file={file}
                   onSelectFile={this.selectFile}
                   selectSheet={this.selectSheet}
