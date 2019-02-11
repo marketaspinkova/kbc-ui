@@ -67,7 +67,7 @@ export default React.createClass({
           <ButtonGroup>
             <Button onClick={this.openCreateBucketModal} bsSize="sm">
               <Tooltip tooltip="Create new bucket" placement="top">
-                <span><i className="fa fa-plus" /> Create</span>
+                <span><i className="fa fa-plus" /> Bucket</span>
               </Tooltip>
             </Button>
           </ButtonGroup>
