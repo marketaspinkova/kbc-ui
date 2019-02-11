@@ -32,7 +32,7 @@ export function loadProvisioningData(pid, newProject = false) {
     })
     .catch((error) => {
       if (error.message && error.message === `Project ${encodeURIComponent(pid)} not found in database`) {
-        return; // user use own existing gooddata project
+        return; // user uses own existing gooddata project
       }
 
       throw error;
