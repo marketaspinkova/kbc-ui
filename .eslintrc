@@ -17,6 +17,16 @@
   "plugins": [
     "react"                          // https://github.com/yannickcr/eslint-plugin-react
   ],
+  "settings": {
+    "react": {
+      "createClass": "createClass",
+      "version": "0.14.9"
+    },
+    "linkComponents": [
+      "Hyperlink",
+      {"name": "Link", "linkAttribute": "to"}
+    ]
+  },
   "rules": {
     /**
      * Strict mode
