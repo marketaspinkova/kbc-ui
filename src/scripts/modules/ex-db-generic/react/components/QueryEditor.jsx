@@ -532,7 +532,7 @@ export default React.createClass({
             >
               add all columns
             </Button>{' '}
-            and then remove the ones you don't want.
+            and then remove the ones you don&apos;t want.
           </HelpBlock>
         </Col>
       </FormGroup>
@@ -558,7 +558,7 @@ export default React.createClass({
       return (
         <div className="help-block">
           <i className="fa fa-exclamation-triangle"/> This connection does not have a schema specified so please be sure to prefix table names with the schema
-          <br/>(e.g. "schemaName"."tableName")
+          <br/>(e.g. &quot;schemaName&quot;.&quot;tableName&quot;)
         </div>
       );
     }

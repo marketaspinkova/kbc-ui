@@ -114,7 +114,7 @@ export default React.createClass({
                   value={this.props.enclosure}
                   onChange={this.onChangeEnclosure}
                 />
-                <HelpBlock>Field enclosure used in CSV file. Default value is <code>"</code>.</HelpBlock>
+                <HelpBlock>Field enclosure used in CSV file. Default value is <code>&quot;</code>.</HelpBlock>
               </Col>
             </FormGroup>
             <FormGroup>

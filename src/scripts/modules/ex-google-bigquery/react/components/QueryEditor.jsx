@@ -111,7 +111,7 @@ export default React.createClass({
                 Use Legacy SQL
               </label>
               <div className="help-block">
-                By default, BigQuery runs queries using legacy SQL. <br /> Uncheck this to run queries using BigQuery's
+                By default, BigQuery runs queries using legacy SQL. <br /> Uncheck this to run queries using BigQuery&apos;s
                 updated SQL dialect with improved standards compliance.
               </div>
             </div>

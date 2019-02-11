@@ -80,7 +80,7 @@ export default React.createClass({
       <div>
         <div className="row text-left">
           <div className="col-md-8 col-md-offset-2 help-block">
-          Select the tables you'd like to import to autogenerate your configuration. <br/>
+          Select the tables you&apos;d like to import to autogenerate your configuration. <br/>
           You can edit them later at any time.
           </div>
         </div>

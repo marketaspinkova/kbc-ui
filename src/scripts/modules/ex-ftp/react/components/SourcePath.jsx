@@ -59,8 +59,8 @@ export default React.createClass({
           help={(<span>Exact path to file or glob syntax. Use absolute path for FTP(s) connection and relative for SFTP connection.
             <ul>
               <li><code>**/*.csv</code> will download all CSV files in all subdirectories</li>
-              <li><code>files/*.csv</code> will download all CSV files in files/ directory </li>
-              <li><code>files/directory/file.txt</code> will download exact TXT file)}</li>
+              <li><code>files/*.csv</code> will download all CSV files in files/ directory</li>
+              <li><code>files/directory/file.txt</code> will download exact TXT file</li>
             </ul>
           </span>)}
         />
@@ -133,7 +133,7 @@ export default React.createClass({
             props.onChange({enclosure: e.target.value});
           }}
           placeholder={'"'}
-          help={(<span>Field enclosure used in CSV file. Default value is <code>"</code>.</span>)}
+          help={(<span>Field enclosure used in CSV file. Default value is <code>&quot;</code>.</span>)}
         />
         <h3>Header &amp; Primary Key</h3>
         <div className="form-group">

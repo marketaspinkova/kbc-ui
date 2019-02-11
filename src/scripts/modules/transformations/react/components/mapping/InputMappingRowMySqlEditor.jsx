@@ -201,7 +201,7 @@ export default React.createClass({
                   {' Optional'}
                 </label>
                 <HelpBlock>
-                  If this table does not exist in Storage, the transformation won't show an error.
+                  If this table does not exist in Storage, the transformation won&apos;t show an error.
                 </HelpBlock>
               </div>
             )}

@@ -95,7 +95,7 @@ const getComponentBadges = (component) => {
   if (flags.contains('hasLicence')) {
     badges.push({
       title: <span><i className="fa fa-file-text-o fa-fw"/></span>,
-      description: <span>You agree to the <ExternalLink href={component.getIn(['data', 'vendor', 'licenseUrl'])}>vendor's license agreement</ExternalLink>.</span>,
+      description: <span>You agree to the <ExternalLink href={component.getIn(['data', 'vendor', 'licenseUrl'])}>vendor&apos;s license agreement</ExternalLink>.</span>,
       descriptionPlain: 'You agree to the vendor\'s license agreement.',
       key: 'license'
     });

@@ -208,7 +208,7 @@ export default React.createClass({
     if (!this.state.isParsableConfiguration) {
       return (
         <small>
-          Can't close JSON editor, configuration is not compatible. Revert your changes to allow switching back to the
+          Can&apos;t close JSON editor, configuration is not compatible. Revert your changes to allow switching back to the
           visual form.
         </small>
       );

@@ -22,8 +22,7 @@
     "no-useless-escape": 0,
     "react/display-name": 0,
     "react/no-find-dom-node": 0,
-    "react/no-string-refs": 0,
-    "react/no-unescaped-entities": 0
+    "react/no-string-refs": 0
   },
   "settings": {
     "react": {

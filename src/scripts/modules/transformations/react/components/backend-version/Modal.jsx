@@ -29,7 +29,7 @@ export default React.createClass({
         </Modal.Header>
         <Modal.Body>
           <p>
-            Most of the time there's no need to change version of the transformation backend.
+            Most of the time there&apos;s no need to change version of the transformation backend.
           </p>
           <p>
             Change the version only if you have problems with the <code>Latest</code> version. And{' '}

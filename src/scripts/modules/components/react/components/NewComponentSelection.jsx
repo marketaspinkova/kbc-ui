@@ -32,7 +32,7 @@ export default React.createClass({
         </div>
         <div className="row">
           <div className="text-center">
-            <h2>Haven't found what you're looking for?</h2>
+            <h2>Haven&apos;t found what you&apos;re looking for?</h2>
             <Button bsStyle="primary" onClick={contactSupport}>Let us know</Button>
           </div>
         </div>
