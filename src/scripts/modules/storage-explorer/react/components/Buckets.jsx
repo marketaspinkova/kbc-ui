@@ -65,7 +65,7 @@ export default React.createClass({
       <ButtonGroup justified>
         {this.canCreateBucket() && (
           <ButtonGroup>
-            <Button onClick={this.openCreateBucketModal} bsSize="sm">
+            <Button onClick={this.openCreateBucketModal}>
               <Tooltip tooltip="Create new bucket" placement="top">
                 <span><i className="fa fa-plus" /> Bucket</span>
               </Tooltip>
@@ -74,7 +74,7 @@ export default React.createClass({
         )}
         {this.canLinkBucket() && (
           <ButtonGroup>
-            <Button onClick={this.openBucketLinkModal} bsSize="sm">
+            <Button onClick={this.openBucketLinkModal}>
               <Tooltip tooltip="Link shared bucket to project" placement="top">
                 <span><i className="fa fa-random" /> Link</span>
               </Tooltip>
@@ -82,7 +82,7 @@ export default React.createClass({
           </ButtonGroup>
         )}
         <ButtonGroup>
-          <Button onClick={reload} bsSize="sm">
+          <Button onClick={reload}>
             <Tooltip tooltip="Reload buckets &amp; tables" placement="top">
               <span><RefreshIcon isLoading={this.state.isReloading} title="" /> Reload</span>
             </Tooltip>
