@@ -43,15 +43,14 @@ export default React.createClass({
 
   limitsRow(limitsPart, index) {
     const tds = limitsPart
-      .map((limit, partIndex) => {
+      .map((limit) => {
         return (
           <LimitRow
-            key={partIndex}
+            key={limit.get('id')}
             limit={limit}
             isKeenReady={this.props.isKeenReady}
             keenClient={this.props.keenClient}
             canEdit={this.props.canEdit}
-            key={limit.get('id')}
           />
         );
       })

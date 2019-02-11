@@ -85,7 +85,6 @@ export default React.createClass({
   errorTooltip() {
     let actionMsg = '';
 
-    /* global navigatior */
     if (/iPhone|iPad/i.test(navigator.userAgent)) {
       actionMsg = 'No support :(';
     } else if (/Mac/i.test(navigator.userAgent)) {

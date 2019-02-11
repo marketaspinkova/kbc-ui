@@ -98,7 +98,7 @@ export default React.createClass({
       try {
         message = JSON.parse(message).message || message;
       } catch (e) {
-        message = message;
+        message = error.get('message');
       }
     }
     return (
