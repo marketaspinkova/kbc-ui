@@ -9,8 +9,7 @@ function createUrl(path, version) {
 }
 
 function getBaseUrl(version) {
-  if (version !== Constants.OAUTH_VERSION_FALLBACK
-    && ApplicationStore.hasCurrentProjectFeature(Constants.OAUTH_V3_FEATURE)) {
+  if (version !== Constants.OAUTH_VERSION_FALLBACK) {
     return ServicesStore.getService('oauth').get('url');
   }
   return ComponentsStore.getComponent('keboola.oauth-v2').get('uri');

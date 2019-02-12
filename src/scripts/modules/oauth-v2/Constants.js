@@ -12,6 +12,5 @@ export const ActionTypes = keyMirror({
 
 export const Constants = {
   OAUTH_VERSION_3: 3,
-  OAUTH_VERSION_FALLBACK: 2,
-  OAUTH_V3_FEATURE: 'oauth-v3'
+  OAUTH_VERSION_FALLBACK: 2
 };
