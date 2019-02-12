@@ -102,14 +102,12 @@ export default createReactClass({
     if (this.props.backend === 'snowflake') {
       return (
         <span>
-          Learn more about{' '}
-          <ExternalLink href="https://help.keboola.com/manipulation/transformations/snowflake/">
-            using Snowflake
-          </ExternalLink>
-          .
+          Learn more about <ExternalLink href="https://help.keboola.com/manipulation/transformations/snowflake/">using Snowflake</ExternalLink>.{' '}
+          Use <code>Ctrl+Space</code> for autocomplete and syntax hints.
         </span>
       );
     }
+
     if (this.props.backend === 'redshift') {
       return (
         <span>
@@ -121,6 +119,17 @@ export default createReactClass({
         </span>
       );
     }
+
+    if (this.props.backend === 'mysql') {
+      return (
+        <span>
+          Learn more about <ExternalLink href="https://help.keboola.com/manipulation/transformations/mysql/">using MySQL</ExternalLink>.{' '}
+          Use <code>Ctrl+Space</code> for autocomplete and syntax hints.
+        </span>
+      );
+    }
+
+    return null;
   },
 
   handleChange(editor, data, value) {
