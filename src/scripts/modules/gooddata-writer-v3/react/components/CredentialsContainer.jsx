@@ -28,7 +28,7 @@ export default React.createClass({
     return {
       canCreateProdProject,
       data,
-      isMasterUser: ApplicationStore.getIsMasterToken(),
+      canDisconnectProject: ApplicationStore.getKbcVars().get('canEditProjectLimits'),
       isCreating: ProvisioningStore.getIsCreating(),
       isLoading: ProvisioningStore.getIsLoading(pid),
       isDeleting: ProvisioningStore.getIsDeleting(pid)
@@ -85,7 +85,7 @@ export default React.createClass({
         provisioning={this.state}
         onHandleCreate={this.handleCreate}
         onHandleResetProject={this.handleResetProject}
-        isMasterUser={this.state.isMasterUser}
+        canDisconnectProject={this.state.canDisconnectProject}
       />
     );
   }

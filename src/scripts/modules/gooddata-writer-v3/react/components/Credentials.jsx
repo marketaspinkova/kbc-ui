@@ -21,7 +21,7 @@ export default React.createClass({
     disabled: PropTypes.bool.isRequired,
     onHandleCreate: PropTypes.func.isRequired,
     onHandleResetProject: PropTypes.func.isRequired,
-    isMasterUser: PropTypes.bool.isRequired
+    canDisconnectProject: PropTypes.bool.isRequired
   },
 
   getInitialState() {
@@ -55,7 +55,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        {this.props.isMasterUser && (
+        {this.props.canDisconnectProject && (
           <ResetProjectModal
             isReseting={this.props.provisioning.isDeleting}
             show={this.state.showResetProjectModal}
@@ -162,7 +162,7 @@ export default React.createClass({
   },
 
   renderResetProjectButton() {
-    if (!this.props.isMasterUser) {
+    if (!this.props.canDisconnectProject) {
       return null;
     }
 
@@ -170,7 +170,8 @@ export default React.createClass({
       <button
         type="button"
         onClick={() => this.setState({showResetProjectModal: true})}
-        className="btn btn-danger pull-right">
+        className="btn btn-danger pull-right"
+      >
         Disconnect
       </button>
     );
