@@ -51,7 +51,7 @@ export default React.createClass({
       const {name, tokenType, customToken} = newProject;
       return ProvisioningActions.createProject(name, tokenType, customToken).then(
         ({pid, login, password}) => {
-          ProvisioningActions.loadProvisioningData(pid, true);
+          ProvisioningActions.loadNewProjectProvisioningData(pid);
           return this.props.onSave({pid, login, password});
         }
       );

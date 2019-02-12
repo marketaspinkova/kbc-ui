@@ -33,6 +33,26 @@ export default {
     });
   },
 
+  loadNewProjectProvisioningData(pid) {
+    dispatcher.handleViewAction({
+      type: ProvisioningActionTypes.GD_PROVISIONING_LOAD_START,
+      pid
+    });
+    return utils.loadNewProjectProvisioningData(pid).then(
+      data => dispatcher.handleViewAction({
+        type: ProvisioningActionTypes.GD_PROVISIONING_LOAD_SUCCESS,
+        data,
+        pid
+      })).catch(err => {
+      dispatcher.handleViewAction({
+        type: ProvisioningActionTypes.GD_PROVISIONING_LOAD_ERROR,
+        error: err,
+        pid
+      });
+      handleError(err);
+    });
+  },
+
   deleteProject(pid) {
     dispatcher.handleViewAction({
       type: ProvisioningActionTypes.GD_PROVISIONING_DELETE_START,
