@@ -67,6 +67,7 @@ export default createReactClass({
   queries() {
     return (
       <Edit
+        transformation={this.props.transformation}
         queries={this.props.queries}
         splitQueries={this.props.splitQueries}
         backend={this.props.transformation.get('backend')}

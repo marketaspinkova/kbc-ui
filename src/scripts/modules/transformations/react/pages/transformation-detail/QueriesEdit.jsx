@@ -2,12 +2,14 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
 import { Controlled as CodeMirror } from 'react-codemirror2'
+import { Map, List } from 'immutable';
 import resolveHighlightMode from './resolveHighlightMode';
 import {ExternalLink} from '@keboola/indigo-ui';
 import normalizeNewlines from './normalizeNewlines';
 
 export default createReactClass({
   propTypes: {
+    transformation: PropTypes.object.isRequired,
     queries: PropTypes.string.isRequired,
     splitQueries: PropTypes.object.isRequired,
     backend: PropTypes.string.isRequired,
@@ -73,7 +75,8 @@ export default createReactClass({
                 lineWrapping: true,
                 readOnly: this.props.disabled,
                 placeholder: '-- Your SQL goes here...',
-                extraKeys: { 'Ctrl-Space': 'autocomplete' }
+                extraKeys: { 'Ctrl-Space': 'autocomplete' },
+                hintOptions: { tables: this.getTables() }
               }}
             />
           </div>
@@ -96,5 +99,19 @@ export default createReactClass({
 
   handleChange(editor, data, value) {
     this.props.onChange(normalizeNewlines(value));
+  },
+
+  getTables() {
+    let tables = Map();
+
+    this.props.transformation.get('input', List()).forEach(input => {
+      tables = tables.set(`"${input.get('destination')}"`, List());
+    });
+
+    this.props.transformation.get('output', List()).forEach(output => {
+      tables = tables.set(`"${output.get('source')}"`, List());
+    });
+
+    return tables.toJS();
   }
 });
