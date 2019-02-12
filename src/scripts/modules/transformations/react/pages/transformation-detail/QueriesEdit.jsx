@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
-import { Controlled as CodeMirror } from 'react-codemirror2'
+import { Controlled as CodeMirror } from 'react-codemirror2';
 import { Map, List } from 'immutable';
 import resolveHighlightMode from './resolveHighlightMode';
-import {ExternalLink} from '@keboola/indigo-ui';
+import { ExternalLink } from '@keboola/indigo-ui';
 import normalizeNewlines from './normalizeNewlines';
 
 export default createReactClass({
@@ -31,8 +31,8 @@ export default createReactClass({
     const lineStart = (this.props.queries.substring(0, positionStart).match(/\n/g) || []).length;
     const positionEnd = positionStart + query.length;
     const lineEnd = (this.props.queries.substring(0, positionEnd).match(/\n/g) || []).length + 1;
-    this.editor.setSelection({line: lineStart, ch: 0}, {line: lineEnd, ch: 0});
-    const scrollTop = this.editor.cursorCoords({line: lineStart, ch: 0}).top - 100;
+    this.editor.setSelection({ line: lineStart, ch: 0 }, { line: lineEnd, ch: 0 });
+    const scrollTop = this.editor.cursorCoords({ line: lineStart, ch: 0 }).top - 100;
 
     /* global window */
     setTimeout(() => {
@@ -44,13 +44,25 @@ export default createReactClass({
   },
 
   componentDidUpdate(previousProps) {
-    if (previousProps.highlightQueryNumber !== this.props.highlightQueryNumber
-      || previousProps.highlightingQueryDisabled !== this.props.highlightingQueryDisabled && !this.props.highlightingQueryDisabled) {
+    if (
+      previousProps.highlightQueryNumber !== this.props.highlightQueryNumber ||
+      (previousProps.highlightingQueryDisabled !== this.props.highlightingQueryDisabled &&
+        !this.props.highlightingQueryDisabled)
+    ) {
       this.highlightQuery();
+    }
+
+    if (
+      !previousProps.transformation.get('input').equals(this.props.transformation.get('input')) ||
+      !previousProps.transformation.get('output').equals(this.props.transformation.get('output'))
+    ) {
+      this.updateCodeMirrorHintTables();
     }
   },
 
   componentDidMount() {
+    this.updateCodeMirrorHintTables();
+
     if (this.props.highlightQueryNumber) {
       this.highlightQuery();
     }
@@ -75,14 +87,11 @@ export default createReactClass({
                 lineWrapping: true,
                 readOnly: this.props.disabled,
                 placeholder: '-- Your SQL goes here...',
-                extraKeys: { 'Ctrl-Space': 'autocomplete' },
-                hintOptions: { tables: this.getTables() }
+                extraKeys: { 'Ctrl-Space': 'autocomplete' }
               }}
             />
           </div>
-          <div className="small help-block">
-            {this.help()}
-          </div>
+          <div className="small help-block">{this.help()}</div>
         </div>
       </div>
     );
@@ -90,10 +99,26 @@ export default createReactClass({
 
   help() {
     if (this.props.backend === 'snowflake') {
-      return (<span>Learn more about <ExternalLink href="https://help.keboola.com/manipulation/transformations/snowflake/">using Snowflake</ExternalLink>.</span>);
+      return (
+        <span>
+          Learn more about{' '}
+          <ExternalLink href="https://help.keboola.com/manipulation/transformations/snowflake/">
+            using Snowflake
+          </ExternalLink>
+          .
+        </span>
+      );
     }
     if (this.props.backend === 'redshift') {
-      return (<span>Learn more about <ExternalLink href="https://help.keboola.com/manipulation/transformations/redshift/">using Redshift</ExternalLink>.</span>);
+      return (
+        <span>
+          Learn more about{' '}
+          <ExternalLink href="https://help.keboola.com/manipulation/transformations/redshift/">
+            using Redshift
+          </ExternalLink>
+          .
+        </span>
+      );
     }
   },
 
@@ -101,14 +126,20 @@ export default createReactClass({
     this.props.onChange(normalizeNewlines(value));
   },
 
+  updateCodeMirrorHintTables() {
+    if (this.refs.CodeMirror) {
+      this.refs.CodeMirror.editor.options.hintOptions.tables = this.getTables();
+    }
+  },
+
   getTables() {
     let tables = Map();
 
-    this.props.transformation.get('input', List()).forEach(input => {
+    this.props.transformation.get('input', List()).forEach((input) => {
       tables = tables.set(`"${input.get('destination')}"`, List());
     });
 
-    this.props.transformation.get('output', List()).forEach(output => {
+    this.props.transformation.get('output', List()).forEach((output) => {
       tables = tables.set(`"${output.get('source')}"`, List());
     });
 
