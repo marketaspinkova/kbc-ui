@@ -84,7 +84,11 @@ export default React.createClass({
             <div className="col-xs-9 col-xs-offset-3 kbc-main">
               {this.renderMain()}
               {this.state.projectHasGuideModeOn === true && (
-                <Wizard projectBaseUrl={this.state.projectBaseUrl} scriptsBasePath={this.state.scriptsBasePath} />
+                <Wizard
+                  projectBaseUrl={this.state.projectBaseUrl}
+                  scriptsBasePath={this.state.scriptsBasePath}
+                  develPreview={this.state.develPreview}
+                />
               )}
             </div>
           </div>
