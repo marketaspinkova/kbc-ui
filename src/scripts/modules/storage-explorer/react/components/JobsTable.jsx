@@ -94,7 +94,14 @@ export default React.createClass({
     const { stage, bucket, table } = tableIdParser.parse(tableId).parts;
 
     return (
-      <Link to="storage-explorer-table" params={{ bucketId: `${stage}.${bucket}`, tableName: table }}>
+      <Link
+        to="storage-explorer-table"
+        params={{
+          bucketId: `${stage}.${bucket}`,
+          tableName: table
+        }}
+        onClick={(event) => event.stopPropagation()}
+      >
         {tableId}
       </Link>
     );
