@@ -2,7 +2,7 @@ import React from 'react';
 import { Map } from 'immutable';
 
 import QueryRow from './QueryRow';
-import LinkToBucket from './../../components/LinkToBucket';
+import StorageApiBucketLink from '../../../../components/react/components/StorageApiBucketLink';
 import CreateQueryElement from '../../components/CreateQueryElement';
 
 export default React.createClass({
@@ -26,7 +26,10 @@ export default React.createClass({
             />
           </div>
           <p>
-            Output bucket: <LinkToBucket configurationId={this.props.configurationId} />
+            Output bucket:{' '}
+            <StorageApiBucketLink bucketId={`in.c-keboola-ex-mongodb-${this.props.configurationId}`}>
+              {`in.c-keboola-ex-mongodb-${this.props.configurationId}`}
+            </StorageApiBucketLink>
           </p>
         </div>
         <div className="table table-striped table-hover">

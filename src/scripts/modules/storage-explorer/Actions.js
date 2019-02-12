@@ -73,8 +73,9 @@ const loadTables = () => {
 const createBucket = (newBucket) => {
   return StorageActionCreators
     .createBucket(newBucket)
-    .then(bucket => {
-      navigateToBucketDetail(bucket.id);
+    .then(bucket => StorageActionCreators.tokenVerify().then(() => bucket.id))
+    .then(bucketId => {
+      navigateToBucketDetail(bucketId);
     });
 };
 

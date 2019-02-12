@@ -10,7 +10,7 @@ import { tokenVerify, loadBuckets, loadTables, loadSharedBuckets, loadJobs, load
 
 export default {
   name: 'storage-explorer',
-  title: 'Storage Explorer',
+  title: 'Storage',
   defaultRouteHandler: Index,
   requireData: [
     () => tokenVerify(),

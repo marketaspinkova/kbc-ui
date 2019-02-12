@@ -23,6 +23,7 @@ export default React.createClass({
     tableAliases: PropTypes.array.isRequired,
     tableLinks: PropTypes.array.isRequired,
     sapiToken: PropTypes.object.isRequired,
+    urlTemplates: PropTypes.object.isRequired,
     creatingPrimaryKey: PropTypes.bool.isRequired,
     deletingPrimaryKey: PropTypes.bool.isRequired,
     settingAliasFilter: PropTypes.bool.isRequired,
@@ -179,7 +180,12 @@ export default React.createClass({
 
     if (sapiToken.getIn(['owner', 'id']) !== table.getIn(['sourceTable', 'project', 'id'])) {
       if (this.props.sapiToken.getIn(['admin', 'isOrganizationMember'])) {
-        return <ExternalProjectTableLink table={table.get('sourceTable')} />;
+        return (
+          <ExternalProjectTableLink
+            table={table.get('sourceTable')}
+            urlTemplates={this.props.urlTemplates}
+          />
+        );
       }
       return (
         <span>
@@ -221,7 +227,11 @@ export default React.createClass({
 
         {this.props.tableLinks.map(alias => (
           <div key={alias.get('id')}>
-            <ProjectAliasLink sapiToken={this.props.sapiToken} alias={alias} />
+            <ProjectAliasLink
+              sapiToken={this.props.sapiToken}
+              urlTemplates={this.props.urlTemplates}
+              alias={alias}
+            />
           </div>
         ))}
       </span>

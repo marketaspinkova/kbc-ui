@@ -1,5 +1,5 @@
-import api from './api';
 import Promise from 'bluebird';
+import api from './api';
 
 export const TokenTypes = {
   DEMO: 'demo',
@@ -19,21 +19,20 @@ export function isNewProjectValid({ name, isCreateNewProject, tokenType, customT
   }
 }
 
+export function loadNewProjectProvisioningData(pid) {
+  return api.getProjectDetail(pid).then(({ token }) => {
+    return Promise.delay(10000).then(() => api.getSSOAccess(pid).then((sso) => ({ sso, token })));
+  });
+}
+
 export function loadProvisioningData(pid) {
-  return api.getProjectDetail(pid).then(
-    ({ token }) => {
-      return api.getSSOAccess(pid).then(
-        sso => ({ sso, token }),
-        err => Promise.reject({ error: err.message || err })
-      );
-    },
-    err => {
-      let result = null;
-      const status = (err.response || {}).status;
-      if (status !== 404 && status !== 400) {
-        result = Promise.reject({ error: err.message || err });
+  return api.getProjectDetail(pid)
+    .then(({ token }) => api.getSSOAccess(pid).then((sso) => ({ sso, token })))
+    .catch((error) => {
+      if (error.message && error.message === `Project ${encodeURIComponent(pid)} not found in database`) {
+        return; // user uses own existing gooddata project
       }
-      return result;
-    }
-  );
+
+      throw error;
+    });
 }

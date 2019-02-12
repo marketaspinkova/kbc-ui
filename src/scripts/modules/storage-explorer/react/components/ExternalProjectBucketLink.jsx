@@ -1,21 +1,32 @@
 import React, { PropTypes } from 'react';
 import { ExternalLink } from '@keboola/indigo-ui';
+import _ from 'underscore';
 
 export default React.createClass({
   propTypes: {
-    bucket: PropTypes.object.isRequired
+    bucket: PropTypes.object.isRequired,
+    urlTemplates: PropTypes.object.isRequired
   },
 
   render() {
-    const bucketId = this.props.bucket.get('id');
-    const projectId = this.props.bucket.getIn(['project', 'id']);
-    const projectName = this.props.bucket.getIn(['project', 'name']);
+    const { bucket, urlTemplates } = this.props;
+    const bucketId = bucket.get('id');
+    const projectId = bucket.getIn(['project', 'id']);
+    const projectName = bucket.getIn(['project', 'name']);
 
     return (
       <span>
-        <ExternalLink href={`/admin/projects/${projectId}`}>{projectName}</ExternalLink>
+        <ExternalLink
+          href={_.template(urlTemplates.get('project'))({ projectId })}
+        >
+          {projectName}
+        </ExternalLink>
         {' / '}
-        <ExternalLink href={`/admin/projects/${projectId}/storage#/buckets/${bucketId}`}>{bucketId}</ExternalLink>
+        <ExternalLink
+          href={`${_.template(urlTemplates.get('project'))({ projectId })}/storage-explorer/${bucketId}`}
+        >
+          {bucketId}
+        </ExternalLink>
       </span>
     );
   }

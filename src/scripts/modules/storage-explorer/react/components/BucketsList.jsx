@@ -76,7 +76,7 @@ export default React.createClass({
     }
 
     return (
-      <ul className="list-unstyled">
+      <ul className="storage-bucket-tables kbc-break-all kbc-break-word">
         {tables
           .sortBy(table => table.get('name').toLowerCase())
           .map(this.renderTable)

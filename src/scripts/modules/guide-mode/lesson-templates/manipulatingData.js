@@ -140,7 +140,7 @@ To continue, click <span class="btn btn-primary btn-sm">Next step <i class="fa f
       'isNavigationVisible': false,
       'title': 'Learn More',
       'route': {
-        'name': '',
+        'name': 'app',
         'params': []
       },
       'markdown': 'In this lesson, you created a basic transformation in Keboola Connection. To see how to write the output data into <a href="https://www.tableau.com/products/desktop/download" target="_blank">Tableau Desktop</a>, continue to the next lesson — Visualizing Results. <br/><br/> Learn more about <a href="https://help.keboola.com/tutorial/load/" target="_blank">Data Manipulation</a>, or follow the hands-on tutorial on data transformation in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.'
