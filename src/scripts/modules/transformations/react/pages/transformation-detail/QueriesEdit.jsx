@@ -72,7 +72,8 @@ export default createReactClass({
                 lineNumbers: true,
                 lineWrapping: true,
                 readOnly: this.props.disabled,
-                placeholder: '-- Your SQL goes here...'
+                placeholder: '-- Your SQL goes here...',
+                extraKeys: { 'Ctrl-Space': 'autocomplete' }
               }}
             />
           </div>
