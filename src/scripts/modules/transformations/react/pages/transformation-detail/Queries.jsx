@@ -12,6 +12,7 @@ export default createReactClass({
   propTypes: {
     bucketId: PropTypes.string.isRequired,
     transformation: PropTypes.object.isRequired,
+    tables: PropTypes.object.isRequired,
     queries: PropTypes.string.isRequired,
     splitQueries: PropTypes.object.isRequired,
     isSaving: PropTypes.bool.isRequired,
@@ -68,6 +69,7 @@ export default createReactClass({
     return (
       <Edit
         transformation={this.props.transformation}
+        tables={this.props.tables}
         queries={this.props.queries}
         splitQueries={this.props.splitQueries}
         backend={this.props.transformation.get('backend')}

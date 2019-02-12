@@ -10,6 +10,7 @@ import normalizeNewlines from './normalizeNewlines';
 export default createReactClass({
   propTypes: {
     transformation: PropTypes.object.isRequired,
+    tables: PropTypes.object.isRequired,
     queries: PropTypes.string.isRequired,
     splitQueries: PropTypes.object.isRequired,
     backend: PropTypes.string.isRequired,
@@ -137,8 +138,8 @@ export default createReactClass({
   getTables() {
     let tables = Map();
 
-    this.props.transformation.get('input', List()).forEach((input) => {
-      tables = tables.set(`"${input.get('destination')}"`, List());
+    this.props.transformation.get('input', List()).forEach(input => {
+      tables = tables.set(`"${input.get('destination')}"`, this.getColumns(input.get('source')));
     });
 
     this.props.transformation.get('output', List()).forEach((output) => {
@@ -146,5 +147,9 @@ export default createReactClass({
     });
 
     return tables.toJS();
+  },
+
+  getColumns(sourceTable) {
+    return this.props.tables.getIn([sourceTable, 'columns'], List()).map(column => `"${column}"`);
   }
 });

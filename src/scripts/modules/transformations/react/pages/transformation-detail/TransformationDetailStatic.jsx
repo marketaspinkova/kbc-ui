@@ -507,6 +507,7 @@ export default createReactClass({
       <Queries
         bucketId={this.props.bucket.get('id')}
         transformation={this.props.transformation}
+        tables={this.props.tables}
         isEditing={this.props.editingFields.has('queriesString')}
         isSaving={this.props.pendingActions.has('save-queries')}
         disabled={this.isDisabled()}
