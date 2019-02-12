@@ -25,6 +25,7 @@ export default React.createClass({
       <AlertBlock type="warning" title="Please migrate these configurations to a new version of OAuth Broker">
         <p>
           We have released new version of our OAuth Broker API. New features will soon be available in this new version like automatic refreshing of tokens, multiple client apps for better quota management and so on. Configurations requiring migration are listed below.
+          &nbsp;<a href="http://status.keboola.com/migrate-to-new-version-of-oauth-broker-api" target="_blank">Read more</a>
         </p>
         <Row>
           {oauthConfigurations.entrySeq().map(([componentId, configurations]) => {
