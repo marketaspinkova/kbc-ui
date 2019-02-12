@@ -6,13 +6,7 @@ export const cases = {
       componentId: '',
       configurationId: ''
     },
-    configuration: {
-      authorization: {
-        oauth_api: {
-          id: ''
-        }
-      }
-    },
+    configuration: {},
     context: {
       componentId: '',
       configurationId: ''

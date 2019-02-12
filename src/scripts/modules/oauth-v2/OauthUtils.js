@@ -115,8 +115,11 @@ export function deleteCredentialsAndConfigAuth(componentId, configId) {
     .then(() => {
       // delete the whole authorization object part of the configuration
       const newConfigData = configData.deleteIn([].concat(configOauthPath[0]));
-      const saveFn = installedComponentsActions.saveComponentConfigData;
-      return saveFn(componentId, configId, newConfigData, `Reset authorization of ${authorizedFor}`);
+      const description = `Reset authorization of ${authorizedFor}`;
+      return installedComponentsActions.saveComponentConfigData(componentId, configId, newConfigData, description);
+    })
+    .then(() => {
+      return installedComponentsActions.loadComponentConfigDataForce(componentId, configId);
     });
 }
 
