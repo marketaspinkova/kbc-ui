@@ -4,9 +4,6 @@ import Edit from './ConfigurationEdit';
 import Immutable from 'immutable';
 import Markdown from '../../../../react/common/Markdown';
 
-/* global require */
-require('codemirror/mode/javascript/javascript');
-
 export default React.createClass({
   propTypes: {
     data: PropTypes.string.isRequired,

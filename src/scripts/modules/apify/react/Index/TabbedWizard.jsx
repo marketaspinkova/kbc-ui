@@ -6,7 +6,6 @@ import SapiTableSelector from '../../../components/react/components/SapiTableSel
 import ApifyObjectSelector from './ApifyObjectSelector';
 import { ExternalLink } from '@keboola/indigo-ui';
 import CodeMirror from 'react-code-mirror';
-import '../../../../utils/codemirror/json-lint';
 
 export const CRAWLER_KEY = 1;
 export const AUTH_KEY = 2;

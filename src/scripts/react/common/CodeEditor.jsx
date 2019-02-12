@@ -1,8 +1,5 @@
 import React from 'react';
 import CodeMirror from 'react-code-mirror';
-import 'codemirror/mode/sql/sql';
-import 'codemirror/mode/diff/diff';
-import 'codemirror/addon/display/placeholder';
 
 export default React.createClass({
   propTypes: {
