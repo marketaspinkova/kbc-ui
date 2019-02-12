@@ -26,7 +26,7 @@ export default React.createClass({
           </Modal.Header>
           <Modal.Body>
             <Alert bsStyle="info">
-              You can specify one column to be filtered and comma separated values you're looking for. The alias table
+              You can specify one column to be filtered and comma separated values you&apos;re looking for. The alias table
               will contain only these rows.
             </Alert>
             <FormGroup>

@@ -44,12 +44,11 @@ export default React.createClass({
           <Tooltip
             placement="top"
             tooltip="Configuration restore is not supported by component"
-            children={
-              <span className="btn btn-link">
-                <i className="fa fa-exclamation-triangle" />
-              </span>
-            }
-          />
+          >
+            <span className="btn btn-link">
+              <i className="fa fa-exclamation-triangle" />
+            </span>
+          </Tooltip>
           <DeleteButton
             tooltip="Delete Forever"
             icon="fa-times"

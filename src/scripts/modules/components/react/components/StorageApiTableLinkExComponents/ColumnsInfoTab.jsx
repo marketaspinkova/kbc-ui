@@ -91,7 +91,13 @@ export default React.createClass({
           {columnNameCell}
         </td>
         <td>
-          {values.map( (item, key) => <span>{key !== 0 && ', '}<StorageTableDataPreviewItem item={item} /></span>)}
+          {values.map((item, key) => {
+            return (
+              <span key={key}>
+                {key !== 0 && ', '}<StorageTableDataPreviewItem item={item} />
+              </span>
+            );
+          })}
         </td>
       </tr>
     );

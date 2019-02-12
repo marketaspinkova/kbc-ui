@@ -106,7 +106,7 @@ export default React.createClass({
   },
 
   renderTableRows() {
-    return this.props.events.map( (e) => {
+    return this.props.events.map((e) => {
       const event = e.get('event');
       let info = this.eventsTemplates[event];
       if (!info) {
@@ -121,7 +121,7 @@ export default React.createClass({
       info.message = underscoreString.replaceAll(info.message, this.props.tableId, '');
       const incremental = e.getIn(['params', 'incremental']) ? incElement : <span />;
       return (
-        <tr className={cl} onClick={() => this.setDetailEventId(e.get('id'))}>
+        <tr key={e.get('id')} className={cl} onClick={() => this.setDetailEventId(e.get('id'))}>
           <td className="td">
             {date.format(e.get('created'))}
             <small> {agoTime} </small>

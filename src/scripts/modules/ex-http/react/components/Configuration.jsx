@@ -112,7 +112,7 @@ export default React.createClass({
           }}
           placeholder={'"'}
           disabled={this.props.disabled}
-          help={(<span>Field enclosure used in CSV file. Default value is <code>"</code>.</span>)}
+          help={(<span>Field enclosure used in CSV file. Default value is <code>&quot;</code>.</span>)}
         />
         <h3>Header &amp; Primary Key</h3>
         <div className="form-group">

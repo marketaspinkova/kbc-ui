@@ -40,7 +40,7 @@ export default React.createClass({
           wrapperClassName="col-xs-8"
           value={this.props.enclosure}
           onChange={this.onChangeEnclosure}
-          help={(<span>Field enclosure used in CSV file. Default value is <code>"</code>.</span>)}
+          help={(<span>Field enclosure used in CSV file. Default value is <code>&quot;</code>.</span>)}
           disabled={this.props.disabled}
         />
       </div>

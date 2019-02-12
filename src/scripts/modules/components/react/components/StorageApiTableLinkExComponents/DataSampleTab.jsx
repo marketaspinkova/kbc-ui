@@ -32,22 +32,20 @@ export default React.createClass({
       );
     }
 
-    const header = dataPreview.columns.map( (c) => {
-      return (
-        <th>
-          {c}
-        </th>
-      );
+    const header = dataPreview.columns.map((c, index) => {
+      return <th key={index}>{c}</th>;
     });
-    const rows = dataPreview.rows.map( (row) => {
-      const cols = row.map( (item) => {
-        return (<td> <StorageTableDataPreviewItem item={item} /> </td>);
+
+    const rows = dataPreview.rows.map((row, index) => {
+      const cols = row.map((item, itemIndex) => {
+        return (
+          <td key={`${index}-${itemIndex}`}>
+            <StorageTableDataPreviewItem item={item} /> 
+          </td>
+        );
       });
 
-      return (
-        <tr>
-          {cols}
-        </tr>);
+      return <tr key={index}>{cols}</tr>;
     });
 
     return (

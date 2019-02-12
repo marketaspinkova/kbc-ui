@@ -176,19 +176,19 @@ export default React.createClass({
 
   renderAffected(components) {
     return [
-      (<div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
+      <div key="header" className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
         <h2>Affected configurations</h2>
-      </div>),
+      </div>,
       this.renderRows(components)
     ];
   },
 
   renderIgnored(components) {
     return [
-      (<div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
+      <div key="info" className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
         <h2>Manual migration needed!</h2>
         <p>The configurations below need to be migrated manually. Please open each configuration and reset the authorization to migrate.</p>
-      </div>),
+      </div>,
       this.renderRows(components)
     ];
   },

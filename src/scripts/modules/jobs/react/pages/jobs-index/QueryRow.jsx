@@ -131,7 +131,7 @@ export default React.createClass({
             Duration
           </dt>
           <dd>
-            <code>durationSeconds:>120</code>
+            <code>durationSeconds:&gt;120</code>
           </dd>
           <dt>
             Time started

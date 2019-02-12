@@ -91,15 +91,18 @@ export default React.createClass({
         <div className="row">
           <ListGroup>
             {first ?
-              profile.map((pItem, idx) =>
-                <ListGroupItem
-                  key={idx}
-                  active={this.isSelected(pItem)}
-                  onClick={() => this.onProfileClick(pItem)}>
-                  <div className="text-center">
-                    {pItem.get('name')} ({pItem.get('id')})
-                  </div>
-                </ListGroupItem>).toArray()
+              profile.map((pItem, idx) => {
+                return (
+                  <ListGroupItem
+                    key={idx}
+                    active={this.isSelected(pItem)}
+                    onClick={() => this.onProfileClick(pItem)}>
+                    <div className="text-center">
+                      {pItem.get('name')} ({pItem.get('id')})
+                    </div>
+                  </ListGroupItem>
+                );
+              }).toArray()
               : <ListGroupItem>No profiles found</ListGroupItem>}
           </ListGroup>
         </div>

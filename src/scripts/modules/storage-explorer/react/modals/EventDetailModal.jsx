@@ -92,7 +92,7 @@ export default React.createClass({
         <p>
           Used authorization method is deprecated and will be disabled soon.
           <br />
-          Please move your tokens from query string parameters to "X-StorageApi-Token" http header. See more in{' '}
+          Please move your tokens from query string parameters to &quot;X-StorageApi-Token&quot; http header. See more in{' '}
           <ExternalLink href="http://docs.keboola.apiary.io/">API documentation</ExternalLink>
         </p>
       </Alert>

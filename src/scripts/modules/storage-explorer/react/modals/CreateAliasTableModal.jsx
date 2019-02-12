@@ -72,7 +72,7 @@ export default React.createClass({
                 Filtering{' '}
                 <Hint title="Filtering">
                   <p>
-                    You can specify one column to be filtered and comma separated values you're looking for. The alias
+                    You can specify one column to be filtered and comma separated values you&apos;re looking for. The alias
                     table will contain only these rows.
                   </p>
                 </Hint>

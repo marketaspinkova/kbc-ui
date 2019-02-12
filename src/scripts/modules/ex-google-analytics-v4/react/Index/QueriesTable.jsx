@@ -130,11 +130,13 @@ export default React.createClass({
     return (
       <span>
         <small>
-          {ranges.map((r, idx) =>
-            <div key={idx}>
-              {r.get('startDate')} - {r.get('endDate')}
-            </div>
-          )}
+          {ranges.map((r, idx) => {
+            return (
+              <div key={idx}>
+                {r.get('startDate')} - {r.get('endDate')}
+              </div>
+            );
+          })}
         </small>
       </span>
     );

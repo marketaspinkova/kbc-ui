@@ -94,12 +94,14 @@ export default React.createClass({
 
         {profiles.count() > 0 ?
           <ul>
-            {profiles.map((profile, index) =>
-              <li key={index}>
-                <ProfileInfo profile={profile} />
-                <span onClick={() => this.deselectProfile(profile.get('id'))} className="kbc-icon-cup kbc-cursor-pointer" />
-              </li>
-            )}
+            {profiles.map((profile, index) => {
+              return (
+                <li key={index}>
+                  <ProfileInfo profile={profile} />
+                  <span onClick={() => this.deselectProfile(profile.get('id'))} className="kbc-icon-cup kbc-cursor-pointer" />
+                </li>
+              );
+            })}
           </ul>
           :
           <EmptyState>

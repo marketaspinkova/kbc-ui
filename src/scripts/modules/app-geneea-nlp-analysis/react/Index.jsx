@@ -382,11 +382,11 @@ export default React.createClass({
   renderStaticTasks() {
     const tasks = this.parameter(params.ANALYSIS, List());
     const outParam = this.parameter(params.OUTPUT, '');
-    let renderedTasks = tasks.map((task) => {
+    let renderedTasks = tasks.map((task, index) => {
       const info = analysisTypes[task];
       const outTableId = outParam ? `${outParam}${task}` : '';
       return (
-        <li>
+        <li key={index}>
           <div className="row">
             <Tooltip tooltip={info.description} placement="top">
               <div className="col-sm-4" style={{paddingLeft: 0}}>

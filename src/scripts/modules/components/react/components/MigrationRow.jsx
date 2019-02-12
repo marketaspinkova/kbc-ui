@@ -51,7 +51,7 @@ const EX_GOODDATA_DESCRIPTION = (
       <li><strong>Only GoodData writer reports will be migrated:</strong> Only reports of the GoodData project belonging to a GoodData writer configuration of this project will be migrated. If there are reports from a different(non-writer) GoodData project, then users have to do the migration manually.</li>
       <li><strong>Tables will be stored into different buckets:</strong> A new GoodData extractor will store extracted tables into new buckets.</li>
       <li><strong>Orchestrations tasks update:</strong> All orchestration tasks of the old GoodData extractor configurations will be replaced with configurations of the new GoodData extractor.</li>
-      <li><strong>Column naming conventions:</strong> The column names of the extracted table are based on the column names of the GoodData report. However, they can contain only alphanumeric characters and underscores. All other characters are replaced by underscores. For example, if there is a column in the report with the name "Month Revenue", then its corresponding table column name will be "Month_Revenue".</li>
+      <li><strong>Column naming conventions:</strong> The column names of the extracted table are based on the column names of the GoodData report. However, they can contain only alphanumeric characters and underscores. All other characters are replaced by underscores. For example, if there is a column in the report with the name &quot;Month Revenue&quot;, then its corresponding table column name will be &quot;Month_Revenue&quot;.</li>
     </ul>
   </p>
 );
@@ -61,7 +61,7 @@ const WR_GOOGLE_DRIVE_DESCRIPTION = (
     <span>Migrate your current configurations to new Google Drive or Google Sheets writer</span>
     <ul>
       <li>Depending on the type of files registered in your configuration, the configuration will be migrated either to new Google Drive Writer, Google Sheets Writer or both.</li>
-      <li>If type of the file is 'sheet' and action is not 'create', the file will be migrated to Google Sheets Writer, otherwise to Google Drive Writer.</li>
+      <li>If type of the file is &quot;sheet&quot; and action is not &quot;create&quot;, the file will be migrated to Google Sheets Writer, otherwise to Google Drive Writer.</li>
       <li>The migration will also alter your orchestrations to use the new writers.</li>
       <li>This component will continue to work until December 2017.</li>
       <li>The old configurations will remain intact for now. You can remove them after successful migration.</li>
@@ -319,19 +319,21 @@ export default React.createClass({
               </tr>
             </thead>
             <tbody>
-              {orchestrations.map((row) =>
-                <tr>
-                  <td>
-                    {this.renderOrchestrationLink(row.get('id'), row.get('name'))}
-                  </td>
-                  <td>
-                    <Check isChecked={row.get('hasOld')} />
-                  </td>
-                  <td>
-                    <Check isChecked={row.get('hasNew')} />
-                  </td>
-                </tr>
-              )}
+              {orchestrations.map((row) => {
+                return (
+                  <tr key={row.get('id')}>
+                    <td>
+                      {this.renderOrchestrationLink(row.get('id'), row.get('name'))}
+                    </td>
+                    <td>
+                      <Check isChecked={row.get('hasOld')} />
+                    </td>
+                    <td>
+                      <Check isChecked={row.get('hasNew')} />
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </Table>
           :
@@ -387,27 +389,29 @@ export default React.createClass({
           </tr>
         </thead>
         <tbody>
-          {this.state.status.get('configurations', List()).map((row) =>
-            <tr>
-              <td>
-                {this.renderConfigLink(row.get('configId'), this.props.componentId, row.get('configName'))}
-              </td>
-              {isReplacementApp ? null :
+          {this.state.status.get('configurations', List()).map((row) => {
+            return (
+              <tr key={row.get('configId')}>
                 <td>
-                  {this.renderTableLink(row.get('tableId'))}
+                  {this.renderConfigLink(row.get('configId'), this.props.componentId, row.get('configName'))}
                 </td>
-              }
-              <td>
-                <i className="kbc-icon-arrow-right" />
-              </td>
-              <td>
-                {this.renderNewConfigLink(row)}
-              </td>
-              <td>
-                {this.renderRowStatus(row.get('status'))}
-              </td>
-            </tr>
-          )}
+                {isReplacementApp ? null :
+                  <td>
+                    {this.renderTableLink(row.get('tableId'))}
+                  </td>
+                }
+                <td>
+                  <i className="kbc-icon-arrow-right" />
+                </td>
+                <td>
+                  {this.renderNewConfigLink(row)}
+                </td>
+                <td>
+                  {this.renderRowStatus(row.get('status'))}
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </Table>
     );

@@ -47,7 +47,7 @@ export default React.createClass({
     }
 
     if (!this.state.events.count()) {
-      return <p>Graph cannot be rendered, there aren't any import events.</p>;
+      return <p>Graph cannot be rendered, there aren&apos;t any import events.</p>;
     }
 
     return <LatestImportGraph data={this.state.events} />;

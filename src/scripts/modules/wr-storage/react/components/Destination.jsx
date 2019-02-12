@@ -76,7 +76,7 @@ export default React.createClass({
               disabled={this.props.disabled}
             />
             <HelpBlock>
-              Name of the table stored in the target project's bucket.
+              Name of the table stored in the target project&apos;s bucket.
             </HelpBlock>
           </Col>
         </FormGroup>

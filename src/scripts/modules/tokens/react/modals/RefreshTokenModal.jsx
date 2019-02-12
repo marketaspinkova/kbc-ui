@@ -61,7 +61,7 @@ export default React.createClass({
     return (
       <div>
         <Alert bsStyle="success">
-          Token has been refreshed. Make sure to copy it. You won't be able to see it again.
+          Token has been refreshed. Make sure to copy it. You won&apos;t be able to see it again.
         </Alert>
         <TokenString token={this.state.newToken} />
       </div>

@@ -70,16 +70,19 @@ export default React.createClass({
   renderOptionsArray() {
     const groups = this.props.allProfiles.groupBy( (profile) =>
       profile.get('accountName') + '/ ' + profile.get('webPropertyName'));
-    const options = groups.map((group, groupName) =>
-      <optgroup key={groupName} label={groupName}>
-        {group.map((item, optionIndex) =>
-          <option key={optionIndex} value={item.get('id')}>
-            {item.get('name')}
-          </option>
-        ).toArray()}
-      </optgroup>
-    ).toArray();
-
+    const options = groups.map((group, groupName) => {
+      return (
+        <optgroup key={groupName} label={groupName}>
+          {group.map((item, optionIndex) => {
+            return (
+              <option key={optionIndex} value={item.get('id')}>
+                {item.get('name')}
+              </option>
+            );
+          }).toArray()}
+        </optgroup>
+      );
+    }).toArray();
 
     return options;
   },
