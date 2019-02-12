@@ -148,7 +148,7 @@ export default createReactClass({
     let tables = Map();
 
     this.props.transformation.get('input', List()).forEach(input => {
-      tables = tables.set(`"${input.get('destination')}"`, this.getColumns(input.get('source')));
+      tables = tables.set(`"${input.get('destination')}"`, this.getColumns(input));
     });
 
     this.props.transformation.get('output', List()).forEach((output) => {
@@ -158,7 +158,13 @@ export default createReactClass({
     return tables.toJS();
   },
 
-  getColumns(sourceTable) {
-    return this.props.tables.getIn([sourceTable, 'columns'], List()).map(column => `"${column}"`);
+  getColumns(input) {
+    let columns = input.get('columns', List());
+
+    if (!columns.count()) {
+      columns = this.props.tables.getIn([input.get('source'), 'columns'], List());
+    }
+
+    return columns.map(column => `"${column}"`);
   }
 });
