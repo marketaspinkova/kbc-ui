@@ -20,6 +20,10 @@ const ApplicationStore = StoreUtils.createStore({
     return _store.getIn(['sapiToken', 'token']);
   },
 
+  getIsMasterToken() {
+    return _store.getIn(['sapiToken', 'isMasterToken'], false);
+  },
+
   getSapiUrl() {
     return _store.get('sapiUrl');
   },
