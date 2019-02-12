@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {AlertBlock} from '@keboola/indigo-ui';
+import { AlertBlock, ExternalLink } from '@keboola/indigo-ui';
 import oAuthMigration from '../../components/utils/oAuthMigration';
 import {Button, Col, Row} from 'react-bootstrap';
 import {Link} from 'react-router';
@@ -24,7 +24,13 @@ export default React.createClass({
     return (
       <AlertBlock type="warning" title="Please migrate these configurations to a new version of OAuth Broker">
         <p>
-          We have released new version of our OAuth Broker API. New features will soon be available in this new version like automatic refreshing of tokens, multiple client apps for better quota management and so on. Configurations requiring migration are listed below.
+          We have released new version of our OAuth Broker API. New features will soon be available
+          {' '}in this new version like automatic refreshing of tokens, multiple client apps for
+          {' '}better quota management and so on. Configurations requiring migration are listed below.
+          {' '}
+          <ExternalLink href="https://status.keboola.com/migrate-to-new-version-of-oauth-broker-api">
+            Read more
+          </ExternalLink>
         </p>
         <Row>
           {oauthConfigurations.entrySeq().map(([componentId, configurations]) => {
