@@ -79,9 +79,7 @@ export default React.createClass({
               </Col>
               <Col sm={3}>
                 <Select
-                  clearable={false}
-                  backspaceRemoves={false}
-                  deleteRemoves={false}
+                  clearable
                   placeholder="Column..."
                   value={this.state.newTableAlias.getIn(['aliasFilter', 'column'])}
                   onChange={this.handleAliasFilterColumn}
@@ -187,9 +185,15 @@ export default React.createClass({
   },
 
   handleAliasFilterColumn(option) {
-    this.setState({
-      newTableAlias: this.state.newTableAlias.setIn(['aliasFilter', 'column'], option.value)
-    });
+    let newTableAlias = this.state.newTableAlias;
+
+    if (option) {
+      newTableAlias = newTableAlias.setIn(['aliasFilter', 'column'], option.value);
+    } else {
+      newTableAlias = newTableAlias.deleteIn(['aliasFilter', 'column']);
+    }
+
+    this.setState({ newTableAlias });
   },
 
   handleAliasFilterValues(event) {
@@ -252,7 +256,7 @@ export default React.createClass({
       return true;
     }
 
-    if (!aliasFilter.get('column') || !aliasFilter.get('operator') || !aliasFilter.get('values')) {
+    if (aliasFilter.get('column') && (!aliasFilter.get('operator') || !aliasFilter.get('values'))) {
       return true;
     }
 
