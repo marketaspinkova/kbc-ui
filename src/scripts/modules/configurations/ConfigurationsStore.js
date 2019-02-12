@@ -201,17 +201,13 @@ Dispatcher.register(function(payload) {
         .deleteIn(['jsonEditor', action.componentId, action.configurationId]);
       return ConfigurationsStore.emitChange();
 
-    case Constants.ActionTypes.CONFIGURATIONS_RESET_OAUTH_START:
+    case Constants.ActionTypes.CONFIGURATIONS_OAUTH_RESET_START:
       _store = _store.setIn(['pendingActions', action.componentId, action.configurationId, 'reset-oauth', action.rowId], true);
       return ConfigurationsStore.emitChange();
 
-    case Constants.ActionTypes.CONFIGURATIONS_RESET_OAUTH_ERROR:
+    case Constants.ActionTypes.CONFIGURATIONS_OAUTH_RESET_ERROR:
+    case Constants.ActionTypes.CONFIGURATIONS_OAUTH_RESET_SUCCESS:
       _store = _store.deleteIn(['pendingActions', action.componentId, action.configurationId, 'reset-oauth']);
-      return ConfigurationsStore.emitChange();
-
-    case Constants.ActionTypes.CONFIGURATIONS_RESET_OAUTH_SUCCESS:
-      _store = _store
-        .deleteIn(['pendingActions', action.componentId, action.configurationId, 'reset-oauth']);
       return ConfigurationsStore.emitChange();
 
     default:
