@@ -703,10 +703,10 @@
   resolved "https://registry.yarnpkg.com/@json-editor/json-editor/-/json-editor-1.3.3.tgz#0d9fb4f096ab7c630ccc15bfc02cefcd001fe220"
   integrity sha512-uMIlz//Er0HZlBghx4Fzr1adViVz23uBUw+kd/DGvgO4sY/xsBWo98mla/9dYlOh/BbpBdOHROv7YF4i9H4pkQ==
 
-"@keboola/indigo-ui@^7.5.2":
-  version "7.5.2"
-  resolved "https://registry.yarnpkg.com/@keboola/indigo-ui/-/indigo-ui-7.5.2.tgz#91a6cf746ff9b7d5dd4cb690958d0d9c7e35890a"
-  integrity sha512-UQRHcMjpqNVnpsEl3tCMENLQZsxzbDtabmkUqjn8GIuWiLpDmYq/dIC7ZKwI7yhEntfP+pAs5oPJRMwW2fC91Q==
+"@keboola/indigo-ui@^7.5.3":
+  version "7.5.3"
+  resolved "https://registry.yarnpkg.com/@keboola/indigo-ui/-/indigo-ui-7.5.3.tgz#33ab0e208bb545fb113cf924a33e2f4295181b94"
+  integrity sha512-k+2jvmc3PXVHH1w3IUvRL1U4LeC+IbYrl0YIfe8CQ/lY+gAHV6qIAHSpjXnWXARBs1C2Of8qPn3r0JaOANN3dg==
   dependencies:
     bootstrap "^3.3.7"
     classnames "^2.1.0"
@@ -6408,7 +6408,7 @@ prop-types@^15.5.10:
     loose-envify "^1.3.1"
     object-assign "^4.1.1"
 
-prop-types@^15.5.7, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
+prop-types@^15.5.7, prop-types@^15.6.0, prop-types@^15.6.2:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
   dependencies:
@@ -6422,6 +6422,14 @@ prop-types@^15.5.8:
     fbjs "^0.8.16"
     loose-envify "^1.3.1"
     object-assign "^4.1.1"
+
+prop-types@^15.6.1:
+  version "15.7.1"
+  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.1.tgz#2fa61e0a699d428b40320127733ee2931f05d9d1"
+  integrity sha512-f8Lku2z9kERjOCcnDOPm68EBJAO2K00Q5mSgPAUE/gJuBgsYLbVy6owSrtcHj90zt8PvW+z0qaIIgsIhHOa1Qw==
+  dependencies:
+    object-assign "^4.1.1"
+    react-is "^16.8.1"
 
 proxy-addr@~2.0.3:
   version "2.0.4"
@@ -6701,6 +6709,11 @@ react-is@^16.7.0:
   version "16.7.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.7.0.tgz#c1bd21c64f1f1364c6f70695ec02d69392f41bfa"
   integrity sha512-Z0VRQdF4NPDoI0tsXVMLkJLiwEBa+RP66g0xDHxgxysxSoCUccSten4RTF/UFvZF1dZvZ9Zu1sx+MDXwcOR34g==
+
+react-is@^16.8.1:
+  version "16.8.1"
+  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.1.tgz#a80141e246eb894824fb4f2901c0c50ef31d4cdb"
+  integrity sha512-ioMCzVDWvCvKD8eeT+iukyWrBGrA3DiFYkXfBsVYIRdaREZuBjENG+KjrikavCLasozqRWTwFUagU/O4vPpRMA==
 
 react-onclickoutside@^5.9.0:
   version "5.11.1"
