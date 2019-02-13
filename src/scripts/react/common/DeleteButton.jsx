@@ -14,8 +14,7 @@ export default React.createClass({
     label: React.PropTypes.string,
     pendingLabel: React.PropTypes.string,
     fixedWidth: React.PropTypes.bool,
-    icon: React.PropTypes.string,
-    componentId: React.PropTypes.string
+    icon: React.PropTypes.string
   },
 
   getDefaultProps() {
@@ -26,8 +25,7 @@ export default React.createClass({
       label: '',
       pendingLabel: '',
       fixedWidth: false,
-      icon: 'kbc-icon-cup',
-      componentId: ''
+      icon: 'kbc-icon-cup'
     };
   },
 

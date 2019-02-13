@@ -43,7 +43,6 @@ export default React.createClass({
             tooltip="Move to Trash"
             isPending={this.props.isDeleting}
             confirm={this.deleteConfirmProps()}
-            componentId={this.props.componentId}
           />
           {this.renderRunButton()}
         </span>
