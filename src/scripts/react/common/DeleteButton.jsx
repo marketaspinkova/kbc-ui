@@ -9,7 +9,7 @@ export default React.createClass({
   propTypes: {
     confirm: PropTypes.shape({
       title: PropTypes.string.isRequired,
-      onConfirm: PropTypes.func.isReqquired,
+      onConfirm: PropTypes.func.isRequired,
       text: PropTypes.any,
       buttonLabel: PropTypes.string
     }).isRequired,
