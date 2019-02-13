@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 import { Button } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
@@ -7,14 +7,19 @@ import Tooltip from './Tooltip';
 
 export default React.createClass({
   propTypes: {
-    confirm: React.PropTypes.object.isRequired,
-    isPending: React.PropTypes.bool,
-    tooltip: React.PropTypes.string,
-    isEnabled: React.PropTypes.bool,
-    label: React.PropTypes.string,
-    pendingLabel: React.PropTypes.string,
-    fixedWidth: React.PropTypes.bool,
-    icon: React.PropTypes.string
+    confirm: PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      onConfirm: PropTypes.func.isReqquired,
+      text: PropTypes.any,
+      buttonLabel: PropTypes.string
+    }).isRequired,
+    isPending: PropTypes.bool,
+    tooltip: PropTypes.string,
+    isEnabled: PropTypes.bool,
+    label: PropTypes.string,
+    pendingLabel: PropTypes.string,
+    fixedWidth: PropTypes.bool,
+    icon: PropTypes.string
   },
 
   getDefaultProps() {
