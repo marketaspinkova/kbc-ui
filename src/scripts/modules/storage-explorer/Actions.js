@@ -276,6 +276,13 @@ const updateFilesSearchQuery = query => {
   });
 };
 
+const setOpenedBuckets = buckets => {
+  return dispatcher.handleViewAction({
+    type: localConstants.ActionTypes.SET_OPENED_BUCKETS,
+    buckets
+  });
+};
+
 const resetFilesSearchQuery = () => {
   updateFilesSearchQuery('');
 };
@@ -317,6 +324,7 @@ export {
   loadFiles,
   loadMoreFiles,
   updateFilesSearchQuery,
+  setOpenedBuckets,
   filterFiles,
   resetFilesSearchQuery
 };

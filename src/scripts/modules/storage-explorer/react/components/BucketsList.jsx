@@ -3,19 +3,13 @@ import { Link } from 'react-router';
 import classnames from 'classnames';
 import { PanelGroup, Panel, Button } from 'react-bootstrap';
 import Tooltip from '../../../../react/common/Tooltip';
-import { navigateToBucketDetail } from '../../Actions';
+import { navigateToBucketDetail, setOpenedBuckets } from '../../Actions';
 
 export default React.createClass({
   propTypes: {
+    openBuckets: PropTypes.object.isRequired,
     buckets: PropTypes.object.isRequired,
-    tables: PropTypes.object.isRequired,
-    activeBucketId: PropTypes.string
-  },
-
-  getInitialState() {
-    return {
-      activeBucketId: null
-    };
+    tables: PropTypes.object.isRequired
   },
 
   render() {
@@ -24,14 +18,9 @@ export default React.createClass({
     }
 
     return (
-      <PanelGroup
-        accordion
-        activeKey={this.state.activeBucketId || this.props.activeBucketId}
-        onSelect={this.handleSelect}
-        className="kbc-accordion"
-      >
+      <PanelGroup className="kbc-accordion">
         {this.props.buckets
-          .sortBy(bucket => bucket.get('id').toLowerCase())
+          .sortBy((bucket) => bucket.get('id').toLowerCase())
           .map(this.renderBucketPanel)
           .toArray()}
       </PanelGroup>
@@ -41,10 +30,12 @@ export default React.createClass({
   renderBucketPanel(bucket) {
     return (
       <Panel
+        collapsible
+        expanded={this.props.openBuckets.has(bucket.get('id'))}
         className="storage-panel"
         header={this.renderBucketHeader(bucket)}
         key={bucket.get('id')}
-        eventKey={bucket.get('id')}
+        onSelect={() => this.onSelectBucket(bucket.get('id'))}
       >
         {this.renderTables(bucket)}
       </Panel>
@@ -57,7 +48,14 @@ export default React.createClass({
         <div className="storage-bucket-header">
           <h4>{bucket.get('id')}</h4>
           <Tooltip tooltip="Bucket detail" placement="top">
-            <Button bsStyle="link" bsSize="sm" onClick={() => navigateToBucketDetail(bucket.get('id'))}>
+            <Button
+              bsStyle="link"
+              bsSize="sm"
+              onClick={(event) => {
+                event.stopPropagation();
+                navigateToBucketDetail(bucket.get('id'))
+              }}
+            >
               <i className="fa fa-fw fa-chevron-right" />
             </Button>
           </Tooltip>
@@ -67,7 +65,7 @@ export default React.createClass({
   },
 
   renderTables(bucket) {
-    const tables = this.props.tables.filter(table => {
+    let tables = this.props.tables.filter((table) => {
       return table.getIn(['bucket', 'id']) === bucket.get('id');
     });
 
@@ -78,7 +76,7 @@ export default React.createClass({
     return (
       <ul className="storage-bucket-tables kbc-break-all kbc-break-word">
         {tables
-          .sortBy(table => table.get('name').toLowerCase())
+          .sortBy((table) => table.get('name').toLowerCase())
           .map(this.renderTable)
           .toArray()}
       </ul>
@@ -102,9 +100,9 @@ export default React.createClass({
     );
   },
 
-  handleSelect(bucketId) {
-    this.setState({
-      activeBucketId: bucketId
-    });
+  onSelectBucket(bucketId) {
+    const opened = this.props.openBuckets;
+
+    setOpenedBuckets(opened.has(bucketId) ? opened.delete(bucketId) : opened.add(bucketId));
   }
 });
