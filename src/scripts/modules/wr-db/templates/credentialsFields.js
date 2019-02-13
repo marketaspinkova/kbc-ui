@@ -99,7 +99,8 @@ const fields = {
     ['Port', 'port', 'number', false, '1521', [], true, null],
     ['Username', 'user', 'text', false, null, [], true, null],
     ['Password', '#password', 'password', true, null, [], true, null],
-    ['Service Name/SID', 'database', 'text', false, null, [], true, null]
+    ['Service Name/SID', 'database', 'text', false, null, [], true, null],
+    ['Schema', 'schema', 'text', false, null, [], false, null]
   ],
 
   'keboola.wr-db-snowflake': [
