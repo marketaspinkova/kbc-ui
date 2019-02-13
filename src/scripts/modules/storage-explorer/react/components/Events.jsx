@@ -45,7 +45,7 @@ export default React.createClass({
       <div>
         <SearchBar
           className="storage-search-bar"
-          placeholder="Search event"
+          placeholder="Search events"
           query={this.state.searchQuery}
           onChange={this.handleQueryChange}
           onSubmit={this.handleSearchSubmit}
