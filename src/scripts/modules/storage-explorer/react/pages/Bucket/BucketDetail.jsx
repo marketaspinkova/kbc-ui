@@ -67,7 +67,6 @@ export default React.createClass({
           <div>
             <Nav bsStyle="tabs">
               <NavItem eventKey="overview">Overview</NavItem>
-              <NavItem eventKey="tables">Tables</NavItem>
               <NavItem eventKey="events">Events</NavItem>
               <NavDropdown title="Actions">
                 <MenuItem
@@ -93,8 +92,7 @@ export default React.createClass({
                   isUnsharing={this.state.isUnsharing}
                   isChangingSharingType={this.state.isChangingSharingType}
                 />
-              </Tab.Pane>
-              <Tab.Pane eventKey="tables">
+
                 <BucketTables
                   bucket={this.state.bucket}
                   tables={this.state.tables}
@@ -157,7 +155,7 @@ export default React.createClass({
   },
 
   handleSelectTab(tab) {
-    if (['overview', 'description', 'tables', 'events'].includes(tab)) {
+    if (['overview', 'description', 'events'].includes(tab)) {
       this.setState({
         activeTab: tab
       });

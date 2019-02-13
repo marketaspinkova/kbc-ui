@@ -34,7 +34,7 @@ export default React.createClass({
 
     return (
       <div>
-        <div className="clearfix">
+        <h2 className="clearfix">
           <div className="kbc-buttons pull-right">
             <ButtonToolbar>
               {this.canWriteBucket() && (
@@ -59,7 +59,8 @@ export default React.createClass({
               )}
             </ButtonToolbar>
           </div>
-        </div>
+          Tables
+        </h2>
 
         {this.props.tables.count() > 0 ? (
           <Row>
