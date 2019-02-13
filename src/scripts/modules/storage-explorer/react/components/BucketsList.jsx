@@ -92,11 +92,11 @@ export default React.createClass({
     return (
       <li key={table.get('id')}>
         <Link
-          className={classnames({ alias: table.get('isAlias', false) })}
+          className="storage-bucket-table-link"
           to="storage-explorer-table"
           params={{ bucketId, tableName }}
         >
-          {tableName}
+          <span className={classnames({ 'is-table-alias': table.get('isAlias', false) })}>{tableName}</span>
         </Link>
       </li>
     );

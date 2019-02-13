@@ -99,7 +99,7 @@ export default React.createClass({
           <Link
             to="storage-explorer-table"
             params={{ bucketId: this.props.bucket.get('id'), tableName: table.get('name') }}
-            className={classnames({ alias: table.get('isAlias', false) })}
+            className={classnames({ 'is-table-alias': table.get('isAlias', false) })}
           >
             {table.get('name')}
           </Link>
