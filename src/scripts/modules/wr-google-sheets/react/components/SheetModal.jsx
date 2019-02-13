@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import {Map} from 'immutable';
-import {Modal, Tabs, Tab} from 'react-bootstrap';
+import {Alert, Modal, Tabs, Tab} from 'react-bootstrap';
 import WizardButtons from './WizardButtons';
 import InputTab from './InputTab';
 import SpreadsheetTab from './SpreadsheetTab';
@@ -18,6 +18,12 @@ export default React.createClass({
     prepareLocalState: PropTypes.func.isRequired
   },
 
+  getInitialState() {
+    return {
+      saveErrorMessage: null
+    }
+  },
+
   render() {
     const step = this.localState(['step'], 1);
     const storageTables = StorageTablesStore.getAll();
@@ -26,7 +32,7 @@ export default React.createClass({
       <Modal
         bsSize="large"
         show={this.props.show}
-        onHide={this.props.onHideFn}
+        onHide={this.handleHide}
       >
         <Modal.Header closeButton>
           <Modal.Title>
@@ -77,6 +83,7 @@ export default React.createClass({
                 valueSheetTitle={this.sheet('sheetTitle', '')}
                 valueAction={this.sheet('action', '')}
               />
+              {this.renderSaveError()}
             </Tab>
           </Tabs>
         </Modal.Body>
@@ -85,7 +92,7 @@ export default React.createClass({
             onNext={this.handleNext}
             onPrevious={this.handlePrevious}
             onSave={this.handleSave}
-            onCancel={this.props.onHideFn}
+            onCancel={this.handleHide}
             isSaving={this.props.isSavingFn(this.sheet('id'))}
             isNextDisabled={this.isStepValid(step)}
             isSaveDisabled={this.isSavingDisabled()}
@@ -97,6 +104,29 @@ export default React.createClass({
         </Modal.Footer>
       </Modal>
     );
+  },
+
+  renderSaveError() {
+    if (!this.state.saveErrorMessage) {
+      return null;
+    }
+
+    return (
+      <Alert bsStyle="danger">
+        <p>
+          {this.state.saveErrorMessage.indexOf('invalid_grant') !== -1
+            ? 'Try to reset authorization'
+            : 'Error while saving file'}
+        </p>
+        <p className="small">{this.state.saveErrorMessage}</p>
+      </Alert>
+    );
+  },
+
+  handleHide() {
+    this.setState({
+      saveErrorMessage: null
+    }, this.props.onHideFn)
   },
 
   isStepValid(step) {
@@ -168,7 +198,12 @@ export default React.createClass({
     const sheet = this.sheet();
     const mapping = this.localState('mapping');
     this.props.onSaveFn(sheet, mapping).then(
-      () => this.props.onHideFn()
+      () => this.handleHide(),
+      (error) => {
+        this.setState({
+          saveErrorMessage: error.message,
+        })
+      }
     );
   },
 

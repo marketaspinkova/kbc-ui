@@ -1,5 +1,6 @@
 import storeProvisioning from './storeProvisioning';
 import _ from 'underscore';
+import Promise from 'bluebird';
 import {fromJS, List, Map} from 'immutable';
 import InstalledComponentStore from '../components/stores/InstalledComponentsStore';
 import componentsActions from '../components/InstalledComponentsActionCreators';
@@ -77,27 +78,43 @@ export default function(COMPONENT_ID, configId) {
 
   function saveTable(table, mapping) {
     updateLocalState(store.getSavingPath(table.get('id')), true);
+
     if (!table.get('fileId')) {
       // create spreadsheet if not exist
       updateLocalState(['SheetModal', 'savingMessage'], 'Creating Spreadsheet');
-      return createSpreadsheet(table).then((data) => {
-        return updateTable(
-          table
-            .set('fileId', data.spreadsheet.spreadsheetId)
-            .set('sheetId', data.spreadsheet.sheets[0].properties.sheetId),
-          mapping
-        );
-      });
+      return createSpreadsheet(table)
+        .then((data) => {
+          if (data.status === 'error' && data.message) {
+            return Promise.reject(new Error(data.message));
+          }
+          return updateTable(
+            table
+              .set('fileId', data.spreadsheet.spreadsheetId)
+              .set('sheetId', data.spreadsheet.sheets[0].properties.sheetId),
+            mapping
+          );
+        })
+        .finally(() => {
+          updateLocalState(store.getSavingPath(table.get('id')), false);
+        });
     } else if (!table.get('sheetId')) {
       // add new sheet, when importing to existing spreadsheet
       updateLocalState(['SheetModal', 'savingMessage'], 'Updating Spreadsheet');
-      return addSheet(table).then((data) => {
-        return updateTable(
-          table.set('sheetId', data.sheet.sheetId),
-          mapping
-        );
-      });
+      return addSheet(table)
+        .then((data) => {
+          if (data.status === 'error' && data.message) {
+            return Promise.reject(new Error(data.message));
+          }
+          return updateTable(
+            table.set('sheetId', data.sheet.sheetId),
+            mapping
+          );
+        })
+        .finally(() => {
+          updateLocalState(store.getSavingPath(table.get('id')), false);
+        });
     }
+
     return updateTable(table, mapping);
   }
 
