@@ -1,11 +1,11 @@
 import storeProvisioning from './storeProvisioning';
 import _ from 'underscore';
-import Promise from 'bluebird';
 import {fromJS, List, Map} from 'immutable';
 import InstalledComponentStore from '../components/stores/InstalledComponentsStore';
 import componentsActions from '../components/InstalledComponentsActionCreators';
 import callDockerAction from '../components/DockerActionsApi';
 import generateId from '../../utils/generateId';
+import SyncActionError from '../../utils/SyncActionError';
 
 export default function(COMPONENT_ID, configId) {
   const store = storeProvisioning(COMPONENT_ID, configId);
@@ -85,7 +85,7 @@ export default function(COMPONENT_ID, configId) {
       return createSpreadsheet(table)
         .then((data) => {
           if (data.status === 'error' && data.message) {
-            return Promise.reject(new Error(data.message));
+            throw new SyncActionError(data.message);
           }
           return updateTable(
             table
@@ -103,7 +103,7 @@ export default function(COMPONENT_ID, configId) {
       return addSheet(table)
         .then((data) => {
           if (data.status === 'error' && data.message) {
-            return Promise.reject(new Error(data.message));
+            throw new SyncActionError(data.message);
           }
           return updateTable(
             table.set('sheetId', data.sheet.sheetId),

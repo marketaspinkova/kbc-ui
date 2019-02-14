@@ -6,6 +6,7 @@ import InputTab from './InputTab';
 import SpreadsheetTab from './SpreadsheetTab';
 import SheetTab from './SheetTab';
 import StorageTablesStore from '../../../components/stores/StorageTablesStore';
+import SyncActionError from '../../../../utils/SyncActionError';
 
 export default React.createClass({
   propTypes: {
@@ -195,16 +196,20 @@ export default React.createClass({
   },
 
   handleSave() {
+    this.setState({
+      saveErrorMessage: null
+    });
     const sheet = this.sheet();
     const mapping = this.localState('mapping');
-    this.props.onSaveFn(sheet, mapping).then(
-      () => this.handleHide(),
-      (error) => {
+    this.props.onSaveFn(sheet, mapping)
+      .then(
+        () => this.handleHide()
+      )
+      .catch(SyncActionError, (error) => {
         this.setState({
-          saveErrorMessage: error.message,
+          saveErrorMessage: error.message
         })
-      }
-    );
+      });
   },
 
   handleNext() {
