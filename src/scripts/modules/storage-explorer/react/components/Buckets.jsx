@@ -3,8 +3,8 @@ import { ButtonGroup, Button } from 'react-bootstrap';
 import { RefreshIcon, SearchBar } from '@keboola/indigo-ui';
 
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
-import RoutesStore from '../../../../stores/RoutesStore';
 import ApplicationStore from '../../../../stores/ApplicationStore';
+import RoutesStore from '../../../../stores/RoutesStore';
 import BucketsStore from '../../../components/stores/StorageBucketsStore';
 import TablesStore from '../../../components/stores/StorageTablesStore';
 import BucketsLocalStore from '../../BucketsLocalStore';
@@ -22,6 +22,7 @@ export default React.createClass({
   getStateFromStores() {
     return {
       bucketId: RoutesStore.getCurrentRouteParam('bucketId'),
+      openBuckets: BucketsLocalStore.getOpenedBuckets(),
       allBuckets: BucketsStore.getAll(),
       allTables: TablesStore.getAll(),
       sharedBuckets: BucketsStore.getSharedBuckets(),
@@ -47,14 +48,16 @@ export default React.createClass({
 
         {this.renderBucketsButtons()}
         <SearchBar
-          placeholder="Search bucket"
+          placeholder="Search buckets or tables"
           query={this.state.searchQuery}
           onChange={this.handleQueryChange}
         />
         <BucketsList
+          activeBucketId={this.state.bucketId}
+          openBuckets={this.state.openBuckets}
           buckets={this.filteredBuckets()}
           tables={this.state.allTables}
-          activeBucketId={this.state.bucketId}
+          expandAllBuckets={this.state.searchQuery !== ''}
         />
       </div>
     );
@@ -124,8 +127,14 @@ export default React.createClass({
 
     if (this.state.searchQuery) {
       const search = this.state.searchQuery.toLowerCase();
+      const filteredTables = this.state.allTables
+        .filter(table => matchByWords(table.get('name').toLowerCase(), search))
+        .map(table => table.getIn(['bucket', 'id']))
+        .toArray();
 
-      buckets = buckets.filter(bucket => matchByWords(bucket.get('id').toLowerCase(), search));
+      buckets = buckets.filter(bucket => {
+        return filteredTables.includes(bucket.get('id')) || matchByWords(bucket.get('id').toLowerCase(), search)
+      });
     }
 
     return buckets;
