@@ -36,8 +36,14 @@ export default React.createClass({
         <h2 className="clearfix">
           {this.canAddColumn() && (
             <div className="kbc-buttons pull-right">
-              <Button onClick={this.openCreateColumnModal} disabled={addingColumn}>
-                {addingColumn ? <Loader /> : <i className="fa fa-plus" />} Create column
+              <Button bsStyle="success" onClick={this.openCreateColumnModal} disabled={addingColumn}>
+                {addingColumn ? (
+                  <span>
+                    <Loader /> Creating column...
+                  </span>
+                ) : (
+                  <span>Create column</span>
+                )}
               </Button>
             </div>
           )}
