@@ -8,14 +8,15 @@ import RoutesStore from '../../../../../stores/RoutesStore';
 import BucketsStore from '../../../../components/stores/StorageBucketsStore';
 import TablesStore from '../../../../components/stores/StorageTablesStore';
 import FilesStore from '../../../../components/stores/StorageFilesStore';
-import Tooltip from '../../../../../react/common/Tooltip';
-
 import { factory as eventsFactory } from '../../../../sapi-events/BucketEventsService';
+import { createTable, deleteBucket, createAliasTable, createTableFromTextInput, uploadFile } from '../../../Actions';
+
+import Tooltip from '../../../../../react/common/Tooltip';
+import FastFade from '../../components/FastFade';
 import BucketEvents from '../../components/Events';
 import DeleteBucketModal from '../../modals/DeleteBucketModal';
 import BucketOverview from './BucketOverview';
 import BucketTables from './BucketTables';
-import { createTable, deleteBucket, createAliasTable, createTableFromTextInput, uploadFile } from '../../../Actions';
 
 export default React.createClass({
   mixins: [createStoreMixin(BucketsStore, ApplicationStore, TablesStore, FilesStore)],
@@ -82,7 +83,7 @@ export default React.createClass({
                 </MenuItem>
               </NavDropdown>
             </Nav>
-            <Tab.Content animation={false}>
+            <Tab.Content mountOnEnter animation={FastFade}>
               <Tab.Pane eventKey="overview">
                 <BucketOverview
                   bucket={this.state.bucket}

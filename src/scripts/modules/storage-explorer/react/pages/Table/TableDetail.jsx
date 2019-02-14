@@ -8,18 +8,18 @@ import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../../../stores/RoutesStore';
 import BucketsStore from '../../../../components/stores/StorageBucketsStore';
 import TablesStore from '../../../../components/stores/StorageTablesStore';
-import DataSample from '../../components/DataSample';
-import { deleteTable, truncateTable } from '../../../Actions';
 import FilesStore from '../../../../components/stores/StorageFilesStore';
-import storageApi from '../../../../components/StorageApi';
-import { exportTable, uploadFile, loadTable } from '../../../Actions';
+import StorageApi from '../../../../components/StorageApi';
+import { factory as eventsFactory } from '../../../../sapi-events/TableEventsService';
+import { deleteTable, truncateTable, exportTable, uploadFile, loadTable } from '../../../Actions';
 
 import TruncateTableModal from '../../modals/TruncateTableModal';
 import DeleteTableModal from '../../modals/DeleteTableModal';
 import LoadTableFromCsvModal from '../../modals/LoadTableFromCsvModal';
 import ExportTableModal from '../../modals/ExportTableModal';
-import { factory as eventsFactory } from '../../../../sapi-events/TableEventsService';
+import DataSample from '../../components/DataSample';
 import TableEvents from '../../components/Events';
+import FastFade from '../../components/FastFade';
 import TableOverview from './TableOverview';
 import TableColumn from './TableColumn';
 import SnapshotRestore from './SnapshotRestore';
@@ -143,7 +143,7 @@ export default React.createClass({
                 )}
               </NavDropdown>
             </Nav>
-            <Tab.Content animation={false}>
+            <Tab.Content mountOnEnter animation={FastFade}>
               <Tab.Pane eventKey="overview">
                 <TableOverview
                   table={this.state.table}
@@ -308,7 +308,7 @@ export default React.createClass({
     const tableId = this.state.table.get('id');
 
     return exportTable(tableId).then(response => {
-      return storageApi
+      return StorageApi
         .getFiles({
           runId: response.runId,
           'tags[]': ['storage-merged-export']
