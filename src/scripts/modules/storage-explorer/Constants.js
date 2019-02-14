@@ -15,3 +15,25 @@ export const bucketSharingTypes = {
   ORGANIZATION: 'organization',
   ORGANIZATION_PROJECT: 'organization-project'
 };
+
+export const eventsTemplates = {
+  'storage.tableImportStarted': {
+    'message': 'Import started',
+    'className': ''
+  },
+
+  'storage.tableImportDone': {
+    'message': 'Successfully imported ',
+    'className': 'success'
+  },
+
+  'storage.tableImportError': {
+    'message': 'Error on table import',
+    'className': 'error'
+  },
+
+  'storage.tableExported': {
+    'message': 'Exported to a csv file',
+    'className': 'info'
+  }
+};

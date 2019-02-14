@@ -190,6 +190,7 @@ export default React.createClass({
                   <TableEvents
                     key={this.state.table.get('lastImportDate') || 'table-events'}
                     eventsFactory={eventsFactory(this.state.table.get('id'))}
+                    excludeString={this.state.table.get('id')}
                   />
                 </Row>
               </Tab.Pane>

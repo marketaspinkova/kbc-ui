@@ -1,10 +1,13 @@
 import React, { PropTypes } from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import classnames from 'classnames';
+import { replaceAll } from 'underscore.string';
 import ComponentsStore from '../../../components/stores/ComponentsStore';
 import { Table } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 import { truncate } from 'underscore.string';
 import { format } from '../../../../utils/date';
+import { eventsTemplates } from '../../Constants';
 import ComponentName from '../../../../react/common/ComponentName';
 import ComponentIcon from '../../../../react/common/ComponentIcon';
 import EventDetailModal from '../modals/EventDetailModal';
@@ -14,7 +17,8 @@ export default React.createClass({
 
   propTypes: {
     events: PropTypes.object.isRequired,
-    isSearching: PropTypes.bool.isRequired
+    isSearching: PropTypes.bool.isRequired,
+    excludeString: PropTypes.string
   },
 
   getInitialState() {
@@ -58,9 +62,22 @@ export default React.createClass({
 
   renderRow(event) {
     const component = this.getComponent(event.get('component'));
+    let info = eventsTemplates[event.get('event')];
+
+    if (!info) {
+      info = { message: event.get('message') };
+    }
+
+    if (this.props.excludeString) {
+      info.message = replaceAll(info.message, this.props.excludeString, '');
+    }
 
     return (
-      <tr key={event.get('id')} onClick={() => this.openEventDetail(event)} className="kbc-cursor-pointer">
+      <tr 
+        key={event.get('id')} 
+        onClick={() => this.openEventDetail(event)} 
+        className={classnames('kbc-cursor-pointer', info.className)}
+      >
         <td>{format(event.get('created'))}</td>
         <td>
           <span>
@@ -68,7 +85,7 @@ export default React.createClass({
             <ComponentName component={component} showType={true} capitalize={true} />
           </span>
         </td>
-        <td>{truncate(event.get('message'), 60)}</td>
+        <td>{truncate(info.message, 60)}</td>
         <td>{event.getIn(['token', 'name'])}</td>
       </tr>
     );
