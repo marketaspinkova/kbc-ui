@@ -6,6 +6,7 @@ import InputTab from './InputTab';
 import FileTab from './FileTab';
 import ActionTab from './ActionTab';
 import StorageTablesStore from '../../../components/stores/StorageTablesStore';
+import SyncActionError from '../../../../utils/SyncActionError';
 
 export default React.createClass({
   propTypes: {
@@ -191,14 +192,15 @@ export default React.createClass({
   handleSave() {
     const file = this.file();
     const mapping = this.localState('mapping');
-    this.props.onSaveFn(file, mapping).then(
-      () => this.handleHide(),
-      (error) => {
+    this.props.onSaveFn(file, mapping)
+      .then(
+        () => this.handleHide()
+      )
+      .catch(SyncActionError, (error) => {
         this.setState({
           saveErrorMessage: error.message,
         })
-      }
-    );
+      });
   },
 
   handleNext() {
