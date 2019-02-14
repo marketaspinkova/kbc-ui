@@ -4,6 +4,7 @@ import { RefreshIcon, SearchBar } from '@keboola/indigo-ui';
 
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import ApplicationStore from '../../../../stores/ApplicationStore';
+import RoutesStore from '../../../../stores/RoutesStore';
 import BucketsStore from '../../../components/stores/StorageBucketsStore';
 import TablesStore from '../../../components/stores/StorageTablesStore';
 import BucketsLocalStore from '../../BucketsLocalStore';
@@ -16,10 +17,11 @@ import BucketsList from './BucketsList';
 import { reload, createBucket } from '../../Actions';
 
 export default React.createClass({
-  mixins: [createStoreMixin(ApplicationStore, BucketsLocalStore, BucketsStore, TablesStore)],
+  mixins: [createStoreMixin(ApplicationStore, RoutesStore, BucketsLocalStore, BucketsStore, TablesStore)],
 
   getStateFromStores() {
     return {
+      bucketId: RoutesStore.getCurrentRouteParam('bucketId'),
       openBuckets: BucketsLocalStore.getOpenedBuckets(),
       allBuckets: BucketsStore.getAll(),
       allTables: TablesStore.getAll(),
@@ -51,6 +53,7 @@ export default React.createClass({
           onChange={this.handleQueryChange}
         />
         <BucketsList
+          activeBucketId={this.state.bucketId}
           openBuckets={this.state.openBuckets}
           buckets={this.filteredBuckets()}
           tables={this.state.allTables}
