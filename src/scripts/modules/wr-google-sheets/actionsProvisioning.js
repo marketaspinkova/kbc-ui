@@ -84,8 +84,8 @@ export default function(COMPONENT_ID, configId) {
       updateLocalState(['SheetModal', 'savingMessage'], 'Creating Spreadsheet');
       return createSpreadsheet(table)
         .then((data) => {
-          if (data.status === 'error' && data.message) {
-            throw new SyncActionError(data.message);
+          if (data.status === 'error') {
+            throw new SyncActionError(data.message || 'There was an error while creating spreadsheet');
           }
           return updateTable(
             table
@@ -102,8 +102,8 @@ export default function(COMPONENT_ID, configId) {
       updateLocalState(['SheetModal', 'savingMessage'], 'Updating Spreadsheet');
       return addSheet(table)
         .then((data) => {
-          if (data.status === 'error' && data.message) {
-            throw new SyncActionError(data.message);
+          if (data.status === 'error') {
+            throw new SyncActionError(data.message || 'There was an error while updating spreadsheet');
           }
           return updateTable(
             table.set('sheetId', data.sheet.sheetId),

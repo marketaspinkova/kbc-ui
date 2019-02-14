@@ -82,8 +82,8 @@ export default function(COMPONENT_ID, configId) {
       updateLocalState(['FileModal', 'savingMessage'], 'Creating new File');
       return createFileAction(table)
         .then((data) => {
-          if (data.status === 'error' && data.message) {
-            throw new SyncActionError(data.message);
+          if (data.status === 'error') {
+            throw new SyncActionError(data.message || 'There was an error while creating file');
           }
           return updateTable(
             table
@@ -102,8 +102,8 @@ export default function(COMPONENT_ID, configId) {
     updateLocalState(['FileModal', 'savingMessage'], 'Saving');
     return getFolderAction(table)
       .then((data) => {
-        if (data.status === 'error' && data.message) {
-          throw new SyncActionError(data.message);
+        if (data.status === 'error') {
+          throw new SyncActionError(data.message || 'There was an error while updating file');
         }
         return updateTable(
           table
