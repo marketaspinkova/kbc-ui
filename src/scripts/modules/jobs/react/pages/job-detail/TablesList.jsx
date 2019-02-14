@@ -50,7 +50,6 @@ export default React.createClass({
     return (
       <li key={table.get('id')}>
         <TableLinkEx
-          moreTables={this.props.allTablesIds}
           tableId={table.get('id')}>
           {table.get('id')}
           <span className="text-muted">
