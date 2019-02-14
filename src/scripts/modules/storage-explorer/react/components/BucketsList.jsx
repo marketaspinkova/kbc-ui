@@ -14,7 +14,7 @@ export default React.createClass({
 
   render() {
     if (!this.props.buckets.count()) {
-      return <p className="kbc-inner-padding">No buckets found.</p>;
+      return <p className="kbc-inner-padding">No buckets or tables are matching your criteria.</p>;
     }
 
     return (
