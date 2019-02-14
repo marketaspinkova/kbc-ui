@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { Map } from 'immutable';
+import { Button } from 'react-bootstrap';
 import formatCardinalNumber from '../../../../utils/formatCardinalNumber';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../../stores/RoutesStore';
@@ -30,9 +31,13 @@ export default React.createClass({
   renderLink() {
     return (
       <Tooltip tooltip={this.renderTooltip()} placement="top">
-        <span className="kbc-sapi-table-link" onClick={this.redirectToTablePage}>
+        <Button
+          bsStyle="link"
+          className="btn-link-inline kbc-sapi-table-link"
+          onClick={this.redirectToTablePage}
+        >
           {this.props.children || this.props.linkLabel || this.props.tableId}
-        </span>
+        </Button>
       </Tooltip>
     );
   },
@@ -57,9 +62,10 @@ export default React.createClass({
     );
   },
 
-  redirectToTablePage() {
+  redirectToTablePage(event) {
+    event.preventDefault();
+    event.stopPropagation();
     const path = RoutesStore.getRouterState().get('pathname');
-
     RoutesStore.getRouter().transitionTo(`${path}/tables/${this.props.tableId}`);
   }
 });
