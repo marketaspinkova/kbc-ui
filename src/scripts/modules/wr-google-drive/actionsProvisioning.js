@@ -102,6 +102,9 @@ export default function(COMPONENT_ID, configId) {
     updateLocalState(['FileModal', 'savingMessage'], 'Saving');
     return getFolderAction(table)
       .then((data) => {
+        if (data.status === 'error' && data.message) {
+          throw new SyncActionError(data.message);
+        }
         return updateTable(
           table
             .setIn(['folder', 'id'], data.file.id)
