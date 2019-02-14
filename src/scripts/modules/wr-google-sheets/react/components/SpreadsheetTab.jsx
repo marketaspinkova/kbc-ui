@@ -12,8 +12,7 @@ export default React.createClass({
     onSwitchType: PropTypes.func.isRequired,
     valueTitle: PropTypes.string.isRequired,
     valueFolder: PropTypes.string.isRequired,
-    type: PropTypes.oneOf(['new', 'existing']),
-    show: PropTypes.bool.isRequired
+    type: PropTypes.oneOf(['new', 'existing'])
   },
 
   render() {

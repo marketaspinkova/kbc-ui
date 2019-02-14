@@ -5,6 +5,7 @@ import InstalledComponentStore from '../components/stores/InstalledComponentsSto
 import componentsActions from '../components/InstalledComponentsActionCreators';
 import callDockerAction from '../components/DockerActionsApi';
 import generateId from '../../utils/generateId';
+import SyncActionError from '../../utils/SyncActionError';
 
 export default function(COMPONENT_ID, configId) {
   const store = storeProvisioning(COMPONENT_ID, configId);
@@ -77,27 +78,43 @@ export default function(COMPONENT_ID, configId) {
 
   function saveTable(table, mapping) {
     updateLocalState(store.getSavingPath(table.get('id')), true);
+
     if (!table.get('fileId')) {
       // create spreadsheet if not exist
       updateLocalState(['SheetModal', 'savingMessage'], 'Creating Spreadsheet');
-      return createSpreadsheet(table).then((data) => {
-        return updateTable(
-          table
-            .set('fileId', data.spreadsheet.spreadsheetId)
-            .set('sheetId', data.spreadsheet.sheets[0].properties.sheetId),
-          mapping
-        );
-      });
+      return createSpreadsheet(table)
+        .then((data) => {
+          if (data.status === 'error') {
+            throw new SyncActionError(data.message || 'There was an error while creating spreadsheet');
+          }
+          return updateTable(
+            table
+              .set('fileId', data.spreadsheet.spreadsheetId)
+              .set('sheetId', data.spreadsheet.sheets[0].properties.sheetId),
+            mapping
+          );
+        })
+        .finally(() => {
+          updateLocalState(store.getSavingPath(table.get('id')), false);
+        });
     } else if (!table.get('sheetId')) {
       // add new sheet, when importing to existing spreadsheet
       updateLocalState(['SheetModal', 'savingMessage'], 'Updating Spreadsheet');
-      return addSheet(table).then((data) => {
-        return updateTable(
-          table.set('sheetId', data.sheet.sheetId),
-          mapping
-        );
-      });
+      return addSheet(table)
+        .then((data) => {
+          if (data.status === 'error') {
+            throw new SyncActionError(data.message || 'There was an error while updating spreadsheet');
+          }
+          return updateTable(
+            table.set('sheetId', data.sheet.sheetId),
+            mapping
+          );
+        })
+        .finally(() => {
+          updateLocalState(store.getSavingPath(table.get('id')), false);
+        });
     }
+
     return updateTable(table, mapping);
   }
 
@@ -134,7 +151,13 @@ export default function(COMPONENT_ID, configId) {
   function deleteTable(table) {
     const newTables = store.tables.filter((t) => t.get('id') !== table.get('id'));
     const newMappings = store.mappings.filter((t) => t.get('source') !== table.get('tableId'));
-    return saveTables(newTables, newMappings, store.getSavingPath(table.get('id')), `Update table ${table.get('tableId')}`);
+    const pendingPath = store.getPendingPath(['delete', table.get('id')]);
+    const savingPath = store.getSavingPath(table.get('id'));
+
+    updateLocalState(pendingPath, true);
+    return saveTables(newTables, newMappings, savingPath, `Update table ${table.get('tableId')}`).then(() => {
+      updateLocalState(pendingPath, false);
+    });
   }
 
   function toggleEnabled(table) {

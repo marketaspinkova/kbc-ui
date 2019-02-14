@@ -1,11 +1,12 @@
 import React, {PropTypes} from 'react';
 import {Map} from 'immutable';
-import {Modal, Tab, Tabs} from 'react-bootstrap';
+import {Modal, Tab, Tabs, Alert} from 'react-bootstrap';
 import WizardButtons from '../../../components/react/components/WizardButtons';
 import InputTab from './InputTab';
 import FileTab from './FileTab';
 import ActionTab from './ActionTab';
 import StorageTablesStore from '../../../components/stores/StorageTablesStore';
+import SyncActionError from '../../../../utils/SyncActionError';
 
 export default React.createClass({
   propTypes: {
@@ -18,6 +19,12 @@ export default React.createClass({
     prepareLocalState: PropTypes.func.isRequired
   },
 
+  getInitialState() {
+    return {
+      saveErrorMessage: null
+    }
+  },
+
   render() {
     const step = this.localState(['step'], 1);
     const storageTables = StorageTablesStore.getAll();
@@ -26,7 +33,7 @@ export default React.createClass({
       <Modal
         bsSize="large"
         show={this.props.show}
-        onHide={this.props.onHideFn}
+        onHide={this.handleHide}
       >
         <Modal.Header closeButton>
           <Modal.Title>
@@ -69,6 +76,7 @@ export default React.createClass({
                 valueConvert={this.file('convert', false)}
                 type={this.localState('uploadType', 'new')}
               />
+              {this.renderSaveError()}
             </Tab>
           </Tabs>
         </Modal.Body>
@@ -77,7 +85,7 @@ export default React.createClass({
             onNext={this.handleNext}
             onPrevious={this.handlePrevious}
             onSave={this.handleSave}
-            onCancel={this.props.onHideFn}
+            onCancel={this.handleHide}
             isSaving={this.props.isSavingFn(this.file('id'))}
             isNextDisabled={this.isStepValid(step)}
             isSaveDisabled={this.isSavingDisabled()}
@@ -88,6 +96,28 @@ export default React.createClass({
           />
         </Modal.Footer>
       </Modal>
+    );
+  },
+
+  handleHide() {
+    this.setState({
+      saveErrorMessage: null
+    }, this.props.onHideFn)
+  },
+
+  renderSaveError() {
+    if (this.state.saveErrorMessage === null) {
+      return null;
+    }
+    return (
+      <Alert bsStyle="danger">
+        <p>
+          {this.state.saveErrorMessage.indexOf('invalid_grant') !== -1
+            ? 'Try to reset authorization'
+            : 'Error while saving file'}
+        </p>
+        <p className="small">{this.state.saveErrorMessage}</p>
+      </Alert>
     );
   },
 
@@ -160,11 +190,20 @@ export default React.createClass({
   },
 
   handleSave() {
+    this.setState({
+      saveErrorMessage: null,
+    });
     const file = this.file();
     const mapping = this.localState('mapping');
-    this.props.onSaveFn(file, mapping).then(
-      () => this.props.onHideFn()
-    );
+    this.props.onSaveFn(file, mapping)
+      .then(
+        () => this.handleHide()
+      )
+      .catch(SyncActionError, (error) => {
+        this.setState({
+          saveErrorMessage: error.message,
+        })
+      });
   },
 
   handleNext() {
