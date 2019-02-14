@@ -190,6 +190,9 @@ export default React.createClass({
   },
 
   handleSave() {
+    this.setState({
+      saveErrorMessage: null,
+    });
     const file = this.file();
     const mapping = this.localState('mapping');
     this.props.onSaveFn(file, mapping)
