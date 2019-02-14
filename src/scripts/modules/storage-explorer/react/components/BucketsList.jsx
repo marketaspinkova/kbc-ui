@@ -9,7 +9,8 @@ export default React.createClass({
   propTypes: {
     openBuckets: PropTypes.object.isRequired,
     buckets: PropTypes.object.isRequired,
-    tables: PropTypes.object.isRequired
+    tables: PropTypes.object.isRequired,
+    expandAllBuckets: PropTypes.bool.isRequired
   },
 
   render() {
@@ -31,7 +32,7 @@ export default React.createClass({
     return (
       <Panel
         collapsible
-        expanded={this.props.openBuckets.has(bucket.get('id'))}
+        expanded={this.props.openBuckets.has(bucket.get('id')) || this.props.expandAllBuckets}
         className="storage-panel"
         header={this.renderBucketHeader(bucket)}
         key={bucket.get('id')}

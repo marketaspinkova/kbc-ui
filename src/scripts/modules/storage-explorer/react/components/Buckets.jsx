@@ -54,6 +54,7 @@ export default React.createClass({
           openBuckets={this.state.openBuckets}
           buckets={this.filteredBuckets()}
           tables={this.state.allTables}
+          expandAllBuckets={this.state.searchQuery !== ''}
         />
       </div>
     );
