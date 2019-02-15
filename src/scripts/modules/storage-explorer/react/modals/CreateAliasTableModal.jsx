@@ -50,10 +50,10 @@ export default React.createClass({
               </Col>
               <Col sm={9}>
                 <SapiTableSelector
-                  autoFocus
                   placeholder="Source table"
                   value={this.state.newTableAlias.get('sourceTable')}
                   onSelectTableFn={this.handleSourceTable}
+                  autoFocus={true}
                 />
               </Col>
             </FormGroup>
@@ -231,18 +231,12 @@ export default React.createClass({
 
   onSubmit(event) {
     event.preventDefault();
-    const tableAlias = this.state.newTableAlias
-      .update((tableAlias) => {
-        if (!tableAlias.getIn(['aliasFilter', 'column'])) {
-          return tableAlias.delete('aliasFilter');
-        }
-        return tableAlias.updateIn(['aliasFilter', 'values'], values => values.split(','))
-      })
-      .toJS();
+    const tableAlias = this.state.newTableAlias.updateIn(['aliasFilter', 'values'], values => values.split(',')).toJS();
 
-    this.setState({ error: null });
     this.props.onSubmit(tableAlias).then(this.onHide, message => {
-      this.setState({ error: message });
+      this.setState({
+        error: message
+      });
     });
   },
 
