@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import {Col, FormControl, ControlLabel, FormGroup, Radio, HelpBlock, Button, ButtonGroup} from 'react-bootstrap';
+import {ExternalLink} from '@keboola/indigo-ui';
 import {TokenTypes} from '../../gooddataProvisioning/utils';
 
 export default React.createClass({
@@ -127,7 +128,11 @@ export default React.createClass({
            />
           }
         </Col>
-      </FormGroup>
+      </FormGroup>,
+      <p key="terms">
+        By creating a project, you agree with the{' '}
+        <ExternalLink href="https://www.gooddata.com/terms-of-use">GoodData terms and conditions</ExternalLink>.
+      </p>
     ];
   }
 });
