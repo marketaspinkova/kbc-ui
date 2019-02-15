@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import {Form, FormControl, FormGroup, ControlLabel, Col} from 'react-bootstrap';
+import Modal from './ServiceAccountModal';
 
 export default React.createClass({
   propTypes: {
@@ -21,7 +22,7 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      jsonInputValue: ''
+      showModal: true
     };
   },
 
@@ -32,8 +33,17 @@ export default React.createClass({
   renderForm() {
     const {value} = this.props;
     return (
-      <Form horizontal>
-        <h3>Service Account</h3>
+      <span>
+        <FormGroup>
+          <Col componentClass={ControlLabel} sm={4}>
+            Project
+          </Col>
+          <Col sm={8}>
+            <FormControl.Static>
+              {value.projectId}
+            </FormControl.Static>
+          </Col>
+        </FormGroup>
         <FormGroup>
           <Col componentClass={ControlLabel} sm={4}>
             Email
@@ -54,28 +64,23 @@ export default React.createClass({
             </FormControl.Static>
           </Col>
         </FormGroup>
-        RESET BUTTON
-      </Form>
-    );
-  },
-
-  renderJsonInput()
-  {
-    return (
-      <Form horizontal>
-        <h3>Service Account</h3>
-        <FormGroup>
-          TEXTAREA
-        </FormGroup>
-      </Form>
+      </span>
     );
   },
 
   render() {
-    if (this.showJsonInput()) {
-      return this.renderJsonInput();
-    } else {
-      return this.renderForm();
-    }
+    return (
+      <Form horizontal>
+        <h3>Service Account</h3>
+        <Modal
+          show={this.state.showModal}
+          onHide={() => this.setState({showModal: false})}
+          onSubmit={() => this.setState({showModal: false})}
+        />
+        NEW CREDENTIALS BUTTON
+        {!this.showJsonInput() && this.renderForm()}
+      </Form>
+    );
   }
 });
+
