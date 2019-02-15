@@ -2,12 +2,11 @@ import React, { PropTypes } from 'react';
 import { fromJS } from 'immutable';
 import { Alert, Col, Modal, Form, FormGroup, FormControl, ControlLabel, Checkbox } from 'react-bootstrap';
 import Select from 'react-select';
-import SapiTableSelector from '../../../components/react/components/SapiTableSelector';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import Hint from '../../../../react/common/Hint';
 
 const initialNewTableAlias = {
-  sourceTable: '',
+  destinationBucket: '',
   name: '',
   aliasFilter: {
     column: '',
@@ -19,8 +18,10 @@ const initialNewTableAlias = {
 
 export default React.createClass({
   propTypes: {
-    bucket: PropTypes.object.isRequired,
-    openModal: PropTypes.bool.isRequired,
+    buckets: PropTypes.object.isRequired,
+    table: PropTypes.object.isRequired,
+    sapiToken: PropTypes.object.isRequired,
+    show: PropTypes.bool.isRequired,
     onSubmit: PropTypes.func.isRequired,
     onHide: PropTypes.func.isRequired,
     isSaving: PropTypes.bool.isRequired
@@ -29,18 +30,18 @@ export default React.createClass({
   getInitialState() {
     return {
       newTableAlias: fromJS(initialNewTableAlias),
-      tableColumns: [],
+      tableColumns: this.props.table.get('columns').map(column => ({ label: column, value: column })).toArray(),
       error: null
     };
   },
 
   render() {
     return (
-      <Modal bsSize="large" show={this.props.openModal} onHide={this.onHide}>
+      <Modal bsSize="large" show={this.props.show} onHide={this.onHide}>
         <Form onSubmit={this.onSubmit} horizontal>
           <Modal.Header closeButton>
             <Modal.Title>
-              Create table alias in {this.props.bucket.get('id')} bucket
+              Create alias of {this.props.table.get('name')} table
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -48,15 +49,22 @@ export default React.createClass({
 
             <FormGroup>
               <Col sm={3} componentClass={ControlLabel}>
-                Source table
+                Destination bucket
               </Col>
               <Col sm={9}>
-                <SapiTableSelector
-                  placeholder="Source table"
-                  value={this.state.newTableAlias.get('sourceTable')}
-                  onSelectTableFn={this.handleSourceTable}
-                  autoFocus={true}
-                />
+                <FormControl
+                  autoFocus
+                  componentClass="select"
+                  value={this.state.newTableAlias.get('destinationBucket')}
+                  onChange={this.handleDestinationBucket}
+                >
+                  <option value="">Select bucket...</option>
+                  {this.allowedBuckets().map((bucket, index) => (
+                    <option key={index} value={bucket.get('id')}>
+                      {bucket.get('id')}
+                    </option>
+                  ))}
+                </FormControl>
               </Col>
             </FormGroup>
 
@@ -86,7 +94,6 @@ export default React.createClass({
                   value={this.state.newTableAlias.getIn(['aliasFilter', 'column'])}
                   onChange={this.handleAliasFilterColumn}
                   options={this.state.tableColumns}
-                  disabled={this.state.tableColumns.length === 0}
                 />
               </Col>
               <Col sm={3}>
@@ -136,7 +143,6 @@ export default React.createClass({
                     value={this.state.newTableAlias.get('aliasColumns', [])}
                     onChange={this.handleAliasTableColumns}
                     options={this.state.tableColumns}
-                    disabled={this.state.tableColumns.length === 0}
                   />
                 </Col>
               )}
@@ -165,18 +171,9 @@ export default React.createClass({
     return <Alert bsStyle="danger">{this.state.error}</Alert>;
   },
 
-  handleSourceTable(tableId, table) {
-    const columns = table
-      .get('columns')
-      .map(column => ({
-        label: column,
-        value: column
-      }))
-      .toArray();
-
+  handleDestinationBucket(event) {
     this.setState({
-      tableColumns: columns,
-      newTableAlias: this.state.newTableAlias.set('sourceTable', tableId).remove('aliasColumns')
+      newTableAlias: this.state.newTableAlias.set('destinationBucket', event.target.value)
     });
   },
 
@@ -218,6 +215,20 @@ export default React.createClass({
     });
   },
 
+  allowedBuckets() {
+    const permissions = this.props.sapiToken.get('bucketPermissions');
+    const neededPermissions = ['write', 'manage'];
+    const alowedStages = ['out', 'in'];
+
+    return this.props.buckets
+      .filter((bucket) => {
+        const bucketPermission = permissions.get(bucket.get('id'), '');
+        return neededPermissions.includes(bucketPermission) && alowedStages.includes(bucket.get('stage'));
+      })
+      .sortBy((bucket) => bucket.get('id').toLowerCase())
+      .toArray();
+  },
+
   toggleSyncColumns() {
     this.setState({
       newTableAlias: this.state.newTableAlias
@@ -233,19 +244,27 @@ export default React.createClass({
 
   onSubmit(event) {
     event.preventDefault();
-    const tableAlias = this.state.newTableAlias.updateIn(['aliasFilter', 'values'], values => values.split(',')).toJS();
+    const bucketId = this.state.newTableAlias.get('destinationBucket');
+    const tableAlias = this.state.newTableAlias
+      .update((tableAlias) => {
+        if (!tableAlias.getIn(['aliasFilter', 'column'])) {
+          return tableAlias.delete('aliasFilter');
+        }
+        return tableAlias.updateIn(['aliasFilter', 'values'], values => values.split(','))
+      })
+      .set('sourceTable', this.props.table.get('id'))
+      .delete('destinationBucket')
+      .toJS();
 
-    this.props.onSubmit(tableAlias).then(this.onHide, message => {
-      this.setState({
-        error: message
-      });
+    this.setState({ error: null });
+    this.props.onSubmit(bucketId, tableAlias).then(this.onHide, message => {
+      this.setState({ error: message });
     });
   },
 
   resetState() {
     this.setState({
       newTableAlias: fromJS(initialNewTableAlias),
-      tableColumns: [],
       error: null
     });
   },
@@ -254,7 +273,7 @@ export default React.createClass({
     const tableAlias = this.state.newTableAlias;
     const aliasFilter = tableAlias.get('aliasFilter');
 
-    if (!tableAlias.get('name') || !tableAlias.get('sourceTable')) {
+    if (!tableAlias.get('name') || !tableAlias.get('destinationBucket')) {
       return true;
     }
 

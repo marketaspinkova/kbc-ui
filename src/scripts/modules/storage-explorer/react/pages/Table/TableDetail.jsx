@@ -11,8 +11,9 @@ import TablesStore from '../../../../components/stores/StorageTablesStore';
 import FilesStore from '../../../../components/stores/StorageFilesStore';
 import StorageApi from '../../../../components/StorageApi';
 import { factory as eventsFactory } from '../../../../sapi-events/TableEventsService';
-import { deleteTable, truncateTable, exportTable, uploadFile, loadTable } from '../../../Actions';
+import { createAliasTable, deleteTable, truncateTable, exportTable, uploadFile, loadTable } from '../../../Actions';
 
+import CreateAliasTableAlternativeModal from '../../modals/CreateAliasTableAlternativeModal';
 import TruncateTableModal from '../../modals/TruncateTableModal';
 import DeleteTableModal from '../../modals/DeleteTableModal';
 import LoadTableFromCsvModal from '../../modals/LoadTableFromCsvModal';
@@ -54,6 +55,7 @@ export default React.createClass({
       creatingSnapshot: TablesStore.getIsCreatingSnapshot(table.get('id')),
       creatingFromSnapshot: TablesStore.getIsCreatingFromSnapshot(),
       deletingSnapshot: TablesStore.getIsDeletingSnapshot(),
+      creatingAliasTable: TablesStore.getIsCreatingAliasTable(),
       truncatingTable: TablesStore.getIsTruncatingTable(table.get('id')),
       deletingTable: TablesStore.getIsDeletingTable(),
       loadingIntoTable: TablesStore.getIsLoadingTable(),
@@ -121,6 +123,11 @@ export default React.createClass({
                   )}
                 </MenuItem>
                 {canWriteTable && <MenuItem divider />}
+                {!this.state.table.get('isAlias') && canWriteTable && (
+                  <MenuItem eventKey="alias" onSelect={this.handleDropdownAction}>
+                    Create alias table
+                  </MenuItem>
+                )}
                 {!this.state.table.get('isAlias') && canWriteTable && (
                   <MenuItem
                     eventKey="truncate"
@@ -217,8 +224,27 @@ export default React.createClass({
         {this.renderDeletingTableModal()}
         {this.renderLoadTableModal()}
         {this.renderExportTableModal()}
-        {!this.state.table.get('isAlias') && canWriteTable && this.renderTruncateTableModal()}
+        {!this.state.table.get('isAlias') && canWriteTable && (
+          <span>
+            {this.renderAliasTableModal()}
+            {this.renderTruncateTableModal()}
+          </span>
+        )}
       </div>
+    );
+  },
+
+  renderAliasTableModal() {
+    return (
+      <CreateAliasTableAlternativeModal
+        show={!!(this.state.openActionModal && this.state.actionModalType === 'alias')}
+        buckets={this.state.buckets}
+        table={this.state.table}
+        sapiToken={this.state.sapiToken}
+        onSubmit={this.handleCreateAliasTable}
+        onHide={this.closeActionModal}
+        isSaving={this.state.creatingAliasTable}
+      />
     );
   },
 
@@ -282,6 +308,10 @@ export default React.createClass({
     }
   },
 
+  handleCreateAliasTable(bucketId, params) {
+    return createAliasTable(bucketId, params);
+  },
+
   handleDeleteTable(forceDelete) {
     const bucketId = this.state.bucket.get('id');
     const tableId = this.state.table.get('id');
@@ -318,7 +348,7 @@ export default React.createClass({
   },
 
   handleDropdownAction(action) {
-    if (['export', 'load', 'truncate', 'delete'].includes(action)) {
+    if (['export', 'load', 'truncate', 'delete', 'alias'].includes(action)) {
       this.setState({
         openActionModal: true,
         actionModalType: action
