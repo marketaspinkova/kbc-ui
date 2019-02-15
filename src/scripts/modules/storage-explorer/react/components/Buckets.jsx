@@ -14,7 +14,7 @@ import Tooltip from '../../../../react/common/Tooltip';
 import CreateBucketModal from '../modals/CreateBucketModal';
 import SharedBucketsModal from '../modals/SharedBucketsModal';
 import BucketsList from './BucketsList';
-import { reload, createBucket } from '../../Actions';
+import { reload, createBucket, updateSearchQuery } from '../../Actions';
 
 export default React.createClass({
   mixins: [createStoreMixin(ApplicationStore, RoutesStore, BucketsLocalStore, BucketsStore, TablesStore)],
@@ -22,6 +22,7 @@ export default React.createClass({
   getStateFromStores() {
     return {
       bucketId: RoutesStore.getCurrentRouteParam('bucketId'),
+      searchQuery: BucketsLocalStore.getSearchQuery(),
       openBuckets: BucketsLocalStore.getOpenedBuckets(),
       allBuckets: BucketsStore.getAll(),
       allTables: TablesStore.getAll(),
@@ -34,7 +35,6 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      searchQuery: '',
       createBucketModal: false,
       linkBucketModal: false
     };
@@ -57,6 +57,7 @@ export default React.createClass({
           openBuckets={this.state.openBuckets}
           buckets={this.filteredBuckets()}
           tables={this.state.allTables}
+          searchQuery={this.state.searchQuery}
           expandAllBuckets={this.state.searchQuery !== ''}
         />
       </div>
@@ -153,9 +154,7 @@ export default React.createClass({
   },
 
   handleQueryChange(query) {
-    this.setState({
-      searchQuery: query
-    });
+    updateSearchQuery(query)
   },
 
   openCreateBucketModal() {

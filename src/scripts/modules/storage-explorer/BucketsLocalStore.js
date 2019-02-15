@@ -4,11 +4,16 @@ import dispatcher from '../../Dispatcher';
 import * as constants from './Constants';
 
 let _store = Map({
+  searchQuery: '',
   openedBuckets: Set(),
   isReloading: false
 });
 
 const BucketsLocalStore = StoreUtils.createStore({
+  getSearchQuery() {
+    return _store.get('searchQuery', '');
+  },
+
   getOpenedBuckets() {
     return _store.get('openedBuckets');
   },
@@ -22,6 +27,10 @@ dispatcher.register(payload => {
   const { action } = payload;
 
   switch (action.type) {
+    case constants.ActionTypes.UPDATE_SEARCH_QUERY:
+      _store = _store.set('searchQuery', action.query);
+      return BucketsLocalStore.emitChange();
+
     case constants.ActionTypes.SET_OPENED_BUCKETS:
       _store = _store.set('openedBuckets', action.buckets);
       return BucketsLocalStore.emitChange();
