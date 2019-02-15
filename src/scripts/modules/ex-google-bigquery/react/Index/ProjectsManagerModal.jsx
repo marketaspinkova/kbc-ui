@@ -233,10 +233,10 @@ export default React.createClass({
   handleHide() {
     this.setState({
       errorMessage: null
-    }, this.props.onHideFn)
+    }, this.props.onHideFn);
   },
 
   handleSave() {
-    this.props.saveFn(this.props.google)
+    this.props.saveFn(this.props.google);
   }
 });
