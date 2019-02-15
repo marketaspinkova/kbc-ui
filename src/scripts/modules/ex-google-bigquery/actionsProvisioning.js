@@ -1,22 +1,17 @@
-import storeProvisioning from './storeProvisioning';
-// import {Map, fromJS} from 'immutable';
-
+import _ from 'underscore';
+import {Map, fromJS} from 'immutable';
 import componentsActions from '../components/InstalledComponentsActionCreators';
 import callDockerAction from '../components/DockerActionsApi';
+import storeProvisioning from './storeProvisioning';
+import SyncActionError from '../../utils/SyncActionError';
 
-import {Map, fromJS} from 'immutable';
-
-
-import _ from 'underscore';
 const COMPONENT_ID = 'keboola.ex-google-bigquery';
 
-// PROPTYPES HELPER:
 /*
   localState: PropTypes.object.isRequired,
   updateLocalState: PropTypes.func.isRequired,
   prepareLocalState: PropTypes.func.isRequired
 */
-
 export default function(configId) {
   const store = storeProvisioning(configId);
 
@@ -179,16 +174,15 @@ export default function(configId) {
 
       return callDockerAction(COMPONENT_ID, 'listProjects', params)
         .then((result) => {
-          if (result.status !== 'success') {
-            throw result;
+          if (result.status === 'error') {
+            throw new SyncActionError(result.message || 'There was an error while loading projects list');
           }
           return result.projects;
         })
         .then((projects) => {
-          updateLocalState(store.getPendingPath('projects'), false);
           return updateLocalState(path, fromJS(projects));
         })
-        .catch(() => {
+        .finally(() => {
           updateLocalState(store.getPendingPath('projects'), false);
         });
     }

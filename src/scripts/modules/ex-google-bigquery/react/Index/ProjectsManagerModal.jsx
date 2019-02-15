@@ -1,18 +1,15 @@
 import React, {PropTypes} from 'react';
-import {Input} from './../../../../react/common/KbcBootstrap';
-import {Modal} from 'react-bootstrap';
 import Select from 'react-select';
-
+import {Alert, Modal} from 'react-bootstrap';
 import {Loader} from '@keboola/indigo-ui';
-
+import {Input} from './../../../../react/common/KbcBootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
-
+import SyncActionError from '../../../../utils/SyncActionError';
 import EmptyState from '../../../components/react/components/ComponentEmptyState';
 
 import { DatasetLocations } from '../../constants';
 
 export default React.createClass({
-
   propTypes: {
     authorizedEmail: PropTypes.string,
     google: PropTypes.object.isRequired,
@@ -21,7 +18,23 @@ export default React.createClass({
     show: PropTypes.bool.isRequired,
     onHideFn: PropTypes.func,
     saveFn: PropTypes.func.isRequired,
+    loadAccountProjectsFn: PropTypes.func.isRequired,
     onChangeFn: PropTypes.func.isRequired
+  },
+
+  getInitialState() {
+    return {
+      errorMessage: null
+    }
+  },
+
+  componentDidUpdate(prevProps) {
+    if (!prevProps.show && this.props.show) {
+      this.setState({ errorMessage: null });
+      this.props.loadAccountProjectsFn('test').catch(SyncActionError, (error) => {
+        this.setState({ errorMessage: error.message })
+      })
+    }
   },
 
   renderProjects(projects) {
@@ -172,7 +185,7 @@ export default React.createClass({
     return (
       <Modal
         show={this.props.show}
-        onHide={this.props.onHideFn}
+        onHide={this.handleHide}
       >
         <Modal.Header closeButton>
           <Modal.Title>
@@ -180,26 +193,31 @@ export default React.createClass({
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          { this.renderForm() }
-          <div className="row">
-            <div className="table kbc-table-border-vertical kbc-detail-table" style={{borderBottom: 0}}>
-              <div className="tr">
-                <div className="td" />
-              </div>
-            </div>
-          </div>
+          {this.renderForm()}
+          {this.renderError()}
         </Modal.Body>
         <Modal.Footer>
           <ConfirmButtons
-            isSaving={this.props.isPendingFn('projectId')}
+            isSaving={this.props.isPendingFn('projectId') || false}
             isDisabled={!this.isGoogleValid(this.props.google)}
             onSave={this.handleSave}
-            onCancel={this.props.onHideFn}
+            onCancel={this.handleHide}
             saveLabel="Save Changes"
           />
-
         </Modal.Footer>
       </Modal>
+    );
+  },
+
+  renderError() {
+    if (this.state.errorMessage === null) {
+      return null;
+    }
+
+    return (
+      <Alert bsStyle="danger">
+        <p className="small">{this.state.errorMessage}</p>
+      </Alert>
     );
   },
 
@@ -212,7 +230,13 @@ export default React.createClass({
     this.props.onChangeFn(newGoogle);
   },
 
+  handleHide() {
+    this.setState({
+      errorMessage: null
+    }, this.props.onHideFn)
+  },
+
   handleSave() {
-    this.props.saveFn(this.props.google);
+    this.props.saveFn(this.props.google)
   }
 });
