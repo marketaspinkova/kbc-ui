@@ -57,6 +57,7 @@ export default React.createClass({
           openBuckets={this.state.openBuckets}
           buckets={this.filteredBuckets()}
           tables={this.state.allTables}
+          searchQuery={this.state.searchQuery}
           expandAllBuckets={this.state.searchQuery !== ''}
         />
       </div>
@@ -153,9 +154,7 @@ export default React.createClass({
   },
 
   handleQueryChange(query) {
-    this.setState({
-      searchQuery: query
-    });
+    this.setState({ searchQuery: query });
   },
 
   openCreateBucketModal() {

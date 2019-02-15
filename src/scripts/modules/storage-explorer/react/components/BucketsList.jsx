@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import { PanelGroup, Panel, Button } from 'react-bootstrap';
 import Tooltip from '../../../../react/common/Tooltip';
 import { navigateToBucketDetail, setOpenedBuckets } from '../../Actions';
+import MarkedText from './MarkedText';
 
 export default React.createClass({
   propTypes: {
@@ -11,7 +12,8 @@ export default React.createClass({
     buckets: PropTypes.object.isRequired,
     tables: PropTypes.object.isRequired,
     expandAllBuckets: PropTypes.bool.isRequired,
-    activeBucketId: PropTypes.string
+    activeBucketId: PropTypes.string,
+    searchQuery: PropTypes.string
   },
 
   render() {
@@ -48,7 +50,9 @@ export default React.createClass({
     return (
       <div>
         <div className="storage-bucket-header">
-          <h4>{bucket.get('id')}</h4>
+          <h4>
+            <MarkedText source={bucket.get('id')} mark={this.props.searchQuery} />
+          </h4>
           <Tooltip tooltip="Bucket detail" placement="top">
             <Button
               bsStyle="link"
@@ -96,7 +100,9 @@ export default React.createClass({
           to="storage-explorer-table"
           params={{ bucketId, tableName }}
         >
-          <span className={classnames({ 'is-table-alias': table.get('isAlias', false) })}>{tableName}</span>
+          <span className={classnames({ 'is-table-alias': table.get('isAlias', false) })}>
+            <MarkedText source={tableName} mark={this.props.searchQuery}  />
+          </span>
         </Link>
       </li>
     );
@@ -117,6 +123,6 @@ export default React.createClass({
       return true;
     }
 
-    return this.props.openBuckets.has(bucket.get('id')); 
+    return this.props.openBuckets.has(bucket.get('id'));
   }
 });
