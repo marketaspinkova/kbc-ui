@@ -3,6 +3,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import ConfigurationLink from '../components/ComponentConfigurationLink';
 import RunConfigurationButton from '../components/RunComponentButton';
 import DeleteButton from '../../../../react/common/DeleteButton';
+import DeleteConfigurationButtonNoConfirm from '../../../../react/common/DeleteConfigurationButtonNoConfirm';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
 import descriptionExcerpt from '../../../../utils/descriptionExcerpt';
 import {isObsoleteComponent} from '../../../../modules/trash/utils';
@@ -39,12 +40,19 @@ export default React.createClass({
               createdTime={this.props.config.get('created')}
             />
           </span>
-          <DeleteButton
-            tooltip="Move to Trash"
-            isPending={this.props.isDeleting}
-            confirm={this.deleteConfirmProps()}
-            componentId={this.props.componentId}
-          />
+          {isObsoleteComponent(this.props.componentId) ? (
+            <DeleteButton
+              tooltip="Move to Trash"
+              isPending={this.props.isDeleting}
+              confirm={this.deleteConfirmProps()}
+            />
+          ) : (
+            <DeleteConfigurationButtonNoConfirm
+              tooltip="Move to Trash"
+              isPending={this.props.isDeleting}
+              onDeleteFn={this.handleDelete}
+            />
+          )}
           {this.renderRunButton()}
         </span>
       </ConfigurationLink>
@@ -104,6 +112,7 @@ export default React.createClass({
   },
 
   handleDelete() {
-    InstalledComponentsActionCreators.deleteConfiguration(this.props.componentId, this.props.config.get('id'), false);
+    InstalledComponentsActionCreators
+      .deleteConfiguration(this.props.componentId, this.props.config.get('id'), false);
   }
 });
