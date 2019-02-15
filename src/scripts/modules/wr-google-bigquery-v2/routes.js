@@ -22,7 +22,7 @@ const routeSettings = {
     sections: [
       {
         render: CollapsibleSection({
-          title: 'Google BigQuery Project and Dataset',
+          title: 'Google BigQuery Dataset',
           contentComponent: TargetDatasetSection,
           options: { includeSaveButtons: true }
         }),
