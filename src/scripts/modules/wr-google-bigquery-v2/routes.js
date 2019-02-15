@@ -16,7 +16,7 @@ import loadType from './adapters/loadType';
 import columnsEditorDefinition from './helpers/columnsEditorDefinition';
 
 const routeSettings = {
-  componentId: 'keboola.wr-google-bigquery',
+  componentId: 'keboola.wr-google-bigquery-v2',
   componentType: 'writer',
   index: {
     sections: [
