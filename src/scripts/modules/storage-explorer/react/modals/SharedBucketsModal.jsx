@@ -110,9 +110,12 @@ export default React.createClass({
   },
 
   groupedBuckets() {
-    return this.props.sharedBuckets.groupBy(bucket => {
-      return bucket.getIn(['project', 'name']);
-    });
+    return this.props.sharedBuckets
+      .sortBy((bucket) => bucket.get('id').toLowerCase())
+      .groupBy((bucket) => {
+        return bucket.getIn(['project', 'name']);
+      })
+      .sortBy((group, project) => project.toLowerCase())
   },
 
   bucketLabel(bucket) {
