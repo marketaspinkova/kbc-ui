@@ -30,7 +30,7 @@ describe('targetDataset', function() {
       expect(false).toEqual(adapter.isComplete(Immutable.fromJS({})));
     });
     it('should return true when parameters are filled', function() {
-      expect(true).toEqual(adapter.isComplete(Immutable.fromJS({parameters: {'project': 'a', 'dataset': 'b'}})));
+      expect(true).toEqual(adapter.isComplete(Immutable.fromJS({parameters: {'dataset': 'b'}})));
     });
   });
 });
