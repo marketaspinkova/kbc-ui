@@ -40,7 +40,9 @@ export default React.createClass({
       <Modal bsSize="large" show={this.props.show} onHide={this.onHide}>
         <Form onSubmit={this.onSubmit} horizontal>
           <Modal.Header closeButton>
-            <Modal.Title>Create table alias of {this.props.table.get('name')}</Modal.Title>
+            <Modal.Title>
+              Create alias of {this.props.table.get('name')} table
+            </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             {this.renderError()}
