@@ -1,7 +1,6 @@
 import createRoute  from '../configurations/utils/createRoute';
 import columnTypes  from '../configurations/utils/columnTypeConstants';
 import createColumnsEditorSection from '../configurations/utils/createColumnsEditorSection';
-import createOauthSection from '../configurations/utils/createOauthSection';
 import {CollapsibleSection} from '../configurations/utils/renderHelpers';
 
 import TargetTableSection from './react/components/TargetTableSection';
@@ -13,6 +12,9 @@ import targetDataset from './adapters/targetDataset';
 import LoadTypeSection from './react/components/LoadTypeSection';
 import loadType from './adapters/loadType';
 
+import ServiceAccountSection from './react/components/ServiceAccountSection';
+import serviceAccount from './adapters/serviceAccount';
+
 import columnsEditorDefinition from './helpers/columnsEditorDefinition';
 
 const routeSettings = {
@@ -20,6 +22,16 @@ const routeSettings = {
   componentType: 'writer',
   index: {
     sections: [
+      {
+        render: CollapsibleSection({
+          title: 'Google Service Account',
+          contentComponent: ServiceAccountSection,
+          options: { includeSaveButtons: true }
+        }),
+        onSave: serviceAccount.createConfiguration,
+        onLoad: serviceAccount.parseConfiguration,
+        isComplete: serviceAccount.isComplete
+      },
       {
         render: CollapsibleSection({
           title: 'Google BigQuery Dataset',
