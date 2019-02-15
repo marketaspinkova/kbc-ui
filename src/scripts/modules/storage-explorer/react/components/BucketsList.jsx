@@ -50,7 +50,9 @@ export default React.createClass({
     return (
       <div>
         <div className="storage-bucket-header">
-          <h4>{bucket.get('id')}</h4>
+          <h4>
+            <MarkedText source={bucket.get('id')} mark={this.props.searchQuery} />
+          </h4>
           <Tooltip tooltip="Bucket detail" placement="top">
             <Button
               bsStyle="link"
