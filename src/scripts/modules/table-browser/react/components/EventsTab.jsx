@@ -6,6 +6,7 @@ import {Table} from 'react-bootstrap';
 import EmptyState from '../../../components/react/components/ComponentEmptyState';
 import immutableMixin from 'react-immutable-render-mixin';
 import EventDetail from '../../../sapi-events/react/EventDetail';
+import {eventsTemplates} from '../../../storage-explorer/Constants';
 
 export default React.createClass({
 
@@ -108,7 +109,7 @@ export default React.createClass({
   renderTableRows() {
     return this.props.events.map( (e) => {
       const event = e.get('event');
-      let info = this.eventsTemplates[event];
+      let info = eventsTemplates[event];
       if (!info) {
         info = {
           className: '',
@@ -165,29 +166,5 @@ export default React.createClass({
           backButton={backButton} />
       </div>
     );
-  },
-
-  eventsTemplates: {
-    'storage.tableImportStarted': {
-      'message': 'Import started',
-      'className': ''
-    },
-
-    'storage.tableImportDone': {
-      'message': 'Successfully imported ',
-      'className': 'success'
-    },
-
-    'storage.tableImportError': {
-      'message': 'Error on table import',
-      'className': 'error'
-    },
-
-    'storage.tableExported': {
-      'message': 'Exported to a csv file',
-      'className': 'info'
-    }
-
   }
-
 });

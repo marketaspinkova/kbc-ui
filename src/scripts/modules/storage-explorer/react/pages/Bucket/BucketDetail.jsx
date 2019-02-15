@@ -108,7 +108,10 @@ export default React.createClass({
               </Tab.Pane>
               <Tab.Pane eventKey="events">
                 <Row>
-                  <BucketEvents eventsFactory={eventsFactory(this.state.bucket.get('id'))} />
+                  <BucketEvents 
+                    eventsFactory={eventsFactory(this.state.bucket.get('id'))} 
+                    excludeString={`${this.state.bucket.get('id')}.`}  
+                  />
                 </Row>
               </Tab.Pane>
             </Tab.Content>

@@ -7,11 +7,27 @@ import { factory as defaultEventsFactory } from '../../../sapi-events/EventsServ
 import Tooltip from '../../../../react/common/Tooltip';
 import EventsTable from './EventsTable';
 
+const predefinedSearches = [
+  {
+    name: 'Omit tables fetches',
+    query: 'NOT event:storage.tableDataPreview OR NOT event:storage.tableDetail'
+  },
+  {
+    name: 'Omit tables exports',
+    query: 'NOT event:storage.tableExported'
+  },
+  {
+    name: 'Import/Exports only',
+    query: ['ImportStarted', 'ImportDone', 'ImportError', 'Exported'].map((type) => `event:storage.table${type}`).join(' OR ')
+  }
+];
+
 export default React.createClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {
-    eventsFactory: PropTypes.object
+    eventsFactory: PropTypes.object,
+    excludeString: PropTypes.string
   },
 
   getDefaultProps() {
@@ -57,7 +73,29 @@ export default React.createClass({
             </Tooltip>
           }
         />
-        <EventsTable events={this.state.events} isSearching={this.isSearching()} />
+        <div className="predefined-search-list">
+          Predefined searches:{' '}
+          {predefinedSearches.map((link, index) => (
+            <Button
+              key={index}
+              bsStyle="link"
+              className="btn-link-inline predefined-search-link"
+              onClick={() => {
+                this.handleQueryChange(link.query, () => {
+                  this.handleSearchSubmit();
+                })
+              }}
+            >
+              {link.name}
+            </Button>
+          ))}
+        </div>
+        <br />
+        <EventsTable 
+          events={this.state.events} 
+          isSearching={this.isSearching()} 
+          excludeString={this.props.excludeString} 
+        />
         {this.renderMoreButton()}
       </div>
     );
@@ -111,10 +149,8 @@ export default React.createClass({
     this._events.loadMore();
   },
 
-  handleQueryChange(query) {
-    this.setState({
-      searchQuery: query
-    });
+  handleQueryChange(query, thenFn = null) {
+    this.setState({ searchQuery: query }, thenFn);
   },
 
   handleSearchSubmit() {
