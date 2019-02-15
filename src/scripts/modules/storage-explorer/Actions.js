@@ -276,13 +276,6 @@ const updateSearchQuery = query => {
   });
 };
 
-const updateFilesSearchQuery = query => {
-  return dispatcher.handleViewAction({
-    type: localConstants.ActionTypes.UPDATE_FILES_SEARCH_QUERY,
-    query
-  });
-};
-
 const setOpenedBuckets = buckets => {
   return dispatcher.handleViewAction({
     type: localConstants.ActionTypes.SET_OPENED_BUCKETS,
@@ -291,7 +284,7 @@ const setOpenedBuckets = buckets => {
 };
 
 const resetFilesSearchQuery = () => {
-  updateFilesSearchQuery('');
+  updateSearchQuery('');
 };
 
 export {
@@ -331,8 +324,7 @@ export {
   loadFiles,
   loadMoreFiles,
   updateSearchQuery,
-  updateFilesSearchQuery,
-  resetFilesSearchQuery,
   setOpenedBuckets,
-  filterFiles
+  filterFiles,
+  resetFilesSearchQuery
 };

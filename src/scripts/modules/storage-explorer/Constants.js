@@ -5,7 +5,6 @@ export const filesLimit = 50;
 
 export const ActionTypes = keyMirror({
   UPDATE_SEARCH_QUERY: null,
-  UPDATE_FILES_SEARCH_QUERY: null,
   SET_OPENED_BUCKETS: null,
   RELOAD: null,
   RELOAD_SUCCESS: null,
