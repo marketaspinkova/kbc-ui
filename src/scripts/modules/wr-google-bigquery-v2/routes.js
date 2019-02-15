@@ -20,7 +20,6 @@ const routeSettings = {
   componentType: 'writer',
   index: {
     sections: [
-      createOauthSection(),
       {
         render: CollapsibleSection({
           title: 'Google BigQuery Project and Dataset',
