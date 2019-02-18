@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import moment from 'moment';
 import { Table, Button, Label } from 'react-bootstrap';
-import { Loader } from '@keboola/indigo-ui';
+import { Finished, Loader } from '@keboola/indigo-ui';
 import { format } from '../../../../utils/date';
 import ConfirmModal from '../../../../react/common/ConfirmModal';
 import Clipboard from '../../../../react/common/Clipboard';
@@ -41,16 +41,10 @@ export default React.createClass({
           <thead>
             <tr>
               <th>ID</th>
-              <th>Uploaded</th>
               <th>Name</th>
-              <th>Size</th>
-              <th>URL</th>
-              <th className="text-center">Public</th>
-              <th className="text-center">Encrypted</th>
-              <th className="text-center">Permanent</th>
-              <th>Creator</th>
-              <th>Tags</th>
-              <th />
+              <th>Detail</th>
+              <th>Setting</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>{this.props.files.map(this.renderRow).toArray()}</tbody>
@@ -70,35 +64,41 @@ export default React.createClass({
             {file.get('id')}
           </button>
         </td>
-        <td>{format(file.get('created'), 'YYYY-MM-DD HH:mm')}</td>
         <td>
           <FileLink file={file} showFilesize={false} />
+          {file.get('tags').count() > 0 && this.renderTags(file)}
         </td>
         <td>
-          <FileSize size={file.get('sizeBytes')} />
+          <table className="inner-table">
+            <tr>
+              <td>File size</td>
+              <td><FileSize size={file.get('sizeBytes')} /></td>
+            </tr>
+            <tr>
+              <td>Creator</td>
+              <td>{file.getIn(['creatorToken', 'description'])}</td>
+            </tr>
+            <tr>
+              <td>Uploaded</td>
+              <td><Finished showIcon endTime={file.get('created')} /></td>
+            </tr>
+          </table>
         </td>
-        <td>{this.renderClipboard(file)}</td>
-        <td className="text-center">
-          {file.get('isPublic') ? <i className="fa fa-check" /> : <i className="fa fa-times" />}
-        </td>
-        <td className="text-center">
-          {file.get('isEncrypted') ? <i className="fa fa-check" /> : <i className="fa fa-times" />}
-        </td>
-        <td className="text-center">{this.expiration(file)}</td>
         <td>
-          <span>{file.getIn(['creatorToken', 'description'])}</span>
-        </td>
-        <td>
-          {file.get('tags').map((tag, index) => (
-            <Label
-              key={index}
-              className="kbc-cursor-pointer"
-              bsStyle="success"
-              onClick={() => this.props.onSearchQuery(`tags:${tag}`)}
-            >
-              {tag}
-            </Label>
-          ))}
+          <table className="inner-table">
+            <tr>
+              <td>Public</td>
+              <td>{file.get('isPublic') ? <i className="fa fa-check" /> : <i className="fa fa-times" />}</td>
+            </tr>
+            <tr>
+              <td>Encrypted</td>
+              <td>{file.get('isEncrypted') ? <i className="fa fa-check" /> : <i className="fa fa-times" />}</td>
+            </tr>
+            <tr>
+              <td>Expiration</td>
+              <td>{this.expiration(file)}</td>
+            </tr>
+          </table>
         </td>
         <td>
           <FileLinkButton file={file} />
@@ -169,7 +169,13 @@ export default React.createClass({
   },
 
   renderClipboard(file) {
-    return <Clipboard tooltipText="Copy file URL to clipboard" text={file.get('url')} />;
+    return (
+      <Clipboard 
+        tooltipText="Copy file URL to clipboard"
+        tooltipPlacement="top"
+        text={file.get('url')}
+      />
+    );
   },
 
   renderDeleteFile(file) {
@@ -189,6 +195,23 @@ export default React.createClass({
           <i className="fa fa-trash-o" />
         </Button>
       </Tooltip>
+    );
+  },
+
+  renderTags(file) {
+    return (
+      <div>
+        {file.get('tags').map((tag, index) => (
+          <Label
+            key={index}
+            className="kbc-cursor-pointer"
+            bsStyle="success"
+            onClick={() => this.props.onSearchQuery(`tags:${tag}`)}
+          >
+            {tag}
+          </Label>
+        ))}
+      </div>
     );
   },
 
