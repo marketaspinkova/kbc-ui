@@ -24,7 +24,7 @@ export const eventsTemplates = {
   },
 
   'storage.tableImportDone': {
-    'message': 'Successfully imported ',
+    'message': 'Successfully imported',
     'className': 'success'
   },
 
