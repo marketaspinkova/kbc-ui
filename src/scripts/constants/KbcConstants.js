@@ -30,10 +30,20 @@ const ActionTypes = keyMirror({
 
 const FEATURE_UI_DEVEL_PREVIEW = 'ui-devel-preview';
 const FEATURE_EARLY_ADOPTER_PREVIEW = 'early-adopter-preview';
+const FEATURE_UI_LOOKER_PREVIEW = 'ui-looker-preview';
+
+const lookerPreviewHideComponents = [
+  'tde-exporter',
+  'keboola.ex-gooddata',
+  'keboola.gooddata-writer',
+  'gooddata-writer',
+];
 
 export {
   PayloadSources,
   ActionTypes,
   FEATURE_UI_DEVEL_PREVIEW,
-  FEATURE_EARLY_ADOPTER_PREVIEW
+  FEATURE_EARLY_ADOPTER_PREVIEW,
+  FEATURE_UI_LOOKER_PREVIEW,
+  lookerPreviewHideComponents
 };

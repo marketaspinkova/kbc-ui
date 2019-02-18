@@ -1,4 +1,5 @@
 import React from 'react';
+import classnames from 'classnames';
 import { RouteHandler } from 'react-router';
 import ApplicationStore from '../../stores/ApplicationStore';
 import Header from './Header';
@@ -40,13 +41,14 @@ export default React.createClass({
       projectFeatures: ApplicationStore.getCurrentProjectFeatures(),
       projectBaseUrl: ApplicationStore.getProjectBaseUrl(),
       scriptsBasePath: ApplicationStore.getScriptsBasePath(),
-      develPreview: ApplicationStore.hasCurrentAdminFeature(FEATURE_UI_DEVEL_PREVIEW)
+      develPreview: ApplicationStore.hasCurrentAdminFeature(FEATURE_UI_DEVEL_PREVIEW),
+      lookerPreview: ApplicationStore.activeLookerPreview()
     };
   },
 
   render() {
     return (
-      <div>
+      <div className={classnames({ 'looker-ui': this.state.lookerPreview })}>
         {this.state.projectHasGuideModeOn === true && (
           <div className="guide-status-bar">
             <p>{'Guide Mode '}</p>

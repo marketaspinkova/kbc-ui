@@ -1,7 +1,9 @@
 import React, {PropTypes} from 'react';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
+import ApplicationStore from '../../../../stores/ApplicationStore';
 import ComponentsStore from '../../stores/ComponentsStore';
 import NewComponentSelection from '../components/NewComponentSelection';
+import { lookerPreviewHideComponents } from '../../../../constants/KbcConstants';
 
 export default React.createClass({
   mixins: [createStoreMixin(ComponentsStore)],
@@ -13,7 +15,15 @@ export default React.createClass({
     const components = ComponentsStore
       .getFilteredForType(this.props.type)
       .filter((component) => {
-        return !component.get('flags').includes('excludeFromNewList');
+        if (component.get('flags').includes('excludeFromNewList')) {
+          return false;
+        }
+
+        if (ApplicationStore.activeLookerPreview() && lookerPreviewHideComponents.includes(component.get('id'))) {
+          return false;
+        }
+
+        return true;
       });
 
     return {
