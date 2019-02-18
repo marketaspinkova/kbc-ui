@@ -8,6 +8,7 @@ import {getDefaultBucket} from './common';
 import InstalledComponentStore from '../components/stores/InstalledComponentsStore';
 import OauthStore from '../oauth-v2/Store';
 
+import { DatasetLocations } from './constants';
 const COMPONENT_ID = 'keboola.ex-google-bigquery';
 
 export const storeMixins = [InstalledComponentStore, OauthStore];
@@ -40,7 +41,7 @@ export default function(configId) {
   }
 
   function createNewGoogle() {
-    return Map({ projectId: '', storage: ''});
+    return Map({ projectId: '', storage: '', location: DatasetLocations.MULTI_REGION_US});
   }
 
   function createNewQuery() {

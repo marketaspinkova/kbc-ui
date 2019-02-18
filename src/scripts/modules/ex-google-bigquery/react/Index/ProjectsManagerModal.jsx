@@ -9,6 +9,8 @@ import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
 import EmptyState from '../../../components/react/components/ComponentEmptyState';
 
+import { DatasetLocations } from '../../constants';
+
 export default React.createClass({
 
   propTypes: {
@@ -104,6 +106,29 @@ export default React.createClass({
     }
   },
 
+  renderLocationSelect() {
+    const locationOptions = [
+      {
+        'label': 'United States',
+        'value': DatasetLocations.MULTI_REGION_US
+      },
+      {
+        'label': 'European Union',
+        'value': DatasetLocations.MULTI_REGION_EU
+      },
+    ];
+    return (
+      <Select
+        key="location"
+        name="location"
+        clearable={false}
+        disabled={false}
+        value={this.props.google.get('location', DatasetLocations.MULTI_REGION_US).toString()}
+        onChange= {({value: newValue}) => this.updateEditingValue('location', newValue)}
+        options= {locationOptions}/>
+    );
+  },
+
   renderForm() {
     return (
       <div className="form-horizontal">
@@ -127,6 +152,14 @@ export default React.createClass({
             />
             <div className="help-block">Existing Google Cloud Storage bucket. There will be data temporarily exported,
               before load to KBC.
+            </div>
+          </div>
+        </div>
+        <div className="form-group">
+          <label className="col-xs-3 control-label">Dataset location</label>
+          <div className="col-xs-9">
+            {this.renderLocationSelect()}
+            <div className="help-block">The geographic location where source data exists.
             </div>
           </div>
         </div>
