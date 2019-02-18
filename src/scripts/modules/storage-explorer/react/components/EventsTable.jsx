@@ -62,21 +62,18 @@ export default React.createClass({
 
   renderRow(event) {
     const component = this.getComponent(event.get('component'));
+    let message = event.get('message');
     let info = eventsTemplates[event.get('event')];
 
-    if (!info) {
-      info = { message: event.get('message') };
-    }
-
     if (this.props.excludeString) {
-      info.message = replaceAll(info.message, this.props.excludeString, '');
+      message = replaceAll(message, this.props.excludeString, '');
     }
 
     return (
       <tr 
         key={event.get('id')} 
         onClick={() => this.openEventDetail(event)} 
-        className={classnames('kbc-cursor-pointer', info.className)}
+        className={classnames('kbc-cursor-pointer', info && info.className)}
       >
         <td>{format(event.get('created'))}</td>
         <td>
@@ -85,7 +82,7 @@ export default React.createClass({
             <ComponentName component={component} showType={true} capitalize={true} />
           </span>
         </td>
-        <td>{truncate(info.message, 60)}</td>
+        <td>{truncate(message, 60)}</td>
         <td>{event.getIn(['token', 'name'])}</td>
       </tr>
     );
