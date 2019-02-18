@@ -44,7 +44,7 @@ export default React.createClass({
               <th>Name</th>
               <th>Detail</th>
               <th>Setting</th>
-              <th>Action</th>
+              <th />
             </tr>
           </thead>
           <tbody>{this.props.files.map(this.renderRow).toArray()}</tbody>
@@ -100,7 +100,8 @@ export default React.createClass({
             </tr>
           </table>
         </td>
-        <td>
+        <td className="files-action-buttons">
+          {this.renderClipboard(file)}
           <FileLinkButton file={file} />
           {this.renderDeleteFile(file)}
         </td>
