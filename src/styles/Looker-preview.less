@@ -1,3 +1,176 @@
+@looker_white: #ffffff;
+@looker_background: #f5f5f7;
+@looker_light: #e2e5e8;
+@looker_dark: #494f53;
+@looker_black: #262d32;
+@looker_blue: #7f5dff;
+@looker_purple: #604e84;
+
 .looker-ui {
+  .kbc-navbar {
+    background: @looker_black;
+
+    .kbc-logo {
+      width: 270px;
+      background: @looker_black;
+      border-right: solid 2px #000;
+    }
+
+    .kbc-buttons {
+      .btn-success {
+        color: #fff;
+        background-color: @looker_blue;
+        border-color: @looker_purple;
+      }
+    }
+  }
+
+  .kbc-main-header > .kbc-title {
+    color: @looker_blue;
+
+    & > a {
+      color: @looker_blue;
+    }
   
+    .kbc-icon-arrow-right {
+      color: #7C8498;
+    }
+
+    .inline-edit-input-link {
+      color: @looker_white;
+
+      &:hover, 
+      &:focus, 
+      &:active {
+        background-color: @looker_dark;
+      }
+    }
+
+    .inline-edit-input-submit.btn.btn-info {
+      color: #fff;
+      background-color: @looker_blue;
+      border-color: @looker_purple;
+    }
+
+    .inline-edit-input-buttons .fa-spin {
+      background: @looker_black;
+    }
+  }
+
+  .kbc-sidebar {
+    background: @looker_background;
+
+    .kbc-project-select {
+      border: none;
+
+      .dropdown-toggle {
+        width: initial;
+        margin: 15px;
+        padding: 0px;
+        background: @looker_light;
+        border: solid rgba(226, 229, 232, 0.5) 2px;
+        border-radius: 4px;
+
+        .icon {
+          top: 20px;
+          right: 10px;
+        }
+      }
+
+      .kbc-project-name {
+        color: @looker_blue;
+        font-weight: bold;
+        border: none;
+      }
+    }
+  }
+
+  .kbc-nav-sidebar li {
+    & > a,
+    &.active > a {
+      color: @looker_black;
+      border-left: none;
+    }
+
+    & > a:hover,
+    & > a:focus,
+    & > a.active {
+      background: @looker_light;
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
+  }
+
+  .kbc-sidebar-footer {
+    background: @looker_background;
+
+    & > div {
+      border-top: solid 1px #DDDFE2;
+      margin-left: 12px;
+      padding: 10px 0px 20px 0px;
+    }
+  }
+
+  .kbc-user {
+    .kbc-user-name,
+    .dropdown-toggle {
+      color: @looker_black;
+    }
+
+    .kbc-user-name {
+      font-weight: bold;
+    }
+
+    .dropdown-menu,
+    .dropup.open .dropdown-toggle .kbc-icon-picker {
+      background: @looker_dark;
+
+      li > a:hover,
+      li > a:focus {
+        background-color: @looker_purple;
+      }
+    }
+  }
+
+  .kbc-user-links > .nav > li > a {
+    color: @looker_black;
+
+    &:hover,
+    &:focus {
+      color: @looker_blue;
+    }
+  }
+
+  .kbc-main-sidebar {
+    margin-top: 0px;
+
+    .nav {
+      margin-top: 0px;
+
+      a,
+      .btn-link {
+        color: @looker_blue;
+        border: solid transparent 2px;
+
+        &:hover,
+        &:focus {
+          border: solid rgba(226, 229, 232, 0.5) 2px;
+          border-radius: 4px;
+        }
+      }
+    }
+  }
+
+  .btn-link:hover, 
+  .btn-link:focus {
+    color: @looker_blue;
+  }
+
+  .kbc-refresh {
+    color: @looker_light;
+  }
+
+  .label-info {
+    background-color: #96d130;
+  }
 }
