@@ -4,6 +4,7 @@ import { ExternalLink } from '@keboola/indigo-ui';
 import Textarea from 'react-textarea-autosize';
 import { HelpBlock } from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
+import Immutable from 'immutable';
 
 
 export default React.createClass({
@@ -15,7 +16,8 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      value: ''
+      value: '',
+      isValid: false
     };
   },
 
@@ -25,9 +27,28 @@ export default React.createClass({
     });
   },
 
+  isValidJson() {
+    try {
+      JSON.parse(this.state.value);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  },
+
+  onSubmit() {
+    this.props.onSubmit(Immutable.fromJS(JSON.parse(this.state.value)));
+    this.setState({value: ''});
+  },
+
+  onHide() {
+    this.props.onHide();
+    this.setState({value: ''});
+  },
+
   render() {
     return (
-      <Modal show={this.props.show} onHide={this.props.onHide}>
+      <Modal show={this.props.show} onHide={this.onHide}>
         <Modal.Header closeButton={true}>
           <Modal.Title>Google Service Account</Modal.Title>
         </Modal.Header>
@@ -41,23 +62,25 @@ export default React.createClass({
                 onChange={this.onChangeValue}
                 className="form-control"
                 minRows={10}
+                placeholder="{}"
               />
               <HelpBlock>
-                HELP
+                Insert the whole JSON of the private key here. Please read the details how to obtain the service account in the
                 {' '}
                 <ExternalLink href="https://help.keboola.com/manipulation/transformations/sandbox/#connecting-to-sandbox">
-                  the documentation
-                </ExternalLink>
+                  documentation
+                </ExternalLink>.
               </HelpBlock>
             </div>
           </form>
         </Modal.Body>
         <Modal.Footer>
           <ConfirmButtons
-            isDisabled="true"
+            isDisabled={!this.isValidJson()}
             saveLabel="Submit"
-            onCancel={this.props.onHide}
+            onCancel={this.onHide}
             onSave={this.onSubmit}
+            isSaving={false}
           />
         </Modal.Footer>
       </Modal>

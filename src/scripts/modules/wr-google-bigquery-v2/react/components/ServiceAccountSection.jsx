@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Form, FormControl, FormGroup, ControlLabel, Col} from 'react-bootstrap';
+import {Form, FormControl, FormGroup, ControlLabel, Col, Button} from 'react-bootstrap';
 import Modal from './ServiceAccountModal';
 
 export default React.createClass({
@@ -22,7 +22,7 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      showModal: true
+      showModal: false
     };
   },
 
@@ -68,6 +68,22 @@ export default React.createClass({
     );
   },
 
+  handleModalSubmit(value) {
+    this.setState({showModal: false});
+    this.props.onChange({
+      type: value.get('type', ''),
+      projectId: value.get('project_id', ''),
+      privateKeyId: value.get('private_key_id', ''),
+      privateKey: value.get('private_key', ''),
+      clientEmail: value.get('client_email', ''),
+      clientId: value.get('client_id', ''),
+      authUri: value.get('auth_uri', ''),
+      tokenUri: value.get('token_uri', ''),
+      authProviderX509CertUrl: value.get('auth_provider_x509_cert_url', ''),
+      clientX509CertUrl: value.get('client_x509_cert_url', '')
+    });
+  },
+
   render() {
     return (
       <Form horizontal>
@@ -75,9 +91,11 @@ export default React.createClass({
         <Modal
           show={this.state.showModal}
           onHide={() => this.setState({showModal: false})}
-          onSubmit={() => this.setState({showModal: false})}
+          onSubmit={this.handleModalSubmit}
         />
-        NEW CREDENTIALS BUTTON
+        <Button bsStyle="link" onClick={() => this.setState({showModal: true})}>
+          Set new Service Account
+        </Button>
         {!this.showJsonInput() && this.renderForm()}
       </Form>
     );
