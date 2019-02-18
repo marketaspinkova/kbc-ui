@@ -69,7 +69,7 @@ export default React.createClass({
           {file.get('tags').count() > 0 && this.renderTags(file)}
         </td>
         <td>
-          <table className="inner-table">
+          <table className="files-inner-table">
             <tr>
               <td>File size</td>
               <td><FileSize size={file.get('sizeBytes')} /></td>
@@ -85,7 +85,7 @@ export default React.createClass({
           </table>
         </td>
         <td>
-          <table className="inner-table">
+          <table className="files-inner-table">
             <tr>
               <td>Public</td>
               <td>{file.get('isPublic') ? <i className="fa fa-check" /> : <i className="fa fa-times" />}</td>
