@@ -85,8 +85,12 @@ export default React.createClass({
           </table>
         </td>
         <td>
-            {file.get('isPublic') && <div>Is public</div>}
-            {file.get('isEncrypted') && <div>Is encrypted</div>}
+            {file.get('isPublic') && (
+              <div><i className="fa fa-eye" /> Is public</div>
+            )}
+            {!file.get('isEncrypted') && (
+              <div><i className="fa fa-times" /> Is not encrypted</div>
+            )}
             {this.expiration(file)}
         </td>
         <td className="files-action-buttons">
