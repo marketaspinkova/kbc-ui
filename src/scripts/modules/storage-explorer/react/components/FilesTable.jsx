@@ -138,16 +138,16 @@ export default React.createClass({
     const diffDays = expiresOn.diff(now, 'days');
 
     if (diffDays > 0) {
-      return <div>Expires in {diffDays} days</div>;
+      return <div className="text-success">Expires in {diffDays} days</div>;
     }
 
     const diffMinutes = expiresOn.diff(now, 'minutes');
 
     if (diffMinutes > 0) {
-      return <div>Expires in {diffMinutes} minutes</div>;
+      return <div className="text-success">Expires in {diffMinutes} minutes</div>;
     }
 
-    return <div>Expired {format(expiresOn, 'YYYY-MM-DD HH:mm')}</div>;
+    return <div className="text-danger">Expired {format(expiresOn, 'YYYY-MM-DD HH:mm')}</div>;
   },
 
   renderClipboard(file) {
