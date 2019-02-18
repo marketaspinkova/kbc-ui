@@ -43,7 +43,7 @@ export default React.createClass({
               <th>ID</th>
               <th>Name</th>
               <th>Detail</th>
-              <th>Setting</th>
+              <th>State</th>
               <th />
             </tr>
           </thead>
@@ -85,20 +85,9 @@ export default React.createClass({
           </table>
         </td>
         <td>
-          <table className="files-inner-table">
-            <tr>
-              <td>Public</td>
-              <td>{file.get('isPublic') ? <i className="fa fa-check" /> : <i className="fa fa-times" />}</td>
-            </tr>
-            <tr>
-              <td>Encrypted</td>
-              <td>{file.get('isEncrypted') ? <i className="fa fa-check" /> : <i className="fa fa-times" />}</td>
-            </tr>
-            <tr>
-              <td>Expiration</td>
-              <td>{this.expiration(file)}</td>
-            </tr>
-          </table>
+            {file.get('isPublic') && <div>Is public</div>}
+            {file.get('isEncrypted') && <div>Is encrypted</div>}
+            {this.expiration(file)}
         </td>
         <td className="files-action-buttons">
           {this.renderClipboard(file)}
@@ -137,7 +126,7 @@ export default React.createClass({
     const maxAgeDays = file.get('maxAgeDays', null);
 
     if (maxAgeDays === null) {
-      return <i className="fa fa-check" />;
+      return null;
     }
 
     const now = moment();
@@ -145,28 +134,16 @@ export default React.createClass({
     const diffDays = expiresOn.diff(now, 'days');
 
     if (diffDays > 0) {
-      return (
-        <Tooltip placement="right" tooltip={`Expires in ${diffDays} days`}>
-          <i className="fa fa-times" />
-        </Tooltip>
-      );
+      return <div>Expires in {diffDays} days</div>;
     }
 
     const diffMinutes = expiresOn.diff(now, 'minutes');
 
     if (diffMinutes > 0) {
-      return (
-        <Tooltip placement="right" tooltip={`Expires in ${diffMinutes} minutes`}>
-          <i className="fa fa-times" />
-        </Tooltip>
-      );
+      return <div>Expires in {diffMinutes} minutes</div>;
     }
 
-    return (
-      <Tooltip placement="right" tooltip={`Expired ${format(expiresOn, 'YYYY-MM-DD HH:mm')}`}>
-        <Label bsStyle="danger">Expired</Label>
-      </Tooltip>
-    );
+    return <div>Expired {format(expiresOn, 'YYYY-MM-DD HH:mm')}</div>;
   },
 
   renderClipboard(file) {
