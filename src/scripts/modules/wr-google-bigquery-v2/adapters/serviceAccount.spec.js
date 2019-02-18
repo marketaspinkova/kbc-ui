@@ -30,7 +30,7 @@ describe('serviceAccount', function() {
       expect(false).toEqual(adapter.isComplete(Immutable.fromJS({})));
     });
     it('should return true when parameters are filled', function() {
-      expect(true).toEqual(adapter.isComplete(Immutable.fromJS({parameters: {service_account: {'#private_key': 'b'}}})));
+      expect(true).toEqual(adapter.isComplete(Immutable.fromJS({parameters: {service_account: {'private_key_id': 'b'}}})));
     });
   });
 });

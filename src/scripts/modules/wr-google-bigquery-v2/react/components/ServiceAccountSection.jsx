@@ -27,7 +27,7 @@ export default React.createClass({
   },
 
   showJsonInput() {
-    return (this.props.value.privateKey === '')
+    return (this.props.value.privateKeyId === '')
   },
 
   renderForm() {

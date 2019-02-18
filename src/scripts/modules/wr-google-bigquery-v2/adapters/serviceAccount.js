@@ -39,7 +39,7 @@ const parseConfiguration = function(configuration) {
 };
 
 const isComplete = function(configuration) {
-  if (configuration.getIn(['parameters', 'service_account', '#private_key'], '') === '') {
+  if (configuration.getIn(['parameters', 'service_account', 'private_key_id'], '') === '') {
     return false;
   }
   return true;
