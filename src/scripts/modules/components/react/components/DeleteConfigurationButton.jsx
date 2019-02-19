@@ -75,6 +75,6 @@ export default React.createClass({
       return <Loader />;
     }
 
-    return <i className="kbc-icon-cup fa fa-fw" />;
+    return <span className="kbc-icon-cup fa fa-fw" />;
   }
 });

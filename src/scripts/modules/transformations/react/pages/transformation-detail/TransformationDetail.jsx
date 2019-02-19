@@ -157,7 +157,7 @@ export default React.createClass({
                 to="transformationDetailGraph"
                 params={{ row: this.state.transformation.get('id'), config: this.state.bucket.get('id') }}
               >
-                <i className="fa fa-search fa-fw" />
+                <span className="fa fa-search fa-fw" />
                 {' Overview'}
               </Link>
             </li>
@@ -233,7 +233,7 @@ export default React.createClass({
                   onConfirm={this._deleteTransformation}
                 >
                   <span>
-                    <i className="fa kbc-icon-cup fa-fw" />
+                    <span className="fa kbc-icon-cup fa-fw" />
                     {' Delete transformation'}
                   </span>
                 </Confirm>
