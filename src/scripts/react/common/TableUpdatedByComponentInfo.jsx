@@ -1,17 +1,14 @@
-import React, {PropTypes} from 'react';
-import {fromJS} from 'immutable';
-import createStoreMixin from '../mixins/createStoreMixin';
-import {Loader} from '@keboola/indigo-ui';
-
-import date from '../../utils/date';
+import React, { PropTypes } from 'react';
 import moment from 'moment';
-
+import { Loader } from '@keboola/indigo-ui';
+import createStoreMixin from '../mixins/createStoreMixin';
+import InstalledComponentsStore from '../../modules/components/stores/InstalledComponentsStore';
 import ComponentsStore from '../../modules/components/stores/ComponentsStore';
+import InstalledComponentsActions from '../../modules/components/InstalledComponentsActionCreators';
+import ComponentConfigurationLink from '../../modules/components/react/components/ComponentConfigurationLink';
+import date from '../../utils/date';
 import ComponentIcon from './ComponentIcon';
 import ComponentName from './ComponentName';
-import ComponentConfigurationLink from '../../modules/components/react/components/ComponentConfigurationLink';
-import InstalledComponentsStore from '../../modules/components/stores/InstalledComponentsStore';
-import InstalledComponentsActions from '../../modules/components/InstalledComponentsActionCreators';
 
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore, ComponentsStore)],
@@ -21,23 +18,26 @@ export default React.createClass({
   },
 
   getStateFromStores() {
+    const { componentId, configId } = this.getLastUpdatedInfo();
+
     return {
+      componentId,
+      configId,
+      component: ComponentsStore.getComponent(componentId),
+      config: InstalledComponentsStore.getConfig(componentId, configId),
       isConfigsLoading: InstalledComponentsStore.getIsLoading(),
       isConfigsLoaded: InstalledComponentsStore.getIsLoaded()
     };
   },
 
   componentDidMount() {
-    if (!!this.state.isConfigsLoading && this.state.isConfigsLoaded) {
+    if (!this.state.isConfigsLoading && !this.state.isConfigsLoaded) {
       InstalledComponentsActions.loadComponentsForce();
     }
   },
 
   render() {
-    const {componentId, configId/* , timestamp*/} = this.getLastUpdatedInfo();
-    const component = componentId && ComponentsStore.getComponent(componentId);
-
-    if (!component) {
+    if (!this.state.component) {
       return <span>N/A</span>;
     }
 
@@ -45,15 +45,20 @@ export default React.createClass({
       return <Loader />;
     }
 
-    const config = InstalledComponentsStore.getConfig(componentId, configId);
-    const unknownConfigName = `Unknown configuration (${configId})`;
-    const configName = config ? config.get('name', unknownConfigName) : unknownConfigName;
+    if (!this.state.config.count()) {
+      return (
+        <span>
+          <ComponentIcon component={this.state.component} resizeToSize="16" />
+          <ComponentName component={this.state.component} /> / {this.state.configId}
+        </span>
+      );
+    }
 
     return (
       <span>
-        <ComponentIcon component={fromJS(component)} resizeToSize="16" />
-        <ComponentConfigurationLink componentId={componentId} configId={configId}>
-          <ComponentName component={component} /> / {configName}
+        <ComponentIcon component={this.state.component} resizeToSize="16" />
+        <ComponentConfigurationLink componentId={this.state.componentId} configId={this.state.configId}>
+          <ComponentName component={this.state.component} /> / {this.state.config.get('name', this.state.configId)}
         </ComponentConfigurationLink>
       </span>
     );
@@ -63,10 +68,10 @@ export default React.createClass({
     if (value === null) {
       return 'N/A';
     }
-    const fromNow = moment(value).fromNow();
+
     return (
-      <div> {date.format(value)}
-        <small> {fromNow} </small>
+      <div>
+        {date.format(value)} <small>{moment(value).fromNow()}</small>
       </div>
     );
   },
@@ -74,19 +79,19 @@ export default React.createClass({
   getLastUpdatedInfo() {
     let componentFound = this.metadataLookup('KBC.lastUpdatedBy.component.id');
     let configFound = this.metadataLookup('KBC.lastUpdatedBy.configuration.id');
+
     if (!componentFound || !configFound) {
       componentFound = this.metadataLookup('KBC.createdBy.component.id');
       configFound = this.metadataLookup('KBC.createdBy.configuration.id');
     }
-    const componentId = componentFound && componentFound.get('value');
-    const configId = configFound && configFound.get('value');
-    const timestamp = configFound && configFound.get('timestamp');
-    return {componentId, configId, timestamp};
+
+    return { 
+      componentId: componentFound && componentFound.get('value'), 
+      configId: configFound && configFound.get('value')
+    };
   },
 
   metadataLookup(key) {
-    const metadata = this.props.table.get('metadata');
-    return metadata.find(m => m.get('key') === key);
+    return this.props.table.get('metadata').find((m) => m.get('key') === key);
   }
-
 });
