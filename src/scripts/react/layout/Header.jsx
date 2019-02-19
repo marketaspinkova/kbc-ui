@@ -52,7 +52,7 @@ export default React.createClass({
         <div className="col-xs-9 col-xs-offset-3 kbc-main-header-container">
           <div className="kbc-main-header kbc-header">
             <div className="kbc-title">
-              {this._renderComponentIcon()}
+              {!this.state.lookerPreview && this._renderComponentIcon()}
               {this._renderBreadcrumbs()} {this._renderReloader()}{' '}
               {this.state.isRoutePending && <RoutePendingIndicator />}
             </div>
