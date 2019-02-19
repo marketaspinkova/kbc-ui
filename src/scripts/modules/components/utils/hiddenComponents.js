@@ -1,5 +1,6 @@
 import _ from 'underscore';
 import ApplicationStore from '../../../stores/ApplicationStore';
+import { FEATURE_EARLY_ADOPTER_PREVIEW } from '../../../constants/KbcConstants';
 
 // hardcoded array of hiden components(under construction components)
 // possible alternative is hasUI component property
@@ -24,8 +25,7 @@ export default {
   },
 
   hasCurrentUserEarlyAdopterFeature() {
-    const adminFeature = 'early-adopter-preview';
-    return ApplicationStore.hasCurrentAdminFeature(adminFeature);
+    return ApplicationStore.hasCurrentAdminFeature(FEATURE_EARLY_ADOPTER_PREVIEW);
   },
 
   filterHiddenRoutes(routes) {
