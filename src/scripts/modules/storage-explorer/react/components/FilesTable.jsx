@@ -2,8 +2,7 @@ import React, { PropTypes } from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import moment from 'moment';
 import { Table, Button, Label } from 'react-bootstrap';
-import { Loader } from '@keboola/indigo-ui';
-import { format } from '../../../../utils/date';
+import { Finished, Loader } from '@keboola/indigo-ui';
 import ConfirmModal from '../../../../react/common/ConfirmModal';
 import Clipboard from '../../../../react/common/Clipboard';
 import FileSize from '../../../../react/common/FileSize';
@@ -41,15 +40,9 @@ export default React.createClass({
           <thead>
             <tr>
               <th>ID</th>
-              <th>Uploaded</th>
               <th>Name</th>
-              <th>Size</th>
-              <th>URL</th>
-              <th className="text-center">Public</th>
-              <th className="text-center">Encrypted</th>
-              <th className="text-center">Permanent</th>
-              <th>Creator</th>
-              <th>Tags</th>
+              <th>Detail</th>
+              <th>State</th>
               <th />
             </tr>
           </thead>
@@ -70,37 +63,39 @@ export default React.createClass({
             {file.get('id')}
           </button>
         </td>
-        <td>{format(file.get('created'), 'YYYY-MM-DD HH:mm')}</td>
         <td>
           <FileLink file={file} showFilesize={false} />
+          {file.get('tags').count() > 0 && this.renderTags(file)}
         </td>
         <td>
-          <FileSize size={file.get('sizeBytes')} />
-        </td>
-        <td>{this.renderClipboard(file)}</td>
-        <td className="text-center">
-          {file.get('isPublic') ? <i className="fa fa-check" /> : <i className="fa fa-times" />}
-        </td>
-        <td className="text-center">
-          {file.get('isEncrypted') ? <i className="fa fa-check" /> : <i className="fa fa-times" />}
-        </td>
-        <td className="text-center">{this.expiration(file)}</td>
-        <td>
-          <span>{file.getIn(['creatorToken', 'description'])}</span>
-        </td>
-        <td>
-          {file.get('tags').map((tag, index) => (
-            <Label
-              key={index}
-              className="kbc-cursor-pointer"
-              bsStyle="success"
-              onClick={() => this.props.onSearchQuery(`tags:${tag}`)}
-            >
-              {tag}
-            </Label>
-          ))}
+          <table className="files-inner-table">
+            <tbody>
+              <tr>
+                <td>File size</td>
+                <td><FileSize size={file.get('sizeBytes')} /></td>
+              </tr>
+              <tr>
+                <td>Creator</td>
+                <td>{file.getIn(['creatorToken', 'description'])}</td>
+              </tr>
+              <tr>
+                <td>Uploaded</td>
+                <td><Finished showIcon endTime={file.get('created')} /></td>
+              </tr>
+            </tbody>
+          </table>
         </td>
         <td>
+            {file.get('isPublic') && (
+              <div>Public</div>
+            )}
+            {!file.get('isEncrypted') && (
+              <div>Not encrypted</div>
+            )}
+            {this.expiration(file)}
+        </td>
+        <td className="files-action-buttons">
+          {this.renderClipboard(file)}
           <FileLinkButton file={file} />
           {this.renderDeleteFile(file)}
         </td>
@@ -136,7 +131,7 @@ export default React.createClass({
     const maxAgeDays = file.get('maxAgeDays', null);
 
     if (maxAgeDays === null) {
-      return <i className="fa fa-check" />;
+      return 'Permanent';
     }
 
     const now = moment();
@@ -144,32 +139,26 @@ export default React.createClass({
     const diffDays = expiresOn.diff(now, 'days');
 
     if (diffDays > 0) {
-      return (
-        <Tooltip placement="right" tooltip={`Expires in ${diffDays} days`}>
-          <i className="fa fa-times" />
-        </Tooltip>
-      );
+      return <div className="text-success">Expires in {diffDays} days</div>;
     }
 
     const diffMinutes = expiresOn.diff(now, 'minutes');
 
     if (diffMinutes > 0) {
-      return (
-        <Tooltip placement="right" tooltip={`Expires in ${diffMinutes} minutes`}>
-          <i className="fa fa-times" />
-        </Tooltip>
-      );
+      return <div className="text-success">Expires in {diffMinutes} minutes</div>;
     }
 
-    return (
-      <Tooltip placement="right" tooltip={`Expired ${format(expiresOn, 'YYYY-MM-DD HH:mm')}`}>
-        <Label bsStyle="danger">Expired</Label>
-      </Tooltip>
-    );
+    return <div className="text-danger">Expired</div>;
   },
 
   renderClipboard(file) {
-    return <Clipboard tooltipText="Copy file URL to clipboard" text={file.get('url')} />;
+    return (
+      <Clipboard 
+        tooltipText="Copy file URL to clipboard"
+        tooltipPlacement="top"
+        text={file.get('url')}
+      />
+    );
   },
 
   renderDeleteFile(file) {
@@ -189,6 +178,23 @@ export default React.createClass({
           <i className="fa fa-trash-o" />
         </Button>
       </Tooltip>
+    );
+  },
+
+  renderTags(file) {
+    return (
+      <div>
+        {file.get('tags').map((tag, index) => (
+          <Label
+            key={index}
+            className="kbc-cursor-pointer"
+            bsStyle="success"
+            onClick={() => this.props.onSearchQuery(`tags:${tag}`)}
+          >
+            {tag}
+          </Label>
+        ))}
+      </div>
     );
   },
 
