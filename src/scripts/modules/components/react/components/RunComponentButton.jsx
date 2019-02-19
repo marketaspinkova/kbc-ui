@@ -151,7 +151,7 @@ module.exports = React.createClass({
         onClick={this.onOpenButtonClick}
       >
         {this.renderModal()}
-        {this._renderIcon()} {this.props.label ? ' ' + this.props.label : void 0}
+        {this._renderIcon()}{this.props.label && ` ${this.props.label}`}
       </Button>
     );
   },

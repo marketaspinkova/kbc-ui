@@ -155,7 +155,9 @@ module.exports = {
       configId: configId
     });
     dataToSave = InstalledComponentsStore.getSavingConfigData(componentId, configId);
-    dataToSave = dataToSave !== null ? dataToSave.toJS() : void 0;
+    if (dataToSave) {
+      dataToSave = dataToSave.toJS();
+    }
     return storeEncodedConfig(componentId, configId, dataToSave, 'Update configuration').then(function(response) {
       VersionActionCreators.loadVersionsForce(componentId, configId);
       return dispatcher.handleViewAction({
@@ -181,10 +183,14 @@ module.exports = {
       configId: configId
     });
     parametersToSave = InstalledComponentsStore.getSavingConfigDataParameters(componentId, configId);
-    parametersToSave = parametersToSave !== null ? parametersToSave.toJS() : void 0;
+    if (parametersToSave) {
+      parametersToSave = parametersToSave.toJS();
+    }
     dataToSave = InstalledComponentsStore.getConfigData(componentId, configId);
-    dataToSave = dataToSave !== null ? dataToSave.toJS() : void 0;
-    dataToSave.parameters = parametersToSave;
+    if (dataToSave) {
+      dataToSave = dataToSave.toJS();
+      dataToSave.parameters = parametersToSave;
+    }
     return storeEncodedConfig(componentId, configId, dataToSave, 'Update parameters').then(function(response) {
       VersionActionCreators.loadVersionsForce(componentId, configId);
       return dispatcher.handleViewAction({
@@ -211,7 +217,9 @@ module.exports = {
       forceData: forceData
     });
     dataToSave = InstalledComponentsStore.getSavingConfigData(componentId, configId);
-    dataToSave = dataToSave !== null ? dataToSave.toJS() : void 0;
+    if (dataToSave) {
+      dataToSave = dataToSave.toJS();
+    }
     return storeEncodedConfig(componentId, configId, dataToSave, changeDescription).then(function(response) {
       VersionActionCreators.loadVersionsForce(componentId, configId);
       return dispatcher.handleViewAction({
@@ -711,7 +719,9 @@ module.exports = {
       configId: configId
     });
     dataToSave = InstalledComponentsStore.getSavingConfigData(componentId, configId);
-    dataToSave = dataToSave !== null ? dataToSave.toJS() : void 0;
+    if (dataToSave) {
+      dataToSave = dataToSave.toJS();
+    }
     return storeEncodedConfig(componentId, configId, dataToSave, 'Update parameters').then(function(response) {
       VersionActionCreators.loadVersionsForce(componentId, configId);
       return dispatcher.handleViewAction({
