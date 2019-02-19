@@ -3,7 +3,6 @@ import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import moment from 'moment';
 import { Table, Button, Label } from 'react-bootstrap';
 import { Finished, Loader } from '@keboola/indigo-ui';
-import { format } from '../../../../utils/date';
 import ConfirmModal from '../../../../react/common/ConfirmModal';
 import Clipboard from '../../../../react/common/Clipboard';
 import FileSize from '../../../../react/common/FileSize';
@@ -86,10 +85,10 @@ export default React.createClass({
         </td>
         <td>
             {file.get('isPublic') && (
-              <div><i className="fa fa-eye" /> Is public</div>
+              <div>Public</div>
             )}
             {!file.get('isEncrypted') && (
-              <div><i className="fa fa-times" /> Is not encrypted</div>
+              <div>Not encrypted</div>
             )}
             {this.expiration(file)}
         </td>
@@ -130,7 +129,7 @@ export default React.createClass({
     const maxAgeDays = file.get('maxAgeDays', null);
 
     if (maxAgeDays === null) {
-      return null;
+      return 'Permanent';
     }
 
     const now = moment();
@@ -147,7 +146,7 @@ export default React.createClass({
       return <div className="text-success">Expires in {diffMinutes} minutes</div>;
     }
 
-    return <div className="text-danger">Expired {format(expiresOn, 'YYYY-MM-DD HH:mm')}</div>;
+    return <div className="text-danger">Expired</div>;
   },
 
   renderClipboard(file) {
