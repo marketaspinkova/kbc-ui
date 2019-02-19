@@ -5,7 +5,6 @@ import NewConfigurationsActionCreators from '../../../NewConfigurationsActionCre
 import DefaultForm from './DefaultForm';
 import GoodDataWriterForm from './GoodDataWriterForm';
 import ManualConfigurationForm from './ManualConfigurationFrom';
-import hiddenComponents from '../../../utils/hiddenComponents';
 
 export default React.createClass({
   mixins: [createStoreMixin(NewConfigurationsStore)],
@@ -61,7 +60,6 @@ export default React.createClass({
   _getFormHandler() {
     const hasUI =
       this.props.component.get('hasUI') ||
-      hiddenComponents.hasDevelPreview(this.props.component.get('id')) ||
       this.props.component.get('flags').includes('genericUI') ||
       this.props.component.get('flags').includes('genericDockerUI') ||
       this.props.component.get('flags').includes('genericTemplatesUI');

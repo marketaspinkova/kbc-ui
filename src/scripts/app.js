@@ -21,8 +21,6 @@ import Error from './utils/Error';
 import ApplicationActionCreators from './actions/ApplicationActionCreators';
 import RouterActionCreators from './actions/RouterActionCreators';
 
-import HiddenComponents from './modules/components/utils/hiddenComponents';
-
 import RoutesStore from './stores/RoutesStore';
 import initializeData from './initializeData';
 
@@ -58,7 +56,7 @@ const startApp = appOptions => {
     tokenStats: appOptions.data.tokenStats
   });
 
-  let routes = HiddenComponents.filterHiddenRoutes(appRoutes);
+  let routes = appRoutes;
   RouterActionCreators.routesConfigurationReceive(routes);
 
   const router = Router.create({
