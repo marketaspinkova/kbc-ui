@@ -23,6 +23,11 @@ export default {
     return ApplicationStore.hasCurrentAdminFeature(adminFeature);
   },
 
+  hasCurrentUserEarlyAdopterFeature() {
+    const adminFeature = 'early-adopter-preview';
+    return ApplicationStore.hasCurrentAdminFeature(adminFeature);
+  },
+
   filterHiddenRoutes(routes) {
     const stack = [routes];
     while (!_.isEmpty(stack)) {
