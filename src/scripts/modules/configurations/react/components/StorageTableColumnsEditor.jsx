@@ -63,7 +63,9 @@ export default React.createClass({
           dataPreviewError
         });
 
-        throw error;
+        if (!dataPreviewError) {
+          throw error;
+        }
       });
   },
 

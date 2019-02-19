@@ -178,12 +178,25 @@ export default React.createClass({
       .then(json => {
         this.setState({ data: json, loading: false });
       })
-      .catch(({ message, response }) => {
-        const errorMessage =
-          response.body.code === 'storage.maxNumberOfColumnsExceed'
-            ? 'Data sample cannot be displayed. Too many columns.'
-            : message;
-        this.setState({ data: [], error: errorMessage, loading: false });
+      .catch((error) => {
+        let errorMessage = null;
+        if (error.response && error.response.body) {
+          if (error.response.body.code === 'storage.maxNumberOfColumnsExceed') {
+            errorMessage = 'Data sample cannot be displayed. Too many columns.';
+          } else {
+            errorMessage = error.response.body.message;
+          }
+        }
+
+        this.setState({ 
+          data: [],
+          loading: false,
+          error: errorMessage
+        });
+
+        if (!errorMessage) {
+          throw error;
+        }
       });
 
     return this.cancellablePromise;
