@@ -31,7 +31,7 @@ export default React.createClass({
   componentDidUpdate(prevProps) {
     if (!prevProps.show && this.props.show) {
       this.setState({ errorMessage: null });
-      this.props.loadAccountProjectsFn('test').catch(SyncActionError, (error) => {
+      this.props.loadAccountProjectsFn().catch(SyncActionError, (error) => {
         this.setState({ errorMessage: error.message })
       })
     }
@@ -193,8 +193,8 @@ export default React.createClass({
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          {this.renderLoadingListError()}
           {this.renderForm()}
-          {this.renderError()}
         </Modal.Body>
         <Modal.Footer>
           <ConfirmButtons
@@ -209,14 +209,15 @@ export default React.createClass({
     );
   },
 
-  renderError() {
+  renderLoadingListError() {
     if (this.state.errorMessage === null) {
       return null;
     }
 
     return (
-      <Alert bsStyle="danger">
-        <p className="small">{this.state.errorMessage}</p>
+      <Alert bsStyle="warning">
+        <p><strong>Loading projects list failed</strong></p>
+        <p>{this.state.errorMessage}</p>
       </Alert>
     );
   },
