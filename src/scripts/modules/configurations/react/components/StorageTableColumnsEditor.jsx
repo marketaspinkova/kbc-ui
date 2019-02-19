@@ -55,14 +55,15 @@ export default React.createClass({
           } else {
             dataPreviewError = error.response.body.message;
           }
-        } else {
-          throw new Error(JSON.stringify(error));
         }
+
         this.setState({
           loadingPreview: false,
           dataPreview: null,
-          dataPreviewError: dataPreviewError
+          dataPreviewError
         });
+
+        throw error;
       });
   },
 
