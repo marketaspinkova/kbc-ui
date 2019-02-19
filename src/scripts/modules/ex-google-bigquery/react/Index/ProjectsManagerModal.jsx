@@ -93,7 +93,8 @@ export default React.createClass({
             disabled={false}
             value={this.props.google.get('projectId', '').toString()}
             onChange= {({value: newValue}) => this.updateEditingValue('projectId', newValue)}
-            options= {projectOptions}/>
+            options= {projectOptions}
+          />
         );
       } else {
         return (
@@ -122,10 +123,10 @@ export default React.createClass({
         key="location"
         name="location"
         clearable={false}
-        disabled={false}
+        searchable={false}
         value={this.props.google.get('location', DatasetLocations.MULTI_REGION_US).toString()}
-        onChange= {({value: newValue}) => this.updateEditingValue('location', newValue)}
-        options= {locationOptions}/>
+        onChange={({value: newValue}) => this.updateEditingValue('location', newValue)}
+        options={locationOptions}/>
     );
   },
 
