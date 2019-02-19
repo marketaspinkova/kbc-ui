@@ -5,7 +5,14 @@ export default React.createClass({
   propTypes: {
     transformationId: React.PropTypes.string.isRequired,
     bucketId: React.PropTypes.string.isRequired,
-    backend: React.PropTypes.string.isRequired
+    backend: React.PropTypes.string.isRequired,
+    lookerPreview: React.PropTypes.bool
+  },
+
+  getDefaultProps() {
+    return {
+      lookerPreview: false
+    }
   },
 
   getInitialState() {
@@ -39,7 +46,11 @@ export default React.createClass({
   render() {
     return (
       <a onClick={this.handleOpenButtonClick}>
-        <i className="fa fa-sitemap fa-fw" />
+        {this.props.lookerPreview ? (
+          <i className="fa fa-database fa-fw" />
+        ) : (
+          <i className="fa fa-sitemap fa-fw" />
+        )}
         {' '}SQLdep
         {this.betaWarning()}
         <Modal

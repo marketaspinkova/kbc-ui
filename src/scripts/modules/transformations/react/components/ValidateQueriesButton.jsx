@@ -9,7 +9,14 @@ export default React.createClass({
     modalOpen: React.PropTypes.bool.isRequired,
     onModalOpen: React.PropTypes.func.isRequired,
     onModalClose: React.PropTypes.func.isRequired,
-    isSaved: React.PropTypes.bool.isRequired
+    isSaved: React.PropTypes.bool.isRequired,
+    lookerPreview: React.PropTypes.bool
+  },
+
+  getDefaultProps() {
+    return {
+      lookerPreview: false
+    }
   },
 
   handleOpenButtonClick(e) {
@@ -20,7 +27,11 @@ export default React.createClass({
   render() {
     return (
       <a onClick={this.handleOpenButtonClick}>
-        <i className="fa fa-check-square-o fa-fw" />
+        {this.props.lookerPreview ? (
+          <i className="fa fa-check-circle fa-fw" />
+        ) : (
+          <i className="fa fa-check-square-o fa-fw" />
+        )}
         {' '}Validate
         <span>{' '}
           <span className="label label-info">BETA</span>
