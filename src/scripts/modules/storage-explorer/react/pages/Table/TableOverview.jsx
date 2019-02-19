@@ -4,6 +4,7 @@ import { Table, Button, Row } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 
 import MetadataEditField from '../../../../components/react/components/MetadataEditField';
+import TableUpdatedByComponentInfo from '../../../../../react/common/TableUpdatedByComponentInfo';
 import InlineEditArea from '../../../../../react/common/InlineEditArea';
 import CreatedWithIcon from '../../../../../react/common/CreatedWithIcon';
 import Tooltip from '../../../../../react/common/Tooltip';
@@ -126,6 +127,10 @@ export default React.createClass({
                 <td>
                   <CreatedWithIcon createdTime={table.get('lastChangeDate')} relative={false} />
                 </td>
+              </tr>
+              <tr>
+                <td>Last updated by</td>
+                <td><TableUpdatedByComponentInfo table={table}/></td>
               </tr>
               <tr>
                 <td>Rows count</td>
