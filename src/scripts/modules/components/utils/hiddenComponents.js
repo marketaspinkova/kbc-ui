@@ -1,6 +1,6 @@
 import _ from 'underscore';
 import ApplicationStore from '../../../stores/ApplicationStore';
-import { FEATURE_EARLY_ADOPTER_PREVIEW } from '../../../constants/KbcConstants';
+import { FEATURE_EARLY_ADOPTER_PREVIEW, FEATURE_UI_DEVEL_PREVIEW } from '../../../constants/KbcConstants';
 
 // hardcoded array of hiden components(under construction components)
 // possible alternative is hasUI component property
@@ -20,8 +20,7 @@ export default {
   },
 
   hasCurrentUserDevelPreview() {
-    const adminFeature = 'ui-devel-preview';
-    return ApplicationStore.hasCurrentAdminFeature(adminFeature);
+    return ApplicationStore.hasCurrentAdminFeature(FEATURE_UI_DEVEL_PREVIEW);
   },
 
   hasCurrentUserEarlyAdopterFeature() {
