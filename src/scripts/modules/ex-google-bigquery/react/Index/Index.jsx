@@ -33,6 +33,7 @@ import {Loader} from '@keboola/indigo-ui';
 
 
 // CONSTS
+import { DatasetLocations } from '../../constants';
 const ROUTE_PREFIX = 'ex-db-generic-';
 const COMPONENT_ID = 'keboola.ex-google-bigquery';
 
@@ -212,6 +213,9 @@ export default React.createClass({
         </div>
         <div className="static-modal">
           CloudStorage bucket: <strong>{this.state.store.google.get('storage', null)}</strong>
+        </div>
+        <div className="static-modal">
+          Dataset location: <strong>{this.state.store.google.get('location', DatasetLocations.MULTI_REGION_US)}</strong>
         </div>
         <div className="static-modal">
           <Confirm
