@@ -69,18 +69,20 @@ export default React.createClass({
         </td>
         <td>
           <table className="files-inner-table">
-            <tr>
-              <td>File size</td>
-              <td><FileSize size={file.get('sizeBytes')} /></td>
-            </tr>
-            <tr>
-              <td>Creator</td>
-              <td>{file.getIn(['creatorToken', 'description'])}</td>
-            </tr>
-            <tr>
-              <td>Uploaded</td>
-              <td><Finished showIcon endTime={file.get('created')} /></td>
-            </tr>
+            <tbody>
+              <tr>
+                <td>File size</td>
+                <td><FileSize size={file.get('sizeBytes')} /></td>
+              </tr>
+              <tr>
+                <td>Creator</td>
+                <td>{file.getIn(['creatorToken', 'description'])}</td>
+              </tr>
+              <tr>
+                <td>Uploaded</td>
+                <td><Finished showIcon endTime={file.get('created')} /></td>
+              </tr>
+            </tbody>
           </table>
         </td>
         <td>
