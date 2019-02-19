@@ -1,10 +1,9 @@
+import _ from 'underscore';
+import { List, Map } from 'immutable';
+import storageApi from '../components/StorageApi';
+import { factory as EventsServiceFactory} from '../sapi-events/EventsService';
 import storeProvisioning from './storeProvisioning';
 import tableBrowserActions from './flux/actions';
-// import storageActions from '../components/StorageActionCreators';
-import storageApi from '../components/StorageApi';
-import { List, Map } from 'immutable';
-import { factory as EventsServiceFactory} from '../sapi-events/EventsService';
-import _ from 'underscore';
 
 const  IMPORT_EXPORT_EVENTS = ['tableImportStarted', 'tableImportDone', 'tableImportError', 'tableExported'];
 
@@ -13,17 +12,15 @@ function runExportDataSample(tableId, onSucceed, onFail) {
     .tableDataJsonPreview(tableId, {limit: 10})
     .then(onSucceed)
     .catch((error) => {
-      let dataPreviewError = null;
       if (error.response && error.response.body) {
         if (error.response.body.code === 'storage.maxNumberOfColumnsExceed') {
-          dataPreviewError = 'Data sample cannot be displayed. Too many columns.';
-        } else {
-          dataPreviewError = error.response.body.message;
+          return onFail('Data sample cannot be displayed. Too many columns.');
         }
-      } else {
-        throw new Error(JSON.stringify(error));
+
+        return onFail(error.response.body.message);
       }
-      return onFail(dataPreviewError);
+      
+      throw error;
     });
 }
 
