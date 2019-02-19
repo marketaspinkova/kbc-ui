@@ -1,4 +1,5 @@
 import React from 'react';
+import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { ButtonGroup, Button } from 'react-bootstrap';
 import { RefreshIcon, SearchBar } from '@keboola/indigo-ui';
 
@@ -17,7 +18,10 @@ import BucketsList from './BucketsList';
 import { reload, createBucket, updateSearchQuery } from '../../Actions';
 
 export default React.createClass({
-  mixins: [createStoreMixin(ApplicationStore, RoutesStore, BucketsLocalStore, BucketsStore, TablesStore)],
+  mixins: [
+    ImmutableRenderMixin,
+    createStoreMixin(ApplicationStore, RoutesStore, BucketsLocalStore, BucketsStore, TablesStore)
+  ],
 
   getStateFromStores() {
     return {
@@ -71,7 +75,9 @@ export default React.createClass({
           <ButtonGroup>
             <Button onClick={this.openCreateBucketModal}>
               <Tooltip tooltip="Create new bucket" placement="top">
-                <span><i className="fa fa-plus" /> Bucket</span>
+                <span>
+                  <i className="fa fa-plus" /> Bucket
+                </span>
               </Tooltip>
             </Button>
           </ButtonGroup>
@@ -80,7 +86,9 @@ export default React.createClass({
           <ButtonGroup>
             <Button onClick={this.openBucketLinkModal}>
               <Tooltip tooltip="Link shared bucket to project" placement="top">
-                <span><i className="fa fa-random" /> Link</span>
+                <span>
+                  <i className="fa fa-random" /> Link
+                </span>
               </Tooltip>
             </Button>
           </ButtonGroup>
@@ -88,7 +96,9 @@ export default React.createClass({
         <ButtonGroup>
           <Button onClick={reload}>
             <Tooltip tooltip="Reload buckets &amp; tables" placement="top">
-              <span><RefreshIcon isLoading={this.state.isReloading} title="" /> Reload</span>
+              <span>
+                <RefreshIcon isLoading={this.state.isReloading} title="" /> Reload
+              </span>
             </Tooltip>
           </Button>
         </ButtonGroup>
@@ -130,12 +140,15 @@ export default React.createClass({
     if (this.state.searchQuery) {
       const search = this.state.searchQuery.toLowerCase();
       const filteredTables = this.state.allTables
-        .filter(table => matchByWords(table.get('name').toLowerCase(), search))
-        .map(table => table.getIn(['bucket', 'id']))
+        .filter((table) => matchByWords(table.get('name').toLowerCase(), search))
+        .map((table) => table.getIn(['bucket', 'id']))
         .toArray();
 
-      buckets = buckets.filter(bucket => {
-        return filteredTables.includes(bucket.get('id')) || matchByWords(bucket.get('id').toLowerCase(), search)
+      buckets = buckets.filter((bucket) => {
+        return (
+          filteredTables.includes(bucket.get('id')) ||
+          matchByWords(bucket.get('id').toLowerCase(), search)
+        );
       });
     }
 

@@ -1,21 +1,19 @@
 import React from 'react';
-import createStoreMixin from '../mixins/createStoreMixin';
+import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { Map, List } from 'immutable';
-
+import { Link } from 'react-router';
+import createStoreMixin from '../mixins/createStoreMixin';
 import RoutesStore from '../../stores/RoutesStore';
 import ApplicationStore from '../../stores/ApplicationStore';
 import ComponentsStore from '../../modules/components/stores/ComponentsStore';
-import immutableMixin from 'react-immutable-render-mixin';
-
-import { Link } from 'react-router';
-import RoutePendingIndicator from './RoutePendingIndicator';
-import ComponentIcon from '../common/ComponentIcon';
 import ComponentNameEdit from '../../modules/components/react/components/ComponentName';
 import ConfiguratinRowName from '../../modules/configurations/react/components/ConfigurationRowName';
 import NotificationsAccess from '../common/NotificationsAccess';
+import ComponentIcon from '../common/ComponentIcon';
+import RoutePendingIndicator from './RoutePendingIndicator';
 
 export default React.createClass({
-  mixins: [createStoreMixin(RoutesStore, ApplicationStore), immutableMixin],
+  mixins: [ImmutableRenderMixin, createStoreMixin(RoutesStore, ApplicationStore, ComponentsStore)],
 
   propTypes: {
     homeUrl: React.PropTypes.string.isRequired,

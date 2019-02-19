@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { Link } from 'react-router';
 import { Table, Button, Row } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
@@ -18,6 +19,8 @@ import AliasFilter from '../../components/TableAliasFilter';
 import { createTablePrimaryKey, removeTablePrimaryKey } from '../../../Actions';
 
 export default React.createClass({
+  mixins: [ImmutableRenderMixin],
+
   propTypes: {
     table: PropTypes.object.isRequired,
     tables: PropTypes.object.isRequired,

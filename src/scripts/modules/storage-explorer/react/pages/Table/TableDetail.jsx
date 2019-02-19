@@ -33,17 +33,22 @@ export default React.createClass({
   getStateFromStores() {
     const bucketId = RoutesStore.getCurrentRouteParam('bucketId');
     const tableName = RoutesStore.getCurrentRouteParam('tableName');
+    const sapiToken = ApplicationStore.getSapiToken();
+    const tables = TablesStore.getAll();
     const table = TablesStore.getAll().find(item => {
       return item.getIn(['bucket', 'id']) === bucketId && item.get('name') === tableName;
     }, null, Map());
+    const buckets = BucketsStore.getAll();
+    const bucket = BucketsStore.getAll().find(item => item.get('id') === bucketId);
 
     return {
+      sapiToken,
+      tables,
       table,
-      sapiToken: ApplicationStore.getSapiToken(),
+      buckets,
+      bucket,
+      canWriteTable: ['write', 'manage'].includes(sapiToken.getIn(['bucketPermissions', bucketId])),
       urlTemplates: ApplicationStore.getUrlTemplates(),
-      tables: TablesStore.getAll(),
-      buckets: BucketsStore.getAll(),
-      bucket: BucketsStore.getAll().find(item => item.get('id') === bucketId),
       creatingPrimaryKey: TablesStore.getIsCreatingPrimaryKey(table.get('id')),
       deletingPrimaryKey: TablesStore.getIsDeletingPrimaryKey(table.get('id')),
       settingAliasFilter: TablesStore.getIsSettingAliasFilter(table.get('id')),
@@ -60,7 +65,9 @@ export default React.createClass({
       deletingTable: TablesStore.getIsDeletingTable(),
       loadingIntoTable: TablesStore.getIsLoadingTable(),
       uploadingProgress: FilesStore.getUploadingProgress(bucketId) || 0,
-      exportingTable: TablesStore.getIsExportingTable(table.get('id'))
+      exportingTable: TablesStore.getIsExportingTable(table.get('id')),
+      tableLinks: this.getTableLinks(table, bucket),
+      tableAliases: this.getTableAliases(table, tables, sapiToken)
     };
   },
 
@@ -80,9 +87,6 @@ export default React.createClass({
         </div>
       );
     }
-
-    const loadingIntoTable = this.state.loadingIntoTable || this.state.uploadingProgress > 0;
-    const canWriteTable = this.canWriteTable();
 
     return (
       <div>
@@ -114,7 +118,7 @@ export default React.createClass({
                   onSelect={this.handleDropdownAction}
                   disabled={this.state.table.get('isAlias')}
                 >
-                  {loadingIntoTable ? (
+                  {(this.state.loadingIntoTable || this.state.uploadingProgress > 0) ? (
                     <span>
                       <Loader /> Loading into table...
                     </span>
@@ -122,13 +126,13 @@ export default React.createClass({
                     'Load'
                   )}
                 </MenuItem>
-                {canWriteTable && <MenuItem divider />}
-                {!this.state.table.get('isAlias') && canWriteTable && (
+                {this.state.canWriteTable && <MenuItem divider />}
+                {!this.state.table.get('isAlias') && this.state.canWriteTable && (
                   <MenuItem eventKey="alias" onSelect={this.handleDropdownAction}>
                     Create alias table
                   </MenuItem>
                 )}
-                {!this.state.table.get('isAlias') && canWriteTable && (
+                {!this.state.table.get('isAlias') && this.state.canWriteTable && (
                   <MenuItem
                     eventKey="truncate"
                     onSelect={this.handleDropdownAction}
@@ -137,7 +141,7 @@ export default React.createClass({
                     Truncate table
                   </MenuItem>
                 )}
-                {canWriteTable && (
+                {this.state.canWriteTable && (
                   <MenuItem eventKey="delete" onSelect={this.handleDropdownAction} disabled={this.state.deletingTable}>
                     {this.state.deletingTable ? (
                       <span>
@@ -155,15 +159,15 @@ export default React.createClass({
                 <TableOverview
                   table={this.state.table}
                   tables={this.state.tables}
-                  tableAliases={this.getTableAliases()}
-                  tableLinks={this.getTableLinks()}
+                  tableAliases={this.state.tableAliases}
+                  tableLinks={this.state.tableLinks}
                   sapiToken={this.state.sapiToken}
                   urlTemplates={this.state.urlTemplates}
                   creatingPrimaryKey={this.state.creatingPrimaryKey}
                   deletingPrimaryKey={this.state.deletingPrimaryKey}
                   settingAliasFilter={this.state.settingAliasFilter}
                   removingAliasFilter={this.state.removingAliasFilter}
-                  canWriteTable={canWriteTable}
+                  canWriteTable={this.state.canWriteTable}
                 />
 
                 <LatestImports
@@ -174,15 +178,15 @@ export default React.createClass({
                 <TableColumn
                   table={this.state.table}
                   tables={this.state.tables}
-                  tableAliases={this.getTableAliases()}
-                  tableLinks={this.getTableLinks()}
+                  tableAliases={this.state.tableAliases}
+                  tableLinks={this.state.tableLinks}
                   sapiToken={this.state.sapiToken}
                   urlTemplates={this.state.urlTemplates}
                   creatingPrimaryKey={this.state.creatingPrimaryKey}
                   deletingPrimaryKey={this.state.deletingPrimaryKey}
                   addingColumn={this.state.addingColumn}
                   deletingColumn={this.state.deletingColumn}
-                  canWriteTable={canWriteTable}
+                  canWriteTable={this.state.canWriteTable}
                 />
               </Tab.Pane>
               <Tab.Pane eventKey="events">
@@ -209,7 +213,7 @@ export default React.createClass({
                   creatingSnapshot={this.state.creatingSnapshot}
                   creatingFromSnapshot={this.state.creatingFromSnapshot}
                   deletingSnapshot={this.state.deletingSnapshot}
-                  canWriteTable={canWriteTable}
+                  canWriteTable={this.state.canWriteTable}
                 />
               </Tab.Pane>
               <Tab.Pane eventKey="graph">
@@ -225,7 +229,7 @@ export default React.createClass({
         {this.renderDeletingTableModal()}
         {this.renderLoadTableModal()}
         {this.renderExportTableModal()}
-        {!this.state.table.get('isAlias') && canWriteTable && (
+        {!this.state.table.get('isAlias') && this.state.canWriteTable && (
           <span>
             {this.renderAliasTableModal()}
             {this.renderTruncateTableModal()}
@@ -256,8 +260,8 @@ export default React.createClass({
         table={this.state.table}
         sapiToken={this.state.sapiToken}
         urlTemplates={this.state.urlTemplates}
-        tableAliases={this.getTableAliases()}
-        tableLinks={this.getTableLinks()}
+        tableAliases={this.state.tableAliases}
+        tableLinks={this.state.tableLinks}
         deleting={this.state.deletingTable}
         onConfirm={this.handleDeleteTable}
         onHide={this.closeActionModal}
@@ -364,21 +368,15 @@ export default React.createClass({
     });
   },
 
-  canWriteTable() {
-    const bucketId = this.state.table.getIn(['bucket', 'id']);
-    const permission = this.state.sapiToken.getIn(['bucketPermissions', bucketId]);
-    return ['write', 'manage'].includes(permission);
-  },
-
-  getTableAliases() {
+  getTableAliases(table, tables, sapiToken) {
     const foundAliases = [];
 
-    this.state.tables.forEach(table => {
+    tables.forEach(table => {
       if (
         !table.getIn(['bucket', 'sourceBucket']) &&
         table.get('isAlias') &&
-        table.getIn(['sourceTable', 'id']) === this.state.table.get('id') &&
-        this.state.sapiToken.getIn(['owner', 'id']) === table.getIn(['sourceTable', 'project', 'id'])
+        table.getIn(['sourceTable', 'id']) === table.get('id') &&
+        sapiToken.getIn(['owner', 'id']) === table.getIn(['sourceTable', 'project', 'id'])
       ) {
         foundAliases.push(table);
       }
@@ -387,15 +385,15 @@ export default React.createClass({
     return foundAliases;
   },
 
-  getTableLinks() {
+  getTableLinks(table, bucket) {
     const foundLinks = [];
 
-    if (this.state.table.get('isAlias') || !this.state.bucket.get('linkedBy')) {
+    if (table.get('isAlias') || !bucket.get('linkedBy')) {
       return foundLinks;
     }
 
-    this.state.bucket.get('linkedBy').forEach(bucket => {
-      foundLinks.push(bucket.merge({ tableName: this.state.table.get('name') }));
+    bucket.get('linkedBy').forEach(bucket => {
+      foundLinks.push(bucket.merge({ tableName: table.get('name') }));
     });
 
     return foundLinks;
