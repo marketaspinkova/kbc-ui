@@ -6,8 +6,18 @@ import {Input} from './../../../../react/common/KbcBootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import SyncActionError from '../../../../utils/SyncActionError';
 import EmptyState from '../../../components/react/components/ComponentEmptyState';
-
 import { DatasetLocations } from '../../constants';
+
+const locationOptions = [
+  {
+    'label': 'United States',
+    'value': DatasetLocations.MULTI_REGION_US
+  },
+  {
+    'label': 'European Union',
+    'value': DatasetLocations.MULTI_REGION_EU
+  },
+];
 
 export default React.createClass({
   propTypes: {
@@ -44,7 +54,8 @@ export default React.createClass({
           'label': project.get('name'),
           'value': project.get('id')
         };
-      }).toList().toJS();
+      }).toArray();
+
       return (
         <div className="form-horizontal">
           <div className="form-group">
@@ -54,10 +65,10 @@ export default React.createClass({
                 key="projectId"
                 name="projectId"
                 clearable={false}
-                disabled={false}
                 value={this.props.google.get('projectId', '').toString()}
                 onChange={({value: newValue}) => this.updateEditingValue('projectId', newValue)}
-                options={projectOptions}/>
+                options={projectOptions}
+              />
             </div>
           </div>
           <div className="form-group">
@@ -74,63 +85,52 @@ export default React.createClass({
           </div>
         </div>
       );
-    } else {
-      return (
-        <EmptyState>The account has no projects</EmptyState>
-      );
     }
+
+    return (
+      <EmptyState>The account has no projects</EmptyState>
+    );
   },
 
   renderProjectSelect() {
     if (this.props.isPendingFn('projects')) {
       return (
-        <div
-          className="form-group">
+        <div className="form-group">
           <Loader/>
         </div>
       );
-    } else {
-      const projects = this.props.projects;
-      if (projects && projects.count() > 0) {
-        const projectOptions = projects.map((project) => {
-          return {
-            'label': project.get('name'),
-            'value': project.get('id')
-          };
-        }).toList().toJS();
-        return (
-          <Select
-            key="projectId"
-            name="projectId"
-            clearable={false}
-            disabled={false}
-            value={this.props.google.get('projectId', '').toString()}
-            onChange= {({value: newValue}) => this.updateEditingValue('projectId', newValue)}
-            options= {projectOptions}
-          />
-        );
-      } else {
-        return (
-          <div
-            className="form-control">
-            <em>The account has no projects</em>
-          </div>
-        );
-      }
     }
+
+    const projects = this.props.projects;
+
+    if (projects && projects.count() > 0) {
+      const projectOptions = projects.map((project) => {
+        return {
+          'label': project.get('name'),
+          'value': project.get('id')
+        };
+      }).toList().toJS();
+      
+      return (
+        <Select
+          key="projectId"
+          name="projectId"
+          clearable={false}
+          value={this.props.google.get('projectId', '').toString()}
+          onChange={({value: newValue}) => this.updateEditingValue('projectId', newValue)}
+          options={projectOptions}
+        />
+      );
+    }
+
+    return (
+      <div className="form-control">
+        <em>The account has no projects</em>
+      </div>
+    );
   },
 
   renderLocationSelect() {
-    const locationOptions = [
-      {
-        'label': 'United States',
-        'value': DatasetLocations.MULTI_REGION_US
-      },
-      {
-        'label': 'European Union',
-        'value': DatasetLocations.MULTI_REGION_EU
-      },
-    ];
     return (
       <Select
         key="location"
@@ -150,7 +150,8 @@ export default React.createClass({
           <label className="col-xs-3 control-label">Select billable project</label>
           <div className="col-xs-9">
             {this.renderProjectSelect()}
-            <div className="help-block">BigQuery charges for data storage, streaming inserts, and for querying data.
+            <div className="help-block">
+              BigQuery charges for data storage, streaming inserts, and for querying data.
             </div>
           </div>
         </div>
@@ -164,7 +165,8 @@ export default React.createClass({
               placeholder="gs://some-bucket-name"
               onChange={(e) => this.updateEditingValue('storage', e.target.value)}
             />
-            <div className="help-block">Existing Google Cloud Storage bucket. There will be data temporarily exported,
+            <div className="help-block">
+              Existing Google Cloud Storage bucket. There will be data temporarily exported,
               before load to KBC.
             </div>
           </div>
@@ -173,7 +175,8 @@ export default React.createClass({
           <label className="col-xs-3 control-label">Dataset location</label>
           <div className="col-xs-9">
             {this.renderLocationSelect()}
-            <div className="help-block">The geographic location where source data exists.
+            <div className="help-block">
+              The geographic location where source data exists.
             </div>
           </div>
         </div>
@@ -183,10 +186,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Modal
-        show={this.props.show}
-        onHide={this.handleHide}
-      >
+      <Modal show={this.props.show} onHide={this.handleHide}>
         <Modal.Header closeButton>
           <Modal.Title>
             Google configuration
