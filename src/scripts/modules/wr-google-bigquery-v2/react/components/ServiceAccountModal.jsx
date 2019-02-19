@@ -2,10 +2,22 @@ import React from 'react';
 import { Modal } from 'react-bootstrap';
 import { ExternalLink } from '@keboola/indigo-ui';
 import Textarea from 'react-textarea-autosize';
-import { HelpBlock } from 'react-bootstrap';
+import { HelpBlock, Alert } from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import Immutable from 'immutable';
 
+const SERVICE_ACCOUNT_REQUIRED_PROPS = [
+  'type',
+  'project_id',
+  'private_key_id',
+  'private_key',
+  'client_email',
+  'client_id',
+  'auth_uri',
+  'token_uri',
+  'auth_provider_x509_cert_url',
+  'client_x509_cert_url'
+];
 
 export default React.createClass({
   propTypes: {
@@ -17,33 +29,72 @@ export default React.createClass({
   getInitialState() {
     return {
       value: '',
-      isValid: false
+      isValid: true,
+      errors: Immutable.List()
     };
   },
 
   onChangeValue(e) {
+    const jsonString = e.target.value;
+    const errors = this.getErrors(jsonString);
     this.setState({
-      value: e.target.value
+      errors: errors,
+      value: jsonString,
+      isValid: errors.size === 0
     });
   },
 
-  isValidJson() {
+  getErrors(jsonString) {
+    let errors = Immutable.List();
     try {
-      JSON.parse(this.state.value);
-      return true;
+      JSON.parse(jsonString);
     } catch (error) {
-      return false;
+      errors = errors.push((
+        <li>Invalid JSON.</li>
+      ));
+      return errors;
     }
+
+    const serviceAccountData = Immutable.fromJS(JSON.parse(jsonString));
+    SERVICE_ACCOUNT_REQUIRED_PROPS.forEach((propertyName) => {
+      if (!serviceAccountData.has(propertyName)) {
+        errors = errors.push((
+          <li key={propertyName}>Missing <code>{propertyName}</code> property.</li>
+        ));
+      }
+    });
+    return errors;
+  },
+
+  isValid() {
+    return this.state.isValid;
+  },
+
+  resetState() {
+    this.setState(this.getInitialState());
   },
 
   onSubmit() {
     this.props.onSubmit(Immutable.fromJS(JSON.parse(this.state.value)));
-    this.setState({value: ''});
+    this.resetState();
   },
 
   onHide() {
     this.props.onHide();
-    this.setState({value: ''});
+    this.resetState();
+  },
+
+  renderErrors() {
+    if (this.state.isValid) {
+      return null;
+    }
+    return (
+      <Alert bsStyle="warning">
+        <ul>
+          {this.state.errors.toArray()}
+        </ul>
+      </Alert>
+    );
   },
 
   render() {
@@ -65,7 +116,7 @@ export default React.createClass({
                 placeholder="{}"
               />
               <HelpBlock>
-                Insert the whole JSON of the private key here. Please read the details how to obtain the service account in the
+                Copy & paste the whole JSON of the private key here. Please read the details how to obtain the service account in the
                 {' '}
                 <ExternalLink href="https://help.keboola.com/manipulation/transformations/sandbox/#connecting-to-sandbox">
                   documentation
@@ -73,10 +124,11 @@ export default React.createClass({
               </HelpBlock>
             </div>
           </form>
+          {this.renderErrors()}
         </Modal.Body>
         <Modal.Footer>
           <ConfirmButtons
-            isDisabled={!this.isValidJson()}
+            isDisabled={!this.isValid() && this.state.value != ''}
             saveLabel="Submit"
             onCancel={this.onHide}
             onSave={this.onSubmit}
