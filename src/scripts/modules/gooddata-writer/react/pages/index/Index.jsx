@@ -96,7 +96,7 @@ export default React.createClass({
     const writer = this.state.writer.get('config');
     return (
       <div className="container-fluid">
-        { hiddenComponents.hasCurrentUserDevelPreview() &&
+        { (hiddenComponents.hasCurrentUserDevelPreview() || hiddenComponents.hasCurrentUserEarlyAdopterFeature()) &&
           <MigrationRow
             componentId="gooddata-writer"
             replacementAppId="keboola.gooddata-writer"

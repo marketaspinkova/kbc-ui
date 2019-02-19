@@ -29,9 +29,11 @@ const ActionTypes = keyMirror({
 });
 
 const FEATURE_UI_DEVEL_PREVIEW = 'ui-devel-preview';
+const FEATURE_EARLY_ADOPTER_PREVIEW = 'early-adopter-preview';
 
 export {
   PayloadSources,
   ActionTypes,
-  FEATURE_UI_DEVEL_PREVIEW
+  FEATURE_UI_DEVEL_PREVIEW,
+  FEATURE_EARLY_ADOPTER_PREVIEW
 };
