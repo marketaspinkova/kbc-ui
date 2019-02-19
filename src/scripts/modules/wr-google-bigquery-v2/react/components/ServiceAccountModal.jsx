@@ -112,7 +112,7 @@ export default React.createClass({
                 value={this.state.value}
                 onChange={this.onChangeValue}
                 className="form-control"
-                minRows={10}
+                minRows={15}
                 placeholder="{}"
               />
               <HelpBlock>

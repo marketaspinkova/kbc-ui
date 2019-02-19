@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import {Form, FormControl, FormGroup, ControlLabel, Col, Button} from 'react-bootstrap';
 import Modal from './ServiceAccountModal';
+import Immutable from 'immutable';
 
 export default React.createClass({
   propTypes: {
@@ -26,8 +27,8 @@ export default React.createClass({
     };
   },
 
-  showJsonInput() {
-    return (this.props.value.privateKeyId === '')
+  hasValue() {
+    return (this.props.value.privateKeyId !== '')
   },
 
   renderForm() {
@@ -64,13 +65,22 @@ export default React.createClass({
             </FormControl.Static>
           </Col>
         </FormGroup>
+        <p className="text-center">
+          <Button bsStyle="danger" onClick={this.deleteServiceAccountKey}>
+            Delete Service Account Key
+          </Button>
+        </p>
+
       </span>
     );
   },
 
-  handleModalSubmit(value) {
-    this.setState({showModal: false});
-    this.props.onChange({
+  deleteServiceAccountKey() {
+    this.props.onChange(this.parseValue(Immutable.Map()));
+  },
+
+  parseValue(value) {
+    return {
       type: value.get('type', ''),
       projectId: value.get('project_id', ''),
       privateKeyId: value.get('private_key_id', ''),
@@ -81,22 +91,34 @@ export default React.createClass({
       tokenUri: value.get('token_uri', ''),
       authProviderX509CertUrl: value.get('auth_provider_x509_cert_url', ''),
       clientX509CertUrl: value.get('client_x509_cert_url', '')
-    });
+    };
+  },
+
+  handleModalSubmit(value) {
+    this.setState({showModal: false});
+    this.props.onChange(this.parseValue(value));
+  },
+
+  renderButton() {
+    return (
+      <p className="text-center">
+        <Button bsStyle="success" onClick={() => this.setState({showModal: true})}>
+          Set Service Account Key
+        </Button>
+      </p>
+    );
   },
 
   render() {
     return (
       <Form horizontal>
-        <h3>Service Account</h3>
         <Modal
           show={this.state.showModal}
           onHide={() => this.setState({showModal: false})}
           onSubmit={this.handleModalSubmit}
         />
-        <Button bsStyle="link" onClick={() => this.setState({showModal: true})}>
-          Set new Service Account
-        </Button>
-        {!this.showJsonInput() && this.renderForm()}
+        {!this.hasValue() && this.renderButton()}
+        {this.hasValue() && this.renderForm()}
       </Form>
     );
   }
