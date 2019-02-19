@@ -1,6 +1,5 @@
 import React from 'react';
 import { Loader } from '@keboola/indigo-ui';
-import ApplicationStore from '../../../../stores/ApplicationStore';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
 import Confirm from '../../../../react/common/Confirm';
 import { isObsoleteComponent } from '../../../trash/utils.js';
@@ -8,7 +7,7 @@ import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import InstalledComponentsStore from '../../stores/InstalledComponentsStore';
 
 export default React.createClass({
-  mixins: [createStoreMixin(ApplicationStore, InstalledComponentsStore)],
+  mixins: [createStoreMixin(InstalledComponentsStore)],
 
   propTypes: {
     componentId: React.PropTypes.string.isRequired,
@@ -25,8 +24,7 @@ export default React.createClass({
         this.props.componentId,
         this.props.configId,
         this.props.fieldName
-      ),
-      lookerPreview: ApplicationStore.hasLookerPreview()
+      )
     };
   },
 
@@ -75,10 +73,6 @@ export default React.createClass({
   _renderIcon() {
     if (this.state.isDeleting) {
       return <Loader />;
-    }
-
-    if (this.state.lookerPreview) {
-      return <i className="fa fa-trash-o fa-fw" />
     }
 
     return <i className="kbc-icon-cup fa fa-fw" />;

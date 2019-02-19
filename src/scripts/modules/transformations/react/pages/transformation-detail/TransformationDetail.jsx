@@ -9,7 +9,6 @@ import TransformationBucketsStore from '../../../stores/TransformationBucketsSto
 import StorageTablesStore from '../../../../components/stores/StorageTablesStore';
 import StorageBucketsStore from '../../../../components/stores/StorageBucketsStore';
 import RoutesStore from '../../../../../stores/RoutesStore';
-import ApplicationStore from '../../../../../stores/ApplicationStore';
 import VersionsStore from '../../../../components/stores/VersionsStore';
 import TransformationsActionCreators from '../../../ActionCreators';
 import RunComponentButton from '../../../../components/react/components/RunComponentButton';
@@ -28,7 +27,6 @@ import LatestJobsStore from '../../../../jobs/stores/LatestJobsStore';
 export default React.createClass({
   mixins: [
     createStoreMixin(
-      ApplicationStore,
       TransformationsStore,
       TransformationBucketsStore,
       StorageTablesStore,
@@ -70,8 +68,7 @@ export default React.createClass({
       isTransformationEditingValid: TransformationsStore.getTransformationEditingIsValid(bucketId, transformationId),
       highlightQueryNumber,
       latestVersionId,
-      latestJobs: LatestJobsStore.getTransformationJobs(bucketId, transformationId),
-      lookerPreview: ApplicationStore.hasLookerPreview()
+      latestJobs: LatestJobsStore.getTransformationJobs(bucketId, transformationId)
     };
   },
 
@@ -160,11 +157,7 @@ export default React.createClass({
                 to="transformationDetailGraph"
                 params={{ row: this.state.transformation.get('id'), config: this.state.bucket.get('id') }}
               >
-                {this.state.lookerPreview ? (
-                  <i className="fa fa-sitemap fa-fw" />
-                ): (
-                  <i className="fa fa-search fa-fw" />
-                )}
+                <i className="fa fa-search fa-fw" />
                 {' Overview'}
               </Link>
             </li>
@@ -210,7 +203,6 @@ export default React.createClass({
                   backend={backend}
                   bucketId={this.state.bucketId}
                   transformationId={this.state.transformationId}
-                  lookerPreview={this.state.lookerPreview}
                 />
               </li>
             )}
@@ -228,7 +220,6 @@ export default React.createClass({
                     return this.setState({ validateModalOpen: false });
                   }}
                   isSaved={!this.state.editingFields.get('queriesChanged', false)}
-                  lookerPreview={this.state.lookerPreview}
                 />
               </li>
             )}
@@ -242,11 +233,7 @@ export default React.createClass({
                   onConfirm={this._deleteTransformation}
                 >
                   <span>
-                    {this.state.lookerPreview ? (
-                      <i className="fa fa-trash-o fa-fw" />
-                    ) : (
-                      <i className="fa kbc-icon-cup fa-fw" />
-                    )}
+                    <i className="fa kbc-icon-cup fa-fw" />
                     {' Delete transformation'}
                   </span>
                 </Confirm>
