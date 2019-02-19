@@ -42,7 +42,7 @@ export default React.createClass({
       projectBaseUrl: ApplicationStore.getProjectBaseUrl(),
       scriptsBasePath: ApplicationStore.getScriptsBasePath(),
       develPreview: ApplicationStore.hasCurrentAdminFeature(FEATURE_UI_DEVEL_PREVIEW),
-      lookerPreview: ApplicationStore.activeLookerPreview()
+      lookerPreview: ApplicationStore.hasLookerPreview()
     };
   },
 

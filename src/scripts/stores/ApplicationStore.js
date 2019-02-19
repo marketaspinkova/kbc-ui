@@ -132,7 +132,7 @@ const ApplicationStore = StoreUtils.createStore({
     return _store.getIn(['kbc', 'urlTemplates', 'project']);
   },
 
-  activeLookerPreview() {
+  hasLookerPreview() {
     return this.hasCurrentAdminFeature(Constants.FEATURE_UI_LOOKER_PREVIEW);
   }
 });

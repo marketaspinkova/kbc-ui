@@ -14,6 +14,11 @@
       width: 270px;
       background: @looker_black;
       border-right: solid 2px #000;
+
+      svg {
+        position: relative;
+        top: -5px;
+      }
     }
 
     .kbc-buttons {
@@ -31,16 +36,16 @@
     & > a {
       color: @looker_blue;
     }
-  
+
     .kbc-icon-arrow-right {
-      color: #7C8498;
+      color: #7c8498;
     }
 
     .inline-edit-input-link {
       color: @looker_white;
 
-      &:hover, 
-      &:focus, 
+      &:hover,
+      &:focus,
       &:active {
         background-color: @looker_dark;
       }
@@ -72,6 +77,7 @@
         border-radius: 4px;
 
         .icon {
+          width: 14px;
           top: 20px;
           right: 10px;
         }
@@ -81,6 +87,28 @@
         color: @looker_blue;
         font-weight: bold;
         border: none;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+      }
+
+      &.open button > span {
+        background: @looker_dark;
+      }
+
+      .dropdown-menu {
+        background: @looker_dark;
+        width: 93%;
+        border: none;
+        left: 17px;
+        top: 80%;
+        margin: 0;
+      
+        li a:hover, 
+        li span.disabled:hover, 
+        li a.active, 
+        li span.disabled.active {
+          background-color: @looker_purple;
+        }
       }
     }
   }
@@ -88,6 +116,7 @@
   .kbc-nav-sidebar li {
     & > a,
     &.active > a {
+      font-weight: 600;
       color: @looker_black;
       border-left: none;
     }
@@ -105,7 +134,7 @@
     background: @looker_background;
 
     & > div {
-      border-top: solid 1px #DDDFE2;
+      border-top: solid 1px #dddfe2;
       margin-left: 12px;
       padding: 10px 0px 20px 0px;
     }
@@ -132,6 +161,15 @@
     }
   }
 
+  .kbc-overview h2,
+  .kbc-header > .kbc-title > h2 a {
+    color: @looker_purple;
+  }
+
+  .table-hover > .tbody > a.tr:hover {
+    background: rgba(127, 93, 255, 0.05);
+  }
+
   .kbc-user-links > .nav > li > a {
     color: @looker_black;
 
@@ -142,14 +180,11 @@
   }
 
   .kbc-main-sidebar {
-    margin-top: 0px;
-
     .nav {
-      margin-top: 0px;
-
       a,
       .btn-link {
-        color: @looker_blue;
+        font-weight: 600;
+        color: @looker_purple;
         border: solid transparent 2px;
 
         &:hover,
@@ -157,11 +192,15 @@
           border: solid rgba(226, 229, 232, 0.5) 2px;
           border-radius: 4px;
         }
+
+        .fa {
+          color: @looker_blue;
+        }
       }
     }
   }
 
-  .btn-link:hover, 
+  .btn-link:hover,
   .btn-link:focus {
     color: @looker_blue;
   }

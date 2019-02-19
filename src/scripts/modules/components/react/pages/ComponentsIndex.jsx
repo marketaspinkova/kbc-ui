@@ -36,7 +36,7 @@ export default React.createClass({
           return false;
         }
 
-        if (ApplicationStore.activeLookerPreview() && lookerPreviewHideComponents.includes(component.get('id'))) {
+        if (ApplicationStore.hasLookerPreview() && lookerPreviewHideComponents.includes(component.get('id'))) {
           return false;
         }
 
