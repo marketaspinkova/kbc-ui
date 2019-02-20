@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Alert, Modal, Form, Col, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import Select from 'react-select';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
 const INITIAL_STATE = {
@@ -37,26 +38,13 @@ export default React.createClass({
                 Shared buckets
               </Col>
               <Col sm={8}>
-                <FormControl autoFocus componentClass="select" onChange={this.handleBucket} value={this.state.bucket}>
-                  <option value="">Select bucket...</option>
-                  {this.groupedBuckets()
-                    .map((group, groupName) => {
-                      return (
-                        <optgroup key={groupName} label={groupName}>
-                          {group
-                            .map((bucket, index) => {
-                              return (
-                                <option key={index} value={JSON.stringify(bucket.toJS())}>
-                                  {this.bucketLabel(bucket)}
-                                </option>
-                              );
-                            })
-                            .toArray()}
-                        </optgroup>
-                      );
-                    })
-                    .toArray()}
-                </FormControl>
+                <Select
+                  disabled={false}
+                  placeholder="Select bucket..."
+                  value={this.state.bucket}
+                  onChange={this.handleBucket}
+                  options={this.groupedBuckets()}
+                />
               </Col>
             </FormGroup>
 
@@ -111,11 +99,12 @@ export default React.createClass({
 
   groupedBuckets() {
     return this.props.sharedBuckets
-      .sortBy((bucket) => bucket.get('id').toLowerCase())
-      .groupBy((bucket) => {
-        return bucket.getIn(['project', 'name']);
-      })
-      .sortBy((group, project) => project.toLowerCase())
+      .map((bucket) => ({
+        value: bucket.get('id'),
+        label: `${bucket.getIn(['project', 'name'])} - ${bucket.get('name')}`
+      }))
+      .sortBy((option) => option.label.toLowerCase())
+      .toArray();
   },
 
   bucketLabel(bucket) {
@@ -145,10 +134,8 @@ export default React.createClass({
     this.setState({ error: message });
   },
 
-  handleBucket(event) {
-    this.setState({
-      bucket: event.target.value
-    });
+  handleBucket(bucket) {
+    this.setState({ bucket });
   },
 
   handleName(event) {
