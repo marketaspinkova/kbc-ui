@@ -14,7 +14,6 @@ export default React.createClass({
     const {value, onChange, disabled} = this.props;
     return (
       <Form horizontal>
-        <h3>BigQuery</h3>
         <FormGroup>
           <Col componentClass={ControlLabel} sm={4}>
             Dataset
