@@ -23,7 +23,8 @@ export default React.createClass({
   propTypes: {
     onHide: React.PropTypes.func.isRequired,
     onSubmit: React.PropTypes.func.isRequired,
-    show: React.PropTypes.bool.isRequired
+    show: React.PropTypes.bool.isRequired,
+    documentationLink: React.PropTypes.string.isRequired
   },
 
   getInitialState() {
@@ -107,7 +108,7 @@ export default React.createClass({
           <form className="form">
             <div className="form-group">
               <Textarea
-                label="test2"
+                label="service_account"
                 type="textarea"
                 value={this.state.value}
                 onChange={this.onChangeValue}
@@ -118,7 +119,7 @@ export default React.createClass({
               <HelpBlock>
                 Copy & paste the whole JSON of the Google service account key file. Please read the details how to create the service account in the
                 {' '}
-                <ExternalLink href="https://help.keboola.com/manipulation/transformations/sandbox/#connecting-to-sandbox">
+                <ExternalLink href={this.props.documentationLink}>
                   documentation
                 </ExternalLink>.
               </HelpBlock>

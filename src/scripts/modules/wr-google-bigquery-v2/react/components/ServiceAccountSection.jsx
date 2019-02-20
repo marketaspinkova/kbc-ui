@@ -105,6 +105,12 @@ export default React.createClass({
         <Button bsStyle="success" onClick={() => this.setState({showModal: true})}>
           Set Service Account Key
         </Button>
+        <Modal
+          show={this.state.showModal}
+          onHide={() => this.setState({showModal: false})}
+          onSubmit={this.handleModalSubmit}
+          documentationLink="https://help.keboola.com/manipulation/transformations/sandbox/#connecting-to-sandbox"
+        />
       </p>
     );
   },
@@ -112,11 +118,6 @@ export default React.createClass({
   render() {
     return (
       <Form horizontal>
-        <Modal
-          show={this.state.showModal}
-          onHide={() => this.setState({showModal: false})}
-          onSubmit={this.handleModalSubmit}
-        />
         {!this.hasValue() && this.renderButton()}
         {this.hasValue() && this.renderForm()}
       </Form>
