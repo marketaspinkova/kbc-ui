@@ -101,7 +101,7 @@ export default React.createClass({
     return (
       <Modal show={this.props.show} onHide={this.onHide}>
         <Modal.Header closeButton={true}>
-          <Modal.Title>Google Service Account</Modal.Title>
+          <Modal.Title>Google Service Account Key</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form className="form">
@@ -116,7 +116,7 @@ export default React.createClass({
                 placeholder="{}"
               />
               <HelpBlock>
-                Copy & paste the whole JSON of the private key here. Please read the details how to obtain the service account in the
+                Copy & paste the whole JSON of the Google service account key file. Please read the details how to obtain the service account in the
                 {' '}
                 <ExternalLink href="https://help.keboola.com/manipulation/transformations/sandbox/#connecting-to-sandbox">
                   documentation

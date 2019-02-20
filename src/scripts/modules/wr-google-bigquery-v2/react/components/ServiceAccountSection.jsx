@@ -47,7 +47,7 @@ export default React.createClass({
         </FormGroup>
         <FormGroup>
           <Col componentClass={ControlLabel} sm={4}>
-            Email
+            Service Account Email
           </Col>
           <Col sm={8}>
             <FormControl.Static>
@@ -57,7 +57,7 @@ export default React.createClass({
         </FormGroup>
         <FormGroup>
           <Col componentClass={ControlLabel} sm={4}>
-            Key Id
+            Service Account Key Id
           </Col>
           <Col sm={8}>
             <FormControl.Static>
