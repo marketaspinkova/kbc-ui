@@ -109,7 +109,7 @@ export default React.createClass({
           show={this.state.showModal}
           onHide={() => this.setState({showModal: false})}
           onSubmit={this.handleModalSubmit}
-          documentationLink="https://help.keboola.com/manipulation/transformations/sandbox/#connecting-to-sandbox"
+          documentationLink="https://help.keboola.com/writers/database/bigquery/#create-service-account"
         />
       </p>
     );
