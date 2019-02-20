@@ -94,12 +94,12 @@ export default React.createClass({
     }), function(transformation) {
       if (parseInt(transformation.get('phase'), 10) !== parseInt(currentTransformation.get('phase'), 10)) {
         return {
-          label: transformation.get('name') + ' (phase mismatch)',
+          label: transformation.get('name', transformation.get('id')) + ' (phase mismatch)',
           value: transformation.get('id')
         };
       }
       return {
-        label: transformation.get('name'),
+        label: transformation.get('name', transformation.get('id')),
         value: transformation.get('id')
       };
     }), function(option) {
