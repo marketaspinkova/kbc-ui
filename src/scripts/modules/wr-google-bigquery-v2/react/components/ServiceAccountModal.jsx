@@ -116,7 +116,7 @@ export default React.createClass({
                 placeholder="{}"
               />
               <HelpBlock>
-                Copy & paste the whole JSON of the Google service account key file. Please read the details how to obtain the service account in the
+                Copy & paste the whole JSON of the Google service account key file. Please read the details how to create the service account in the
                 {' '}
                 <ExternalLink href="https://help.keboola.com/manipulation/transformations/sandbox/#connecting-to-sandbox">
                   documentation
