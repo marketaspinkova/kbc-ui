@@ -68,8 +68,7 @@ export default React.createClass({
   },
 
   isValid() {
-    return this.state.value !== ''
-      && this.state.isJsonValid
+    return this.state.isJsonValid
       && this.state.errors.count() === 0;
   },
 
@@ -88,7 +87,7 @@ export default React.createClass({
   },
 
   renderErrors() {
-    if (this.state.isJsonValid && this.state.errors.count() === 0 || this.state.value === '') {
+    if (this.isValid() || this.state.value === '') {
       return null;
     }
     if (!this.state.isJsonValid) {
@@ -150,7 +149,7 @@ export default React.createClass({
         </Modal.Body>
         <Modal.Footer>
           <ConfirmButtons
-            isDisabled={!this.isValid()}
+            isDisabled={!this.isValid() || this.state.value === ''}
             saveLabel="Submit"
             onCancel={this.onHide}
             onSave={this.onSubmit}
