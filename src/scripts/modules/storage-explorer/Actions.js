@@ -269,7 +269,7 @@ const filterFiles = query => {
   RoutesStore.getRouter().transitionTo('storage-explorer-files', null, queryParams);
 };
 
-const updateFilesSearchQuery = query => {
+const updateSearchQuery = query => {
   return dispatcher.handleViewAction({
     type: localConstants.ActionTypes.UPDATE_SEARCH_QUERY,
     query
@@ -284,7 +284,7 @@ const setOpenedBuckets = buckets => {
 };
 
 const resetFilesSearchQuery = () => {
-  updateFilesSearchQuery('');
+  updateSearchQuery('');
 };
 
 export {
@@ -323,7 +323,7 @@ export {
   deleteFile,
   loadFiles,
   loadMoreFiles,
-  updateFilesSearchQuery,
+  updateSearchQuery,
   setOpenedBuckets,
   filterFiles,
   resetFilesSearchQuery
