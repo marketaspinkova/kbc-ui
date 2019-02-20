@@ -1,7 +1,5 @@
 import React from 'react';
 import Immutable from 'immutable';
-import Router from 'react-router';
-
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import TransformationsStore from '../../../stores/TransformationsStore';
 import TransformationBucketsStore from '../../../stores/TransformationBucketsStore';
@@ -20,8 +18,7 @@ import EmptyStateBucket from '../../components/EmptyStateBucket';
 
 export default React.createClass({
   mixins: [
-    createStoreMixin(TransformationsStore, TransformationBucketsStore, LatestJobsStore, VersionsStore),
-    Router.Navigation
+    createStoreMixin(TransformationsStore, TransformationBucketsStore, LatestJobsStore, VersionsStore)
   ],
 
   getStateFromStores() {
@@ -120,18 +117,16 @@ export default React.createClass({
   },
 
   _getSortedTransformations() {
-    const sorted = this.state.transformations.sortBy(function(transformation) {
-      // phase with padding
-      const phase = `0000${transformation.get('phase')}`.slice(-4);
-      const name = transformation.get('name');
-      return phase + name.toLowerCase();
+    return this.state.transformations.sortBy((transformation) => {
+      const phase = `000000000${transformation.get('phase')}`.slice(-10);
+      const name = transformation.get('name', '').toLowerCase();
+      return phase + name;
     });
-    return sorted;
   },
 
   _deleteTransformationBucket() {
     const bucketId = this.state.bucket.get('id');
     TransformationActionCreators.deleteTransformationBucket(bucketId);
-    return this.transitionTo('transformations');
+    RoutesStore.getRouter().transitionTo('transformations');
   }
 });

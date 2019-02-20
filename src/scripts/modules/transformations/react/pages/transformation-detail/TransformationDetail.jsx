@@ -100,9 +100,9 @@ export default React.createClass({
   _handleActiveChange(newValue) {
     let changeDescription;
     if (newValue) {
-      changeDescription = `Transformation ${this.state.transformation.get('name')} enabled`;
+      changeDescription = `Transformation ${this.state.transformation.get('name', this.state.transformation.get('id'))} enabled`;
     } else {
-      changeDescription = `Transformation ${this.state.transformation.get('name')} disabled`;
+      changeDescription = `Transformation ${this.state.transformation.get('name', this.state.transformation.get('id'))} disabled`;
     }
     return TransformationsActionCreators.changeTransformationProperty(
       this.state.bucketId,
@@ -173,7 +173,7 @@ export default React.createClass({
                   transformations: [this.state.transformation.get('id')]
                 })}
               >
-                {`You are about to run the transformation ${this.state.transformation.get('name')}.`}
+                You are about to run the transformation {this.state.transformation.get('name', this.state.transformation.get('id'))}.
               </RunComponentButton>
             </li>
             <li>
@@ -227,7 +227,7 @@ export default React.createClass({
               <a>
                 <Confirm
                   text="Delete transformation"
-                  title={`Do you really want to delete the transformation ${this.state.transformation.get('name')}?`}
+                  title={`Do you really want to delete the transformation ${this.state.transformation.get('name', this.state.transformation.get('id'))}?`}
                   buttonLabel="Delete"
                   buttonType="danger"
                   onConfirm={this._deleteTransformation}

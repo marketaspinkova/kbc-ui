@@ -286,29 +286,23 @@ var InstalledComponentsStore = StoreUtils.createStore({
 
   isValidEditingConfig(componentId, configId, field) {
     const value = this.getEditingConfig(componentId, configId, field);
-    if (!value) {
-      return true;
-    }
+
     switch (field) {
-      case 'description':
-        return true;
       case 'name':
-        return value.trim().length > 0;
+        return !!(value && value.trim().length > 0);
       default:
+        return true;
     }
   },
 
   isValidEditingConfigRow(componentId, configId, rowId, field) {
-    const value = this.getEditingConfig(componentId, configId, rowId, field);
-    if (!value) {
-      return true;
-    }
+    const value = this.getEditingConfigRow(componentId, configId, rowId, field);
+
     switch (field) {
-      case 'description':
-        return true;
       case 'name':
-        return value.trim().length > 0;
+        return !!(value && value.trim().length > 0);
       default:
+        return true;
     }
   },
 
