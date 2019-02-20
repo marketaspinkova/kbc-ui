@@ -2,7 +2,7 @@ import React from 'react';
 import PureRendererMixin from 'react-immutable-render-mixin';
 import moment from 'moment';
 import { Link } from 'react-router';
-import { Map, fromJS } from 'immutable';
+import { fromJS } from 'immutable';
 import { Alert, PanelGroup, Panel } from 'react-bootstrap';
 import { Tree, NewLineToBr } from '@keboola/indigo-ui';
 import SoundNotifications from '../../../../../utils/SoundNotifications';
@@ -36,18 +36,9 @@ export default React.createClass({
   ],
 
   getStateFromStores() {
-    const job = JobsStore.get(RoutesStore.getCurrentRouteIntParam('jobId'));
-
-    let configuration = Map();
-    if (job && job.hasIn(['params', 'config'])) {
-      const config = job.getIn(['params', 'config'], '');
-      configuration = InstalledComponentsStore.getConfig(getComponentId(job), config.toString());
-    }
-
     return {
-      job,
-      query: JobsStore.getQuery(),
-      configuration
+      job: JobsStore.get(RoutesStore.getCurrentRouteIntParam('jobId')),
+      query: JobsStore.getQuery()
     };
   },
 
@@ -239,13 +230,13 @@ export default React.createClass({
 
   _renderConfigurationLink(job) {
     let componentId = getComponentId(job);
-    let configId = this.state.configuration.get('id');
+    let configuration = this._getConfiguration(job);
 
-    if (this.state.configuration.count()) {
+    if (configuration.count()) {
       return (
         <span>
-          <ComponentConfigurationLink componentId={componentId} configId={configId}>
-            {this.state.configuration.get('name', configId)}
+          <ComponentConfigurationLink componentId={componentId} configId={configuration.get('id')}>
+            {configuration.get('name', configuration.get('id'))}
           </ComponentConfigurationLink>
         </span>
       );
@@ -253,7 +244,7 @@ export default React.createClass({
 
     if (job.get('component') === 'provisioning') {
       if (job.hasIn(['params', 'transformation', 'config_id'])) {
-        configId = job.getIn(['params', 'transformation', 'config_id']);
+        const configId = job.getIn(['params', 'transformation', 'config_id']);
 
         return (
           <span>
@@ -280,7 +271,8 @@ export default React.createClass({
 
   _renderConfigurationRowLink(job) {
     let componentId = getComponentId(job);
-    let configId = this.state.configuration.get('id');
+    let configuration = this._getConfiguration(job);
+    let configId = configuration.get('id');
     let rowId = job.getIn(['params', 'transformations', 0], null);
     let rowName = TransformationsStore.getTransformationName(configId, rowId);
 
@@ -371,21 +363,32 @@ export default React.createClass({
 
   _renderConfiguration(job) {
     if (job.getIn(['params', 'configData'])) {
-      const runIdParts = job.get('runId').split('.').slice(0, -1);
-      console.log(job.get('runId').split('.')); // eslint-disable-line
-      console.log(runIdParts); // eslint-disable-line
-      // const parentJob = JobsStore.getAll().find((job) => {
+      const runIdParts = job.get('runId', []).split('.').slice(0, -1);
+      let parentRunId = '';
+      let parentJob = null;
 
-      // })
+      do {
+        parentRunId = runIdParts.join('.');
+        parentJob = JobsStore.getAll().find((job) => {
+          return job.get('runId') === parentRunId && !job.getIn(['params', 'configData']);
+        });
+        runIdParts.pop();
+      } while (!parentJob && runIdParts.length > 0);
 
       return (
         <div className="row">
           <span className="col-md-3">Within Configuration</span>
-          <strong className="col-md-9">
-            {this._renderConfigurationLink(job)}
-            {this._renderConfigurationRowLink(job)}
-            {this._renderConfigVersion(job)}
-          </strong>
+          {parentJob && parentJob.count() > 0 ? (
+            <strong className="col-md-9">
+              {this._renderConfigurationLink(parentJob)}
+              {this._renderConfigurationRowLink(parentJob)}
+              {this._renderConfigVersion(parentJob)}
+            </strong>
+          ) : (
+            <strong className="col-md-9">
+              <em>N/A</em>
+            </strong>
+          )}
         </div>
       );
     }
@@ -578,5 +581,11 @@ export default React.createClass({
     }
 
     return moment().diff(job.get('endTime'), 'minutes') < 5;
+  },
+
+  _getConfiguration(job) {
+    const config = job.getIn(['params', 'config'], '');
+
+    return InstalledComponentsStore.getConfig(getComponentId(job), config.toString());
   }
 });
