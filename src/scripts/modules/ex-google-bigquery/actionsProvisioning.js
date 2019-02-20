@@ -1,4 +1,5 @@
 import _ from 'underscore';
+import Promise from 'bluebird';
 import {Map, fromJS} from 'immutable';
 import componentsActions from '../components/InstalledComponentsActionCreators';
 import callDockerAction from '../components/DockerActionsApi';
@@ -153,10 +154,9 @@ export default function(configId) {
     },
 
     loadAccountProjects() {
-      if (!store.isAuthorized()) return null;
-      const path = store.getProjectsPath();
-
-      if (store.projects.count() > 0) return null;
+      if (!store.isAuthorized() || store.projects.count() > 0) {
+        return Promise.resolve();
+      }
 
       updateLocalState(store.getPendingPath('projects'), true);
 
@@ -180,7 +180,7 @@ export default function(configId) {
           return result.projects;
         })
         .then((projects) => {
-          return updateLocalState(path, fromJS(projects));
+          return updateLocalState(store.getProjectsPath(), fromJS(projects));
         })
         .finally(() => {
           updateLocalState(store.getPendingPath('projects'), false);
