@@ -17,7 +17,7 @@ dispatcher.register(payload => {
   const { action } = payload;
 
   switch (action.type) {
-    case constants.ActionTypes.UPDATE_SEARCH_QUERY:
+    case constants.ActionTypes.UPDATE_FILES_SEARCH_QUERY:
       _store = _store.set('searchQuery', action.query);
       return FilesLocalStore.emitChange();
 
