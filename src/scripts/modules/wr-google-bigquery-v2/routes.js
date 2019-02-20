@@ -24,7 +24,7 @@ const routeSettings = {
     sections: [
       {
         render: CollapsibleSection({
-          title: 'Google Service Account',
+          title: 'Google Service Account Key',
           contentComponent: ServiceAccountSection,
           options: { includeSaveButtons: true }
         }),
