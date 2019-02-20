@@ -288,8 +288,6 @@ var InstalledComponentsStore = StoreUtils.createStore({
     const value = this.getEditingConfig(componentId, configId, field);
 
     switch (field) {
-      case 'description':
-        return true;
       case 'name':
         return !!(value && value.trim().length > 0);
       default:
@@ -301,8 +299,6 @@ var InstalledComponentsStore = StoreUtils.createStore({
     const value = this.getEditingConfigRow(componentId, configId, rowId, field);
 
     switch (field) {
-      case 'description':
-        return true;
       case 'name':
         return !!(value && value.trim().length > 0);
       default:
