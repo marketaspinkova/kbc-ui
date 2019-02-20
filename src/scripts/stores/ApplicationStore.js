@@ -133,7 +133,7 @@ const ApplicationStore = StoreUtils.createStore({
   },
 
   hasLookerPreview() {
-    return this.hasCurrentAdminFeature(Constants.FEATURE_UI_LOOKER_PREVIEW);
+    return this.hasCurrentAdminFeature(Constants.FEATURE_UI_LOOKER_PREVIEW) || this.hasCurrentProjectFeature(Constants.FEATURE_UI_LOOKER_PREVIEW);
   }
 });
 
