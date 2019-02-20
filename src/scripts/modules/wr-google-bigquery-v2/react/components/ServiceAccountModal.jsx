@@ -19,6 +19,15 @@ const SERVICE_ACCOUNT_REQUIRED_PROPS = [
   'client_x509_cert_url'
 ];
 
+const isJsonValid = (jsonString) => {
+  try {
+    JSON.parse(jsonString);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
 export default React.createClass({
   propTypes: {
     onHide: React.PropTypes.func.isRequired,
@@ -30,45 +39,38 @@ export default React.createClass({
   getInitialState() {
     return {
       value: '',
-      isValid: true,
+      isJsonValid: false,
       errors: Immutable.List()
     };
   },
 
   onChangeValue(e) {
     const jsonString = e.target.value;
-    const errors = this.getErrors(jsonString);
     this.setState({
-      errors: errors,
-      value: jsonString,
-      isValid: errors.size === 0
+      errors: this.getErrors(jsonString),
+      isJsonValid: isJsonValid(jsonString),
+      value: jsonString
     });
   },
 
   getErrors(jsonString) {
-    let errors = Immutable.List();
-    try {
-      JSON.parse(jsonString);
-    } catch (error) {
-      errors = errors.push((
-        <li>Invalid JSON.</li>
-      ));
-      return errors;
+    if (!isJsonValid(jsonString)) {
+      return Immutable.List();
     }
-
+    let errors = Immutable.List();
     const serviceAccountData = Immutable.fromJS(JSON.parse(jsonString));
     SERVICE_ACCOUNT_REQUIRED_PROPS.forEach((propertyName) => {
       if (!serviceAccountData.has(propertyName)) {
-        errors = errors.push((
-          <li key={propertyName}>Missing <code>{propertyName}</code> property.</li>
-        ));
+        errors = errors.push(propertyName);
       }
     });
     return errors;
   },
 
   isValid() {
-    return this.state.isValid;
+    return this.state.value !== ''
+      && this.state.isJsonValid
+      && this.state.errors.count() === 0;
   },
 
   resetState() {
@@ -86,14 +88,32 @@ export default React.createClass({
   },
 
   renderErrors() {
-    if (this.state.isValid) {
+    if (this.state.isJsonValid && this.state.errors.count() === 0 || this.state.value === '') {
       return null;
     }
+    if (!this.state.isJsonValid) {
+      return (
+        <Alert bsStyle="danger">
+          Provided Service Account Key is not valid JSON object.
+        </Alert>
+      );
+    }
     return (
-      <Alert bsStyle="warning">
-        <ul>
-          {this.state.errors.toArray()}
-        </ul>
+      <Alert bsStyle="danger">
+        <p>Provided Service Account Key does not contain all required properties.</p>
+        <p>
+          Missing properties:{' '}
+          {this.state.errors
+            .map((missingProp, index) => {
+              return (
+                <span key={missingProp}>
+                  <strong>{missingProp}</strong>{index + 1 < this.state.errors.count() && ', '}
+                </span>
+              );
+            })
+            .toArray()}
+          .
+        </p>
       </Alert>
     );
   },
@@ -129,7 +149,7 @@ export default React.createClass({
         </Modal.Body>
         <Modal.Footer>
           <ConfirmButtons
-            isDisabled={!this.isValid() && this.state.value != ''}
+            isDisabled={!this.isValid()}
             saveLabel="Submit"
             onCancel={this.onHide}
             onSave={this.onSubmit}
