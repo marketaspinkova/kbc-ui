@@ -25,7 +25,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Modal show={this.props.show} onHide={this.onHide}>
+      <Modal bsSize="large" show={this.props.show} onHide={this.onHide}>
         <Form onSubmit={this.handleSubmit} horizontal>
           <Modal.Header closeButton>
             <Modal.Title>Link bucket</Modal.Title>
@@ -34,10 +34,10 @@ export default React.createClass({
             {this.renderError()}
 
             <FormGroup>
-              <Col sm={4} componentClass={ControlLabel}>
+              <Col sm={3} componentClass={ControlLabel}>
                 Shared buckets
               </Col>
-              <Col sm={8}>
+              <Col sm={9}>
                 <Select
                   autoFocus
                   disabled={false}
@@ -50,19 +50,19 @@ export default React.createClass({
             </FormGroup>
 
             <FormGroup>
-              <Col sm={4} componentClass={ControlLabel}>
+              <Col sm={3} componentClass={ControlLabel}>
                 Name
               </Col>
-              <Col sm={8}>
+              <Col sm={9}>
                 <FormControl type="text" value={this.state.name} onChange={this.handleName} />
               </Col>
             </FormGroup>
 
             <FormGroup>
-              <Col sm={4} componentClass={ControlLabel}>
+              <Col sm={3} componentClass={ControlLabel}>
                 Stage
               </Col>
-              <Col sm={8}>
+              <Col sm={9}>
                 <FormControl
                   componentClass="select"
                   placeholder="Select stage..."
@@ -101,21 +101,11 @@ export default React.createClass({
   groupedBuckets() {
     return this.props.sharedBuckets
       .map((bucket) => ({
-        value: bucket.get('id'),
-        label: `${bucket.getIn(['project', 'name'])} - ${bucket.get('name')}`
+        value: JSON.stringify(bucket.toJS()),
+        label: `${bucket.getIn(['project', 'name'])} | ${bucket.get('id')}`
       }))
       .sortBy((option) => option.label.toLowerCase())
       .toArray();
-  },
-
-  bucketLabel(bucket) {
-    let label = bucket.get('id');
-
-    if (bucket.get('description')) {
-      label += ` - ${bucket.get('description')}`;
-    }
-
-    return label;
   },
 
   handleSubmit(event) {
