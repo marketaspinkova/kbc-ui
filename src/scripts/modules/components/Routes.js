@@ -37,6 +37,7 @@ import wrStorageRoutes from '../wr-storage/routes';
 import exStorageRoutes from '../ex-storage/routes';
 import wrAwsS3Routes from '../wr-aws-s3/routes';
 import wrGoogleBigQueryRoutes from '../wr-google-bigquery/routes';
+import wrGoogleBigQueryV2Routes from '../wr-google-bigquery-v2/routes';
 import htnsExSalesforceRoutes from '../htns.ex-salesforce/routes';
 import exFtpRoutes from '../ex-ftp/routes';
 const extractor = injectProps({ type: 'extractor' });
@@ -174,6 +175,7 @@ module.exports = {
       createComponentRoute('keboola.wr-storage', [wrStorageRoutes]),
       createComponentRoute('keboola.wr-aws-s3', [wrAwsS3Routes]),
       createComponentRoute('keboola.wr-google-bigquery', [wrGoogleBigQueryRoutes]),
+      createComponentRoute('keboola.wr-google-bigquery-v2', [wrGoogleBigQueryV2Routes]),
       createGenericDetailRoute('writer')
     ]
   }
