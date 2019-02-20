@@ -39,6 +39,7 @@ export default React.createClass({
               </Col>
               <Col sm={8}>
                 <Select
+                  autoFocus
                   disabled={false}
                   placeholder="Select bucket..."
                   value={this.state.bucket}
