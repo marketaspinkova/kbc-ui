@@ -169,7 +169,7 @@ export default React.createClass({
   canManageBucket() {
     const bucketId = this.state.bucket.get('id');
     const permission = this.state.sapiToken.getIn(['bucketPermissions', bucketId], '');
-    return permission === 'manage';
+    return permission === 'manage' || !!this.state.bucket.get('sourceBucket');
   },
 
   openDeleteBucketModal() {
