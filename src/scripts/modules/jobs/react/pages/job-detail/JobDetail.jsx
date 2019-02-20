@@ -1,7 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router';
+import PureRendererMixin from 'react-immutable-render-mixin';
 import moment from 'moment';
-import { Map } from 'immutable';
+import { Link } from 'react-router';
+import { Map, fromJS } from 'immutable';
+import { Alert, PanelGroup, Panel } from 'react-bootstrap';
+import { Tree, NewLineToBr } from '@keboola/indigo-ui';
 import SoundNotifications from '../../../../../utils/SoundNotifications';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../../../stores/RoutesStore';
@@ -10,27 +13,19 @@ import ComponentsStore from '../../../../components/stores/ComponentsStore';
 import InstalledComponentsStore from '../../../../components/stores/InstalledComponentsStore';
 import ConfigurationRowsStore from '../../../../configurations/ConfigurationRowsStore';
 import TransformationsStore from '../../../../transformations/stores/TransformationsStore';
-import PureRendererMixin from 'react-immutable-render-mixin';
-import { fromJS } from 'immutable';
-
 import Events from '../../../../sapi-events/react/Events';
 import ComponentName from '../../../../../react/common/ComponentName';
 import ComponentIcon from '../../../../../react/common/ComponentIcon';
 import Duration from '../../../../../react/common/Duration';
 import JobRunId from '../../../../../react/common/JobRunId';
-import JobStatsContainer from './JobStatsContainer';
-import GoodDataStatsContainer from './GoodDataStatsContainer';
-import { Alert, PanelGroup, Panel } from 'react-bootstrap';
 import getComponentId from '../../../getJobComponentId';
 import JobStatusLabel from '../../../../../react/common/JobStatusLabel';
-
 import ComponentConfigurationLink from '../../../../components/react/components/ComponentConfigurationLink';
 import ComponentConfigurationRowLink from '../../../../components/react/components/ComponentConfigurationRowLink';
-
 import contactSupport from '../../../../../utils/contactSupport';
-
 import date from '../../../../../utils/date';
-import { Tree, NewLineToBr } from '@keboola/indigo-ui';
+import GoodDataStatsContainer from './GoodDataStatsContainer';
+import JobStatsContainer from './JobStatsContainer';
 
 const APPLICATION_ERROR = 'application';
 
@@ -327,34 +322,18 @@ export default React.createClass({
   },
 
   _renderRunInfoRow(job) {
-    const jobStarted = () => job.get('startTime');
-    const renderDate = function(pdate) {
-      if (pdate) {
-        return date.format(pdate);
-      } else {
-        return 'N/A';
-      }
-    };
-
     return (
       <div className="table kbc-table-border-vertical kbc-detail-table" style={{ marginBottom: 0 }}>
         <div className="tr">
           <div className="td">
-            <div className="row">
-              <span className="col-md-3">Configuration</span>
-              <strong className="col-md-9">
-                {this._renderConfigurationLink(job)}
-                {this._renderConfigurationRowLink(job)}
-                {this._renderConfigVersion(job)}
-              </strong>
-            </div>
+            {this._renderConfiguration(job)}
             <div className="row">
               <span className="col-md-3">Created At</span>
               <strong className="col-md-9">{date.format(job.get('createdTime'))}</strong>
             </div>
             <div className="row">
               <span className="col-md-3">Start</span>
-              <strong className="col-md-9">{renderDate(job.get('startTime'))}</strong>
+              <strong className="col-md-9">{this._renderDate(job.get('startTime'))}</strong>
             </div>
             <div className="row">
               <span className="col-md-3">RunId</span>
@@ -376,18 +355,51 @@ export default React.createClass({
             </div>
             <div className="row">
               <span className="col-md-3">{'End '}</span>
-              <strong className="col-md-9">{renderDate(job.get('endTime'))}</strong>
+              <strong className="col-md-9">{this._renderDate(job.get('endTime'))}</strong>
             </div>
             <div className="row">
               <span className="col-md-3">Duration</span>
               <strong className="col-md-9">
-                {jobStarted() ? <Duration startTime={job.get('startTime')} endTime={job.get('endTime')} /> : 'N/A'}
+                {job.get('startTime') ? <Duration startTime={job.get('startTime')} endTime={job.get('endTime')} /> : 'N/A'}
               </strong>
             </div>
           </div>
         </div>
       </div>
     );
+  },
+
+  _renderConfiguration(job) {
+    if (job.getIn(['params', 'configData'])) {
+      const runIdParts = job.get('runId').split('.').slice(0, -1);
+      console.log(job.get('runId').split('.')); // eslint-disable-line
+      console.log(runIdParts); // eslint-disable-line
+      // const parentJob = JobsStore.getAll().find((job) => {
+
+      // })
+
+      return (
+        <div className="row">
+          <span className="col-md-3">Within Configuration</span>
+          <strong className="col-md-9">
+            {this._renderConfigurationLink(job)}
+            {this._renderConfigurationRowLink(job)}
+            {this._renderConfigVersion(job)}
+          </strong>
+        </div>
+      );
+    }
+
+    return (
+      <div className="row">
+        <span className="col-md-3">Configuration</span>
+        <strong className="col-md-9">
+          {this._renderConfigurationLink(job)}
+          {this._renderConfigurationRowLink(job)}
+          {this._renderConfigVersion(job)}
+        </strong>
+      </div>
+    )
   },
 
   _renderConfigVersion(job) {
@@ -546,6 +558,14 @@ export default React.createClass({
         </span>
       </span>
     );
+  },
+
+  _renderDate(pdate) {
+    if (pdate) {
+      return date.format(pdate);
+    }
+
+    return 'N/A';
   },
 
   _shouldAutoReload(job) {
