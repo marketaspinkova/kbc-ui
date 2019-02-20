@@ -44,7 +44,7 @@ export default React.createClass({
                   placeholder="Select bucket..."
                   value={this.state.bucket}
                   onChange={this.handleBucket}
-                  options={this.groupedBuckets()}
+                  options={this.bucketsOptions()}
                 />
               </Col>
             </FormGroup>
@@ -98,11 +98,11 @@ export default React.createClass({
     return <Alert bsStyle="danger">{this.state.error}</Alert>;
   },
 
-  groupedBuckets() {
+  bucketsOptions() {
     return this.props.sharedBuckets
       .map((bucket) => ({
-        value: JSON.stringify(bucket.toJS()),
-        label: `${bucket.getIn(['project', 'name'])} | ${bucket.get('id')}`
+        value: JSON.stringify(bucket.toJSON()),
+        label: `${bucket.getIn(['project', 'name'])} / ${bucket.get('id')}`
       }))
       .sortBy((option) => option.label.toLowerCase())
       .toArray();
@@ -125,20 +125,16 @@ export default React.createClass({
     this.setState({ error: message });
   },
 
-  handleBucket(bucket) {
-    this.setState({ bucket });
+  handleBucket(selected) {
+    this.setState({ bucket: selected ? selected.value : null });
   },
 
   handleName(event) {
-    this.setState({
-      name: event.target.value
-    });
+    this.setState({ name: event.target.value });
   },
 
   handleStage(event) {
-    this.setState({
-      stage: event.target.value
-    });
+    this.setState({ stage: event.target.value });
   },
 
   onHide() {
