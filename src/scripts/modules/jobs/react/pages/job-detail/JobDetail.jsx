@@ -362,7 +362,7 @@ export default React.createClass({
   },
 
   _renderConfiguration(job) {
-    if (job.getIn(['params', 'configData'])) {
+    if (job.get('nestingLevel') > 0 && job.getIn(['params', 'configData'])) {
       const runIdParts = job.get('runId', []).split('.').slice(0, -1);
       let parentRunId = '';
       let parentJob = null;
