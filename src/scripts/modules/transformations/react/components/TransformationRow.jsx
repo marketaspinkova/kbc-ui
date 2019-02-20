@@ -32,7 +32,7 @@ export default React.createClass({
         isPending={this.props.pendingActions.get('delete')}
         confirm={{
           title: 'Delete Transformation',
-          text: `Do you really want to delete transformation ${this.props.transformation.get('name')}?`,
+          text: `Do you really want to delete transformation ${this.props.transformation.get('name', this.props.transformation.get('id'))}?`,
           onConfirm: this._deleteTransformation
         }}
       />
@@ -57,7 +57,7 @@ export default React.createClass({
     buttons.push(
       <RunComponentButton
         key="run"
-        title={`Run ${this.props.transformation.get('name')}`}
+        title={`Run ${this.props.transformation.get('name', this.props.transformation.get('id'))}`}
         component="transformation"
         mode="button"
         runParams={() => ({
@@ -65,7 +65,7 @@ export default React.createClass({
           transformations: [this.props.transformation.get('id')]
         })}
       >
-        {`You are about to run the transformation ${this.props.transformation.get('name')}.`}
+        You are about to run the transformation {this.props.transformation.get('name', this.props.transformation.get('id'))}.
       </RunComponentButton>
     );
 
@@ -108,9 +108,9 @@ export default React.createClass({
     const transformationId = this.props.transformation.get('id');
     const bucketId = this.props.bucket.get('id');
     if (newValue) {
-      changeDescription = `Transformation ${this.props.transformation.get('name')} enabled`;
+      changeDescription = `Transformation ${this.props.transformation.get('name', this.props.transformation.get('id'))} enabled`;
     } else {
-      changeDescription = `Transformation ${this.props.transformation.get('name')} disabled`;
+      changeDescription = `Transformation ${this.props.transformation.get('name', this.props.transformation.get('id'))} disabled`;
     }
     return TransformationsActionCreators.changeTransformationProperty(
       bucketId,
