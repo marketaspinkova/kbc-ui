@@ -58,6 +58,7 @@ export default React.createClass({
   renderQueryRow(query) {
     return (
       <Link
+        key={query.get('id')}
         to={this.props.queryDetailRoute}
         params={{
           config: this.props.configId,

@@ -73,6 +73,7 @@ export default React.createClass({
           projects={this.state.store.projects}
           google={this.state.store.getEditingGoogle()}
           onChangeFn={this.state.actions.onUpdateEditingGoogle}
+          loadAccountProjectsFn={this.state.actions.loadAccountProjects}
           {...this.state.actions.prepareLocalState('ProjectsManagerModal')}
         />
 
@@ -173,7 +174,7 @@ export default React.createClass({
       return 'No queries configured yet';
     }
 
-    return false;
+    return '';
   },
 
   handleFilterChange(query) {
@@ -195,7 +196,6 @@ export default React.createClass({
 
   showProjectsModal() {
     this.state.actions.startEditingGoogle();
-    this.state.actions.loadAccountProjects(); // @move to component will mount?
     return this.state.actions.updateLocalState(['ProjectsManagerModal', 'projects'], true);
   },
 

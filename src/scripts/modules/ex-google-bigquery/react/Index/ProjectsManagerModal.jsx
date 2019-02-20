@@ -1,18 +1,25 @@
 import React, {PropTypes} from 'react';
-import {Input} from './../../../../react/common/KbcBootstrap';
-import {Modal} from 'react-bootstrap';
 import Select from 'react-select';
-
+import {Alert, Modal} from 'react-bootstrap';
 import {Loader} from '@keboola/indigo-ui';
-
+import {Input} from './../../../../react/common/KbcBootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
-
+import SyncActionError from '../../../../utils/SyncActionError';
 import EmptyState from '../../../components/react/components/ComponentEmptyState';
-
 import { DatasetLocations } from '../../constants';
 
-export default React.createClass({
+const locationOptions = [
+  {
+    'label': 'United States',
+    'value': DatasetLocations.MULTI_REGION_US
+  },
+  {
+    'label': 'European Union',
+    'value': DatasetLocations.MULTI_REGION_EU
+  },
+];
 
+export default React.createClass({
   propTypes: {
     authorizedEmail: PropTypes.string,
     google: PropTypes.object.isRequired,
@@ -21,7 +28,23 @@ export default React.createClass({
     show: PropTypes.bool.isRequired,
     onHideFn: PropTypes.func,
     saveFn: PropTypes.func.isRequired,
+    loadAccountProjectsFn: PropTypes.func.isRequired,
     onChangeFn: PropTypes.func.isRequired
+  },
+
+  getInitialState() {
+    return {
+      errorMessage: null
+    }
+  },
+
+  componentDidUpdate(prevProps) {
+    if (!prevProps.show && this.props.show) {
+      this.setState({ errorMessage: null });
+      this.props.loadAccountProjectsFn().catch(SyncActionError, (error) => {
+        this.setState({ errorMessage: error.message })
+      })
+    }
   },
 
   renderProjects(projects) {
@@ -31,7 +54,8 @@ export default React.createClass({
           'label': project.get('name'),
           'value': project.get('id')
         };
-      }).toList().toJS();
+      }).toArray();
+
       return (
         <div className="form-horizontal">
           <div className="form-group">
@@ -41,10 +65,10 @@ export default React.createClass({
                 key="projectId"
                 name="projectId"
                 clearable={false}
-                disabled={false}
                 value={this.props.google.get('projectId', '').toString()}
                 onChange={({value: newValue}) => this.updateEditingValue('projectId', newValue)}
-                options={projectOptions}/>
+                options={projectOptions}
+              />
             </div>
           </div>
           <div className="form-group">
@@ -61,63 +85,52 @@ export default React.createClass({
           </div>
         </div>
       );
-    } else {
-      return (
-        <EmptyState>The account has no projects</EmptyState>
-      );
     }
+
+    return (
+      <EmptyState>The account has no projects</EmptyState>
+    );
   },
 
   renderProjectSelect() {
     if (this.props.isPendingFn('projects')) {
       return (
-        <div
-          className="form-group">
+        <div className="form-group">
           <Loader/>
         </div>
       );
-    } else {
-      const projects = this.props.projects;
-      if (projects && projects.count() > 0) {
-        const projectOptions = projects.map((project) => {
-          return {
-            'label': project.get('name'),
-            'value': project.get('id')
-          };
-        }).toList().toJS();
-        return (
-          <Select
-            key="projectId"
-            name="projectId"
-            clearable={false}
-            disabled={false}
-            value={this.props.google.get('projectId', '').toString()}
-            onChange= {({value: newValue}) => this.updateEditingValue('projectId', newValue)}
-            options= {projectOptions}
-          />
-        );
-      } else {
-        return (
-          <div
-            className="form-control">
-            <em>The account has no projects</em>
-          </div>
-        );
-      }
     }
+
+    const projects = this.props.projects;
+
+    if (projects && projects.count() > 0) {
+      const projectOptions = projects.map((project) => {
+        return {
+          'label': project.get('name'),
+          'value': project.get('id')
+        };
+      }).toList().toJS();
+      
+      return (
+        <Select
+          key="projectId"
+          name="projectId"
+          clearable={false}
+          value={this.props.google.get('projectId', '').toString()}
+          onChange={({value: newValue}) => this.updateEditingValue('projectId', newValue)}
+          options={projectOptions}
+        />
+      );
+    }
+
+    return (
+      <div className="form-control">
+        <em>The account has no projects</em>
+      </div>
+    );
   },
 
   renderLocationSelect() {
-    const locationOptions = [
-      {
-        'label': 'United States',
-        'value': DatasetLocations.MULTI_REGION_US
-      },
-      {
-        'label': 'European Union',
-        'value': DatasetLocations.MULTI_REGION_EU
-      },
-    ];
     return (
       <Select
         key="location"
@@ -137,7 +150,8 @@ export default React.createClass({
           <label className="col-xs-3 control-label">Select billable project</label>
           <div className="col-xs-9">
             {this.renderProjectSelect()}
-            <div className="help-block">BigQuery charges for data storage, streaming inserts, and for querying data.
+            <div className="help-block">
+              BigQuery charges for data storage, streaming inserts, and for querying data.
             </div>
           </div>
         </div>
@@ -151,7 +165,8 @@ export default React.createClass({
               placeholder="gs://some-bucket-name"
               onChange={(e) => this.updateEditingValue('storage', e.target.value)}
             />
-            <div className="help-block">Existing Google Cloud Storage bucket. There will be data temporarily exported,
+            <div className="help-block">
+              Existing Google Cloud Storage bucket. There will be data temporarily exported,
               before load to KBC.
             </div>
           </div>
@@ -160,7 +175,8 @@ export default React.createClass({
           <label className="col-xs-3 control-label">Dataset location</label>
           <div className="col-xs-9">
             {this.renderLocationSelect()}
-            <div className="help-block">The geographic location where source data exists.
+            <div className="help-block">
+              The geographic location where source data exists.
             </div>
           </div>
         </div>
@@ -170,36 +186,39 @@ export default React.createClass({
 
   render() {
     return (
-      <Modal
-        show={this.props.show}
-        onHide={this.props.onHideFn}
-      >
+      <Modal show={this.props.show} onHide={this.handleHide}>
         <Modal.Header closeButton>
           <Modal.Title>
             Google configuration
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          { this.renderForm() }
-          <div className="row">
-            <div className="table kbc-table-border-vertical kbc-detail-table" style={{borderBottom: 0}}>
-              <div className="tr">
-                <div className="td" />
-              </div>
-            </div>
-          </div>
+          {this.renderLoadingListError()}
+          {this.renderForm()}
         </Modal.Body>
         <Modal.Footer>
           <ConfirmButtons
-            isSaving={this.props.isPendingFn('projectId')}
+            isSaving={this.props.isPendingFn('projectId') || false}
             isDisabled={!this.isGoogleValid(this.props.google)}
             onSave={this.handleSave}
-            onCancel={this.props.onHideFn}
+            onCancel={this.handleHide}
             saveLabel="Save Changes"
           />
-
         </Modal.Footer>
       </Modal>
+    );
+  },
+
+  renderLoadingListError() {
+    if (this.state.errorMessage === null) {
+      return null;
+    }
+
+    return (
+      <Alert bsStyle="warning">
+        <p><strong>Loading projects list failed</strong></p>
+        <p>{this.state.errorMessage}</p>
+      </Alert>
     );
   },
 
@@ -210,6 +229,12 @@ export default React.createClass({
   updateEditingValue(item, newValue) {
     const newGoogle = this.props.google.set(item, newValue);
     this.props.onChangeFn(newGoogle);
+  },
+
+  handleHide() {
+    this.setState({
+      errorMessage: null
+    }, this.props.onHideFn);
   },
 
   handleSave() {
