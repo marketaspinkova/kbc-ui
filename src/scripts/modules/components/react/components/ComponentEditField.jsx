@@ -84,7 +84,7 @@ export default React.createClass({
         tooltipPlacement={this.props.tooltipPlacement}
         isSaving={this.state.isSaving}
         isEditing={this.state.isEditing}
-        isValid={this.state.isValid}
+        isValid={!!this.state.isValid}
         onEditStart={this._handleEditStart}
         onEditCancel={this._handleEditCancel}
         onEditChange={this._handleEditChange}
