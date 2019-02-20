@@ -354,14 +354,15 @@ export default {
 
     return orchestrationsApi
       .updateOrchestration(orchestrationId, data)
-      .then(orchestration =>
+      .then(orchestration => {
         dispatcher.handleViewAction({
           type: constants.ActionTypes.ORCHESTRATION_FIELD_SAVE_SUCCESS,
           orchestrationId,
           field: fieldName,
           orchestration
         })
-      )
+        return VersionsActionCreators.loadVersionsForce('orchestrator', orchestrationId.toString());
+      })
       .catch(e => {
         dispatcher.handleViewAction({
           type: constants.ActionTypes.ORCHESTRATION_FIELD_SAVE_ERROR,
