@@ -4,7 +4,7 @@ import { ExternalLink } from '@keboola/indigo-ui';
 import Textarea from 'react-textarea-autosize';
 import { HelpBlock, Alert } from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
-import Immutable from 'immutable';
+import { List, fromJS } from 'immutable';
 
 const SERVICE_ACCOUNT_REQUIRED_PROPS = [
   'type',
@@ -40,7 +40,7 @@ export default React.createClass({
     return {
       value: '',
       isJsonValid: false,
-      errors: Immutable.List()
+      errors: List()
     };
   },
 
@@ -55,10 +55,10 @@ export default React.createClass({
 
   getErrors(jsonString) {
     if (!isJsonValid(jsonString)) {
-      return Immutable.List();
+      return List();
     }
-    let errors = Immutable.List();
-    const serviceAccountData = Immutable.fromJS(JSON.parse(jsonString));
+    let errors = List();
+    const serviceAccountData = fromJS(JSON.parse(jsonString));
     SERVICE_ACCOUNT_REQUIRED_PROPS.forEach((propertyName) => {
       if (!serviceAccountData.has(propertyName)) {
         errors = errors.push(propertyName);
@@ -78,7 +78,7 @@ export default React.createClass({
   },
 
   onSubmit() {
-    this.props.onSubmit(Immutable.fromJS(JSON.parse(this.state.value)));
+    this.props.onSubmit(fromJS(JSON.parse(this.state.value)));
     this.resetState();
   },
 
