@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Alert, Modal, Form, Col, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import Select from 'react-select';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
 const INITIAL_STATE = {
@@ -24,7 +25,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Modal show={this.props.show} onHide={this.onHide}>
+      <Modal bsSize="large" show={this.props.show} onHide={this.onHide}>
         <Form onSubmit={this.handleSubmit} horizontal>
           <Modal.Header closeButton>
             <Modal.Title>Link bucket</Modal.Title>
@@ -33,47 +34,35 @@ export default React.createClass({
             {this.renderError()}
 
             <FormGroup>
-              <Col sm={4} componentClass={ControlLabel}>
+              <Col sm={3} componentClass={ControlLabel}>
                 Shared buckets
               </Col>
-              <Col sm={8}>
-                <FormControl autoFocus componentClass="select" onChange={this.handleBucket} value={this.state.bucket}>
-                  <option value="">Select bucket...</option>
-                  {this.groupedBuckets()
-                    .map((group, groupName) => {
-                      return (
-                        <optgroup key={groupName} label={groupName}>
-                          {group
-                            .map((bucket, index) => {
-                              return (
-                                <option key={index} value={JSON.stringify(bucket.toJS())}>
-                                  {this.bucketLabel(bucket)}
-                                </option>
-                              );
-                            })
-                            .toArray()}
-                        </optgroup>
-                      );
-                    })
-                    .toArray()}
-                </FormControl>
+              <Col sm={9}>
+                <Select
+                  autoFocus
+                  disabled={false}
+                  placeholder="Select bucket..."
+                  value={this.state.bucket}
+                  onChange={this.handleBucket}
+                  options={this.bucketsOptions()}
+                />
               </Col>
             </FormGroup>
 
             <FormGroup>
-              <Col sm={4} componentClass={ControlLabel}>
+              <Col sm={3} componentClass={ControlLabel}>
                 Name
               </Col>
-              <Col sm={8}>
+              <Col sm={9}>
                 <FormControl type="text" value={this.state.name} onChange={this.handleName} />
               </Col>
             </FormGroup>
 
             <FormGroup>
-              <Col sm={4} componentClass={ControlLabel}>
+              <Col sm={3} componentClass={ControlLabel}>
                 Stage
               </Col>
-              <Col sm={8}>
+              <Col sm={9}>
                 <FormControl
                   componentClass="select"
                   placeholder="Select stage..."
@@ -109,23 +98,14 @@ export default React.createClass({
     return <Alert bsStyle="danger">{this.state.error}</Alert>;
   },
 
-  groupedBuckets() {
+  bucketsOptions() {
     return this.props.sharedBuckets
-      .sortBy((bucket) => bucket.get('id').toLowerCase())
-      .groupBy((bucket) => {
-        return bucket.getIn(['project', 'name']);
-      })
-      .sortBy((group, project) => project.toLowerCase())
-  },
-
-  bucketLabel(bucket) {
-    let label = bucket.get('id');
-
-    if (bucket.get('description')) {
-      label += ` - ${bucket.get('description')}`;
-    }
-
-    return label;
+      .map((bucket) => ({
+        value: JSON.stringify(bucket.toJSON()),
+        label: `${bucket.getIn(['project', 'name'])} / ${bucket.get('id')}`
+      }))
+      .sortBy((option) => option.label.toLowerCase())
+      .toArray();
   },
 
   handleSubmit(event) {
@@ -145,22 +125,16 @@ export default React.createClass({
     this.setState({ error: message });
   },
 
-  handleBucket(event) {
-    this.setState({
-      bucket: event.target.value
-    });
+  handleBucket(selected) {
+    this.setState({ bucket: selected ? selected.value : null });
   },
 
   handleName(event) {
-    this.setState({
-      name: event.target.value
-    });
+    this.setState({ name: event.target.value });
   },
 
   handleStage(event) {
-    this.setState({
-      stage: event.target.value
-    });
+    this.setState({ stage: event.target.value });
   },
 
   onHide() {
