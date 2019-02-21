@@ -4,11 +4,10 @@ import { Link } from 'react-router';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import { componentsStore, createStore } from '../../../storeProvisioning';
 import RoutesStore from '../../../../../stores/RoutesStore';
-import LatestJobsStore from '../../../../jobs/stores/LatestJobsStore';
 import ComponentDescription from '../../../../components/react/components/ComponentDescription';
 import ComponentMetadata from '../../../../components/react/components/ComponentMetadata';
 import DeleteConfigurationButton from '../../../../components/react/components/DeleteConfigurationButton';
-import LatestJobs from '../../../../components/react/components/SidebarJobs';
+import SidebarJobsContainer from '../../../../components/react/components/SidebarJobsContainer';
 import RunExtractionButton from '../../../../components/react/components/RunComponentButton';
 import { SearchBar } from '@keboola/indigo-ui';
 import { createActions } from '../../../actionsProvisioning';
@@ -20,7 +19,7 @@ export default function(componentId) {
   const actionCreators = createActions(componentId);
 
   return React.createClass({
-    mixins: [createStoreMixin(LatestJobsStore, componentsStore)],
+    mixins: [createStoreMixin(componentsStore)],
 
     componentWillReceiveProps() {
       return this.setState(this.getStateFromStores());
@@ -36,7 +35,6 @@ export default function(componentId) {
       return {
         configId: config,
         pendingActions: ExDbStore.getQueriesPendingActions(),
-        latestJobs: LatestJobsStore.getJobs(componentId, config),
         hasCredentials: ExDbStore.hasValidCredentials(credentials),
         queries,
         queriesFilter: ExDbStore.getQueriesFilter(),
@@ -153,10 +151,9 @@ export default function(componentId) {
               <DeleteConfigurationButton componentId={componentId} configId={configurationId} />
             </li>
           </ul>
-          <LatestJobs
+          <SidebarJobsContainer
             componentId={componentId}
             configId={this.state.configId}
-            jobs={this.state.latestJobs}
             limit={3}
           />
           <LatestVersions limit={3} componentId={componentId} />

@@ -5,7 +5,6 @@ import {Map} from 'immutable';
 import storeProvisioning, {storeMixins} from '../../storeProvisioning';
 import ComponentStore from '../../../components/stores/ComponentsStore';
 import RoutesStore from '../../../../stores/RoutesStore';
-import LatestJobsStore from '../../../jobs/stores/LatestJobsStore';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 
 // actions
@@ -20,7 +19,7 @@ import RunComponentButton from '../../../components/react/components/RunComponen
 import DeleteConfigurationButton from '../../../components/react/components/DeleteConfigurationButton';
 import EmptyState from '../../../components/react/components/ComponentEmptyState';
 // import {Link} from 'react-router';
-import LatestJobs from '../../../components/react/components/SidebarJobs';
+import SidebarJobsContainer from '../../../components/react/components/SidebarJobsContainer';
 import LatestVersions from '../../../components/react/components/SidebarVersionsWrapper';
 
 // index components
@@ -32,7 +31,7 @@ import OutputTableModal from './OutputTableModal';
 const COMPONENT_ID = 'keboola.ex-google-drive';
 
 export default React.createClass({
-  mixins: [createStoreMixin(...storeMixins, LatestJobsStore)],
+  mixins: [createStoreMixin(...storeMixins)],
 
   getStateFromStores() {
     const configId = RoutesStore.getCurrentRouteParam('config');
@@ -41,7 +40,6 @@ export default React.createClass({
     const component = ComponentStore.getComponent(COMPONENT_ID);
 
     return {
-      latestJobs: LatestJobsStore.getJobs(COMPONENT_ID, configId),
       store: store,
       actions: actions,
       component: component,
@@ -101,10 +99,9 @@ export default React.createClass({
               />
             </li>
           </ul>
-          <LatestJobs
+          <SidebarJobsContainer
             componentId={COMPONENT_ID}
             configId={this.state.configId}
-            jobs={this.state.latestJobs}
             limit={3}
           />
           <LatestVersions

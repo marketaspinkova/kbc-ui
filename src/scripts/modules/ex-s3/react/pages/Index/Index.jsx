@@ -7,7 +7,6 @@ import InstalledComponentsStore from '../../../../components/stores/InstalledCom
 import StorageTablesStore from '../../../../components/stores/StorageTablesStore';
 import StorageBucketsStore from '../../../../components/stores/StorageBucketsStore';
 import RoutesStore from '../../../../../stores/RoutesStore';
-import LatestJobsStore from '../../../../jobs/stores/LatestJobsStore';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import storeProvisioning from '../../../storeProvisioning';
 
@@ -25,7 +24,7 @@ import ComponentMetadata from '../../../../components/react/components/Component
 import DeleteConfigurationButton from '../../../../components/react/components/DeleteConfigurationButton';
 import RunComponentButton from '../../../../components/react/components/RunComponentButton';
 import LatestVersions from '../../../../components/react/components/SidebarVersionsWrapper';
-import LatestJobs from '../../../../components/react/components/SidebarJobs';
+import SidebarJobsContainer from '../../../../components/react/components/SidebarJobsContainer';
 import SaveButtons from '../../../../../react/common/SaveButtons';
 
 // utils
@@ -35,7 +34,7 @@ import {getDefaultTable, getDefaultBucket} from '../../../utils';
 const COMPONENT_ID = 'keboola.ex-s3';
 
 export default React.createClass({
-  mixins: [createStoreMixin(InstalledComponentsStore, StorageTablesStore, StorageBucketsStore, LatestJobsStore)],
+  mixins: [createStoreMixin(InstalledComponentsStore, StorageTablesStore, StorageBucketsStore)],
 
   getStateFromStores() {
     const configId = RoutesStore.getCurrentRouteParam('config');
@@ -48,8 +47,7 @@ export default React.createClass({
       actions: actions,
       tables: StorageTablesStore.getAll(),
       localState: store.getLocalState(),
-      settings: store.settings,
-      latestJobs: LatestJobsStore.getJobs(COMPONENT_ID, configId)
+      settings: store.settings
     };
   },
 
@@ -154,10 +152,9 @@ export default React.createClass({
               />
             </li>
           </ul>
-          <LatestJobs
+          <SidebarJobsContainer
             componentId={COMPONENT_ID}
             configId={this.state.configId}
-            jobs={this.state.latestJobs}
             limit={3}
           />
           <LatestVersions
