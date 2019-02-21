@@ -163,7 +163,7 @@ describe('getMetadataDataType', function() {
     expect(fromJS({
       Price: {
         column: 'Price',
-        type: 'STRING',
+        type: 'VARCHAR',
         length: '123',
         convertEmptyValuesToNull: false
       }
@@ -191,7 +191,7 @@ describe('getMetadataDataType', function() {
     expect(fromJS({
       Price: {
         column: 'Price',
-        type: 'STRING',
+        type: 'VARCHAR',
         length: 16777216,
         convertEmptyValuesToNull: false
       }
