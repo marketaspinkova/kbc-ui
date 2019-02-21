@@ -3,7 +3,6 @@ import React from 'react';
 // stores
 import InstalledComponentsStore from '../../../../components/stores/InstalledComponentsStore';
 import RoutesStore from '../../../../../stores/RoutesStore';
-import LatestJobsStore from '../../../../jobs/stores/LatestJobsStore';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import VersionsStore from '../../../../components/stores/VersionsStore';
 import makeConfigProvisioning from '../../../configProvisioning';
@@ -22,7 +21,7 @@ import ComponentDescription from '../../../../components/react/components/Compon
 import ComponentMetadata from '../../../../components/react/components/ComponentMetadata';
 import DeleteConfigurationButton from '../../../../components/react/components/DeleteConfigurationButton';
 import LatestVersions from '../../../../components/react/components/SidebarVersionsWrapper';
-import LatestJobs from '../../../../components/react/components/SidebarJobs';
+import SidebarJobsContainer from '../../../../components/react/components/SidebarJobsContainer';
 import {CollapsibleSection} from '../../../../configurations/utils/renderHelpers';
 import NewTableButton from './NewTableButton';
 import ConfiguredTables from './ConfiguredTables';
@@ -50,7 +49,7 @@ const LoadSettingsCollapsibleComponent = CollapsibleSection({
 
 export default React.createClass({
 
-  mixins: [createStoreMixin(InstalledComponentsStore, LatestJobsStore, VersionsStore, GoodDataProvisioningStore)],
+  mixins: [createStoreMixin(InstalledComponentsStore, VersionsStore, GoodDataProvisioningStore)],
 
   getStateFromStores() {
     const configurationId = RoutesStore.getCurrentRouteParam('config');
@@ -76,8 +75,7 @@ export default React.createClass({
       tables,
       deleteTable,
       createNewTable,
-      toggleTableExport,
-      latestJobs: LatestJobsStore.getJobs(COMPONENT_ID, configurationId)
+      toggleTableExport
     };
   },
 
@@ -119,10 +117,9 @@ export default React.createClass({
               />
             </li>
           </ul>
-          <LatestJobs
+          <SidebarJobsContainer
             componentId={COMPONENT_ID}
             configId={this.state.configurationId}
-            jobs={this.state.latestJobs}
             limit={3}
           />
           <LatestVersions
