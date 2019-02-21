@@ -1,8 +1,8 @@
-
 const ignoreComponents = [
   'esnerda.wr-zoho-crm',
   'keboola.ex-github',
-  'esnerda.ex-twitter-ads'
+  'esnerda.ex-twitter-ads',
+  'tde-exporter'
 ];
 
 export default {
@@ -10,7 +10,10 @@ export default {
     return component.get('configurations')
       .filter((config) => {
         return (config.hasIn(['configuration', 'authorization', 'oauth_api', 'id']) &&
-          config.getIn(['configuration', 'authorization', 'oauth_api', 'version']) !== 3);
+                config.getIn(['configuration', 'authorization', 'oauth_api', 'version']) !== 3 ||
+                (config.getIn(['configuration', 'parameters', 'keboola.wr-google-drive', 'version']) !== 3 &&
+                config.getIn(['configuration', 'parameters', 'keboola.wr-dropbox-v2', 'version']) !== 3)
+        );
       });
   },
 
