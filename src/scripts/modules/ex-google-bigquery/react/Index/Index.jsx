@@ -5,7 +5,6 @@ import React from 'react';
 import storeProvisioning, {storeMixins} from '../../storeProvisioning';
 import ComponentStore from '../../../components/stores/ComponentsStore';
 import RoutesStore from '../../../../stores/RoutesStore';
-import LatestJobsStore from '../../../jobs/stores/LatestJobsStore';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 
 // actions
@@ -25,7 +24,7 @@ import {SearchBar, ExternalLink} from '@keboola/indigo-ui';
 import Confirm from '../../../../react/common/Confirm';
 import Tooltip from '../../../../react/common/Tooltip';
 import {Link} from 'react-router';
-import LatestJobs from '../../../components/react/components/SidebarJobs';
+import SidebarJobsContainer from '../../../components/react/components/SidebarJobsContainer';
 import LatestVersions from '../../../components/react/components/SidebarVersionsWrapper';
 import {Loader} from '@keboola/indigo-ui';
 
@@ -38,7 +37,7 @@ const ROUTE_PREFIX = 'ex-db-generic-';
 const COMPONENT_ID = 'keboola.ex-google-bigquery';
 
 export default React.createClass({
-  mixins: [createStoreMixin(...storeMixins, LatestJobsStore)],
+  mixins: [createStoreMixin(...storeMixins)],
 
   getStateFromStores() {
     const configId = RoutesStore.getCurrentRouteParam('config');
@@ -47,7 +46,6 @@ export default React.createClass({
     const component = ComponentStore.getComponent(COMPONENT_ID);
 
     return {
-      latestJobs: LatestJobsStore.getJobs(COMPONENT_ID, configId),
       store: store,
       actions: actions,
       component: component,
@@ -125,10 +123,9 @@ export default React.createClass({
               />
             </li>
           </ul>
-          <LatestJobs
+          <SidebarJobsContainer
             componentId={COMPONENT_ID}
             configId={this.state.configId}
-            jobs={this.state.latestJobs}
             limit={3}
           />
           <LatestVersions

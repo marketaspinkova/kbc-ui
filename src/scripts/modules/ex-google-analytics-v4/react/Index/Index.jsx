@@ -4,7 +4,6 @@ import {Map} from 'immutable';
 import storeProvisioning, {storeMixins} from '../../storeProvisioning';
 import ComponentStore from '../../../components/stores/ComponentsStore';
 import RoutesStore from '../../../../stores/RoutesStore';
-import LatestJobsStore from '../../../jobs/stores/LatestJobsStore';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 
 // actions
@@ -21,7 +20,7 @@ import EmptyState from '../../../components/react/components/ComponentEmptyState
 import {Link} from 'react-router';
 import {ExternalLink} from '@keboola/indigo-ui';
 import ProfileInfo from '../ProfileInfo';
-import LatestJobs from '../../../components/react/components/SidebarJobs';
+import SidebarJobsContainer from '../../../components/react/components/SidebarJobsContainer';
 import LatestVersions from '../../../components/react/components/SidebarVersionsWrapper';
 
 // index components
@@ -30,7 +29,7 @@ import ProfilesManagerModal from './ProfilesManagerModal';
 
 export default function(componentId) {
   return React.createClass({
-    mixins: [createStoreMixin(...storeMixins, LatestJobsStore)],
+    mixins: [createStoreMixin(...storeMixins)],
 
     getStateFromStores() {
       const configId = RoutesStore.getCurrentRouteParam('config');
@@ -39,7 +38,6 @@ export default function(componentId) {
       const component = ComponentStore.getComponent(componentId);
 
       return {
-        latestJobs: LatestJobsStore.getJobs(componentId, configId),
         store: store,
         actions: actions,
         component: component,
@@ -130,10 +128,9 @@ export default function(componentId) {
                 />
               </li>
             </ul>
-            <LatestJobs
+            <SidebarJobsContainer
               componentId={componentId}
               configId={this.state.configId}
-              jobs={this.state.latestJobs}
               limit={3}
             />
             <LatestVersions
