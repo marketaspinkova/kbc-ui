@@ -1,7 +1,6 @@
 import React from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
 import {SearchBar} from '@keboola/indigo-ui';
-import Immutable from 'immutable';
 import ConfigurationRowsTable from './ConfigurationRowsTable';
 import CreateConfigurationRowButton from './CreateConfigurationRowButton';
 
@@ -22,26 +21,18 @@ export default React.createClass({
     orderPending: React.PropTypes.object.isRequired,
     onRowCreated: React.PropTypes.func.isRequired,
     rowCreateEmptyConfig: React.PropTypes.func.isRequired,
-    objectName: React.PropTypes.string,
+    filter: React.PropTypes.func.isRequired,
     header: React.PropTypes.array,
     columns: React.PropTypes.object,
-    filter: React.PropTypes.func
+    objectName: React.PropTypes.string
   },
 
   getDefaultProps() {
     return {
       header: ['Name', 'Description'],
       columns: [
-        function(row) {
-          return row.get('name') !== '' ? row.get('name') : 'Untitled';
-        },
-        function(row) {
-          return (
-            <small>
-              {row.get('description') !== '' ? row.get('description') : 'No description'}
-            </small>
-          );
-        }
+        (row) => row.get('name') ? row.get('name') : 'Untitled',
+        (row) => <small>{row.get('description') ? row.get('description') : 'No description'}</small>
       ],
       objectName: 'Row'
     };
@@ -49,88 +40,8 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      query: '',
-      rows: Immutable.List()
+      query: ''
     };
-  },
-
-  componentWillReceiveProps(nextProps) {
-    const state = this.state;
-    this.setState({
-      rows: nextProps.rows
-        .filter(function(row) {
-          return nextProps.filter(row, state.query);
-        }).toList()
-    });
-  },
-
-  onChangeSearch(query) {
-    this.setState({
-      query: query,
-      rows: this.props.rows.filter(function(row) {
-        return this.props.filter(row, query);
-      }, this).toList()
-    });
-  },
-
-  onOrder(orderedIds, movedRowId) {
-    const orderedItems = this.props.rows.sort(function(a, b) {
-      if (orderedIds.indexOf(a.get('id')) < orderedIds.indexOf(b.get('id'))) {
-        return -1;
-      }
-      if (orderedIds.indexOf(a.get('id')) > orderedIds.indexOf(b.get('id'))) {
-        return 1;
-      }
-      return 0;
-    });
-    this.setState({
-      rows: orderedItems
-    });
-    return this.props.onOrder(orderedIds, movedRowId);
-  },
-
-  renderTable() {
-    const props = this.props;
-    const state = this.state;
-    if (this.state.rows.size === 0) {
-      return (
-        <div className="kbc-inner-padding">
-          No results found.
-        </div>
-      );
-    } else {
-      return (
-        <ConfigurationRowsTable
-          columns={props.columns}
-          header={props.header}
-          componentId={props.componentId}
-          component={props.component}
-          configurationId={props.configurationId}
-          rowLinkTo={props.rowLinkTo}
-          rowDeletePending={props.rowDeletePending}
-          rowDelete={props.rowDelete}
-          rowEnableDisablePending={props.rowEnableDisablePending}
-          rowEnableDisable={props.rowEnableDisable}
-          disabledMove={state.query !== ''}
-          onOrder={this.onOrder}
-          rows={this.state.rows}
-          orderPending={this.props.orderPending}
-        />
-      );
-    }
-  },
-
-  renderNewConfigRowButton() {
-    return (
-      <CreateConfigurationRowButton
-        componentType={this.props.component.get('type')}
-        objectName={this.props.objectName}
-        componentId={this.props.componentId}
-        configId={this.props.configurationId}
-        emptyConfig={this.props.rowCreateEmptyConfig}
-        onRowCreated={this.props.onRowCreated}
-      />
-    );
   },
 
   render() {
@@ -146,5 +57,61 @@ export default React.createClass({
         {this.renderTable()}
       </div>
     );
+  },
+
+  renderTable() {
+    const rows = this.filteredRows();
+
+    if (!rows.count()) {
+      return (
+        <div className="kbc-inner-padding">
+          No results found.
+        </div>
+      );
+    }
+
+    return (
+      <ConfigurationRowsTable
+        columns={this.props.columns}
+        header={this.props.header}
+        componentId={this.props.componentId}
+        component={this.props.component}
+        configurationId={this.props.configurationId}
+        rowLinkTo={this.props.rowLinkTo}
+        rowDeletePending={this.props.rowDeletePending}
+        rowDelete={this.props.rowDelete}
+        rowEnableDisablePending={this.props.rowEnableDisablePending}
+        rowEnableDisable={this.props.rowEnableDisable}
+        disabledMove={this.state.query !== ''}
+        onOrder={this.props.onOrder}
+        rows={rows}
+        orderPending={this.props.orderPending}
+      />
+    );
+  },
+
+  renderNewConfigRowButton() {
+    return (
+      <CreateConfigurationRowButton
+        componentType={this.props.component.get('type')}
+        objectName={this.props.objectName}
+        componentId={this.props.componentId}
+        configId={this.props.configurationId}
+        emptyConfig={this.props.rowCreateEmptyConfig}
+        onRowCreated={this.props.onRowCreated}
+      />
+    );
+  },
+
+  filteredRows() {
+    if (this.state.query) {
+      return this.props.rows.filter((row) => this.props.filter(row, this.state.query))
+    }
+
+    return this.props.rows;
+  },
+
+  onChangeSearch(query) {
+    this.setState({ query });
   }
 });
