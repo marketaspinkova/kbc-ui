@@ -10,15 +10,14 @@ import ComponentMetadata from '../../../../components/react/components/Component
 import RunComponentButton from '../../../../components/react/components/RunComponentButton';
 import TransformationActionCreators from '../../../ActionCreators';
 import NewTransformationModal from '../../modals/NewTransformation';
-import LatestJobsStore from '../../../../jobs/stores/LatestJobsStore';
-import SidebarJobs from '../../../../components/react/components/SidebarJobs';
+import SidebarJobsContainer from '../../../../components/react/components/SidebarJobsContainer';
 import SidebarVersions from '../../../../components/react/components/SidebarVersionsWrapper';
 import VersionsStore from '../../../../components/stores/VersionsStore';
 import EmptyStateBucket from '../../components/EmptyStateBucket';
 
 export default React.createClass({
   mixins: [
-    createStoreMixin(TransformationsStore, TransformationBucketsStore, LatestJobsStore, VersionsStore)
+    createStoreMixin(TransformationsStore, TransformationBucketsStore, VersionsStore)
   ],
 
   getStateFromStores() {
@@ -31,7 +30,6 @@ export default React.createClass({
       transformations: TransformationsStore.getTransformations(bucketId),
       bucket: TransformationBucketsStore.get(bucketId),
       pendingActions: TransformationsStore.getPendingActions(bucketId),
-      latestJobs: LatestJobsStore.getJobs('transformation', bucketId),
       latestVersions,
       latestVersionId
     };
@@ -82,10 +80,9 @@ export default React.createClass({
               </a>
             </li>
           </ul>
-          <SidebarJobs
+          <SidebarJobsContainer
             componentId="transformation"
             configId={this.state.bucketId}
-            jobs={this.state.latestJobs}
             limit={3}
           />
           <SidebarVersions componentId="transformation" limit={3} />
