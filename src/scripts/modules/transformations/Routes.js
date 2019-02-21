@@ -122,7 +122,6 @@ const routes = {
       },
       defaultRouteHandler: Sandbox,
       requireData: [
-        () => ProvisioningActionCreators.loadMySqlSandboxCredentials(),
         () => {
           if (ApplicationsStore.getSapiToken().getIn(['owner', 'hasRedshift'])) {
             return ProvisioningActionCreators.loadRedshiftSandboxCredentials();
