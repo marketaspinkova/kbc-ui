@@ -5,7 +5,6 @@ import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../../stores/RoutesStore';
 import InstalledComponentStore from '../../stores/InstalledComponentsStore';
 import ComponentStore from '../../stores/ComponentsStore';
-import LatestJobsStore from '../../../jobs/stores/LatestJobsStore';
 import ApplicationStore from '../../../../stores/ApplicationStore';
 import VersionsStore from '../../stores/VersionsStore';
 
@@ -15,7 +14,7 @@ import ComponentMetadata from '../components/ComponentMetadata';
 import LastUpdateInfo from '../../../../react/common/LastUpdateInfo';
 import RunComponentButton from '../components/RunComponentButton';
 import DeleteConfigurationButton from '../components/DeleteConfigurationButton';
-import LatestJobs from '../components/SidebarJobs';
+import SidebarJobsContainer from '../components/SidebarJobsContainer';
 import Configuration from '../components/Configuration';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
 import Immutable from 'immutable';
@@ -23,7 +22,7 @@ import LatestVersions from '../components/SidebarVersionsWrapper';
 
 
 export default React.createClass({
-  mixins: [createStoreMixin(InstalledComponentStore, LatestJobsStore, ComponentStore, VersionsStore)],
+  mixins: [createStoreMixin(InstalledComponentStore, ComponentStore, VersionsStore)],
 
   getStateFromStores() {
     const configId = RoutesStore.getCurrentRouteParam('config'),
@@ -36,7 +35,6 @@ export default React.createClass({
       versions: VersionsStore.getVersions(componentId, configId),
       configData: InstalledComponentStore.getConfigData(componentId, configId),
       config: InstalledComponentStore.getConfig(componentId, configId),
-      latestJobs: LatestJobsStore.getJobs(componentId, configId),
       isChanged: InstalledComponentStore.isChangedRawConfigData(componentId, configId),
       isSaving: InstalledComponentStore.isSavingConfigData(componentId, configId),
 
@@ -112,10 +110,9 @@ export default React.createClass({
             </li>
             {this.renderShinyAppLink()}
           </ul>
-          <LatestJobs
+          <SidebarJobsContainer
             componentId={this.state.componentId}
             configId={this.state.config.get('id')}
-            jobs={this.state.latestJobs}
             limit={3}
           />
           <LatestVersions

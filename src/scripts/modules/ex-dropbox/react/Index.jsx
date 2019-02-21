@@ -23,8 +23,7 @@ import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../stores/RoutesStore';
 import StorageActionCreators from '../../components/StorageActionCreators';
 import StorageBucketsStore from '../../components/stores/StorageBucketsStore';
-import LatestJobsStore from '../../jobs/stores/LatestJobsStore';
-import LatestJobs from '../../components/react/components/SidebarJobs';
+import SidebarJobsContainer from '../../components/react/components/SidebarJobsContainer';
 import ComponentsMetadata from '../../components/react/components/ComponentMetadata';
 import { fromJS, Map, List } from 'immutable';
 import Confirm from '../../../react/common/Confirm';
@@ -45,7 +44,7 @@ const componentId = 'ex-dropbox';
 
 export default React.createClass({
 
-  mixins: [createStoreMixin(InstalledComponentsStore, OAuthStore, LatestJobsStore, ExDropboxStore, StorageBucketsStore)],
+  mixins: [createStoreMixin(InstalledComponentsStore, OAuthStore, ExDropboxStore, StorageBucketsStore)],
 
   getStateFromStores() {
     let configId = RoutesStore.getCurrentRouteParam('config');
@@ -63,7 +62,6 @@ export default React.createClass({
     let isDeletingCredentials = OAuthStore.isDeletingCredetials(componentId, configId);
 
     return {
-      latestJobs: LatestJobsStore.getJobs(componentId, configId),
       configId: configId,
       configData: configData,
       parameters: parameters,
@@ -311,11 +309,10 @@ export default React.createClass({
             />
           </li>
         </ul>
-        <LatestJobs
+        <SidebarJobsContainer
           componentId={componentId}
           configId={this.state.configId}
           limit={3}
-          jobs={this.state.latestJobs}
         />
         <LatestVersions
           limit={3}

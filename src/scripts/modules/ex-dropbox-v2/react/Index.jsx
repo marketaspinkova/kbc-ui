@@ -23,8 +23,7 @@ import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../stores/RoutesStore';
 // import StorageActionCreators from '../../components/StorageActionCreators';
 // import StorageBucketsStore from '../../components/stores/StorageBucketsStore';
-import LatestJobsStore from '../../jobs/stores/LatestJobsStore';
-import LatestJobs from '../../components/react/components/SidebarJobs';
+import SidebarJobsContainer from '../../components/react/components/SidebarJobsContainer';
 import ComponentsMetadata from '../../components/react/components/ComponentMetadata';
 
 import {
@@ -37,7 +36,7 @@ const componentId = 'radektomasek.ex-dropbox-v2';
 
 export default React.createClass({
 
-  mixins: [createStoreMixin(InstalledComponentsStore, LatestJobsStore, ExDropboxStore)],
+  mixins: [createStoreMixin(InstalledComponentsStore, ExDropboxStore)],
 
   getStateFromStores() {
     let configId = RoutesStore.getCurrentRouteParam('config');
@@ -56,8 +55,7 @@ export default React.createClass({
       parameters: parameters,
       localState: localState,
       dropboxFiles: dropboxFiles,
-      selectedDropboxFiles: selectedDropboxFiles,
-      latestJobs: LatestJobsStore.getJobs(componentId, configId)
+      selectedDropboxFiles: selectedDropboxFiles
     };
   },
 
@@ -236,11 +234,10 @@ export default React.createClass({
             />
           </li>
         </ul>
-        <LatestJobs
+        <SidebarJobsContainer
           componentId={componentId}
           configId={this.state.configId}
           limit={3}
-          jobs={this.state.latestJobs}
         />
         <LatestVersions
           limit={3}

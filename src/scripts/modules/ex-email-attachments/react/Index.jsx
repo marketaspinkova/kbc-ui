@@ -4,7 +4,6 @@ import storeProvisioning, {storeMixins} from '../storeProvisioning';
 import InstalledComponentStore from '../../components/stores/InstalledComponentsStore';
 import RoutesStore from '../../../stores/RoutesStore';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
-import LatestJobsStore from '../../jobs/stores/LatestJobsStore';
 
 // actions
 import actionsProvisioning from '../actionsProvisioning';
@@ -16,7 +15,7 @@ import {RefreshIcon} from '@keboola/indigo-ui';
 import LatestVersions from '../../components/react/components/SidebarVersionsWrapper';
 import RunComponentButton from '../../components/react/components/RunComponentButton';
 import DeleteConfigurationButton from '../../components/react/components/DeleteConfigurationButton';
-import LatestJobs from '../../components/react/components/SidebarJobs';
+import SidebarJobsContainer from '../../components/react/components/SidebarJobsContainer';
 import ConfigurationForm from './ConfigurationForm';
 import StorageTablesStore from '../../components/stores/StorageTablesStore';
 import StorageBucketsStore from '../../components/stores/StorageBucketsStore';
@@ -30,7 +29,7 @@ import Processors from '../../components/react/components/Processors';
 const COMPONENT_ID = 'keboola.ex-email-attachments';
 
 export default React.createClass({
-  mixins: [createStoreMixin(...storeMixins, InstalledComponentStore, StorageTablesStore, StorageBucketsStore, LatestJobsStore)],
+  mixins: [createStoreMixin(...storeMixins, InstalledComponentStore, StorageTablesStore, StorageBucketsStore)],
 
   getStateFromStores() {
     const configId = RoutesStore.getCurrentRouteParam('config');
@@ -42,7 +41,6 @@ export default React.createClass({
       store: store,
       actions: actions,
       tables: StorageTablesStore.getAll(),
-      latestJobs: LatestJobsStore.getJobs(COMPONENT_ID, configId),
       localState: store.getLocalState(),
       settings: store.settings,
       processors: store.processors
@@ -162,10 +160,9 @@ export default React.createClass({
               />
             </li>
           </ul>
-          <LatestJobs
+          <SidebarJobsContainer
             componentId={COMPONENT_ID}
             configId={this.state.configId}
-            jobs={this.state.latestJobs}
             limit={3}
           />
           <LatestVersions

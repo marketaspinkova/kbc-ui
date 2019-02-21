@@ -3,7 +3,6 @@ import React from 'react';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../../stores/RoutesStore';
 import InstalledComponentStore from '../../stores/InstalledComponentsStore';
-import LatestJobsStore from '../../../jobs/stores/LatestJobsStore';
 import ComponentStore from '../../stores/ComponentsStore';
 import VersionsStore from '../../stores/VersionsStore';
 
@@ -14,7 +13,7 @@ import ComponentDescription from '../components/ComponentDescription';
 import ComponentMetadata from '../components/ComponentMetadata';
 import RunComponentButton from '../components/RunComponentButton';
 import DeleteConfigurationButton from '../components/DeleteConfigurationButton';
-import LatestJobs from '../components/SidebarJobs';
+import SidebarJobsContainer from '../components/SidebarJobsContainer';
 import Configuration from '../components/Configuration';
 import RuntimeConfiguration from '../components/RuntimeConfiguration';
 import TemplatedConfiguration from '../components/TemplatedConfiguration';
@@ -34,7 +33,7 @@ import LatestVersions from '../components/SidebarVersionsWrapper';
 import Processors from '../components/Processors';
 
 export default React.createClass({
-  mixins: [createStoreMixin(InstalledComponentStore, LatestJobsStore, StorageTablesStore, OauthStore, ComponentStore, VersionsStore)],
+  mixins: [createStoreMixin(InstalledComponentStore, StorageTablesStore, OauthStore, ComponentStore, VersionsStore)],
 
   propTypes: {
     migrationComponent: React.PropTypes.any
@@ -54,7 +53,6 @@ export default React.createClass({
       configData: configData,
       editingConfigData: InstalledComponentStore.getEditingConfigDataObject(componentId, configId),
       config: InstalledComponentStore.getConfig(componentId, configId),
-      latestJobs: LatestJobsStore.getJobs(componentId, configId),
       isParametersChanged: InstalledComponentStore.isChangedRawConfigDataParameters(componentId, configId),
       isParametersSaving: InstalledComponentStore.isSavingConfigDataParameters(componentId, configId),
       editingConfigDataParameters: InstalledComponentStore.getEditingRawConfigDataParameters(componentId, configId, '{}'),
@@ -270,10 +268,9 @@ export default React.createClass({
               />
             </li>
           </ul>
-          <LatestJobs
+          <SidebarJobsContainer
             componentId={this.state.componentId}
             configId={this.state.config.get('id')}
-            jobs={this.state.latestJobs}
             limit={3}
           />
           <LatestVersions

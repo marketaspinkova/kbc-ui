@@ -11,8 +11,7 @@ import ComponentMetadata from '../../../../components/react/components/Component
 import ComponentEmptyState from '../../../../components/react/components/ComponentEmptyState';
 import Confirm from '../../../../../react/common/Confirm';
 import TablesByBucketsPanel from '../../../../components/react/components/TablesByBucketsPanel';
-import LatestJobs from '../../../../components/react/components/SidebarJobs';
-import LatestJobsStore from '../../../../jobs/stores/LatestJobsStore';
+import SidebarJobsContainer from '../../../../components/react/components/SidebarJobsContainer';
 import LatestVersions from '../../../../components/react/components/SidebarVersionsWrapper';
 import InstalledComponentStore from '../../../../components/stores/InstalledComponentsStore';
 import StorageTablesStore from '../../../../components/stores/StorageTablesStore';
@@ -33,8 +32,7 @@ export default React.createClass({
     createStoreMixin(
       goodDataWriterStore,
       InstalledComponentStore,
-      StorageTablesStore,
-      LatestJobsStore
+      StorageTablesStore
     )
   ],
 
@@ -51,7 +49,6 @@ export default React.createClass({
       filter: goodDataWriterStore.getWriterTablesFilter(config),
       deletingTables: goodDataWriterStore.getDeletingTables(config),
       localState,
-      latestJobs: LatestJobsStore.getJobs('gooddata-writer', config),
       storageTables: StorageTablesStore.getAll()
     };
   },
@@ -328,10 +325,9 @@ export default React.createClass({
               </li>
             </ul>
           )}
-          <LatestJobs
+          <SidebarJobsContainer
             componentId="gooddata-writer"
             configId={this.state.writer.getIn(['config', 'id'])}
-            jobs={this.state.latestJobs}
             limit={3}
           />
           <LatestVersions componentId="gooddata-writer" limit={3} />

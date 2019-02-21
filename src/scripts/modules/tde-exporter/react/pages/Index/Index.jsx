@@ -8,8 +8,7 @@ import { Button } from 'react-bootstrap';
 import { RefreshIcon } from '@keboola/indigo-ui';
 
 import * as tdeCommon from '../../../tdeCommon';
-import LatestJobsStore from '../../../../jobs/stores/LatestJobsStore';
-import LatestJobs from '../../../../components/react/components/SidebarJobs';
+import SidebarJobsContainer from '../../../../components/react/components/SidebarJobsContainer';
 import InstalledComponentsStore from '../../../../components/stores/InstalledComponentsStore';
 import StorageFilesStore from '../../../../components/stores/StorageFilesStore';
 import RoutesStore from '../../../../../stores/RoutesStore';
@@ -29,7 +28,7 @@ import AddNewTableModal from './AddNewTableModal';
 const componentId = 'tde-exporter';
 
 export default React.createClass({
-  mixins: [createStoreMixin(InstalledComponentsStore, LatestJobsStore, StorageFilesStore)],
+  mixins: [createStoreMixin(InstalledComponentsStore, StorageFilesStore)],
 
   getStateFromStores() {
     const configId = RoutesStore.getCurrentRouteParam('config');
@@ -38,7 +37,6 @@ export default React.createClass({
     return {
       configId,
       configData,
-      latestJobs: LatestJobsStore.getJobs(componentId, configId),
       files: StorageFilesStore.getAll(),
       isLoadingFiles: StorageFilesStore.getIsLoading(),
       localState: InstalledComponentsStore.getLocalState(componentId, configId),
@@ -127,10 +125,9 @@ export default React.createClass({
             <DeleteConfigurationButton componentId={componentId} configId={this.state.configId} />
           </li>
         </ul>
-        <LatestJobs
+        <SidebarJobsContainer
           componentId={componentId}
           configId={this.state.configId}
-          jobs={this.state.latestJobs}
           limit={3}
         />
         <LatestVersions componentId={componentId} limit={3} />

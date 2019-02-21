@@ -20,9 +20,8 @@ import SqlDepButton from '../../components/SqlDepButton';
 import ValidateQueriesButton from '../../components/ValidateQueriesButton';
 import * as sandboxUtils from '../../../utils/sandboxUtils';
 
-import LatestJobs from '../../../../components/react/components/SidebarJobs';
+import SidebarJobsContainer from '../../../../components/react/components/SidebarJobsContainer';
 import LatestRowVersions from '../../../../configurations/react/components/SidebarRowVersionsWrapper';
-import LatestJobsStore from '../../../../jobs/stores/LatestJobsStore';
 
 export default React.createClass({
   mixins: [
@@ -31,8 +30,7 @@ export default React.createClass({
       TransformationBucketsStore,
       StorageTablesStore,
       StorageBucketsStore,
-      VersionsStore,
-      LatestJobsStore
+      VersionsStore
     ),
     Router.Navigation,
     Router.State
@@ -67,8 +65,7 @@ export default React.createClass({
       transformations: TransformationsStore.getTransformations(bucketId),
       isTransformationEditingValid: TransformationsStore.getTransformationEditingIsValid(bucketId, transformationId),
       highlightQueryNumber,
-      latestVersionId,
-      latestJobs: LatestJobsStore.getTransformationJobs(bucketId, transformationId)
+      latestVersionId
     };
   },
 
@@ -246,11 +243,10 @@ export default React.createClass({
               </ExternalLink>
             </li>
           </ul>
-          <LatestJobs
+          <SidebarJobsContainer
             componentId="transformation"
             configId={this.state.bucketId}
             rowId={this.state.transformationId}
-            jobs={this.state.latestJobs}
             limit={3}
           />
           <LatestRowVersions

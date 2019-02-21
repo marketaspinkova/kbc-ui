@@ -29,14 +29,13 @@ import {params,
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../stores/RoutesStore';
 import InstalledComponentStore from '../../components/stores/InstalledComponentsStore';
-import LatestJobsStore from '../../jobs/stores/LatestJobsStore';
 import storageTablesStore from '../../components/stores/StorageTablesStore';
 
 import ComponentDescription from '../../components/react/components/ComponentDescription';
 import ComponentMetadata from '../../components/react/components/ComponentMetadata';
 import RunComponentButton from '../../components/react/components/RunComponentButton';
 import DeleteConfigurationButton from '../../components/react/components/DeleteConfigurationButton';
-import LatestJobs from '../../components/react/components/SidebarJobs';
+import SidebarJobsContainer from '../../components/react/components/SidebarJobsContainer';
 import LatestVersions from '../../components/react/components/SidebarVersionsWrapper';
 
 import {analysisTypes, languageOptions} from './templates';
@@ -62,7 +61,7 @@ const domainOptions = [
 ];
 
 export default React.createClass({
-  mixins: [createStoreMixin(storageTablesStore, InstalledComponentStore, LatestJobsStore)],
+  mixins: [createStoreMixin(storageTablesStore, InstalledComponentStore)],
 
   getStateFromStores() {
     const configId = RoutesStore.getCurrentRouteParam('config');
@@ -81,7 +80,6 @@ export default React.createClass({
       intable: intable,
       parameters: parameters,
       editing: !!localState.get('editing'),
-      latestJobs: LatestJobsStore.getJobs(componentId, configId),
       allTables: allSapiTables
 
     };
@@ -146,10 +144,9 @@ export default React.createClass({
               />
             </li>
           </ul>
-          <LatestJobs
+          <SidebarJobsContainer
             componentId={componentId}
             configId={this.state.configId}
-            jobs={this.state.latestJobs}
             limit={3}
           />
           <LatestVersions

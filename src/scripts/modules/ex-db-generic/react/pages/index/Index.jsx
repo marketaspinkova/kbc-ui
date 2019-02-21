@@ -7,7 +7,6 @@ import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 
 import * as storeProvisioning from '../../../storeProvisioning';
 import RoutesStore from '../../../../../stores/RoutesStore';
-import LatestJobsStore from '../../../../jobs/stores/LatestJobsStore';
 import VersionsStore from '../../../../components/stores/VersionsStore';
 
 import QueryTable from './QueryTable';
@@ -19,7 +18,7 @@ import SidebarVersions from '../../../../components/react/components/SidebarVers
 
 import DeleteConfigurationButton from '../../../../components/react/components/DeleteConfigurationButton';
 
-import LatestJobs from '../../../../components/react/components/SidebarJobs';
+import SidebarJobsContainer from '../../../../components/react/components/SidebarJobsContainer';
 import RunComponentButton from '../../../../components/react/components/RunComponentButton';
 
 import {Loader} from '@keboola/indigo-ui';
@@ -36,7 +35,7 @@ export default function(componentId) {
   const actionsCreators = actionsProvisioning.createActions(componentId);
   return React.createClass({
     displayName: 'ExDbIndex',
-    mixins: [createStoreMixin(VersionsStore, LatestJobsStore, storeProvisioning.componentsStore), Navigation],
+    mixins: [createStoreMixin(VersionsStore, storeProvisioning.componentsStore), Navigation],
 
     componentWillReceiveProps() {
       return this.setState(this.getStateFromStores());
@@ -62,7 +61,6 @@ export default function(componentId) {
         configId: config,
         versions: VersionsStore.getVersions(componentId, config),
         pendingActions: ExDbStore.getQueriesPendingActions(),
-        latestJobs: LatestJobsStore.getJobs(componentId, config),
         hasCredentials: hasValidCredentials,
         newCredentials: ExDbStore.getNewCredentials(),
         sourceTables: ExDbStore.getSourceTables(),
@@ -305,11 +303,10 @@ export default function(componentId) {
                 />
               </li>
             </ul>
-            <LatestJobs
+            <SidebarJobsContainer
               componentId={componentId}
               configId={this.state.configId}
               limit={3}
-              jobs={this.state.latestJobs}
             />
             <SidebarVersions limit={3} componentId={componentId}/>
           </div>
