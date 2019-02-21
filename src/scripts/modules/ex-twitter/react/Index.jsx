@@ -4,7 +4,6 @@ import {Map} from 'immutable';
 // stores
 import InstalledComponentStore from '../../components/stores/InstalledComponentsStore';
 import ComponentStore from '../../components/stores/ComponentsStore';
-import LatestJobsStore from '../../jobs/stores/LatestJobsStore';
 import RoutesStore from '../../../stores/RoutesStore';
 import OauthStore from '../../oauth-v2/Store';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
@@ -20,7 +19,7 @@ import ComponentDescription from '../../components/react/components/ComponentDes
 import ComponentMetadata from '../../components/react/components/ComponentMetadata';
 import RunComponentButton from '../../components/react/components/RunComponentButton';
 import DeleteConfigurationButton from '../../components/react/components/DeleteConfigurationButton';
-import LatestJobs from '../../components/react/components/SidebarJobs';
+import SidebarJobsContainer from '../../components/react/components/SidebarJobsContainer';
 import LatestVersions from '../../components/react/components/SidebarVersionsWrapper';
 import {ExternalLink} from '@keboola/indigo-ui';
 
@@ -35,7 +34,7 @@ import {
 const COMPONENT_ID = 'keboola.ex-twitter';
 
 export default React.createClass({
-  mixins: [createStoreMixin(InstalledComponentStore, LatestJobsStore, ComponentStore, OauthStore)],
+  mixins: [createStoreMixin(InstalledComponentStore, ComponentStore, OauthStore)],
 
   getStateFromStores() {
     const configId = RoutesStore.getCurrentRouteParam('config'),
@@ -52,7 +51,6 @@ export default React.createClass({
       component: ComponentStore.getComponent(COMPONENT_ID),
       config: InstalledComponentStore.getConfig(COMPONENT_ID, configId),
       configData: configData,
-      latestJobs: LatestJobsStore.getJobs(COMPONENT_ID, configId),
       isSaving: InstalledComponentStore.isSavingConfigData(COMPONENT_ID, configId),
       isAuthorized: configData.hasIn(['authorization', 'oauth_api', 'id']),
       oauthCredentials: oauthCredentials,
@@ -170,10 +168,9 @@ export default React.createClass({
               />
             </li>
           </ul>
-          <LatestJobs
+          <SidebarJobsContainer
             componentId={this.state.component.get('id')}
             configId={this.state.config.get('id')}
-            jobs={this.state.latestJobs}
             limit={3}
           />
           <LatestVersions
