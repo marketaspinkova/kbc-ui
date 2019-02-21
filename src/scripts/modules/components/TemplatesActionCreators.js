@@ -7,6 +7,7 @@ import { ActionTypes } from './TemplatesConstants';
 export default {
   loadSchema(componentId) {
     if (templatesStore.hasTemplates(componentId)) {
+      this.loadSchemaForce(componentId);
       return Promise.resolve();
     }
     return this.loadSchemaForce(componentId);

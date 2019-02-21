@@ -102,6 +102,7 @@ export default {
 
   loadConfiguration(configurationId) {
     if (goodDataWriterStore.hasWriter(configurationId)) {
+      this.loadConfigurationForce(configurationId);
       return Promise.resolve();
     }
     return this.loadConfigurationForce(configurationId);
@@ -134,6 +135,7 @@ export default {
 
   loadTableDetail(configurationId, tableId) {
     if (goodDataWriterStore.hasTableColumns(configurationId, tableId)) {
+      this.loadTableDetailForce(configurationId, tableId);
       return Promise.resolve();
     }
     return this.loadTableDetailForce(configurationId, tableId);
