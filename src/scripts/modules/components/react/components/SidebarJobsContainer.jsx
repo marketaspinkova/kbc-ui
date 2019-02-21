@@ -14,6 +14,13 @@ export default React.createClass({
   },
 
   getStateFromStores() {
+    if (this.props.componentId === 'transformation') {
+      return {
+        latestJobs: this.props.rowId
+          ? LatestJobsStore.getTransformationJobs(this.props.configId, this.props.rowId)
+          : LatestJobsStore.getJobs(this.props.componentId, this.props.configId),
+      };
+    }
     return {
       latestJobs: this.props.rowId
         ? LatestJobsStore.getRowJobs(this.props.componentId, this.props.configId, this.props.rowId)
