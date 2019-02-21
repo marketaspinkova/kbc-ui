@@ -3,7 +3,6 @@ import { fromJS } from 'immutable';
 export default fromJS({
   BIGINT: {
     name: 'BIGINT',
-    basetype: 'INTEGER',
     size: false
   },
   BOOLEAN: {
@@ -17,7 +16,6 @@ export default fromJS({
   },
   DOUBLE: {
     name: 'DOUBLE',
-    basetype: 'FLOAT',
     size: false
   },
   DECIMAL: {
@@ -37,12 +35,10 @@ export default fromJS({
   },
   REAL: {
     name: 'REAL',
-    basetype: 'FLOAT',
     size: false
   },
   SMALLINT: {
     name: 'SMALLINT',
-    basetype: 'INTEGER',
     size: false
   },
   STRING: {
@@ -58,12 +54,10 @@ export default fromJS({
   },
   TINYINT: {
     name: 'TINYINT',
-    basetype: 'INTEGER',
     size: false
   },
   VARCHAR: {
     name: 'VARCHAR',
-    basetype: 'VARCHAR',
     size: true,
     maxLength: 16777216
   }
