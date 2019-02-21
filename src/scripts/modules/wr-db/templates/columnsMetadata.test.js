@@ -19,7 +19,7 @@ const table = fromJS({
 });
 
 function metadataSnowflakeType(column) {
-  return { name: column, dbName: column, type: 'varchar', nullable: true, default: 'value', size: 16777216 };
+  return { name: column, dbName: column, type: 'string', nullable: true, default: 'value', size: 16777216 };
 }
 
 function defaultSnowflakeType(column) {
