@@ -3,12 +3,10 @@ import { fromJS } from 'immutable';
 export default fromJS({
   INT: {
     name: 'INT',
-    basetype: 'INTEGER',
     size: false
   },
   SMALLINT: {
     name: 'SMALLINT',
-    basetype: 'INTEGER',
     size: false
   },
   INTEGER: {
@@ -18,12 +16,10 @@ export default fromJS({
   },
   BIGINT: {
     name: 'BIGINT',
-    basetype: 'INTEGER',
     size: false
   },
   DECIMAL: {
     name: 'DECIMAL',
-    basetype: 'NUMERIC',
     size: true
   },
   NUMERIC: {
@@ -38,17 +34,14 @@ export default fromJS({
   },
   'DOUBLE PRECISION': {
     name: 'DOUBLE PRECISION',
-    basetype: 'FLOAT',
     size: false
   },
   FLOAT4: {
     name: 'FLOAT4',
-    basetype: 'FLOAT',
     size: false
   },
   FLOAT8: {
     name: 'FLOAT8',
-    basetype: 'FLOAT',
     size: false
   },
   SERIAL: {

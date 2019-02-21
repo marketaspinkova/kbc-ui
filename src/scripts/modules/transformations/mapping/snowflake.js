@@ -8,17 +8,14 @@ export default fromJS({
   },
   DECIMAL: {
     name: 'DECIMAL',
-    basetype: 'NUMERIC',
     size: true
   },
   NUMERIC: {
     name: 'NUMERIC',
-    basetype: 'NUMERIC',
     size: true
   },
   INT: {
     name: 'INT',
-    basetype: 'INTEGER',
     size: false
   },
   INTEGER: {
@@ -28,22 +25,18 @@ export default fromJS({
   },
   BIGINT: {
     name: 'BIGINT',
-    basetype: 'INTEGER',
     size: false
   },
   SMALLINT: {
     name: 'SMALLINT',
-    basetype: 'INTEGER',
     size: false
   },
   TINYINT: {
     name: 'TINYINT',
-    basetype: 'INTEGER',
     size: false
   },
   BYTEINT: {
     name: 'BYTEINT',
-    basetype: 'INTEGER',
     size: false
   },
   FLOAT: {
@@ -53,27 +46,22 @@ export default fromJS({
   },
   FLOAT4: {
     name: 'FLOAT4',
-    basetype: 'FLOAT',
     size: false
   },
   FLOAT8: {
     name: 'FLOAT8',
-    basetype: 'FLOAT',
     size: false
   },
   DOUBLE: {
     name: 'DOUBLE',
-    basetype: 'FLOAT',
     size: false
   },
   'DOUBLE PRECISION': {
     name: 'DOUBLE PRECISION',
-    basetype: 'FLOAT',
     size: false
   },
   REAL: {
     name: 'REAL',
-    basetype: 'FLOAT',
     size: false
   },
   VARCHAR: {
@@ -92,7 +80,6 @@ export default fromJS({
   },
   STRING: {
     name: 'STRING',
-    basetype: 'STRING',
     size: true,
     maxLength: 16777216
   },
@@ -112,7 +99,6 @@ export default fromJS({
   },
   DATETIME: {
     name: 'DATETIME',
-    basetype: 'TIMESTAMP',
     size: false
   },
   TIMESTAMP: {
@@ -122,17 +108,14 @@ export default fromJS({
   },
   TIMESTAMP_NTZ: {
     name: 'TIMESTAMP_NTZ',
-    basetype: 'TIMESTAMP',
     size: false
   },
   TIMESTAMP_LTZ: {
     name: 'TIMESTAMP_LTZ',
-    basetype: 'TIMESTAMP',
     size: false
   },
   TIMESTAMP_TZ: {
     name: 'TIMESTAMP_TZ',
-    basetype: 'TIMESTAMP',
     size: false
   },
   VARIANT: {

@@ -21,7 +21,6 @@ export default fromJS({
   },
   REAL: {
     name: 'REAL',
-    basetype: 'FLOAT',
     size: false
   },
   FLOAT: {
@@ -36,7 +35,6 @@ export default fromJS({
   },
   DATETIME: {
     name: 'DATETIME',
-    basetype: 'TIMESTAMP',
     size: true
   },
   SMALLDATETIME: {
@@ -72,7 +70,6 @@ export default fromJS({
   },
   SMALLINT: {
     name: 'SMALLINT',
-    basetype: 'INTEGER',
     size: false
   },
   NCHAR: {
@@ -81,7 +78,6 @@ export default fromJS({
   },
   INT: {
     name: 'INT',
-    basetype: 'INTEGER',
     size: false
   },
   NVARCHAR: {

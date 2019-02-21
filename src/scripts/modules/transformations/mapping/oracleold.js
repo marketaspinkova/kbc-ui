@@ -37,7 +37,6 @@ export default fromJS({
   },
   NUMBER: {
     name: 'NUMBER',
-    basetype: 'NUMERIC',
     size: true
   },
   BINARY_FLOAT: {

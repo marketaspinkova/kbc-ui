@@ -8,42 +8,34 @@ export default fromJS({
   },
   INT: {
     name: 'INT',
-    basetype: 'INTEGER',
     size: false
   },
   TINYINT: {
     name: 'TINYINT',
-    basetype: 'INTEGER',
     size: false
   },
   SMALLINT: {
     name: 'SMALLINT',
-    basetype: 'INTEGER',
     size: false
   },
   MEDIUMINT: {
     name: 'MEDIUMINT',
-    basetype: 'INTEGER',
     size: false
   },
   BIGINT: {
     name: 'BIGINT',
-    basetype: 'INTEGER',
     size: false
   },
   DECIMAL: {
     name: 'DECIMAL',
-    basetype: 'NUMERIC',
     size: true
   },
   DEC: {
     name: 'DEC',
-    basetype: 'NUMERIC',
     size: true
   },
   FIXED: {
     name: 'FIXED',
-    basetype: 'FLOAT',
     size: false
   },
   NUMERIC: {
@@ -58,17 +50,14 @@ export default fromJS({
   },
   'DOUBLE PRECISION': {
     name: 'DOUBLE PRECISION',
-    basetype: 'FLOAT',
     size: false
   },
   REAL: {
     name: 'REAL',
-    basetype: 'FLOAT',
     size: false
   },
   DOUBLE: {
     name: 'DOUBLE',
-    basetype: 'FLOAT',
     size: false
   },
   BIT: {
@@ -86,7 +75,6 @@ export default fromJS({
   },
   DATETIME: {
     name: 'DATETIME',
-    basetype: 'TIMESTAMP',
     size: false
   },
   TIMESTAMP: {

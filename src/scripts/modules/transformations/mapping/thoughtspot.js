@@ -8,12 +8,10 @@ export default fromJS({
   },
   BIGINT: {
     name: 'BIGINT',
-    basetype: 'INTEGER',
     size: false
   },
   DOUBLE: {
     name: 'DOUBLE',
-    basetype: 'FLOAT',
     size: false
   },
   FLOAT: {
@@ -48,7 +46,6 @@ export default fromJS({
   },
   DATETIME: {
     name: 'DATETIME',
-    basetype: 'TIMESTAMP',
     size: false
   }
 });

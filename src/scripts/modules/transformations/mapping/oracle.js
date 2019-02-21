@@ -66,6 +66,8 @@ export default fromJS({
   },
   VARCHAR2: {
     name: 'VARCHAR2',
-    size: false
+    basetype: 'VARCHAR',
+    size: true,
+    maxLength: 16777216
   }
 });
