@@ -5,13 +5,12 @@ import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../stores/RoutesStore';
 import InstalledComponentStore from '../../components/stores/InstalledComponentsStore';
 import ComponentStore from '../../components/stores/ComponentsStore';
-import LatestJobsStore from '../../jobs/stores/LatestJobsStore';
 
 import ComponentDescription from '../../components/react/components/ComponentDescription';
 import ComponentMetadata from '../../components/react/components/ComponentMetadata';
 import RunComponentButton from '../../components/react/components/RunComponentButton';
 import DeleteConfigurationButton from '../../components/react/components/DeleteConfigurationButton';
-import LatestJobs from '../../components/react/components/SidebarJobs';
+import SidebarJobsContainer from '../../components/react/components/SidebarJobsContainer';
 import LatestVersions from '../../components/react/components/SidebarVersionsWrapper';
 import CredentialsModal from './CredentialsModal';
 import TemplateModal from './TemplateModal';
@@ -41,7 +40,7 @@ function parameterPasswordCompatibility(parameters) {
 }
 
 export default React.createClass({
-  mixins: [createStoreMixin(InstalledComponentStore, LatestJobsStore, ComponentStore)],
+  mixins: [createStoreMixin(InstalledComponentStore, ComponentStore)],
 
   getStateFromStores() {
     const configId = RoutesStore.getCurrentRouteParam('config'),
@@ -57,7 +56,6 @@ export default React.createClass({
       componentId: componentId,
       parameters: parameters,
       config: InstalledComponentStore.getConfig(componentId, configId),
-      latestJobs: LatestJobsStore.getJobs(componentId, configId),
       isSaving: InstalledComponentStore.isSavingConfigData(componentId, configId),
       localState: localState,
       isEditingJobs: localState.has('jobsString'),
@@ -162,10 +160,9 @@ export default React.createClass({
               />
             </li>
           </ul>
-          <LatestJobs
+          <SidebarJobsContainer
             componentId={this.state.componentId}
             configId={this.state.config.get('id')}
-            jobs={this.state.latestJobs}
             limit={3}
           />
           <LatestVersions
