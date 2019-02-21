@@ -33,10 +33,16 @@ const FEATURE_EARLY_ADOPTER_PREVIEW = 'early-adopter-preview';
 const FEATURE_UI_LOOKER_PREVIEW = 'ui-looker-preview';
 
 const lookerPreviewHideComponents = [
-  'tde-exporter',
+  'cleveranalytics.wr-clever-analytics',
+  'gooddata-writer',
+  'htns.wr-salesforce-analytics-cloud',
   'keboola.ex-gooddata',
   'keboola.gooddata-writer',
-  'gooddata-writer',
+  'keboola.wr-thoughtspot',
+  'stories.wr-stories',
+  'tde-exporter',
+  'wr-tableau',
+  'wr-tableau-server'
 ];
 
 export {
