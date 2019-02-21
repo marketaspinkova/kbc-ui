@@ -1,5 +1,5 @@
 import { fromJS, Map, List } from 'immutable';
-import { SnowflakeDataTypesMapping } from '../../../Constants';
+import SnowflakeDataTypesMapping from '../../../mapping/snowflake';
 
 const getMetadataDataTypes = (columnMetadata) => {
   return columnMetadata.map((metadata, colname) => {

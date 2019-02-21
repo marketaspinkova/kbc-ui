@@ -12,7 +12,7 @@ import whereOperatorConstants from '../../../../../react/common/whereOperatorCon
 import {PanelWithDetails} from '@keboola/indigo-ui';
 import MetadataStore from '../../../../components/stores/MetadataStore';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
-import { SnowflakeDataTypesMapping } from '../../../Constants';
+import SnowflakeDataTypesMapping from '../../../mapping/snowflake';
 import { getMetadataDataTypes } from './InputMappingRowSnowflakeEditorHelper';
 
 export default createReactClass({

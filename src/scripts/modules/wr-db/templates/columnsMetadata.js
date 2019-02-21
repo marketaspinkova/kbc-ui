@@ -1,6 +1,6 @@
 import { List, Map, fromJS } from 'immutable';
 import DataTypes from './dataTypes';
-import { SnowflakeDataTypesMapping } from '../../transformations/Constants';
+import SnowflakeDataTypesMapping from '../../transformations/mapping/snowflake';
 
 export function prepareColumnsTypes(componentId, table) {
   if (!DataTypes[componentId]) {
