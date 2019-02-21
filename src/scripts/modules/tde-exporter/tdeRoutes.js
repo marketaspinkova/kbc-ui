@@ -17,6 +17,7 @@ import storageActionCreators from '../components/StorageActionCreators';
 import RouterStore from '../../stores/RoutesStore';
 import VersionsActionCreators from '../components/VersionsActionCreators';
 import { createTablesRoute } from '../table-browser/routes';
+import {Constants} from '../oauth-v2/Constants';
 
 const componentId = 'tde-exporter';
 const registerOAuthV2Route = writerComponentId => ({
@@ -36,7 +37,13 @@ const registerOAuthV2Route = writerComponentId => ({
           .loadCredentials(writerComponentId, credentialsId)
           .then(() => {
             const saveFn = installedComponentsActions.saveComponentConfigData;
-            const newConfig = configuration.setIn(['parameters', writerComponentId, 'id'], credentialsId);
+            const credentialsObject = Map(
+              {
+                id: credentialsId,
+                version: Constants.OAUTH_VERSION_3
+              }
+            );
+            const newConfig = configuration.setIn(['parameters', writerComponentId], credentialsObject);
 
             return saveFn(componentId, params.config, newConfig).then(() => {
               const notification = 'Account succesfully authorized.';
