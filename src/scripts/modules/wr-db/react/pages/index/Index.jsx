@@ -9,7 +9,7 @@ import { Button } from 'react-bootstrap';
 import { wontMigrateComponents } from '../../../templates/migration';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import LatestVersions from '../../../../components/react/components/SidebarVersionsWrapper';
-import LatestJobs from '../../../../components/react/components/SidebarJobs';
+import SidebarJobsContainer from '../../../../components/react/components/SidebarJobsContainer';
 import dockerProxyApi from '../../../templates/dockerProxyApi';
 import ComponentEmptyState from '../../../../components/react/components/ComponentEmptyState';
 import RunButtonModal from '../../../../components/react/components/RunComponentButton';
@@ -19,7 +19,6 @@ import TablesByBucketsPanel from '../../../../components/react/components/Tables
 import ComponentDescription from '../../../../components/react/components/ComponentDescription';
 import ComponentMetadata from '../../../../components/react/components/ComponentMetadata';
 
-import LatestJobsStore from '../../../../jobs/stores/LatestJobsStore';
 import RoutesStore from '../../../../../stores/RoutesStore';
 import InstalledComponentsStore from '../../../../components/stores/InstalledComponentsStore';
 import WrDbStore from '../../../store';
@@ -37,7 +36,7 @@ export default componentId => {
   return React.createClass({
     displayName: 'wrdbIndex',
 
-    mixins: [createStoreMixin(StorageTablesStore, InstalledComponentsStore, LatestJobsStore, WrDbStore)],
+    mixins: [createStoreMixin(StorageTablesStore, InstalledComponentsStore, WrDbStore)],
 
     getStateFromStores() {
       const configId = RoutesStore.getCurrentRouteParam('config');
@@ -49,7 +48,6 @@ export default componentId => {
 
       // state
       return {
-        latestJobs: LatestJobsStore.getJobs(componentId, configId),
         updatingTables: WrDbStore.getUpdatingTables(componentId, configId),
         allTables: StorageTablesStore.getAll(),
         tables,
@@ -257,10 +255,9 @@ export default componentId => {
               <DeleteConfigurationButton componentId={componentId} configId={this.state.configId} />
             </li>
           </ul>
-          <LatestJobs
+          <SidebarJobsContainer
             componentId={componentId}
             configId={this.state.configId}
-            jobs={this.state.latestJobs}
             limit={3}
           />
           {dockerProxyApi(componentId) && <LatestVersions componentId={componentId} limit={3} />}
