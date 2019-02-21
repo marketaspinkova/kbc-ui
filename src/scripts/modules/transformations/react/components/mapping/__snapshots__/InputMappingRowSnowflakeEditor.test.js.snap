@@ -289,17 +289,40 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok 1`] = `
         datatypes={Immutable.Map {}}
         datatypesMap={
           Immutable.Map {
+            "BINARY": Immutable.Map {
+              "name": "BINARY",
+              "size": false,
+            },
             "VARIANT": Immutable.Map {
               "name": "VARIANT",
               "size": false,
             },
+            "BYTEINT": Immutable.Map {
+              "name": "BYTEINT",
+              "basetype": "INTEGER",
+              "size": false,
+            },
             "BOOLEAN": Immutable.Map {
               "name": "BOOLEAN",
-              "size": false,
               "basetype": "BOOLEAN",
+              "size": false,
+            },
+            "SMALLINT": Immutable.Map {
+              "name": "SMALLINT",
+              "basetype": "INTEGER",
+              "size": false,
+            },
+            "VARBINARY": Immutable.Map {
+              "name": "VARBINARY",
+              "size": false,
             },
             "TIMESTAMP_LTZ": Immutable.Map {
               "name": "TIMESTAMP_LTZ",
+              "basetype": "TIMESTAMP",
+              "size": false,
+            },
+            "CHARACTER": Immutable.Map {
+              "name": "CHARACTER",
               "size": false,
             },
             "NUMBER": Immutable.Map {
@@ -309,20 +332,86 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok 1`] = `
             },
             "TIMESTAMP_NTZ": Immutable.Map {
               "name": "TIMESTAMP_NTZ",
+              "basetype": "TIMESTAMP",
               "size": false,
+            },
+            "TEXT": Immutable.Map {
+              "name": "TEXT",
+              "size": false,
+            },
+            "NUMERIC": Immutable.Map {
+              "name": "NUMERIC",
+              "basetype": "NUMERIC",
+              "size": true,
             },
             "DATE": Immutable.Map {
               "name": "DATE",
               "basetype": "DATE",
               "size": false,
             },
+            "TINYINT": Immutable.Map {
+              "name": "TINYINT",
+              "basetype": "INTEGER",
+              "size": false,
+            },
             "TIMESTAMP_TZ": Immutable.Map {
               "name": "TIMESTAMP_TZ",
+              "basetype": "TIMESTAMP",
+              "size": false,
+            },
+            "DOUBLE PRECISION": Immutable.Map {
+              "name": "DOUBLE PRECISION",
+              "basetype": "FLOAT",
+              "size": false,
+            },
+            "BIGINT": Immutable.Map {
+              "name": "BIGINT",
+              "basetype": "INTEGER",
+              "size": false,
+            },
+            "INT": Immutable.Map {
+              "name": "INT",
+              "basetype": "INTEGER",
+              "size": false,
+            },
+            "STRING": Immutable.Map {
+              "name": "STRING",
+              "basetype": "STRING",
+              "size": true,
+              "maxLength": 16777216,
+            },
+            "DECIMAL": Immutable.Map {
+              "name": "DECIMAL",
+              "basetype": "NUMERIC",
+              "size": true,
+            },
+            "DOUBLE": Immutable.Map {
+              "name": "DOUBLE",
+              "basetype": "FLOAT",
               "size": false,
             },
             "TIMESTAMP": Immutable.Map {
               "name": "TIMESTAMP",
               "basetype": "TIMESTAMP",
+              "size": false,
+            },
+            "CHAR": Immutable.Map {
+              "name": "CHAR",
+              "size": false,
+            },
+            "FLOAT4": Immutable.Map {
+              "name": "FLOAT4",
+              "basetype": "FLOAT",
+              "size": false,
+            },
+            "DATETIME": Immutable.Map {
+              "name": "DATETIME",
+              "basetype": "TIMESTAMP",
+              "size": false,
+            },
+            "FLOAT8": Immutable.Map {
+              "name": "FLOAT8",
+              "basetype": "FLOAT",
               "size": false,
             },
             "FLOAT": Immutable.Map {
@@ -339,6 +428,11 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok 1`] = `
             "INTEGER": Immutable.Map {
               "name": "INTEGER",
               "basetype": "INTEGER",
+              "size": false,
+            },
+            "REAL": Immutable.Map {
+              "name": "REAL",
+              "basetype": "FLOAT",
               "size": false,
             },
           }
@@ -640,17 +734,40 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source and des
         datatypes={Immutable.Map {}}
         datatypesMap={
           Immutable.Map {
+            "BINARY": Immutable.Map {
+              "name": "BINARY",
+              "size": false,
+            },
             "VARIANT": Immutable.Map {
               "name": "VARIANT",
               "size": false,
             },
+            "BYTEINT": Immutable.Map {
+              "name": "BYTEINT",
+              "basetype": "INTEGER",
+              "size": false,
+            },
             "BOOLEAN": Immutable.Map {
               "name": "BOOLEAN",
-              "size": false,
               "basetype": "BOOLEAN",
+              "size": false,
+            },
+            "SMALLINT": Immutable.Map {
+              "name": "SMALLINT",
+              "basetype": "INTEGER",
+              "size": false,
+            },
+            "VARBINARY": Immutable.Map {
+              "name": "VARBINARY",
+              "size": false,
             },
             "TIMESTAMP_LTZ": Immutable.Map {
               "name": "TIMESTAMP_LTZ",
+              "basetype": "TIMESTAMP",
+              "size": false,
+            },
+            "CHARACTER": Immutable.Map {
+              "name": "CHARACTER",
               "size": false,
             },
             "NUMBER": Immutable.Map {
@@ -660,20 +777,86 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source and des
             },
             "TIMESTAMP_NTZ": Immutable.Map {
               "name": "TIMESTAMP_NTZ",
+              "basetype": "TIMESTAMP",
               "size": false,
+            },
+            "TEXT": Immutable.Map {
+              "name": "TEXT",
+              "size": false,
+            },
+            "NUMERIC": Immutable.Map {
+              "name": "NUMERIC",
+              "basetype": "NUMERIC",
+              "size": true,
             },
             "DATE": Immutable.Map {
               "name": "DATE",
               "basetype": "DATE",
               "size": false,
             },
+            "TINYINT": Immutable.Map {
+              "name": "TINYINT",
+              "basetype": "INTEGER",
+              "size": false,
+            },
             "TIMESTAMP_TZ": Immutable.Map {
               "name": "TIMESTAMP_TZ",
+              "basetype": "TIMESTAMP",
+              "size": false,
+            },
+            "DOUBLE PRECISION": Immutable.Map {
+              "name": "DOUBLE PRECISION",
+              "basetype": "FLOAT",
+              "size": false,
+            },
+            "BIGINT": Immutable.Map {
+              "name": "BIGINT",
+              "basetype": "INTEGER",
+              "size": false,
+            },
+            "INT": Immutable.Map {
+              "name": "INT",
+              "basetype": "INTEGER",
+              "size": false,
+            },
+            "STRING": Immutable.Map {
+              "name": "STRING",
+              "basetype": "STRING",
+              "size": true,
+              "maxLength": 16777216,
+            },
+            "DECIMAL": Immutable.Map {
+              "name": "DECIMAL",
+              "basetype": "NUMERIC",
+              "size": true,
+            },
+            "DOUBLE": Immutable.Map {
+              "name": "DOUBLE",
+              "basetype": "FLOAT",
               "size": false,
             },
             "TIMESTAMP": Immutable.Map {
               "name": "TIMESTAMP",
               "basetype": "TIMESTAMP",
+              "size": false,
+            },
+            "CHAR": Immutable.Map {
+              "name": "CHAR",
+              "size": false,
+            },
+            "FLOAT4": Immutable.Map {
+              "name": "FLOAT4",
+              "basetype": "FLOAT",
+              "size": false,
+            },
+            "DATETIME": Immutable.Map {
+              "name": "DATETIME",
+              "basetype": "TIMESTAMP",
+              "size": false,
+            },
+            "FLOAT8": Immutable.Map {
+              "name": "FLOAT8",
+              "basetype": "FLOAT",
               "size": false,
             },
             "FLOAT": Immutable.Map {
@@ -690,6 +873,11 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source and des
             "INTEGER": Immutable.Map {
               "name": "INTEGER",
               "basetype": "INTEGER",
+              "size": false,
+            },
+            "REAL": Immutable.Map {
+              "name": "REAL",
+              "basetype": "FLOAT",
               "size": false,
             },
           }
@@ -992,17 +1180,40 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
         datatypes={Immutable.Map {}}
         datatypesMap={
           Immutable.Map {
+            "BINARY": Immutable.Map {
+              "name": "BINARY",
+              "size": false,
+            },
             "VARIANT": Immutable.Map {
               "name": "VARIANT",
               "size": false,
             },
+            "BYTEINT": Immutable.Map {
+              "name": "BYTEINT",
+              "basetype": "INTEGER",
+              "size": false,
+            },
             "BOOLEAN": Immutable.Map {
               "name": "BOOLEAN",
-              "size": false,
               "basetype": "BOOLEAN",
+              "size": false,
+            },
+            "SMALLINT": Immutable.Map {
+              "name": "SMALLINT",
+              "basetype": "INTEGER",
+              "size": false,
+            },
+            "VARBINARY": Immutable.Map {
+              "name": "VARBINARY",
+              "size": false,
             },
             "TIMESTAMP_LTZ": Immutable.Map {
               "name": "TIMESTAMP_LTZ",
+              "basetype": "TIMESTAMP",
+              "size": false,
+            },
+            "CHARACTER": Immutable.Map {
+              "name": "CHARACTER",
               "size": false,
             },
             "NUMBER": Immutable.Map {
@@ -1012,20 +1223,86 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
             },
             "TIMESTAMP_NTZ": Immutable.Map {
               "name": "TIMESTAMP_NTZ",
+              "basetype": "TIMESTAMP",
               "size": false,
+            },
+            "TEXT": Immutable.Map {
+              "name": "TEXT",
+              "size": false,
+            },
+            "NUMERIC": Immutable.Map {
+              "name": "NUMERIC",
+              "basetype": "NUMERIC",
+              "size": true,
             },
             "DATE": Immutable.Map {
               "name": "DATE",
               "basetype": "DATE",
               "size": false,
             },
+            "TINYINT": Immutable.Map {
+              "name": "TINYINT",
+              "basetype": "INTEGER",
+              "size": false,
+            },
             "TIMESTAMP_TZ": Immutable.Map {
               "name": "TIMESTAMP_TZ",
+              "basetype": "TIMESTAMP",
+              "size": false,
+            },
+            "DOUBLE PRECISION": Immutable.Map {
+              "name": "DOUBLE PRECISION",
+              "basetype": "FLOAT",
+              "size": false,
+            },
+            "BIGINT": Immutable.Map {
+              "name": "BIGINT",
+              "basetype": "INTEGER",
+              "size": false,
+            },
+            "INT": Immutable.Map {
+              "name": "INT",
+              "basetype": "INTEGER",
+              "size": false,
+            },
+            "STRING": Immutable.Map {
+              "name": "STRING",
+              "basetype": "STRING",
+              "size": true,
+              "maxLength": 16777216,
+            },
+            "DECIMAL": Immutable.Map {
+              "name": "DECIMAL",
+              "basetype": "NUMERIC",
+              "size": true,
+            },
+            "DOUBLE": Immutable.Map {
+              "name": "DOUBLE",
+              "basetype": "FLOAT",
               "size": false,
             },
             "TIMESTAMP": Immutable.Map {
               "name": "TIMESTAMP",
               "basetype": "TIMESTAMP",
+              "size": false,
+            },
+            "CHAR": Immutable.Map {
+              "name": "CHAR",
+              "size": false,
+            },
+            "FLOAT4": Immutable.Map {
+              "name": "FLOAT4",
+              "basetype": "FLOAT",
+              "size": false,
+            },
+            "DATETIME": Immutable.Map {
+              "name": "DATETIME",
+              "basetype": "TIMESTAMP",
+              "size": false,
+            },
+            "FLOAT8": Immutable.Map {
+              "name": "FLOAT8",
+              "basetype": "FLOAT",
               "size": false,
             },
             "FLOAT": Immutable.Map {
@@ -1042,6 +1319,11 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
             "INTEGER": Immutable.Map {
               "name": "INTEGER",
               "basetype": "INTEGER",
+              "size": false,
+            },
+            "REAL": Immutable.Map {
+              "name": "REAL",
+              "basetype": "FLOAT",
               "size": false,
             },
           }
@@ -1416,17 +1698,40 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
         }
         datatypesMap={
           Immutable.Map {
+            "BINARY": Immutable.Map {
+              "name": "BINARY",
+              "size": false,
+            },
             "VARIANT": Immutable.Map {
               "name": "VARIANT",
               "size": false,
             },
+            "BYTEINT": Immutable.Map {
+              "name": "BYTEINT",
+              "basetype": "INTEGER",
+              "size": false,
+            },
             "BOOLEAN": Immutable.Map {
               "name": "BOOLEAN",
-              "size": false,
               "basetype": "BOOLEAN",
+              "size": false,
+            },
+            "SMALLINT": Immutable.Map {
+              "name": "SMALLINT",
+              "basetype": "INTEGER",
+              "size": false,
+            },
+            "VARBINARY": Immutable.Map {
+              "name": "VARBINARY",
+              "size": false,
             },
             "TIMESTAMP_LTZ": Immutable.Map {
               "name": "TIMESTAMP_LTZ",
+              "basetype": "TIMESTAMP",
+              "size": false,
+            },
+            "CHARACTER": Immutable.Map {
+              "name": "CHARACTER",
               "size": false,
             },
             "NUMBER": Immutable.Map {
@@ -1436,20 +1741,86 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
             },
             "TIMESTAMP_NTZ": Immutable.Map {
               "name": "TIMESTAMP_NTZ",
+              "basetype": "TIMESTAMP",
               "size": false,
+            },
+            "TEXT": Immutable.Map {
+              "name": "TEXT",
+              "size": false,
+            },
+            "NUMERIC": Immutable.Map {
+              "name": "NUMERIC",
+              "basetype": "NUMERIC",
+              "size": true,
             },
             "DATE": Immutable.Map {
               "name": "DATE",
               "basetype": "DATE",
               "size": false,
             },
+            "TINYINT": Immutable.Map {
+              "name": "TINYINT",
+              "basetype": "INTEGER",
+              "size": false,
+            },
             "TIMESTAMP_TZ": Immutable.Map {
               "name": "TIMESTAMP_TZ",
+              "basetype": "TIMESTAMP",
+              "size": false,
+            },
+            "DOUBLE PRECISION": Immutable.Map {
+              "name": "DOUBLE PRECISION",
+              "basetype": "FLOAT",
+              "size": false,
+            },
+            "BIGINT": Immutable.Map {
+              "name": "BIGINT",
+              "basetype": "INTEGER",
+              "size": false,
+            },
+            "INT": Immutable.Map {
+              "name": "INT",
+              "basetype": "INTEGER",
+              "size": false,
+            },
+            "STRING": Immutable.Map {
+              "name": "STRING",
+              "basetype": "STRING",
+              "size": true,
+              "maxLength": 16777216,
+            },
+            "DECIMAL": Immutable.Map {
+              "name": "DECIMAL",
+              "basetype": "NUMERIC",
+              "size": true,
+            },
+            "DOUBLE": Immutable.Map {
+              "name": "DOUBLE",
+              "basetype": "FLOAT",
               "size": false,
             },
             "TIMESTAMP": Immutable.Map {
               "name": "TIMESTAMP",
               "basetype": "TIMESTAMP",
+              "size": false,
+            },
+            "CHAR": Immutable.Map {
+              "name": "CHAR",
+              "size": false,
+            },
+            "FLOAT4": Immutable.Map {
+              "name": "FLOAT4",
+              "basetype": "FLOAT",
+              "size": false,
+            },
+            "DATETIME": Immutable.Map {
+              "name": "DATETIME",
+              "basetype": "TIMESTAMP",
+              "size": false,
+            },
+            "FLOAT8": Immutable.Map {
+              "name": "FLOAT8",
+              "basetype": "FLOAT",
               "size": false,
             },
             "FLOAT": Immutable.Map {
@@ -1466,6 +1837,11 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
             "INTEGER": Immutable.Map {
               "name": "INTEGER",
               "basetype": "INTEGER",
+              "size": false,
+            },
+            "REAL": Immutable.Map {
+              "name": "REAL",
+              "basetype": "FLOAT",
               "size": false,
             },
           }
