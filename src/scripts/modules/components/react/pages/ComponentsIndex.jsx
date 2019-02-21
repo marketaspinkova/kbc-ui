@@ -2,12 +2,14 @@ import React from 'react';
 import { Map } from 'immutable';
 
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
+import ApplicationStore from '../../../../stores/ApplicationStore';
 import InstalledComponentsStore from '../../stores/InstalledComponentsStore';
 import ComponentsStore from '../../stores/ComponentsStore';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
 import {SearchBar} from '@keboola/indigo-ui';
 import ComponentRow from './ComponentRow';
 import NewComponentSelection from '../components/NewComponentSelection';
+import { lookerPreviewHideComponents } from '../../../../constants/KbcConstants';
 
 const TEXTS = {
   noComponents: {
@@ -30,8 +32,17 @@ export default React.createClass({
   getStateFromStores() {
     const components = ComponentsStore.getFilteredForType(this.props.type)
       .filter((component) => {
-        return !component.get('flags').includes('excludeFromNewList');
+        if (component.get('flags').includes('excludeFromNewList')) {
+          return false;
+        }
+
+        if (ApplicationStore.hasLookerPreview() && lookerPreviewHideComponents.includes(component.get('id'))) {
+          return false;
+        }
+
+        return true;
       });
+
     return {
       installedComponentsFiltered: InstalledComponentsStore.getFilteredComponents(this.props.type),
       installedComponents: InstalledComponentsStore.getAllForType(this.props.type),
@@ -41,6 +52,7 @@ export default React.createClass({
       configurationFilter: InstalledComponentsStore.getConfigurationFilter(this.props.type)
     };
   },
+
   render() {
     if (this.state.installedComponents.count()) {
       return (
@@ -73,24 +85,25 @@ export default React.createClass({
           </div>
         </div>
       );
-    } else {
-      return (
-        <div className="container-fluid">
-          <NewComponentSelection
-            className="kbc-main-content"
-            components={this.state.components}
-            filter={this.state.componentFilter}
-            componentType={this.props.type}
-          >
-            <div className="row">
-              <h2>{TEXTS.noComponents[this.props.type]}</h2>
-              <p>{TEXTS.installFirst[this.props.type]}</p>
-            </div>
-          </NewComponentSelection>
-        </div>
-      );
     }
+
+    return (
+      <div className="container-fluid">
+        <NewComponentSelection
+          className="kbc-main-content"
+          components={this.state.components}
+          filter={this.state.componentFilter}
+          componentType={this.props.type}
+        >
+          <div className="row">
+            <h2>{TEXTS.noComponents[this.props.type]}</h2>
+            <p>{TEXTS.installFirst[this.props.type]}</p>
+          </div>
+        </NewComponentSelection>
+      </div>
+    );
   },
+
   handleFilterChange: function(query) {
     return InstalledComponentsActionCreators
       .setInstalledComponentsConfigurationFilter(this.props.type, query);
