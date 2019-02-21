@@ -362,7 +362,7 @@ export default React.createClass({
   },
 
   _renderConfiguration(job) {
-    if (job.get('nestingLevel') > 0 && job.getIn(['params', 'configData'])) {
+    if (job.get('nestingLevel') > 0 && !job.hasIn(['params', 'config'])) {
       const runIdParts = job.get('runId', []).split('.').slice(0, -1);
       let parentRunId = '';
       let parentJob = null;
@@ -370,7 +370,7 @@ export default React.createClass({
       do {
         parentRunId = runIdParts.join('.');
         parentJob = JobsStore.getAll().find((job) => {
-          return job.get('runId') === parentRunId && !job.getIn(['params', 'configData']);
+          return job.get('runId') === parentRunId && job.hasIn(['params', 'config']);
         });
         runIdParts.pop();
       } while (!parentJob && runIdParts.length > 0);
