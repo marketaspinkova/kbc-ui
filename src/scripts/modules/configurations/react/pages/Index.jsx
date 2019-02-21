@@ -7,7 +7,6 @@ import ComponentsStore from '../../../components/stores/ComponentsStore';
 import ConfigurationRowsStore from '../../ConfigurationRowsStore';
 import ConfigurationsStore from '../../ConfigurationsStore';
 import RoutesStore from '../../../../stores/RoutesStore';
-import LatestJobsStore from '../../../jobs/stores/LatestJobsStore';
 import VersionsStore from '../../../components/stores/VersionsStore';
 import MigrationsStore from '../../MigrationsStore';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
@@ -22,7 +21,7 @@ import ComponentDescription from '../../../components/react/components/Component
 import ComponentMetadata from '../../../components/react/components/ComponentMetadata';
 import DeleteConfigurationButton from '../../../components/react/components/DeleteConfigurationButton';
 import LatestVersions from '../../../components/react/components/SidebarVersionsWrapper';
-import LatestJobs from '../../../components/react/components/SidebarJobs';
+import SidebarJobsContainer from '../../../components/react/components/SidebarJobsContainer';
 import CreateConfigurationRowButton from '../components/CreateConfigurationRowButton';
 import ConfigurationRows from '../components/ConfigurationRows';
 import IndexSections from '../components/IndexSections';
@@ -31,7 +30,7 @@ import IndexSections from '../components/IndexSections';
 import sections from '../../utils/sections';
 
 export default React.createClass({
-  mixins: [createStoreMixin(InstalledComponentsStore, ConfigurationsStore, ConfigurationRowsStore, LatestJobsStore, VersionsStore, MigrationsStore)],
+  mixins: [createStoreMixin(InstalledComponentsStore, ConfigurationsStore, ConfigurationRowsStore, VersionsStore, MigrationsStore)],
 
   getStateFromStores() {
     const configurationId = RoutesStore.getCurrentRouteParam('config');
@@ -44,7 +43,6 @@ export default React.createClass({
       settings: settings,
       configurationId: configurationId,
       configuration: configuration,
-      latestJobs: LatestJobsStore.getJobs(componentId, configurationId),
       rows: ConfigurationRowsStore.getRows(componentId, configurationId),
       isChanged: ConfigurationsStore.isEditingConfiguration(componentId, configurationId)
     };
@@ -192,10 +190,9 @@ export default React.createClass({
               />
             </li>
           </ul>
-          <LatestJobs
+          <SidebarJobsContainer
             componentId={this.state.componentId}
             configId={this.state.configurationId}
-            jobs={this.state.latestJobs}
             limit={3}
           />
           <LatestVersions

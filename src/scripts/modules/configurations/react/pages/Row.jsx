@@ -7,7 +7,6 @@ import RoutesStore from '../../../../stores/RoutesStore';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import ConfigurationsStore from '../../ConfigurationsStore';
 import TablesStore from '../../../components/stores/StorageTablesStore';
-import LatestJobsStore from '../../../jobs/stores/LatestJobsStore';
 import DockerActionsStore from '../../DockerActionsStore';
 
 // actions
@@ -23,7 +22,7 @@ import JsonConfiguration from '../components/JsonConfiguration';
 import SaveButtons from '../../../../react/common/SaveButtons';
 import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
 import LatestRowVersions from '../components/SidebarRowVersionsWrapper';
-import LatestJobs from '../../../components/react/components/SidebarJobs';
+import SidebarJobsContainer from '../../../components/react/components/SidebarJobsContainer';
 
 // adapters
 import isParsableConfiguration from '../../utils/isParsableConfiguration';
@@ -31,7 +30,7 @@ import sections from '../../utils/sections';
 import dockerActions from '../../DockerActionsActionCreators';
 
 export default React.createClass({
-  mixins: [createStoreMixin(Store, TablesStore, DockerActionsStore, LatestJobsStore)],
+  mixins: [createStoreMixin(Store, TablesStore, DockerActionsStore)],
 
   getStateFromStores() {
     const settings = RoutesStore.getRouteSettings();
@@ -102,9 +101,7 @@ export default React.createClass({
       hasState: !Store.get(componentId, configurationId, rowId)
         .get('state', Immutable.Map())
         .isEmpty(),
-      isClearStatePending: Store.getPendingActions(componentId, configurationId, rowId).has('clear-state'),
-
-      latestJobs: LatestJobsStore.getRowJobs(componentId, configurationId, rowId)
+      isClearStatePending: Store.getPendingActions(componentId, configurationId, rowId).has('clear-state')
     };
   },
 
@@ -208,11 +205,10 @@ export default React.createClass({
             rowId={this.state.rowId}
           />
           <ul className="nav nav-stacked">{this.renderActions()}</ul>
-          <LatestJobs
+          <SidebarJobsContainer
             componentId={this.state.componentId}
             configId={this.state.configurationId}
             rowId={this.state.rowId}
-            jobs={this.state.latestJobs}
             limit={3}
           />
           <LatestRowVersions
