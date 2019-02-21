@@ -15,7 +15,6 @@ import OAuthStore from '../../../../oauth-v2/Store';
 import InstalledComponentsActions from '../../../../components/InstalledComponentsActionCreators';
 import uploadUtils from '../../../uploadUtils';
 import { OAUTH_V2_WRITERS } from '../../../tdeCommon';
-import GdriveRow from './GdriveRow';
 import SelectWriterModal from './WritersModal';
 import TableauServerRow from './TableauServerRow';
 import OauthV2WriterRow from './OauthV2WriterRow';
@@ -52,11 +51,6 @@ export default React.createClass({
       case 'tableauServer':
         destinationRow = this._renderTableauServer();
         break;
-
-      case 'gdrive':
-        destinationRow = this._renderGoogleDrive();
-        break;
-
       default:
         break;
     }
@@ -107,31 +101,6 @@ export default React.createClass({
         renderComponent={() => this._renderComponentCol(component)}
         renderEnableUpload={name => this._renderEnableUploadCol(component, isAuthorized, name)}
         resetUploadTask={() => this._resetUploadTask(component)}
-      />
-    );
-  },
-
-  _renderGoogleDrive() {
-    const parameters = this.state.configData.get('parameters');
-    const isAuthorized = uploadUtils.isGdriveAuthorized(parameters);
-
-    return (
-      <GdriveRow
-        configId={this.state.configId}
-        localState={this.state.localState}
-        updateLocalStateFn={this._updateLocalState}
-        account={this.state.configData.getIn(['parameters', 'gdrive'])}
-        setConfigDataFn={this._saveConfigData}
-        saveTargetFolderFn={(folderId, folderName) => {
-          const path = ['parameters', 'gdrive'];
-          let gdrive = this.state.configData.getIn(path, Map());
-          gdrive = gdrive.set('targetFolder', folderId);
-          gdrive = gdrive.set('targetFolderName', folderName);
-          this._saveConfigData(path, gdrive);
-        }}
-        renderComponent={() => this._renderComponentCol('wr-google-drive')}
-        renderEnableUpload={name => this._renderEnableUploadCol('gdrive', isAuthorized, name)}
-        resetUploadTask={() => this._resetUploadTask('gdrive')}
       />
     );
   },
