@@ -23,7 +23,6 @@ import emailAttachmentsExtractorRoutes from '../ex-email-attachments/routes';
 import createDbWriterRoutes from '../wr-db/routes';
 import createGenericDetailRoute from './createGenericDetailRoute';
 import createComponentRoute from './createComponentRoute';
-import googleDriveWriterRoutes from '../wr-google-drive-old/wrGdriveRoutes';
 import googleDriveWriterNewRoutes from '../wr-google-drive/routes';
 import googleSheetsWriterRoutes from '../wr-google-sheets/routes';
 import tdeRoutes from '../tde-exporter/tdeRoutes';
@@ -146,7 +145,6 @@ module.exports = {
       },
       createComponentRoute('gooddata-writer', [goodDataWriterRoutes]),
       createComponentRoute('tde-exporter', [tdeRoutes]),
-      createComponentRoute('wr-google-drive', [googleDriveWriterRoutes]),
       createComponentRoute('keboola.wr-google-sheets', [googleSheetsWriterRoutes]),
       createComponentRoute('keboola.wr-google-drive', [googleDriveWriterNewRoutes]),
       createComponentRoute('wr-db', [createDbWriterRoutes('wr-db', 'mysql', false)]),
