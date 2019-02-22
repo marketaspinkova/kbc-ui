@@ -48,7 +48,6 @@ export default React.createClass({
                   type="text"
                   value={this.state.name}
                   onChange={this.handleName}
-                  onBlur={this.validateBucketName}
                 />
               </Col>
             </FormGroup>
@@ -148,13 +147,14 @@ export default React.createClass({
   },
 
   handleName(event) {
-    this.validateName(event.target.value);
-    this.setState({ name: event.target.value });
+    this.setState({ name: event.target.value }, () => {
+      this.validateName();
+    });
   },
 
   handleStage(event) {
     this.setState({ stage: event.target.value }, () => {
-      this.validateBucketName();
+      this.validateName();
     });
   },
 
@@ -186,27 +186,24 @@ export default React.createClass({
     this.setState(INITIAL_STATE);
   },
 
-  validateName(name) {
-    if (!/^[a-zA-Z0-9_-]*$/.test(name)) {
+  validateName() {
+    if (!/^[a-zA-Z0-9_-]*$/.test(this.state.name)) {
       this.setState({
         warning: 'Only alphanumeric characters, dash and underscores are allowed in bucket name.'
       });
-    } else if (this.state.warning) {
+    } else if (this.bucketExists()) {
+      this.setState({
+        warning: `The bucket ${this.state.name} already exists.`
+      });
+    } else {
       this.setState({ warning: null });
     }
   },
 
-  validateBucketName() {
-    const bucketName = `${this.state.stage}.c-${this.state.name}`;
-    const bucketWithSameName = this.props.buckets.find((bucket) => bucket.get('id') === bucketName);
-
-    if (bucketWithSameName) {
-      this.setState({
-        warning: `The bucket ${this.state.name} already exists.`
-      });
-    } else if (this.state.warning) {
-      this.setState({ warning: null });
-    }
+  bucketExists() {
+    return this.props.buckets.find((bucket) => {
+      return bucket.get('id') === `${this.state.stage}.c-${this.state.name}`;
+    });
   },
 
   isDisabled() {
