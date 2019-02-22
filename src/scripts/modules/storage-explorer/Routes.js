@@ -8,17 +8,6 @@ import JobsReloaderButton from './react/components/JobsReloaderButton';
 import { filesLimit, jobsLimit } from './Constants';
 import { tokenVerify, loadBuckets, loadTables, loadSharedBuckets, loadJobs, loadFiles, updateFilesSearchQuery } from './Actions';
 
-const getFiles = (params, query) => {
-  const searchParams = { limit: filesLimit };
-
-  if (query.q || query.q === '') {
-    searchParams.q = query.q;
-    updateFilesSearchQuery(query.q);
-  }
-
-  return loadFiles(searchParams);
-}
-
 export default {
   name: 'storage-explorer',
   title: 'Storage',
@@ -38,9 +27,28 @@ export default {
       title: 'Files',
       poll: {
         interval: 20,
-        action: getFiles
+        action(params, query) {
+          const searchParams = { limit: filesLimit };
+
+          if (query.q) {
+            searchParams.q = query.q;
+          }
+
+          return loadFiles(searchParams);
+        }
       },
-      requireData: [getFiles]
+      requireData: [
+        (params, query) => {
+          const searchParams = { limit: filesLimit };
+
+          if (query.q || query.q === '') {
+            searchParams.q = query.q;
+            updateFilesSearchQuery(query.q);
+          }
+
+          return loadFiles(searchParams);
+        }
+      ]
     },
     {
       name: 'storage-explorer-jobs',
