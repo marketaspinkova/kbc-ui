@@ -6,7 +6,7 @@ import TransformationBucketsStore from '../../stores/TransformationBucketsStore'
 import { RefreshIcon, Loader } from '@keboola/indigo-ui';
 
 export default React.createClass({
-  mixins: [createStoreMixin(RoutesStore, TransformationBucketsStore)],
+  mixins: [createStoreMixin(TransformationBucketsStore)],
 
   propTypes: {
     allowRefresh: React.PropTypes.bool
