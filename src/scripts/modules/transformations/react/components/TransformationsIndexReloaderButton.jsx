@@ -1,12 +1,12 @@
 import React from 'react';
-
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
+import RoutesStore from '../../../../stores/RoutesStore';
 import InstalledComponentsActionCreators from '../../../components/InstalledComponentsActionCreators';
 import TransformationBucketsStore from '../../stores/TransformationBucketsStore';
 import { RefreshIcon, Loader } from '@keboola/indigo-ui';
 
 export default React.createClass({
-  mixins: [createStoreMixin(TransformationBucketsStore)],
+  mixins: [createStoreMixin(RoutesStore, TransformationBucketsStore)],
 
   propTypes: {
     allowRefresh: React.PropTypes.bool
@@ -17,16 +17,19 @@ export default React.createClass({
   },
 
   getStateFromStores() {
-    return { isLoading: TransformationBucketsStore.getIsLoading() };
-  },
-
-  _handleRefreshClick() {
-    return InstalledComponentsActionCreators.loadComponentConfigsData('transformation');
+    return { 
+      isRoutePending: RoutesStore.getIsPending(),
+      isLoading: TransformationBucketsStore.getIsLoading() 
+    };
   },
 
   render() {
+    if (this.state.isRoutePending) {
+      return null;
+    }
+
     if (this.props.allowRefresh) {
-      return <RefreshIcon isLoading={this.state.isLoading} onClick={this._handleRefreshClick} />;
+      return <RefreshIcon isLoading={this.state.isLoading} onClick={this.handleRefreshClick} />;
     }
 
     if (this.state.isLoading) {
@@ -34,5 +37,9 @@ export default React.createClass({
     }
 
     return null;
+  },
+
+  handleRefreshClick() {
+    return InstalledComponentsActionCreators.loadComponentConfigsData('transformation');
   }
 });
