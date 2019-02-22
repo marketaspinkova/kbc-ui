@@ -331,6 +331,10 @@ export default React.createClass({
       this.setState({
         warning: 'Only alphanumeric characters, dash and underscores are allowed in table name.'
       });
+    } else if (this.state.name.length > 64) {
+      this.setState({
+        warning: `The maximum allowed table name length is 64 characters.`
+      });
     } else if (this.state.warning) {
       this.setState({ warning: null });
     }
