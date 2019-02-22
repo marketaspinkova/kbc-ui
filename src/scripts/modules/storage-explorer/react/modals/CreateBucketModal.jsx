@@ -147,15 +147,11 @@ export default React.createClass({
   },
 
   handleName(event) {
-    this.setState({ name: event.target.value }, () => {
-      this.validateName();
-    });
+    this.setState({ name: event.target.value }, this.validateName);
   },
 
   handleStage(event) {
-    this.setState({ stage: event.target.value }, () => {
-      this.validateName();
-    });
+    this.setState({ stage: event.target.value }, this.validateName);
   },
 
   handleBackend(event) {
@@ -201,7 +197,7 @@ export default React.createClass({
   },
 
   bucketExists() {
-    return this.props.buckets.find((bucket) => {
+    return !!this.props.buckets.find((bucket) => {
       return bucket.get('id') === `${this.state.stage}.c-${this.state.name}`;
     });
   },
