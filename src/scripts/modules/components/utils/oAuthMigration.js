@@ -5,14 +5,22 @@ const ignoreComponents = [
   'tde-exporter'
 ];
 
+function needTdeExporterDestinationNewOauth(config, destinationComponentId) {
+  const path = ['configuration', 'parameters', destinationComponentId];
+  return config.hasIn(path) && config.getIn(path.concat('version')) !== 3;
+}
+
 export default {
   getConfigurationsToMigrate(component) {
+    const isTdeExporter = component.get('id') === 'tde-exporter';
     return component.get('configurations')
       .filter((config) => {
-        return (config.hasIn(['configuration', 'authorization', 'oauth_api', 'id']) &&
-                config.getIn(['configuration', 'authorization', 'oauth_api', 'version']) !== 3 ||
-                (config.getIn(['configuration', 'parameters', 'keboola.wr-google-drive', 'version']) !== 3 &&
-                config.getIn(['configuration', 'parameters', 'keboola.wr-dropbox-v2', 'version']) !== 3)
+        return (
+          config.hasIn(['configuration', 'authorization', 'oauth_api', 'id']) &&
+          config.getIn(['configuration', 'authorization', 'oauth_api', 'version']) !== 3 ||
+          (isTdeExporter &&
+           needTdeExporterDestinationNewOauth(config, 'keboola.wr-google-drive') &&
+           needTdeExporterDestinationNewOauth(config, 'keboola.wr-dropbox-v2'))
         );
       });
   },
