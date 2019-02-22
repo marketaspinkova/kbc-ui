@@ -138,7 +138,6 @@ export default {
 
   loadOrchestration(id) {
     if (OrchestrationStore.has(id) && OrchestrationStore.hasOrchestrationTasks(id)) {
-      this.loadOrchestrationForce(id);
       return Promise.resolve();
     }
     return this.loadOrchestrationForce(id);

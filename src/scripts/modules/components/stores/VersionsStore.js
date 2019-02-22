@@ -106,11 +106,7 @@ dispatcher.register(function(payload) {
       return VersionsStore.emitChange();
 
     case Constants.ActionTypes.VERSIONS_ROLLBACK_START:
-      return VersionsStore.emitChange();
-
     case Constants.ActionTypes.VERSIONS_ROLLBACK_SUCCESS:
-      return VersionsStore.emitChange();
-
     case Constants.ActionTypes.VERSIONS_ROLLBACK_ERROR:
       return VersionsStore.emitChange();
 
