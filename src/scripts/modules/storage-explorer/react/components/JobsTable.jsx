@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { Link } from 'react-router';
 import { Table } from 'react-bootstrap';
-import Duration from '../../../../react/common/Duration';
+import DurationStatic from '../../../../react/common/DurationStatic';
 import FileSize from '../../../../react/common/FileSize';
 import JobStatusLabel from '../../../../react/common/JobStatusLabel';
 import date from '../../../../utils/date';
@@ -61,7 +61,9 @@ export default React.createClass({
           <JobStatusLabel status={job.get('status')} />
         </td>
         <td>
-          <Duration startTime={job.get('startTime')} endTime={job.get('endTime')} />
+          {(job.get('status') === 'success' || job.get('status') === 'error') && (
+            <DurationStatic startTime={job.get('startTime')} endTime={job.get('endTime')} />
+          )}
         </td>
         <td>
           <FileSize size={this.jobDataTransfer(job)} />
