@@ -52,11 +52,11 @@ export default React.createClass({
           </tr>
           <tr>
             <td>Start time</td>
-            <td>{format(this.props.job.get('startTime'))}</td>
+            <td>{this.props.job.get('startTime') ? format(this.props.job.get('startTime')) : 'N/A'}</td>
           </tr>
           <tr>
             <td>End time</td>
-            <td>{format(this.props.job.get('endTime'))}</td>
+            <td>{this.props.job.get('endTime') ? format(this.props.job.get('endTime')) : 'N/A'}</td>
           </tr>
           <tr>
             <td>Duration</td>
