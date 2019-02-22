@@ -125,7 +125,9 @@ export default React.createClass({
               <tr>
                 <td>Last change</td>
                 <td>
-                  <CreatedWithIcon createdTime={table.get('lastChangeDate')} relative={false} />
+                  {table.get('lastChangeDate') ? (
+                    <CreatedWithIcon createdTime={table.get('lastChangeDate')} relative={false} />
+                  ) : 'N/A'}
                 </td>
               </tr>
               <tr>
