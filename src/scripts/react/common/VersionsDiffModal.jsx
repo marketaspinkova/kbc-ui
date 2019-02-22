@@ -120,7 +120,8 @@ export default React.createClass({
           <input
             checked={this.state.showChangedOnly}
             type="checkbox"
-            onChange={this.toggleShowChanged}/>
+            onChange={this.toggleShowChanged}
+          />
           Show changed parts only
         </label>
       </div>
@@ -154,34 +155,31 @@ export default React.createClass({
       return null;
     }
 
-    const dataDiff = this.getDiff();
-    const preparsedParts = preparseDiffParts(dataDiff);
-    const parts = preparsedParts.map((part) => {
-      if (part.isMulti) {
-        return this.renderMultiDiff(part.first, part.second);
-      }
-      return this.renderSimplePreDiff(part);
-    });
     return (
       <div className="pre-scrollable" style={{margin: '0 -15px -15px -15px '}}>
-        {parts}
+        {preparseDiffParts(this.getDiff()).map((part, index) => {
+          if (part.isMulti) {
+            return <div key={index}>{this.renderMultiDiff(part.first, part.second)}</div>;
+          }
+          return <div key={index}>{this.renderSimplePreDiff(part)}</div>;
+        })}
       </div>
     );
   },
 
   renderMultiDiff(firstPart, secondPart) {
-    const middlePart = (
-      <DetailedDiff
-        firstPart={firstPart}
-        firstPartDescription={this.versionDescription(this.props.referentialVersion)}
-        secondPart={secondPart}
-        secondPartDescription={this.versionDescription(this.props.compareVersion)}
-      />);
-
-    return [
-      this.renderSimplePreDiff(firstPart),
-      middlePart,
-      this.renderSimplePreDiff(secondPart)];
+    return (
+      <div>
+        {this.renderSimplePreDiff(firstPart)}
+        <DetailedDiff
+          firstPart={firstPart}
+          firstPartDescription={this.versionDescription(this.props.referentialVersion)}
+          secondPart={secondPart}
+          secondPartDescription={this.versionDescription(this.props.compareVersion)}
+        />
+        {this.renderSimplePreDiff(secondPart)}
+      </div>
+    )
   },
 
   renderSimplePreDiff(part) {
