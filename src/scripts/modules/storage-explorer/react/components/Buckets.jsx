@@ -107,6 +107,7 @@ export default React.createClass({
         onSubmit={this.handleCreateBucket}
         onHide={this.closeCreateBucketModal}
         isSaving={this.state.isCreatingBucket}
+        buckets={this.state.allBuckets}
       />
     );
   },

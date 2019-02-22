@@ -6,7 +6,8 @@ const INITIAL_STATE = {
   name: '',
   stage: 'in',
   backend: '',
-  error: null
+  error: null,
+  warning: null
 };
 
 export default React.createClass({
@@ -18,7 +19,8 @@ export default React.createClass({
     defaultBackend: PropTypes.string.isRequired,
     onSubmit: PropTypes.func.isRequired,
     onHide: PropTypes.func.isRequired,
-    isSaving: PropTypes.bool.isRequired
+    isSaving: PropTypes.bool.isRequired,
+    buckets: PropTypes.object.isRequired
   },
 
   getInitialState() {
@@ -34,13 +36,19 @@ export default React.createClass({
           </Modal.Header>
           <Modal.Body>
             {this.renderError()}
+            {this.renderWarning()}
 
             <FormGroup>
               <Col sm={3} componentClass={ControlLabel}>
                 Name
               </Col>
               <Col sm={9}>
-                <FormControl type="text" autoFocus value={this.state.name} onChange={this.handleName} />
+                <FormControl
+                  autoFocus
+                  type="text"
+                  value={this.state.name}
+                  onChange={this.handleName}
+                />
               </Col>
             </FormGroup>
 
@@ -100,40 +108,54 @@ export default React.createClass({
     return <Alert bsStyle="danger">{this.state.error}</Alert>;
   },
 
+  renderWarning() {
+    if (!this.state.warning) {
+      return null;
+    }
+
+    return <Alert bsStyle="warning">{this.state.warning}</Alert>;
+  },
+
   renderBackendOptions() {
     const options = [];
 
     if (this.props.hasMysql) {
-      options.push(<option key="mysql" value="mysql">MySQL</option>);
+      options.push(
+        <option key="mysql" value="mysql">
+          MySQL
+        </option>
+      );
     }
 
     if (this.props.hasRedshift) {
-      options.push(<option key="redshift" value="redshift">Redshift</option>);
+      options.push(
+        <option key="redshift" value="redshift">
+          Redshift
+        </option>
+      );
     }
 
     if (this.props.hasSnowflake) {
-      options.push(<option key="snowflake" value="snowflake">Snowflake</option>);
+      options.push(
+        <option key="snowflake" value="snowflake">
+          Snowflake
+        </option>
+      );
     }
 
     return options;
   },
 
   handleName(event) {
-    this.setState({
-      name: event.target.value
-    });
+    this.setState({ name: event.target.value }, this.validateName);
   },
 
   handleStage(event) {
-    this.setState({
-      stage: event.target.value
-    });
+    this.setState({ stage: event.target.value }, this.validateName);
   },
 
   handleBackend(event) {
-    this.setState({
-      backend: event.target.value
-    });
+    this.setState({ backend: event.target.value });
   },
 
   onHide() {
@@ -149,7 +171,7 @@ export default React.createClass({
       backend: this.state.backend || this.props.defaultBackend
     };
 
-    this.props.onSubmit(newBucket).then(this.onHide, message => {
+    this.props.onSubmit(newBucket).then(this.onHide, (message) => {
       this.setState({
         error: message
       });
@@ -160,10 +182,30 @@ export default React.createClass({
     this.setState(INITIAL_STATE);
   },
 
+  validateName() {
+    if (!/^[a-zA-Z0-9_-]*$/.test(this.state.name)) {
+      this.setState({
+        warning: 'Only alphanumeric characters, dash and underscores are allowed in bucket name.'
+      });
+    } else if (this.bucketExists()) {
+      this.setState({
+        warning: `The bucket ${this.state.name} already exists.`
+      });
+    } else {
+      this.setState({ warning: null });
+    }
+  },
+
+  bucketExists() {
+    return !!this.props.buckets.find((bucket) => {
+      return bucket.get('id') === `${this.state.stage}.c-${this.state.name}`;
+    });
+  },
+
   isDisabled() {
     const backend = this.state.backend || this.props.defaultBackend;
 
-    if (!this.state.name || !this.state.stage || !backend) {
+    if (!this.state.name || !this.state.stage || !backend || this.state.warning) {
       return true;
     }
 

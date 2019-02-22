@@ -25,12 +25,14 @@ const INITIAL_STATE = {
   tableColumns: [],
   primaryKey: '',
   createFrom: CREATE_TABLE_FROM_CSV_FILE,
-  error: null
+  error: null,
+  warning: null
 };
 
 export default React.createClass({
   propTypes: {
     bucket: PropTypes.object.isRequired,
+    tables: PropTypes.object.isRequired,
     openModal: PropTypes.bool.isRequired,
     onCreateFromCsv: PropTypes.func.isRequired,
     onCreateFromString: PropTypes.func.isRequired,
@@ -51,9 +53,10 @@ export default React.createClass({
             <Modal.Title>Create table in {this.props.bucket.get('id')}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {this.state.error ? (
-              this.renderError()
-            ) : (
+            {this.renderError()}
+            {this.renderWarning()}
+
+            {!this.state.error && (
               <div>{this.isSaving() ? this.renderProgress() : this.renderForm()}</div>
             )}
           </Modal.Body>
@@ -61,7 +64,12 @@ export default React.createClass({
             <Button bsStyle="link" onClick={this.onHide}>
               Close
             </Button>
-            <Button type="submit" bsStyle="success" onClick={this.onSubmit} disabled={this.isDisabled()}>
+            <Button
+              type="submit"
+              bsStyle="success"
+              onClick={this.onSubmit}
+              disabled={this.isDisabled()}
+            >
               Create
             </Button>
             {this.state.error && (
@@ -83,7 +91,12 @@ export default React.createClass({
             Name
           </Col>
           <Col sm={9}>
-            <FormControl type="text" autoFocus value={this.state.name} onChange={this.handleName} />
+            <FormControl
+              autoFocus
+              type="text"
+              value={this.state.name}
+              onChange={this.handleName}
+            />
           </Col>
         </FormGroup>
 
@@ -92,7 +105,11 @@ export default React.createClass({
             Create from
           </Col>
           <Col sm={9}>
-            <FormControl componentClass="select" value={this.state.createFrom} onChange={this.handleCreateFrom}>
+            <FormControl
+              componentClass="select"
+              value={this.state.createFrom}
+              onChange={this.handleCreateFrom}
+            >
               <option value={CREATE_TABLE_FROM_CSV_FILE}>CSV file upload</option>
               <option value={CREATE_TABLE_FROM_TEXT}>Text input</option>
             </FormControl>
@@ -101,8 +118,7 @@ export default React.createClass({
 
         {this.state.createFrom === CREATE_TABLE_FROM_CSV_FILE
           ? this.renderCreateFromCsv()
-          : this.renderCreateFromTextInput()
-        }
+          : this.renderCreateFromTextInput()}
 
         {this.renderAdvancedOptions()}
       </div>
@@ -122,9 +138,7 @@ export default React.createClass({
 
     return (
       <div>
-        <p>
-          {progress < 100 ? 'Uploading file...' : 'File was successfully uploaded'}
-        </p>
+        <p>{progress < 100 ? 'Uploading file...' : 'File was successfully uploaded'}</p>
         <ProgressBar striped bsStyle="info" now={progress} active={progress < 100} />
         {this.props.isCreatingTable && (
           <p>
@@ -179,7 +193,7 @@ export default React.createClass({
             deleteRemoves={false}
             placeholder="Add columns..."
             noResultsText=""
-            promptTextCreator={column => `Add column ${column}`}
+            promptTextCreator={(column) => `Add column ${column}`}
             value={this.state.tableColumns}
             onChange={this.handleTableColumns}
           />
@@ -190,7 +204,11 @@ export default React.createClass({
 
   renderAdvancedOptions() {
     return (
-      <PanelWithDetails defaultExpanded={false} labelOpen="Show advanced options" labelCollapse="Hide advanced options">
+      <PanelWithDetails
+        defaultExpanded={false}
+        labelOpen="Show advanced options"
+        labelCollapse="Hide advanced options"
+      >
         <FormGroup>
           <Col sm={3} componentClass={ControlLabel}>
             Primary key
@@ -203,7 +221,8 @@ export default React.createClass({
               onChange={this.handlePrimaryKey}
             />
             <HelpBlock>
-              Primary key is useful for incremental imports - rows that already exists in table are updated.
+              Primary key is useful for incremental imports - rows that already exists in table are
+              updated.
             </HelpBlock>
           </Col>
         </FormGroup>
@@ -212,49 +231,47 @@ export default React.createClass({
   },
 
   renderError() {
+    if (!this.state.error) {
+      return null;
+    }
+
     return <Alert bsStyle="danger">{this.state.error}</Alert>;
   },
 
+  renderWarning() {
+    if (!this.state.warning) {
+      return null;
+    }
+
+    return <Alert bsStyle="warning">{this.state.warning}</Alert>;
+  },
+
   handleName(event) {
-    this.setState({
-      name: event.target.value
-    });
+    this.setState({ name: event.target.value }, this.validateName);
   },
 
   handleCreateFrom(event) {
-    this.setState({
-      createFrom: event.target.value
-    });
+    this.setState({ createFrom: event.target.value });
   },
 
   handleFile(event) {
-    this.setState({
-      file: event.target.files[0]
-    });
+    this.setState({ file: event.target.files[0] });
   },
 
   handleDelimiter(event) {
-    this.setState({
-      delimiter: event.target.value
-    });
+    this.setState({ delimiter: event.target.value });
   },
 
   handleEnclosure(event) {
-    this.setState({
-      enclosure: event.target.value
-    });
+    this.setState({ enclosure: event.target.value });
   },
 
   handleTableColumns(columns) {
-    this.setState({
-      tableColumns: columns
-    });
+    this.setState({ tableColumns: columns });
   },
 
   handlePrimaryKey(event) {
-    this.setState({
-      primaryKey: event.target.value
-    });
+    this.setState({ primaryKey: event.target.value });
   },
 
   onHide() {
@@ -289,7 +306,7 @@ export default React.createClass({
   createTableFromString() {
     const params = {
       name: this.state.name,
-      dataString: this.state.tableColumns.map(column => column.value).join(',')
+      dataString: this.state.tableColumns.map((column) => column.value).join(',')
     };
 
     if (this.state.primaryKey) {
@@ -305,6 +322,32 @@ export default React.createClass({
 
   resetState() {
     this.setState(INITIAL_STATE);
+  },
+
+  validateName() {
+    if (!/^[a-zA-Z0-9_-]*$/.test(this.state.name)) {
+      this.setState({
+        warning: 'Only alphanumeric characters, dash and underscores are allowed in table name.'
+      });
+    } else if (this.state.name.length > 64) {
+      this.setState({
+        warning: 'The maximum allowed table name length is 64 characters.'
+      });
+    } else if (this.state.name.indexOf('_') === 0) {
+      this.setState({
+        warning: `Table name cannot start with underscore.`
+      });
+    } else if (this.tableExists()) {
+      this.setState({
+        warning: `The table ${this.state.name} already exists.`
+      });
+    } else {
+      this.setState({ warning: null });
+    }
+  },
+
+  tableExists() {
+    return !!this.props.tables.find((table) => table.get('name') === this.state.name);
   },
 
   isSaving() {
