@@ -25,6 +25,18 @@ export default {
       defaultRouteHandler: Files,
       reloaderHandler: FilesReloaderButton,
       title: 'Files',
+      poll: {
+        interval: 20,
+        action(params, query) {
+          const searchParams = { limit: filesLimit };
+
+          if (query.q) {
+            searchParams.q = query.q;
+          }
+
+          return loadFiles(searchParams);
+        }
+      },
       requireData: [
         (params, query) => {
           const searchParams = { limit: filesLimit };
@@ -44,6 +56,12 @@ export default {
       defaultRouteHandler: Jobs,
       reloaderHandler: JobsReloaderButton,
       title: 'Jobs',
+      poll: {
+        interval: 20,
+        action() {
+          return loadJobs({ limit: jobsLimit })
+        }
+      },
       requireData: [() => loadJobs({ limit: jobsLimit })]
     },
     {
