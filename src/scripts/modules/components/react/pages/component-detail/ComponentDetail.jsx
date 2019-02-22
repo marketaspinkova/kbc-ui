@@ -4,17 +4,18 @@ import { SearchBar } from '@keboola/indigo-ui';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../../../stores/RoutesStore';
 import ComponentsStore from '../../../stores/ComponentsStore';
+import contactSupport from '../../../../../utils/contactSupport';
+import matchByWords from '../../../../../utils/matchByWords';
 import InstalledComponentsStore from '../../../stores/InstalledComponentsStore';
 import InstalledComponentsActionCreators from '../../../InstalledComponentsActionCreators';
-import VendorInfo from './VendorInfo';
-import ConfigurationRow from '../ConfigurationRow';
-import ComponentEmptyState from '../../components/ComponentEmptyState';
 import AddComponentConfigurationButton from '../../components/AddComponentConfigurationButton';
-import FormHeader from '../new-component-form/FormHeader';
-import AppUsageInfo from '../new-component-form/AppUsageInfo';
-import ComponentDescription from './ComponentDescription';
-import contactSupport from '../../../../../utils/contactSupport';
+import ComponentEmptyState from '../../components/ComponentEmptyState';
 import MigrationRow from '../../components/MigrationRow';
+import AppUsageInfo from '../new-component-form/AppUsageInfo';
+import FormHeader from '../new-component-form/FormHeader';
+import ConfigurationRow from '../ConfigurationRow';
+import ComponentDescription from './ComponentDescription';
+import VendorInfo from './VendorInfo';
 
 export default React.createClass({
   mixins: [createStoreMixin(ComponentsStore, InstalledComponentsStore)],
@@ -79,21 +80,25 @@ export default React.createClass({
 
   _getFilteredConfigurations() {
     let filtered = this.state.configurations;
-    if (this.state.configurationFilter || this.state.configurationFilter !== '') {
+    if (this.state.configurationFilter) {
       const filterQuery = this.state.configurationFilter.toLowerCase();
-      filtered = this.state.configurations.filter(
-        configuration =>
-          configuration
-            .get('name', '')
-            .toLowerCase()
-            .match(filterQuery) ||
-          configuration.get('id', '').match(filterQuery) ||
-          configuration
-            .get('description', '')
-            .toLowerCase()
-            .match(filterQuery)
-      );
+      filtered = this.state.configurations.filter(configuration => {
+        if (matchByWords(configuration.get('name', '').toLowerCase(), filterQuery)) {
+          return true;
+        }
+
+        if (matchByWords(configuration.get('id', '').toLowerCase(), filterQuery)) {
+          return true;
+        }
+
+        if (matchByWords(configuration.get('description', '').toLowerCase(), filterQuery)) {
+          return true;
+        }
+
+        return false;
+      });
     }
+
     return filtered.sortBy(configuration => configuration.get('name').toLowerCase());
   },
 
