@@ -36,7 +36,7 @@ export default React.createClass({
       <Panel
         collapsible
         expanded={this.isPanelExpanded(bucket)}
-        className="storage-panel"
+        className={classnames('storage-panel', { 'is-active': this.props.activeBucketId === bucket.get('id') })}
         header={this.renderBucketHeader(bucket)}
         key={bucket.get('id')}
         onSelect={() => this.onSelectBucket(bucket.get('id'))}
