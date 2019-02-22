@@ -1,4 +1,5 @@
 import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { Col, Row } from 'react-bootstrap';
 import Buckets from '../../components/Buckets';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
@@ -7,7 +8,7 @@ import BucketDetail from './BucketDetail';
 import NavButtons from '../../components/NavButtons';
 
 export default React.createClass({
-  mixins: [createStoreMixin(RoutesStore)],
+  mixins: [PureRenderMixin, createStoreMixin(RoutesStore)],
 
   getStateFromStores() {
     return {

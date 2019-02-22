@@ -1,15 +1,12 @@
-import React, {PropTypes} from 'react';
-
+import React, { PropTypes } from 'react';
+import _ from 'underscore';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
-import MetadataStore from '../../stores/MetadataStore';
-import immutableMixin from 'react-immutable-render-mixin';
 import MetadataActionCreators from '../../MetadataActionCreators';
+import MetadataStore from '../../stores/MetadataStore';
 
 export default React.createClass({
-
-  displayName: 'MetadataEditField',
-
-  mixins: [createStoreMixin(MetadataStore), immutableMixin],
+  mixins: [PureRenderMixin, createStoreMixin(MetadataStore)],
 
   propTypes: {
     objectType: PropTypes.oneOf(['bucket', 'table', 'column']).isRequired,
@@ -20,61 +17,43 @@ export default React.createClass({
     tooltipPlacement: PropTypes.string
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       placeholder: 'Describe this ...',
       tooltipPlacement: 'top'
     };
   },
 
-  componentWillReceiveProps: function(nextProps) {
-    this.setState(this.getState(nextProps));
+  componentDidUpdate(prevProps) {
+    if (!_.isEqual(this.props, prevProps)) {
+      this.setState(this.getState(this.props));
+    }
   },
 
-  getStateFromStores: function() {
+  getStateFromStores() {
     return this.getState(this.props);
   },
 
-  getState: function(props) {
+  getState(props) {
     return {
-      value: MetadataStore.getMetadataValue(props.objectType, props.objectId, 'user', props.metadataKey),
-      editValue: MetadataStore.getEditingMetadataValue(props.objectType, props.objectId, props.metadataKey),
-      isEditing: MetadataStore.isEditingMetadata(props.objectType, props.objectId, props.metadataKey),
+      value: MetadataStore.getMetadataValue(
+        props.objectType,
+        props.objectId,
+        'user',
+        props.metadataKey
+      ),
+      editValue: MetadataStore.getEditingMetadataValue(
+        props.objectType,
+        props.objectId,
+        props.metadataKey
+      ),
+      isEditing: MetadataStore.isEditingMetadata(
+        props.objectType,
+        props.objectId,
+        props.metadataKey
+      ),
       isSaving: MetadataStore.isSavingMetadata(props.objectType, props.objectId, props.metadataKey)
     };
-  },
-
-  _handleEditStart: function() {
-    MetadataActionCreators.startMetadataEdit(
-      this.props.objectType,
-      this.props.objectId,
-      this.props.metadataKey
-    );
-  },
-
-  _handleEditCancel: function() {
-    MetadataActionCreators.cancelMetadataEdit(
-      this.props.objectType,
-      this.props.objectId,
-      this.props.metadataKey
-    );
-  },
-
-  _handleEditChange: function(newValue) {
-    MetadataActionCreators.updateEditingMetadata(
-      this.props.objectType,
-      this.props.objectId,
-      this.props.metadataKey,
-      newValue
-    );
-  },
-
-  _handleEditSubmit: function() {
-    MetadataActionCreators.saveMetadata(
-      this.props.objectType,
-      this.props.objectId,
-      this.props.metadataKey
-    );
   },
 
   render() {
@@ -88,11 +67,44 @@ export default React.createClass({
         isSaving={this.state.isSaving}
         isEditing={this.state.isEditing}
         isValid={this.state.isValid}
-        onEditStart={this._handleEditStart}
-        onEditChange={this._handleEditChange}
-        onEditSubmit={this._handleEditSubmit}
-        onEditCancel={this._handleEditCancel}
+        onEditStart={this.handleEditStart}
+        onEditChange={this.handleEditChange}
+        onEditSubmit={this.handleEditSubmit}
+        onEditCancel={this.handleEditCancel}
       />
+    );
+  },
+
+  handleEditStart() {
+    MetadataActionCreators.startMetadataEdit(
+      this.props.objectType,
+      this.props.objectId,
+      this.props.metadataKey
+    );
+  },
+
+  handleEditCancel() {
+    MetadataActionCreators.cancelMetadataEdit(
+      this.props.objectType,
+      this.props.objectId,
+      this.props.metadataKey
+    );
+  },
+
+  handleEditChange(newValue) {
+    MetadataActionCreators.updateEditingMetadata(
+      this.props.objectType,
+      this.props.objectId,
+      this.props.metadataKey,
+      newValue
+    );
+  },
+
+  handleEditSubmit() {
+    MetadataActionCreators.saveMetadata(
+      this.props.objectType,
+      this.props.objectId,
+      this.props.metadataKey
     );
   }
 });
