@@ -209,7 +209,7 @@ export default React.createClass({
   isDisabled() {
     const backend = this.state.backend || this.props.defaultBackend;
 
-    if (!this.state.name || !this.state.stage || !backend) {
+    if (!this.state.name || !this.state.stage || !backend || this.state.warning) {
       return true;
     }
 
