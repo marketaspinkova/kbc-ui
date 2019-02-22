@@ -1,15 +1,12 @@
 import React, { PropTypes } from 'react';
-import { SearchBar } from '@keboola/indigo-ui';
+import { Loader, SearchBar } from '@keboola/indigo-ui';
 import RoutesStore from '../../../../../stores/RoutesStore';
 import StorageApiTableLinkEx from '../../../../components/react/components/StorageApiTableLinkEx';
-// import classnames from 'classnames';
-
 import ActivateDeactivateButton from '../../../../../react/common/ActivateDeactivateButton';
-import RunLoadButton from '../../components/RunLoadButton';
-
 import Tooltip from '../../../../../react/common/Tooltip';
 import Confirm from '../../../../../react/common/Confirm';
-import { Loader } from '@keboola/indigo-ui';
+import matchByWords from '../../../../../utils/matchByWords';
+import RunLoadButton from '../../components/RunLoadButton';
 
 export default React.createClass({
   propTypes: {
@@ -57,12 +54,18 @@ export default React.createClass({
   },
 
   getFilteredRows() {
-    const { query } = this.state;
-    if (!query) {
+    if (!this.state.query) {
       return this.props.tables;
     }
 
-    return this.props.tables.filter((table, tableId) => tableId.match(query) || table.get('title').match(query));
+    const filterQuery = this.state.query.toLowerCase();
+    return this.props.tables.filter((table, tableId) => {
+      if (matchByWords(tableId.toLowerCase(), filterQuery) || matchByWords(table.get('title', '').toLowerCase(), filterQuery)) {
+        return true;
+      }
+
+      return false;
+    });
   },
 
   transitionToTableDetail(tableId) {
