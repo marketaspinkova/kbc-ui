@@ -15,7 +15,6 @@ import InstalledComponentsStore from '../components/stores/InstalledComponentsSt
 import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
 import storageActionCreators from '../components/StorageActionCreators';
 import RouterStore from '../../stores/RoutesStore';
-import { fromJS } from 'immutable';
 import VersionsActionCreators from '../components/VersionsActionCreators';
 import { createTablesRoute } from '../table-browser/routes';
 
@@ -189,54 +188,6 @@ export default {
         return 'Setup Upload';
       },
       childRoutes: OAUTH_V2_WRITERS.map(wid => registerOAuthV2Route(wid))
-    },
-    {
-      name: 'tde-exporter-gdrive-redirect',
-      path: 'oauth/gdrive',
-      title() {
-        return 'Google Drive Authorization verifying...';
-      },
-      requireData: [
-        params => {
-          const router = RouterStore.getRouter();
-
-          return installedComponentsActions.loadComponentConfigData(componentId, params.config).then(() => {
-            const configuration = InstalledComponentsStore.getConfigData(componentId, params.config);
-            const query = router.getCurrentQuery();
-            if (query['access-token'] && query['refresh-token']) {
-              const email = query.email || 'unknown';
-              const gdrive = {
-                accessToken: query['access-token'],
-                refreshToken: query['refresh-token'],
-                targetFolder: null,
-                targetFolderName: '',
-                email
-              };
-              const newConfig = configuration.setIn(['parameters', 'gdrive'], fromJS(gdrive));
-              const saveFn = installedComponentsActions.saveComponentConfigData;
-              return saveFn(componentId, params.config, newConfig)
-                .then(() => {
-                  const notification = `Google drive account ${email} succesfully authorized.`;
-                  ApplicationActionCreators.sendNotification({
-                    message: notification
-                  });
-                  return router.transitionTo('tde-exporter-destination', { config: params.config });
-                })
-                .error(() => {
-                  const notification =
-                    'Failed to authorize the Google Drive account, please contact us ' +
-                    'using the Support button in the menu on the left.';
-                  ApplicationActionCreators.sendNotification({
-                    message: notification,
-                    type: 'error'
-                  });
-
-                  return router.transitionTo(componentId, { config: params.config });
-                });
-            }
-          });
-        }
-      ]
     }
   ]
 };
