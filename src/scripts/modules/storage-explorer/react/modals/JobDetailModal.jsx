@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Table, Button, Modal } from 'react-bootstrap';
 import { Tree } from '@keboola/indigo-ui';
-import Duration from '../../../../react/common/Duration';
+import DurationStatic from '../../../../react/common/DurationStatic';
 import FileSize from '../../../../react/common/FileSize';
 import JobStatusLabel from '../../../../react/common/JobStatusLabel';
 import { format } from '../../../../utils/date';
@@ -61,7 +61,9 @@ export default React.createClass({
           <tr>
             <td>Duration</td>
             <td>
-              <Duration startTime={this.props.job.get('startTime')} endTime={this.props.job.get('endTime')} />
+              {(this.props.job.get('status') === 'success' || this.props.job.get('status') === 'error') && (
+                <DurationStatic startTime={this.props.job.get('startTime')} endTime={this.props.job.get('endTime')} />
+              )}
             </td>
           </tr>
           <tr>
