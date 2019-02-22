@@ -174,6 +174,10 @@ export default React.createClass({
     const newDimension = {...this.state.newDimension, includeTime: !!this.state.newDimension.includeTime};
     const name = this.state.newDimension.name;
     delete newDimension.name;
+    if (newDimension.template === 'custom') {
+      newDimension.template = newDimension.templateId;
+      delete newDimension.templateId;
+    }
     const dimensionsToSave = {...this.props.value.dimensions, [name]: newDimension};
     this.props.onSave({dimensions: dimensionsToSave}).then(this.closeModal);
   }
