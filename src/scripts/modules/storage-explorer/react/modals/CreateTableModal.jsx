@@ -96,7 +96,6 @@ export default React.createClass({
               type="text"
               value={this.state.name}
               onChange={this.handleName}
-              onBlur={this.validateTableName}
             />
           </Col>
         </FormGroup>
@@ -248,8 +247,7 @@ export default React.createClass({
   },
 
   handleName(event) {
-    this.validateName(event.target.value);
-    this.setState({ name: event.target.value });
+    this.setState({ name: event.target.value }, this.validateName);
   },
 
   handleCreateFrom(event) {
@@ -326,30 +324,30 @@ export default React.createClass({
     this.setState(INITIAL_STATE);
   },
 
-  validateName(name) {
-    if (!/^[a-zA-Z0-9_-]*$/.test(name)) {
+  validateName() {
+    if (!/^[a-zA-Z0-9_-]*$/.test(this.state.name)) {
       this.setState({
         warning: 'Only alphanumeric characters, dash and underscores are allowed in table name.'
       });
     } else if (this.state.name.length > 64) {
       this.setState({
-        warning: `The maximum allowed table name length is 64 characters.`
+        warning: 'The maximum allowed table name length is 64 characters.'
       });
-    } else if (this.state.warning) {
+    } else if (this.state.name.indexOf('_') === 0) {
+      this.setState({
+        warning: `Table name cannot start with underscore.`
+      });
+    } else if (this.tableExists()) {
+      this.setState({
+        warning: `The table ${this.state.name} already exists.`
+      });
+    } else {
       this.setState({ warning: null });
     }
   },
 
-  validateTableName() {
-    const tableWithSameName = this.props.tables.find((table) => table.get('name') === this.state.name);
-
-    if (tableWithSameName) {
-      this.setState({
-        warning: `The table ${this.state.name} already exists.`
-      });
-    } else if (this.state.warning) {
-      this.setState({ warning: null });
-    }
+  tableExists() {
+    return !!this.props.tables.find((table) => table.get('name') === this.state.name);
   },
 
   isSaving() {
