@@ -76,7 +76,7 @@ export default React.createClass({
               </thead>
               <tbody>
                 {this.props.tables
-                  .sortBy(table => table.get('name').toLowerCase())
+                  .sortBy((table) => table.get('name').toLowerCase())
                   .map(this.renderTableRow)
                   .toArray()}
               </tbody>
@@ -124,6 +124,7 @@ export default React.createClass({
     return (
       <CreateTableModal
         bucket={this.props.bucket}
+        tables={this.props.tables}
         openModal={this.state.openCreateTableModal}
         onCreateFromCsv={this.props.onCreateTableFromCsv}
         onCreateFromString={this.props.onCreateTableFromString}
