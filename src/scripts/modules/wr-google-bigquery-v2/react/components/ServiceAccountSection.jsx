@@ -18,6 +18,8 @@ export default React.createClass({
       clientX509CertUrl: PropTypes.string.isRequired
     }),
     onChange: PropTypes.func.isRequired,
+    onSave: PropTypes.func.isRequired,
+    isSaving: PropTypes.bool.isRequired,
     disabled: PropTypes.bool.isRequired
   },
 
@@ -66,7 +68,11 @@ export default React.createClass({
           </Col>
         </FormGroup>
         <p className="text-center">
-          <Button bsStyle="danger" onClick={this.deleteServiceAccountKey}>
+          <Button
+            bsStyle="danger"
+            onClick={this.deleteServiceAccountKey}
+            disabled={this.props.isSaving}
+          >
             Delete Service Account Key
           </Button>
         </p>
@@ -76,7 +82,7 @@ export default React.createClass({
   },
 
   deleteServiceAccountKey() {
-    this.props.onChange(this.parseValue(Immutable.Map()));
+    this.props.onSave(this.parseValue(Immutable.Map()));
   },
 
   parseValue(value) {
@@ -96,13 +102,17 @@ export default React.createClass({
 
   handleModalSubmit(value) {
     this.setState({showModal: false});
-    this.props.onChange(this.parseValue(value));
+    this.props.onSave(this.parseValue(value));
   },
 
   renderButton() {
     return (
       <p className="text-center">
-        <Button bsStyle="success" onClick={() => this.setState({showModal: true})}>
+        <Button
+          bsStyle="success"
+          onClick={() => this.setState({showModal: true})}
+          disabled={this.props.isSaving || this.props.disabled}
+        >
           Set Service Account Key
         </Button>
         <Modal

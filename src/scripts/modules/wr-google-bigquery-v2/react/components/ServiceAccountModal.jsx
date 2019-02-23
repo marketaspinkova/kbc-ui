@@ -150,7 +150,7 @@ export default React.createClass({
         <Modal.Footer>
           <ConfirmButtons
             isDisabled={!this.isValid() || this.state.value === ''}
-            saveLabel="Submit"
+            saveLabel="Save"
             onCancel={this.onHide}
             onSave={this.onSubmit}
             isSaving={false}
