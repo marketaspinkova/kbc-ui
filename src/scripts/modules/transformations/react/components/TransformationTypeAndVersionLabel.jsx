@@ -4,7 +4,6 @@ import ApplicationStore from '../../../../stores/ApplicationStore';
 import { Image, Label } from 'react-bootstrap';
 
 import backendLogoR from '../../../../../images/backend-logo-r.svg';
-import backendLogoMySql from '../../../../../images/backend-logo-mysql.svg';
 import backendLogoPython from '../../../../../images/backend-logo-python.svg';
 import backendLogoOpenRefine from '../../../../../images/backend-logo-openrefine.svg';
 import backendLogoSnowflake from '../../../../../images/backend-logo-snowflake.svg';
@@ -17,7 +16,6 @@ import BackendVersionModal from './backend-version/Modal';
 
 const paths = {
   r: backendLogoR,
-  mysql: backendLogoMySql,
   python: backendLogoPython,
   openrefine: backendLogoOpenRefine,
   snowflake: backendLogoSnowflake,

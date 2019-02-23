@@ -2,7 +2,6 @@ import React, {PropTypes} from 'react';
 import {Button, Modal} from 'react-bootstrap';
 import Tooltip from './../../../../react/common/Tooltip';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
-import InputMappingRowMySqlEditor from '../components/mapping/InputMappingRowMySqlEditor';
 import InputMappingRowDockerEditor from '../components/mapping/InputMappingRowDockerEditor';
 import InputMappingRowRedshiftEditor from '../components/mapping/InputMappingRowRedshiftEditor';
 import InputMappingRowSnowflakeEditor from '../components/mapping/InputMappingRowSnowflakeEditor';
@@ -122,9 +121,7 @@ export default React.createClass({
       isDestinationDuplicate: this.isDestinationDuplicate(),
       definition: this.props.definition
     };
-    if (this.props.backend === 'mysql' && this.props.type === 'simple') {
-      return <InputMappingRowMySqlEditor {...props} />;
-    } else if (this.props.backend === 'redshift' && this.props.type === 'simple') {
+    if (this.props.backend === 'redshift' && this.props.type === 'simple') {
       return <InputMappingRowRedshiftEditor {...props} />;
     } else if (this.props.backend === 'snowflake' && this.props.type === 'simple') {
       return <InputMappingRowSnowflakeEditor {...props} />;

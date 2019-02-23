@@ -83,9 +83,6 @@ export default React.createClass({
     if (this.props.backend === 'redshift') {
       return (<span>Learn more about <ExternalLink href="https://help.keboola.com/manipulation/transformations/redshift/">using Redshift</ExternalLink>.</span>);
     }
-    if (this.props.backend === 'mysql') {
-      return (<span>Learn more about <ExternalLink href="https://help.keboola.com/manipulation/transformations/mysql/">using MySQL</ExternalLink>.</span>);
-    }
   },
 
   handleChange(e) {

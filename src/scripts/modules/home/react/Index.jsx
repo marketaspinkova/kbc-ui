@@ -8,7 +8,6 @@ import TransformationsStore from '../../transformations/stores/TransformationsSt
 import TransformationBucketsStore from '../../transformations/stores/TransformationBucketsStore';
 import componentsActions from '../../components/InstalledComponentsActionCreators';
 import DeprecatedComponents from './DeprecatedComponents';
-import DeprecatedTransformations from './DeprecatedTransformations';
 import FileSize from '../../../react/common/FileSize';
 import TransformationParallelUnloads from './TransformationParallelUnloads';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
@@ -112,9 +111,6 @@ export default React.createClass({
           <LimitsOverQuota limits={this.state.limitsOverQuota}/>
           <DeprecatedOAuth
             components={this.getComponentsWithOAuth()}
-          />
-          <DeprecatedTransformations
-            transformations={this.state.transformations}
           />
           {!ApplicationStore.hasCurrentProjectFeature('transformation-parallel-unloads') && (
             <TransformationParallelUnloads

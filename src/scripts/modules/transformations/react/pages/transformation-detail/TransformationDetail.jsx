@@ -112,7 +112,6 @@ export default React.createClass({
 
   _showDetails() {
     return (
-      (this.state.transformation.get('backend') === 'mysql' && this.state.transformation.get('type') === 'simple') ||
       (this.state.transformation.get('backend') === 'redshift' && this.state.transformation.get('type') === 'simple') ||
       (this.state.transformation.get('backend') === 'snowflake' &&
         this.state.transformation.get('type') === 'simple') ||
@@ -193,7 +192,6 @@ export default React.createClass({
               </li>
             )}
             {(backend === 'redshift' ||
-              (backend === 'mysql' && transformationType === 'simple') ||
               backend === 'snowflake') && (
               <li>
                 <SqlDepButton
