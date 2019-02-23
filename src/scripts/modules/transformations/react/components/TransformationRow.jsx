@@ -89,15 +89,25 @@ export default React.createClass({
 
   render() {
     // TODO - no detail for unsupported transformations! (remote, db/snapshot, ...)
-    return (
-      <Link
-        className="tr"
-        to="transformationDetail"
-        params={{ row: this.props.transformation.get('id'), config: this.props.bucket.get('id') }}
-      >
-        {this.props.hideButtons ? this._renderHideButtons() : this._renderNormalButtons()}
-      </Link>
-    );
+    if (isKnownTransformationType(this.props.transformation)) {
+      return (
+        <Link
+          className="tr"
+          to="transformationDetail"
+          params={{row: this.props.transformation.get('id'), config: this.props.bucket.get('id')}}
+        >
+          {this.props.hideButtons ? this._renderHideButtons() : this._renderNormalButtons()}
+        </Link>
+      );
+    } else {
+      return (
+        <div
+          className="tr"
+        >
+          {this.props.hideButtons ? this._renderHideButtons() : this._renderNormalButtons()}
+        </div>
+      )
+    }
   },
 
   _deleteTransformation() {
