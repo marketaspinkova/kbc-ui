@@ -14,6 +14,8 @@ import { transformationBackend, transformationType, transformationLabels } from 
 import {getVersions, hasVersions} from './backend-version/versions';
 import BackendVersionModal from './backend-version/Modal';
 
+import { resolveBackendName, isKnownTransformationType } from '../../utils/transformationTypes';
+
 const paths = {
   r: backendLogoR,
   python: backendLogoPython,
@@ -44,13 +46,10 @@ export default React.createClass({
   },
 
   render() {
-    const backendName = this.resolveBackendName();
-    if (!backendName) {
+    if (!isKnownTransformationType(this.props.transformation)) {
       return null;
     }
-    if (!transformationLabels[backendName]) {
-      return null;
-    }
+    const backendName = resolveBackendName(this.props.transformation);
     return (
       <span className="label-backend-wrap">
         <Image
@@ -112,14 +111,6 @@ export default React.createClass({
         {transformationLabels[backendName]}
       </Label>
     );
-  },
-
-  resolveBackendName() {
-    if (this.props.transformation.get('backend') === transformationBackend.DOCKER) {
-      return this.props.transformation.get('type');
-    } else {
-      return this.props.transformation.get('backend');
-    }
   },
 
   showModal() {
