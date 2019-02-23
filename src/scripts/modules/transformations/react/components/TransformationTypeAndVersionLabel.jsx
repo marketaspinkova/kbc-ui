@@ -48,6 +48,9 @@ export default React.createClass({
     if (!backendName) {
       return null;
     }
+    if (!transformationLabels[backendName]) {
+      return null;
+    }
     return (
       <span className="label-backend-wrap">
         <Image
