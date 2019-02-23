@@ -142,8 +142,6 @@ export default React.createClass({
   },
 
   render() {
-    const settings = this.state.settings;
-    const sidebarCustomItems = settings.getIn(['index', 'sidebarCustomItems'], Immutable.List());
     return (
       <div className="container-fluid">
         <div className="col-md-9 kbc-main-content">
@@ -172,17 +170,6 @@ export default React.createClass({
                 {this.renderRunModalContent()}
               </RunComponentButton>
             </li>
-            {
-              sidebarCustomItems.map((SidebarItem, index) => {
-                return (
-                  <li key={index}>
-                    <SidebarItem
-                      configuration={this.state.configuration}
-                      onSaveConfiguration={(newConfig) => configurationsActions.updateConfiguration(this.state.componentId, this.state.configurationId, newConfig)}
-                    />
-                  </li>
-                );
-              })}
             <li>
               <DeleteConfigurationButton
                 componentId={this.state.componentId}
