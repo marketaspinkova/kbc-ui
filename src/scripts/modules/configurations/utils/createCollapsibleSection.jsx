@@ -14,18 +14,19 @@ export default (TitleComponent, InnerComponent, options = {}) => {
     displayName: 'CollapsibleSection',
 
     propTypes: {
-      disabled: PropTypes.bool,
-      isComplete: PropTypes.bool,
-      onSave: PropTypes.func,
-      onChange: PropTypes.func,
-      value: PropTypes.any,
-      actions: PropTypes.any
+      disabled: PropTypes.bool.isRequired,
+      isComplete: PropTypes.bool.isRequired,
+      onSave: PropTypes.func.isRequired,
+      onChange: PropTypes.func.isRequired,
+      onReset: PropTypes.func.isRequired,
+      isSaving: PropTypes.bool.isRequired,
+      isChanged: PropTypes.bool.isRequired,
+      value: PropTypes.any.isRequired,
+      actions: PropTypes.any.isRequired
     },
 
     getInitialState() {
       return {
-        isChanged: false,
-        initValue: this.props.value,
         contentManuallyOpen: null
       };
     },
@@ -35,7 +36,7 @@ export default (TitleComponent, InnerComponent, options = {}) => {
         return this.state.contentManuallyOpen;
       }
 
-      if (this.state.isChanged) {
+      if (this.props.isChanged) {
         return true;
       }
 
@@ -74,7 +75,7 @@ export default (TitleComponent, InnerComponent, options = {}) => {
           <div className="text-right">
             <SaveButtons
               isSaving={this.props.disabled}
-              isChanged={this.state.isChanged}
+              isChanged={this.props.isChanged}
               onSave={this.handleSave}
               onReset={this.handleReset}
             />
@@ -85,18 +86,14 @@ export default (TitleComponent, InnerComponent, options = {}) => {
     },
 
     handleReset() {
-      this.setState({isChanged: false});
-      this.props.onChange(this.state.initValue);
+      this.props.onReset();
     },
 
-    handleSave() {
-      this.props.onSave(this.props.value).then(
-        () => this.setState({isChanged: false, initValue: this.props.value})
-      );
+    handleSave(diff) {
+      this.props.onSave(diff);
     },
 
     handleChange(diff) {
-      this.setState({isChanged: true});
       this.props.onChange(diff);
     },
 
@@ -105,7 +102,11 @@ export default (TitleComponent, InnerComponent, options = {}) => {
         <InnerComponent
           disabled={this.props.disabled}
           onChange={this.handleChange}
-          onSave={this.props.onSave}
+          onSave={this.handleSave}
+          onReset={this.handleReset}
+          isChanged={this.props.isChanged}
+          isSaving={this.props.isSaving}
+
           value={this.props.value}
           actions={this.props.actions}
         />);
