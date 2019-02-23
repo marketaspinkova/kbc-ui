@@ -47,6 +47,8 @@ export default React.createClass({
 
     const storedConfigurationSections = parseBySectionsFn(Store.getConfiguration(componentId, configurationId));
 
+    const changedSections = Store.getSectionsIsChanged(componentId, configurationId);
+
     return {
       storedConfigurationSections,
       componentId: settings.get('componentId'),
@@ -76,7 +78,8 @@ export default React.createClass({
       isJsonEditorOpen: Store.hasJsonEditor(componentId, configurationId, parseBySectionsFn, createBySectionsFn, conformFn),
       configurationBySections: configurationBySections,
       isSaving: Store.getPendingActions(componentId, configurationId).has('save-configuration'),
-      isChanged: isChanged
+      isChanged: isChanged,
+      changedSections: changedSections
 
     };
   },
@@ -93,7 +96,8 @@ export default React.createClass({
         .merge(Immutable.fromJS(diff)));
     const created = this.state.createBySectionsFn(newConfigurationBySections);
     const parsed = this.state.parseBySectionsFn(created);
-    return Actions.updateConfiguration(componentId, configurationId, parsed);
+    Actions.updateConfiguration(componentId, configurationId, parsed);
+    return Actions.setIndexSectionIsChanged(componentId, configurationId, sectionKey);
   },
 
   onSaveSection(sectionKey, diff) {
@@ -104,6 +108,17 @@ export default React.createClass({
         .merge(Immutable.fromJS(diff)));
     const created = this.state.createBySectionsFn(newConfigurationBySections);
     return Actions.saveForcedConfiguration(componentId, configurationId, created);
+  },
+
+  onResetSection(sectionKey) {
+    const {storedConfigurationSections, configurationBySections, componentId, configurationId} = this.state;
+    const newConfigurationBySections = configurationBySections.set(
+      sectionKey,
+      storedConfigurationSections.get(sectionKey));
+    const created = this.state.createBySectionsFn(newConfigurationBySections);
+    const parsed = this.state.parseBySectionsFn(created);
+    Actions.updateConfiguration(componentId, configurationId, parsed);
+    return Actions.resetIndexSectionIsChanged(componentId, configurationId, sectionKey);
   },
 
   renderSections() {
@@ -126,6 +141,7 @@ export default React.createClass({
       const onSectionSave = section.get('onSave');
       const sectionIsCompleteFn = section.get('isComplete') || returnTrue;
       const isComplete = sectionIsCompleteFn(onSectionSave(storedConfigurationSections.get(key)));
+
       return (
         <div key={key}>
           <SectionComponent
@@ -133,6 +149,9 @@ export default React.createClass({
             disabled={this.state.isSaving}
             onChange={(diff) => this.onUpdateSection(key, diff)}
             onSave={(diff) => this.onSaveSection(key, diff)}
+            onReset={() => this.onResetSection(key)}
+            isChanged={this.isSectionChanged(key)}
+            isSaving={this.state.isSaving}
             value={this.state.configurationBySections.get(key).toJS()}
             actions={actionsData}
           />
@@ -140,6 +159,13 @@ export default React.createClass({
       );
     }
     );
+  },
+
+  isSectionChanged(sectionKey) {
+    if (this.state.isChanged === false) {
+      return false;
+    }
+    return this.state.changedSections.includes(sectionKey);
   },
 
   renderForm() {

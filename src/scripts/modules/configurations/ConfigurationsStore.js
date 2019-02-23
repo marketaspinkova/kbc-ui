@@ -2,7 +2,7 @@ import Dispatcher from '../../Dispatcher';
 import Constants from './ConfigurationsConstants';
 import RowConstants from './ConfigurationRowsConstants';
 import Immutable from 'immutable';
-import {Map} from 'immutable';
+import {Map, List} from 'immutable';
 import StoreUtils from '../../utils/StoreUtils';
 import * as InstalledComponentsConstants from '../components/Constants';
 import isParsableConfiguration from './utils/isParsableConfiguration';
@@ -11,7 +11,8 @@ var _store = Map({
   configurations: Map(),
   pendingActions: Map(),
   editing: Map(),
-  jsonEditor: Map()
+  jsonEditor: Map(),
+  indexSectionIsChanged: Map()
 });
 
 let ConfigurationsStore = StoreUtils.createStore({
@@ -92,6 +93,10 @@ let ConfigurationsStore = StoreUtils.createStore({
       _store = _store.setIn(['jsonEditor', componentId, configId], true);
     }
     return _store.hasIn(['jsonEditor', componentId, configId]);
+  },
+
+  getSectionsIsChanged: function(componentId, configurationId) {
+    return _store.getIn(['indexSectionIsChanged', componentId, configurationId], List());
   }
 });
 
@@ -145,7 +150,8 @@ Dispatcher.register(function(payload) {
       _store = _store
         .deleteIn(['pendingActions', action.componentId, action.configurationId, 'save-configuration'])
         .deleteIn(['editing', action.componentId, action.configurationId])
-        .setIn(['configurations', action.componentId, action.configurationId], Immutable.fromJS(action.configuration));
+        .setIn(['configurations', action.componentId, action.configurationId], Immutable.fromJS(action.configuration))
+        .deleteIn(['indexSectionIsChanged', action.componentId, action.configurationId]);
       return ConfigurationsStore.emitChange();
 
     case Constants.ActionTypes.CONFIGURATIONS_ORDER_ROWS_START:
@@ -208,6 +214,25 @@ Dispatcher.register(function(payload) {
     case Constants.ActionTypes.CONFIGURATIONS_OAUTH_RESET_ERROR:
     case Constants.ActionTypes.CONFIGURATIONS_OAUTH_RESET_SUCCESS:
       _store = _store.deleteIn(['pendingActions', action.componentId, action.configurationId, 'reset-oauth']);
+      return ConfigurationsStore.emitChange();
+
+    case Constants.ActionTypes.CONFIGURATIONS_SET_INDEX_SECTION_IS_CHANGED:
+      let changedSections = ConfigurationsStore.getSectionsIsChanged(action.componentId, action.configurationId);
+      if (!changedSections.includes(action.sectionKey)) {
+        _store = _store.setIn(
+          ['indexSectionIsChanged', action.componentId, action.configurationId],
+          changedSections.push(action.sectionKey)
+        );
+      }
+      return ConfigurationsStore.emitChange();
+
+    case Constants.ActionTypes.CONFIGURATIONS_RESET_INDEX_SECTION_IS_CHANGED:
+      _store = _store.setIn(
+        ['indexSectionIsChanged', action.componentId, action.configurationId],
+        ConfigurationsStore.getSectionsIsChanged(action.componentId, action.configurationId).filter(
+          (item) => item !== action.sectionKey
+        )
+      );
       return ConfigurationsStore.emitChange();
 
     default:

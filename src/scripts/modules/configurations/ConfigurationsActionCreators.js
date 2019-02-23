@@ -39,6 +39,24 @@ module.exports = {
     });
   },
 
+  setIndexSectionIsChanged: function(componentId, configurationId, sectionKey) {
+    Dispatcher.handleViewAction({
+      type: Constants.ActionTypes.CONFIGURATIONS_SET_INDEX_SECTION_IS_CHANGED,
+      componentId: componentId,
+      configurationId: configurationId,
+      sectionKey: sectionKey
+    });
+  },
+
+  resetIndexSectionIsChanged: function(componentId, configurationId, sectionKey) {
+    Dispatcher.handleViewAction({
+      type: Constants.ActionTypes.CONFIGURATIONS_RESET_INDEX_SECTION_IS_CHANGED,
+      componentId: componentId,
+      configurationId: configurationId,
+      sectionKey: sectionKey
+    });
+  },
+
   saveJsonConfiguration: function(componentId, configurationId, changeDescription) {
     Dispatcher.handleViewAction({
       type: Constants.ActionTypes.CONFIGURATIONS_SAVE_JSON_CONFIGURATION_START,
