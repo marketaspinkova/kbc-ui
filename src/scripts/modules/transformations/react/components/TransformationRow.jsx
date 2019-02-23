@@ -10,6 +10,7 @@ import TransformationsActionCreators from '../../ActionCreators';
 import descriptionExcerpt from '../../../../utils/descriptionExcerpt';
 import TransformationStore from '../../stores/TransformationsStore';
 import * as sandboxUtils from '../../utils/sandboxUtils';
+import { isKnownTransformationType } from '../../utils/transformationTypes';
 
 export default React.createClass({
   mixins: [ImmutableRenderMixin],
@@ -54,31 +55,34 @@ export default React.createClass({
       );
     }
 
-    buttons.push(
-      <RunComponentButton
-        key="run"
-        title={`Run ${this.props.transformation.get('name', this.props.transformation.get('id'))}`}
-        component="transformation"
-        mode="button"
-        runParams={() => ({
-          configBucketId: this.props.bucket.get('id'),
-          transformations: [this.props.transformation.get('id')]
-        })}
-      >
-        You are about to run the transformation {this.props.transformation.get('name', this.props.transformation.get('id'))}.
-      </RunComponentButton>
-    );
+    if (isKnownTransformationType(this.props.transformation)) {
+      buttons.push(
+        <RunComponentButton
+          key="run"
+          title={`Run ${this.props.transformation.get('name', this.props.transformation.get('id'))}`}
+          component="transformation"
+          mode="button"
+          runParams={() => ({
+            configBucketId: this.props.bucket.get('id'),
+            transformations: [this.props.transformation.get('id')]
+          })}
+        >v
+          You are about to run the
+          transformation {this.props.transformation.get('name', this.props.transformation.get('id'))}.
+        </RunComponentButton>
+      );
 
-    buttons.push(
-      <ActivateDeactivateButton
-        key="active"
-        activateTooltip="Enable Transformation"
-        deactivateTooltip="Disable Transformation"
-        isActive={!this.props.transformation.get('disabled')}
-        isPending={this.props.pendingActions.has('save-disabled')}
-        onChange={this._handleActiveChange}
-      />
-    );
+      buttons.push(
+        <ActivateDeactivateButton
+          key="active"
+          activateTooltip="Enable Transformation"
+          deactivateTooltip="Disable Transformation"
+          isActive={!this.props.transformation.get('disabled')}
+          isPending={this.props.pendingActions.has('save-disabled')}
+          onChange={this._handleActiveChange}
+        />
+      );
+    }
 
     return buttons;
   },
