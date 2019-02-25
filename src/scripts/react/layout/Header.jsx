@@ -51,8 +51,8 @@ export default React.createClass({
           <div className="kbc-main-header kbc-header">
             <div className="kbc-title">
               {!this.state.lookerPreview && this._renderComponentIcon()}
-              {this._renderBreadcrumbs()} {this._renderReloader()}{' '}
-              {this.state.isRoutePending && <RoutePendingIndicator />}
+              {this._renderBreadcrumbs()}{' '}
+              {this.state.isRoutePending ? <RoutePendingIndicator /> : this._renderReloader()}
             </div>
             <div className="kbc-buttons">{this._renderButtons()}</div>
           </div>
