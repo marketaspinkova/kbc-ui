@@ -16,11 +16,12 @@ export default {
     return component.get('configurations')
       .filter((config) => {
         return (
-          config.hasIn(['configuration', 'authorization', 'oauth_api', 'id']) &&
-          config.getIn(['configuration', 'authorization', 'oauth_api', 'version']) !== 3 ||
-          (isTdeExporter &&
-           needTdeExporterDestinationNewOauth(config, 'keboola.wr-google-drive') &&
-           needTdeExporterDestinationNewOauth(config, 'keboola.wr-dropbox-v2'))
+          config.hasIn(['configuration', 'authorization', 'oauth_api', 'id'])
+          && config.getIn(['configuration', 'authorization', 'oauth_api', 'version']) !== 3
+          || (isTdeExporter && (
+            needTdeExporterDestinationNewOauth(config, 'keboola.wr-google-drive')
+            || needTdeExporterDestinationNewOauth(config, 'keboola.wr-dropbox-v2')
+          ))
         );
       });
   },
