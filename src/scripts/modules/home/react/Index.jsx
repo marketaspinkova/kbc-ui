@@ -74,13 +74,6 @@ export default React.createClass({
     componentCount += this.state.installedComponents.filter(function(component) {
       return !!component.get('flags', List()).contains('deprecated');
     }).count();
-    if (ApplicationStore.hasCurrentProjectFeature('transformation-mysql')) {
-      componentCount += this.state.transformations.filter(function(bucket) {
-        return bucket.filter(function(transformation) {
-          return transformation.get('backend') === 'mysql';
-        }).count() > 0;
-      }).count();
-    }
     if (typeof this.state.expires !== 'undefined') {
       componentCount += 1;
     }
