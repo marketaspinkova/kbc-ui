@@ -8,7 +8,7 @@ export const storeMixins = [InstalledComponentStore, OauthStore];
 export default function(COMPONENT_ID, configId) {
   const localState = () => InstalledComponentStore.getLocalState(COMPONENT_ID, configId) || Map();
   const configData =  InstalledComponentStore.getConfigData(COMPONENT_ID, configId) || Map();
-  const oauthCredentialsId = configData.getIn(['authorization', 'oauth_api', 'id'], configId);
+  const oauthCredentialsId = configData.getIn(['authorization', 'oauth_api', 'id']);
   const parameters = configData.get('parameters', Map());
   const tables = parameters.get('tables', List());
   const mappings = configData.getIn(['storage', 'input', 'tables'], List());
@@ -30,7 +30,7 @@ export default function(COMPONENT_ID, configId) {
     configData: configData,
     parameters: parameters,
     oauthCredentials: OauthStore.getCredentials(COMPONENT_ID, oauthCredentialsId) || Map(),
-    oauthCredentialsId: oauthCredentialsId,
+    oauthCredentialsId: oauthCredentialsId || configId,
     tables: tables,
     hasTables: tables.count() > 0,
     mappings: mappings,

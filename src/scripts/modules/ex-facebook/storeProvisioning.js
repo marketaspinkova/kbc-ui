@@ -18,7 +18,7 @@ export default function(COMPONENT_ID, configId) {
   const DEFAULT_API_VERSION = DEFAULT_VERSIONS_MAP[COMPONENT_ID];
   const localState = () => InstalledComponentStore.getLocalState(COMPONENT_ID, configId) || Map();
   const configData =  InstalledComponentStore.getConfigData(COMPONENT_ID, configId) || Map();
-  const oauthCredentialsId = configData.getIn(['authorization', 'oauth_api', 'id'], configId);
+  const oauthCredentialsId = configData.getIn(['authorization', 'oauth_api', 'id']);
   const parameters = configData.get('parameters', Map());
   const queries = parameters.get('queries', List());
 
@@ -39,7 +39,7 @@ export default function(COMPONENT_ID, configId) {
   return {
     DEFAULT_API_VERSION: DEFAULT_API_VERSION,
     oauthCredentials: OauthStore.getCredentials(COMPONENT_ID, oauthCredentialsId) || Map(),
-    oauthCredentialsId: oauthCredentialsId,
+    oauthCredentialsId: oauthCredentialsId || configId,
 
     // local state stuff
     getLocalState(path) {
