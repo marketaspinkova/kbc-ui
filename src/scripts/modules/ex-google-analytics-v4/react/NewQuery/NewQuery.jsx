@@ -1,4 +1,5 @@
 import React from 'react';
+import {Tab, Tabs} from 'react-bootstrap';
 
 // stores
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
@@ -8,11 +9,11 @@ import {GapiStore} from '../../../google-utils/react/GapiFlux';
 
 // actions
 import actionsProvisioning from '../../actionsProvisioning';
-// import {injectGapiScript} from '../../../google-utils/react/InitGoogleApis';
 import {GapiActions} from '../../../google-utils/react/GapiFlux';
 
 // ui components
 import QueryEditor from '../components/QueryEditor/QueryEditor';
+import McfEditor from '../components/QueryEditor/McfEditor';
 
 export default function(componentId) {
   return React.createClass({
@@ -51,7 +52,14 @@ export default function(componentId) {
       return (
         <div className="container-fluid">
           <div className="kbc-main-content">
-            {this.renderQueryEditor()}
+            <Tabs defaultActiveKey={'report'} id="ga-tabs" onSelect={this.onSelectTab}>
+              <Tab eventKey={'report'} title="Report">
+                {this.renderQueryEditor()}
+              </Tab>
+              <Tab eventKey={'mcf'} title="Multi-Channel Funnel">
+                {this.renderMcfEditor()}
+              </Tab>
+            </Tabs>
           </div>
         </div>
       );
@@ -73,6 +81,28 @@ export default function(componentId) {
           query={this.state.newQuery}
           {...this.state.actions.prepareLocalState('NewQuery')}/>
       );
+    },
+
+    renderMcfEditor() {
+      return (
+        <McfEditor
+          isEditing={true}
+          isLoadingMetadata={this.state.isLoadingMetadata}
+          metadata={this.state.metadata}
+          allProfiles={this.state.store.profiles}
+          outputBucket={this.state.store.outputBucket}
+          onChangeQuery={this.state.actions.onUpdateNewQuery}
+          onRunQuery={(query) => this.state.actions.runQuerySample(query, 'NewQuery')}
+          sampleDataInfo={this.state.store.getSampleDataInfo('NewQuery')}
+          isQueryValidFn={this.state.store.isQueryValid}
+          query={this.state.newQuery}
+          {...this.state.actions.prepareLocalState('NewQuery')}/>
+      );
+    },
+
+    onSelectTab(key) {
+      const newQuery = this.state.newQuery.setIn([].concat('endpoint'), key);
+      this.state.actions.onUpdateNewQuery(newQuery);
     }
   });
 }

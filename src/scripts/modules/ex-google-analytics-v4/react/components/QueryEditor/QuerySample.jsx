@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react';
-// import EmptyState from '../../../../components/react/components/ComponentEmptyState';
 import {Table, Alert} from 'react-bootstrap';
 import {Loader} from '@keboola/indigo-ui';
 import EmptyState from '../../../../components/react/components/ComponentEmptyState';
@@ -8,7 +7,7 @@ export default React.createClass({
   propTypes: {
     sampleDataInfo: PropTypes.object.isRequired,
     onRunQuery: PropTypes.func.isRequired,
-    isQueryValid: PropTypes.bool
+    isQueryValid: PropTypes.bool,
   },
 
   getSampleDataInfo(key, defaultValue) {
