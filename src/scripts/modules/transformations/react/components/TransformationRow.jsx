@@ -66,7 +66,7 @@ export default React.createClass({
             configBucketId: this.props.bucket.get('id'),
             transformations: [this.props.transformation.get('id')]
           })}
-        >v
+        >
           You are about to run the
           transformation {this.props.transformation.get('name', this.props.transformation.get('id'))}.
         </RunComponentButton>
