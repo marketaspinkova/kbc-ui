@@ -148,7 +148,7 @@ export default React.createClass({
                         <Loader /> Deleting table...
                       </span>
                     ) : (
-                      <span><i className="fa fa-trash-o"></i> Delete table</span>
+                      <span><i className="fa fa-trash-o" /> Delete table</span>
                     )}
                   </MenuItem>
                 )}
