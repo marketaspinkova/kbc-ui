@@ -110,7 +110,7 @@ export default React.createClass({
                       <Loader /> Exporting...
                     </span>
                   ) : (
-                    <span>Export</span>
+                    <span><i className='fa fa-arrow-down' /> Export</span>
                   )}
                 </MenuItem>
                 <MenuItem
@@ -123,13 +123,13 @@ export default React.createClass({
                       <Loader /> Loading into table...
                     </span>
                   ) : (
-                    'Load'
+                    <span><i className='fa fa-arrow-up' /> Load</span>
                   )}
                 </MenuItem>
                 {this.state.canWriteTable && <MenuItem divider />}
                 {!this.state.table.get('isAlias') && this.state.canWriteTable && (
                   <MenuItem eventKey="alias" onSelect={this.handleDropdownAction}>
-                    Create alias table
+                    <i className="fa fa-plus" /> Create alias table
                   </MenuItem>
                 )}
                 {!this.state.table.get('isAlias') && this.state.canWriteTable && (
@@ -138,7 +138,7 @@ export default React.createClass({
                     onSelect={this.handleDropdownAction}
                     disabled={this.state.truncatingTable}
                   >
-                    Truncate table
+                    <i className="fa fa-times" /> Truncate table
                   </MenuItem>
                 )}
                 {this.state.canWriteTable && (
@@ -148,7 +148,7 @@ export default React.createClass({
                         <Loader /> Deleting table...
                       </span>
                     ) : (
-                      'Delete table'
+                      <span><i className="fa fa-trash-o"></i> Delete table</span>
                     )}
                   </MenuItem>
                 )}

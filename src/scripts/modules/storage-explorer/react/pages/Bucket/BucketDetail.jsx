@@ -77,9 +77,11 @@ export default React.createClass({
                 >
                   {linkedBuckets.count() > 0 ? (
                     <Tooltip tooltip="Please unlink linked buckets first" placement="top">
-                      <span>Delete bucket</span>
+                      <span><i className="fa fa-trash-o"></i> Delete bucket</span>
                     </Tooltip>
-                  ) : 'Delete bucket'}
+                  ) : (
+                    <span><i className="fa fa-trash-o"></i> Delete bucket</span>
+                  )}
                 </MenuItem>
               </NavDropdown>
             </Nav>
