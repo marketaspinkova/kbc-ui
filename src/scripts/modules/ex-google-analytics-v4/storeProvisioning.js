@@ -23,7 +23,7 @@ export const storeMixins = [InstalledComponentStore, OauthStore];
 export default function(configId, componentId) {
   const localState = () => InstalledComponentStore.getLocalState(componentId, configId) || Map();
   const configData =  InstalledComponentStore.getConfigData(componentId, configId) || Map();
-  const oauthCredentialsId = configData.getIn(['authorization', 'oauth_api', 'id'], configId);
+  const oauthCredentialsId = configData.getIn(['authorization', 'oauth_api', 'id']);
 
   const parameters = configData.get('parameters', Map());
   const queries = parameters.getIn(['queries'], List());
@@ -48,7 +48,7 @@ export default function(configId, componentId) {
 
   return {
     oauthCredentials: OauthStore.getCredentials(componentId, oauthCredentialsId) || Map(),
-    oauthCredentialsId: oauthCredentialsId,
+    oauthCredentialsId: oauthCredentialsId || configId,
 
     // local state stuff
     getLocalState(path) {
