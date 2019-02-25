@@ -205,7 +205,7 @@ export default React.createClass({
 
   getComponentsWithOAuth() {
     return this.state.components.filter(component => {
-      return component.get('flags').contains('genericDockerUI-authorization');
+      return component.get('flags').contains('genericDockerUI-authorization') || component.get('id') === 'tde-exporter';
     });
   },
 
