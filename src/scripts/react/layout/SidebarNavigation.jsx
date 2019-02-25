@@ -8,10 +8,6 @@ import RoutesStore from '../../stores/RoutesStore';
 const SidebarNavigation = React.createClass({
   mixins: [State],
 
-  propTypes: {
-    develPreview: React.PropTypes.bool.isRequired
-  },
-
   render() {
     return (
       <ul className="kbc-nav-sidebar nav nav-sidebar">
@@ -63,7 +59,11 @@ const SidebarNavigation = React.createClass({
         title: 'Orchestrations',
         icon: 'kbc-icon-orchestrations'
       },
-      this.getStoragePage(),
+      {
+        id: 'storage-explorer',
+        title: 'Storage',
+        icon: 'kbc-icon-storage'
+      },
       {
         id: 'jobs',
         title: 'Jobs',
@@ -75,21 +75,6 @@ const SidebarNavigation = React.createClass({
         icon: 'kbc-icon-applications'
       }
     ];
-  },
-
-  getStoragePage() {
-    if (this.props.develPreview) {
-      return {
-        id: 'storage-explorer',
-        title: 'Storage',
-        icon: 'kbc-icon-storage'
-      };
-    }
-    return {
-      id: 'storage',
-      title: 'Storage',
-      icon: 'kbc-icon-storage'
-    };
   }
 });
 
