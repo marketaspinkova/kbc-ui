@@ -52,12 +52,12 @@ export default function(componentId) {
       return (
         <div className="container-fluid">
           <div className="kbc-main-content">
-            <Tabs defaultActiveKey={'report'} id="ga-tabs" onSelect={this.onSelectTab}>
-              <Tab eventKey={'report'} title="Report">
+            <Tabs defaultActiveKey={'reports'} id="ga-tabs" onSelect={this.onSelectTab}>
+              <Tab eventKey={'reports'} title="Report">
                 {this.renderQueryEditor()}
               </Tab>
-              <Tab eventKey={'mcf'} title="Multi-Channel Funnel">
-                {this.renderMcfEditor()}
+              <Tab eventKey={'mcf'} title="Multi-Channel Funnel (Beta)">
+                  {this.renderMcfEditor()}
               </Tab>
             </Tabs>
           </div>
@@ -102,6 +102,8 @@ export default function(componentId) {
 
     onSelectTab(key) {
       const newQuery = this.state.newQuery.setIn([].concat('endpoint'), key);
+      // clear newQuery state object
+
       this.state.actions.onUpdateNewQuery(newQuery);
     }
   });

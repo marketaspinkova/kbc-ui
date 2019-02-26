@@ -5,6 +5,7 @@ import ProfileSelector from './ProfileSelector';
 import GaMultiSelect from './GaMultiSelect';
 import SapiTableLinkEx from '../../../../components/react/components/StorageApiTableLinkEx';
 import QuerySample from './QuerySample';
+import DateRangesSelector from './DateRangesSelector';
 
 const DIMENSIONS = [
   'mcf:basicChannelGroupingPath',
@@ -225,47 +226,12 @@ export default React.createClass({
             </div>
           </div>
 
-          <div className="form-group">
-            <label className="col-md-2 control-label">
-              Date since
-            </label>
-            <div className="col-md-10">
-              {isEditing ?
-                <input
-                  type="text"
-                  placeholder="-4 Days"
-                  className="form-control"
-                  value={query.getIn(['query', 'mcfDateSince'])}
-                  onChange={this.onChangeTextPropFn(['query', 'mcfDateSince'])}
-                />
-                :
-                <p className="form-control-static">
-                  {query.getIn(['query', 'mcfDateSince']) || 'N/A'}
-                </p>
-              }
-            </div>
-          </div>
-
-          <div className="form-group">
-            <label className="col-md-2 control-label">
-              Date until
-            </label>
-            <div className="col-md-10">
-              {isEditing ?
-                <input
-                  type="text"
-                  placeholder="-1 Day"
-                  className="form-control"
-                  value={query.getIn(['query', 'mcfDateUntil'])}
-                  onChange={this.onChangeTextPropFn(['query', 'mcfDateUntil'])}
-                />
-                :
-                <p className="form-control-static">
-                  {query.getIn(['query', 'mcfDateUntil']) || 'N/A'}
-                </p>
-              }
-            </div>
-          </div>
+          <DateRangesSelector
+            isEditing={isEditing}
+            ranges={query.getIn(['query', 'dateRanges'], List())}
+            onChange={this.onChangePropertyFn(['query', 'dateRanges'])}
+            maxRanges={1}
+            {...this.props.prepareLocalState('DateRangeSelector')}/>
 
         </div>
         <QuerySample

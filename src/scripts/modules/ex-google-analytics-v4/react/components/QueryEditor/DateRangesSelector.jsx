@@ -1,8 +1,8 @@
 import React, {PropTypes} from 'react';
 import {Map, fromJS} from 'immutable';
 import Tooltip from '../../../../../react/common/Tooltip';
-// import DateInput from './DateInput';
 import DateRangeModal from './DateRangeModal';
+
 export default React.createClass({
   propTypes: {
     ranges: PropTypes.object.isRequired,
@@ -10,7 +10,8 @@ export default React.createClass({
     isEditing: PropTypes.bool.isRequired,
     localState: PropTypes.object.isRequired,
     updateLocalState: PropTypes.func.isRequired,
-    prepareLocalState: PropTypes.func.isRequired
+    prepareLocalState: PropTypes.func.isRequired,
+    maxRanges: PropTypes.number,
   },
 
   render() {
@@ -35,14 +36,7 @@ export default React.createClass({
             </div>
             <div className="tbody">
               {this.props.ranges.map((r, idx) => this.renderRange(r, idx))}
-              {this.props.isEditing && this.props.ranges.count() < 2 ?
-                <div className="tr">
-                  <button className="btn btn-link" onClick={this.addRange}>
-                   Add Date Range
-                  </button>
-                </div>
-                : null
-              }
+              {this.renderAddButton()}
             </div>
           </div>
         </div>
@@ -96,6 +90,18 @@ export default React.createClass({
     );
   },
 
+  renderAddButton() {
+    const maxRanges = this.props.maxRanges ? this.props.maxRanges : 2;
+
+    return this.props.isEditing && this.props.ranges.count() < maxRanges ?
+      <div className="tr">
+        <button className="btn btn-link" onClick={this.addRange}>
+          Add Date Range
+        </button>
+      </div>
+      : null
+  },
+
   addRange() {
     const newRange = fromJS({
       'startDate': '-4 days',
@@ -123,14 +129,5 @@ export default React.createClass({
     });
     const newRanges = this.props.ranges.map((r, ridx) => idx === ridx ? rangeToUpdate : r);
     this.props.onChange(newRanges);
-  },
-
-  createUpdateFn(propName, idx) {
-    return (e) => {
-      const value = e;
-      const newRanges = this.props.ranges.map((r, ridx) => idx === ridx ? r.set(propName, value) : r);
-      this.props.onChange(newRanges);
-    };
   }
-
 });
