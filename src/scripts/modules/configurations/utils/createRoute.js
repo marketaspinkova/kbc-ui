@@ -84,10 +84,11 @@ export default function(settings) {
         return configurationRow.get('name') !== '' ? configurationRow.get('name') : 'Untitled ' + settingsWithDefaults.row.name.singular;
       },
       poll: {
-        interval: 10,
+        interval: 15,
         action: (params) => {
           jobsActions.loadComponentConfigurationLatestJobs(settingsWithDefaults.componentId, params.config);
           versionsActions.reloadVersions(settingsWithDefaults.componentId, params.config);
+          rowVersionsActions.loadVersions(settingsWithDefaults.componentId, params.config, params.row);
         }
       },
       requireData: [
