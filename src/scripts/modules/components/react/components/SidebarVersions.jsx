@@ -161,7 +161,7 @@ export default createReactClass({
         <p>
           {'Editing same configuration'}
           {createdByCurrentAdmin ? ' from multiple places ' : ' by several users '}
-          {'is not supported. You will overrides your previous work.'}
+          {'is not supported. If you save the current configuration you may overwrite the latest changes.'}
         </p>
       </Alert>
     );
