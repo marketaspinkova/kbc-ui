@@ -157,3 +157,13 @@ export function saveDirectData(componentId, configId, authorizedFor, data) {
       return saveFn(componentId, configId, fromJS(newConfiguration), `Save direct token authorization for ${authorizedFor}`).then(() => authorizedFor);
     });
 }
+
+export function linkCredentials(componentId, configId, credentials) {
+  const description = `Link credentials for ${credentials.get('authorizedFor')}`;
+  const newConfiguration = installedComponentsStore
+    .getConfigData(componentId, configId)
+    .setIn(['authorization', 'oauth_api', 'id'], credentials.get('id'))
+    .setIn(['authorization', 'oauth_api', 'version'], Constants.OAUTH_VERSION_FALLBACK);
+  
+  return installedComponentsActions.saveComponentConfigData(componentId, configId, newConfiguration, description);
+}

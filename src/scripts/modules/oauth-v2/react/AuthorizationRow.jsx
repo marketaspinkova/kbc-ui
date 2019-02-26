@@ -1,12 +1,17 @@
-import React, {PropTypes} from 'react';
-import AuthorizationModal from './AuthorizationModal';
-import Confirm from '../../../react/common/Confirm';
-import {Loader} from '@keboola/indigo-ui';
-import EmptyState from '../../components/react/components/ComponentEmptyState';
-import Tooltip from '../../../react/common/Tooltip';
+import React, { PropTypes } from 'react';
 import moment from 'moment';
-export default React.createClass({
+import { fromJS } from 'immutable';
+import { Button } from 'react-bootstrap';
+import { Loader } from '@keboola/indigo-ui';
+import Confirm from '../../../react/common/Confirm';
+import Tooltip from '../../../react/common/Tooltip';
+import EmptyState from '../../components/react/components/ComponentEmptyState';
+import ApplicationStore from '../../../stores/ApplicationStore';
+import AuthorizationModal from './AuthorizationModal';
+import oauthActions from '../ActionCreators';
+import * as OauthUtils from '../OauthUtils';
 
+export default React.createClass({
   propTypes: {
     componentId: PropTypes.string.isRequired,
     credentials: PropTypes.object,
@@ -23,7 +28,9 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      showModal: false
+      showModal: false,
+      linkingCredentials: false,
+      existingNotLinkedCredentials: null
     };
   },
 
@@ -34,6 +41,20 @@ export default React.createClass({
       allowExternalAuthorization: true,
       returnUrlSuffix: 'oauth-redirect'
     };
+  },
+
+  componentDidMount() {
+    if (!this.isAuthorized()) {
+      oauthActions
+        .loadCredentialsForce(this.props.componentId, this.props.configId)
+        .then((credentials) => {
+          if (credentials && credentials.id === ApplicationStore.getCurrentAdmin().get('id')) {
+            this.setState({
+              existingNotLinkedCredentials: fromJS(credentials)
+            });
+          }
+        });
+    }
   },
 
   render() {
@@ -50,9 +71,8 @@ export default React.createClass({
     if (!this.props.showHeader) {
       return null;
     }
-    return (
-      <h2>Authorization</h2>
-    );
+
+    return <h2>Authorization</h2>;
   },
 
   renderAuth() {
@@ -61,12 +81,10 @@ export default React.createClass({
     return (
       <InnerComponent>
         <p>No Account authorized</p>
-        <button
-          onClick={this.showModal}
-          className="btn btn-success">
-          <i className="fa fa-fw fa-user"/>
-          Authorize Account
-        </button>
+        <Button bsStyle="success" onClick={this.showModal} disabled={this.state.linkingCredentials}>
+          <i className="fa fa-fw fa-user" /> Authorize Account
+        </Button>
+        {this.state.existingNotLinkedCredentials && this.renderLinkExistingCredentials()}
       </InnerComponent>
     );
   },
@@ -81,32 +99,32 @@ export default React.createClass({
       </Tooltip>
     );
     const creator = this.props.credentials.getIn(['creator', 'description']);
+
     return (
       <div>
         Authorized for <strong>{this.props.credentials.get('authorizedFor')}</strong>
-        {!this.props.isResetingCredentials ?  (
+        {!this.props.isResetingCredentials ? (
           <Confirm
             text="Do you really want to reset the authorized account?"
             title="Reset Authorization"
             buttonLabel="Reset"
-            onConfirm={this.props.onResetCredentials}>
-            <a className="btn btn-link btn-sm" style={{'paddingTop': 0, 'paddingBottom': 0}}>
+            onConfirm={this.props.onResetCredentials}
+          >
+            <a className="btn btn-link btn-sm" style={{ paddingTop: 0, paddingBottom: 0 }}>
               <Tooltip tooltip="Reset Authorization" placement="top">
-                <span>  Reset</span>
+                <span> Reset</span>
               </Tooltip>
             </a>
           </Confirm>
         ) : (
           <span>
             {' '}
-            <Loader/>
+            <Loader />
           </span>
-        )
-        }
+        )}
         <div className="small">
           {createdInfo} by {creator}
         </div>
-
       </div>
     );
   },
@@ -125,6 +143,27 @@ export default React.createClass({
     );
   },
 
+  renderLinkExistingCredentials() {
+    const creator = this.state.existingNotLinkedCredentials.get('creator');
+
+    return (
+      <div>
+        <br />
+        <p>
+          or link existing authorization (<b>{creator.get('description')}</b>)
+        </p>
+        <Button bsStyle="success" onClick={this.linkCredentials} disabled={this.state.linkingCredentials}>
+          {this.state.linkingCredentials ? (
+            <Loader />
+          ) : (
+            <i className="fa fa-fw fa-link" />
+          )}{' '}
+          Link Existing
+        </Button>
+      </div>
+    );
+  },
+
   isAuthorized() {
     const creds = this.props.credentials;
     return  creds && creds.has('id');
@@ -140,6 +179,14 @@ export default React.createClass({
     this.setState(
       {showModal: true}
     );
-  }
+  },
 
+  linkCredentials() {
+    this.setState({ linkingCredentials: true });
+    OauthUtils
+      .linkCredentials(this.props.componentId, this.props.configId, this.state.existingNotLinkedCredentials)
+      .finally(() => {
+        this.setState({ linkingCredentials: true });
+      })
+  }
 });
