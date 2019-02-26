@@ -1,5 +1,3 @@
 src/scripts/utils/codemirror/addon/parser.js
-src/scripts/utils/codemirror/addon/snowflake-hint.js
-src/scripts/utils/codemirror/mode/snowflake-sql.js
 # Ignore indigo-ui lib if linked
 ../indigo-ui
