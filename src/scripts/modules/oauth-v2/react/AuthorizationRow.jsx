@@ -30,7 +30,7 @@ export default React.createClass({
     return {
       showModal: false,
       linkingCredentials: false,
-      existingNotLinkedCredentials: null
+      notLinkedCredentials: null
     };
   },
 
@@ -51,7 +51,7 @@ export default React.createClass({
           const credentials = fromJS(data);
           if (parseInt(credentials.getIn(['creator', 'id']), 10) === parseInt(ApplicationStore.getCurrentAdmin().get('id'), 10)) {
             this.setState({
-              existingNotLinkedCredentials: credentials
+              notLinkedCredentials: credentials
             });
           }
         });
@@ -85,7 +85,7 @@ export default React.createClass({
         <Button bsStyle="success" onClick={this.showModal} disabled={this.state.linkingCredentials}>
           <i className="fa fa-fw fa-user" /> Authorize Account
         </Button>
-        {this.state.existingNotLinkedCredentials && this.renderLinkExistingCredentials()}
+        {this.state.notLinkedCredentials && this.renderLinkExistingCredentials()}
       </InnerComponent>
     );
   },
@@ -145,7 +145,7 @@ export default React.createClass({
   },
 
   renderLinkExistingCredentials() {
-    const creator = this.state.existingNotLinkedCredentials.get('creator');
+    const creator = this.state.notLinkedCredentials.get('creator');
 
     return (
       <div>
@@ -185,7 +185,7 @@ export default React.createClass({
   linkCredentials() {
     this.setState({ linkingCredentials: true });
     OauthUtils
-      .linkCredentials(this.props.componentId, this.props.configId, this.state.existingNotLinkedCredentials)
+      .linkCredentials(this.props.componentId, this.props.configId, this.state.notLinkedCredentials)
       .finally(() => {
         this.setState({ linkingCredentials: true });
       })
