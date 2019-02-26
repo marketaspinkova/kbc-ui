@@ -78,6 +78,7 @@ export default createReactClass({
         versionsConfigs={this.state.versionsConfigs}
         pendingMultiLoad={this.state.pendingMultiLoad}
         isPending={this.state.isPending}
+        configurationVersions={this.state.versions}
         isReloading={this.state.isReloading}
       />
     );

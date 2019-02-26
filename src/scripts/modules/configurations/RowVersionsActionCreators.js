@@ -41,23 +41,6 @@ export default {
     });
   },
 
-  reloadVersions: function(componentId, configId, rowId) {
-    dispatcher.handleViewAction({
-      componentId: componentId,
-      configId: configId,
-      rowId: rowId,
-      type: Constants.ActionTypes.ROW_VERSIONS_RELOAD_START
-    });
-    this.loadVersionsForce(componentId, configId, rowId).finally(() => {
-      dispatcher.handleViewAction({
-        componentId: componentId,
-        configId: configId,
-        rowId: rowId,
-        type: Constants.ActionTypes.ROW_VERSIONS_RELOAD_STOP
-      });
-    })
-  },
-
   loadComponentConfigByVersion(componentId, configId, rowId, version) {
     if (Store.hasConfigByVersion(componentId, configId, rowId, version)) {
       return Promise.resolve(Store.getConfigByVersion(componentId, configId, rowId, version));

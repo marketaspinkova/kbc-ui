@@ -5,11 +5,12 @@ import SidebarVesions from '../../../components/react/components/SidebarVersions
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import InstalledComponentStore from '../../../components/stores/InstalledComponentsStore';
 import ComponentStore from '../../../components/stores/ComponentsStore';
-import VersionsActionCreators from '../../RowVersionsActionCreators';
-import VersionsStore from '../../RowVersionsStore';
+import VersionsStore from '../../../components/stores/VersionsStore';
+import VersionsActionCreators from '../../RowVersionsActionCreators'
+import RowVersionsStore from '../../RowVersionsStore';
 
 export default createReactClass({
-  mixins: [createStoreMixin(InstalledComponentStore, ComponentStore, VersionsStore)],
+  mixins: [createStoreMixin(InstalledComponentStore, ComponentStore, VersionsStore, RowVersionsStore)],
 
   getStateFromStores() {
     const versionsLinkTo = this.props.componentId + '-row-versions';
@@ -22,12 +23,13 @@ export default createReactClass({
     return {
       versionsLinkTo,
       versionsLinkParams,
-      versions: VersionsStore.getVersions(this.props.componentId, this.props.configId, this.props.rowId),
-      isLoading: VersionsStore.isLoadingVersions(this.props.componentId, this.props.configId, this.props.rowId),
-      versionsConfigs: VersionsStore.getVersionsConfigs(this.props.componentId, this.props.configId, this.props.rowId),
-      pendingMultiLoad: VersionsStore.getPendingMultiLoad(this.props.componentId, this.props.configId, this.props.rowId),
-      isPending: VersionsStore.isPendingConfig(this.props.componentId, this.props.configId, this.props.rowId),
-      isReloading: VersionsStore.isReloadingConfig(this.props.componentId, this.props.configId, this.props.rowId)
+      rowVersions: RowVersionsStore.getVersions(this.props.componentId, this.props.configId, this.props.rowId),
+      isLoading: RowVersionsStore.isLoadingVersions(this.props.componentId, this.props.configId, this.props.rowId),
+      versionsConfigs: RowVersionsStore.getVersionsConfigs(this.props.componentId, this.props.configId, this.props.rowId),
+      pendingMultiLoad: RowVersionsStore.getPendingMultiLoad(this.props.componentId, this.props.configId, this.props.rowId),
+      isPending: RowVersionsStore.isPendingConfig(this.props.componentId, this.props.configId, this.props.rowId),
+      versions: VersionsStore.getVersions(this.props.componentId, this.props.configId),
+      isReloading: VersionsStore.isReloadingConfig(this.props.componentId, this.props.configId)
     };
   },
 
@@ -47,7 +49,7 @@ export default createReactClass({
   render() {
     return (
       <SidebarVesions
-        versions={this.state.versions}
+        versions={this.state.rowVersions}
         isLoading={this.state.isLoading}
         configId={this.props.configId}
         componentId={this.props.componentId}
@@ -59,6 +61,7 @@ export default createReactClass({
         versionsConfigs={this.state.versionsConfigs}
         pendingMultiLoad={this.state.pendingMultiLoad}
         isPending={this.state.isPending}
+        configurationVersions={this.state.versions}
         isReloading={this.state.isReloading}
       />
     );

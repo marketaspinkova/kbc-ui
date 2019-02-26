@@ -87,7 +87,7 @@ export default function(settings) {
         interval: 10,
         action: (params) => {
           jobsActions.loadComponentConfigurationLatestJobs(settingsWithDefaults.componentId, params.config);
-          rowVersionsActions.reloadVersions(settingsWithDefaults.componentId, params.config, params.row);
+          versionsActions.reloadVersions(settingsWithDefaults.componentId, params.config);
         }
       },
       requireData: [

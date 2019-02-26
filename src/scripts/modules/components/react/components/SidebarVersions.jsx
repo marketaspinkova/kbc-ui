@@ -21,6 +21,7 @@ export default createReactClass({
     isLoading: PropTypes.bool.isRequired,
     configId: PropTypes.string.isRequired,
     componentId: PropTypes.string.isRequired,
+    configurationVersions: PropTypes.object,
     isReloading: PropTypes.bool,
     limit: PropTypes.number,
     versionsLinkTo: PropTypes.string,
@@ -33,6 +34,7 @@ export default createReactClass({
   getDefaultProps() {
     return {
       limit: 5,
+      configurationVersions: Map(),
       isReloading: false
     };
   },
@@ -44,7 +46,7 @@ export default createReactClass({
   },
 
   componentDidUpdate(prevProps) {
-    if (this.props.isReloading && !this.props.versions.equals(prevProps.versions)) {
+    if (this.props.isReloading && !this.props.configurationVersions.equals(prevProps.configurationVersions)) {
       this.setState({ versionsWarning: true });
     }
   },
@@ -143,7 +145,7 @@ export default createReactClass({
       return null;
     }
 
-    const latestVersion = this.props.versions.first();
+    const latestVersion = this.props.configurationVersions.first();
     const creatorId = latestVersion.getIn(['creatorToken', 'id']);
     const currentAdminId = ApplicationStore.getCurrentAdmin().get('id');
     const createdByCurrentAdmin = parseInt(creatorId, 10) === parseInt(currentAdminId, 10);
