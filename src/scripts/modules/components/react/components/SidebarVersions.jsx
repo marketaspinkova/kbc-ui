@@ -6,7 +6,6 @@ import moment from 'moment';
 import { Map } from 'immutable';
 import { Link } from 'react-router';
 import { Alert } from 'react-bootstrap';
-import { Loader } from '@keboola/indigo-ui';
 import ApplicationStore from '../../../../stores/ApplicationStore';
 import { getPreviousVersion } from '../../../../utils/VersionsDiffUtils';
 import DiffVersionButton from '../../../../react/common/DiffVersionButton';
@@ -56,7 +55,6 @@ export default createReactClass({
       <div>
         <h4>
           Updates
-          {this.props.isLoading && <Loader />}
           {this.props.versions.count() > 1 && this.renderLatestChangeDiffButton()}
         </h4>
         {this.renderVersionWarning()}
