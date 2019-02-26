@@ -7,10 +7,8 @@
 export default function(backend, type) {
   if (backend === 'mysql') {
     return 'text/x-mysql';
-  } else if (backend === 'redshift') {
+  } else if (backend === 'redshift' || backend === 'snowflake') {
     return 'text/x-sql';
-  } else if (backend === 'snowflake') {
-    return 'text/x-sfsql';
   } else if (backend === 'docker') {
     if (type === 'r') {
       return 'text/x-rsrc';
