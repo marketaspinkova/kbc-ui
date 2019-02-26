@@ -57,7 +57,10 @@ export default function(settings) {
     defaultRouteHandler: IndexLegacyCompatibilityWrapper,
     poll: {
       interval: 10,
-      action: (params) => jobsActions.loadComponentConfigurationLatestJobs(settingsWithDefaults.componentId, params.config)
+      action: (params) => {
+        jobsActions.loadComponentConfigurationLatestJobs(settingsWithDefaults.componentId, params.config);
+        versionsActions.loadVersionsForce(settingsWithDefaults.componentId, params.config);
+      }
     },
     requireData: [
       (params) => installedComponentsActions.loadComponentConfigData(settingsWithDefaults.componentId, params.config).then(function() {
@@ -82,7 +85,10 @@ export default function(settings) {
       },
       poll: {
         interval: 10,
-        action: (params) => jobsActions.loadComponentConfigurationLatestJobs(settingsWithDefaults.componentId, params.config)
+        action: (params) => {
+          jobsActions.loadComponentConfigurationLatestJobs(settingsWithDefaults.componentId, params.config);
+          rowVersionsActions.loadVersionsForce(settingsWithDefaults.componentId, params.config, params.row);
+        }
       },
       requireData: [
         (params) => rowVersionsActions.loadVersions(settingsWithDefaults.componentId, params.config, params.row),

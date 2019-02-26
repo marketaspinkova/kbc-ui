@@ -1,15 +1,16 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
-import {Map} from 'immutable';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
-import SidebarVersionsRow from './SidebarVersionsRow';
-import {Link} from 'react-router';
-import {getPreviousVersion} from '../../../../utils/VersionsDiffUtils';
+import ImmutableMixin from 'react-immutable-render-mixin';
+import { Map } from 'immutable';
+import { Link } from 'react-router';
+import { Loader } from '@keboola/indigo-ui';
+import { getPreviousVersion } from '../../../../utils/VersionsDiffUtils';
 import DiffVersionButton from '../../../../react/common/DiffVersionButton';
+import SidebarVersionsRow from './SidebarVersionsRow';
 
 export default createReactClass({
-  mixins: [PureRenderMixin],
+  mixins: [ImmutableMixin],
 
   propTypes: {
     versions: PropTypes.object.isRequired,
@@ -35,6 +36,7 @@ export default createReactClass({
     if (this.props.versionsLinkParams) {
       return this.props.versionsLinkParams;
     }
+
     return {
       component: this.props.componentId,
       config: this.props.configId
@@ -45,43 +47,46 @@ export default createReactClass({
     if (this.props.versionsLinkTo) {
       return this.props.versionsLinkTo;
     }
+
     return this.props.componentId + '-versions';
   },
 
   renderVersions() {
-    const self = this;
     if (this.props.versions.count() || this.props.isLoading) {
-      return this.props.versions.slice(0, 3).map((version) => {
-        const isLast = (version.get('version') === this.props.versions.first().get('version'));
-        return (
-          <Link
-            className="list-group-item"
-            to={self.getVersionsLinkTo()}
-            params={self.getVersionsLinkParams()}
-            key={version.get('version')}
-          >
-            <SidebarVersionsRow
-              version={version}
-              isLast={isLast}
-            />
-          </Link>
-        );
-      }).toArray();
-    } else {
-      return (<div><small className="text-muted">No versions found</small></div>);
+      return this.props.versions
+        .slice(0, 3)
+        .map((version) => {
+          const isLast = version.get('version') === this.props.versions.first().get('version');
+
+          return (
+            <Link
+              key={version.get('version')}
+              className="list-group-item"
+              to={this.getVersionsLinkTo()}
+              params={this.getVersionsLinkParams()}
+            >
+              <SidebarVersionsRow version={version} isLast={isLast} />
+            </Link>
+          );
+        })
+        .toArray();
     }
+
+    return (
+      <div>
+        <small className="text-muted">No versions found</small>
+      </div>
+    );
   },
 
   renderAllVersionsLink() {
-    if (this.props.versions.count() === 0) {
+    if (!this.props.versions.count()) {
       return null;
     }
+
     return (
       <div className="versions-link">
-        <Link
-          to={this.getVersionsLinkTo()}
-          params={this.getVersionsLinkParams()}
-        >
+        <Link to={this.getVersionsLinkTo()} params={this.getVersionsLinkParams()}>
           Show all versions
         </Link>
       </div>
@@ -92,20 +97,24 @@ export default createReactClass({
     const version = this.props.versions.first();
     const previousVersion = getPreviousVersion(this.props.versions, version);
     const previousVersionConfig = getPreviousVersion(this.props.versionsConfigs, version) || Map();
-    const currentVersionConfig = this.props.versionsConfigs.filter((currentVersion) => {
-      return version.get('version') === currentVersion.get('version');
-    }).first() || Map();
+    const currentVersionConfig =
+      this.props.versionsConfigs
+        .filter((currentVersion) => {
+          return version.get('version') === currentVersion.get('version');
+        })
+        .first() || Map();
     const isMultiPending = this.props.pendingMultiLoad.get(version.get('version'), false);
+
     return (
       <DiffVersionButton
+        isSmall
+        buttonAsSpan
         isDisabled={isMultiPending || this.props.isPending}
         isPending={isMultiPending}
         onLoadVersionConfig={() => this.props.prepareVersionsDiffData(version, previousVersion)}
         version={version}
         tooltipMsg="Compare changes of the most recent update"
         buttonClassName="pull-right"
-        isSmall={true}
-        buttonAsSpan={true}
         buttonText=" Compare Latest"
         versionConfig={currentVersionConfig}
         previousVersion={previousVersion}
@@ -114,11 +123,12 @@ export default createReactClass({
     );
   },
 
-
   render() {
     return (
       <div>
-        <h4>Updates
+        <h4>
+          Updates
+          {this.props.isLoading && <Loader />}
           {this.props.versions.size > 1 && this.renderLatestChangeDiffButton()}
         </h4>
         <div className="kbc-sidebar-versions">

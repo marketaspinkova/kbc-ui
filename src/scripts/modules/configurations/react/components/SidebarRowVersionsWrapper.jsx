@@ -12,7 +12,7 @@ import VersionsActionCreators from '../../RowVersionsActionCreators';
 export default createReactClass({
   mixins: [createStoreMixin(InstalledComponentStore, ComponentStore, VersionsStore)],
 
-  getStateFromStores: function() {
+  getStateFromStores() {
     const versionsLinkTo = this.props.componentId + '-row-versions';
     const versionsLinkParams = {
       component: this.props.componentId,
@@ -21,10 +21,10 @@ export default createReactClass({
     };
 
     return {
+      versionsLinkTo,
+      versionsLinkParams,
       versions: VersionsStore.getVersions(this.props.componentId, this.props.configId, this.props.rowId),
-      isLoading: false,
-      versionsLinkTo: versionsLinkTo,
-      versionsLinkParams: versionsLinkParams,
+      isLoading: VersionsStore.isLoadingVersions(this.props.componentId, this.props.configId, this.props.rowId),
       versionsConfigs: VersionsStore.getVersionsConfigs(this.props.componentId, this.props.configId, this.props.rowId),
       pendingMultiLoad: VersionsStore.getPendingMultiLoad(this.props.componentId, this.props.configId, this.props.rowId),
       isPending: VersionsStore.isPendingConfig(this.props.componentId, this.props.configId, this.props.rowId)
@@ -38,13 +38,13 @@ export default createReactClass({
     rowId: PropTypes.string.isRequired
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       limit: 5
     };
   },
 
-  render: function() {
+  render() {
     return (
       <SidebarVesions
         versions={this.state.versions}
@@ -69,5 +69,4 @@ export default createReactClass({
     return VersionsActionCreators.loadTwoComponentConfigVersions(
       this.props.componentId, configId, rowId, version1.get('version'), version2.get('version'));
   }
-
 });

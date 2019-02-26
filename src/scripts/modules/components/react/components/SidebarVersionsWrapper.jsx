@@ -13,10 +13,10 @@ import VersionsActionCreators from '../../VersionsActionCreators';
 export default createReactClass({
   mixins: [createStoreMixin(InstalledComponentStore, ComponentStore, VersionsStore)],
 
-  getStateFromStores: function() {
-    const configId = RoutesStore.getCurrentRouteParam('config') || RoutesStore.getCurrentRouteParam('orchestrationId'),
-      componentId = this.props.componentId || RoutesStore.getCurrentRouteParam('component'),
-      component = ComponentStore.getComponent(componentId);
+  getStateFromStores() {
+    const configId = RoutesStore.getCurrentRouteParam('config') || RoutesStore.getCurrentRouteParam('orchestrationId');
+    const componentId = this.props.componentId || RoutesStore.getCurrentRouteParam('component');
+    const component = ComponentStore.getComponent(componentId);
 
     var versionsLinkTo = null;
     var versionsLinkParams = null;
@@ -37,12 +37,12 @@ export default createReactClass({
     }
 
     return {
+      componentId,
+      configId,
+      versionsLinkTo,
+      versionsLinkParams,
       versions: VersionsStore.getVersions(componentId, configId),
-      componentId: componentId,
-      configId: configId,
-      isLoading: false,
-      versionsLinkTo: versionsLinkTo,
-      versionsLinkParams: versionsLinkParams,
+      isLoading: VersionsStore.isLoadingVersions(componentId, configId),
       versionsConfigs: VersionsStore.getVersionsConfigs(componentId, configId),
       pendingMultiLoad: VersionsStore.getPendingMultiLoad(componentId, configId),
       isPending: VersionsStore.isPendingConfig(componentId, configId)
@@ -54,16 +54,17 @@ export default createReactClass({
     componentId: PropTypes.string
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       limit: 5
     };
   },
 
-  render: function() {
+  render() {
     if (!this.state.versionsLinkTo) {
       return null;
     }
+
     return (
       <SidebarVesions
         versions={this.state.versions}
@@ -86,5 +87,4 @@ export default createReactClass({
     return VersionsActionCreators.loadTwoComponentConfigVersions(
       this.state.componentId, configId, version1.get('version'), version2.get('version'));
   }
-
 });

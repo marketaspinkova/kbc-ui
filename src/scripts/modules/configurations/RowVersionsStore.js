@@ -24,6 +24,10 @@ var RowVersionsStore = StoreUtils.createStore({
     return _store.hasIn(['versionsConfigs', componentId, configId, rowId, versionId]);
   },
 
+  isLoadingVersions: function(componentId, configId, rowId) {
+    return _store.getIn(['loadingVersions', componentId, configId, rowId], false);
+  },
+
   getVersions: function(componentId, configId, rowId) {
     return _store.getIn(['versions', componentId, configId, rowId], List());
   },
@@ -74,6 +78,7 @@ dispatcher.register(function(payload) {
     case Constants.ActionTypes.ROW_VERSIONS_LOAD_SUCCESS:
       _store = _store.setIn(['versions', action.componentId, action.configId, action.rowId], Immutable.fromJS(action.versions));
       _store = _store.setIn(['rollbackVersions', action.componentId, action.configId, action.rowId], false);
+      _store = _store.setIn(['loadingVersions', action.componentId, action.configId, action.rowId], false);
       return RowVersionsStore.emitChange();
 
     case Constants.ActionTypes.ROW_VERSIONS_LOAD_ERROR:
