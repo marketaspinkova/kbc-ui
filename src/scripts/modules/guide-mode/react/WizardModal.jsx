@@ -26,8 +26,7 @@ export default React.createClass({
     achievedStep: React.PropTypes.number.isRequired,
     lesson: React.PropTypes.object.isRequired,
     projectBaseUrl: React.PropTypes.string.isRequired,
-    scriptsBasePath: React.PropTypes.string.isRequired,
-    develPreview: React.PropTypes.bool.isRequired
+    scriptsBasePath: React.PropTypes.string.isRequired
   },
 
   getProjectPageUrlHref(path) {
@@ -206,17 +205,9 @@ export default React.createClass({
     this.handleStep('prev');
     if (this.hasPreviousStep()) {
       if (this.isCurrentStepStorage()) {
-        if (this.props.develPreview) {
-          this.handlePrevStepTransition();
-        } else {
-          redirectTo(this.getProjectPageUrlHref(this.getCurrentStep().previousLink));
-        }
+        this.handlePrevStepTransition();
       } else if (this.isPrevStepStorage()) {
-        if (this.props.develPreview) {
-          RoutesStore.getRouter().transitionTo('storage-explorer');
-        } else {
-          redirectTo(this.getProjectPageUrlHref(ROUTE_PATH_STORAGE));
-        }
+        RoutesStore.getRouter().transitionTo('storage-explorer');
       } else if (this.hasPreviousStepRoute()) {
         this.handlePrevStepTransition();
       }
@@ -253,17 +244,9 @@ export default React.createClass({
     this.handleStep('next');
     if (this.hasNextStep()) {
       if (this.isCurrentStepStorage()) {
-        if (this.props.develPreview) {
-          this.handleNextStepTransition();
-        } else {
-          redirectTo(this.getProjectPageUrlHref(this.getCurrentStep().nextLink));
-        }
+        this.handleNextStepTransition();
       } else if (this.isNextStepStorage()) {
-        if (this.props.develPreview) {
-          RoutesStore.getRouter().transitionTo('storage-explorer');
-        } else {
-          redirectTo(this.getProjectPageUrlHref(ROUTE_PATH_STORAGE));
-        }
+        RoutesStore.getRouter().transitionTo('storage-explorer');
       } else if (this.hasNextStepRoute()) {
         this.handleNextStepTransition();
       }
