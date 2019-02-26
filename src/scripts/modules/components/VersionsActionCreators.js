@@ -42,6 +42,20 @@ export default {
     });
   },
 
+  reloadVersions: function(componentId, configId) {
+    dispatcher.handleViewAction({
+      componentId: componentId,
+      configId: configId,
+      type: Constants.ActionTypes.VERSIONS_RELOAD_START
+    });
+    this.loadVersionsForce(componentId, configId).finally(() => {
+      dispatcher.handleViewAction({
+        componentId: componentId,
+        configId: configId,
+        type: Constants.ActionTypes.VERSIONS_RELOAD_STOP
+      });
+    });
+  },
 
   loadComponentConfigByVersion(componentId, configId, version) {
     if (Store.hasConfigByVersion(componentId, configId, version)) {

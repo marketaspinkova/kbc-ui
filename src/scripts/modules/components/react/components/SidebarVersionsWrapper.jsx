@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
 import SidebarVesions from './SidebarVersions';
-
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../../stores/RoutesStore';
 import InstalledComponentStore from '../../stores/InstalledComponentsStore';
@@ -45,7 +44,8 @@ export default createReactClass({
       isLoading: VersionsStore.isLoadingVersions(componentId, configId),
       versionsConfigs: VersionsStore.getVersionsConfigs(componentId, configId),
       pendingMultiLoad: VersionsStore.getPendingMultiLoad(componentId, configId),
-      isPending: VersionsStore.isPendingConfig(componentId, configId)
+      isPending: VersionsStore.isPendingConfig(componentId, configId),
+      isReloading: VersionsStore.isReloadingConfig(componentId, configId)
     };
   },
 
@@ -78,6 +78,7 @@ export default createReactClass({
         versionsConfigs={this.state.versionsConfigs}
         pendingMultiLoad={this.state.pendingMultiLoad}
         isPending={this.state.isPending}
+        isReloading={this.state.isReloading}
       />
     );
   },

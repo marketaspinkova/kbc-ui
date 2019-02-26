@@ -12,6 +12,7 @@ var _store = Map({
   newVersionNames: Map(),
   searchFilters: Map(),
   pending: Map(),
+  reloading: Map(),
   multiLoadPending: Map()
 });
 
@@ -62,6 +63,10 @@ var VersionsStore = StoreUtils.createStore({
 
   isPendingConfig: function(componentId, configId) {
     return _store.hasIn(['pending', componentId, configId], false);
+  },
+
+  isReloadingConfig: function(componentId, configId) {
+    return _store.hasIn(['reloading', componentId, configId], false);
   },
 
   getPendingVersions: function(componentId, configId) {
@@ -133,6 +138,14 @@ dispatcher.register(function(payload) {
 
     case Constants.ActionTypes.VERSIONS_MULTI_PENDING_STOP:
       _store = _store.deleteIn(['multiLoadPending', action.componentId, action.configId, action.pivotVersion]);
+      return VersionsStore.emitChange();
+
+    case Constants.ActionTypes.VERSIONS_RELOAD_START:
+      _store = _store.setIn(['reloading', action.componentId, action.configId], true);
+      return VersionsStore.emitChange();
+
+    case Constants.ActionTypes.VERSIONS_RELOAD_STOP:
+      _store = _store.deleteIn(['reloading', action.componentId, action.configId]);
       return VersionsStore.emitChange();
 
     default:

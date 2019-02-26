@@ -59,7 +59,7 @@ export default function(settings) {
       interval: 10,
       action: (params) => {
         jobsActions.loadComponentConfigurationLatestJobs(settingsWithDefaults.componentId, params.config);
-        versionsActions.loadVersionsForce(settingsWithDefaults.componentId, params.config);
+        versionsActions.reloadVersions(settingsWithDefaults.componentId, params.config);
       }
     },
     requireData: [
@@ -87,7 +87,7 @@ export default function(settings) {
         interval: 10,
         action: (params) => {
           jobsActions.loadComponentConfigurationLatestJobs(settingsWithDefaults.componentId, params.config);
-          rowVersionsActions.loadVersionsForce(settingsWithDefaults.componentId, params.config, params.row);
+          rowVersionsActions.reloadVersions(settingsWithDefaults.componentId, params.config, params.row);
         }
       },
       requireData: [

@@ -2,12 +2,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
 import SidebarVesions from '../../../components/react/components/SidebarVersions';
-
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import InstalledComponentStore from '../../../components/stores/InstalledComponentsStore';
 import ComponentStore from '../../../components/stores/ComponentsStore';
-import VersionsStore from '../../RowVersionsStore';
 import VersionsActionCreators from '../../RowVersionsActionCreators';
+import VersionsStore from '../../RowVersionsStore';
 
 export default createReactClass({
   mixins: [createStoreMixin(InstalledComponentStore, ComponentStore, VersionsStore)],
@@ -27,7 +26,8 @@ export default createReactClass({
       isLoading: VersionsStore.isLoadingVersions(this.props.componentId, this.props.configId, this.props.rowId),
       versionsConfigs: VersionsStore.getVersionsConfigs(this.props.componentId, this.props.configId, this.props.rowId),
       pendingMultiLoad: VersionsStore.getPendingMultiLoad(this.props.componentId, this.props.configId, this.props.rowId),
-      isPending: VersionsStore.isPendingConfig(this.props.componentId, this.props.configId, this.props.rowId)
+      isPending: VersionsStore.isPendingConfig(this.props.componentId, this.props.configId, this.props.rowId),
+      isReloading: VersionsStore.isReloadingConfig(this.props.componentId, this.props.configId, this.props.rowId)
     };
   },
 
@@ -59,6 +59,7 @@ export default createReactClass({
         versionsConfigs={this.state.versionsConfigs}
         pendingMultiLoad={this.state.pendingMultiLoad}
         isPending={this.state.isPending}
+        isReloading={this.state.isReloading}
       />
     );
   },

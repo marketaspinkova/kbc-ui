@@ -2,9 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import ImmutableMixin from 'react-immutable-render-mixin';
+import moment from 'moment';
 import { Map } from 'immutable';
 import { Link } from 'react-router';
+import { Alert } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
+import ApplicationStore from '../../../../stores/ApplicationStore';
 import { getPreviousVersion } from '../../../../utils/VersionsDiffUtils';
 import DiffVersionButton from '../../../../react/common/DiffVersionButton';
 import SidebarVersionsRow from './SidebarVersionsRow';
@@ -18,6 +21,7 @@ export default createReactClass({
     isLoading: PropTypes.bool.isRequired,
     configId: PropTypes.string.isRequired,
     componentId: PropTypes.string.isRequired,
+    isReloading: PropTypes.bool,
     limit: PropTypes.number,
     versionsLinkTo: PropTypes.string,
     versionsLinkParams: PropTypes.object,
@@ -28,27 +32,38 @@ export default createReactClass({
 
   getDefaultProps() {
     return {
-      limit: 5
+      limit: 5,
+      isReloading: false
     };
   },
 
-  getVersionsLinkParams() {
-    if (this.props.versionsLinkParams) {
-      return this.props.versionsLinkParams;
-    }
-
+  getInitialState() {
     return {
-      component: this.props.componentId,
-      config: this.props.configId
+      versionsWarning: false
     };
   },
 
-  getVersionsLinkTo() {
-    if (this.props.versionsLinkTo) {
-      return this.props.versionsLinkTo;
+  componentDidUpdate(prevProps) {
+    if (this.props.isReloading && !this.props.versions.equals(prevProps.versions)) {
+      this.setState({ versionsWarning: true });
     }
+  },
 
-    return this.props.componentId + '-versions';
+  render() {
+    return (
+      <div>
+        <h4>
+          Updates
+          {this.props.isLoading && <Loader />}
+          {this.props.versions.count() > 1 && this.renderLatestChangeDiffButton()}
+        </h4>
+        {this.renderVersionWarning()}
+        <div className="kbc-sidebar-versions">
+          {this.renderVersions()}
+          {this.renderAllVersionsLink()}
+        </div>
+      </div>
+    );
   },
 
   renderVersions() {
@@ -123,19 +138,55 @@ export default createReactClass({
     );
   },
 
-  render() {
+  renderVersionWarning() {
+    if (!this.state.versionsWarning) {
+      return null;
+    }
+
+    const latestVersion = this.props.versions.first();
+    const creatorId = latestVersion.getIn(['creatorToken', 'id']);
+    const currentAdminId = ApplicationStore.getCurrentAdmin().get('id');
+    const createdByCurrentAdmin = parseInt(creatorId, 10) === parseInt(currentAdminId, 10);
+
     return (
-      <div>
-        <h4>
-          Updates
-          {this.props.isLoading && <Loader />}
-          {this.props.versions.size > 1 && this.renderLatestChangeDiffButton()}
-        </h4>
-        <div className="kbc-sidebar-versions">
-          {this.renderVersions()}
-          {this.renderAllVersionsLink()}
-        </div>
-      </div>
+      <Alert bsStyle="danger" onDismiss={this.handleDismissWarning} closeLabel="Close warning">
+        <p>
+          {'New configuration created by '}
+          <b>
+            {createdByCurrentAdmin ? 'you' : latestVersion.getIn(['creatorToken', 'description'])}{' '} 
+            {moment(latestVersion.get('created')).fromNow()}
+          </b>
+          {' was detected.'}
+        </p>
+        <p>
+          {'Editing same configuration'}
+          {createdByCurrentAdmin ? ' from multiple places ' : ' by several users '}
+          {'is not supported. You will overrides your previous work.'}
+        </p>
+      </Alert>
     );
+  },
+
+  handleDismissWarning() {
+    this.setState({ versionsWarning: false });
+  },
+
+  getVersionsLinkParams() {
+    if (this.props.versionsLinkParams) {
+      return this.props.versionsLinkParams;
+    }
+
+    return {
+      component: this.props.componentId,
+      config: this.props.configId
+    };
+  },
+
+  getVersionsLinkTo() {
+    if (this.props.versionsLinkTo) {
+      return this.props.versionsLinkTo;
+    }
+
+    return this.props.componentId + '-versions';
   }
 });
