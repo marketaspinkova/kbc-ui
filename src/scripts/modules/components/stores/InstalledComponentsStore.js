@@ -247,10 +247,6 @@ var InstalledComponentsStore = StoreUtils.createStore({
     return _store.hasIn(['editingConfigurationRows', componentId, configId, rowId, field]);
   },
 
-  isEditingConfigData(componentId, configId) {
-    return _store.hasIn(['editingConfigData', componentId, configId]);
-  },
-
   isChangedRawConfigData(componentId, configId) {
     return _store.hasIn(['rawConfigDataEditing', componentId, configId]);
   },
