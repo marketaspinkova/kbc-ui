@@ -159,14 +159,14 @@ export default React.createClass({
   lookupForNotLinkedCredentials() {
     oauthActions
         .loadCredentialsForce(this.props.componentId, this.props.configId)
-        .then((data) => {
-          const credentials = fromJS(data);
+        .then((data) => fromJS(data))
+        .then((credentials) => {
           if (parseInt(credentials.getIn(['creator', 'id']), 10) === parseInt(ApplicationStore.getCurrentAdmin().get('id'), 10)) {
             this.setState({
               notLinkedCredentials: credentials
             });
           }
-        });
+        })
   },
 
   isAuthorized() {
