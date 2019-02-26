@@ -23,6 +23,8 @@ import * as sandboxUtils from '../../../utils/sandboxUtils';
 import SidebarJobsContainer from '../../../../components/react/components/SidebarJobsContainer';
 import LatestRowVersions from '../../../../configurations/react/components/SidebarRowVersionsWrapper';
 
+import { isKnownTransformationType } from '../../../utils/transformationTypes';
+
 export default React.createClass({
   mixins: [
     createStoreMixin(
@@ -112,7 +114,6 @@ export default React.createClass({
 
   _showDetails() {
     return (
-      (this.state.transformation.get('backend') === 'mysql' && this.state.transformation.get('type') === 'simple') ||
       (this.state.transformation.get('backend') === 'redshift' && this.state.transformation.get('type') === 'simple') ||
       (this.state.transformation.get('backend') === 'snowflake' &&
         this.state.transformation.get('type') === 'simple') ||
@@ -149,40 +150,46 @@ export default React.createClass({
         </div>
         <div className="col-md-3 kbc-main-sidebar">
           <ul className="nav nav-stacked">
-            <li>
-              <Link
-                to="transformationDetailGraph"
-                params={{ row: this.state.transformation.get('id'), config: this.state.bucket.get('id') }}
-              >
-                <span className="fa fa-search fa-fw" />
-                {' Overview'}
-              </Link>
-            </li>
-            <li className={classnames({ disabled: this.state.transformation.get('disabled') })}>
-              <RunComponentButton
-                title="Run transformation"
-                component="transformation"
-                mode="link"
-                disabled={this.state.transformation.get('disabled')}
-                disabledReason={this.state.transformation.get('disabled') ? 'Transformation is disabled' : ''}
-                runParams={() => ({
-                  configBucketId: this.state.bucketId,
-                  transformations: [this.state.transformation.get('id')]
-                })}
-              >
-                You are about to run the transformation {this.state.transformation.get('name', this.state.transformation.get('id'))}.
-              </RunComponentButton>
-            </li>
-            <li>
-              <ActivateDeactivateButton
-                mode="link"
-                activateTooltip="Enable transformation"
-                deactivateTooltip="Disable transformation"
-                isActive={!this.state.transformation.get('disabled')}
-                isPending={this.state.pendingActions.has('save-disabled')}
-                onChange={this._handleActiveChange}
-              />
-            </li>
+            {isKnownTransformationType(this.state.transformation) && (
+              <li>
+                <Link
+                  to="transformationDetailGraph"
+                  params={{ row: this.state.transformation.get('id'), config: this.state.bucket.get('id') }}
+                >
+                  <span className="fa fa-search fa-fw" />
+                  {' Overview'}
+                </Link>
+              </li>
+            )}
+            {isKnownTransformationType(this.state.transformation) && (
+              <li className={classnames({ disabled: this.state.transformation.get('disabled') })}>
+                <RunComponentButton
+                  title="Run transformation"
+                  component="transformation"
+                  mode="link"
+                  disabled={this.state.transformation.get('disabled')}
+                  disabledReason={this.state.transformation.get('disabled') ? 'Transformation is disabled' : ''}
+                  runParams={() => ({
+                    configBucketId: this.state.bucketId,
+                    transformations: [this.state.transformation.get('id')]
+                  })}
+                >
+                  You are about to run the transformation {this.state.transformation.get('name', this.state.transformation.get('id'))}.
+                </RunComponentButton>
+              </li>
+            )}
+            {isKnownTransformationType(this.state.transformation) && (
+              <li>
+                <ActivateDeactivateButton
+                  mode="link"
+                  activateTooltip="Enable transformation"
+                  deactivateTooltip="Disable transformation"
+                  isActive={!this.state.transformation.get('disabled')}
+                  isPending={this.state.pendingActions.has('save-disabled')}
+                  onChange={this._handleActiveChange}
+                />
+              </li>
+            )}
             {sandboxUtils.hasSandbox(backend, transformationType) && (
               <li>
                 <CreateSandboxButton
@@ -193,7 +200,6 @@ export default React.createClass({
               </li>
             )}
             {(backend === 'redshift' ||
-              (backend === 'mysql' && transformationType === 'simple') ||
               backend === 'snowflake') && (
               <li>
                 <SqlDepButton
@@ -236,24 +242,30 @@ export default React.createClass({
                 </Confirm>
               </a>
             </li>
-            <li>
-              <ExternalLink href={this.resolveLinkDocumentationLink()}>
-                <span className="fa fa-question-circle fa-fw" />
-                {' Documentation'}
-              </ExternalLink>
-            </li>
+            {isKnownTransformationType(this.state.transformation) && (
+              <li>
+                <ExternalLink href={this.resolveLinkDocumentationLink()}>
+                  <span className="fa fa-question-circle fa-fw" />
+                  {' Documentation'}
+                </ExternalLink>
+              </li>
+            )}
           </ul>
-          <SidebarJobsContainer
-            componentId="transformation"
-            configId={this.state.bucketId}
-            rowId={this.state.transformationId}
-            limit={3}
-          />
-          <LatestRowVersions
-            componentId="transformation"
-            configId={this.state.bucketId}
-            rowId={this.state.transformationId}
-          />
+          {isKnownTransformationType(this.state.transformation) && (
+            <SidebarJobsContainer
+              componentId="transformation"
+              configId={this.state.bucketId}
+              rowId={this.state.transformationId}
+              limit={3}
+            />
+          )}
+          {isKnownTransformationType(this.state.transformation) && (
+            <LatestRowVersions
+              componentId="transformation"
+              configId={this.state.bucketId}
+              rowId={this.state.transformationId}
+            />
+          )}
         </div>
       </div>
     );

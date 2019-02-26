@@ -8,7 +8,6 @@ import TransformationsStore from '../../transformations/stores/TransformationsSt
 import TransformationBucketsStore from '../../transformations/stores/TransformationBucketsStore';
 import componentsActions from '../../components/InstalledComponentsActionCreators';
 import DeprecatedComponents from './DeprecatedComponents';
-import DeprecatedTransformations from './DeprecatedTransformations';
 import FileSize from '../../../react/common/FileSize';
 import TransformationParallelUnloads from './TransformationParallelUnloads';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
@@ -75,13 +74,6 @@ export default React.createClass({
     componentCount += this.state.installedComponents.filter(function(component) {
       return !!component.get('flags', List()).contains('deprecated');
     }).count();
-    if (ApplicationStore.hasCurrentProjectFeature('transformation-mysql')) {
-      componentCount += this.state.transformations.filter(function(bucket) {
-        return bucket.filter(function(transformation) {
-          return transformation.get('backend') === 'mysql';
-        }).count() > 0;
-      }).count();
-    }
     if (typeof this.state.expires !== 'undefined') {
       componentCount += 1;
     }
@@ -112,9 +104,6 @@ export default React.createClass({
           <LimitsOverQuota limits={this.state.limitsOverQuota}/>
           <DeprecatedOAuth
             components={this.getComponentsWithOAuth()}
-          />
-          <DeprecatedTransformations
-            transformations={this.state.transformations}
           />
           {!ApplicationStore.hasCurrentProjectFeature('transformation-parallel-unloads') && (
             <TransformationParallelUnloads

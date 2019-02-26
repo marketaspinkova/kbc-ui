@@ -2,7 +2,6 @@ import React, {PropTypes} from 'react';
 import ConfigureSandboxModal from './ConfigureSandboxModal';
 // import ConfigureDockerSandboxModal from './ConfigureDockerSandboxModal';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
-import MySqlSandboxCredentialsStore from '../../../provisioning/stores/MySqlSandboxCredentialsStore';
 import RedshiftSandboxCredentialsStore from '../../../provisioning/stores/RedshiftSandboxCredentialsStore';
 import SnowflakeSandboxCredentialsStore from '../../../provisioning/stores/SnowflakeSandboxCredentialsStore';
 import JupyterSandboxCredentialsStore from '../../../provisioning/stores/JupyterSandboxCredentialsStore';
@@ -20,13 +19,12 @@ export default React.createClass({
     transformationType: PropTypes.string.isRequired,
     runParams: PropTypes.object.isRequired
   },
-  mixins: [createStoreMixin(MySqlSandboxCredentialsStore, RedshiftSandboxCredentialsStore, SnowflakeSandboxCredentialsStore, JupyterSandboxCredentialsStore, RStudioSandboxCredentialsStore)],
+  mixins: [createStoreMixin(RedshiftSandboxCredentialsStore, SnowflakeSandboxCredentialsStore, JupyterSandboxCredentialsStore, RStudioSandboxCredentialsStore)],
 
   getStateFromStores() {
     const isPythonTransformation = this.isPythonTransformation();
     const dockerStore = isPythonTransformation ? JupyterSandboxCredentialsStore : RStudioSandboxCredentialsStore;
     return {
-      mysqlCredentials: MySqlSandboxCredentialsStore.getCredentials(),
       redshiftCredentials: RedshiftSandboxCredentialsStore.getCredentials(),
       snowflakeCredentials: SnowflakeSandboxCredentialsStore.getCredentials(),
       dockerCredentials: dockerStore.getCredentials(),
@@ -53,7 +51,6 @@ export default React.createClass({
   render() {
     return (
       <ConfigureSandboxModal
-        mysqlCredentials={this.state.mysqlCredentials}
         redshiftCredentials={this.state.redshiftCredentials}
         dockerCredentials={this.state.dockerCredentials}
         isLoadingDockerCredentials={this.state.isLoadingDockerCredentials}

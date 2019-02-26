@@ -111,9 +111,6 @@ export default {
   isProvisioningCredentials(driver, credentials) {
     const hasPlainPassword = credentials.has('password');
     const host = credentials !== null ? credentials.get('host') : null;
-    if (driver === 'mysql') {
-      return host === 'wr-db-aws.keboola.com' && hasPlainPassword;
-    }
     if (driver === 'redshift') {
       return (
         underscoreString.include(host, 'redshift.amazonaws.com') &&

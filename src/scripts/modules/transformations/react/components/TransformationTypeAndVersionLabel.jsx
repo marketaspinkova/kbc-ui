@@ -4,7 +4,6 @@ import ApplicationStore from '../../../../stores/ApplicationStore';
 import { Image, Label } from 'react-bootstrap';
 
 import backendLogoR from '../../../../../images/backend-logo-r.svg';
-import backendLogoMySql from '../../../../../images/backend-logo-mysql.svg';
 import backendLogoPython from '../../../../../images/backend-logo-python.svg';
 import backendLogoOpenRefine from '../../../../../images/backend-logo-openrefine.svg';
 import backendLogoSnowflake from '../../../../../images/backend-logo-snowflake.svg';
@@ -15,9 +14,10 @@ import { transformationBackend, transformationType, transformationLabels } from 
 import {getVersions, hasVersions} from './backend-version/versions';
 import BackendVersionModal from './backend-version/Modal';
 
+import { resolveBackendName, isKnownTransformationType } from '../../utils/transformationTypes';
+
 const paths = {
   r: backendLogoR,
-  mysql: backendLogoMySql,
   python: backendLogoPython,
   openrefine: backendLogoOpenRefine,
   snowflake: backendLogoSnowflake,
@@ -46,10 +46,10 @@ export default React.createClass({
   },
 
   render() {
-    const backendName = this.resolveBackendName();
-    if (!backendName) {
+    if (!isKnownTransformationType(this.props.transformation)) {
       return null;
     }
+    const backendName = resolveBackendName(this.props.transformation);
     return (
       <span className="label-backend-wrap">
         <Image
@@ -111,14 +111,6 @@ export default React.createClass({
         {transformationLabels[backendName]}
       </Label>
     );
-  },
-
-  resolveBackendName() {
-    if (this.props.transformation.get('backend') === transformationBackend.DOCKER) {
-      return this.props.transformation.get('type');
-    } else {
-      return this.props.transformation.get('backend');
-    }
   },
 
   showModal() {

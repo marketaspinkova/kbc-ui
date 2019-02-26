@@ -48,7 +48,7 @@ export default React.createClass({
           </ListGroupItem>
         )}
 
-        {(this.props.transformationBackend === 'mysql' || this.props.transformationBackend === 'redshift') && (
+        {(this.props.transformationBackend === 'redshift') && (
           <ListGroupItem className="row" key="optional">
             <strong className="col-md-4">Optional</strong>
             <span className="col-md-6">
@@ -119,30 +119,7 @@ export default React.createClass({
           </ListGroupItem>
         ]}
 
-        {this.props.transformationBackend === 'mysql' && (
-          <ListGroupItem className="row" key="indexes">
-            <strong className="col-md-4">Indexes</strong>
-            <span className="col-md-6">
-              {this.props.inputMapping.get('indexes', List()).count()
-                ? this.props.inputMapping
-                  .get('indexes')
-                  .map(
-                    index => (
-                      <span key={index}>
-                        <span className="label label-default">{index.toArray().join(', ')}</span>{' '}
-                      </span>
-                    ),
-
-                    this
-                  )
-                  .toArray()
-                : 'N/A'}
-            </span>
-          </ListGroupItem>
-        )}
-
-        {(this.props.transformationBackend === 'mysql' ||
-          this.props.transformationBackend === 'redshift' ||
+        {(this.props.transformationBackend === 'redshift' ||
           this.props.transformationBackend === 'snowflake')
         && this.props.inputMapping.get('loadType') !== 'clone' && (
           <ListGroupItem className="row" key="datatypes">

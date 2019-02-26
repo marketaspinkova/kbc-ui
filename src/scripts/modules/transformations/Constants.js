@@ -57,7 +57,6 @@ const ActionTypes = keyMirror({
 });
 
 const transformationBackend = {
-  MYSQL: 'mysql',
   REDSHIFT: 'redshift',
   SNOWFLAKE: 'snowflake',
   DOCKER: 'docker'
@@ -70,7 +69,6 @@ const transformationType = {
 };
 
 const transformationLabels = {
-  mysql: 'MySQL',
   redshift: 'Redshift',
   snowflake: 'Snowflake',
   docker: 'Docker',

@@ -1,7 +1,6 @@
 import dispatcher from '../../Dispatcher';
 import constants from './Constants';
 import provisioningApi from './ProvisioningApi';
-import mySqlSandboxCredentialsStore from './stores/MySqlSandboxCredentialsStore';
 import redshiftSandboxCredentialsStore from './stores/RedshiftSandboxCredentialsStore';
 import snowflakeSandboxCredentialsStore from './stores/SnowflakeSandboxCredentialsStore';
 import rStudioSandboxCredentialsStore from './stores/RStudioSandboxCredentialsStore';
@@ -13,100 +12,6 @@ import HttpError from '../../utils/HttpError';
 module.exports = {
   getRedshiftBackend: function() {
     return 'redshift-workspace';
-  },
-
-  /*
-  Request specified orchestration load from server
-  @return Promise
-   */
-  loadMySqlSandboxCredentialsForce: function() {
-    dispatcher.handleViewAction({
-      type: constants.ActionTypes.CREDENTIALS_MYSQL_SANDBOX_LOAD
-    });
-    return provisioningApi.getCredentials('mysql', 'sandbox').then(function(response) {
-      dispatcher.handleViewAction({
-        type: constants.ActionTypes.CREDENTIALS_MYSQL_SANDBOX_LOAD_SUCCESS,
-        touch: response.touch,
-        credentials: response.credentials
-      });
-    }).catch(HttpError, function(error) {
-      if (error.response.status === 404) {
-        return dispatcher.handleViewAction({
-          type: constants.ActionTypes.CREDENTIALS_MYSQL_SANDBOX_LOAD_SUCCESS,
-          credentials: {
-            id: null
-          }
-        });
-      } else {
-        dispatcher.handleViewAction({
-          type: constants.ActionTypes.CREDENTIALS_MYSQL_SANDBOX_LOAD_ERROR
-        });
-        throw error;
-      }
-    }).catch(function(error) {
-      dispatcher.handleViewAction({
-        type: constants.ActionTypes.CREDENTIALS_MYSQL_SANDBOX_LOAD_ERROR
-      });
-      throw error;
-    });
-  },
-
-  loadMySqlSandboxCredentials: function() {
-    if (mySqlSandboxCredentialsStore.getIsLoaded()) {
-      return Promise.resolve();
-    }
-    return this.loadMySqlSandboxCredentialsForce();
-  },
-
-  createMySqlSandboxCredentials: function() {
-    dispatcher.handleViewAction({
-      type: constants.ActionTypes.CREDENTIALS_MYSQL_SANDBOX_CREATE
-    });
-    return provisioningApi.createCredentials('mysql', 'sandbox').then(function(response) {
-      dispatcher.handleViewAction({
-        type: constants.ActionTypes.CREDENTIALS_MYSQL_SANDBOX_CREATE_SUCCESS,
-        touch: response.touch,
-        credentials: response.credentials
-      });
-    }).catch(function(error) {
-      dispatcher.handleViewAction({
-        type: constants.ActionTypes.CREDENTIALS_MYSQL_SANDBOX_CREATE_ERROR
-      });
-      throw error;
-    });
-  },
-
-  dropMySqlSandboxCredentials: function() {
-    dispatcher.handleViewAction({
-      type: constants.ActionTypes.CREDENTIALS_MYSQL_SANDBOX_DROP
-    });
-    return provisioningApi.dropCredentials('mysql', mySqlSandboxCredentialsStore.getCredentials().get('id')).then(function() {
-      dispatcher.handleViewAction({
-        type: constants.ActionTypes.CREDENTIALS_MYSQL_SANDBOX_DROP_SUCCESS
-      });
-    }).catch(function(error) {
-      dispatcher.handleViewAction({
-        type: constants.ActionTypes.CREDENTIALS_MYSQL_SANDBOX_DROP_ERROR
-      });
-      throw error;
-    });
-  },
-
-  extendMySqlSandboxCredentials: function() {
-    dispatcher.handleViewAction({
-      type: constants.ActionTypes.CREDENTIALS_MYSQL_SANDBOX_EXTEND
-    });
-    return provisioningApi.extendCredentials('mysql', mySqlSandboxCredentialsStore.getCredentials().get('id')).then(function(response) {
-      dispatcher.handleViewAction({
-        type: constants.ActionTypes.CREDENTIALS_MYSQL_SANDBOX_EXTEND_SUCCESS,
-        touch: response.touch
-      });
-    }).catch(function(error) {
-      dispatcher.handleViewAction({
-        type: constants.ActionTypes.CREDENTIALS_MYSQL_SANDBOX_EXTEND_ERROR
-      });
-      throw error;
-    });
   },
 
   /*

@@ -3,13 +3,10 @@ import { Modal, HelpBlock, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router';
 import { RadioGroup } from 'react-radio-group';
 import RadioGroupInput from '../../../../react/common/RadioGroupInput';
-import MySqlCredentialsContainer from '../components/MySqlCredentialsContainer';
 import RedshiftCredentialsContainer from '../components/RedshiftCredentialsContainer';
 import SnowflakeCredentialsContainer from '../components/SnowflakeCredentialsContainer';
 import DockerCredentialsContainer from '../components/DockerCredentialsContainer';
-import ConnectToMySqlSandbox from '../components/ConnectToMySqlSandbox';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
-import ExtendMySqlCredentials from '../../../provisioning/react/components/ExtendMySqlCredentials';
 import { ExternalLink } from '@keboola/indigo-ui';
 
 export default React.createClass({
@@ -24,7 +21,6 @@ export default React.createClass({
     isRunning: PropTypes.bool,
     isCreated: PropTypes.bool,
     jobId: PropTypes.string,
-    mysqlCredentials: PropTypes.object.isRequired,
     redshiftCredentials: PropTypes.object.isRequired,
     snowflakeCredentials: PropTypes.object.isRequired,
     dockerCredentials: PropTypes.object.isRequired,
@@ -136,8 +132,6 @@ export default React.createClass({
 
   hasCredentials() {
     switch (this.props.backend) {
-      case 'mysql':
-        return this.props.mysqlCredentials.has('id');
       case 'redshift':
         return this.props.redshiftCredentials.has('id');
       case 'snowflake':
@@ -152,7 +146,7 @@ export default React.createClass({
     if (backend === 'docker') {
       return this.renderDockerCredentials();
     }
-    if (!['mysql', 'redshift', 'snowflake'].includes(backend)) {
+    if (!['redshift', 'snowflake'].includes(backend)) {
       return null;
     }
 
@@ -160,7 +154,6 @@ export default React.createClass({
       <div>
         <h2>Credentials</h2>
         {backend === 'redshift' ? this.renderRedshiftCredentials() : null}
-        {backend === 'mysql' ? this.renderMysqlCredentials() : null}
         {backend === 'snowflake' ? this.renderSnowflakeCredentials() : null}
       </div>
     );
@@ -208,34 +201,6 @@ export default React.createClass({
           <span> Connect</span>
         </ExternalLink>
       </div>
-    );
-  },
-
-  renderMysqlCredentials() {
-    return (
-      <Row>
-        <Col sm={9}>
-          <MySqlCredentialsContainer isAutoLoad={true} />
-        </Col>
-        <Col sm={3}>{this.renderMysqlConnect()}</Col>
-      </Row>
-    );
-  },
-
-  renderMysqlConnect() {
-    if (!this.props.mysqlCredentials.get('id')) {
-      return null;
-    }
-
-    return (
-      <span>
-        <ConnectToMySqlSandbox credentials={this.props.mysqlCredentials}>
-          <button className="btn btn-link" title="Connect to Sandbox" type="submit">
-            <span className="fa fa-fw fa-database" /> Connect
-          </button>
-        </ConnectToMySqlSandbox>
-        <ExtendMySqlCredentials />
-      </span>
     );
   }
 });

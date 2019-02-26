@@ -15,16 +15,6 @@ function prepareDataForCreate(data) {
   });
 
   switch (data.get('backend')) {
-    case 'mysql':
-      newData = newData.set('backend', 'mysql')
-        .set('type', 'simple')
-        .set('queries', [
-          '-- This is a sample query.\n' +
-          '-- Adjust accordingly to your input mapping, output mapping\n' +
-          '-- and desired functionality.\n\n' +
-          '-- CREATE VIEW `out_table` AS SELECT * FROM `in_table`;'
-        ]);
-      break;
     case 'redshift':
       newData = newData.set('backend', 'redshift')
         .set('type', 'simple')
@@ -219,9 +209,6 @@ export default React.createClass({
   backendOptions() {
     var options = [];
     options.push({value: 'snowflake', label: 'Snowflake'});
-    if (ApplicationStore.hasCurrentProjectFeature('transformation-mysql')) {
-      options.push({value: 'mysql', label: 'MySQL'});
-    }
     if (ApplicationStore.getSapiToken().getIn(['owner', 'hasRedshift'], false)) {
       options.push({value: 'redshift', label: 'Redshift'});
     }

@@ -1,5 +1,4 @@
 import React from 'react';
-import MySqlSandbox from '../../components/MySqlSandbox';
 import RedshiftSandbox from '../../components/RedshiftSandbox';
 import SnowflakeSandbox from '../../components/SnowflakeSandbox';
 import RStudioSandbox from '../../components/RStudioSandbox';
@@ -12,7 +11,6 @@ export default React.createClass({
     return (
       <div className="container-fluid">
         <div className="kbc-main-content">
-          {ApplicationStore.hasCurrentProjectFeature('transformation-mysql') && <MySqlSandbox />}
           {ApplicationStore.getSapiToken().getIn(['owner', 'hasRedshift'], false) && <RedshiftSandbox />}
           {ApplicationStore.getSapiToken().getIn(['owner', 'hasSnowflake'], false) && <SnowflakeSandbox />}
           <RStudioSandbox />
