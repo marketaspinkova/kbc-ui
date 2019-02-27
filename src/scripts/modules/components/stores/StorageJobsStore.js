@@ -1,11 +1,11 @@
 import Dispatcher from '../../../Dispatcher';
 import * as constants from '../Constants';
-import { Map, List, fromJS } from 'immutable';
+import { Map, fromJS } from 'immutable';
 import StoreUtils from '../../../utils/StoreUtils';
 import { jobsLimit } from '../../storage-explorer/Constants';
 
 let _store = Map({
-  jobs: List(),
+  jobs: Map(),
   hasMore: true,
   isLoading: false,
   isLoadingMore: false
@@ -13,7 +13,9 @@ let _store = Map({
 
 const StorageJobsStore = StoreUtils.createStore({
   getAll() {
-    return _store.get('jobs');
+    return _store.get('jobs')
+      .toList()
+      .sortBy((job) => -job.get('id'));
   },
 
   hasMore() {
@@ -29,6 +31,14 @@ const StorageJobsStore = StoreUtils.createStore({
   }
 });
 
+const jobsByIds = (jobs) => {
+  return fromJS(jobs)
+    .toMap()
+    .mapKeys((key, val) => {
+      return val.get('id');
+    });
+};
+
 Dispatcher.register(function(payload) {
   const { action } = payload;
 
@@ -40,7 +50,7 @@ Dispatcher.register(function(payload) {
     case constants.ActionTypes.STORAGE_JOBS_LOAD_SUCCESS:
       _store = _store.withMutations(store =>
         store
-          .set('jobs', fromJS(action.jobs))
+          .set('jobs', _store.get('jobs').merge(jobsByIds(action.jobs)))
           .set('hasMore', action.jobs.length === jobsLimit)
           .set('isLoading', false)
       );
@@ -57,7 +67,7 @@ Dispatcher.register(function(payload) {
     case constants.ActionTypes.STORAGE_JOBS_LOAD_MORE_SUCCESS:
       _store = _store.withMutations(store =>
         store
-          .set('jobs', _store.get('jobs').concat(fromJS(action.jobs)))
+          .set('jobs', _store.get('jobs').merge(jobsByIds(action.jobs)))
           .set('hasMore', action.jobs.length === jobsLimit)
           .set('isLoadingMore', false)
       );
