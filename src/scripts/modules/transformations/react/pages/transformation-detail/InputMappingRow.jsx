@@ -74,11 +74,11 @@ export default React.createClass({
                 </span>
               ]}
             <span className="td col-xs-1 text-right kbc-no-wrap">
-              {this.props.inputMapping.get('source') !== '' &&
-                !this.props.disabled && (
+              {this.props.inputMapping.get('source') !== '' && (
                 <DeleteButton
                   tooltip="Delete Input"
                   isPending={this.props.pendingActions.get(`delete-input-${this.props.mappingIndex}`)}
+                  isEnabled={!this.props.disabled}
                   confirm={{
                     title: 'Delete Input',
                     text: (
@@ -91,20 +91,19 @@ export default React.createClass({
                   }}
                 />
               )}
-              {!this.props.disabled && (
-                <InputMappingModal
-                  mode="edit"
-                  tables={this.props.tables}
-                  backend={this.props.transformation.get('backend')}
-                  type={this.props.transformation.get('type')}
-                  mapping={this.props.editingInputMapping}
-                  otherDestinations={this.props.otherDestinations}
-                  onChange={this._handleChange}
-                  onCancel={this._handleCancel}
-                  onSave={this._handleSave}
-                  definition={this.props.definition}
-                />
-              )}
+              <InputMappingModal
+                mode="edit"
+                tables={this.props.tables}
+                backend={this.props.transformation.get('backend')}
+                type={this.props.transformation.get('type')}
+                mapping={this.props.editingInputMapping}
+                otherDestinations={this.props.otherDestinations}
+                onChange={this._handleChange}
+                onCancel={this._handleCancel}
+                onSave={this._handleSave}
+                definition={this.props.definition}
+                disabled={this.props.disabled}
+              />
             </span>
           </span>
         </span>

@@ -21,12 +21,14 @@ export default React.createClass({
     onChange: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
-    definition: PropTypes.object
+    definition: PropTypes.object,
+    disabled: PropTypes.bool
   },
 
   getDefaultProps() {
     return {
-      definition: Immutable.Map()
+      definition: Immutable.Map(),
+      disabled: false
     };
   },
 
@@ -91,7 +93,7 @@ export default React.createClass({
     if (this.props.mode === MODE_EDIT) {
       return (
         <Tooltip tooltip="Edit Input" placement="top">
-          <Button bsStyle="link" onClick={this.handleOpenButtonLink}>
+          <Button bsStyle="link" onClick={this.handleOpenButtonLink} disabled={this.props.disabled}>
             <span className="fa fa-pencil" />
           </Button>
         </Tooltip>

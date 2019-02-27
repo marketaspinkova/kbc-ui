@@ -6,7 +6,14 @@ export default React.createClass({
   propTypes: {
     tags: PropTypes.object.isRequired,
     isSaving: PropTypes.bool.isRequired,
-    onEditChange: PropTypes.func.isRequired
+    onEditChange: PropTypes.func.isRequired,
+    disabled: PropTypes.bool
+  },
+
+  getDefaultProps() {
+    return {
+      disabled: false
+    };
   },
 
   render() {
@@ -20,7 +27,7 @@ export default React.createClass({
             name="tags"
             value={this.props.tags}
             multi={true}
-            disabled={this.props.isSaving}
+            disabled={this.props.isSaving || this.props.disabled}
             onChange={this.props.onEditChange}
             placeholder="Add tags..."
             isLoading={this.props.isSaving}
