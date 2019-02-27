@@ -21,7 +21,6 @@ export default React.createClass({
     accounts: PropTypes.object.isRequired,
     placeholders: PropTypes.object.isRequired,
     queryTemplates: PropTypes.object.isRequired,
-    syncAccounts: PropTypes.object.isRequired,
     show: PropTypes.bool.isRequired,
     helpUrl: PropTypes.string.isRequired,
     isSavingFn: PropTypes.func.isRequired,
@@ -120,7 +119,7 @@ export default React.createClass({
         <div className="col-xs-12">
           <div className="text-right">
             <DateRangeSelector
-              query={this.query()}
+              query={this.query(null, Map())}
               updateQueryFn={(query) => this.updateLocalState(['query'], query)}
             />
           </div>
@@ -136,7 +135,7 @@ export default React.createClass({
           <div className="text-right">
             <TemplateSelector
               templates={this.props.queryTemplates}
-              query={this.query()}
+              query={this.query(null, Map())}
               updateQueryFn={(query) => this.updateLocalState(['query'], query)}
             />
           </div>

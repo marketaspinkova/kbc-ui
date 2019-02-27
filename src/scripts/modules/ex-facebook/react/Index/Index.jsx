@@ -23,8 +23,8 @@ import EmptyState from '../../../components/react/components/ComponentEmptyState
 import {ExternalLink} from '@keboola/indigo-ui';
 import SidebarJobsContainer from '../../../components/react/components/SidebarJobsContainer';
 import LatestVersions from '../../../components/react/components/SidebarVersionsWrapper';
-import AccountsManagerModal from './AccountsManagerModal.jsx';
-import QueryModal from './QueryModal.jsx';
+import AccountsManagerModal from './AccountsManagerModal';
+import QueryModal from './QueryModal';
 import ApiVersionModal from './ApiVersionModal';
 import getDefaultBucket from '../../../../utils/getDefaultBucket';
 import AccountLink from './AccountLink';
@@ -169,7 +169,7 @@ export default function(COMPONENT_ID) {
           currentVersion={this.state.store.version}
           defaultVersion={this.state.store.DEFAULT_API_VERSION}
           onHide={hideFn}
-          isSaving={this.state.store.isPending('version')}
+          isSaving={!!this.state.store.isPending('version')}
           onSave={this.state.actions.saveApiVersion}
           {...this.state.actions.prepareLocalState('ApiVersionModal')}
         />
@@ -199,7 +199,8 @@ export default function(COMPONENT_ID) {
       if (!this.isAuthorized()) {
         return 'No Facebook account authorized';
       }
-      return false;
+
+      return '';
     },
 
     renderAccountsInfo(clName) {
@@ -266,6 +267,7 @@ export default function(COMPONENT_ID) {
         this.state.actions.updateLocalState(['QueryModal'], Map());
         this.state.actions.updateLocalState('showQueryModal', false);
       };
+
       return (
         <QueryModal
           apiVersion={this.state.store.version}
@@ -304,7 +306,7 @@ export default function(COMPONENT_ID) {
           syncAccounts={this.state.store.syncAccounts}
           {...this.state.actions.prepareLocalState('AccountsManagerModal')}
           onSaveAccounts={this.state.actions.saveAccounts}
-          isSaving={this.state.store.isSavingAccounts()}
+          isSaving={!!this.state.store.isSavingAccounts()}
           accountDescFn={getAccountDesc}
         />
       );

@@ -71,18 +71,16 @@ export default React.createClass({
                   {this.renderExternal()}
                 </Tab>
               }
-              {DIRECT_TOKEN_COMPONENTS.includes(this.props.componentId) ?
+              {DIRECT_TOKEN_COMPONENTS.includes(this.props.componentId) && (
                 <Tab key="direct" eventKey="direct" title="Direct token insert">
                   {this.renderDirectTokenInsert()}
                 </Tab>
-                : null
-              }
-              {CUSTOM_AUTHORIZATION_COMPONENTS.includes(this.props.componentId) ?
+              )}
+              {CUSTOM_AUTHORIZATION_COMPONENTS.includes(this.props.componentId) && (
                 <Tab key="custom" eventKey="custom" title="Custom authorization">
                   {this.renderCustom()}
                 </Tab>
-                : null
-              }
+              )}
             </Tabs>
           </Modal.Body>
           <Modal.Footer>

@@ -2,10 +2,10 @@ import React, {PropTypes} from 'react';
 export default React.createClass({
 
   propTypes: {
-    token: PropTypes.string.isRequired,
-    authorizedFor: PropTypes.string.isRequired,
     componentId: PropTypes.string.isRequired,
-    onChangeProperty: PropTypes.func.isRequired
+    onChangeProperty: PropTypes.func.isRequired,
+    authorizedFor: PropTypes.string,
+    token: PropTypes.string
   },
 
   makeSetStatePropertyFn(prop) {
