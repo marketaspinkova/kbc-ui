@@ -154,7 +154,9 @@ export default React.createClass({
           return bucket.set('bucketTables', tables);
         }
 
-        if (matchByWords(bucket.get('id').toLowerCase(), searchQuery)) {
+        const matchBucket = matchByWords(bucket.get('id').toLowerCase(), searchQuery);
+
+        if (matchBucket) {
           return bucket.set('bucketTables', bucketTables).set('matchOnlyBucket', true);
         }
 
