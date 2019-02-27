@@ -170,10 +170,12 @@ export default React.createClass({
                   canWriteTable={this.state.canWriteTable}
                 />
 
-                <LatestImports
-                  table={this.state.table}
-                  key={this.state.table.get('lastImportDate') || 'table-imports'}
-                />
+                {this.state.activeTab === 'overview' && (
+                  <LatestImports
+                    table={this.state.table}
+                    key={this.state.table.get('lastImportDate') || 'table-imports'}
+                  />
+                )}
 
                 <TableColumn
                   table={this.state.table}
@@ -217,10 +219,12 @@ export default React.createClass({
                 />
               </Tab.Pane>
               <Tab.Pane eventKey="graph">
-                <TableGraph
-                  key={this.state.table.get('lastImportDate') || 'table-graph'}
-                  table={this.state.table}
-                />
+                {this.state.activeTab === 'graph' && (
+                  <TableGraph
+                    key={this.state.table.get('lastImportDate') || 'table-graph'}
+                    table={this.state.table}
+                  />
+                )}
               </Tab.Pane>
             </Tab.Content>
           </div>
