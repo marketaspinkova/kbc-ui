@@ -10,7 +10,7 @@
     "bluebird": "^3.5.3",
     "byte-converter": "^0.1.4",
     "classnames": "^2.2.6",
-    "codemirror": "^5.42.2",
+    "codemirror": "^5.44.0",
     "crypto-js": "^3.1.5",
     "d3": "~3.5.6",
     "dagre-d3": "git+https://git@github.com/keboola/dagre-d3.git#6b444d10ddb5276789b4b2bc1eafcd22a767968a",
