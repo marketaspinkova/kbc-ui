@@ -29,14 +29,15 @@ export default function(componentId) {
       (params) => actionsProvisioning.loadConfiguration(componentId, params.config),
       (params) => VersionsActionCreators.loadVersions(componentId, params.config)
     ],
-    title: function(routerState) {
+    title: (routerState) => {
       const configId = routerState.getIn(['params', 'config']);
       return IntalledComponentsStore.getConfig(componentId, configId).get('name');
     },
     poll: {
-      interval: 5,
-      action: function(params) {
-        return JobsActionCreators.loadComponentConfigurationLatestJobs(componentId, params.config);
+      interval: 15,
+      action: (params) => {
+        JobsActionCreators.loadComponentConfigurationLatestJobs(componentId, params.config);
+        VersionsActionCreators.reloadVersions(componentId, params.config);
       }
     },
     defaultRouteHandler: ExDbIndex(componentId),
@@ -46,13 +47,13 @@ export default function(componentId) {
       {
         name: 'ex-db-generic-' + componentId + '-query',
         path: 'query/:query',
-        title: function(routerState) {
+        title: (routerState) => {
           const configId = routerState.getIn(['params', 'config']);
           const queryId = routerState.getIn(['params', 'query']);
           const ExDbStore = storeProvisioning.createStore(componentId, configId);
           return 'Query ' + ExDbStore.getConfigQuery(parseInt(queryId, 10)).get('name');
         },
-        nameEdit: function(params) {
+        nameEdit: (params) => {
           var ExDbQueryNameElement = ExDbQueryName(componentId, storeProvisioning);
           return (
             <ExDbQueryNameElement

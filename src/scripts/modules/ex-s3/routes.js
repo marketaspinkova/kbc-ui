@@ -18,8 +18,11 @@ export default {
   isComponent: true,
   defaultRouteHandler: Index,
   poll: {
-    interval: 10,
-    action: (params) => jobsActions.loadComponentConfigurationLatestJobs(COMPONENT_ID, params.config)
+    interval: 15,
+    action: (params) => {
+      jobsActions.loadComponentConfigurationLatestJobs(COMPONENT_ID, params.config);
+      versionsActions.reloadVersions(COMPONENT_ID, params.config);
+    }
   },
   requireData: [
     (params) => installedComponentsActions.loadComponentConfigData(COMPONENT_ID, params.config),

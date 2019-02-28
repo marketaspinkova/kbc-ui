@@ -4,18 +4,23 @@ import jobsActionCreators from '../jobs/ActionCreators';
 import versionsActions from '../components/VersionsActionCreators';
 import {createTablesRoute} from '../table-browser/routes';
 
+const COMPONENT_ID = 'radektomasek.ex-dropbox-v2';
+
 export default {
-  name: 'radektomasek.ex-dropbox-v2',
+  name: COMPONENT_ID,
   path: ':config',
   isComponent: true,
   requireData: [
-    (params) => installedComponentsActions.loadComponentConfigData('radektomasek.ex-dropbox-v2', params.config),
-    (params) => versionsActions.loadVersions('radektomasek.ex-dropbox-v2', params.config)
+    (params) => installedComponentsActions.loadComponentConfigData(COMPONENT_ID, params.config),
+    (params) => versionsActions.loadVersions(COMPONENT_ID, params.config)
   ],
   poll: {
-    interval: 7,
-    action: (params) => jobsActionCreators.loadComponentConfigurationLatestJobs('radektomasek.ex-dropbox-v2', params.config)
+    interval: 15,
+    action: (params) => {
+      jobsActionCreators.loadComponentConfigurationLatestJobs(COMPONENT_ID, params.config);
+      versionsActions.reloadVersions(COMPONENT_ID, params.config);
+    }
   },
   defaultRouteHandler: Index,
-  childRoutes: [ createTablesRoute('radektomasek.ex-dropbox-v2')]
+  childRoutes: [ createTablesRoute(COMPONENT_ID)]
 };

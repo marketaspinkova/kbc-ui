@@ -26,7 +26,6 @@ export default {
     const configId = routerState.getIn(['params', 'config']);
     return InstalledComponentsStore.getConfig(COMPONENT_ID, configId).get('name');
   },
-  // headerButtonsHandler: HeaderButtons,
   requireData: [
     (params) => installedComponentsActions.loadComponentConfigData(COMPONENT_ID, params.config).then(() => {
       return oauthUtils.loadCredentialsFromConfig(COMPONENT_ID, params.config);
@@ -35,8 +34,11 @@ export default {
     () => storageActions.loadTables()
   ],
   poll: {
-    interval: 7,
-    action: (params) => jobsActionCreators.loadComponentConfigurationLatestJobs(COMPONENT_ID, params.config)
+    interval: 15,
+    action: (params) => {
+      jobsActionCreators.loadComponentConfigurationLatestJobs(COMPONENT_ID, params.config);
+      versionsActions.reloadVersions(COMPONENT_ID, params.config);
+    }
   },
   childRoutes: [
     createTablesRoute(COMPONENT_ID),

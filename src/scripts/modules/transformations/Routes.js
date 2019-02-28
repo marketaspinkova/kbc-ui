@@ -59,12 +59,12 @@ const routes = {
       reloaderHandler: TransformationsIndexReloaderButton,
       requireData: [params => VersionsActionCreators.loadVersions('transformation', params.config)],
       poll: {
-        interval: 10,
+        interval: 15,
         action(params) {
-          return JobsActionCreators.loadComponentConfigurationLatestJobs('transformation', params.config);
+          JobsActionCreators.loadComponentConfigurationLatestJobs('transformation', params.config);
+          VersionsActionCreators.reloadVersions('transformation', params.config);
         }
       },
-
       childRoutes: [
         createVersionsPageRoute('transformation', 'config', 'transformation-versions'),
         {
@@ -96,9 +96,11 @@ const routes = {
             (params) => rowVersionsActions.loadVersions('transformation', params.config, params.row)
           ],
           poll: {
-            interval: 10,
+            interval: 15,
             action(params) {
-              return JobsActionCreators.loadComponentConfigurationLatestJobs('transformation', params.config);
+              JobsActionCreators.loadComponentConfigurationLatestJobs('transformation', params.config);
+              VersionsActionCreators.reloadVersions('transformation', params.config);
+              rowVersionsActions.loadVersions('transformation', params.config, params.row)
             }
           },
           childRoutes: [

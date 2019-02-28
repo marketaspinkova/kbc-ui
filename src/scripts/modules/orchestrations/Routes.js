@@ -37,7 +37,7 @@ const routes = {
   poll: {
     interval: 10,
     action() {
-      return OrchestrationsActionCreators.loadOrchestrationsForce();
+      OrchestrationsActionCreators.loadOrchestrationsForce();
     }
   },
   requireData: [
@@ -54,9 +54,10 @@ const routes = {
       reloaderHandler: OrchestrationReloaderButton,
       defaultRouteHandler: OrchestrationDetail,
       poll: {
-        interval: 20,
-        action(params) {
-          return OrchestrationsActionCreators.loadOrchestrationJobsForce(parseInt(params.orchestrationId, 10));
+        interval: 15,
+        action: (params) => {
+          OrchestrationsActionCreators.loadOrchestrationJobsForce(parseInt(params.orchestrationId, 10));
+          VersionsActionCreators.reloadVersions('orchestrator', params.orchestrationId);
         }
       },
       requireData: [

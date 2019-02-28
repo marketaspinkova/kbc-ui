@@ -19,12 +19,10 @@ export default function(componentId) {
     path: ':config',
     isComponent: true,
     defaultRouteHandler: Index(componentId),
-
     title: (routerState) => {
       const configId = routerState.getIn(['params', 'config']);
       return InstalledComponentsStore.getConfig(componentId, configId).get('name');
     },
-
     requireData: [
       (params) => installedComponentsActions.loadComponentConfigData(componentId, params.config).then(() => {
         return oauthUtils.loadCredentialsFromConfig(componentId, params.config);
@@ -33,10 +31,12 @@ export default function(componentId) {
       () => storageActions.loadTables()
     ],
     poll: {
-      interval: 7,
-      action: (params) => jobsActionCreators.loadComponentConfigurationLatestJobs(componentId, params.config)
+      interval: 15,
+      action: (params) => {
+        jobsActionCreators.loadComponentConfigurationLatestJobs(componentId, params.config);
+        versionsActions.reloadVersions(componentId, params.config);
+      }
     },
-
     childRoutes: [
       createTablesRoute(componentId),
       oauthUtils.createRedirectRouteSimple(componentId),

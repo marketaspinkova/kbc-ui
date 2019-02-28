@@ -11,6 +11,7 @@ import versionsActions from '../components/VersionsActionCreators';
 import {createTablesRoute} from '../table-browser/routes';
 
 const componentId = 'keboola.gooddata-writer';
+
 export default {
   name: componentId,
   path: ':config',
@@ -26,8 +27,11 @@ export default {
     (params) => versionsActions.loadVersions(componentId, params.config)
   ],
   poll: {
-    interval: 7,
-    action: (params) => jobsActionCreators.loadComponentConfigurationLatestJobs(componentId, params.config)
+    interval: 15,
+    action: (params) => {
+      jobsActionCreators.loadComponentConfigurationLatestJobs(componentId, params.config);
+      versionsActions.reloadVersions(componentId, params.config);
+    }
   },
   childRoutes: [
     {

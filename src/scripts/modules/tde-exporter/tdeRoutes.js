@@ -20,6 +20,7 @@ import { createTablesRoute } from '../table-browser/routes';
 import {Constants} from '../oauth-v2/Constants';
 
 const componentId = 'tde-exporter';
+
 const registerOAuthV2Route = writerComponentId => ({
   name: `tde-oauth-v2-redirect-${writerComponentId}`,
   path: `oauth-redirect-${writerComponentId}`,
@@ -51,7 +52,7 @@ const registerOAuthV2Route = writerComponentId => ({
                 message: notification
               });
 
-              return router.transitionTo('tde-exporter-destination', { config: params.config });
+              return router.transitionTo(`${componentId}-destination`, { config: params.config });
             });
           })
           .error(() => {
@@ -61,7 +62,7 @@ const registerOAuthV2Route = writerComponentId => ({
               type: 'error'
             });
 
-            return router.transitionTo('tde-exporter', { config: params.config });
+            return router.transitionTo(componentId, { config: params.config });
           });
       })
   ]
@@ -137,35 +138,33 @@ export default {
   defaultRouteHandler: index,
   isComponent: true,
   poll: {
-    interval: 7,
-    action(params) {
-      return JobsActionCreators.loadComponentConfigurationLatestJobs('tde-exporter', params.config).then(() => {
-        const jobs = LatestJobsStore.getJobs('tde-exporter', params.config);
+    interval: 15,
+    action: (params) => {
+      JobsActionCreators.loadComponentConfigurationLatestJobs(componentId, params.config).then(() => {
+        const jobs = LatestJobsStore.getJobs(componentId, params.config);
         return reloadSapiFilesTrigger(jobs.get('jobs') && jobs.get('jobs').toJS());
       });
+      VersionsActionCreators.reloadVersions(componentId, params.config);
     }
   },
-
   requireData: [
     params =>
       installedComponentsActions.loadComponentConfigData(componentId, params.config).then(() => {
         const configData = InstalledComponentsStore.getConfigData(componentId, params.config);
         return migrateUploadTasks(configData, params.config);
       }),
-
     () => storageActionCreators.loadTables(),
     () => loadFiles(false),
-    params => VersionsActionCreators.loadVersions('tde-exporter', params.config)
+    params => VersionsActionCreators.loadVersions(componentId, params.config)
   ],
   title(routerState) {
     const configId = routerState.getIn(['params', 'config']);
     return InstalledComponentsStore.getConfig(componentId, configId).get('name');
   },
-
   childRoutes: [
     createTablesRoute(componentId),
     {
-      name: 'tde-exporter-table',
+      name: `${componentId}-table`,
       path: 'table/:tableId',
       handler: tableDetail,
       headerButtonsHandler: tableEditButtons,
@@ -174,7 +173,7 @@ export default {
       }
     },
     {
-      name: 'tde-exporter-destination',
+      name: `${componentId}-destination`,
       path: 'destination',
       defaultRouteHandler: destinationPage,
       requireData: [

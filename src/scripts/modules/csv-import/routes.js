@@ -17,5 +17,11 @@ export default {
     () => storageActions.loadTables(),
     () => storageActions.loadBuckets()
   ],
+  poll: {
+    interval: 15,
+    action: (params) => {
+      versionsActions.reloadVersions(COMPONENT_ID, params.config);
+    }
+  },
   childRoutes: [ createTablesRoute(COMPONENT_ID)]
 };

@@ -4,7 +4,6 @@ import jobsActionCreators from '../jobs/ActionCreators';
 import * as OauthUtils from '../oauth-v2/OauthUtils';
 import versionsActions from '../components/VersionsActionCreators';
 
-
 const COMPONENT_ID = 'keboola.ex-twitter';
 
 export default {
@@ -22,8 +21,11 @@ export default {
     (params) => versionsActions.loadVersions(COMPONENT_ID, params.config)
   ],
   poll: {
-    interval: 5,
-    action: (params) => jobsActionCreators.loadComponentConfigurationLatestJobs(COMPONENT_ID, params.config)
+    interval: 15,
+    action: (params) => {
+      jobsActionCreators.loadComponentConfigurationLatestJobs(COMPONENT_ID, params.config);
+      versionsActions.reloadVersions(COMPONENT_ID, params.config);
+    }
   },
   defaultRouteHandler: Index,
   childRoutes: [

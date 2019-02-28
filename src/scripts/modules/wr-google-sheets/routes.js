@@ -21,8 +21,11 @@ export default {
     (params) => versionsActions.loadVersions(COMPONENT_ID, params.config)
   ],
   poll: {
-    interval: 5,
-    action: (params) => jobsActionCreators.loadComponentConfigurationLatestJobs(COMPONENT_ID, params.config)
+    interval: 15,
+    action: (params) => {
+      jobsActionCreators.loadComponentConfigurationLatestJobs(COMPONENT_ID, params.config);
+      versionsActions.reloadVersions(COMPONENT_ID, params.config);
+    }
   },
   childRoutes: [ createTablesRoute(COMPONENT_ID)]
 };

@@ -24,8 +24,11 @@ export default function(componentId, driver, isProvisioning) {
     },
     isComponent: true,
     poll: {
-      interval: 5,
-      action: params => JobsActionCreators.loadComponentConfigurationLatestJobs(componentId, params.config)
+      interval: 15,
+      action: (params) => {
+        JobsActionCreators.loadComponentConfigurationLatestJobs(componentId, params.config);
+        VersionsActionCreators.reloadVersions(componentId, params.config);
+      }
     },
     defaultRouteHandler: dbwrIndex(componentId),
     requireData: [

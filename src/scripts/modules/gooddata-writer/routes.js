@@ -14,35 +14,34 @@ import JobsActionCreators from '../jobs/ActionCreators';
 import VersionsActionCreators from '../components/VersionsActionCreators';
 import { createTablesRoute } from '../table-browser/routes';
 
+const componentId = 'gooddata-writer';
+
 export default {
-  name: 'gooddata-writer',
+  name: componentId,
   path: ':config',
   isComponent: true,
   requireData: [
     (params) => actionCreators.loadConfiguration(params.config),
     () => storageActionCreators.loadTables(),
-    (params) => VersionsActionCreators.loadVersions('gooddata-writer', params.config)
+    (params) => VersionsActionCreators.loadVersions(componentId, params.config)
   ],
   poll: {
-    interval: 5,
-    action(params) {
-      return JobsActionCreators.loadComponentConfigurationLatestJobs(
-        'gooddata-writer',
-        params.config
-      );
+    interval: 15,
+    action: (params) => {
+      JobsActionCreators.loadComponentConfigurationLatestJobs(componentId, params.config);
+      VersionsActionCreators.reloadVersions(componentId, params.config);
     }
   },
-
   defaultRouteHandler: IndexPage,
   reloaderHandler: WriterReloader,
   title(routerState) {
     const configId = routerState.getIn(['params', 'config']);
-    return InstalledComponentsStore.getConfig('gooddata-writer', configId).get('name');
+    return InstalledComponentsStore.getConfig(componentId, configId).get('name');
   },
   childRoutes: [
-    createTablesRoute('gooddata-writer'),
+    createTablesRoute(componentId),
     {
-      name: 'gooddata-writer-table',
+      name: `${componentId}-table`,
       path: 'table/:table',
       requireData: [
         (params) => actionCreators.loadTableDetail(params.config, params.table),
@@ -59,7 +58,7 @@ export default {
       reloaderHandler: TablePageHeaderExportStatus
     },
     {
-      name: 'gooddata-writer-date-dimensions',
+      name: `${componentId}-date-dimensions`,
       path: 'dimensions',
       title() {
         return 'Date dimensions';
@@ -68,7 +67,7 @@ export default {
       handler: DateDimensionsPage
     },
     {
-      name: 'gooddata-writer-model',
+      name: `${componentId}-model`,
       path: 'model',
       title: 'Model',
       handler: ModelPage
