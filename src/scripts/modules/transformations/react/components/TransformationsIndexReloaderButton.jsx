@@ -1,6 +1,5 @@
 import React from 'react';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
-import RoutesStore from '../../../../stores/RoutesStore';
 import InstalledComponentsActionCreators from '../../../components/InstalledComponentsActionCreators';
 import TransformationBucketsStore from '../../stores/TransformationBucketsStore';
 import { RefreshIcon, Loader } from '@keboola/indigo-ui';
@@ -18,16 +17,11 @@ export default React.createClass({
 
   getStateFromStores() {
     return { 
-      isRoutePending: RoutesStore.getIsPending(),
       isLoading: TransformationBucketsStore.getIsLoading() 
     };
   },
 
   render() {
-    if (this.state.isRoutePending) {
-      return null;
-    }
-
     if (this.props.allowRefresh) {
       return <RefreshIcon isLoading={this.state.isLoading} onClick={this.handleRefreshClick} />;
     }
