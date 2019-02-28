@@ -281,7 +281,7 @@ Dispatcher.register(payload => {
       if (!(currentState && currentState.get('pathname') === action.routerState.pathname)) {
         _store = _store.set('isPending', true);
       }
-      break;
+      return RoutesStore.emitChange();
 
     case Constants.ActionTypes.ROUTER_ROUTE_CHANGE_SUCCESS:
       // jobs status (playing icon in header) can be changed so wait for it
@@ -305,7 +305,7 @@ Dispatcher.register(payload => {
         store.set('breadcrumbs', generateBreadcrumbs(store));
         return store;
       });
-      break;
+      return RoutesStore.emitChange();
 
     case Constants.ActionTypes.ROUTER_ROUTE_CHANGE_ERROR:
       _store = _store.withMutations(store => {
@@ -314,15 +314,15 @@ Dispatcher.register(payload => {
           .set('error', Error.create(action.error))
           .set('breadcrumbs', generateBreadcrumbs(store));
       });
-      break;
+      return RoutesStore.emitChange();
 
     case Constants.ActionTypes.ROUTER_ROUTES_CONFIGURATION_RECEIVE:
       _store = _store.set('routesByName', nestedRoutesToByNameMap(action.routes));
-      break;
+      return RoutesStore.emitChange();
 
     case Constants.ActionTypes.ROUTER_ROUTER_CREATED:
       _store = _store.set('router', action.router);
-      break;
+      return RoutesStore.emitChange();
 
     case ComponentsConstants.INSTALLED_COMPONENTS_CONFIGDATA_LOAD_SUCCESS:
       // update breadcrumb title for generic-detail component route
@@ -343,15 +343,10 @@ Dispatcher.register(payload => {
         return breadcrumb;
       });
       _store = _store.set('breadcrumbs', breadcrumbs);
-      break;
+      return RoutesStore.emitChange();
 
     default:
-      break;
   }
-
-  // Emit change on events
-  // for example orchestration is loaed asynchronously while breadcrumbs are already rendered so it has to be rendered again
-  return RoutesStore.emitChange();
 });
 
 export default RoutesStore;
