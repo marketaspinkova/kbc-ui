@@ -1,5 +1,6 @@
 import React from 'react';
 import {Map} from 'immutable';
+import classNames from 'classnames';
 
 // stores
 import storeProvisioning, {storeMixins} from '../../storeProvisioning';
@@ -113,7 +114,7 @@ export default function(COMPONENT_ID) {
               configId={this.state.configId}
             />
             <ul className="nav nav-stacked">
-              <li className={!!this.invalidToRun() ? 'disabled' : null}>
+              <li className={classNames({'disabled' : !this.state.store.isAuthorized()})}>
                 <RunComponentButton
                   title="Run Extraction"
                   component={COMPONENT_ID}
