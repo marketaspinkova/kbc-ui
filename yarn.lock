@@ -6765,11 +6765,12 @@ react-radio-group@^3.0.3:
   dependencies:
     prop-types "^15.5.8"
 
-react-remarkable@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/react-remarkable/-/react-remarkable-1.1.1.tgz#37908ac95894576d0d39187bd289bc2cbb5ac6de"
+react-remarkable@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/react-remarkable/-/react-remarkable-1.1.3.tgz#6ef3861812d806fbf747cc1d1e151ee3172130a6"
+  integrity sha512-H4kfiT0Q84OzNAcNfWKDMe1Xhm/7jJAIHV5n4mAff2N0nGpPtRN2M7zhLXaTalD5DNGCGKEq1b4XApZ/1QpKbg==
   dependencies:
-    remarkable "^1.4.1"
+    remarkable "^1.x"
 
 react-router@~0.13.3:
   version "0.13.6"
@@ -7026,9 +7027,10 @@ regjsparser@^0.3.0:
   dependencies:
     jsesc "~0.5.0"
 
-remarkable@^1.4.1:
+remarkable@^1.x:
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/remarkable/-/remarkable-1.7.1.tgz#aaca4972100b66a642a63a1021ca4bac1be3bff6"
+  integrity sha1-qspJchALZqZCpjoQIcpLrBvjv/Y=
   dependencies:
     argparse "~0.1.15"
     autolinker "~0.15.0"

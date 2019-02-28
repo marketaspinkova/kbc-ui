@@ -13,6 +13,6 @@ export default React.createClass({
       return null;
     }
 
-    return <Markdown source={longDescription} escapeHtml={true} />;
+    return <Markdown source={longDescription} />;
   }
 });

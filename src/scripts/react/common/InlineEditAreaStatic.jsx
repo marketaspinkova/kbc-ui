@@ -33,7 +33,7 @@ export default React.createClass({
           </button>
         </div>
         <div>
-          <Markdown source={this.props.text} escapeHtml={true} collapsible={this.props.collapsible}/>
+          <Markdown source={this.props.text} collapsible={this.props.collapsible}/>
         </div>
       </div>
     );
