@@ -10,7 +10,6 @@ export default React.createClass({
   propTypes: {
     openBuckets: PropTypes.object.isRequired,
     buckets: PropTypes.object.isRequired,
-    tables: PropTypes.object.isRequired,
     expandAllBuckets: PropTypes.bool.isRequired,
     activeBucketId: PropTypes.string,
     searchQuery: PropTypes.string
@@ -36,7 +35,9 @@ export default React.createClass({
       <Panel
         collapsible
         expanded={this.isPanelExpanded(bucket)}
-        className={classnames('storage-panel', { 'is-active': this.props.activeBucketId === bucket.get('id') })}
+        className={classnames('storage-panel', {
+          'is-active': this.props.activeBucketId === bucket.get('id')
+        })}
         header={this.renderBucketHeader(bucket)}
         key={bucket.get('id')}
         onSelect={() => this.onSelectBucket(bucket.get('id'))}
@@ -59,7 +60,7 @@ export default React.createClass({
               bsSize="sm"
               onClick={(event) => {
                 event.stopPropagation();
-                navigateToBucketDetail(bucket.get('id'))
+                navigateToBucketDetail(bucket.get('id'));
               }}
             >
               <i className="fa fa-fw fa-chevron-right" />
@@ -71,17 +72,14 @@ export default React.createClass({
   },
 
   renderTables(bucket) {
-    let tables = this.props.tables.filter((table) => {
-      return table.getIn(['bucket', 'id']) === bucket.get('id');
-    });
-
-    if (!tables.count()) {
+    if (!bucket.get('bucketTables').count()) {
       return <p>No tables.</p>;
     }
 
     return (
       <ul className="storage-bucket-tables kbc-break-all kbc-break-word">
-        {tables
+        {bucket
+          .get('bucketTables')
           .sortBy((table) => table.get('name').toLowerCase())
           .map(this.renderTable)
           .toArray()}
@@ -101,7 +99,7 @@ export default React.createClass({
           params={{ bucketId, tableName }}
         >
           <span className={classnames({ 'is-table-alias': table.get('isAlias', false) })}>
-            <MarkedText source={tableName} mark={this.props.searchQuery}  />
+            <MarkedText source={tableName} mark={this.props.searchQuery} />
           </span>
         </Link>
       </li>
@@ -115,14 +113,18 @@ export default React.createClass({
   },
 
   isPanelExpanded(bucket) {
-    if (this.props.expandAllBuckets) {
-      return true;
-    }
-
     if (this.props.activeBucketId === bucket.get('id')) {
       return true;
     }
 
-    return this.props.openBuckets.has(bucket.get('id'));
+    if (this.props.openBuckets.has(bucket.get('id'))) {
+      return true;
+    }
+
+    if (this.props.expandAllBuckets && bucket.get('matchOnlyBucket')) {
+      return false;
+    }
+
+    return this.props.expandAllBuckets;
   }
 });

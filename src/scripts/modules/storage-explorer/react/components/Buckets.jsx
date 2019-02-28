@@ -18,7 +18,10 @@ import BucketsList from './BucketsList';
 import { reload, createBucket, updateSearchQuery } from '../../Actions';
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin, createStoreMixin(ApplicationStore, RoutesStore, BucketsLocalStore, BucketsStore, TablesStore)],
+  mixins: [
+    ImmutableRenderMixin,
+    createStoreMixin(ApplicationStore, RoutesStore, BucketsLocalStore, BucketsStore, TablesStore)
+  ],
 
   getStateFromStores() {
     return {
@@ -57,7 +60,6 @@ export default React.createClass({
           activeBucketId={this.state.bucketId}
           openBuckets={this.state.openBuckets}
           buckets={this.filteredBuckets()}
-          tables={this.state.allTables}
           searchQuery={this.state.searchQuery}
           expandAllBuckets={this.state.searchQuery !== ''}
         />
@@ -72,7 +74,9 @@ export default React.createClass({
           <ButtonGroup>
             <Button onClick={this.openCreateBucketModal}>
               <Tooltip tooltip="Create new bucket" placement="top">
-                <span><i className="fa fa-plus" /> Bucket</span>
+                <span>
+                  <i className="fa fa-plus" /> Bucket
+                </span>
               </Tooltip>
             </Button>
           </ButtonGroup>
@@ -81,7 +85,9 @@ export default React.createClass({
           <ButtonGroup>
             <Button onClick={this.openBucketLinkModal}>
               <Tooltip tooltip="Link shared bucket to project" placement="top">
-                <span><i className="fa fa-random" /> Link</span>
+                <span>
+                  <i className="fa fa-random" /> Link
+                </span>
               </Tooltip>
             </Button>
           </ButtonGroup>
@@ -89,7 +95,9 @@ export default React.createClass({
         <ButtonGroup>
           <Button onClick={reload}>
             <Tooltip tooltip="Reload buckets &amp; tables" placement="top">
-              <span><RefreshIcon isLoading={this.state.isReloading} title="" /> Reload</span>
+              <span>
+                <RefreshIcon isLoading={this.state.isReloading} title="" /> Reload
+              </span>
             </Tooltip>
           </Button>
         </ButtonGroup>
@@ -126,21 +134,35 @@ export default React.createClass({
   },
 
   filteredBuckets() {
-    let buckets = this.state.allBuckets;
+    const searchQuery = this.state.searchQuery ? this.state.searchQuery.toLowerCase() : null;
 
-    if (this.state.searchQuery) {
-      const search = this.state.searchQuery.toLowerCase();
-      const filteredTables = this.state.allTables
-        .filter(table => matchByWords(table.get('name').toLowerCase(), search))
-        .map(table => table.getIn(['bucket', 'id']))
-        .toArray();
+    return this.state.allBuckets
+      .map((bucket) => {
+        const bucketTables = this.state.allTables.filter((table) => {
+          return table.getIn(['bucket', 'id']) === bucket.get('id');
+        });
 
-      buckets = buckets.filter(bucket => {
-        return filteredTables.includes(bucket.get('id')) || matchByWords(bucket.get('id').toLowerCase(), search)
-      });
-    }
+        if (!searchQuery) {
+          return bucket.set('bucketTables', bucketTables);
+        }
 
-    return buckets;
+        const tables = bucketTables.filter((table) => {
+          return matchByWords(table.get('name').toLowerCase(), searchQuery);
+        });
+
+        if (tables.count()) {
+          return bucket.set('bucketTables', tables);
+        }
+
+        const matchBucket = matchByWords(bucket.get('id').toLowerCase(), searchQuery);
+
+        if (matchBucket) {
+          return bucket.set('bucketTables', bucketTables).set('matchOnlyBucket', true);
+        }
+
+        return false;
+      })
+      .filter(Boolean);
   },
 
   canCreateBucket() {
@@ -156,7 +178,7 @@ export default React.createClass({
   },
 
   handleQueryChange(query) {
-    updateSearchQuery(query)
+    updateSearchQuery(query);
   },
 
   openCreateBucketModal() {
