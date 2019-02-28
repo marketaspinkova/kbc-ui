@@ -1,4 +1,5 @@
 import Promise from 'bluebird';
+import _ from 'underscore';
 import dispatcher from '../../Dispatcher';
 import * as constants from '../components/Constants';
 import * as localConstants from './Constants';
@@ -12,6 +13,10 @@ import StorageApi from '../components/StorageApi';
 import exportTableApi from './ExportTableApi';
 
 const errorNotification = (message) => {
+  if (!_.isString(message)) {
+    throw message;
+  }
+
   ApplicationActionCreators.sendNotification({
     type: 'error',
     message: message
