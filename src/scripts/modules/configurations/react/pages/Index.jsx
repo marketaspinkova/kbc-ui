@@ -150,13 +150,13 @@ export default React.createClass({
     const sidebarCustomItems = settings.getIn(['index', 'sidebarCustomItems'], Immutable.List());
     return (
       <div className="container-fluid">
+        {this.state.isDeprecated && (
+          <MigrationRow
+            componentId={this.state.componentId}
+            replacementAppId={this.state.deprecationReplacementComponentId}
+          />
+        )}
         <div className="col-md-9 kbc-main-content">
-          {this.state.isDeprecated && (
-            <MigrationRow
-              componentId={this.state.componentId}
-              replacementAppId={this.state.deprecationReplacementComponentId}
-            />
-          )}
           <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
             <ComponentDescription
               componentId={this.state.componentId}
