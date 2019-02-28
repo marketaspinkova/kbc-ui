@@ -495,13 +495,23 @@ module.exports = {
     if (!mapping) {
       return Promise.resolve();
     }
+    const pendingAction = `save-${mappingType}`;
+
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.TRANSFORMATION_EDIT_SAVE_START,
+      transformationId: transformationId,
+      bucketId: bucketId,
+      pendingAction
+    });
+
     return transformationsApi.saveTransformation(bucketId, transformationId, transformation.toJS(), changeDescription).then(function(response) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.TRANSFORMATION_EDIT_SAVE_SUCCESS,
         transformationId: transformationId,
         bucketId: bucketId,
         editingId: editingId,
-        data: response
+        data: response,
+        pendingAction
       });
       return reloadVersions(bucketId, transformationId);
     }).catch(function(error) {
@@ -509,7 +519,8 @@ module.exports = {
         type: constants.ActionTypes.TRANSFORMATION_EDIT_SAVE_ERROR,
         transformationId: transformationId,
         bucketId: bucketId,
-        error: error
+        error: error,
+        pendingAction
       });
       throw error;
     });
