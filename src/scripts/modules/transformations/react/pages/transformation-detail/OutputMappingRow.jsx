@@ -78,11 +78,11 @@ export default React.createClass({
                 </span>
               ]}
             <span className="td col-xs-1 col-xs-1 text-right kbc-no-wrap">
-              {this.props.outputMapping.get('destination') !== '' &&
-                !this.props.disabled && (
+              {this.props.outputMapping.get('destination') !== '' && (
                 <DeleteButton
                   tooltip="Delete Output"
                   isPending={this.props.pendingActions.get(`delete-output-${this.props.mappingIndex}`)}
+                  isEnabled={!this.props.disabled}
                   confirm={{
                     title: 'Delete Output',
                     text: (
@@ -95,22 +95,21 @@ export default React.createClass({
                   }}
                 />
               )}
-              {!this.props.disabled && (
-                <OutputMappingModal
-                  transformationBucket={this.props.bucket}
-                  mode="edit"
-                  tables={this.props.tables}
-                  buckets={this.props.buckets}
-                  backend={this.props.transformation.get('backend')}
-                  type={this.props.transformation.get('type')}
-                  mapping={this.props.editingOutputMapping}
-                  onChange={this._handleChange}
-                  onCancel={this._handleCancel}
-                  onSave={this._handleSave}
-                  definition={this.props.definition}
-                  otherOutputMappings={this.props.otherOutputMappings}
-                />
-              )}
+              <OutputMappingModal
+                transformationBucket={this.props.bucket}
+                mode="edit"
+                tables={this.props.tables}
+                buckets={this.props.buckets}
+                backend={this.props.transformation.get('backend')}
+                type={this.props.transformation.get('type')}
+                mapping={this.props.editingOutputMapping}
+                onChange={this._handleChange}
+                onCancel={this._handleCancel}
+                onSave={this._handleSave}
+                definition={this.props.definition}
+                otherOutputMappings={this.props.otherOutputMappings}
+                disabled={this.props.disabled}
+              />
             </span>
           </span>
         </span>

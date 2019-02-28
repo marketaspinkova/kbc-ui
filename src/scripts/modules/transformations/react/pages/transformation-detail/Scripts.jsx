@@ -15,7 +15,14 @@ export default React.createClass({
     onDescriptionChange: PropTypes.func.isRequired,
     changeDescription: PropTypes.string.isRequired,
     onEditSubmit: PropTypes.func.isRequired,
-    isChanged: PropTypes.bool.isRequired
+    isChanged: PropTypes.bool.isRequired,
+    disabled: PropTypes.bool
+  },
+
+  getDefaultProps() {
+    return {
+      disabled: false
+    };
   },
 
   render() {
@@ -41,7 +48,7 @@ export default React.createClass({
           isChanged={this.props.isChanged}
           onSave={this.props.onEditSubmit}
           onReset={this.props.onEditCancel}
-          disabled={!this.props.isEditingValid}
+          disabled={!this.props.isEditingValid || this.props.disabled}
           onDescriptionChange={this.props.onDescriptionChange}
           changeDescription={this.props.changeDescription}
         />

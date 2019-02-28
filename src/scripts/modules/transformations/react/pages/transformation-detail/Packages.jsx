@@ -7,7 +7,14 @@ export default React.createClass({
     transformation: PropTypes.object.isRequired,
     packages: PropTypes.object.isRequired,
     isSaving: PropTypes.bool.isRequired,
-    onEditChange: PropTypes.func.isRequired
+    onEditChange: PropTypes.func.isRequired,
+    disabled: PropTypes.bool
+  },
+
+  getDefaultProps() {
+    return {
+      disabled: false
+    };
   },
 
   render() {
@@ -20,13 +27,13 @@ export default React.createClass({
           <Select
             name="packages"
             value={this.props.packages}
-            multi={true}
-            disabled={this.props.isSaving}
+            multi
+            disabled={this.props.isSaving || this.props.disabled}
             onChange={this.props.onEditChange}
             placeholder="Add packages..."
             isLoading={this.props.isSaving}
-            allowCreate={true}
-            trimMultiCreatedValues={true}
+            allowCreate
+            trimMultiCreatedValues
           />
           <span className="help-block">
             {this.hint()}

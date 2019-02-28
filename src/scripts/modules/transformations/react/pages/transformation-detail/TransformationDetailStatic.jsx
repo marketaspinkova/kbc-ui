@@ -182,6 +182,7 @@ export default React.createClass({
           transformation={this.props.transformation}
           transformations={this.props.transformations}
           isSaving={this.props.pendingActions.has('save-requires')}
+          disabled={this.isDisabled()}
           requires={this.props.editingFields.get('requires', this.props.transformation.get('requires'))}
           bucketId={this.props.bucketId}
           onEditChange={newValue => {
@@ -304,12 +305,13 @@ export default React.createClass({
                               pendingActions={this.props.pendingActions}
                               otherDestinations={this._inputMappingDestinations(key)}
                               definition={definition}
+                              disabled={this.isDisabled()}
                             />
                           </div>
                         }
                       >
                         <InputMappingDetail
-                          fill={true}
+                          fill
                           transformationBackend={this.props.transformation.get('backend')}
                           inputMapping={input}
                           tables={this.props.tables}
@@ -376,6 +378,7 @@ export default React.createClass({
                                 otherOutputMappings={this.props.transformation
                                   .get('output')
                                   .filter((otherOutputMapping, otherOutputMappingKey) => otherOutputMappingKey !== key)}
+                                disabled={this.isDisabled()}
                               />
                             </div>
                           }
@@ -402,6 +405,7 @@ export default React.createClass({
             <Packages
               transformation={this.props.transformation}
               isSaving={this.props.pendingActions.has('save-packages')}
+              disabled={this.isDisabled()}
               packages={this.props.editingFields.get('packages', this.props.transformation.get('packages', List()))}
               onEditChange={newValue => {
                 TransformationsActionCreators.updateTransformationEditingField(
@@ -420,6 +424,7 @@ export default React.createClass({
             <div>
               <SavedFiles
                 isSaving={this.props.pendingActions.has('save-tags')}
+                disabled={this.isDisabled()}
                 tags={this.props.editingFields.get('tags', this.props.transformation.get('tags', List()))}
                 onEditChange={newValue => {
                   TransformationsActionCreators.updateTransformationEditingField(
@@ -451,6 +456,7 @@ export default React.createClass({
           transformation={this.props.transformation}
           isEditing={this.props.editingFields.has('queriesString')}
           isSaving={this.props.pendingActions.has('save-queries')}
+          disabled={this.isDisabled()}
           scripts={this.props.editingFields.get('queriesString', this.props.transformation.get('queriesString'))}
           isEditingValid={this.props.isEditingValid}
           isChanged={this.props.editingFields.get('queriesChanged', false)}
@@ -507,6 +513,7 @@ export default React.createClass({
         transformation={this.props.transformation}
         isEditing={this.props.editingFields.has('queriesString')}
         isSaving={this.props.pendingActions.has('save-queries')}
+        disabled={this.isDisabled()}
         queries={this.props.editingFields.get('queriesString', this.props.transformation.get('queriesString'))}
         splitQueries={this.props.editingFields.get('splitQueries', this.props.transformation.get('queries'))}
         isQueriesProcessing={this.props.isQueriesProcessing}
@@ -563,5 +570,11 @@ export default React.createClass({
         }}
       />
     );
+  },
+
+  isDisabled() {
+    const actions = this.props.pendingActions.delete('queries-processing');
+
+    return actions.count() > 0;
   }
 });
