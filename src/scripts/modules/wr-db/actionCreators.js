@@ -70,9 +70,8 @@ export default {
   loadTableConfig(componentId, configId, tableId) {
     if (store.hasTableConfig(componentId, configId, tableId)) {
       return Promise.resolve();
-    } else {
-      return this.loadTableConfigForce(componentId, configId, tableId);
     }
+    return this.loadTableConfigForce(componentId, configId, tableId);
   },
 
   loadTableConfigForce(componentId, configId, tableId) {
@@ -187,9 +186,8 @@ export default {
   loadConfiguration(componentId, configId) {
     if (store.hasConfiguration(componentId, configId)) {
       return Promise.resolve();
-    } else {
-      return this.loadConfigurationForce(componentId, configId);
     }
+    return this.loadConfigurationForce(componentId, configId);
   },
 
   loadConfigurationForce(componentId, configId) {

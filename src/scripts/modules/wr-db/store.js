@@ -2,6 +2,7 @@ import Dispatcher from '../../Dispatcher';
 import { Map, fromJS } from 'immutable';
 import _ from 'underscore';
 import StoreUtils from '../../utils/StoreUtils';
+import versionsConstants from '../components/VersionsConstants';
 import constants from './constants';
 
 let _store = Map({
@@ -192,6 +193,11 @@ Dispatcher.register(payload => {
       if (action.errorPath) {
         _store = _store.deleteIn(action.errorPath);
       }
+      return WrDbStore.emitChange();
+
+    case versionsConstants.ActionTypes.VERSIONS_ROLLBACK_SUCCESS:
+      _store = _store.deleteIn(['tables', action.componentId, action.configId]);
+      _store = _store.deleteIn(['tablesConfig', action.componentId, action.configId]);
       return WrDbStore.emitChange();
 
     default:
