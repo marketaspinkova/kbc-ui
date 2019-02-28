@@ -144,7 +144,12 @@ dispatcher.register(function(payload) {
       _store = _store.setIn(['reloading', action.componentId, action.configId], true);
       return VersionsStore.emitChange();
 
-    case Constants.ActionTypes.VERSIONS_RELOAD_STOP:
+    case Constants.ActionTypes.VERSIONS_RELOAD_SUCCESS:
+      _store = _store.setIn(['versions', action.componentId, action.configId], Immutable.fromJS(action.versions));
+      _store = _store.deleteIn(['reloading', action.componentId, action.configId]);
+      return VersionsStore.emitChange();
+
+    case Constants.ActionTypes.VERSIONS_RELOAD_ERROR:
       _store = _store.deleteIn(['reloading', action.componentId, action.configId]);
       return VersionsStore.emitChange();
 

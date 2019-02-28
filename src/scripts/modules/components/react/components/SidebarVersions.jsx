@@ -45,7 +45,7 @@ export default createReactClass({
   },
 
   componentDidUpdate(prevProps) {
-    if (this.props.isReloading && !this.props.configurationVersions.equals(prevProps.configurationVersions)) {
+    if (prevProps.isReloading && !this.props.isReloading && !this.props.configurationVersions.equals(prevProps.configurationVersions)) {
       this.setState({ versionsWarning: true });
     }
   },

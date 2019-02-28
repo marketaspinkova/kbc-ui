@@ -48,12 +48,20 @@ export default {
       configId: configId,
       type: Constants.ActionTypes.VERSIONS_RELOAD_START
     });
-    this.loadVersionsForce(componentId, configId).finally(() => {
+    Api.getComponentConfigVersions(componentId, configId).then((versions) => {
       dispatcher.handleViewAction({
         componentId: componentId,
         configId: configId,
-        type: Constants.ActionTypes.VERSIONS_RELOAD_STOP
+        type: Constants.ActionTypes.VERSIONS_RELOAD_SUCCESS,
+        versions
       });
+    }).catch((error) => {
+      dispatcher.handleViewAction({
+        componentId: componentId,
+        configId: configId,
+        type: Constants.ActionTypes.VERSIONS_RELOAD_ERROR
+      });
+      throw error;
     });
   },
 
