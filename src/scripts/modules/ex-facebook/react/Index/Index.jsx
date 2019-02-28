@@ -114,14 +114,14 @@ export default function(COMPONENT_ID) {
               configId={this.state.configId}
             />
             <ul className="nav nav-stacked">
-              <li className={classNames({'disabled' : !this.state.store.isAuthorized()})}>
+              <li className={classNames({'disabled' : !this.isAuthorized()})}>
                 <RunComponentButton
                   title="Run Extraction"
                   component={COMPONENT_ID}
                   mode="link"
                   runParams={this.runParams()}
-                  disabled={!!this.invalidToRun()}
-                  disabledReason={this.invalidToRun()}
+                  disabled={!this.isAuthorized()}
+                  disabledReason={!this.isAuthorized() ? 'No Facebook account authorized' : ''}
                 >
                   You are about to run an extraction.
                 </RunComponentButton>
@@ -193,15 +193,6 @@ export default function(COMPONENT_ID) {
 
     isAuthorized() {
       return this.state.store.isAuthorized();
-    },
-
-
-    invalidToRun() {
-      if (!this.isAuthorized()) {
-        return 'No Facebook account authorized';
-      }
-
-      return '';
     },
 
     renderAccountsInfo(clName) {
