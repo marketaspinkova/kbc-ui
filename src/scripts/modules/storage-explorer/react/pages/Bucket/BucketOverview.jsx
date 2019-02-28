@@ -76,17 +76,13 @@ export default React.createClass({
               <tr>
                 <td>Rows count</td>
                 <td>
-                  {bucket.get('rowsCount')}{' '}
-                  {bucket.get('backend') === 'mysql' && (
-                    <Hint title="Rows count">Number of rows is only an estimate.</Hint>
-                  )}
+                  {bucket.get('rowsCount')}
                 </td>
               </tr>
               <tr>
                 <td>Data size</td>
                 <td>
-                  <FileSize size={bucket.get('dataSizeBytes')} />{' '}
-                  {bucket.get('backend') === 'mysql' && <Hint title="Data size">Data size is only an estimate.</Hint>}
+                  <FileSize size={bucket.get('dataSizeBytes')} />
                 </td>
               </tr>
             </tbody>
