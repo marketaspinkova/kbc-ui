@@ -8,6 +8,13 @@ export default React.createClass({
     onChangeProperty: PropTypes.func.isRequired
   },
 
+  getDefaultProps() {
+    return {
+      token: '',
+      authorizedFor: ''
+    }
+  },
+
   makeSetStatePropertyFn(prop) {
     return (e) => {
       const val = e.target.value;

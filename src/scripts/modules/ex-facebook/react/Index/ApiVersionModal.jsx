@@ -6,6 +6,7 @@ import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
 export default React.createClass({
   mixins: [PureRenderMixin],
+
   propTypes: {
     onHide: React.PropTypes.func.isRequired,
     show: React.PropTypes.bool.isRequired,
@@ -17,7 +18,6 @@ export default React.createClass({
     currentVersion: PropTypes.string.isRequired,
     defaultVersion: PropTypes.string.isRequired
   },
-
 
   isValid() {
     return !!this.getVersion();
@@ -39,7 +39,7 @@ export default React.createClass({
         <Modal.Body>
           <p>
             Facebook has its own specific platform {' '}
-            <ExternalLink hree="https://developers.facebook.com/docs/apps/versions">versioning</ExternalLink>.
+            <ExternalLink href="https://developers.facebook.com/docs/apps/versions">versioning</ExternalLink>.
             If you change the api version some api calls specified in queries may not work resulting in error,
             or no data as well as data with different columns might be retrieved. To review the api changes
             see <ExternalLink href="https://developers.facebook.com/docs/apps/changelog">changelog</ExternalLink>.

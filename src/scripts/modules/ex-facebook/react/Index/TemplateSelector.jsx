@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react';
-// import {Map} from 'immutable';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
 
 export default React.createClass({

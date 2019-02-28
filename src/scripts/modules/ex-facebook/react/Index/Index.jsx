@@ -1,5 +1,6 @@
 import React from 'react';
 import {Map} from 'immutable';
+import classNames from 'classnames';
 
 // stores
 import storeProvisioning, {storeMixins} from '../../storeProvisioning';
@@ -23,8 +24,8 @@ import EmptyState from '../../../components/react/components/ComponentEmptyState
 import {ExternalLink} from '@keboola/indigo-ui';
 import SidebarJobsContainer from '../../../components/react/components/SidebarJobsContainer';
 import LatestVersions from '../../../components/react/components/SidebarVersionsWrapper';
-import AccountsManagerModal from './AccountsManagerModal.jsx';
-import QueryModal from './QueryModal.jsx';
+import AccountsManagerModal from './AccountsManagerModal';
+import QueryModal from './QueryModal';
 import ApiVersionModal from './ApiVersionModal';
 import getDefaultBucket from '../../../../utils/getDefaultBucket';
 import AccountLink from './AccountLink';
@@ -113,14 +114,14 @@ export default function(COMPONENT_ID) {
               configId={this.state.configId}
             />
             <ul className="nav nav-stacked">
-              <li className={!!this.invalidToRun() ? 'disabled' : null}>
+              <li className={classNames({'disabled' : !this.isAuthorized()})}>
                 <RunComponentButton
                   title="Run Extraction"
                   component={COMPONENT_ID}
                   mode="link"
                   runParams={this.runParams()}
-                  disabled={!!this.invalidToRun()}
-                  disabledReason={this.invalidToRun()}
+                  disabled={!this.isAuthorized()}
+                  disabledReason={!this.isAuthorized() ? 'No Facebook account authorized' : ''}
                 >
                   You are about to run an extraction.
                 </RunComponentButton>
@@ -169,7 +170,7 @@ export default function(COMPONENT_ID) {
           currentVersion={this.state.store.version}
           defaultVersion={this.state.store.DEFAULT_API_VERSION}
           onHide={hideFn}
-          isSaving={this.state.store.isPending('version')}
+          isSaving={!!this.state.store.isPending('version')}
           onSave={this.state.actions.saveApiVersion}
           {...this.state.actions.prepareLocalState('ApiVersionModal')}
         />
@@ -192,14 +193,6 @@ export default function(COMPONENT_ID) {
 
     isAuthorized() {
       return this.state.store.isAuthorized();
-    },
-
-
-    invalidToRun() {
-      if (!this.isAuthorized()) {
-        return 'No Facebook account authorized';
-      }
-      return false;
     },
 
     renderAccountsInfo(clName) {
@@ -266,6 +259,7 @@ export default function(COMPONENT_ID) {
         this.state.actions.updateLocalState(['QueryModal'], Map());
         this.state.actions.updateLocalState('showQueryModal', false);
       };
+
       return (
         <QueryModal
           apiVersion={this.state.store.version}
@@ -304,7 +298,7 @@ export default function(COMPONENT_ID) {
           syncAccounts={this.state.store.syncAccounts}
           {...this.state.actions.prepareLocalState('AccountsManagerModal')}
           onSaveAccounts={this.state.actions.saveAccounts}
-          isSaving={this.state.store.isSavingAccounts()}
+          isSaving={!!this.state.store.isSavingAccounts()}
           accountDescFn={getAccountDesc}
         />
       );
