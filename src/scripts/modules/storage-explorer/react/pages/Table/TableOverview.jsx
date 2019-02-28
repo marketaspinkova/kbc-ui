@@ -9,7 +9,6 @@ import TableUpdatedByComponentInfo from '../../../../../react/common/TableUpdate
 import InlineEditArea from '../../../../../react/common/InlineEditArea';
 import CreatedWithIcon from '../../../../../react/common/CreatedWithIcon';
 import Tooltip from '../../../../../react/common/Tooltip';
-import Hint from '../../../../../react/common/Hint';
 import FileSize from '../../../../../react/common/FileSize';
 import ConfirmModal from '../../../../../react/common/ConfirmModal';
 import CreatePrimaryKeyModal from '../../modals/CreatePrimaryKeyModal';
@@ -140,19 +139,13 @@ export default React.createClass({
               <tr>
                 <td>Rows count</td>
                 <td>
-                  {table.get('rowsCount') || 'N/A'}{' '}
-                  {table.getIn(['bucket', 'backend']) === 'mysql' && (
-                    <Hint title="Rows count">Number of rows is only an estimate.</Hint>
-                  )}
+                  {table.get('rowsCount') || 'N/A'}
                 </td>
               </tr>
               <tr>
                 <td>Data size</td>
                 <td>
-                  <FileSize size={table.get('dataSizeBytes')} />{' '}
-                  {table.getIn(['bucket', 'backend']) === 'mysql' && (
-                    <Hint title="Data size">Data size is only an estimate.</Hint>
-                  )}
+                  <FileSize size={table.get('dataSizeBytes')} />
                 </td>
               </tr>
             </tbody>

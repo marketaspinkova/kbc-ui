@@ -13,7 +13,6 @@ const INITIAL_STATE = {
 export default React.createClass({
   propTypes: {
     openModal: PropTypes.bool.isRequired,
-    hasMysql: PropTypes.bool.isRequired,
     hasRedshift: PropTypes.bool.isRequired,
     hasSnowflake: PropTypes.bool.isRequired,
     defaultBackend: PropTypes.string.isRequired,
@@ -118,14 +117,6 @@ export default React.createClass({
 
   renderBackendOptions() {
     const options = [];
-
-    if (this.props.hasMysql) {
-      options.push(
-        <option key="mysql" value="mysql">
-          MySQL
-        </option>
-      );
-    }
 
     if (this.props.hasRedshift) {
       options.push(

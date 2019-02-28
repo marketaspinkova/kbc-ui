@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Col, HelpBlock, Modal, Form, FormGroup, ControlLabel } from 'react-bootstrap';
+import { Col, Modal, Form, FormGroup, ControlLabel } from 'react-bootstrap';
 import Select from 'react-select';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
@@ -26,8 +26,6 @@ export default React.createClass({
             <Modal.Title>Create primary key</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {this.renderMysqlWarning()}
-
             <FormGroup>
               <Col sm={3} componentClass={ControlLabel}>
                 Columns
@@ -58,14 +56,6 @@ export default React.createClass({
         </Form>
       </Modal>
     );
-  },
-
-  renderMysqlWarning() {
-    if (this.props.backend !== 'mysql') {
-      return null;
-    }
-
-    return <HelpBlock>Columns will be truncated to 255 characters</HelpBlock>;
   },
 
   handlePrimaryKey(selected) {
