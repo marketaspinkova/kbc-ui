@@ -214,7 +214,7 @@ export default React.createClass({
                 <ValidateQueriesButton
                   backend={backend}
                   bucketId={this.state.bucketId}
-                  transformationId={this.state.transformationId}
+                  transformation={this.state.transformation}
                   modalOpen={this.state.validateModalOpen}
                   onModalOpen={() => {
                     return this.setState({ validateModalOpen: true });
