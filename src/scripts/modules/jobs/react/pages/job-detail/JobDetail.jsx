@@ -380,7 +380,7 @@ export default React.createClass({
 
       return (
         <div className="row">
-          <span className="col-md-3">Within Configuration</span>
+          <span className="col-md-3">Configuration</span>
           {parentJob && parentJob.count() > 0 ? (
             <strong className="col-md-9">
               {this._renderConfigurationLink(parentJob)}
