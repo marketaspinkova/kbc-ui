@@ -1,5 +1,4 @@
 import React from 'react';
-import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { ButtonGroup, Button } from 'react-bootstrap';
 import { RefreshIcon, SearchBar } from '@keboola/indigo-ui';
 
@@ -19,7 +18,6 @@ import { reload, createBucket, updateSearchQuery } from '../../Actions';
 
 export default React.createClass({
   mixins: [
-    ImmutableRenderMixin,
     createStoreMixin(ApplicationStore, RoutesStore, BucketsLocalStore, BucketsStore, TablesStore)
   ],
 
