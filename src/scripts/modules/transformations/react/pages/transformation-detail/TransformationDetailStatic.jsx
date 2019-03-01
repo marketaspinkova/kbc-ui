@@ -533,6 +533,11 @@ export default React.createClass({
           TransformationsActionCreators.cancelTransformationEditingField(
             this.props.bucketId,
             this.props.transformationId,
+            'splitQueries'
+          );
+          TransformationsActionCreators.cancelTransformationEditingField(
+            this.props.bucketId,
+            this.props.transformationId,
             'queriesString'
           );
           return TransformationsActionCreators.cancelTransformationEditingField(

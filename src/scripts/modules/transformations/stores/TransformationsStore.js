@@ -230,25 +230,12 @@ Dispatcher.register(payload => {
           store.deleteIn(['editingTransformationsFields', action.bucketId, action.transformationId, action.editingId]);
 
           if (action.editingId === 'queries') {
-            store.deleteIn([
-              'editingTransformationsFields',
-              action.bucketId,
-              action.transformationId,
-              'queriesChanged'
-            ]);
-            store.deleteIn([
-              'editingTransformationsFields',
-              action.bucketId,
-              action.transformationId,
-              'description'
-            ]);
+            store.deleteIn(['editingTransformationsFields', action.bucketId, action.transformationId, 'splitQueries']);
+            store.deleteIn(['editingTransformationsFields', action.bucketId, action.transformationId, 'queriesString']);
+            store.deleteIn(['editingTransformationsFields', action.bucketId, action.transformationId, 'queriesChanged']);
+            store.deleteIn(['editingTransformationsFields', action.bucketId, action.transformationId, 'description']);
           } else if (action.editingId === 'packages') {
-            store.deleteIn([
-              'editingTransformationsFields',
-              action.bucketId,
-              action.transformationId,
-              'packagesChanged'
-            ]);
+            store.deleteIn(['editingTransformationsFields', action.bucketId, action.transformationId, 'packagesChanged']);
           } else if (action.editingId === 'tags') {
             store.deleteIn(['editingTransformationsFields', action.bucketId, action.transformationId, 'tagsChanged']);
           }
