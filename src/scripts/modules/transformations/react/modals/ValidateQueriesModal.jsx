@@ -40,14 +40,18 @@ export default React.createClass({
             isSaving={this.state.isLoading || this.state.isRunning}
             isDisabled={this.isDisabled()}
             onCancel={this.onHide}
-            onSave={this.state.isValid ? this.onRunTransformation : this.onRunValidation}
-            saveLabel={this.state.isValid ? 'Run transformation' : 'Validate'}
+            onSave={this.isEligibleToRun() ? this.onRunTransformation : this.onRunValidation}
+            saveLabel={this.isEligibleToRun() ? 'Run transformation' : 'Validate'}
             saveStyle="primary"
             saveButtonType="submit"
           />
         </Modal.Footer>
       </Modal>
     );
+  },
+
+  isEligibleToRun() {
+    return this.state.isValid && !this.props.transformation.get('disabled');
   },
 
   renderBody() {
