@@ -363,17 +363,20 @@ export default React.createClass({
 
   _renderConfiguration(job) {
     if (job.get('nestingLevel') > 0 && !job.hasIn(['params', 'config'])) {
-      const runIdParts = job.get('runId', []).split('.').slice(0, -1);
+      const runIdParts = job.get('runId', []).split('.')
       let parentRunId = '';
       let parentJob = null;
 
-      do {
-        parentRunId = runIdParts.join('.');
+      for (let index = 1; index <= runIdParts.length; index++) {
+        parentRunId = runIdParts.slice(0, index * -1).join('.');
         parentJob = JobsStore.getAll().find((job) => {
           return job.get('runId') === parentRunId && job.hasIn(['params', 'config']);
         });
-        runIdParts.pop();
-      } while (!parentJob && runIdParts.length > 0);
+
+        if (parentJob) {
+          break;
+        }
+      }
 
       return (
         <div className="row">
