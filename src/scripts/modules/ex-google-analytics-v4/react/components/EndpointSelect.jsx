@@ -13,7 +13,7 @@ const options = [
     value: Constants.ENDPOINT_REPORT
   },
   {
-    label: 'Multi-Channel Funnels API (BETA)',
+    label: 'Multi-Channel Funnels API',
     value: Constants.ENDPOINT_MCF
   },
 ];
@@ -40,7 +40,7 @@ export default React.createClass({
             clearable={false}
           />
           <HelpBlock>
-            Switch between standard &nbsp;
+            Switch between core &nbsp;
             <ExternalLink href="https://developers.google.com/analytics/devguides/reporting/core/v4/">
               Reporting API
             </ExternalLink>
