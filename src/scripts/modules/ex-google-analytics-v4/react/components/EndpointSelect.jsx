@@ -7,17 +7,6 @@ import Col from 'react-bootstrap/es/Col';
 import HelpBlock from 'react-bootstrap/es/HelpBlock';
 import { ExternalLink } from '@keboola/indigo-ui';
 
-const options = [
-  {
-    label: 'Reporting API',
-    value: Constants.ENDPOINT_REPORT
-  },
-  {
-    label: 'Multi-Channel Funnels API',
-    value: Constants.ENDPOINT_MCF
-  },
-];
-
 export default React.createClass({
   propTypes: {
     selectedValue: PropTypes.string.isRequired,
@@ -54,7 +43,20 @@ export default React.createClass({
     );
   },
 
+  getOptions() {
+    return [
+      {
+        label: 'Reporting API',
+        value: Constants.ENDPOINT_REPORT
+      },
+      {
+        label: 'Multi-Channel Funnels API',
+        value: Constants.ENDPOINT_MCF
+      },
+    ];
+  },
+
   prepareValue(value) {
-    return options.find(item => item.value === value);
+    return this.getOptions().find(item => item.value === value);
   },
 });
