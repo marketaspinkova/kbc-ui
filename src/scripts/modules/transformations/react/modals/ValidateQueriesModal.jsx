@@ -10,6 +10,7 @@ import Result from '../components/validation/Result';
 const INITIAL_STATE = {
   isLoading: false,
   isValid: false,
+  isRunning: false,
   result: null
 };
 
@@ -36,7 +37,7 @@ export default React.createClass({
         <Modal.Body>{this.renderBody()}</Modal.Body>
         <Modal.Footer>
           <ConfirmButtons
-            isSaving={this.state.isLoading}
+            isSaving={this.state.isLoading || this.state.isRunning}
             isDisabled={this.isDisabled()}
             onCancel={this.onHide}
             onSave={this.state.isValid ? this.onRunTransformation : this.onRunValidation}
@@ -89,19 +90,22 @@ export default React.createClass({
   },
 
   onHide() {
-    this.setState(INITIAL_STATE);
-    this.props.onHide();
+    this.setState(INITIAL_STATE, this.props.onHide);
   },
 
   onRunTransformation() {
-    InstalledComponentsActionCreators.runComponent({
-      component: 'transformation',
-      data: {
-        configBucketId: this.props.bucketId,
-        transformations: [this.props.transformation.get('id')]
-      }
+    this.setState({
+      isRunning: true
     });
-    this.onHide();
+    InstalledComponentsActionCreators
+      .runComponent({
+        component: 'transformation',
+        data: {
+          configBucketId: this.props.bucketId,
+          transformations: [this.props.transformation.get('id')]
+        }
+      })
+      .finally(this.onHide);
   },
 
   onRunValidation() {
