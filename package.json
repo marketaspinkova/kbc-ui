@@ -42,7 +42,7 @@
     "react-datetime": "git+https://git@github.com/keboola/react-datetime.git#v2.10.3-fix",
     "react-dnd": "~2.2.4",
     "react-dnd-html5-backend": "~2.2.4",
-    "react-document-title": "~1.0.2",
+    "react-document-title": "^2.0.3",
     "react-dom": "^0.14.9",
     "react-dropbox-chooser": "^0.0.3",
     "react-immutable-render-mixin": "~0.9.6",
