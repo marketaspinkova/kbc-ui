@@ -1,11 +1,8 @@
 import React, {PropTypes} from 'react';
 import Select from 'react-select';
-import { Constants } from './Constants';
-import {FormGroup} from 'react-bootstrap';
-import ControlLabel from 'react-bootstrap/es/ControlLabel';
-import Col from 'react-bootstrap/es/Col';
-import HelpBlock from 'react-bootstrap/es/HelpBlock';
-import { ExternalLink } from '@keboola/indigo-ui';
+import {Constants} from './Constants';
+import {Col,ControlLabel,FormGroup,HelpBlock} from 'react-bootstrap';
+import {ExternalLink} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -29,11 +26,11 @@ export default React.createClass({
             clearable={false}
           />
           <HelpBlock>
-            Switch between core &nbsp;
+            Switch between core{' '}
             <ExternalLink href="https://developers.google.com/analytics/devguides/reporting/core/v4/">
               Reporting API
             </ExternalLink>
-            &nbsp;and&nbsp;
+            {' '}and{' '}
             <ExternalLink href="https://developers.google.com/analytics/devguides/reporting/mcf/v3/">
               Multi-Channel Funnels API
             </ExternalLink>
