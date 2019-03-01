@@ -13,8 +13,6 @@ import {GapiActions} from '../../../google-utils/react/GapiFlux';
 // ui components
 import QueryEditor from '../components/QueryEditor/QueryEditor';
 import QueryNav from './QueryNav';
-import McfEditor from '../components/QueryEditor/McfEditor';
-import {Tab, Tabs} from 'react-bootstrap';
 
 export default function(componentId) {
   return React.createClass({
@@ -55,21 +53,7 @@ export default function(componentId) {
 
     render() {
       const isEditing = !!this.state.editingQuery;
-      const editorTabs =
-        <Tabs
-          defaultActiveKey={this.state.query.get('endpoint', 'reports')}
-          id="ga-tabs"
-          onSelect={this.onSelectTabFn(isEditing)}
-        >
-          <Tab eventKey={'reports'} title="Report">
-            <div className="kbc-container">
-            {this.renderQueryEditor(isEditing)}
-            </div>
-          </Tab>
-          <Tab eventKey={'mcf'} title="Multi-Channel Funnel (Beta)">
-            {this.renderMcfEditor(isEditing)}
-          </Tab>
-        </Tabs>;
+      const editor = this.renderQueryEditor(isEditing);
 
       return (
         <div className="container-fluid">
@@ -88,11 +72,10 @@ export default function(componentId) {
                 </div>
               </div>
             }
-            {isEditing ?
-              editorTabs :
-              <div className="col-md-9 kbc-main-content-with-nav">
-                {editorTabs}
-              </div>
+            {
+              isEditing
+              ? editor
+              :<div className="col-md-9 kbc-main-content-with-nav">{editor}</div>
             }
           </div>
         </div>
@@ -116,31 +99,6 @@ export default function(componentId) {
           query={isEditing ? this.state.editingQuery : this.state.query}
           {...this.state.actions.prepareLocalState('QueryDetail')}/>
       );
-    },
-
-    renderMcfEditor(isEditing) {
-      return (
-        <McfEditor
-          isEditing={isEditing}
-          isLoadingMetadata={this.state.isLoadingMetadata}
-          metadata={this.state.metadata}
-          allProfiles={this.state.store.profiles}
-          outputBucket={this.state.store.outputBucket}
-          onChangeQuery={this.state.actions.onChangeEditingQueryFn(this.state.queryId)}
-          onRunQuery={(query) => this.state.actions.runQuerySample(query, this.state.queryId)}
-          sampleDataInfo={this.state.store.getSampleDataInfo(this.state.queryId)}
-          isQueryValidFn={this.state.store.isQueryValid}
-          query={isEditing ? this.state.editingQuery : this.state.query}
-          {...this.state.actions.prepareLocalState('QueryDetail')}/>
-      );
-    },
-
-    onSelectTabFn(isEditing) {
-      return (key) => {
-        const query = isEditing ? this.state.editingQuery : this.state.query;
-        const newQuery = query.setIn([].concat('endpoint'), key);
-        this.state.actions.onUpdateNewQuery(newQuery);
-      };
     }
   });
 }

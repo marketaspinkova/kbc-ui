@@ -5,11 +5,13 @@ import {getDefaultBucket} from './common';
 import _ from 'underscore';
 import InstalledComponentStore from '../components/stores/InstalledComponentsStore';
 import OauthStore from '../oauth-v2/Store';
+import { Constants } from './react/components/Constants';
 
 const defaultNewQuery = Map({
   name: '',
   enabled: true,
   outputTable: null,
+  endpoint: Constants.ENDPOINT_REPORT,
   query: Map({
     dateRanges: List([Map({
       startDate: '-4 days',

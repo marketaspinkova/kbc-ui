@@ -15,8 +15,8 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      labelClassName: 'col-xs-2',
-      wrapperClassName: 'col-xs-8',
+      labelClassName: 'col-md-2',
+      wrapperClassName: 'col-md-10',
       label: 'Profile'
     };
   },
