@@ -23,7 +23,7 @@ export default React.createClass({
         <Col md={10}>
           <Select
             value={this.prepareValue(this.props.selectedValue)}
-            options={options}
+            options={this.getOptions()}
             onChange={this.props.onSelectValue}
             name={name}
             clearable={false}
