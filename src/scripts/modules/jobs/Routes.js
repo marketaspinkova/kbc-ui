@@ -8,7 +8,7 @@ import JobDetailButtons from './react/components/JobDetailButtons';
 import JobsStore from './stores/JobsStore';
 import InstalledComponentsActionCreators from '../components/InstalledComponentsActionCreators';
 import { createTablesRoute } from '../table-browser/routes';
-import getComponentId from './getJobComponentId';
+import { getJobComponentId } from './utils';
 
 export default {
   name: 'jobs',
@@ -81,7 +81,7 @@ export default {
               job.hasIn(['params', 'config']) &&
               job.hasIn(['params', 'row'])
             ) {
-              return InstalledComponentsActionCreators.loadComponentConfigsData(getComponentId(job));
+              return InstalledComponentsActionCreators.loadComponentConfigsData(getJobComponentId(job));
             }
           })
       ],

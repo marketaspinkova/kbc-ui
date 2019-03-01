@@ -9,6 +9,7 @@ import SoundNotifications from '../../../../../utils/SoundNotifications';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../../../stores/RoutesStore';
 import JobsStore from '../../../stores/JobsStore';
+import { getJobComponentId } from '../../../utils';
 import ComponentsStore from '../../../../components/stores/ComponentsStore';
 import InstalledComponentsStore from '../../../../components/stores/InstalledComponentsStore';
 import ConfigurationRowsStore from '../../../../configurations/ConfigurationRowsStore';
@@ -18,7 +19,6 @@ import ComponentName from '../../../../../react/common/ComponentName';
 import ComponentIcon from '../../../../../react/common/ComponentIcon';
 import Duration from '../../../../../react/common/Duration';
 import JobRunId from '../../../../../react/common/JobRunId';
-import getComponentId from '../../../getJobComponentId';
 import JobStatusLabel from '../../../../../react/common/JobStatusLabel';
 import ComponentConfigurationLink from '../../../../components/react/components/ComponentConfigurationLink';
 import ComponentConfigurationRowLink from '../../../../components/react/components/ComponentConfigurationRowLink';
@@ -107,7 +107,7 @@ export default React.createClass({
     let message;
     const exceptionId = job.getIn(['result', 'exceptionId']);
     const parts = [];
-    const componentId = getComponentId(job);
+    const componentId = getJobComponentId(job);
     if (job.get('error') === APPLICATION_ERROR) {
       message = 'Internal Error';
     } else {
@@ -229,7 +229,7 @@ export default React.createClass({
   },
 
   _renderConfigurationLink(job) {
-    let componentId = getComponentId(job);
+    let componentId = getJobComponentId(job);
     let configuration = this._getConfiguration(job);
 
     if (configuration.count()) {
@@ -270,7 +270,7 @@ export default React.createClass({
   },
 
   _renderConfigurationRowLink(job) {
-    let componentId = getComponentId(job);
+    let componentId = getJobComponentId(job);
     let configuration = this._getConfiguration(job);
     let configId = configuration.get('id');
     let rowId = job.getIn(['params', 'transformations', 0], null);
@@ -361,40 +361,8 @@ export default React.createClass({
     );
   },
 
-  _renderConfiguration(job) {
-    if (job.get('nestingLevel') > 0 && !job.hasIn(['params', 'config'])) {
-      const runIdParts = job.get('runId', []).split('.')
-      let parentRunId = '';
-      let parentJob = null;
-
-      for (let index = 1; index <= runIdParts.length; index++) {
-        parentRunId = runIdParts.slice(0, index * -1).join('.');
-        parentJob = JobsStore.getAll().find((job) => {
-          return job.get('runId') === parentRunId && job.hasIn(['params', 'config']);
-        });
-
-        if (parentJob) {
-          break;
-        }
-      }
-
-      return (
-        <div className="row">
-          <span className="col-md-3">Configuration</span>
-          {parentJob && parentJob.count() > 0 ? (
-            <strong className="col-md-9">
-              {this._renderConfigurationLink(parentJob)}
-              {this._renderConfigurationRowLink(parentJob)}
-              {this._renderConfigVersion(parentJob)}
-            </strong>
-          ) : (
-            <strong className="col-md-9">
-              <em>N/A</em>
-            </strong>
-          )}
-        </div>
-      );
-    }
+  _renderConfiguration(configurationJob) {
+    let job = JobsStore.getUserRunnedParentJob(configurationJob);
 
     return (
       <div className="row">
@@ -488,7 +456,7 @@ export default React.createClass({
   },
 
   _renderGeneralInfoRow(job) {
-    const componentId = getComponentId(job);
+    const componentId = getJobComponentId(job);
     let component = ComponentsStore.getComponent(componentId);
     if (!component) {
       component = ComponentsStore.unknownComponent(componentId);
@@ -533,7 +501,7 @@ export default React.createClass({
   },
 
   _isGoodDataWriter() {
-    return getComponentId(this.state.job) === 'gooddata-writer';
+    return getJobComponentId(this.state.job) === 'gooddata-writer';
   },
 
   _contactSupport() {
@@ -589,6 +557,6 @@ export default React.createClass({
   _getConfiguration(job) {
     const config = job.getIn(['params', 'config'], '');
 
-    return InstalledComponentsStore.getConfig(getComponentId(job), config.toString());
+    return InstalledComponentsStore.getConfig(getJobComponentId(job), config.toString());
   }
 });
