@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {ExternalLink} from '@keboola/indigo-ui';
+import * as helpers from './helpers';
 
 const App = React.createClass({
   render() {
@@ -352,9 +353,9 @@ const App = React.createClass({
   }
 });
 
-module.exports = {
+export default {
   start: function() {
     ReactDOM.render(<App />, document.getElementById('react'));
   },
-  helpers: require('./helpers')
+  helpers
 };

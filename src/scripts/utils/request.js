@@ -26,6 +26,6 @@ Request.prototype.promise = function() {
   });
 };
 
-module.exports = (method, url) => {
+export default (method, url) => {
   return request(method, url).timeout(60000);
 };

@@ -1,4 +1,4 @@
-var changedSinceOptionCreator = require('./changedSinceOptionCreator');
+import changedSinceOptionCreator from './changedSinceOptionCreator';
 
 describe('changedSinceOptionCreator', function() {
   describe('valid options', function() {

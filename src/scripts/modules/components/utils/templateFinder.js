@@ -1,6 +1,6 @@
-var deepEqual = require('deep-equal');
+import deepEqual from 'deep-equal';
 
-module.exports = function(templates, configuration) {
+export default function(templates, configuration) {
   return templates.filter(function(template) {
     var templateKeys, valid;
 
@@ -48,4 +48,4 @@ module.exports = function(templates, configuration) {
     });
     return valid;
   });
-};
+}

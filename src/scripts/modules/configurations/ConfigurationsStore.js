@@ -215,4 +215,4 @@ Dispatcher.register(function(payload) {
   }
 });
 
-module.exports = ConfigurationsStore;
+export default ConfigurationsStore;

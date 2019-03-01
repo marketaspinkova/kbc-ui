@@ -1,6 +1,6 @@
 import keyMirror from 'fbjs/lib/keyMirror';
 
-module.exports = {
+export default {
   ActionTypes: keyMirror({
     OAUTH_DELETE_CREDENTIALS_SUCCESS: null,
     OAUTH_DELETE_CREDENTIALS_START: null,

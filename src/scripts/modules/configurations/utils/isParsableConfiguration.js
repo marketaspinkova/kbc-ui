@@ -1,4 +1,4 @@
-var Immutable = require('immutable');
+import Immutable from 'immutable';
 
 export default function(configuration, parseFunction, createFunction) {
   if (configuration.isEmpty()) {

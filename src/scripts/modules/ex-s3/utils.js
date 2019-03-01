@@ -1,18 +1,18 @@
-var Immutable = require('immutable');
+import Immutable from 'immutable';
 
-const getDefaultBucket = function(configId) {
+export const getDefaultBucket = function(configId) {
   return 'in.c-keboola-ex-s3-' + configId;
 };
 
-const getDefaultTable = function(configId) {
+export const getDefaultTable = function(configId) {
   return getDefaultBucket(configId) + '.data';
 };
 
-const hasWildcard = function(key) {
+export const hasWildcard = function(key) {
   return key.substring(key.length - 1, key.length) === '*';
 };
 
-function createConfiguration(localState, configId) {
+export const createConfiguration = function(localState, configId) {
   var mapping = {};
   var s3Key = localState.get('s3Key', '');
 
@@ -67,9 +67,9 @@ function createConfiguration(localState, configId) {
     processors: processors
   };
   return config;
-}
+};
 
-function parseConfiguration(configuration, configId) {
+export const parseConfiguration = function(configuration, configId) {
   const configData = Immutable.fromJS(configuration);
   const s3Key = configData.getIn(['parameters', 'key'], '');
   return {
@@ -84,12 +84,12 @@ function parseConfiguration(configuration, configId) {
     delimiter: configData.getIn(['storage', 'output', 'tables', 0, 'delimiter'], ','),
     enclosure: configData.getIn(['storage', 'output', 'tables', 0, 'enclosure'], '"')
   };
-}
+};
 
-module.exports = {
-  getDefaultTable: getDefaultTable,
-  getDefaultBucket: getDefaultBucket,
-  hasWildcard: hasWildcard,
-  createConfiguration: createConfiguration,
-  parseConfiguration: parseConfiguration
+export default {
+  getDefaultTable,
+  getDefaultBucket,
+  hasWildcard,
+  createConfiguration,
+  parseConfiguration
 };

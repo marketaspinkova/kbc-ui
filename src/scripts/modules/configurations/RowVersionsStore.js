@@ -126,4 +126,4 @@ dispatcher.register(function(payload) {
   }
 });
 
-module.exports = RowVersionsStore;
+export default RowVersionsStore;

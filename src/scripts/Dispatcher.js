@@ -16,4 +16,4 @@ class KbcDispatcher extends Dispatcher {
   }
 }
 
-module.exports = new KbcDispatcher();
+export default new KbcDispatcher();

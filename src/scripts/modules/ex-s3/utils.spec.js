@@ -1,9 +1,5 @@
-var Immutable = require('immutable');
-var getDefaultTable = require('./utils').getDefaultTable;
-var hasWildcard = require('./utils').hasWildcard;
-var createConfiguration = require('./utils').createConfiguration;
-var parseConfiguration = require('./utils').parseConfiguration;
-var getDefaultBucket = require('./utils').getDefaultBucket;
+import Immutable from 'immutable';
+import { getDefaultTable, hasWildcard, createConfiguration, parseConfiguration, getDefaultBucket } from './utils';
 
 const emptyLocalState = {};
 const emptyConfiguration = {};

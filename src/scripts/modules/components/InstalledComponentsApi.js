@@ -186,4 +186,4 @@ const installedComponentsApi = {
   }
 };
 
-module.exports = installedComponentsApi;
+export default installedComponentsApi;

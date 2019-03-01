@@ -5,7 +5,7 @@ import Api from '../components/InstalledComponentsApi';
 import Constants from './RowVersionsConstants';
 import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
 
-module.exports = {
+export default {
   loadVersions: function(componentId, configId, rowId) {
     if (Store.hasVersions(componentId, configId, rowId)) {
       this.loadVersionsForce(componentId, configId, rowId);

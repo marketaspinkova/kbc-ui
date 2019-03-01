@@ -21,7 +21,7 @@ const storeEncodedConfiguration = function(componentId, configurationId, configu
   });
 };
 
-module.exports = {
+export default {
   updateConfiguration: function(componentId, configurationId, value) {
     Dispatcher.handleViewAction({
       type: Constants.ActionTypes.CONFIGURATIONS_UPDATE_CONFIGURATION,

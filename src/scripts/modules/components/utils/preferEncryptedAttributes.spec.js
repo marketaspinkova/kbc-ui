@@ -1,4 +1,4 @@
-var preferEncryptedAttributes = require('./preferEncryptedAttributes');
+import preferEncryptedAttributes from './preferEncryptedAttributes';
 
 describe('preferEncryptedAttributes', function() {
   describe('#preferEncryptedAttributes()', function() {

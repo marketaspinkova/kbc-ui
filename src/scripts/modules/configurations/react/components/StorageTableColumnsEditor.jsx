@@ -4,7 +4,7 @@ import {fromJS} from 'immutable';
 import classnames from 'classnames';
 import storageApi from '../../../components/StorageApi';
 import ColumnDataPreview from '../../../components/react/components/ColumnDataPreview';
-require('./StorageTableColumnsEditor.less');
+import './StorageTableColumnsEditor.less';
 
 export default React.createClass({
   propTypes: {

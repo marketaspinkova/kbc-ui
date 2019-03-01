@@ -24,4 +24,4 @@ const StoreUtils = {
   }
 };
 
-module.exports = StoreUtils;
+export default StoreUtils;

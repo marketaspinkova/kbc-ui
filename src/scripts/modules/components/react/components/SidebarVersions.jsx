@@ -5,9 +5,10 @@ import SidebarVersionsRow from './SidebarVersionsRow';
 import {Link} from 'react-router';
 import {getPreviousVersion} from '../../../../utils/VersionsDiffUtils';
 import DiffVersionButton from '../../../../react/common/DiffVersionButton';
-module.exports = React.createClass({
-  displayName: 'SidebarVersions',
+
+export default React.createClass({
   mixins: [PureRenderMixin],
+
   propTypes: {
     versions: React.PropTypes.object.isRequired,
     versionsConfigs: React.PropTypes.object.isRequired,
@@ -21,6 +22,7 @@ module.exports = React.createClass({
     isPending: React.PropTypes.bool,
     prepareVersionsDiffData: React.PropTypes.func
   },
+
   getDefaultProps: function() {
     return {
       limit: 5

@@ -141,7 +141,7 @@ const startApp = appOptions => {
   });
 };
 
-module.exports = {
+export default {
   start: startApp,
   helpers
 };

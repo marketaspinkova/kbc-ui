@@ -1,11 +1,10 @@
 import {Map, List} from 'immutable';
 
-const getDefaultTable = function(configId) {
+export const getDefaultTable = function(configId) {
   return 'in.c-csv-import.' + configId;
 };
 
-
-const createConfiguration = function(settings, configId) {
+export const createConfiguration = function(settings, configId) {
   let config = Map();
 
   if (settings.get('destination') && settings.get('destination') !== '') {
@@ -36,7 +35,7 @@ const createConfiguration = function(settings, configId) {
   return config;
 };
 
-module.exports = {
+export default {
   getDefaultTable: getDefaultTable,
   createConfiguration: createConfiguration
 };

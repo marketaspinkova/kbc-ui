@@ -44,7 +44,7 @@ const storeEncodedConfigRow = function(componentId, configId, rowId, dataToSave,
   });
 };
 
-module.exports = {
+export default {
   loadComponentsForce: function() {
     var promises;
     promises = [];

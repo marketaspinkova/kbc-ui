@@ -99,4 +99,4 @@ const ProvisioningApi = {
   }
 };
 
-module.exports = ProvisioningApi;
+export default ProvisioningApi;

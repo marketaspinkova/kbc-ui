@@ -11,7 +11,7 @@ import DeprecatedComponents from './DeprecatedComponents';
 import FileSize from '../../../react/common/FileSize';
 import TransformationParallelUnloads from './TransformationParallelUnloads';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
-import { showWizardModalFn } from '../../guide-mode/stores/ActionCreators.js';
+import { showWizardModalFn } from '../../guide-mode/stores/ActionCreators';
 import WizardStore from '../../guide-mode/stores/WizardStore';
 import Desk from '../../guide-mode/react/Desk';
 import lessons from '../../guide-mode/WizardLessons';

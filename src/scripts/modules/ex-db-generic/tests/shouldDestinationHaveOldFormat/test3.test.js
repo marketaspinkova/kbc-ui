@@ -1,3 +1,5 @@
+import { createStore } from '../../storeProvisioning';
+
 jest.mock('../../../../modules/components/stores/InstalledComponentsStore', () => {
   const Immutable = require('immutable');
   const data = Immutable.fromJS({
@@ -26,7 +28,7 @@ jest.mock('../../../../modules/components/stores/InstalledComponentsStore', () =
   };
 });
 
-const store = require('../../storeProvisioning').createStore('keboola.ex-db-mysql', '333289236222');
+const store = createStore('keboola.ex-db-mysql', '333289236222');
 
 describe('shouldDestinationHaveOldFormat test 3', function() {
   describe('shouldDestinationHaveOldFormat', function() {

@@ -16,8 +16,7 @@ import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
 import 'aws-sdk/dist/aws-sdk';
 const AWS = window.AWS;
 
-module.exports = {
-
+export default {
   tokenVerify: function() {
     return storageApi.verifyToken().then((sapiToken) => {
       return dispatcher.handleViewAction({

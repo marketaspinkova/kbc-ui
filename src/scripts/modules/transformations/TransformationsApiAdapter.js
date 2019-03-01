@@ -82,4 +82,4 @@ var transformationsApi = {
   }
 };
 
-module.exports = transformationsApi;
+export default transformationsApi;

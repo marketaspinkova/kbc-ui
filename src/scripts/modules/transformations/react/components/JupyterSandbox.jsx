@@ -155,4 +155,4 @@ var JupyterSandbox = React.createClass({
   }
 });
 
-module.exports = JupyterSandbox;
+export default JupyterSandbox;

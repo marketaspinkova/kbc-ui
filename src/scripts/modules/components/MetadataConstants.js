@@ -1,6 +1,6 @@
 import keyMirror from 'fbjs/lib/keyMirror';
 
-module.exports = {
+export default {
   ActionTypes: keyMirror({
 
     METADATA_EDIT_START: null,

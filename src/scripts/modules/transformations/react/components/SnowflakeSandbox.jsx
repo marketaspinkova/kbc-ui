@@ -133,4 +133,4 @@ var SnowflakeSandbox = React.createClass({
   }
 });
 
-module.exports = SnowflakeSandbox;
+export default SnowflakeSandbox;

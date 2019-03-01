@@ -53,7 +53,7 @@ const reloadVersions = function(configId, rowId) {
   return Promise.all(promises);
 };
 
-module.exports = {
+export default {
   createTransformationBucket: function(data) {
     var changeDescription, newBucket;
     newBucket = {};

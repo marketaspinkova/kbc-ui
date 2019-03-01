@@ -27,4 +27,4 @@ dispatcher.register(function(payload) {
   }
 });
 
-module.exports = ServicesStore;
+export default ServicesStore;
