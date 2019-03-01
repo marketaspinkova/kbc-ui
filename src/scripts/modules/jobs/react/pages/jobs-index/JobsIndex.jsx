@@ -74,7 +74,16 @@ export default React.createClass({
   },
 
   renderJob(job) {
-    return <JobRow job={job} key={job.get('id')} query={this.state.query} />;
+    const userRunnedJob = JobsStore.getUserRunnedParentJob(job);
+
+    return (
+      <JobRow 
+        key={job.get('id')} 
+        job={job}
+        userRunnedJob={userRunnedJob}
+        query={this.state.query} 
+      />
+    );
   },
 
   handleSearch(query) {

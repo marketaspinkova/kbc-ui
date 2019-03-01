@@ -74,6 +74,29 @@ const JobsStore = StoreUtils.createStore({
 
   getIsJobTerminating(jobId) {
     return _store.get('terminatingJobs').contains(jobId);
+  },
+
+  getUserRunnedParentJob(configurationJob) {
+    let job = configurationJob;
+
+    if (job.get('nestingLevel') > 0 && !job.hasIn(['params', 'config'])) {
+      const jobs = this.getAll();
+      const runIdParts = job.get('runId', []).split('.');
+      let parentRunId = '';
+      let parentJob = null;
+
+      for (let index = 1; index <= runIdParts.length; index++) {
+        parentRunId = runIdParts.slice(0, index * -1).join('.');
+        parentJob = jobs.find((job) => job.get('runId') === parentRunId && job.hasIn(['params', 'config']));
+
+        if (parentJob && parentJob.count() > 0) {
+          job = parentJob;
+          break;
+        }
+      }
+    }
+
+    return job;
   }
 });
 

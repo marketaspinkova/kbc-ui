@@ -10,19 +10,19 @@ import ComponentsStore from '../../../../components/stores/ComponentsStore';
 import InstalledComponentsStore from '../../../../components/stores/InstalledComponentsStore';
 import TransformationsStore from '../../../../transformations/stores/TransformationsStore';
 import date from '../../../../../utils/date';
-import { getJobComponentId, getUserConfiguredJob } from '../../../utils';
+import { getJobComponentId } from '../../../utils';
 
 export default React.createClass({
   mixins: [PureRenderMixin],
 
   propTypes: {
     job: React.PropTypes.object.isRequired,
+    userRunnedJob: React.PropTypes.object.isRequired,
     query: React.PropTypes.string.isRequired
   },
 
   render() {
     const component = this.getComponent();
-    const userConfiguredJob = getUserConfiguredJob(this.props.job);
 
     return (
       <Link className="tr" to="jobDetail" params={this.linkParams()} query={this.linkQuery()}>
@@ -31,8 +31,8 @@ export default React.createClass({
           <ComponentName component={component} showType />
         </div>
         <div className="td">
-          <JobPartialRunLabel job={userConfiguredJob} />
-          {this.jobConfiguration(userConfiguredJob)}
+          <JobPartialRunLabel job={this.props.userRunnedJob} />
+          {this.jobConfiguration(this.props.userRunnedJob)}
         </div>
         <div className="td">{this.props.job.getIn(['token', 'description'])}</div>
         <div className="td">{date.format(this.props.job.get('createdTime'))}</div>

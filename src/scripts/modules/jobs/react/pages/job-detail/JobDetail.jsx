@@ -9,7 +9,7 @@ import SoundNotifications from '../../../../../utils/SoundNotifications';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../../../stores/RoutesStore';
 import JobsStore from '../../../stores/JobsStore';
-import { getJobComponentId, getUserConfiguredJob } from '../../../utils';
+import { getJobComponentId } from '../../../utils';
 import ComponentsStore from '../../../../components/stores/ComponentsStore';
 import InstalledComponentsStore from '../../../../components/stores/InstalledComponentsStore';
 import ConfigurationRowsStore from '../../../../configurations/ConfigurationRowsStore';
@@ -362,7 +362,7 @@ export default React.createClass({
   },
 
   _renderConfiguration(configurationJob) {
-    let job = getUserConfiguredJob(configurationJob);
+    let job = JobsStore.getUserRunnedParentJob(configurationJob);
 
     return (
       <div className="row">
