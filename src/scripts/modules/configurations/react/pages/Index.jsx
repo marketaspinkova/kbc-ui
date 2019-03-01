@@ -28,6 +28,7 @@ import IndexSections from '../components/IndexSections';
 
 // utils
 import sections from '../../utils/sections';
+import MigrationRow from "../../../components/react/components/MigrationRow";
 
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore, ConfigurationsStore, ConfigurationRowsStore, VersionsStore, MigrationsStore)],
@@ -36,15 +37,18 @@ export default React.createClass({
     const configurationId = RoutesStore.getCurrentRouteParam('config');
     const settings = RoutesStore.getRouteSettings();
     const componentId = settings.get('componentId');
+    const component = ComponentsStore.getComponent(componentId);
     const configuration = ConfigurationsStore.get(componentId, configurationId);
     return {
       componentId: componentId,
-      component: ComponentsStore.getComponent(componentId),
+      component: component,
       settings: settings,
       configurationId: configurationId,
       configuration: configuration,
       rows: ConfigurationRowsStore.getRows(componentId, configurationId),
-      isChanged: ConfigurationsStore.isEditingConfiguration(componentId, configurationId)
+      isChanged: ConfigurationsStore.isEditingConfiguration(componentId, configurationId),
+      isDeprecated: component.get('flags').includes('deprecated'),
+      deprecationReplacementComponentId: component.getIn(['uiOptions', 'replacementApp'])
     };
   },
 
@@ -146,6 +150,12 @@ export default React.createClass({
     const sidebarCustomItems = settings.getIn(['index', 'sidebarCustomItems'], Immutable.List());
     return (
       <div className="container-fluid">
+        {this.state.isDeprecated && (
+          <MigrationRow
+            componentId={this.state.componentId}
+            replacementAppId={this.state.deprecationReplacementComponentId}
+          />
+        )}
         <div className="col-md-9 kbc-main-content">
           <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
             <ComponentDescription

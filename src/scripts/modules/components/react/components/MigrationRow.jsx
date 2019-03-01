@@ -41,9 +41,9 @@ const componentNameMap = Map({
   'wr-db-redshift': 'keboola.wr-redshift-v2'
 });
 
-const WR_DB_DESCRIPTION = 'Migrate your current configurations to new Database Writer. This writer will continue to work until May 2017. The migration will also alter your orchestrations to use the new writers. The old configurations will remain intact for now. You can remove them yourself after a successful migration.';
+const WR_DB_DESCRIPTION = (<p>Migrate your current configurations to new Database Writer. This writer will continue to work until May 2017. The migration will also alter your orchestrations to use the new writers. The old configurations will remain intact for now. You can remove them yourself after a successful migration.</p>);
 const EX_GOODDATA_DESCRIPTION = (
-  <p>
+  <div>
     <span>Migration takes place with the following consequences:</span>
     <ul>
       <li><strong>Only GoodData writer reports will be migrated:</strong> Only reports of the GoodData project belonging to a GoodData writer configuration of this project will be migrated. If there are reports from a different(non-writer) GoodData project, then users have to do the migration manually.</li>
@@ -51,14 +51,14 @@ const EX_GOODDATA_DESCRIPTION = (
       <li><strong>Orchestrations tasks update:</strong> All orchestration tasks of the old GoodData extractor configurations will be replaced with configurations of the new GoodData extractor.</li>
       <li><strong>Column naming conventions:</strong> The column names of the extracted table are based on the column names of the GoodData report. However, they can contain only alphanumeric characters and underscores. All other characters are replaced by underscores. For example, if there is a column in the report with the name &quot;Month Revenue&quot;, then its corresponding table column name will be &quot;Month_Revenue&quot;.</li>
     </ul>
-  </p>
+  </div>
 );
 
 const descriptionsMap = Map({
-  'ex-db': 'Migrate your current configurations to new vendor specific database extractors (MySql, Postgres, Oracle, Microsoft SQL). This extractor will continue to work until August 2016. The migration will also alter your orchestrations to use the new extractors. The old configurations will remain intact for now. You can remove them yourself after a successful migration.',
+  'ex-db': (<p>Migrate your current configurations to new vendor specific database extractors (MySql, Postgres, Oracle, Microsoft SQL). This extractor will continue to work until August 2016. The migration will also alter your orchestrations to use the new extractors. The old configurations will remain intact for now. You can remove them yourself after a successful migration.</p>),
   'ex-gooddata': EX_GOODDATA_DESCRIPTION,
-  'ex-google-analytics': 'Migrate your current configurations to new Google Analytics Extractor, which uses the newest API V4. This extractor will continue to work until November 2016. The migration will also alter your orchestrations to use the new extractors. The old configurations will remain intact for now. You can remove them yourself after a successful migration.',
-  'ex-google-drive': 'Migrate your current configurations to new Google Drive Extractor. This extractor will continue to work until April 2017. The migration will also alter your orchestrations to use the new extractors. The old configurations will remain intact for now. You can remove them yourself after a successful migration.',
+  'ex-google-analytics': (<p>Migrate your current configurations to new Google Analytics Extractor, which uses the newest API V4. This extractor will continue to work until November 2016. The migration will also alter your orchestrations to use the new extractors. The old configurations will remain intact for now. You can remove them yourself after a successful migration.</p>),
+  'ex-google-drive': (<p>Migrate your current configurations to new Google Drive Extractor. This extractor will continue to work until April 2017. The migration will also alter your orchestrations to use the new extractors. The old configurations will remain intact for now. You can remove them yourself after a successful migration.</p>),
   'wr-db-mysql': WR_DB_DESCRIPTION,
   'wr-db-oracle': WR_DB_DESCRIPTION,
   'wr-db-redshift': WR_DB_DESCRIPTION
@@ -219,6 +219,10 @@ export default React.createClass({
         <Row>
           <Col md={9}>
             {this.getInfo()}
+          </Col>
+        </Row>
+        <Row>
+          <Col md={9}>
             {this.renderMigrationButton()}
           </Col>
         </Row>
