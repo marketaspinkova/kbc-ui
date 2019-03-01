@@ -74,8 +74,6 @@ export default React.createClass({
       const configId = job.getIn(['params', 'config']);
       const rowId = job.getIn(['params', 'transformations', 0], null);
 
-      console.log(TransformationsStore.getTransformationName(configId, rowId)); // eslint-disable-line
-
       if (rowId) {
         return (
           <span>
