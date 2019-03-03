@@ -55,10 +55,12 @@ export default React.createClass({
 
     return this.props.job
       .getIn(['params', 'tasks'], List())
-      .map((task, taskId) => {
+      .map((task) => {
         return task.set(
           'event',
-          this.state.events.find((event) => startsWith(event.get('message'), `Task ${taskId} `))
+          this.state.events.find((event) =>
+            startsWith(event.get('message'), `Task ${task.get('id')} `)
+          )
         );
       })
       .toJS();
