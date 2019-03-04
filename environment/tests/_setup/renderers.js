@@ -1,5 +1,5 @@
 import { configure, shallow, render, mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-14';
+import Adapter from 'enzyme-adapter-react-15';
 
 configure({ adapter: new Adapter() });
 
