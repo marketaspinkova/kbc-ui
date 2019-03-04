@@ -1,9 +1,8 @@
-/* eslint no-console: 0 */
 import React, {PropTypes} from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
-import {Form, FormGroup, ControlLabel, Col, HelpBlock, Checkbox, FormControl} from 'react-bootstrap';
+import {Form, FormGroup, ControlLabel, Col, HelpBlock, Checkbox} from 'react-bootstrap';
 import Select from '../../../../react/common/Select';
-import TableSelectorForm from '../../../../react/common//TableSelectorForm';
+import TableSelectorForm from '../../../../react/common/TableSelectorForm';
 
 
 export default React.createClass({
@@ -13,15 +12,21 @@ export default React.createClass({
     value: PropTypes.shape({
       outputTable: PropTypes.string.isRequired,
       incremental: PropTypes.bool.isRequired,
-      primaryKey: PropTypes.array.isRequired
+      primaryKey: PropTypes.array.isRequired,
+      destinationEditing: PropTypes.bool.isRequired,
     }),
     onChange: PropTypes.func.isRequired,
-    disabled: PropTypes.bool.isRequired,
-    destinationEditing: PropTypes.bool
+    disabled: PropTypes.bool.isRequired
+  },
+
+  onDestinationEdit() {
+    const value = this.props.value;
+    this.props.onChange(value);
   },
 
   render() {
     const props = this.props;
+
     return (
       <Form horizontal>
         <h3>Save Settings</h3>
@@ -36,31 +41,9 @@ export default React.createClass({
           label="Destination"
           help="Where the table will be imported.
                   If the table or bucket does not exist, it will be created."
-          onEdit={function(value, valuevalue) {
-            console.log(value);
-            console.log(valuevalue);
-            props.onChange({destinationEditing: true});
-          }}
-          editing={this.props.destinationEditing}
+          onEdit={() => this.onDestinationEdit()}
+          editing={this.props.value.destinationEditing}
         />
-        <FormGroup>
-          <Col componentClass={ControlLabel} sm={4}>
-            Destination
-          </Col>
-          <Col sm={8}>
-            <FormControl
-              type="text"
-              value={this.props.value.outputTable}
-              onChange={function(e) {
-                props.onChange({outputTable: e.target.value});
-              }}
-              disabled={this.props.disabled}
-            />
-            <HelpBlock>
-              If empty, the default will be used.
-            </HelpBlock>
-          </Col>
-        </FormGroup>
         <FormGroup>
           <Col smOffset={4} sm={8}>
             <Checkbox

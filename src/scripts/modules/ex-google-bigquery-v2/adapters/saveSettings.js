@@ -1,8 +1,15 @@
 import Immutable from 'immutable';
 import string from "../../../utils/string";
 
+const generateDefaultOutputTable = function(name) {
+  const queryName = string.sanitizeKbcTableIdString(name);
+  const bucketName = string.sanitizeKbcTableIdString('keboola.ex-google-bigquery-v2');
+
+  return 'in.c-' + bucketName + '.' + queryName;
+}
+
 const createConfiguration = function(localState) {
-  const config = Immutable.fromJS({
+  return Immutable.fromJS({
     parameters: {
       query: {
         outputTable: localState.get('outputTable', ''),
@@ -11,24 +18,26 @@ const createConfiguration = function(localState) {
       }
     }
   });
-  return config;
 };
 
 const parseConfiguration = function(configuration) {
   const query = configuration.getIn(['parameters', 'query'], Immutable.Map());
 
+  let outputTable = query.get('outputTable', '');
+  if (outputTable === '') {
+    outputTable = generateDefaultOutputTable(query.get('name', ''))
+  }
+
   return Immutable.fromJS({
-    outputTable: query.get('outputTable', ''),
+    outputTable: outputTable,
     incremental: query.get('incremental', false),
-    primaryKey: query.get('primaryKey', Immutable.List()).toJS()
+    primaryKey: query.get('primaryKey', Immutable.List()).toJS(),
+    destinationEditing: true
   });
 };
 
 const createEmptyConfiguration = function(name) {
-  const qname = string.sanitizeKbcTableIdString(name);
-  const bucketName = string.sanitizeKbcTableIdString('keboola.ex-google-bigquery-v2');
-
-  return createConfiguration(Immutable.fromJS({outputTable: 'in.c-' + bucketName + '.' + qname}));
+  return createConfiguration(Immutable.fromJS({outputTable: generateDefaultOutputTable(name)}));
 };
 
 export default {
