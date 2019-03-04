@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import {Form, FormControl, FormGroup, ControlLabel, Col, HelpBlock} from 'react-bootstrap';
 import Select from 'react-select';
 
-import {DatasetLocations} from "./../../constants";
+import {DatasetLocations} from "../../helpers/constants";
 
 const locationOptions = [
   {
