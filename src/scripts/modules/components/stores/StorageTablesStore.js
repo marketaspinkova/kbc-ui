@@ -22,6 +22,10 @@ const StorageTablesStore = StoreUtils.createStore({
     return _store.get('tables').has(tableId);
   },
 
+  getTable(tableId, defaultValue) {
+    return _store.getIn(['tables', tableId], defaultValue);
+  },
+
   getIsLoading() {
     return _store.get('isLoading');
   },

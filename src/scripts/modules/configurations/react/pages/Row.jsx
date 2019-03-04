@@ -48,7 +48,7 @@ export default React.createClass({
     const parseTableIdFn = settings.getIn(['row', 'parseTableId']);
     if (parseTableIdFn) {
       const tableId = parseTableIdFn(rowConfiguration);
-      const table = TablesStore.getAll().get(tableId);
+      const table = TablesStore.get(tableId);
       context = context.set('table', table).set('tableId', tableId);
     }
     const parseBySectionsFn = sections.makeParseFn(

@@ -38,7 +38,7 @@ export default React.createClass({
 
     return {
       isSaving: InstalledComponentsStore.getSavingConfigData(componentId, configId),
-      table: StorageTablesStore.getAll().get(tableId),
+      table: StorageTablesStore.get(tableId),
       configId,
       tableId,
       columnsTypes: configData.getIn(['parameters', 'typedefs', tableId], Map()),

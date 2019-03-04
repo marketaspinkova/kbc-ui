@@ -42,7 +42,7 @@ export default componentId => {
       const configId = RoutesStore.getCurrentRouteParam('config');
       const tableId = RoutesStore.getCurrentRouteParam('tableId');
       const tableConfig = WrDbStore.getTableConfig(componentId, configId, tableId);
-      const storageTableColumns = StorageTablesStore.getAll().getIn([tableId, 'columns'], List());
+      const storageTableColumns = StorageTablesStore.get(tableId, Map()).get('columns', List());
       const localState = InstalledComponentsStore.getLocalState(componentId, configId);
       const tablesExportInfo = WrDbStore.getTables(componentId, configId);
       const exportInfo = tablesExportInfo.find(tab => tab.get('id') === tableId);
