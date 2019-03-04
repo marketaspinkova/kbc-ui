@@ -204,44 +204,41 @@ export default React.createClass({
             />
           </div>
           <div className="row">
-            <div classNmae="col-xs-4">
-              {this.accountAuthorization()}
-              {this.tableInputMapping()}
-              {this.fileInputMapping()}
-              {this.tableOutputMapping()}
-              {this.fileOutputMapping()}
-              {this.isTemplatedComponent() ? (
-                <TemplatedConfiguration
+            {this.accountAuthorization()}
+            {this.tableInputMapping()}
+            {this.fileInputMapping()}
+            {this.tableOutputMapping()}
+            {this.fileOutputMapping()}
+            {this.isTemplatedComponent() ? (
+              <TemplatedConfiguration
+                headerText="Configuration"
+                editLabel="Edit configuration"
+                saveLabel="Save configuration"
+              />
+            ) : (
+              <span>
+                <Configuration
+                  data={this.state.editingConfigDataParameters}
+                  isChanged={this.state.isParametersChanged}
+                  isSaving={this.state.isParametersSaving}
+                  onEditCancel={this.onEditParametersCancel}
+                  onEditChange={this.onEditParametersChange}
+                  onEditSubmit={this.onEditParametersSubmit}
+                  isValid={this.state.isValidEditingConfigDataParameters}
                   headerText="Configuration"
-                  editLabel="Edit configuration"
                   saveLabel="Save configuration"
+                  schema={this.state.component.get('configurationSchema', Map())}
+                  editHelp={this.state.component.get('configurationDescription')}
+                  documentationUrl={this.state.component.get('documentationUrl')}
                 />
-              ) : (
-                <span>
-                  <Configuration
-                    data={this.state.editingConfigDataParameters}
-                    isChanged={this.state.isParametersChanged}
-                    isSaving={this.state.isParametersSaving}
-                    onEditCancel={this.onEditParametersCancel}
-                    onEditChange={this.onEditParametersChange}
-                    onEditSubmit={this.onEditParametersSubmit}
-                    isValid={this.state.isValidEditingConfigDataParameters}
-                    headerText="Configuration"
-                    saveLabel="Save configuration"
-                    schema={this.state.component.get('configurationSchema', Map())}
-                    editHelp={this.state.component.get('configurationDescription')}
-                    documentationUrl={this.state.component.get('documentationUrl')}
-                  />
-                </span>
-              )}
-              {this.runtimeConfiguration()}
-              {this.processorsConfiguration()}
-            </div>
-
+              </span>
+            )}
+            {this.runtimeConfiguration()}
+            {this.processorsConfiguration()}
           </div>
         </div>
         <div className="col-md-3 kbc-main-sidebar">
-          <div classNmae="kbc-buttons kbc-text-light">
+          <div className="kbc-buttons kbc-text-light">
             <ComponentMetadata
               componentId={this.state.componentId}
               configId={this.state.config.get('id')}

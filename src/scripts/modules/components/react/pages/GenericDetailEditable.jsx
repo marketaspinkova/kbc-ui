@@ -67,24 +67,21 @@ export default React.createClass({
             />
           </div>
           <div className="row">
-            <div classNmae="col-xs-4">
-              {this.renderConfigurationHint()}
-              <Configuration
-                data={this.state.editingConfigData}
-                isSaving={this.state.isSaving}
-                onEditCancel={this.onEditCancel}
-                onEditChange={this.onEditChange}
-                isChanged={this.state.isChanged}
-                onEditSubmit={this.onEditSubmit}
-                isValid={this.state.isValidEditingConfigData}
-                showDocumentationLink={!this.state.component.get('flags').contains('genericDockerUI-runtime')}
-              />
-
-            </div>
+            {this.renderConfigurationHint()}
+            <Configuration
+              data={this.state.editingConfigData}
+              isSaving={this.state.isSaving}
+              onEditCancel={this.onEditCancel}
+              onEditChange={this.onEditChange}
+              isChanged={this.state.isChanged}
+              onEditSubmit={this.onEditSubmit}
+              isValid={this.state.isValidEditingConfigData}
+              showDocumentationLink={!this.state.component.get('flags').contains('genericDockerUI-runtime')}
+            />
           </div>
         </div>
         <div className="col-md-3 kbc-main-sidebar">
-          <div classNmae="kbc-buttons kbc-text-light">
+          <div className="kbc-buttons kbc-text-light">
             <ComponentMetadata
               componentId={this.state.componentId}
               configId={this.state.config.get('id')}
