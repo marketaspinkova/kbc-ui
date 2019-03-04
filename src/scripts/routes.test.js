@@ -17,7 +17,6 @@ jest.mock('react-router', () => {
     Route,
     Navigation: {},
     State: {}
-  };
 });
 
 describe('routes config', function() {
