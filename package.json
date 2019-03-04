@@ -46,7 +46,7 @@
     "react-dnd-html5-backend": "~2.2.4",
     "react-document-title": "^2.0.3",
     "react-dom": "^15.6.2",
-    "react-dropbox-chooser": "^0.0.3",
+    "react-dropbox-chooser": "^0.0.5",
     "react-immutable-render-mixin": "~0.9.7",
     "react-radio-group": "^3.0.3",
     "react-remarkable": "^1.1.3",
