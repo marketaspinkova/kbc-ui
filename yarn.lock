@@ -2106,7 +2106,7 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-create-react-class@^15.5.2, create-react-class@^15.5.x, create-react-class@^15.6.0, create-react-class@^15.6.3:
+create-react-class@^15.5.2, create-react-class@^15.6.0, create-react-class@^15.6.3:
   version "15.6.3"
   resolved "https://registry.yarnpkg.com/create-react-class/-/create-react-class-15.6.3.tgz#2d73237fb3f970ae6ebe011a9e66f46dbca80036"
   integrity sha512-M+/3Q6E6DLO6Yx3OwrWjwHBnvfXXYA7W+dFjt/ZDBemHO1DDZhsalX/NUtnTYclN6GfnBDRh4qRHjcDHmlJBJg==
@@ -6716,14 +6716,15 @@ react-code-mirror@^3.1.0:
   resolved "https://registry.yarnpkg.com/react-code-mirror/-/react-code-mirror-3.1.0.tgz#d1e34a417dc9555dddbd63528f9fa6370d46fc44"
   integrity sha1-0eNKQX3JVV3dvWNSj5+mNw1G/EQ=
 
-"react-datetime@git+https://git@github.com/keboola/react-datetime.git#v2.10.3-fix":
-  version "2.10.3-fix"
-  resolved "git+https://git@github.com/keboola/react-datetime.git#04bd1d24c94c3f3b31220d6fe67f206cd5daef11"
+react-datetime@^2.16.3:
+  version "2.16.3"
+  resolved "https://registry.yarnpkg.com/react-datetime/-/react-datetime-2.16.3.tgz#7f9ac7d4014a939c11c761d0c22d1fb506cb505e"
+  integrity sha512-amWfb5iGEiyqjLmqCLlPpu2oN415jK8wX1qoTq7qn6EYiU7qQgbNHglww014PT4O/3G5eo/3kbJu/M/IxxTyGw==
   dependencies:
     create-react-class "^15.5.2"
     object-assign "^3.0.0"
     prop-types "^15.5.7"
-    react-onclickoutside "^5.9.0"
+    react-onclickoutside "^6.5.0"
 
 react-dnd-html5-backend@~2.2.4:
   version "2.2.4"
@@ -6805,12 +6806,10 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-onclickoutside@^5.9.0:
-  version "5.11.1"
-  resolved "https://registry.yarnpkg.com/react-onclickoutside/-/react-onclickoutside-5.11.1.tgz#00314e52567cf55faba94cabbacd119619070623"
-  integrity sha1-ADFOUlZ89V+rqUyrus0RlhkHBiM=
-  dependencies:
-    create-react-class "^15.5.x"
+react-onclickoutside@^6.5.0:
+  version "6.8.0"
+  resolved "https://registry.yarnpkg.com/react-onclickoutside/-/react-onclickoutside-6.8.0.tgz#9f91b5b3ed59f4d9e43fd71620dc200773a4d569"
+  integrity sha512-5Q4Rn7QLEoh7WIe66KFvYIpWJ49GeHoygP1/EtJyZjXKgrWH19Tf0Ty3lWyQzrEEDyLOwUvvmBFSE3dcDdvagA==
 
 react-overlays@^0.7.4:
   version "0.7.4"
