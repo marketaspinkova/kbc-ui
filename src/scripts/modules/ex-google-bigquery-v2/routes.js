@@ -76,9 +76,9 @@ const routeSettings = {
       },
       {
         name: 'Destination',
-        type: columnTypes.TABLE_LINK_DEFAULT_BUCKET,
+        type: columnTypes.TABLE_LINK,
         value: function(row) {
-          return row.getIn(['configuration', 'parameters', 'tableName']);
+          return row.getIn(['configuration', 'parameters', 'query', 'outputTable']);
         }
       },
       {
