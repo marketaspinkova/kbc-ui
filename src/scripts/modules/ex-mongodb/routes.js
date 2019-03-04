@@ -9,7 +9,7 @@ import ExDbQueryHeaderButtons from './react/components/QueryActionButtons';
 import ExDbQueryName from './react/components/QueryName';
 import JobsActionCreators from '../jobs/ActionCreators';
 import StorageActionCreators from '../components/StorageActionCreators';
-import * as VersionsActionsCreators from '../components/VersionsActionCreators';
+import VersionsActionsCreators from '../components/VersionsActionCreators';
 import { createTablesRoute } from '../table-browser/routes';
 import * as storeProvisioning from './storeProvisioning';
 import * as credentialsTemplate from './credentials';
