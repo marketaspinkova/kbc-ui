@@ -7,8 +7,6 @@ module.exports = function(options) {
   var isDevelopment = options.isDevelopment;
 
   var plugins = [
-    new webpack.PrefetchPlugin('react'),
-    new webpack.PrefetchPlugin('react/lib/ReactComponentBrowserEnvironment'),
     new webpack.DefinePlugin({
       'process.env': {
         __DEV__: isDevelopment,
@@ -44,7 +42,11 @@ module.exports = function(options) {
     };
   } else {
     entry = {
-      bundle: ['./node_modules/intl/Intl.js', './node_modules/intl/locale-data/jsonp/en.js', './src/scripts/app'],
+      bundle: [
+        './node_modules/intl/Intl.js',
+        './node_modules/intl/locale-data/jsonp/en.js',
+        './src/scripts/app'
+      ],
       parts: ['./src/scripts/parts']
     };
   }
@@ -55,7 +57,10 @@ module.exports = function(options) {
     entry: entry,
     output: Object.assign(
       {
-        path: path.resolve(__dirname, isDevelopment ? '../dist' : '../dist/' + process.env.KBC_REVISION),
+        path: path.resolve(
+          __dirname,
+          isDevelopment ? '../dist' : '../dist/' + process.env.KBC_REVISION
+        ),
         filename: isDevelopment ? '[name].js' : '[name].min.js',
         publicPath: isDevelopment ? '/scripts/' : '',
         libraryExport: 'default',
@@ -103,7 +108,11 @@ module.exports = function(options) {
         },
         {
           test: /\.less$/,
-          use: [isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader', 'less-loader']
+          use: [
+            isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
+            'css-loader',
+            'less-loader'
+          ]
         },
         {
           test: /.(png|woff|woff2|eot|ttf|svg|jpg|mp3)/,
