@@ -75,7 +75,7 @@ const routeSettings = {
         }
       },
       {
-        name: 'Destination',
+        name: 'Output Table',
         type: columnTypes.TABLE_LINK,
         value: function(row) {
           return row.getIn(['configuration', 'parameters', 'query', 'outputTable']);
