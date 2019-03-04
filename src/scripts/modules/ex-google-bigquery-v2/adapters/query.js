@@ -1,7 +1,7 @@
 import Immutable from 'immutable';
 
 const createConfiguration = function(localState) {
-  const config = Immutable.fromJS({
+  return Immutable.fromJS({
     parameters: {
       query: {
         name: localState.get('name', ''),
@@ -10,7 +10,6 @@ const createConfiguration = function(localState) {
       }
     }
   });
-  return config;
 };
 
 const parseConfiguration = function(configuration) {
