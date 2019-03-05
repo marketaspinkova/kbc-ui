@@ -20,25 +20,24 @@ export default React.createClass({
   },
 
   render() {
-    var codeMirrorParams = {
-      ref: 'CodeMirror',
-      value: this.props.value,
-      theme: 'solarized',
-      lineNumbers: true,
-      mode: 'application/json',
-      autofocus: true,
-      lineWrapping: true,
-      onChange: this.handleChange,
-      readOnly: this.props.disabled,
-      lint: false,
-      gutters: ['CodeMirror-lint-markers'],
-      placeholder: JSON.stringify({before: [], after: []}, null, 2)
-    };
     return (
       <div className="kbc-processor-edit">
         <div>
           <div className="edit form-group kbc-processor-editor">
-            <CodeMirror {...codeMirrorParams} />
+            <CodeMirror
+              ref='CodeMirror'
+              theme='solarized'
+              mode='application/json'
+              autofocus
+              lineNumbers
+              lineWrapping
+              lint={false}
+              value={this.props.value}
+              onChange={this.handleChange}
+              readOnly={this.props.disabled}
+              gutters={['CodeMirror-lint-markers']}
+              placeholder={JSON.stringify({before: [], after: []}, null, 2)}
+            />
           </div>
           <div className="small help-block">
             Learn more about <ExternalLink href="https://developers.keboola.com/integrate/docker-runner/processors/">Processors</ExternalLink>

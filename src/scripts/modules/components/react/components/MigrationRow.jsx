@@ -143,51 +143,10 @@ export default React.createClass({
       return null;
     }
 
-    const configHelpText = 'List of all configurations to be migrated and their new counterparts';
-    const orchHelpText = 'List of orchestrations containing tasks of either the old component or new component. '
-      + 'After a successful migration there should be only new component\'s tasks.';
-
-    const body = !this.state.loadingStatus ? (
-      <span>
-        {this.state.error ?
-          <Alert bsStyle="danger">
-            Error Loading status: {this.state.error}
-          </Alert>
-          :
-          <div>
-            <Tabs className="tabs-inside-modal" defaultActiveKey="general" animation={false} id="components-migration-row-tabs">
-
-              <Tab eventKey="general" title={this.renderTabTitle('Affected Configurations', configHelpText)}>
-                {this.renderConfigStatus()}
-              </Tab>
-              <Tab eventKey="datasample" title={this.renderTabTitle('Affected Orchestrations', orchHelpText)}>
-                {this.renderOrhcestrationsStatus()}
-              </Tab>
-            </Tabs>
-          </div>
-        }
-      </span>
-    ) : 'Loading migration status...';
-    const dialogTitle = this.renderDialogTitle();
-    const footer = (
-      <ConfirmButtons
-        saveStyle="success"
-        saveLabel="Migrate"
-        isSaving={this.state.isLoading}
-        isDisabled={this.state.isLoading || this.state.loadingStatus || this.state.error}
-        onSave={this.onMigrate}
-        onCancel={this.hideModal}
-      />
-    );
-    const dialogProps = {
-      show: this.state.showModal,
-      onHide: this.hideModal,
-      bsSize: 'large'
-    };
     return (
       <div className="kbc-overview-component-container">
         {this.renderInfoRow()}
-        {this.renderModal(dialogTitle, body, footer, dialogProps)}
+        {this.renderModal()}
       </div>
     );
   },
@@ -269,21 +228,73 @@ export default React.createClass({
       );
   },
 
-  renderModal(title, body, footer, props) {
+  renderModal() {
     return (
-      <Modal {...props}>
+      <Modal
+        bsSize='large'
+        show={this.state.showModal}
+        onHide={this.hideModal}
+      >
         <Modal.Header closeButton>
           <Modal.Title>
-            {title}
+            <span>
+              Configuration Migration {' '}
+              <RefreshIcon
+                isLoading={this.state.loadingStatus}
+                onClick={this.loadStatus}
+              />
+              {this.renderJobInfo()}
+            </span>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {body}
+          {this.renderModalBody()}
         </Modal.Body>
         <Modal.Footer>
-          {footer}
+          <ConfirmButtons
+            saveStyle="success"
+            saveLabel="Migrate"
+            isSaving={this.state.isLoading}
+            isDisabled={this.state.isLoading || this.state.loadingStatus || this.state.error}
+            onSave={this.onMigrate}
+            onCancel={this.hideModal}
+          />
         </Modal.Footer>
       </Modal>
+    );
+  },
+
+  renderModalBody() {
+    if (this.state.loadingStatus) {
+      return <span>Loading migration status...</span>;
+    }
+
+    if (this.state.error) {
+      return (
+        <Alert bsStyle="danger">
+          Error Loading status: {this.state.error}
+        </Alert>
+      );
+    }
+
+    const configHelpText = 'List of all configurations to be migrated and their new counterparts';
+    const orchHelpText = 'List of orchestrations containing tasks of either the old component or new component. '
+      + 'After a successful migration there should be only new component\'s tasks.';
+
+    return (
+      <Tabs 
+        animation={false} 
+        id="components-migration-row-tabs"
+        className="tabs-inside-modal" 
+        defaultActiveKey="general" 
+      >
+        <Tab eventKey="general" title={this.renderTabTitle('Affected Configurations', configHelpText)}>
+          {this.renderConfigStatus()}
+        </Tab>
+        <Tab eventKey="datasample" title={this.renderTabTitle('Affected Orchestrations', orchHelpText)}>
+          {this.renderOrhcestrationsStatus()}
+        </Tab>
+      </Tabs>
     );
   },
 
@@ -329,19 +340,6 @@ export default React.createClass({
            No affected orchestrations found.
           </ComponentEmptyState>
         }
-      </span>
-    );
-  },
-
-  renderDialogTitle() {
-    return (
-      <span>
-        Configuration Migration {' '}
-        <RefreshIcon
-          isLoading={this.state.loadingStatus}
-          onClick={this.loadStatus}
-        />
-        {this.renderJobInfo()}
       </span>
     );
   },

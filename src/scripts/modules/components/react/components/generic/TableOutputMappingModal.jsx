@@ -50,10 +50,10 @@ export default React.createClass({
     return (
       <span>
         {this.renderOpenButton()}
-        <Modal {...this.props}
+        <Modal
+          bsSize="large" 
           show={this.state.show}
           onHide={this.handleCancel}
-          bsSize="large" onChange={() => null}
         >
           <Modal.Header closeButton>
             <Modal.Title>

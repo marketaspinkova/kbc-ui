@@ -6,7 +6,6 @@ import { capitalize } from 'underscore.string';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import TableNameEdit from './TableNameEdit';
 import ColumnsEditor from './ColumnsEditor';
-import ColumnRow from './ColumnRow';
 import DataTypes from '../../../templates/dataTypes';
 import columnTypeValidation from '../../../columnTypeValidation';
 
@@ -152,7 +151,6 @@ export default componentId => {
               }}
               dataTypes={this._getComponentDataTypes()}
               columns={this.state.columns}
-              renderRowFn={this._renderColumnRow}
               editingColumns={this.state.editingColumns}
               isSaving={this.state.isSavingColumns}
               editColumnFn={this._onEditColumn}
@@ -320,10 +318,6 @@ export default componentId => {
         return c.get('type') === 'IGNORE' && this.state.hideIgnored;
       });
       return newCols;
-    },
-
-    _renderColumnRow(props) {
-      return <ColumnRow {...props} />;
     },
 
     _handleEditColumnsStart() {
