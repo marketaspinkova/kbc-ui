@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
+import _ from 'underscore';
+import { fromJS } from 'immutable';
 import Select from 'react-select';
-import Immutable from 'immutable';
 
 export default React.createClass({
   propTypes: {
@@ -93,7 +94,7 @@ export default React.createClass({
     }
 
     var filterOption = function(op) {
-      if (this.props.multi && exclude && Immutable.fromJS(exclude).toMap().find(function(item) {
+      if (this.props.multi && exclude && fromJS(exclude).toMap().find(function(item) {
         return item.get('value') === op.value;
       }, op)) {
         return false;
@@ -125,8 +126,8 @@ export default React.createClass({
       return (
         <span>
           <Select.Creatable
+            {...this.selectProps()}
             isOptionUnique={this.isOptionUnique}
-            {...this.props}
             value={this.props.value.toJS ? this.mapValues(this.props.value.toJS()) : this.mapValues(this.props.value)}
             valueRenderer={this.valueRenderer}
             filterOptions={this.filterOptions}
@@ -140,7 +141,7 @@ export default React.createClass({
       return (
         <span>
           <Select
-            {...this.props}
+            {...this.selectProps()}
             value={this.props.value.toJS ? this.mapValues(this.props.value.toJS()) : this.mapValues(this.props.value)}
             valueRenderer={this.valueRenderer}
             filterOptions={this.filterOptions}
@@ -155,7 +156,7 @@ export default React.createClass({
   onChange(selected) {
     const {trimMultiCreatedValues} = this.props;
     if (this.props.multi) {
-      this.props.onChange(Immutable.fromJS(selected.map(function(value) {
+      this.props.onChange(fromJS(selected.map(function(value) {
         if (value.value === '%_EMPTY_STRING_%') {
           return '';
         }
@@ -232,6 +233,9 @@ export default React.createClass({
     } else {
       return [];
     }
-  }
+  },
 
+  selectProps() {
+    return _.pick(this.props, Object.keys(Select.propTypes));
+  }
 });
