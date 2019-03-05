@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import ComponentsStore from '../../components/stores/ComponentsStore';
 import { Link } from 'react-router';
-import _ from 'underscore';
 import classnames from 'classnames';
 import { format } from '../../../utils/date';
 import { NewLineToBr } from '@keboola/indigo-ui';
@@ -28,7 +27,15 @@ export default React.createClass({
     const component = this.getComponent();
 
     return (
-      <Link {...this.linkProps()}>
+      <Link
+        className='tr'
+        to={this.props.link.to}
+        params={this.props.link.params}
+        query={{ 
+          ...this.props.link.query,
+          eventId: this.props.event.get('id') 
+        }}
+      >
         <div className={classnames('td', 'text-nowrap', status)}>{format(this.props.event.get('created'))}</div>
         <div className={classnames('td', 'text-nowrap', status)}>
           {component.get('name') && (
@@ -43,19 +50,6 @@ export default React.createClass({
         </div>
       </Link>
     );
-  },
-
-  linkProps() {
-    const { link, event } = this.props;
-
-    return {
-      to: link.to,
-      params: link.params,
-      query: _.extend({}, link.query, {
-        eventId: event.get('id')
-      }),
-      className: 'tr'
-    };
   },
 
   getComponent() {
