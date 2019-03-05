@@ -6,7 +6,7 @@ import RoutesStore from '../../../stores/RoutesStore';
 import { hideWizardModalFn, showWizardModalFn } from '../stores/ActionCreators.js';
 import GuideModeImage from './GuideModeImage';
 import Remarkable from 'react-remarkable';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 const redirectTo = (pathname) => {
   window.location.assign(window.location.origin + pathname);
@@ -53,8 +53,8 @@ export default createReactClass({
         <Modal
           enforceFocus={false}
           show={this.props.show} onHide={this.closeLessonModal} backdrop={this.isStepBackdrop()}
-          className={'guide-wizard guide-wizard-' + this.getStepPosition()}>
-
+          className={'guide-wizard guide-wizard-' + this.getStepPosition()}
+        >
           <Modal.Header closeButton>
             { this.getStepPosition() === 'center' ? (
               this.getModalTitleExtended()
@@ -63,13 +63,15 @@ export default createReactClass({
             )}
           </Modal.Header>
           <Modal.Body className="guide-modal-body">
-            <ReactCSSTransitionGroup
-              transitionName={'guide-wizard-animated-' + this.props.direction}
-              transitionEnterTimeout={200}
-              transitionLeaveTimeout={200}
-            >
-              {this.getModalBody()}
-            </ReactCSSTransitionGroup>
+            <TransitionGroup>
+              <CSSTransition
+                key={this.props.step}
+                classNames={'guide-wizard-animated-' + this.props.direction}
+                timeout={200}
+              >
+                {this.getModalBody()}
+              </CSSTransition>
+            </TransitionGroup>
           </Modal.Body>
           <Modal.Footer>
             {this.hasPreviousStep() && this.renderButtonPrev()}

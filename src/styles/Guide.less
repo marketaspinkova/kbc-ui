@@ -284,9 +284,9 @@
                 animation: list-prev-enter 200ms ease-in;
               }
             }
-            &-leave {
+            &-exit {
               &-active {
-                animation: list-prev-leave 200ms ease-in;
+                animation: list-prev-exit 200ms ease-in;
               }
             }
           }
@@ -298,10 +298,10 @@
                 animation: list-next-enter 200ms ease-in;
               }
             }
-            &-leave {
+            &-exit {
               width: 310px;
               &-active {
-                animation: list-next-leave 200ms ease-in;
+                animation: list-next-exit 200ms ease-in;
               }
             }
           }
@@ -531,7 +531,7 @@
   }
 }
 
-@keyframes list-next-leave {
+@keyframes list-next-exit {
   0% {
     opacity: 1;
     transform: translate3D(0, 0, 0);
@@ -553,7 +553,7 @@
   }
 }
 
-@keyframes list-prev-leave {
+@keyframes list-prev-exit {
   0% {
     opacity: 1;
     transform: translate3D(0, 0, 0);
