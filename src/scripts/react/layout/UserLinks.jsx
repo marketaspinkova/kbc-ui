@@ -1,7 +1,10 @@
 import React from 'react';
+import request from '../../utils/request';
 import { ExternalLink } from '@keboola/indigo-ui';
 import _ from 'underscore';
 import contactSupport from '../../utils/contactSupport';
+import WishlistModalDialog from '../../modules/components/react/components/WishlistModalDialog';
+
 
 export default React.createClass({
   propTypes: {
@@ -10,6 +13,30 @@ export default React.createClass({
     xsrf: React.PropTypes.string.isRequired
   },
 
+  _openWishlistModal(e) {
+    this.state.showWishlistModal = true;
+    e.preventDefault();
+    e.stopPropagation();
+  },
+
+  getInitialState: function() {
+    return {showWishlistModal: false};
+  },
+
+  _wishlistSubmit(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    request('POST', '/admin/projects/send-wishlist-request')
+      .type('form')
+      .send({title: 'test', description: 'whatever desc'})
+      .promise()
+      .then((response) => {
+        // eslint-disable-next-line no-alert
+        alert(response.body);
+        this.state.showWishlistModal = false;
+        return response.body;
+      });
+  },
   render() {
     return (
       <div className="kbc-user-links">
@@ -39,12 +66,16 @@ export default React.createClass({
             </a>
           </li>
           <li>
-            <ExternalLink href="https://portal.productboard.com/ltulbdlwnurf2accjn3ukkww">
+            <a href="" onClick={this._openWishlistModal}>
               <span className="fa fa-tasks" />
               {' Feature Wishlist '}
-            </ExternalLink>
+            </a>
           </li>
         </ul>
+        <WishlistModalDialog
+          show={this.state.showWishlistModal}
+          onSubmit={this._wishlistSubmit}
+        />
       </div>
     );
   },
