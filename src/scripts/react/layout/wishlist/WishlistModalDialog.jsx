@@ -48,6 +48,7 @@ export default React.createClass({
               <Col sm={9}>
                 <FormControl
                   componentClass="textarea"
+                  rows="6"
                   value={this.state.description}
                   onChange={this.handleDescription}
                 />
