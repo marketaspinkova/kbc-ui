@@ -8,6 +8,7 @@ export default React.createClass({
     onConfirm: React.PropTypes.func.isRequired,
     buttonLabel: React.PropTypes.string.isRequired,
     buttonType: React.PropTypes.string,
+    isLoading: React.PropTypes.bool,
     children: React.PropTypes.any,
     childrenRootElement: React.PropTypes.any
   },
@@ -46,6 +47,7 @@ export default React.createClass({
           onHide={this.closeModal}
           title={this.props.title}
           text={this.props.text}
+          isLoading={this.props.isLoading}
           onConfirm={this.props.onConfirm}
           buttonLabel={this.props.buttonLabel}
           buttonType={this.props.buttonType}
