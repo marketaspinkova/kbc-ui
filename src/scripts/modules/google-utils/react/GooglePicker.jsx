@@ -85,8 +85,8 @@ export default React.createClass({
 
   render() {
     return (
-      <Button 
-        classname="btn btn-success"
+      <Button
+        className="btn btn-success"
         onClick={this._ButtonClick}
         disabled={!this.state.isInitialized}
         {...this.props.buttonProps}
