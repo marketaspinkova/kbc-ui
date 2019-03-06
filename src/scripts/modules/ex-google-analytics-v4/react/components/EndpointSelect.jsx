@@ -18,7 +18,8 @@ export default React.createClass({
   propTypes: {
     selectedValue: PropTypes.string.isRequired,
     onSelectValue: PropTypes.func.isRequired,
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
+    disabled: PropTypes.bool.isRequired
   },
 
   render() {
@@ -35,7 +36,7 @@ export default React.createClass({
           >
             {availableEndpoints.map((item) => {
               return (
-                <ToggleButton key={`endpoint-${item.value}`} value={item.value}>
+                <ToggleButton key={`endpoint-${item.value}`} value={item.value} disabled={this.props.disabled}>
                   {item.label}
                 </ToggleButton>
               );

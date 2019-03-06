@@ -45,6 +45,7 @@ export default React.createClass({
             selectedValue={endpoint}
             onSelectValue={this.onSelectEndpoint}
             name={'Endpoint'}
+            disabled={!this.props.isEditing}
           />
           <div className="form-group">
             <label className="col-md-2 control-label">
