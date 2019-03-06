@@ -7,7 +7,7 @@ function createRequest(method, path) {
 
 export default {
   sendRequest(params) {
-    return createRequest('POST', '/admin/projects/send-wishlist-request')
+    return createRequest('POST', '/admin/index/send-wishlist-request')
       .type('form')
       .send(params)
       .promise()

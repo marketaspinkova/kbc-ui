@@ -59,14 +59,14 @@ export default React.createClass({
         <WishlistModalDialog
           show={this.state.showWishlistModal}
           isSaving={this.state.sendingWishlish}
-          onSubmit={this.handeSubmit}
+          onSubmit={this.handleSubmit}
           onHide={this.closeWishlistModal}
         />
       </div>
     );
   },
 
-  handeSubmit(title, description) {
+  handleSubmit(title, description) {
     this.setState({ sendingWishlish: true });
     return WishlistApi.sendRequest({ title, description })
       .then(() => {
