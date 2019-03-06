@@ -1,8 +1,18 @@
-import React, {PropTypes} from 'react';
-import Select from 'react-select';
-import {Constants} from './Constants';
-import {Col,ControlLabel,FormGroup,HelpBlock} from 'react-bootstrap';
-import {ExternalLink} from '@keboola/indigo-ui';
+import React, { PropTypes } from 'react';
+import { Constants } from './Constants';
+import { Col, ControlLabel, FormGroup, HelpBlock, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
+import { ExternalLink } from '@keboola/indigo-ui';
+
+const availableEndpoints = [
+  {
+    label: 'Reporting API',
+    value: Constants.ENDPOINT_REPORT
+  },
+  {
+    label: 'Multi-Channel Funnels API',
+    value: Constants.ENDPOINT_MCF
+  },
+];
 
 export default React.createClass({
   propTypes: {
@@ -18,13 +28,19 @@ export default React.createClass({
           {this.props.name}
         </ControlLabel>
         <Col md={10}>
-          <Select
-            value={this.prepareValue(this.props.selectedValue)}
-            options={this.getOptions()}
+          <ToggleButtonGroup
+            name="endpoint"
+            value={this.props.selectedValue}
             onChange={this.props.onSelectValue}
-            name={name}
-            clearable={false}
-          />
+          >
+            {availableEndpoints.map((item) => {
+              return (
+                <ToggleButton key={`endpoint-${item.value}`} value={item.value}>
+                  {item.label}
+                </ToggleButton>
+              );
+            })}
+          </ToggleButtonGroup>
           <HelpBlock>
             Switch between core{' '}
             <ExternalLink href="https://developers.google.com/analytics/devguides/reporting/core/v4/">
@@ -38,22 +54,5 @@ export default React.createClass({
         </Col>
       </FormGroup>
     );
-  },
-
-  getOptions() {
-    return [
-      {
-        label: 'Reporting API',
-        value: Constants.ENDPOINT_REPORT
-      },
-      {
-        label: 'Multi-Channel Funnels API',
-        value: Constants.ENDPOINT_MCF
-      },
-    ];
-  },
-
-  prepareValue(value) {
-    return this.getOptions().find(item => item.value === value);
-  },
+  }
 });

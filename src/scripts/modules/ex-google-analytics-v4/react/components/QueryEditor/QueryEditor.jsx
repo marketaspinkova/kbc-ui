@@ -334,13 +334,13 @@ export default React.createClass({
     };
   },
 
-  onSelectEndpoint(item) {
-    if (this.props.query.get('endpoint') !== item.value) {
+  onSelectEndpoint(selectedEndpoint) {
+    if (this.props.query.get('endpoint') !== selectedEndpoint) {
       this.props.onChangeQuery(Map({
         name: this.props.query.get('name'),
         enabled: this.props.query.get('enabled'),
         outputTable: this.props.query.get('outputTable'),
-        endpoint: item.value,
+        endpoint: selectedEndpoint,
         query: Map({
           dateRanges: List([Map({
             startDate: '-4 days',
