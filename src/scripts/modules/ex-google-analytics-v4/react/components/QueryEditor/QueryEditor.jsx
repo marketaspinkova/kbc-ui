@@ -41,6 +41,11 @@ export default React.createClass({
     return (
       <div className="row">
         <div className="form-horizontal">
+          <EndpointSelect
+            selectedValue={endpoint}
+            onSelectValue={this.onSelectEndpoint}
+            name={'Endpoint'}
+          />
           <div className="form-group">
             <label className="col-md-2 control-label">
               Name
@@ -98,11 +103,6 @@ export default React.createClass({
         </div>
 
         <div className="form form-horizontal">
-          <EndpointSelect
-            selectedValue={endpoint}
-            onSelectValue={this.onSelectEndpoint}
-            name={'Endpoint'}
-          />
           <ProfileSelector
             isEditing={isEditing}
             allProfiles={this.props.allProfiles}
