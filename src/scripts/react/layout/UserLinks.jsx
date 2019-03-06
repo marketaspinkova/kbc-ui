@@ -68,7 +68,7 @@ export default React.createClass({
 
   handeSubmit(title, description) {
     this.setState({ sendingWishlish: true });
-    WishlistApi.sendRequest({ title, description })
+    return WishlistApi.sendRequest({ title, description })
       .then(() => {
         ApplicationActionCreators.sendNotification({
           message: 'Your request was successfully sended.'
