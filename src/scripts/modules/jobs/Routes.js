@@ -7,7 +7,6 @@ import JobDetailReloaderButton from './react/components/JobDetailReloaderButton'
 import JobDetailButtons from './react/components/JobDetailButtons';
 import JobsStore from './stores/JobsStore';
 import InstalledComponentsActionCreators from '../components/InstalledComponentsActionCreators';
-import StorageActionCreators from '../components/StorageActionCreators';
 import { createTablesRoute } from '../table-browser/routes';
 import { getJobComponentId } from './utils';
 
@@ -26,7 +25,6 @@ export default {
   },
   requireData: [
     () => InstalledComponentsActionCreators.loadComponents(),
-    () => StorageActionCreators.loadTables(),
     (params, query) => {
       const currentQuery = JobsStore.getQuery();
       if (params.jobId) {

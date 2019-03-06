@@ -6,6 +6,7 @@ import formatCardinalNumber from '../../../../utils/formatCardinalNumber';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../../stores/RoutesStore';
 import TablesStore from '../../stores/StorageTablesStore';
+import StorageActions from '../../StorageActionCreators';
 import Tooltip from '../../../../react/common/Tooltip';
 import FileSize from '../../../../react/common/FileSize';
 
@@ -22,6 +23,10 @@ export default React.createClass({
     return {
       table: TablesStore.getAll().get(this.props.tableId, Map())
     };
+  },
+
+  componentDidMount() {
+    setTimeout(() => StorageActions.loadTables());
   },
 
   render() {
