@@ -1,12 +1,12 @@
 import React from 'react';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
-import immutableMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import ConfigurationsStore  from '../../ConfigurationsStore';
 import RowsStore  from '../../ConfigurationRowsStore';
 import date from '../../../../utils/date';
 
 export default React.createClass({
-  mixins: [createStoreMixin(RowsStore, ConfigurationsStore), immutableMixin],
+  mixins: [createStoreMixin(RowsStore, ConfigurationsStore), PureRenderMixin],
   propTypes: {
     componentId: React.PropTypes.string.isRequired,
     configurationId: React.PropTypes.string.isRequired,

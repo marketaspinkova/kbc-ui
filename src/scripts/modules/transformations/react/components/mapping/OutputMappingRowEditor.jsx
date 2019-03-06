@@ -1,5 +1,5 @@
 import React from 'react';
-import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Immutable from 'immutable';
 import { Form, FormGroup, FormControl, ControlLabel, Col, HelpBlock } from 'react-bootstrap';
 import { Input } from '../../../../../react/common/KbcBootstrap';
@@ -11,7 +11,7 @@ import stringUtils from '../../../../../utils/string';
 import whereOperatorConstants from '../../../../../react/common/whereOperatorConstants';
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     transformationBucket: React.PropTypes.object.isRequired,

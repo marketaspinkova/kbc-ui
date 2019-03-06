@@ -1,7 +1,7 @@
 import React from 'react';
 import JobsTableRow from './JobsTableRow';
 import { RefreshIcon } from '@keboola/indigo-ui';
-import ImmutableRendererMixin from 'react-immutable-render-mixin';
+import ImmutableRendererMixin from 'react-addons-pure-render-mixin';
 
 export default React.createClass({
   mixins: [ImmutableRendererMixin],

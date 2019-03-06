@@ -1,5 +1,5 @@
 import React from 'react';
-import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { Link } from 'react-router';
 import { Loader } from '@keboola/indigo-ui';
 
@@ -11,7 +11,7 @@ import ActivateTableExportButton from '../../components/ActivateTableExportButto
 import actionCreators from '../../../actionCreators';
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin],
+  mixins: [PureRenderMixin],
   propTypes: {
     table: React.PropTypes.object.isRequired,
     configId: React.PropTypes.string.isRequired,

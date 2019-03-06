@@ -1,5 +1,5 @@
 import React from 'react';
-import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import {Link} from 'react-router';
 import {Check} from '@keboola/indigo-ui';
@@ -12,7 +12,7 @@ import * as actionsProvisioning from '../../../actionsProvisioning';
 
 export default React.createClass({
   displayName: 'QueryRow',
-  mixins: [ImmutableRenderMixin],
+  mixins: [PureRenderMixin],
   propTypes: {
     query: React.PropTypes.object.isRequired,
     pendingActions: React.PropTypes.object.isRequired,

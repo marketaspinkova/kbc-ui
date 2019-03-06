@@ -1,10 +1,10 @@
 import React, {PropTypes} from 'react';
-import immutableMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { ExternalLink } from '@keboola/indigo-ui';
 import {Input} from './../../../../react/common/KbcBootstrap';
 
 export default React.createClass({
-  mixins: [immutableMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     awsAccessKeyId: PropTypes.string.isRequired,

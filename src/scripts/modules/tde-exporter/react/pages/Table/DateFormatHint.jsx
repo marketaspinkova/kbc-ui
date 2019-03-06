@@ -1,5 +1,5 @@
 import React from 'react';
-import PureRenderMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 
 export default React.createClass({

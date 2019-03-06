@@ -1,10 +1,10 @@
 import React from 'react';
-import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { Check } from '@keboola/indigo-ui';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     value: React.PropTypes.object.isRequired

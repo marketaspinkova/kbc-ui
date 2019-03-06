@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 
-import immutableMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import EmptyState from '../../../components/react/components/ComponentEmptyState';
 import StorageTableDataPreviewItem from '../../../../react/common/StorageTableDataPreviewItem';
 import {Table} from 'react-bootstrap';
@@ -11,7 +11,7 @@ export default React.createClass({
     dataPreviewError: PropTypes.string
   },
 
-  mixins: [immutableMixin],
+  mixins: [PureRenderMixin],
 
   render() {
     const {dataPreview, dataPreviewError} = this.props;

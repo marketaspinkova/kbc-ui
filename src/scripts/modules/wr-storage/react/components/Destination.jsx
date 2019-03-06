@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import immutableMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { Form, FormControl, FormGroup, ControlLabel, HelpBlock, Col } from 'react-bootstrap';
 import { RadioGroup } from 'react-radio-group';
 import RadioGroupInput from '../../../../react/common/RadioGroupInput';
@@ -8,7 +8,7 @@ import ExternalProjectLink from '../../../components/react/components/ExternalPr
 import ExternalBucketLink from '../../../components/react/components/ExternalBucketLink';
 
 export default React.createClass({
-  mixins: [immutableMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     value: PropTypes.shape({

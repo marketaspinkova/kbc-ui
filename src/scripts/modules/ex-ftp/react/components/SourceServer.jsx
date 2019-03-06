@@ -1,9 +1,9 @@
 import React, {PropTypes} from 'react';
-import immutableMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {FormControl, FormGroup, ControlLabel, Form, Col, HelpBlock} from 'react-bootstrap';
 
 export default React.createClass({
-  mixins: [immutableMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     value: PropTypes.shape({

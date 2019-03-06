@@ -4,7 +4,7 @@ import { Table } from 'react-bootstrap';
 
 import Row from './DatasetColumnEditorRow';
 import Hint from '../../../../../react/common/Hint';
-import pureRendererMixin from 'react-immutable-render-mixin';
+import pureRendererMixin from 'react-addons-pure-render-mixin';
 
 export default React.createClass({
   mixins: [pureRendererMixin],

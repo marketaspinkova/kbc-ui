@@ -1,13 +1,13 @@
 import React, { PropTypes } from 'react';
 
-import immutableMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {FormControl, FormGroup, ControlLabel, HelpBlock, Form, Col} from 'react-bootstrap';
 import SyncActionSimpleValue from '../../../configurations/react/components/SyncActionSimpleValue';
 import ExternalProjectLink from '../../../components/react/components/ExternalProjectLink';
 import ExternalBucketLink from '../../../components/react/components/ExternalBucketLink';
 
 export default React.createClass({
-  mixins: [immutableMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     value: PropTypes.shape({

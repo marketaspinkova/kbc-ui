@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import immutableMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Input} from './../../../../react/common/KbcBootstrap';
 import CsvDelimiterInput from '../../../../react/common/CsvDelimiterInput';
 import Select from '../../../../react/common/Select';
@@ -20,7 +20,7 @@ const columnsFromOptions = [
 ];
 
 export default React.createClass({
-  mixins: [immutableMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     value: PropTypes.shape({

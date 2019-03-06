@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import moment from 'moment';
 import { Table, Button, Label } from 'react-bootstrap';
 import { Finished, Loader } from '@keboola/indigo-ui';
@@ -11,7 +11,7 @@ import FileLink from '../../../sapi-events/react/FileLink';
 import FileLinkButton from './FileLinkButton';
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     files: PropTypes.object.isRequired,
@@ -153,7 +153,7 @@ export default React.createClass({
 
   renderClipboard(file) {
     return (
-      <Clipboard 
+      <Clipboard
         tooltipText="Copy file URL to clipboard"
         tooltipPlacement="top"
         text={file.get('url')}

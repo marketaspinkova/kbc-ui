@@ -1,7 +1,7 @@
 import React from 'react';
 import TableRow from './EventsTableRow';
 import { Loader } from '@keboola/indigo-ui';
-import PureRendererMixin from 'react-immutable-render-mixin';
+import PureRendererMixin from 'react-addons-pure-render-mixin';
 
 export default React.createClass({
   mixins: [PureRendererMixin],

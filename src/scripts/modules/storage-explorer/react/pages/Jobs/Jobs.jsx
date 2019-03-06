@@ -1,5 +1,5 @@
 import React from 'react';
-import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { Button } from 'react-bootstrap';
 
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
@@ -10,7 +10,7 @@ import { loadMoreJobs } from '../../../Actions';
 import NavButtons from '../../components/NavButtons';
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin, createStoreMixin(JobsStore)],
+  mixins: [PureRenderMixin, createStoreMixin(JobsStore)],
 
   getStateFromStores() {
     return {

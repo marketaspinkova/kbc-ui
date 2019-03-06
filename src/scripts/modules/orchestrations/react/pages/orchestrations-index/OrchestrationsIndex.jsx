@@ -7,7 +7,7 @@ import OrchestrationStore from '../../../stores/OrchestrationsStore';
 
 import OrchestrationRow from './OrchestrationRow';
 import { SearchBar } from '@keboola/indigo-ui';
-import ImmutableRendererMixin from 'react-immutable-render-mixin';
+import ImmutableRendererMixin from 'react-addons-pure-render-mixin';
 import NewOrchestrationButton from '../../components/NewOrchestionButton';
 
 export default React.createClass({

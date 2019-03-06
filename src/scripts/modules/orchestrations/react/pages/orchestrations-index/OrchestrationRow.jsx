@@ -6,10 +6,10 @@ import OrchestrationActiveButton from '../../components/OrchestrationActiveButto
 import OrchestrationDeleteButton from '../../components/OrchestrationDeleteButton';
 import OrchestrationRunButton from '../../components/OrchestrationRunButton';
 import CronRecord from './../../components/CronRecord';
-import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     orchestration: React.PropTypes.object,

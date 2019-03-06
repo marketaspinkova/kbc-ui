@@ -1,5 +1,5 @@
 import React from 'react';
-import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { ButtonToolbar, Button } from 'react-bootstrap';
 import { Navigation } from 'react-router';
 import { SearchBar } from '@keboola/indigo-ui';
@@ -26,7 +26,7 @@ import { filesLimit } from '../../../Constants';
 const DIRECT_UPLOAD = 'direct-upload';
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin, Navigation, createStoreMixin(FilesStore, FilesLocalStore)],
+  mixins: [PureRenderMixin, Navigation, createStoreMixin(FilesStore, FilesLocalStore)],
 
   getStateFromStores() {
     return {

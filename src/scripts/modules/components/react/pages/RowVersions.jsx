@@ -1,5 +1,5 @@
 import React from 'react';
-import immutableMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import fuzzy from 'fuzzy';
 import { Map } from 'immutable';
 import { Button, Table } from 'react-bootstrap';
@@ -17,7 +17,7 @@ const ITEMS_PER_PAGE = 20;
 
 export default function(componentIdValue, readOnlyMode = false) {
   return React.createClass({
-    mixins: [createStoreMixin(VersionsStore), immutableMixin],
+    mixins: [createStoreMixin(VersionsStore), PureRenderMixin],
 
     getStateFromStores() {
       const configId = RoutesStore.getCurrentRouteParam('config');

@@ -1,5 +1,5 @@
 import React from 'react';
-import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { List, Map } from 'immutable';
 import { PanelWithDetails } from '@keboola/indigo-ui';
 import { Input } from '../../../../../react/common/KbcBootstrap';
@@ -11,7 +11,7 @@ import whereOperatorConstants from '../../../../../react/common/whereOperatorCon
 import stringUtils from '../../../../../utils/string';
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     value: React.PropTypes.object.isRequired,

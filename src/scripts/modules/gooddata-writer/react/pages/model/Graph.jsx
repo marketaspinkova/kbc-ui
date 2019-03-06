@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import GraphCanvas from '../../../../../react/common/GraphCanvas';
 import graphUtils from '../../../../../utils/graphUtils';
@@ -9,7 +9,7 @@ export default React.createClass({
   propTypes: {
     model: React.PropTypes.object.isRequired
   },
-  mixins: [ImmutableRenderMixin],
+  mixins: [PureRenderMixin],
 
   getInitialState() {
     return { direction: 'reverse' };

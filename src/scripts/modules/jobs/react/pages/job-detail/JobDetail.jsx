@@ -1,5 +1,5 @@
 import React from 'react';
-import PureRendererMixin from 'react-immutable-render-mixin';
+import PureRendererMixin from 'react-addons-pure-render-mixin';
 import moment from 'moment';
 import { Link } from 'react-router';
 import { fromJS } from 'immutable';

@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { List } from 'immutable';
 import { Button } from 'react-bootstrap';
 import { RefreshIcon, SearchBar } from '@keboola/indigo-ui';
@@ -23,7 +23,7 @@ const predefinedSearches = [
 ];
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     eventsFactory: PropTypes.object,
@@ -91,10 +91,10 @@ export default React.createClass({
           ))}
         </div>
         <br />
-        <EventsTable 
-          events={this.state.events} 
-          isSearching={this.isSearching()} 
-          excludeString={this.props.excludeString} 
+        <EventsTable
+          events={this.state.events}
+          isSearching={this.isSearching()}
+          excludeString={this.props.excludeString}
         />
         {this.renderMoreButton()}
       </div>

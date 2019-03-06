@@ -1,6 +1,6 @@
 import React from 'react';
 import date from '../../../utils/date';
-import PureRendererMixin from 'react-immutable-render-mixin';
+import PureRendererMixin from 'react-addons-pure-render-mixin';
 import {Link} from 'react-router';
 import {NewLineToBr} from '@keboola/indigo-ui';
 import {Tree} from '@keboola/indigo-ui';

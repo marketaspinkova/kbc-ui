@@ -1,11 +1,11 @@
 import React from 'react';
-import immutableMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {SearchBar} from '@keboola/indigo-ui';
 import ConfigurationRowsTable from './ConfigurationRowsTable';
 import CreateConfigurationRowButton from './CreateConfigurationRowButton';
 
 export default React.createClass({
-  mixins: [immutableMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     rows: React.PropTypes.object.isRequired,

@@ -1,5 +1,5 @@
 import React from 'react';
-import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Map} from 'immutable';
 
 import QueryRow from './QueryRow';
@@ -7,7 +7,7 @@ import QueryRow from './QueryRow';
 
 export default React.createClass({
   displayName: 'QueryTable',
-  mixins: [ImmutableRenderMixin],
+  mixins: [PureRenderMixin],
   propTypes: {
     queries: React.PropTypes.object,
     configurationId: React.PropTypes.string,

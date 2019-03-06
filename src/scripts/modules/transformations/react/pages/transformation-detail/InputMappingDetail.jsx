@@ -1,5 +1,5 @@
 import React from 'react';
-import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import WhereOperator from '../../../../../react/common/WhereOperator';
 import { Check } from '@keboola/indigo-ui';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
@@ -8,7 +8,7 @@ import { Map, List } from 'immutable';
 import DatatypeLabel from '../../components/mapping/input/DatatypeLabel';
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     transformationBackend: React.PropTypes.string.isRequired,

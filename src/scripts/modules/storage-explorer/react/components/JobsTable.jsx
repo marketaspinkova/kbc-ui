@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { Link } from 'react-router';
 import { Table } from 'react-bootstrap';
 import DurationStatic from '../../../../react/common/DurationStatic';
@@ -10,7 +10,7 @@ import tableIdParser from '../../../../utils/tableIdParser';
 import JobDetailModal from '../modals/JobDetailModal';
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     jobs: PropTypes.object.isRequired

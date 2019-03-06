@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Map, List} from 'immutable';
 import {Panel} from 'react-bootstrap';
 import mappingDefinitions from '../../../utils/mappingDefinitions';
@@ -9,7 +9,7 @@ import Header from './TableInputMappingHeader';
 import Add from './AddTableInputMapping';
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     componentId: PropTypes.string.isRequired,

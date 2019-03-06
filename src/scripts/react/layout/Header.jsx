@@ -1,5 +1,5 @@
 import React from 'react';
-import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { Map, List } from 'immutable';
 import { Link } from 'react-router';
 import createStoreMixin from '../mixins/createStoreMixin';
@@ -13,7 +13,7 @@ import ComponentIcon from '../common/ComponentIcon';
 import RoutePendingIndicator from './RoutePendingIndicator';
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin, createStoreMixin(RoutesStore, ApplicationStore, ComponentsStore)],
+  mixins: [PureRenderMixin, createStoreMixin(RoutesStore, ApplicationStore, ComponentsStore)],
 
   propTypes: {
     homeUrl: React.PropTypes.string.isRequired,

@@ -1,5 +1,5 @@
 import React from 'react';
-import immutableMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { Modal, ButtonToolbar, Button } from 'react-bootstrap';
 import { SearchBar } from '@keboola/indigo-ui';
 
@@ -27,7 +27,7 @@ export default React.createClass({
     onChangeSearchQuery: React.PropTypes.func.isRequired
   },
 
-  mixins: [createStoreMixin(InstalledComponentsStore, OrchestrationStore), immutableMixin],
+  mixins: [createStoreMixin(InstalledComponentsStore, OrchestrationStore), PureRenderMixin],
 
   getInitialState() {
     return {

@@ -8,7 +8,7 @@ import { Table } from 'react-bootstrap';
 import {SearchBar} from '@keboola/indigo-ui';
 import VersionsActionCreators from '../../RowVersionsActionCreators';
 import fuzzy from 'fuzzy';
-import immutableMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { Map } from 'immutable';
 import createRowVersionOnRollback from '../../utils/createRowVersionOnRollback';
 import simpleMatch from '../../../../utils/simpleMatch';
@@ -16,7 +16,7 @@ import simpleMatch from '../../../../utils/simpleMatch';
 const ITEMS_PER_PAGE = 20;
 
 export default React.createClass({
-  mixins: [createStoreMixin(VersionsStore), immutableMixin],
+  mixins: [createStoreMixin(VersionsStore), PureRenderMixin],
 
   getStateFromStores() {
     var versions, filteredVersions, query;

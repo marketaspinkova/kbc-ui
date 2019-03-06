@@ -5,12 +5,12 @@ import { Check, Loader } from '@keboola/indigo-ui';
 import { Link } from 'react-router';
 import dockerProxyApi from '../../../templates/dockerProxyApi';
 
-import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import RunButtonModal from '../../../../components/react/components/RunComponentButton';
 import SapiTableLinkEx from '../../../../components/react/components/StorageApiTableLinkEx';
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     tableExists: React.PropTypes.bool.isRequired,

@@ -1,5 +1,5 @@
 import React from 'react';
-import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import TableSizeLabel from '../../components/TableSizeLabel';
 import DeleteButton from '../../../../../react/common/DeleteButton';
 import OutputMappingModal from '../../modals/OutputMapping';
@@ -7,7 +7,7 @@ import actionCreators from '../../../ActionCreators';
 import { Map } from 'immutable';
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     outputMapping: React.PropTypes.object.isRequired,

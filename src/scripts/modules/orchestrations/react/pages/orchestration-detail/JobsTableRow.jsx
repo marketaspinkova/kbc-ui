@@ -3,7 +3,7 @@ import Router from 'react-router';
 import Duration from '../../../../../react/common/Duration';
 import JobStatusLabel from '../../../../../react/common/JobStatusLabel';
 import date from '../../../../../utils/date';
-import ImmutableRendererMixin from 'react-immutable-render-mixin';
+import ImmutableRendererMixin from 'react-addons-pure-render-mixin';
 
 export default React.createClass({
   mixins: [Router.Navigation, Router.State, ImmutableRendererMixin],

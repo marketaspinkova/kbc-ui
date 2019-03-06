@@ -2,12 +2,12 @@ import React from 'react';
 import {Input} from './KbcBootstrap';
 import {Modal} from 'react-bootstrap';
 import moment from 'moment';
-import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import ConfirmButtons from './ConfirmButtons';
 import defaultCopyVersionName from '../../utils/defaultCopyVersionName';
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     version: React.PropTypes.object.isRequired,

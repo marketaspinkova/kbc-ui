@@ -1,12 +1,12 @@
 import React from 'react';
-import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import _ from 'underscore';
 import { fromJS } from 'immutable';
 import RedshiftDataTypesAddForm from './RedshiftDataTypesAddForm';
 import RedshiftDataTypesList from './RedshiftDataTypesList';
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     value: React.PropTypes.object.isRequired,

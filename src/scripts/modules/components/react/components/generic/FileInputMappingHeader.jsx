@@ -2,12 +2,12 @@ import React, { PropTypes } from 'react';
 import { List } from 'immutable';
 
 import DeleteButton from '../../../../../react/common/DeleteButton';
-import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import FileInputMappingModal from './FileInputMappingModal';
 
 export default React.createClass({
 
-  mixins: [ImmutableRenderMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     value: PropTypes.object.isRequired,

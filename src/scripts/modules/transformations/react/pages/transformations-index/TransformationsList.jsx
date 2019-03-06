@@ -1,5 +1,5 @@
 import React from 'react';
-import pureRendererMixin from 'react-immutable-render-mixin';
+import pureRendererMixin from 'react-addons-pure-render-mixin';
 import { Map } from 'immutable';
 import TransformationRow from '../../components/TransformationRow';
 

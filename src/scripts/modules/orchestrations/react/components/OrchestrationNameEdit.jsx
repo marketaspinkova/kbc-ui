@@ -2,14 +2,14 @@ import React from 'react';
 import { InlineEditInput } from '@keboola/indigo-ui';
 
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
-import immutableMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import OrchestrationsStore from '../../stores/OrchestrationsStore';
 import actionCreators from '../../ActionCreators';
 
 const FIELD = 'name';
 
 export default React.createClass({
-  mixins: [createStoreMixin(OrchestrationsStore), immutableMixin],
+  mixins: [createStoreMixin(OrchestrationsStore), PureRenderMixin],
 
   propTypes: {
     orchestrationId: React.PropTypes.number.isRequired

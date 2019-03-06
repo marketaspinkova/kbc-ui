@@ -1,12 +1,12 @@
 import React from 'react';
-import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import _ from 'underscore';
 import { Input } from '../../../../../../react/common/KbcBootstrap';
 import { Button } from 'react-bootstrap';
 import Select from 'react-select';
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     columnValue: React.PropTypes.string.isRequired,

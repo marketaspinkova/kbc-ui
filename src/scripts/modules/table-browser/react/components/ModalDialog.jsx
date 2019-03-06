@@ -7,7 +7,7 @@ import ColumnsInfoTab from './ColumnsInfoTab';
 import TableDescriptionTab from './TableDescriptionTab';
 
 import SapiTableLink from '../../../components/react/components/StorageApiTableLink';
-import immutableMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import {Modal, Tabs, Tab} from 'react-bootstrap';
 import {RefreshIcon} from '@keboola/indigo-ui';
@@ -37,7 +37,7 @@ export default React.createClass({
     detailEventId: PropTypes.number
   },
 
-  mixins: [immutableMixin],
+  mixins: [PureRenderMixin],
 
   componentDidMount() {
     this.refs.close.focus();

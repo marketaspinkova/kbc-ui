@@ -2,10 +2,10 @@ import React from 'react';
 import Tooltip from '../../react/common/Tooltip';
 import CopyVersionModal from './CopyVersionModal';
 import {Loader} from '@keboola/indigo-ui';
-import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     version: React.PropTypes.object.isRequired,

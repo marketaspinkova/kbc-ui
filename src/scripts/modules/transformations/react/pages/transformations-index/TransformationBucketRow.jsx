@@ -1,5 +1,5 @@
 import React from 'react';
-import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import RunComponentButton from '../../../../components/react/components/RunComponentButton';
 import DeleteButton from '../../../../../react/common/DeleteButton';
 import TransformationActionCreators from '../../../ActionCreators';
@@ -8,7 +8,7 @@ import Tooltip from '../../../../../react/common/Tooltip';
 import descriptionExcerpt from '../../../../../utils/descriptionExcerpt';
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     bucket: React.PropTypes.object.isRequired,

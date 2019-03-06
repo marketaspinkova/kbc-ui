@@ -1,10 +1,10 @@
 import React, {PropTypes} from 'react';
-import immutableMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Input} from './../../../../react/common/KbcBootstrap';
 import CsvDelimiterInput from './../../../../react/common/CsvDelimiterInput';
 
 export default React.createClass({
-  mixins: [immutableMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     delimiter: PropTypes.string.isRequired,

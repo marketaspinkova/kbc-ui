@@ -1,12 +1,12 @@
 import React from 'react';
 import { List } from 'immutable';
 import { Table } from 'react-bootstrap';
-import immutableMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import ComponentsStore from '../../../components/stores/ComponentsStore';
 import TaskSelectTableRow from './TaskSelectTableRow';
 
 export default React.createClass({
-  mixins: [immutableMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     tasks: React.PropTypes.object.isRequired,

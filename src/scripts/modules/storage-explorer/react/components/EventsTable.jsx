@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import classnames from 'classnames';
 import { replaceAll } from 'underscore.string';
 import ComponentsStore from '../../../components/stores/ComponentsStore';
@@ -13,7 +13,7 @@ import ComponentIcon from '../../../../react/common/ComponentIcon';
 import EventDetailModal from '../modals/EventDetailModal';
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     events: PropTypes.object.isRequired,
@@ -70,9 +70,9 @@ export default React.createClass({
     }
 
     return (
-      <tr 
-        key={event.get('id')} 
-        onClick={() => this.openEventDetail(event)} 
+      <tr
+        key={event.get('id')}
+        onClick={() => this.openEventDetail(event)}
         className={classnames('kbc-cursor-pointer', info && info.className)}
       >
         <td>{format(event.get('created'))}</td>

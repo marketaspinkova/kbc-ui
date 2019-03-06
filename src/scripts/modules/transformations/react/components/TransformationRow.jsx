@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import RunComponentButton from '../../../components/react/components/RunComponentButton';
 import TransformationTypeAndVersionLabel from './TransformationTypeAndVersionLabel';
 import DeleteButton from '../../../../react/common/DeleteButton';
@@ -13,7 +13,7 @@ import * as sandboxUtils from '../../utils/sandboxUtils';
 import { isKnownTransformationType } from '../../utils/transformationTypes';
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     transformation: React.PropTypes.object,

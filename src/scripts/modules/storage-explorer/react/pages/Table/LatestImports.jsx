@@ -1,12 +1,12 @@
 import React, { PropTypes } from 'react';
-import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { List } from 'immutable';
 import { Loader } from '@keboola/indigo-ui';
 import { factory as eventsFactory } from '../../../../sapi-events/TableEventsService';
 import LatestImportGraph from '../../components/LatestImportGraph';
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     table: PropTypes.object.isRequired

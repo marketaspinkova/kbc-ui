@@ -1,12 +1,12 @@
 import React from 'react';
-import immutableMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import StorageApiTableLinkEx from '../../../components/react/components/StorageApiTableLinkEx';
 import columnTypes from '../../../configurations/utils/columnTypeConstants';
 import StorageApiBucketLink from '../../../components/react/components/StorageApiBucketLink';
 import StorageApiFileUploadsLink from '../../../components/react/components/StorageApiFileUploadsLink';
 
 const TableCell = React.createClass({
-  mixins: [immutableMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     type: React.PropTypes.string.isRequired,

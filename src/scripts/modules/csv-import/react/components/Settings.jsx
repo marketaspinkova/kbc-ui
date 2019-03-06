@@ -1,12 +1,12 @@
 import React, {PropTypes} from 'react';
-import immutableMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Input} from './../../../../react/common/KbcBootstrap';
 import Select from '../../../../react/common/Select';
 import {List} from 'immutable';
 import TableSelectorForm from '../../../../react/common/TableSelectorForm';
 
 export default React.createClass({
-  mixins: [immutableMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     settings: PropTypes.object.isRequired,

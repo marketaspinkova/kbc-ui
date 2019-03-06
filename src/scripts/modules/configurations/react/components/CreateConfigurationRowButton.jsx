@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import immutableMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { fromJS } from 'immutable';
 import { Button, Col, ControlLabel, Form, FormControl, FormGroup, Modal } from 'react-bootstrap';
 import SapiTableSelector from '../../../components/react/components/SapiTableSelector';
@@ -7,7 +7,7 @@ import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import ConfigurationRowsActions from '../../ConfigurationRowsActionCreators';
 
 export default React.createClass({
-  mixins: [immutableMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     componentType: PropTypes.string.isRequired,

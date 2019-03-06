@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { Map, List, fromJS } from 'immutable';
-import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { ExternalLink } from '@keboola/indigo-ui';
 import TransformationsActionCreators from '../../../ActionCreators';
 import ApplicationStore from '../../../../../stores/ApplicationStore';
@@ -35,7 +35,7 @@ import {
 } from '../../../../components/utils/mappingDefinitions';
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     bucket: React.PropTypes.object.isRequired,

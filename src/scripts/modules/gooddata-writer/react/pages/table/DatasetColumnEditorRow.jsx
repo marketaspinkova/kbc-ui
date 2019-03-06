@@ -2,7 +2,7 @@ import React from 'react';
 import Immutable from 'immutable';
 import { Map } from 'immutable';
 import keyMirror from 'fbjs/lib/keyMirror';
-import PureRenderMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { FormControl, InputGroup, FormGroup } from 'react-bootstrap';
 import { Input, FormControls } from './../../../../../react/common/KbcBootstrap';
 const StaticText = FormControls.Static;

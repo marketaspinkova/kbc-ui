@@ -3,13 +3,13 @@ import _ from 'underscore';
 import moment from 'moment';
 import StatusLabel from '../../../../../react/common/JobStatusLabel';
 import { fromJS } from 'immutable';
-import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { timeInWords } from '../../../../../utils/duration';
 import date from '../../../../../utils/date';
 import { Tree, ExternalLink } from '@keboola/indigo-ui';
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     tasks: React.PropTypes.array.isRequired

@@ -4,10 +4,10 @@ import Graph from './Graph';
 import TransformationsStore from '../../../stores/TransformationsStore';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import TransformationsActionCreators from '../../../ActionCreators';
-import immutableMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 export default React.createClass({
-  mixins: [createStoreMixin(TransformationsStore), immutableMixin],
+  mixins: [createStoreMixin(TransformationsStore), PureRenderMixin],
 
   propTypes: {
     bucketId: React.PropTypes.string.isRequired,

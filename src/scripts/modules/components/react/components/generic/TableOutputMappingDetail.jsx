@@ -1,12 +1,12 @@
 import React from 'react';
-import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { List } from 'immutable';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import { Check } from '@keboola/indigo-ui';
 import TableLinkEx from '../StorageApiTableLinkEx';
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     value: React.PropTypes.object.isRequired

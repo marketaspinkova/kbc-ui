@@ -1,11 +1,11 @@
 import React from 'react';
-import immutableMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import InstalledComponentsStore from '../../stores/InstalledComponentsStore';
 
 export default React.createClass({
-  mixins: [createStoreMixin(InstalledComponentsStore), immutableMixin],
+  mixins: [createStoreMixin(InstalledComponentsStore), PureRenderMixin],
 
   propTypes: {
     componentId: React.PropTypes.string.isRequired,

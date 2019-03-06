@@ -1,5 +1,5 @@
 import React from 'react';
-import PureRenderMixin from 'react-immutable-render-mixin';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { fromJS } from 'immutable';
 import { Button, OverlayTrigger, Popover } from 'react-bootstrap';
 import { truncate } from 'underscore.string';
