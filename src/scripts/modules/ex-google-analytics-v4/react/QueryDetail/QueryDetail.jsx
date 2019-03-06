@@ -9,7 +9,6 @@ import {GapiStore} from '../../../google-utils/react/GapiFlux';
 // actions
 import actionsProvisioning from '../../actionsProvisioning';
 import {GapiActions} from '../../../google-utils/react/GapiFlux';
-// import {injectGapiScript} from '../../../google-utils/react/InitGoogleApis';
 
 // ui components
 import QueryEditor from '../components/QueryEditor/QueryEditor';
@@ -55,6 +54,7 @@ export default function(componentId) {
     render() {
       const isEditing = !!this.state.editingQuery;
       const editor = this.renderQueryEditor(isEditing);
+
       return (
         <div className="container-fluid">
           <div className="kbc-main-content">
@@ -72,11 +72,10 @@ export default function(componentId) {
                 </div>
               </div>
             }
-            {isEditing ?
-              editor :
-              <div className="col-md-9 kbc-main-content-with-nav">
-                {editor}
-              </div>
+            {
+              isEditing
+              ? editor
+              :<div className="col-md-9 kbc-main-content-with-nav">{editor}</div>
             }
           </div>
         </div>
@@ -98,10 +97,8 @@ export default function(componentId) {
           sampleDataInfo={this.state.store.getSampleDataInfo(this.state.queryId)}
           isQueryValidFn={this.state.store.isQueryValid}
           query={isEditing ? this.state.editingQuery : this.state.query}
-
           {...this.state.actions.prepareLocalState('QueryDetail')}/>
       );
     }
-
   });
 }

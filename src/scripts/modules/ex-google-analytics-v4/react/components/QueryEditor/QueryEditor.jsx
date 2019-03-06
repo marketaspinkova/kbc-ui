@@ -8,6 +8,8 @@ import SapiTableLinkEx from '../../../../components/react/components/StorageApiT
 import QuerySample from './QuerySample';
 import UrlParserModal from './UrlParserModal';
 import AntiSamplingModal from './AntiSamplingModal';
+import EndpointSelect from '../EndpointSelect';
+import {Constants, MCF_DIMENSIONS, MCF_METRICS} from '../Constants';
 
 const PREFERED_METRICS = ['ga:sessions', 'ga:users', 'ga:transactions', 'ga:pageviews', 'ga:uniquePageviews', 'ga:sessionDuration', 'ga:newUsers', 'ga:impressions', 'ga:transactionRevenue', 'ga:adClicks', 'ga:adCost', 'ga:bounces', 'ga:bounceRate'];
 
@@ -34,9 +36,17 @@ export default React.createClass({
   render() {
     const {query, isEditing} = this.props;
     const outTableId = this.props.outputBucket + '.' + query.get('outputTable');
+    const endpoint = query.get('endpoint', Constants.ENDPOINT_REPORT);
+
     return (
       <div className="row">
         <div className="form-horizontal">
+          <EndpointSelect
+            selectedValue={endpoint}
+            onSelectValue={this.onSelectEndpoint}
+            name={'Endpoint'}
+            disabled={!this.props.isEditing}
+          />
           <div className="form-group">
             <label className="col-md-2 control-label">
               Name
@@ -64,14 +74,14 @@ export default React.createClass({
               </label>
             </div>
             <div className="col-md-2">
-              {isEditing ? this.renderUrlParser() : null}
+              {(isEditing && endpoint === Constants.ENDPOINT_REPORT) && this.renderUrlParser()}
             </div>
           </div>
           <div className="form-group">
             <label className="col-md-2 control-label">
               Output Table
             </label>
-            <div className="col-md-8">
+            <div className="col-md-10">
               {isEditing ?
                 <div className="input-group">
                   <div className="input-group-addon">
@@ -102,30 +112,34 @@ export default React.createClass({
           />
           <GaMultiSelect
             isLoadingMetadata={this.props.isLoadingMetadata}
-            metadata={this.props.metadata.get('metrics', List()).toJS()}
+            metadata={this.getMetrics(endpoint)}
             isEditing={isEditing}
             name="Metrics"
-            preferedOrderIds={PREFERED_METRICS}
+            preferedOrderIds={this.getPreferredMetrics(endpoint)}
             onSelectValue={this.onSelectMetric}
             selectedValues={this.getSelectedMetrics()}
           />
           <GaMultiSelect
             isLoadingMetadata={this.props.isLoadingMetadata}
-            metadata={this.props.metadata.get('dimensions', List()).toJS()}
+            metadata={this.getDimensions(endpoint)}
             name="Dimensions"
-            preferedOrderIds={PREFERED_DIMENSTIONS}
+            preferedOrderIds={this.getPreferredDimensions(endpoint)}
             onSelectValue={this.onSelectDimension}
             selectedValues={this.getSelectedDimensions()}
             isEditing={isEditing}
           />
-          <GaMultiSelect
-            isLoadingMetadata={this.props.accountSegments.get('isLoading', false)}
-            metadata={this.props.accountSegments.get('data', List()).toJS()}
-            name="Segments (optional)"
-            onSelectValue={this.onSelectSegment}
-            selectedValues={this.getSelectedSegments()}
-            isEditing={isEditing}
-          />
+
+          {endpoint === Constants.ENDPOINT_REPORT ?
+            <GaMultiSelect
+              isLoadingMetadata={this.props.accountSegments.get('isLoading', false)}
+              metadata={this.props.accountSegments.get('data', List()).toJS()}
+              name="Segments (optional)"
+              onSelectValue={this.onSelectSegment}
+              selectedValues={this.getSelectedSegments()}
+              isEditing={isEditing}
+            />
+          : null}
+
           <div className="form-group">
             <label className="col-md-2 control-label">
               Filters (optional)
@@ -147,6 +161,7 @@ export default React.createClass({
             </div>
           </div>
 
+          {endpoint === Constants.ENDPOINT_REPORT ?
           <div className="form-group">
             <label className="col-md-2 control-label">
               {this.renderOptionsModal()}
@@ -167,11 +182,13 @@ export default React.createClass({
               }
             </div>
           </div>
+          : null}
 
           <DateRangesSelector
             isEditing={isEditing}
             ranges={query.getIn(['query', 'dateRanges'], List())}
             onChange={this.onChangePropertyFn(['query', 'dateRanges'])}
+            maxRanges={endpoint === Constants.ENDPOINT_MCF ? 1 : 2}
             {...this.props.prepareLocalState('DateRangeSelector')}/>
 
 
@@ -223,6 +240,43 @@ export default React.createClass({
           {...this.props.prepareLocalState('UrlParser')}/>
       </span>
     );
+  },
+
+  getMetrics(endpoint) {
+    if (endpoint === Constants.ENDPOINT_MCF) {
+      return fromJS(MCF_METRICS).map((item) => ({
+        id: item,
+        attributes: {
+          group: 'MCF',
+          uiName: item,
+          description: ''
+        }
+      })).toJS();
+    }
+    return this.props.metadata.get('metrics', List()).toJS();
+  },
+
+  getDimensions(endpoint) {
+    if (endpoint === Constants.ENDPOINT_MCF) {
+      return fromJS(MCF_DIMENSIONS).map((item) => ({
+        id: item,
+        attributes: {
+          group: 'MCF',
+          uiName: item,
+          description: ''
+        }
+      })).toJS();
+    }
+
+    return this.props.metadata.get('dimensions', List()).toJS();
+  },
+
+  getPreferredMetrics(endpoint) {
+    return (endpoint === Constants.ENDPOINT_MCF) ? MCF_METRICS : PREFERED_METRICS;
+  },
+
+  getPreferredDimensions(endpoint) {
+    return (endpoint === Constants.ENDPOINT_MCF) ? MCF_DIMENSIONS : PREFERED_DIMENSTIONS;
   },
 
   onSelectMetric(metrics) {
@@ -279,5 +333,23 @@ export default React.createClass({
       const newQuery = this.props.query.setIn([].concat(propName), value);
       this.props.onChangeQuery(newQuery);
     };
+  },
+
+  onSelectEndpoint(selectedEndpoint) {
+    if (this.props.query.get('endpoint') !== selectedEndpoint) {
+      this.props.onChangeQuery(Map({
+        id: this.props.query.get('id'),
+        name: this.props.query.get('name'),
+        enabled: this.props.query.get('enabled'),
+        outputTable: this.props.query.get('outputTable'),
+        endpoint: selectedEndpoint,
+        query: Map({
+          dateRanges: List([Map({
+            startDate: '-4 days',
+            endDate: 'today'
+          })])
+        })
+      }));
+    }
   }
 });

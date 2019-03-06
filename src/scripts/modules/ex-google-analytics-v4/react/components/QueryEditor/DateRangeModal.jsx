@@ -85,7 +85,7 @@ export default React.createClass({
           <Tabs
             className="tabs-inside-modal"
             activeKey={this.state.rangeType}
-            onSelect={this.onSelectTab}
+            onSelect={this.onSelectEndpoint}
             animation={false}
             id="daterangemodaltab"
           >
@@ -202,7 +202,7 @@ export default React.createClass({
     );
   },
 
-  onSelectTab(selectedTab) {
+  onSelectEndpoint(selectedTab) {
     this.setState({ rangeType: selectedTab });
   },
 

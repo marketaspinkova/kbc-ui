@@ -8,7 +8,6 @@ import {GapiStore} from '../../../google-utils/react/GapiFlux';
 
 // actions
 import actionsProvisioning from '../../actionsProvisioning';
-// import {injectGapiScript} from '../../../google-utils/react/InitGoogleApis';
 import {GapiActions} from '../../../google-utils/react/GapiFlux';
 
 // ui components
