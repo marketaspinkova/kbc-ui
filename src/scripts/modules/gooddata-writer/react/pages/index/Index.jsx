@@ -164,7 +164,7 @@ export default React.createClass({
                 buttonLabel="Upload"
                 buttonType="success"
                 onConfirm={this._handleProjectUpload}
-                childrenRootElement={React.DOM.a}
+                childrenRootElement="a"
               >
                 {this.state.writer.get('pendingActions', List()).contains('uploadProject') ? (
                   <Loader className="fa-fw" />
@@ -273,7 +273,7 @@ export default React.createClass({
                       buttonLabel="Optimize"
                       buttonType="primary"
                       onConfirm={this._handleOptimizeSLI}
-                      childrenRootElement={React.DOM.a}
+                      childrenRootElement="a"
                     >
                       <span>Optimize SLI hash</span>
                     </Confirm>
@@ -292,7 +292,7 @@ export default React.createClass({
                       }
                       buttonLabel="Reset"
                       onConfirm={this._handleProjectReset}
-                      childrenRootElement={React.DOM.a}
+                      childrenRootElement="a"
                     >
                       <span>Reset Project</span>
                     </Confirm>
@@ -313,7 +313,7 @@ export default React.createClass({
                   ]}
                   buttonLabel="Delete"
                   onConfirm={this._handleProjectDelete}
-                  childrenRootElement={React.DOM.a}
+                  childrenRootElement="a"
                 >
                   {this.state.writer.get('isDeleting') ? (
                     <Loader className="fa-fw" />
