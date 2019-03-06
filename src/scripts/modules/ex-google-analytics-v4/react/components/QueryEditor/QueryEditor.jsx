@@ -338,6 +338,7 @@ export default React.createClass({
   onSelectEndpoint(selectedEndpoint) {
     if (this.props.query.get('endpoint') !== selectedEndpoint) {
       this.props.onChangeQuery(Map({
+        id: this.props.query.get('id'),
         name: this.props.query.get('name'),
         enabled: this.props.query.get('enabled'),
         outputTable: this.props.query.get('outputTable'),
