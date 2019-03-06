@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react';
-import _ from 'underscore';
 import { fromJS } from 'immutable';
 import Select from 'react-select';
 
@@ -7,34 +6,46 @@ export default React.createClass({
   propTypes: {
     value: PropTypes.any,
     emptyStrings: PropTypes.bool,
+    multi: PropTypes.bool,
+    delimiter: PropTypes.string,
+    onChange: PropTypes.func.isRequired,
+    optionRenderer: PropTypes.func,
+    options: PropTypes.array,
+    searchable: PropTypes.bool,
+    clearable: PropTypes.bool,
+    autoFocus: PropTypes.bool,
+    disabled: PropTypes.bool,
+    name: PropTypes.string,
+    placeholder: PropTypes.string,
+    noResultsText: PropTypes.string,
+    promptTextCreator: PropTypes.func,
+
+    trimMultiCreatedValues: PropTypes.bool,
+    help: PropTypes.any,
     allowCreate: PropTypes.bool,
     ignoreCase: PropTypes.bool,
-    multi: PropTypes.bool,
     matchProp: PropTypes.string,
     labelKey: PropTypes.string,
     valueKey: PropTypes.string,
     matchPos: PropTypes.string,
-    help: PropTypes.any,
-    delimiter: PropTypes.string,
-    trimMultiCreatedValues: PropTypes.bool,
-    onChange: PropTypes.func.isRequired,
-    optionRenderer: PropTypes.func,
-    options: PropTypes.array,
-    filterOption: PropTypes.func
+    filterOption: PropTypes.func,
   },
 
   getDefaultProps() {
     return {
-      trimMultiCreatedValues: false,
       value: '',
       emptyStrings: false,
-      allowCreate: false,
       multi: false,
+      delimiter: ',',
+      trimMultiCreatedValues: false,
+      searchable: true,
+      clearable: true,
+      disabled: false,
+      allowCreate: false,
       ignoreCase: true,
       matchProp: 'any',
       labelKey: 'label',
       valueKey: 'value',
-      delimiter: ','
     };
   },
 
@@ -126,7 +137,18 @@ export default React.createClass({
       return (
         <span>
           <Select.Creatable
-            {...this.selectProps()}
+            emptyStrings={this.props.emptyStrings}
+            multi={this.props.multi}
+            delimiter={this.props.delimiter}
+            optionRenderer={this.props.optionRenderer}
+            searchable={this.props.searchable}
+            clearable={this.props.clearable}
+            autoFocus={this.props.autoFocus}
+            disabled={this.props.disabled}
+            name={this.props.name}
+            placeholder={this.props.placeholder}
+            noResultsText={this.props.noResultsText}
+            promptTextCreator={this.props.promptTextCreator}
             isOptionUnique={this.isOptionUnique}
             value={this.props.value.toJS ? this.mapValues(this.props.value.toJS()) : this.mapValues(this.props.value)}
             valueRenderer={this.valueRenderer}
@@ -137,20 +159,31 @@ export default React.createClass({
           {this.props.help ? (<span className="help-block">{this.props.help}</span>) : null}
         </span>
       );
-    } else {
-      return (
-        <span>
-          <Select
-            {...this.selectProps()}
-            value={this.props.value.toJS ? this.mapValues(this.props.value.toJS()) : this.mapValues(this.props.value)}
-            valueRenderer={this.valueRenderer}
-            filterOptions={this.filterOptions}
-            onChange={this.onChange}
-          />
-          {this.props.help ? (<span className="help-block">{this.props.help}</span>) : null}
-        </span>
-      );
     }
+
+    return (
+      <span>
+        <Select
+          emptyStrings={this.props.emptyStrings}
+          multi={this.props.multi}
+          delimiter={this.props.delimiter}
+          optionRenderer={this.props.optionRenderer}
+          searchable={this.props.searchable}
+          clearable={this.props.clearable}
+          autoFocus={this.props.autoFocus}
+          disabled={this.props.disabled}
+          name={this.props.name}
+          placeholder={this.props.placeholder}
+          noResultsText={this.props.noResultsText}
+          promptTextCreator={this.props.promptTextCreator}
+          value={this.props.value.toJS ? this.mapValues(this.props.value.toJS()) : this.mapValues(this.props.value)}
+          valueRenderer={this.valueRenderer}
+          filterOptions={this.filterOptions}
+          onChange={this.onChange}
+        />
+        {this.props.help ? (<span className="help-block">{this.props.help}</span>) : null}
+      </span>
+    );
   },
 
   onChange(selected) {
@@ -233,9 +266,5 @@ export default React.createClass({
     } else {
       return [];
     }
-  },
-
-  selectProps() {
-    return _.pick(this.props, Object.keys(Select.propTypes));
   }
 });
