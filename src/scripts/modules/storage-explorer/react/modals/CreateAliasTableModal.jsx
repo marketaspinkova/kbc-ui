@@ -233,7 +233,14 @@ export default React.createClass({
 
   onSubmit(event) {
     event.preventDefault();
-    const tableAlias = this.state.newTableAlias.updateIn(['aliasFilter', 'values'], values => values.split(',')).toJS();
+    const tableAlias = this.state.newTableAlias
+      .update((tableAlias) => {
+        if (!tableAlias.getIn(['aliasFilter', 'column'])) {
+          return tableAlias.delete('aliasFilter');
+        }
+        return tableAlias.updateIn(['aliasFilter', 'values'], values => values.split(','))
+      })
+      .toJS();
 
     this.props.onSubmit(tableAlias).then(this.onHide, message => {
       this.setState({
