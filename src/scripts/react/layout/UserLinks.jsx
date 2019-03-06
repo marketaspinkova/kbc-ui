@@ -1,10 +1,10 @@
 import React from 'react';
-import request from '../../utils/request';
 import { ExternalLink } from '@keboola/indigo-ui';
 import _ from 'underscore';
+import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
 import contactSupport from '../../utils/contactSupport';
-import WishlistModalDialog from '../../modules/components/react/components/WishlistModalDialog';
-
+import WishlistModalDialog from './wishlist/WishlistModalDialog';
+import WishlistApi from './wishlist/WishlistApi';
 
 export default React.createClass({
   propTypes: {
@@ -13,30 +13,13 @@ export default React.createClass({
     xsrf: React.PropTypes.string.isRequired
   },
 
-  _openWishlistModal(e) {
-    this.state.showWishlistModal = true;
-    e.preventDefault();
-    e.stopPropagation();
+  getInitialState() {
+    return {
+      showWishlistModal: false,
+      sendingWishlish: false
+    };
   },
 
-  getInitialState: function() {
-    return {showWishlistModal: false};
-  },
-
-  _wishlistSubmit(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    request('POST', '/admin/projects/send-wishlist-request')
-      .type('form')
-      .send({title: 'test', description: 'whatever desc'})
-      .promise()
-      .then((response) => {
-        // eslint-disable-next-line no-alert
-        alert(response.body);
-        this.state.showWishlistModal = false;
-        return response.body;
-      });
-  },
   render() {
     return (
       <div className="kbc-user-links">
@@ -66,18 +49,34 @@ export default React.createClass({
             </a>
           </li>
           <li>
-            <a href="" onClick={this._openWishlistModal}>
+            <a href="" onClick={this.openWishlistModal}>
               <span className="fa fa-tasks" />
               {' Feature Wishlist '}
             </a>
           </li>
         </ul>
+
         <WishlistModalDialog
           show={this.state.showWishlistModal}
-          onSubmit={this._wishlistSubmit}
+          isLoading={this.state.sendingWishlish}
+          onSubmit={this.handeSubmit}
+          onHide={this.closeWishlistModal}
         />
       </div>
     );
+  },
+
+  handeSubmit(title, description) {
+    this.setState({ sendingWishlish: true });
+    WishlistApi.sendRequest({ title, description })
+      .then(() => {
+        ApplicationActionCreators.sendNotification({
+          message: 'Your request was successfully sended.'
+        });
+      })
+      .finally(() => {
+        this.setState({ sendingWishlish: false });
+      });
   },
 
   openSupportModal(e) {
@@ -85,4 +84,13 @@ export default React.createClass({
     e.preventDefault();
     e.stopPropagation();
   },
+
+  openWishlistModal(e) {
+    e.preventDefault();
+    this.setState({ showWishlistModal: true });
+  },
+
+  closeWishlistModal() {
+    this.setState({ showWishlistModal: false });
+  }
 });
