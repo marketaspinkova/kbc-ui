@@ -58,7 +58,7 @@ export default React.createClass({
 
         <WishlistModalDialog
           show={this.state.showWishlistModal}
-          isLoading={this.state.sendingWishlish}
+          isSaving={this.state.sendingWishlish}
           onSubmit={this.handeSubmit}
           onHide={this.closeWishlistModal}
         />
