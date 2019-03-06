@@ -74,7 +74,7 @@ export default React.createClass({
               </label>
             </div>
             <div className="col-md-2">
-              {isEditing ? this.renderUrlParser() : null}
+              {(isEditing && endpoint === Constants.ENDPOINT_REPORT) && this.renderUrlParser()}
             </div>
           </div>
           <div className="form-group">
