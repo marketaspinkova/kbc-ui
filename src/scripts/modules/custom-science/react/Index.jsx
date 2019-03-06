@@ -143,7 +143,7 @@ export default React.createClass({
   renderSidebar() {
     return (
       <div className="col-md-3 kbc-main-sidebar">
-        <div classNmae="kbc-buttons kbc-text-light">
+        <div className="kbc-buttons kbc-text-light">
           <ComponentMetadata
             componentId={componentId}
             configId={this.state.configId}

@@ -44,18 +44,16 @@ export default React.createClass({
             />
           </div>
           <div className="row">
-            <div classNmae="col-xs-4">
-              <p>This component has to be configured manually, please contact our support for assistance.</p>
-              <div className="kbc-buttons">
-                <Button onClick={this.contactSupport} bsStyle="success">
-                  Contact Support
-                </Button>
-              </div>
+            <p>This component has to be configured manually, please contact our support for assistance.</p>
+            <div className="kbc-buttons">
+              <Button onClick={this.contactSupport} bsStyle="success">
+                Contact Support
+              </Button>
             </div>
           </div>
         </div>
         <div className="col-md-3 kbc-main-sidebar">
-          <div classNmae="kbc-buttons kbc-text-light">
+          <div className="kbc-buttons kbc-text-light">
             <ComponentMetadata
               componentId={this.state.componentId}
               configId={this.state.config.get('id')}

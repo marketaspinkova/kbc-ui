@@ -128,7 +128,7 @@ export default React.createClass({
           </div>
         </div>
         <div className="col-md-3 kbc-main-sidebar">
-          <div classNmae="kbc-buttons kbc-text-light">
+          <div className="kbc-buttons kbc-text-light">
             <span>Authorized for <strong>{this.state.parameters.getIn(['config', 'username'])}</strong></span>
             <ComponentMetadata
               componentId={this.state.componentId}
