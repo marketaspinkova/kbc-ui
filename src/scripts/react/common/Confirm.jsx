@@ -15,7 +15,7 @@ export default React.createClass({
   getDefaultProps() {
     return {
       buttonType: 'danger',
-      childrenRootElement: React.DOM.span
+      childrenRootElement: 'span'
     };
   },
 
@@ -36,7 +36,21 @@ export default React.createClass({
   },
 
   render() {
-    const modal = <ConfirmModal show={this.state.showModal} onHide={this.closeModal} {...this.props} key="modal"/>;
-    return this.props.childrenRootElement({onClick: this.onButtonClick}, [this.props.children, modal]);
+    const Wrapper = this.props.childrenRootElement;
+
+    return (
+      <Wrapper onClick={this.onButtonClick}>
+        {this.props.children}
+        <ConfirmModal 
+          show={this.state.showModal} 
+          onHide={this.closeModal}
+          title={this.props.title}
+          text={this.props.text}
+          onConfirm={this.props.onConfirm}
+          buttonLabel={this.props.buttonLabel}
+          buttonType={this.props.buttonType}
+        />
+      </Wrapper>
+    )
   }
 });

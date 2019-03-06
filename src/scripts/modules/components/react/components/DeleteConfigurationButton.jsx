@@ -59,7 +59,7 @@ export default React.createClass({
           text={text}
           buttonLabel="Move to Trash"
           onConfirm={this._handleDelete}
-          childrenRootElement={React.DOM.a}
+          childrenRootElement="a"
         >
           {this._renderIcon()}
           {' Move to Trash'}
