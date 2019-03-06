@@ -12,8 +12,8 @@ export default React.createClass({
     mapping: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
+    onSave: PropTypes.func.isRequired,
     onEditStart: PropTypes.func,
-    onSave: PropTypes.func.isRequired
   },
 
   getInitialState() {
@@ -37,9 +37,10 @@ export default React.createClass({
     return (
       <span>
         {this.renderOpenButton()}
-        <Modal {...this.props} show={this.state.show}
+        <Modal 
+          bsSize="large" 
+          show={this.state.show}
           onHide={this.handleCancel}
-          bsSize="large" onChange={() => null}
         >
           <Modal.Header closeButton>
             <Modal.Title>

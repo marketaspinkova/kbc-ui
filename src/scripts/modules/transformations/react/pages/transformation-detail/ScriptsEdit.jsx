@@ -13,16 +13,8 @@ export default React.createClass({
   },
 
   render() {
-    var codeMirrorParams = {
-      value: normalizeNewlines(this.props.script),
-      theme: 'solarized',
-      lineNumbers: true,
-      mode: resolveHighlightMode('docker', this.props.backend),
-      autofocus: true,
-      lineWrapping: true,
-      onChange: this.handleChange,
-      readOnly: this.props.disabled
-    };
+    var codeMirrorParams = {};
+
     if (this.props.backend === 'openrefine') {
       codeMirrorParams.lint = true;
       codeMirrorParams.gutters = ['CodeMirror-lint-markers'];
@@ -34,11 +26,22 @@ export default React.createClass({
     if (this.props.backend === 'r') {
       codeMirrorParams.placeholder = '# Your R script goes here...';
     }
+
     return (
       <div className="kbc-queries-edit">
         <div>
           <div className="edit form-group kbc-queries-editor">
-            <CodeMirror {...codeMirrorParams} />
+            <CodeMirror 
+              theme='solarized'
+              lineNumbers
+              autofocus
+              lineWrapping
+              value={normalizeNewlines(this.props.script)}
+              mode={resolveHighlightMode('docker', this.props.backend)}
+              onChange={this.handleChange}
+              readOnly={this.props.disabled}
+              {...codeMirrorParams}
+            />
           </div>
           <div className="small help-block">
             {this.help()}

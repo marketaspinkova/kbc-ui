@@ -1,11 +1,11 @@
 import React from 'react';
+import ColumnRow from './ColumnRow';
 import Hint from '../../../../../react/common/Hint';
 import Tooltip from '../../../../../react/common/Tooltip';
 
 export default React.createClass({
   propTypes: {
     columns: React.PropTypes.object.isRequired,
-    renderRowFn: React.PropTypes.func.isRequired,
     filterColumnFn: React.PropTypes.func.isRequired,
     onToggleHideIgnored: React.PropTypes.func.isRequired,
     editButtons: React.PropTypes.object.isRequired,
@@ -38,17 +38,19 @@ export default React.createClass({
         isValid = this.props.columnsValidation.get(cname, true);
       }
 
-      return this.props.renderRowFn({
-        key: index,
-        isValid,
-        isSaving: this.props.isSaving,
-        column,
-        editingColumn,
-        dataTypes: this.props.dataTypes,
-        editColumnFn: this.props.editColumnFn,
-        dataPreview: this.props.dataPreview,
-        disabledFields: this.props.disabledColumnFields
-      });
+      return (
+        <ColumnRow
+          key={index}
+          isValid={isValid}
+          column={column}
+          editingColumn={editingColumn}
+          isSaving={this.props.isSaving}
+          dataTypes={this.props.dataTypes}
+          editColumnFn={this.props.editColumnFn}
+          dataPreview={this.props.dataPreview}
+          disabledFields={this.props.disabledColumnFields}
+        />
+      );
     });
 
     return (

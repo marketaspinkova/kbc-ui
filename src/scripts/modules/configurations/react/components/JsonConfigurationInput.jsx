@@ -9,25 +9,23 @@ export default React.createClass({
   },
 
   render() {
-    var codeMirrorParams = {
-      value: this.props.value,
-      theme: 'solarized',
-      lineNumbers: true,
-      mode: 'application/json',
-      autofocus: true,
-      lineWrapping: true,
-      onChange: this.handleChange,
-      readOnly: this.props.disabled,
-      lint: true,
-      gutters: ['CodeMirror-lint-markers'],
-      placeholder: 'Your JSON config goes here...'
-
-    };
     return (
       <div className="kbc-json-edit">
         <div>
           <div className="edit form-group kbc-json-editor">
-            <CodeMirror {...codeMirrorParams} />
+            <CodeMirror
+              theme='solarized'
+              mode='application/json'
+              placeholder='Your JSON config goes here...'
+              lineNumbers
+              lint
+              autofocus
+              lineWrapping
+              value={this.props.value}
+              onChange={this.handleChange}
+              readOnly={this.props.disabled}
+              gutters={['CodeMirror-lint-markers']}
+            />
           </div>
           <div className="small help-block">
             {this.help()}
