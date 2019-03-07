@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
-import { Input } from './../../../../react/common/KbcBootstrap';
+import { ControlLabel, FormControl, Col, FormGroup, Checkbox, HelpBlock } from 'react-bootstrap';
 import CsvDelimiterInput from '../../../../react/common/CsvDelimiterInput';
 import Select from '../../../../react/common/Select';
 
@@ -43,54 +43,71 @@ export default React.createClass({
     return (
       <div className="form-horizontal">
         <h3>Download Settings</h3>
-        <Input
-          type="text"
-          label="Path"
-          labelClassName="col-xs-4"
-          wrapperClassName="col-xs-8"
-          value={this.props.value.path}
-          onChange={function(e) {
-            props.onChange({path: e.target.value});
-          }}
-          placeholder="/myfolder/myfile.csv"
-          disabled={this.props.disabled}
-        />
-        <Input
-          type="checkbox"
-          label="Decompress"
-          wrapperClassName="col-xs-8 col-xs-offset-4"
-          checked={this.props.value.decompress}
-          onChange={function(e) {
-            props.onChange({decompress: e.target.checked});
-          }}
-          disabled={this.props.disabled}
-          help={(<span>Decompress downloaded file(s). All files in all archives will be imported into a single Storage table.</span>)}
-        />
+        <FormGroup>
+          <Col componentClass={ControlLabel} xs={4}>Path</Col>
+          <Col xs={8}>
+            <FormControl
+              type="text"
+              value={this.props.value.path}
+              onChange={function(e) {
+                props.onChange({path: e.target.value});
+              }}
+              placeholder="/myfolder/myfile.csv"
+              disabled={this.props.disabled}
+            />
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col xs={8} xsOffset={4}>
+            <Checkbox
+              checked={this.props.value.decompress}
+              onChange={function(e) {
+                props.onChange({decompress: e.target.checked});
+              }}
+              disabled={this.props.disabled}
+            >
+              Decompress
+            </Checkbox>
+            <HelpBlock>
+              Decompress downloaded file(s). All files in all archives will be imported into a single Storage table.
+            </HelpBlock>
+          </Col>
+        </FormGroup>
         <h3>Save Settings</h3>
-        <Input
-          type="text"
-          label="Table Name"
-          labelClassName="col-xs-4"
-          wrapperClassName="col-xs-8"
-          value={this.props.value.name}
-          onChange={function(e) {
-            props.onChange({name: e.target.value});
-          }}
-          placeholder="mytable"
-          disabled={this.props.disabled}
-          help={(<span>Name of the table stored in Storage.</span>)}
-        />
-        <Input
-          type="checkbox"
-          label="Incremental Load"
-          wrapperClassName="col-xs-8 col-xs-offset-4"
-          checked={this.props.value.incremental}
-          onChange={function(e) {
-            props.onChange({incremental: e.target.checked});
-          }}
-          help={(<span>If incremental load is turned on, table will be updated instead of rewritten. Tables with primary key will update rows, tables without primary key will append rows.</span>)}
-          disabled={this.props.disabled}
-        />
+        <FormGroup>
+          <Col componentClass={ControlLabel} xs={4}>Table Name</Col>
+          <Col xs={8}>
+            <FormControl
+              type="text"
+              value={this.props.value.name}
+              onChange={function(e) {
+                props.onChange({name: e.target.value});
+              }}
+              placeholder="mytable"
+              disabled={this.props.disabled}
+            />
+            <HelpBlock>
+              Name of the table stored in Storage.
+            </HelpBlock>
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col xs={8} xsOffset={4}>
+            <Checkbox
+              checked={this.props.value.incremental}
+              onChange={function(e) {
+                props.onChange({incremental: e.target.checked});
+              }}
+              disabled={this.props.disabled}
+            >
+              Incremental Load
+            </Checkbox>
+            <HelpBlock>
+              If incremental load is turned on, table will be updated instead of rewritten. Tables
+              {' '}with primary key will update rows, tables without primary key will append rows.
+            </HelpBlock>
+          </Col>
+        </FormGroup>
         <CsvDelimiterInput
           type="text"
           labelClassName="col-xs-4"
@@ -101,19 +118,23 @@ export default React.createClass({
           }}
           disabled={this.props.disabled}
         />
-        <Input
-          type="text"
-          label="Enclosure"
-          labelClassName="col-xs-4"
-          wrapperClassName="col-xs-8"
-          value={this.props.value.enclosure}
-          onChange={function(e) {
-            props.onChange({enclosure: e.target.value});
-          }}
-          placeholder={'"'}
-          disabled={this.props.disabled}
-          help={(<span>Field enclosure used in CSV file. Default value is <code>&quot;</code>.</span>)}
-        />
+        <FormGroup>
+          <Col componentClass={ControlLabel} xs={4}>Enclosure</Col>
+          <Col xs={8}>
+            <FormControl
+              type="text"
+              value={this.props.value.enclosure}
+              onChange={function(e) {
+                props.onChange({enclosure: e.target.value});
+              }}
+              placeholder={'"'}
+              disabled={this.props.disabled}
+            />
+            <HelpBlock>
+              Field enclosure used in CSV file. Default value is <code>&quot;</code>.
+            </HelpBlock>
+          </Col>
+        </FormGroup>
         <h3>Header &amp; Primary Key</h3>
         <div className="form-group">
           <div className="col-xs-4 control-label">Read Header</div>
