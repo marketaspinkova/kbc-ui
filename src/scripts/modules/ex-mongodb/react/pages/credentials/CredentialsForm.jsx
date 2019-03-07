@@ -1,14 +1,10 @@
 import React from 'react';
 import {Map} from 'immutable';
+import {Col, Checkbox, Form, FormControl, FormGroup, ControlLabel} from 'react-bootstrap';
 import Clipboard from '../../../../../react/common/Clipboard';
-
 import TestCredentialsButtonGroup from '../../../../../react/common/TestCredentialsButtonGroup';
-import {Input, FormControls} from './../../../../../react/common/KbcBootstrap';
 import Tooltip from '../../../../../react/common/Tooltip';
 import SshTunnelRow from '../../../../../react/common/SshTunnelRow';
-
-
-const StaticText = FormControls.Static;
 
 export default React.createClass({
   propTypes: {
@@ -29,7 +25,6 @@ export default React.createClass({
       onChange: () => null
     };
   },
-
 
   testCredentials() {
     return this.props.actionCreators.testCredentials(this.props.configId, this.props.credentials);
@@ -66,16 +61,21 @@ export default React.createClass({
 
   createProtectedInput(labelValue, propName) {
     let savedValue = this.props.savedCredentials.get(propName);
+
     return (
-      <Input
-        key={propName}
-        label={this.renderProtectedLabel(labelValue, !!savedValue)}
-        type="password"
-        labelClassName="col-xs-4"
-        wrapperClassName="col-xs-8"
-        placeholder={(savedValue) ? 'type new password to change it' : ''}
-        value={this.props.credentials.get(propName)}
-        onChange={this.handleChange.bind(this, propName)}/>
+      <FormGroup key={propName}>
+        <Col xs={4} componentClass={ControlLabel}>
+          {this.renderProtectedLabel(labelValue, !!savedValue)}
+        </Col>
+        <Col xs={8}>
+          <FormControl
+            type="password"
+            placeholder={(savedValue) ? 'type new password to change it' : ''}
+            value={this.props.credentials.get(propName)}
+            onChange={this.handleChange.bind(this, propName)}
+          />
+        </Col>
+      </FormGroup>
     );
   },
 
@@ -83,54 +83,75 @@ export default React.createClass({
     if (this.props.enabled) {
       if (isProtected) {
         return this.createProtectedInput(labelValue, propName);
-      } else {
+      }
+
+      if (type === 'checkbox') {
         return (
-          <Input
-            key={propName}
-            label={labelValue}
-            type={type}
-            labelClassName={(type === 'checkbox') ? '' : 'col-xs-4'}
-            wrapperClassName={(type === 'checkbox') ? 'col-xs-8 col-xs-offset-4' : 'col-xs-8'}
-            value={this.props.credentials.get(propName)}
-            checked={(type === 'checkbox') ? this.props.credentials.get(propName) : false}
-            onChange={
-              (type === 'checkbox') ?
-                this.handleCheckboxChange.bind(this, propName) :
-                this.handleChange.bind(this, propName)
-            }
-          />
+          <FormGroup key={propName}>
+            <Col xs={8} xsOffset={4}>
+              <Checkbox
+                checked={this.props.credentials.get(propName)}
+                onChange={this.handleCheckboxChange.bind(this, propName)}
+              />
+            </Col>
+          </FormGroup>
         );
       }
-    } else if (isProtected) {
+
       return (
-        <StaticText
-          key={propName}
-          label={labelValue}
-          labelClassName="col-xs-4"
-          wrapperClassName="col-xs-8">
-          <Tooltip tooltip="Encrypted password">
-            <span className="fa fa-fw fa-lock"/>
-          </Tooltip>
-        </StaticText>
-      );
-    } else {
-      return (
-        <StaticText
-          key={propName}
-          label={labelValue}
-          labelClassName="col-xs-4"
-          wrapperClassName="col-xs-8">
-          {this.props.credentials.get(propName)}
-          {(this.props.credentials.get(propName)) ? <Clipboard text={this.props.credentials.get(propName).toString()}/> : null}
-        </StaticText>
+        <FormGroup key={propName}>
+          <Col xs={4} componentClass={ControlLabel}>
+            {labelValue}
+          </Col>
+          <Col xs={8}>
+            <FormControl
+              type={type}
+              value={this.props.credentials.get(propName)}
+              onChange={this.handleChange.bind(this, propName)}
+            />
+          </Col>
+        </FormGroup>
       );
     }
+    
+    if (isProtected) {
+      return (
+        <FormGroup key={propName}>
+          <Col xs={4} componentClass={ControlLabel}>
+            {labelValue}
+          </Col>
+          <Col xs={8}>
+            <FormControl.Static>
+              <Tooltip tooltip="Encrypted password">
+                <i className="fa fa-fw fa-lock"/>
+              </Tooltip>
+            </FormControl.Static>
+          </Col>
+        </FormGroup>
+      );
+    }
+
+    return (
+      <FormGroup key={propName}>
+        <Col xs={4} componentClass={ControlLabel}>
+          {labelValue}
+        </Col>
+        <Col xs={8}>
+          <FormControl.Static>
+            {this.props.credentials.get(propName)}
+            {this.props.credentials.get(propName) && (
+              <Clipboard text={this.props.credentials.get(propName).toString()}/>
+            )}
+          </FormControl.Static>
+        </Col>
+      </FormGroup>
+    );
   },
 
   renderFields() {
-    return this.props.credentialsTemplate.getFields().map(function(field) {
+    return this.props.credentialsTemplate.getFields().map((field) => {
       return this.createInput(field.label, field.name, field.type, field.protected);
-    }, this);
+    });
   },
 
   sshRowOnChange(sshObject) {
@@ -139,8 +160,9 @@ export default React.createClass({
 
   render() {
     const { componentId, configId, enabled, isValidEditingCredentials, isEditing } = this.props;
+
     return (
-      <form className="form-horizontal">
+      <Form horizontal>
         <div className="kbc-inner-padding">
           {this.renderFields()}
           <SshTunnelRow
@@ -157,7 +179,7 @@ export default React.createClass({
             testCredentialsFn={this.testCredentials}
           />
         </div>
-      </form>
+      </Form>
     );
   }
 });

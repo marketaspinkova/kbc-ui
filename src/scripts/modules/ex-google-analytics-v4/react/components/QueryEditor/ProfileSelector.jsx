@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Input} from './../../../../../react/common/KbcBootstrap';
+import {FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
 import ProfileInfo from '../../ProfileInfo';
 
 export default React.createClass({
@@ -24,35 +24,40 @@ export default React.createClass({
   render() {
     if (this.props.isEditing) {
       return (
-        <Input
-          type="select"
-          value={this.props.selectedProfile}
-          label={this.props.label}
-          labelClassName={this.props.labelClassName}
-          wrapperClassName={this.props.wrapperClassName}
-          onChange={this.onSelect}>
-
-          <option value="">
-            --all profiles--
-          </option>
-
-          {this.renderOptionsArray()}
-        </Input>
-      );
-    } else {
-      return (
-        <div className="form-group">
-          <label className={'control-label ' + this.props.labelClassName}>
-            {this.props.label}
-          </label>
+        <FormGroup>
+          {this.props.label && (
+            <ControlLabel className={this.props.labelClassName}>
+              {this.props.label}
+            </ControlLabel>
+          )}
           <div className={this.props.wrapperClassName}>
-            <p className="form-control-static">
-              {this.renderStaticProfile()}
-            </p>
+            <FormControl
+              componentClass="select"
+              value={this.props.selectedProfile}
+              onChange={this.onSelect}
+            >
+              <option value="">
+                --all profiles--
+              </option>
+              {this.renderOptionsArray()}
+            </FormControl>
           </div>
-        </div>
+        </FormGroup>
       );
     }
+
+    return (
+      <FormGroup>
+        <ControlLabel className={'control-label ' + this.props.labelClassName}>
+          {this.props.label}
+        </ControlLabel>
+        <div className={this.props.wrapperClassName}>
+          <p className="form-control-static">
+            {this.renderStaticProfile()}
+          </p>
+        </div>
+      </FormGroup>
+    );
   },
 
   renderStaticProfile() {
