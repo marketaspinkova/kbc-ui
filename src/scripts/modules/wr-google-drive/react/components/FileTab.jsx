@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Input} from '../../../../react/common/KbcBootstrap';
+import { Checkbox, Col, FormGroup, HelpBlock } from 'react-bootstrap';
 import {RadioGroup} from 'react-radio-group';
 import RadioGroupInput from '../../../../react/common/RadioGroupInput';
 import Picker from '../../../google-utils/react/GooglePicker';
@@ -133,20 +133,19 @@ export default React.createClass({
 
   renderConvertCheckbox() {
     return (
-      <div className="form-group">
-        <label className="col-md-2 control-label">
-          Format
-        </label>
-        <div className="col-md-10">
-          <Input
-            type="checkbox"
+      <FormGroup>
+        <Col md={10} xsOffset={2}>
+          <Checkbox
             checked={this.props.valueConvert}
             onChange={this.props.onToggleConvert}
-            label="Convert to Google Docs format"
-            help="After upload, file will be converted so it can be edited directly in Google Drive"
-          />
-        </div>
-      </div>
+          >
+            Convert to Google Docs format
+          </Checkbox>
+          <HelpBlock>
+            After upload, file will be converted so it can be edited directly in Google Drive
+          </HelpBlock>
+        </Col>
+      </FormGroup>
     );
   }
 });
