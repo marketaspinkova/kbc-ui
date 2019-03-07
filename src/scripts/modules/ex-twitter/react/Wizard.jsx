@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Input} from './../../../react/common/KbcBootstrap';
-import AutoFocus from './wizard/AutoFocus';
+import InputAutoFocused from './wizard/AutoFocus';
 import {Steps, COMPONENT_ID} from '../constants';
 import AuthorizationRow from '../../oauth-v2/react/AuthorizationRow';
 import WizardCommon from './wizard/WizardCommon';
@@ -9,8 +8,6 @@ import WizardButtons from './wizard/WizardButtons';
 import {Map} from 'immutable';
 import EditButtons from '../../../react/common/EditButtons';
 import {deleteCredentialsAndConfigAuth} from '../../oauth-v2/OauthUtils';
-
-const InputAutoFocused = AutoFocus(Input);
 
 export default React.createClass({
   propTypes: {
@@ -57,7 +54,6 @@ export default React.createClass({
           <div className="col-md-8">
             <InputAutoFocused
               currentStep={this.props.step}
-              type="text"
               value={this.props.settings.get('userTimelineScreenName')}
               onChange={this.onUserTimelineChange}
               label="Screen name"
@@ -74,7 +70,6 @@ export default React.createClass({
         <WizardStep step={Steps.STEP_FOLLOWERS} title="Followers List" buttons={followersButtons}>
           <div className="col-md-8">
             <InputAutoFocused
-              type="text"
               currentStep={this.props.step}
               value={this.props.settings.get('followersScreenName')}
               onChange={this.onFollowersChange}
@@ -88,7 +83,6 @@ export default React.createClass({
         <WizardStep step={Steps.STEP_SEARCH} title="Search Tweets" buttons={searchButtons}>
           <div className="col-md-8">
             <InputAutoFocused
-              type="text"
               currentStep={this.props.step}
               value={this.props.settings.getIn(['search', 'query'])}
               onChange={this.onSearchQueryChange}
