@@ -3,8 +3,8 @@ import Immutable from 'immutable';
 const createConfiguration = function(localState) {
   return Immutable.fromJS({
     parameters: {
-      tableName: localState.get('tableName', ''),
       query: {
+        tableName: localState.get('tableName', ''),
         incremental: localState.get('incremental', false),
         primaryKey: localState.get('primaryKey', Immutable.List()).toJS()
       }
@@ -16,15 +16,15 @@ const parseConfiguration = function(configuration) {
   const query = configuration.getIn(['parameters', 'query'], Immutable.Map());
 
   return Immutable.fromJS({
-    tableName: configuration.getIn(['parameters', 'tableName'], ''),
+    tableName: query.get('tableName', ''),
     incremental: query.get('incremental', false),
     primaryKey: query.get('primaryKey', Immutable.List()).toJS(),
     destinationEditing: true
   });
 };
 
-const createEmptyConfiguration = function(name) {
-  return createConfiguration(Immutable.fromJS({tableName: name}));
+const createEmptyConfiguration = function(name, friendlyName) {
+  return createConfiguration(Immutable.fromJS({tableName: friendlyName}));
 };
 
 export default {

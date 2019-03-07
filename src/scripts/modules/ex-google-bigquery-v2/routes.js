@@ -78,7 +78,7 @@ const routeSettings = {
         name: 'Output Table',
         type: columnTypes.TABLE_LINK_DEFAULT_BUCKET,
         value: function(row) {
-          return row.getIn(['configuration', 'parameters', 'tableName']);
+          return row.getIn(['configuration', 'parameters', 'query', 'tableName'], '');
         }
       },
       {
