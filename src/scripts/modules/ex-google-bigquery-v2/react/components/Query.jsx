@@ -10,7 +10,7 @@ export default React.createClass({
   propTypes: {
     value: PropTypes.shape({
       useLegacySql: PropTypes.bool.isRequired,
-      query: PropTypes.string.isRequired
+      sql: PropTypes.string.isRequired
     }),
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired
@@ -24,7 +24,8 @@ export default React.createClass({
         <FormGroup>
           <Col smOffset={4} sm={8}>
             <Checkbox
-              checked={this.props.value.useLegacySql}
+              checked={props.value.useLegacySql}
+              disabled={props.disabled}
               onChange={function(e) {
                 props.onChange({useLegacySql: e.target.checked});
               }}
@@ -41,9 +42,9 @@ export default React.createClass({
           </Col>
           <Col sm={8}>
             <CodeEditor
-              readOnly={false}
+              readOnly={props.disabled}
               placeholder="e.g. SELECT `id`, `name` FROM `myTable`"
-              value={this.props.value.query}
+              value={props.value.query}
               mode={editorMode('keboola.ex-google-bigquery-v2')}
               onChange={function(e) {
                 props.onChange({query: e.value});

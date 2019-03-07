@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
 import {Form, FormGroup, ControlLabel, Col, HelpBlock, Checkbox} from 'react-bootstrap';
 import Select from '../../../../react/common/Select';
-import TableSelectorForm from '../../../../react/common/TableSelectorForm';
+import {Input} from "../../../../react/common/KbcBootstrap";
 
 
 export default React.createClass({
@@ -10,10 +10,9 @@ export default React.createClass({
 
   propTypes: {
     value: PropTypes.shape({
-      outputTable: PropTypes.string.isRequired,
+      tableName: PropTypes.string.isRequired,
       incremental: PropTypes.bool.isRequired,
-      primaryKey: PropTypes.array.isRequired,
-      destinationEditing: PropTypes.bool.isRequired,
+      primaryKey: PropTypes.array.isRequired
     }),
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired
@@ -30,24 +29,24 @@ export default React.createClass({
     return (
       <Form horizontal>
         <h3>Save Settings</h3>
-        <TableSelectorForm
+        <Input
+          type="text"
+          label="Storage Table Name"
           labelClassName="col-sm-4"
           wrapperClassName="col-sm-8"
-          value={this.props.value.outputTable}
-          onChange={function(value) {
-            props.onChange({outputTable: value});
+          value={props.value.tableName}
+          onChange={function(e) {
+            props.onChange({tableName: e.target.value});
           }}
-          disabled={this.props.disabled}
-          label="Destination"
-          help="Where the table will be imported.
-                  If the table or bucket does not exist, it will be created."
-          onEdit={() => this.onDestinationEdit()}
-          editing={this.props.value.destinationEditing}
+          placeholder="mytable"
+          disabled={props.disabled}
+          help={(<span>Name of the table stored in Storage.</span>)}
         />
         <FormGroup>
           <Col smOffset={4} sm={8}>
             <Checkbox
-              checked={this.props.value.incremental}
+              checked={props.value.incremental}
+              disabled={props.disabled}
               onChange={function(e) {
                 props.onChange({incremental: e.target.checked});
               }}
@@ -64,7 +63,7 @@ export default React.createClass({
           <Col sm={8}>
             <Select
               name="primaryKey"
-              value={this.props.value.primaryKey}
+              value={props.value.primaryKey}
               multi={true}
               allowCreate={true}
               delimiter=","
@@ -73,7 +72,7 @@ export default React.createClass({
               onChange={function(value) {
                 props.onChange({primaryKey: value});
               }}
-              disabled={this.props.disabled}
+              disabled={props.disabled}
             />
             <HelpBlock>
               If primary key is set, updates can be done on table by selecting <strong>incremental loads</strong>. Primary key can consist of multiple columns. Primary key of an existing table cannot be changed.
