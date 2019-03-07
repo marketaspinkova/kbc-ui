@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
-import {Input} from './../../../../react/common/KbcBootstrap';
+import { FormGroup, FormControl, ControlLabel, Col, HelpBlock } from 'react-bootstrap';
 
 export default React.createClass({
   mixins: [immutableMixin],
@@ -21,54 +21,64 @@ export default React.createClass({
     const {onChange, value} = this.props;
     return (
       <div className="form-horizontal">
-        <Input
-          type="text"
-          label="Host"
-          labelClassName="col-xs-4"
-          wrapperClassName="col-xs-8"
-          value={value.host}
-          onChange={e => onChange({host: e.target.value})}
-          placeholder="example.snowflakecomputing.com"
-          disabled={this.props.disabled}
-          help="Snowflake instance hostname"
-        />
-        <Input
-          type="text"
-          label="User"
-          labelClassName="col-xs-4"
-          wrapperClassName="col-xs-8"
-          value={value.user}
-          onChange={e => onChange({user: e.target.value})}
-          disabled={this.props.disabled}
-        />
-        <Input
-          type="password"
-          label="Password"
-          labelClassName="col-xs-4"
-          wrapperClassName="col-xs-8"
-          value={value.password}
-          onChange={e => onChange({password: e.target.value})}
-          disabled={this.props.disabled}
-        />
-        <Input
-          type="text"
-          label="Database"
-          labelClassName="col-xs-4"
-          wrapperClassName="col-xs-8"
-          value={value.database}
-          onChange={e => onChange({database: e.target.value})}
-          disabled={this.props.disabled}
-          help="You need to have privileges to create new schemas in this database"
-        />
-        <Input
-          type="text"
-          label="Warehouse"
-          labelClassName="col-xs-4"
-          wrapperClassName="col-xs-8"
-          value={value.warehouse}
-          onChange={e => onChange({warehouse: e.target.value})}
-          disabled={this.props.disabled}
-        />
+        <FormGroup>
+          <Col componentClass={ControlLabel} xs={4}>Host</Col>
+          <Col xs={8}>
+            <FormControl
+              type="text"
+              value={value.host}
+              onChange={e => onChange({host: e.target.value})}
+              placeholder="example.snowflakecomputing.com"
+              disabled={this.props.disabled}
+            />
+            <HelpBlock>Snowflake instance hostname</HelpBlock>
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col componentClass={ControlLabel} xs={4}>User</Col>
+          <Col xs={8}>
+            <FormControl
+              type="text"
+              value={value.user}
+              onChange={e => onChange({user: e.target.value})}
+              disabled={this.props.disabled}
+            />
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col componentClass={ControlLabel} xs={4}>Password</Col>
+          <Col xs={8}>
+            <FormControl
+              type="password"
+              value={value.password}
+              onChange={e => onChange({password: e.target.value})}
+              disabled={this.props.disabled}
+            />
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col componentClass={ControlLabel} xs={4}>Database</Col>
+          <Col xs={8}>
+            <FormControl
+              type="text"
+              value={value.database}
+              onChange={e => onChange({database: e.target.value})}
+              disabled={this.props.disabled}
+            />
+            <HelpBlock>You need to have privileges to create new schemas in this database</HelpBlock>
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col componentClass={ControlLabel} xs={4}>Warehouse</Col>
+          <Col xs={8}>
+            <FormControl
+              type="text"
+              value={value.warehouse}
+              onChange={e => onChange({warehouse: e.target.value})}
+              disabled={this.props.disabled}
+            />
+          </Col>
+        </FormGroup>
       </div>
     );
   }
