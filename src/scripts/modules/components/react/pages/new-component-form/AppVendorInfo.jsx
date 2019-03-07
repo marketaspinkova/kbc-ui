@@ -1,6 +1,6 @@
 import React from 'react';
 import { ExternalLink } from '@keboola/indigo-ui';
-import { Input } from '../../../../../react/common/KbcBootstrap';
+import { Checkbox, Col, FormGroup } from 'react-bootstrap';
 
 export default React.createClass({
   propTypes: {
@@ -11,18 +11,18 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="form-group">
-        <div className="col-xs-9 col-xs-offset-3">
-          <Input
-            type="checkbox"
-            label={this._renderCheckboxLabel()}
+      <FormGroup>
+        <Col xs={9} xsOffset={3}>
+          <Checkbox
             checked={this.props.licenseAgreed}
             onChange={event => {
               return this.props.handleAgreedLicense(event.target.checked);
             }}
-          />
-        </div>
-      </div>
+          >
+            {this._renderCheckboxLabel()}
+          </Checkbox>
+        </Col>
+      </FormGroup>
     );
   },
 
