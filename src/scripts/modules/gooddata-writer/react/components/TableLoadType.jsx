@@ -261,7 +261,7 @@ export default React.createClass({
         .toArray();
       columnsOptions = columnsOptions.concat(
         <option key="" value="" disabled="true">
-          <small>- add -</small>
+          - add -
         </option>
       );
     }
