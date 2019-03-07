@@ -1,9 +1,7 @@
 import React from 'react';
 import _ from 'underscore';
 import Immutable from 'immutable';
-
-import { Form, FormGroup, ControlLabel, Col, HelpBlock } from 'react-bootstrap';
-import { Input } from '../../../../../react/common/KbcBootstrap';
+import { Form, FormGroup, FormControl, ControlLabel, Col, HelpBlock } from 'react-bootstrap';
 import Select from '../../../../../react/common/Select';
 import SapiTableSelector from '../../../../components/react/components/SapiTableSelector';
 import ChangedSinceInput from '../../../../../react/common/ChangedSinceInput';
@@ -148,18 +146,18 @@ export default React.createClass({
           </Col>
         </FormGroup>
         {!this.props.definition.has('destination') && (
-          <Input
-            type="text"
-            label="File name"
-            value={this.props.value.get('destination')}
-            disabled={this.props.disabled}
-            placeholder="File name"
-            onChange={this._handleChangeDestination}
-            labelClassName="col-sm-2"
-            wrapperClassName="col-sm-10"
-            bsStyle={this.props.isDestinationDuplicate ? 'error' : null}
-            help={
-              this.props.isDestinationDuplicate ? (
+          <FormGroup>
+            <Col sm={2} componentClass={ControlLabel}>File name</Col>
+            <Col sm={10}>
+              <FormControl
+                type="text"
+                value={this.props.value.get('destination')}
+                disabled={this.props.disabled}
+                placeholder="File name"
+                onChange={this._handleChangeDestination}
+                bsStyle={this.props.isDestinationDuplicate ? 'error' : null}
+              />
+              {this.props.isDestinationDuplicate ? (
                 <span className="error">
                   {'Duplicate destination '}
                   <code>{this.props.value.get('destination')}</code>.
@@ -169,9 +167,9 @@ export default React.createClass({
                   File will be available at
                   <code>{`/data/in/tables/${this._getFileName()}`}</code>
                 </HelpBlock>
-              )
-            }
-          />
+              )}
+            </Col>
+          </FormGroup>
         )}
         <PanelWithDetails defaultExpanded={this.props.initialShowDetails}>
           <FormGroup>
@@ -215,8 +213,8 @@ export default React.createClass({
               />
             </Col>
             <Col sm={2}>
-              <Input
-                type="select"
+              <FormControl
+                componentClass="select"
                 name="whereOperator"
                 value={this.props.value.get('whereOperator')}
                 disabled={this.props.disabled}
@@ -224,7 +222,7 @@ export default React.createClass({
               >
                 <option value={whereOperatorConstants.EQ_VALUE}>{whereOperatorConstants.EQ_LABEL}</option>
                 <option value={whereOperatorConstants.NOT_EQ_VALUE}>{whereOperatorConstants.NOT_EQ_LABEL}</option>
-              </Input>
+              </FormControl>
             </Col>
             <Col sm={4}>
               <Select

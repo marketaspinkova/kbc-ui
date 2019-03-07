@@ -1,9 +1,7 @@
 import React from 'react';
 import _ from 'underscore';
 import { fromJS, Map, List } from 'immutable';
-import {Input} from './../../../../../react/common/KbcBootstrap';
-
-import { Form, FormGroup, ControlLabel, Col, HelpBlock } from 'react-bootstrap';
+import { Form, FormGroup, FormControl, ControlLabel, Col, HelpBlock } from 'react-bootstrap';
 import Select from '../../../../../react/common/Select';
 import SapiTableSelector from '../../../../components/react/components/SapiTableSelector';
 import DatatypeForm from './input/DatatypeForm';
@@ -272,24 +270,26 @@ export default React.createClass({
             />
           </Col>
         </FormGroup>
-        <Input
-          type="text"
-          label="Destination"
-          value={this.props.value.get('destination')}
-          disabled={this.props.disabled}
-          placeholder="Destination table name in transformation DB"
-          onChange={this._handleChangeDestination}
-          labelClassName="col-sm-2"
-          wrapperClassName="col-sm-10"
-          bsStyle={this.props.isDestinationDuplicate ? 'error' : null}
-          help={
-            this.props.isDestinationDuplicate
-              ? <span className="error">
-                    Duplicate Destination <code>{this.props.value.get('destination')}</code>.
-              </span>
-              : null
-          }
-        />
+        <FormGroup>
+          <Col sm={2} componentClass={ControlLabel}>Destination</Col>
+          <Col sm={10}>
+            <FormControl
+              type="text"
+              value={this.props.value.get('destination')}
+              disabled={this.props.disabled}
+              placeholder="Destination table name in transformation DB"
+              onChange={this._handleChangeDestination}
+              bsStyle={this.props.isDestinationDuplicate ? 'error' : null}
+            />
+            {this.props.isDestinationDuplicate && (
+              <HelpBlock>
+                <span className="error">
+                  Duplicate Destination <code>{this.props.value.get('destination')}</code>.
+                </span>
+              </HelpBlock>
+            )}
+          </Col>
+        </FormGroup>
         <FormGroup>
           <Col sm={2} componentClass={ControlLabel}>Load Type</Col>
           <Col sm={10}>
@@ -354,16 +354,16 @@ export default React.createClass({
                   />
                 </Col>
                 <Col sm={2}>
-                  <Input
-                    type="select"
+                  <FormControl
                     name="whereOperator"
+                    componentClass="select"
                     value={this.props.value.get('whereOperator')}
                     disabled={this.props.disabled}
                     onChange={this._handleChangeWhereOperator}
                   >
                     <option value={whereOperatorConstants.EQ_VALUE}>{whereOperatorConstants.EQ_LABEL}</option>
                     <option value={whereOperatorConstants.NOT_EQ_VALUE}>{whereOperatorConstants.NOT_EQ_LABEL}</option>
-                  </Input>
+                  </FormControl>
                 </Col>
                 <Col sm={4}>
                   <Select
