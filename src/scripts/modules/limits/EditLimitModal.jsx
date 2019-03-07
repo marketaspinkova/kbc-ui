@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Input } from './../../react/common/KbcBootstrap';
+import { Col, FormControl, FormGroup, HelpBlock, ControlLabel } from 'react-bootstrap';
 import ApplicationStore from '../../stores/ApplicationStore';
 import { Button, ButtonToolbar, Modal } from 'react-bootstrap';
 
@@ -32,18 +32,21 @@ export default React.createClass({
         <Modal.Body>
           <form className="form-horizontal" ref="limitEditForm" method="post" action={this.state.actionUrl}>
             <p>You can change the limit because you are superadmin. This feature is hidden for all other users.</p>
-            <Input
-              label={limit.get('name')}
-              name="limitValue"
-              ref="name"
-              autoFocus={true}
-              value={this.state.limitValue}
-              onChange={this.handleChange}
-              type="number"
-              help={limit.get('id')}
-              labelClassName="col-sm-6"
-              wrapperClassName="col-sm-4"
-            />
+            <FormGroup>
+              <Col componentClass={ControlLabel} sm={6}>{limit.get('name')}</Col>
+              <Col sm={4}>
+                <FormControl
+                  type="number"
+                  name="limitValue"
+                  autoFocus
+                  value={this.state.limitValue}
+                  onChange={this.handleChange}
+                />
+                <HelpBlock>
+                  {limit.get('id')}
+                </HelpBlock>
+              </Col>
+            </FormGroup>
             <input type="hidden" name="limitName" value={limit.get('id')} />
             <input type="hidden" name="projectId" value={this.state.projectId} />
             <input type="hidden" name="xsrf" value={this.state.xsrf} />
