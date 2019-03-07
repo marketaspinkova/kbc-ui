@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
 import { ExternalLink } from '@keboola/indigo-ui';
-import { Input } from './../../../../react/common/KbcBootstrap';
+import { ControlLabel, FormControl, Col, HelpBlock, FormGroup} from 'react-bootstrap';
 
 export default React.createClass({
   mixins: [immutableMixin],
@@ -19,41 +19,46 @@ export default React.createClass({
     const props = this.props;
     return (
       <div className="form-horizontal">
-        <Input
-          type="text"
-          label="Access Key Id"
-          labelClassName="col-xs-4"
-          wrapperClassName="col-xs-8"
-          value={this.props.value.awsAccessKeyId}
-          onChange={function(e) {
-            props.onChange({awsAccessKeyId: e.target.value});
-          }}
-          placeholder="MYAWSACCESSKEYID123"
-          disabled={this.props.disabled}
-          help={(
-            <span>
+        <FormGroup>
+          <Col componentClass={ControlLabel} xs={4}>Access Key Id</Col>
+          <Col xs={8}>
+            <FormControl
+              type="text"
+              value={this.props.value.awsAccessKeyId}
+              onChange={function(e) {
+                props.onChange({awsAccessKeyId: e.target.value});
+              }}
+              placeholder="MYAWSACCESSKEYID123"
+              disabled={this.props.disabled}
+            />
+            <HelpBlock>
               Make sure that this AWS Access Key ID has correct permissions. Required permissions are
               <ul>
                 <li><code>s3:GetObject</code> for the given key/wildcard</li>
                 <li><code>s3:ListBucket</code> to access all wildcard files</li>
                 <li><code>s3:GetBucketLocation</code> to determine the bucket region</li>
               </ul>
-              More information is available in the <ExternalLink href="https://help.keboola.com/extractors/storage/aws-s3/">documentation</ExternalLink>.
-            </span>
-          )}
-        />
-        <Input
-          type="password"
-          label="Secret Access Key"
-          labelClassName="col-xs-4"
-          wrapperClassName="col-xs-8"
-          value={this.props.value.awsSecretAccessKey}
-          onChange={function(e) {
-            props.onChange({awsSecretAccessKey: e.target.value});
-          }}
-          help={(<span>The AWS Secret Access Key will be encrypted.</span>)}
-          disabled={this.props.disabled}
-        />
+              More information is available in the{' '}
+              <ExternalLink href="https://help.keboola.com/extractors/storage/aws-s3/">documentation</ExternalLink>.
+            </HelpBlock>
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col componentClass={ControlLabel} xs={4}>Secret Access Key</Col>
+          <Col xs={8}>
+            <FormControl
+              type="password"
+              value={this.props.value.awsSecretAccessKey}
+              onChange={function(e) {
+                props.onChange({awsSecretAccessKey: e.target.value});
+              }}
+              disabled={this.props.disabled}
+            />
+            <HelpBlock>
+              The AWS Secret Access Key will be encrypted.
+            </HelpBlock>
+          </Col>
+        </FormGroup>
       </div>
     );
   }

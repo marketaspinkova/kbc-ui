@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
-import { Input } from './../../../../react/common/KbcBootstrap';
+import { ControlLabel, FormGroup, HelpBlock, Checkbox, FormControl, Col } from 'react-bootstrap';
 import CsvDelimiterInput from '../../../../react/common/CsvDelimiterInput';
 import Select from '../../../../react/common/Select';
 import {PanelWithDetails} from '@keboola/indigo-ui';
@@ -79,74 +79,92 @@ export default React.createClass({
     return (
       <div className="form-horizontal">
         <h3>Source</h3>
-        <Input
-          type="text"
-          label="S3 Bucket"
-          labelClassName="col-xs-4"
-          wrapperClassName="col-xs-8"
-          value={this.props.value.bucket}
-          onChange={function(e) {
-            props.onChange({bucket: e.target.value});
-          }}
-          placeholder="mybucket"
-          disabled={this.props.disabled}
-        />
-        <Input
-          type="text"
-          label="Search Key"
-          labelClassName="col-xs-4"
-          wrapperClassName="col-xs-8"
-          value={this.props.value.key}
-          onChange={function(e) {
-            props.onChange({key: e.target.value});
-          }}
-          placeholder="myfolder/myfile.csv"
-          disabled={this.props.disabled}
-          help={(<span>Filename including folders or a prefix. Do not type <code>*</code> or <code>%</code> wildcards, use <strong>Wildcard</strong> checkbox instead.</span>)}
-        />
+        <FormGroup>
+          <Col componentClass={ControlLabel} xs={4}>S3 Bucket</Col>
+          <Col xs={8}>
+            <FormControl
+              type="text"
+              value={this.props.value.bucket}
+              onChange={function(e) {
+                props.onChange({bucket: e.target.value});
+              }}
+              placeholder="mybucket"
+              disabled={this.props.disabled}
+            />
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col componentClass={ControlLabel} xs={4}>Search Key</Col>
+          <Col xs={8}>
+            <FormControl
+              type="text"
+              value={this.props.value.key}
+              onChange={function(e) {
+                props.onChange({key: e.target.value});
+              }}
+              placeholder="myfolder/myfile.csv"
+              disabled={this.props.disabled}
+            />
+            <HelpBlock>
+              Filename including folders or a prefix. Do not type <code>*</code> or <code>%</code> wildcards,
+              {' '}use <strong>Wildcard</strong> checkbox instead.
+            </HelpBlock>
+          </Col>
+        </FormGroup>
         <PanelWithDetails
           defaultExpanded={this.props.value.newFilesOnly || this.props.value.wildcard || this.props.value.subfolders}
           placement="bottom"
           labelOpen="Show additional source settings"
           labelCollapse="Hide additional source settings"
         >
-          <Input
-            type="checkbox"
-            label="New Files Only"
-            wrapperClassName="col-xs-8 col-xs-offset-4"
-            checked={this.props.value.newFilesOnly}
-            onChange={function(e) {
-              props.onChange({newFilesOnly: e.target.checked});
-            }}
-            disabled={this.props.disabled}
-            help={(<span>Every job stores the timestamp of the last downloaded file and a subsequent job can pick up from there.</span>)}
-          />
-          <Input
-            type="checkbox"
-            label="Wildcard"
-            wrapperClassName="col-xs-8 col-xs-offset-4"
-            checked={this.props.value.wildcard}
-            onChange={function(e) {
-              let change = {wildcard: e.target.checked};
-              if (change.wildcard === false) {
-                change.subfolders = false;
-              }
-              props.onChange(change);
-            }}
-            disabled={this.props.disabled}
-            help={(<span>Match all files beginning with the specified key.</span>)}
-          />
-          <Input
-            type="checkbox"
-            label="Subfolders"
-            wrapperClassName="col-xs-8 col-xs-offset-4"
-            checked={this.props.value.subfolders}
-            onChange={function(e) {
-              props.onChange({subfolders: e.target.checked});
-            }}
-            disabled={this.props.disabled || !this.props.value.wildcard}
-            help={(<span>Download subfolders recursively.</span>)}
-          />
+          <FormGroup>
+            <Col xs={8} xsOffset={4}>
+              <Checkbox
+                checked={this.props.value.newFilesOnly}
+                onChange={function(e) {
+                  props.onChange({newFilesOnly: e.target.checked});
+                }}
+                disabled={this.props.disabled}
+              >
+                New Files Only
+              </Checkbox>
+              <HelpBlock>
+                Every job stores the timestamp of the last downloaded file and a subsequent job can pick up from there.
+              </HelpBlock>
+            </Col>
+          </FormGroup>
+          <FormGroup>
+            <Col xs={8} xsOffset={4}>
+              <Checkbox
+                checked={this.props.value.wildcard}
+                onChange={function(e) {
+                  let change = {wildcard: e.target.checked};
+                  if (change.wildcard === false) {
+                    change.subfolders = false;
+                  }
+                  props.onChange(change);
+                }}
+                disabled={this.props.disabled}
+              >
+                Wildcard
+              </Checkbox>
+              <HelpBlock>Match all files beginning with the specified key.</HelpBlock>
+            </Col>
+          </FormGroup>
+          <FormGroup>
+            <Col xs={8} xsOffset={4}>
+              <Checkbox
+                checked={this.props.value.subfolders}
+                onChange={function(e) {
+                  props.onChange({subfolders: e.target.checked});
+                }}
+                disabled={this.props.disabled || !this.props.value.wildcard}
+              >
+                Subfolders
+              </Checkbox>
+              <HelpBlock>Download subfolders recursively.</HelpBlock>
+            </Col>
+          </FormGroup>
         </PanelWithDetails>
         <h3>CSV Settings</h3>
         <CsvDelimiterInput
@@ -160,18 +178,20 @@ export default React.createClass({
           disabled={this.props.disabled}
           help={<span>Field delimiter used in CSV file. Use <code>\t</code> for tabulator.</span>}
         />
-        <Input
-          type="text"
-          label="Enclosure"
-          labelClassName="col-xs-4"
-          wrapperClassName="col-xs-8"
-          value={this.props.value.enclosure}
-          onChange={function(e) {
-            props.onChange({enclosure: e.target.value});
-          }}
-          disabled={this.props.disabled}
-          help={<span>Field enclosure used in CSV file.</span>}
-        />
+        <FormGroup>
+          <Col componentClass={ControlLabel} xs={4}>Enclosure</Col>
+          <Col xs={8}>
+            <FormControl
+              type="text"
+              value={this.props.value.enclosure}
+              onChange={function(e) {
+                props.onChange({enclosure: e.target.value});
+              }}
+              disabled={this.props.disabled}
+            />
+            <HelpBlock>Field enclosure used in CSV file.</HelpBlock>
+          </Col>
+        </FormGroup>
         <div className="form-group">
           <div className="col-xs-4 control-label">Header</div>
           <div className="col-xs-8">
@@ -193,30 +213,38 @@ export default React.createClass({
         </div>
         {this.renderCsvHeader()}
         <h3>Destination</h3>
-        <Input
-          type="text"
-          label="Storage Table Name"
-          labelClassName="col-xs-4"
-          wrapperClassName="col-xs-8"
-          value={this.props.value.name}
-          onChange={function(e) {
-            props.onChange({name: e.target.value});
-          }}
-          placeholder="mytable"
-          disabled={this.props.disabled}
-          help={(<span>Name of the table stored in Storage.</span>)}
-        />
-        <Input
-          type="checkbox"
-          label="Incremental Load"
-          wrapperClassName="col-xs-8 col-xs-offset-4"
-          checked={this.props.value.incremental}
-          onChange={function(e) {
-            props.onChange({incremental: e.target.checked});
-          }}
-          help={(<span>If incremental load is turned on, table will be updated instead of rewritten. Tables with primary key will update rows, tables without primary key will append rows.</span>)}
-          disabled={this.props.disabled}
-        />
+        <FormGroup>
+          <Col componentClass={ControlLabel} xs={4}>Storage Table Name</Col>
+          <Col xs={8}>
+            <FormControl
+              type="text"
+              value={this.props.value.name}
+              onChange={function(e) {
+                props.onChange({name: e.target.value});
+              }}
+              placeholder="mytable"
+              disabled={this.props.disabled}
+            />
+            <HelpBlock>Name of the table stored in Storage.</HelpBlock>
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col xs={8} xsOffset={4}>
+            <Checkbox
+              checked={this.props.value.incremental}
+              onChange={function(e) {
+                props.onChange({incremental: e.target.checked});
+              }}
+              disabled={this.props.disabled}
+            >
+              Incremental Load
+            </Checkbox>
+            <HelpBlock>
+              If incremental load is turned on, table will be updated instead of rewritten. Tables with primary key will
+              {' '}update rows, tables without primary key will append rows.
+            </HelpBlock>
+          </Col>
+        </FormGroup>
         <div className="form-group">
           <div className="col-xs-4 control-label">Primary Key</div>
           <div className="col-xs-8">
@@ -237,45 +265,60 @@ export default React.createClass({
           </div>
         </div>
         <h3>Processing Settings</h3>
-        <Input
-          type="checkbox"
-          label="Decompress"
-          wrapperClassName="col-xs-8 col-xs-offset-4"
-          checked={this.props.value.decompress}
-          onChange={function(e) {
-            props.onChange({decompress: e.target.checked});
-          }}
-          disabled={this.props.disabled}
-          help={(<span>Decompress downloaded file(s). All files in all archives will be imported into a single Storage table.</span>)}
-        />
+        <FormGroup>
+          <Col xs={8} xsOffset={4}>
+            <Checkbox
+              checked={this.props.value.decompress}
+              onChange={function(e) {
+                props.onChange({decompress: e.target.checked});
+              }}
+              disabled={this.props.disabled}
+            >
+              Decompress
+            </Checkbox>
+            <HelpBlock>
+              Decompress downloaded file(s). All files in all archives will be imported into a single Storage table.
+            </HelpBlock>
+          </Col>
+        </FormGroup>
         <PanelWithDetails
           defaultExpanded={this.props.value.addFilenameColumn || this.props.value.addRowNumberColumn}
           placement="bottom"
           labelOpen="Show additional processing settings"
           labelCollapse="Hide additional processing settings"
         >
-          <Input
-            type="checkbox"
-            label="Add Filename Column"
-            wrapperClassName="col-xs-8 col-xs-offset-4"
-            checked={this.props.value.addFilenameColumn}
-            onChange={function(e) {
-              props.onChange({addFilenameColumn: e.target.checked});
-            }}
-            help={(<span>Add an <code>s3_filename</code> column that will store the processed file name.</span>)}
-            disabled={this.props.disabled}
-          />
-          <Input
-            type="checkbox"
-            label="Add Row Number Column"
-            wrapperClassName="col-xs-8 col-xs-offset-4"
-            checked={this.props.value.addRowNumberColumn}
-            onChange={function(e) {
-              props.onChange({addRowNumberColumn: e.target.checked});
-            }}
-            help={(<span>Add an <code>s3_row_number</code> column that will store the row number from the processed file.</span>)}
-            disabled={this.props.disabled}
-          />
+          <FormGroup>
+            <Col xs={8} xsOffset={4}>
+              <Checkbox
+                checked={this.props.value.addFilenameColumn}
+                onChange={function(e) {
+                  props.onChange({addFilenameColumn: e.target.checked});
+                }}
+                disabled={this.props.disabled}
+              >
+                Add Filename Column
+              </Checkbox>
+              <HelpBlock>
+                Add an <code>s3_filename</code> column that will store the processed file name.
+              </HelpBlock>
+            </Col>
+          </FormGroup>
+          <FormGroup>
+            <Col xs={8} xsOffset={4}>
+              <Checkbox
+                checked={this.props.value.addRowNumberColumn}
+                onChange={function(e) {
+                  props.onChange({addRowNumberColumn: e.target.checked});
+                }}
+                disabled={this.props.disabled}
+              >
+                Add Row Number Column
+              </Checkbox>
+              <HelpBlock>
+                Add an <code>s3_row_number</code> column that will store the row number from the processed file.
+              </HelpBlock>
+            </Col>
+          </FormGroup>
         </PanelWithDetails>
       </div>
     );
