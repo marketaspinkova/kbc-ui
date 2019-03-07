@@ -1,8 +1,8 @@
 import React, {PropTypes} from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
-import {Input} from './../../../../react/common/KbcBootstrap';
 import Select from '../../../../react/common/Select';
 import TableSelectorForm from '../../../../react/common/TableSelectorForm';
+import {Col, ControlLabel, FormControl, FormGroup, HelpBlock, Checkbox} from 'react-bootstrap';
 
 export default React.createClass({
   mixins: [immutableMixin],
@@ -89,36 +89,48 @@ export default React.createClass({
   render() {
     return (
       <div className="form-horizontal">
-        <Input
-          type="text"
-          label="Bucket"
-          labelClassName="col-xs-4"
-          wrapperClassName="col-xs-8"
-          value={this.props.s3Bucket}
-          onChange={this.onChangeS3Bucket}
-          placeholder="MyS3Bucket"
-          disabled={this.props.disabled}
-        />
-        <Input
-          type="text"
-          label="Key"
-          labelClassName="col-xs-4"
-          wrapperClassName="col-xs-8"
-          value={this.props.s3Key}
-          onChange={this.onChangeS3Key}
-          placeholder="myfolder/myfile.csv"
-          help={(<span>Do not include bucket name or wildcard asterisk.</span>)}
-          disabled={this.props.disabled}
-        />
-        <Input
-          type="checkbox"
-          label="Wildcard"
-          wrapperClassName="col-xs-8 col-xs-offset-4"
-          checked={this.props.wildcard}
-          onChange={this.onChangeWildcard}
-          help={(<span>If wildcard is turned on, all files in S3 with the defined prefix will be downloaded. Please note, that all files need to have the same header.</span>)}
-          disabled={this.props.disabled}
-        />
+        <FormGroup>
+          <Col componentClass={ControlLabel} xs={4}>Bucket</Col>
+          <Col xs={8}>
+            <FormControl
+              type="text"
+              value={this.props.s3Bucket}
+              onChange={this.onChangeS3Bucket}
+              placeholder="MyS3Bucket"
+              disabled={this.props.disabled}
+            />
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col componentClass={ControlLabel} xs={4}>Key</Col>
+          <Col xs={8}>
+            <FormControl
+              type="text"
+              value={this.props.s3Key}
+              onChange={this.onChangeS3Key}
+              placeholder="myfolder/myfile.csv"
+              disabled={this.props.disabled}
+            />
+            <HelpBlock>
+              Do not include bucket name or wildcard asterisk.
+            </HelpBlock>
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col xs={8} xsOffset={4}>
+            <Checkbox
+              checked={this.props.wildcard}
+              onChange={this.onChangeWildcard}
+              disabled={this.props.disabled}
+            >
+              Wildcard
+            </Checkbox>
+            <HelpBlock>
+              If wildcard is turned on, all files in S3 with the defined prefix will be downloaded.
+              {' '}Please note, that all files need to have the same header.
+            </HelpBlock>
+          </Col>
+        </FormGroup>
         <TableSelectorForm
           labelClassName="col-xs-4"
           wrapperClassName="col-xs-8"
@@ -131,15 +143,21 @@ export default React.createClass({
           onEdit={this.props.onDestinationEdit}
           editing={this.props.destinationEditing}
         />
-        <Input
-          type="checkbox"
-          label="Incremental Load"
-          wrapperClassName="col-xs-8 col-xs-offset-4"
-          checked={this.props.incremental}
-          onChange={this.onChangeIncremental}
-          help={(<span>If incremental load is turned on, table will be updated instead of rewritten. Tables with primary key will update rows, tables without primary key will append rows.</span>)}
-          disabled={this.props.disabled}
-        />
+        <FormGroup>
+          <Col xs={8} xsOffset={4}>
+            <Checkbox
+              checked={this.props.incremental}
+              onChange={this.onChangeIncremental}
+              disabled={this.props.disabled}
+            >
+              Incremental Load
+            </Checkbox>
+            <HelpBlock>
+              If incremental load is turned on, table will be updated instead of rewritten.
+              {' '}Tables with primary key will update rows, tables without primary key will append rows.
+            </HelpBlock>
+          </Col>
+        </FormGroup>
         <div className="form-group">
           <div className="col-xs-4 control-label">Primary Key</div>
           <div className="col-xs-8">
