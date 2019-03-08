@@ -1,6 +1,7 @@
 import React from 'react';
-import { fromJS, Map } from 'immutable';
 import _ from 'underscore';
+import { fromJS, Map } from 'immutable';
+import { ControlLabel, FormGroup, FormControl, HelpBlock } from 'react-bootstrap';
 import * as tdeCommon from '../../../tdeCommon';
 import StorageStore from '../../../../components/stores/StorageTablesStore';
 import RoutesStore from '../../../../../stores/RoutesStore';
@@ -11,7 +12,6 @@ import FilterTableModal from '../../../../components/react/components/generic/Ta
 import FiltersDescription from '../../../../components/react/components/generic/FiltersDescription';
 import ColumnsTable from './ColumnsTable';
 import storageApi from '../../../../components/StorageApi';
-import { Input, FormControls } from './../../../../../react/common/KbcBootstrap';
 
 const componentId = 'tde-exporter';
 const columnTdeTypes = ['string', 'boolean', 'number', 'decimal', 'date', 'datetime'];
@@ -130,9 +130,14 @@ export default React.createClass({
     }
 
     return (
-      <FormControls.Static label={tlabel} bsSize="small" wrapperClassName="wrapper">
-        <FiltersDescription value={isEditing ? this.state.editingMapping : this.state.mapping} rootClassName="" />
-      </FormControls.Static>
+      <FormGroup bsSize="small">
+        <ControlLabel>
+          {tlabel}
+        </ControlLabel>
+        <FormControl.Static className="wrapper">
+          <FiltersDescription value={isEditing ? this.state.editingMapping : this.state.mapping} rootClassName="" />
+        </FormControl.Static>
+      </FormGroup>
     );
   },
 
@@ -160,11 +165,17 @@ export default React.createClass({
 
   _renderOutNameEditor(isEditing) {
     const tlabel = 'Output file name:';
+
     if (!isEditing) {
       return (
-        <FormControls.Static label={tlabel} bsSize="small" wrapperClassName="wrapper">
-          {this.state.tdeFileName}
-        </FormControls.Static>
+        <FormGroup bsSize="small">
+          <ControlLabel>
+            {tlabel}
+          </ControlLabel>
+          <FormControl.Static className="wrapper">
+            {this.state.tdeFileName}
+          </FormControl.Static>
+        </FormGroup>
       );
     }
 
@@ -176,22 +187,24 @@ export default React.createClass({
     }
 
     return (
-      <Input
-        value={this.state.editingTdeFileName}
-        bsSize="small"
-        bsStyle={errorMsg ? 'error' : ''}
-        help={(
-          <small>{errorMsg || msg}</small>
-        )}
-        type="text"
-        label={tlabel}
-        wrapperClassName="wrapper"
-        onChange={e => {
-          const { value } = e.target;
-          const path = ['editingTdeNames', this.state.tableId];
-          return this._updateLocalState(path, value);
-        }}
-      />
+      <FormGroup bsSize="small">
+        <ControlLabel>
+          {tlabel}
+        </ControlLabel>
+        <div className="wrapper">
+          <FormControl
+            type="text"
+            bsStyle={errorMsg ? 'error' : ''}
+            value={this.state.editingTdeFileName}
+            onChange={e => {
+              const { value } = e.target;
+              const path = ['editingTdeNames', this.state.tableId];
+              return this._updateLocalState(path, value);
+            }}
+          />
+          <HelpBlock>{errorMsg || msg}</HelpBlock>
+        </div>
+      </FormGroup>
     );
   },
 
@@ -221,19 +234,20 @@ export default React.createClass({
     });
 
     return (
-      <Input
-        type="select"
-        bsSize="small"
-        defaultValue=""
-        onChange={e => {
-          if (_.isEmpty(e.target.value)) {
-            return;
-          }
-          return this._prefillSelectedType(e.target.value);
-        }}
-      >
-        {options}
-      </Input>
+      <FormGroup bsSize="small">
+        <FormControl
+          componentClass="select"
+          defaultValue=""
+          onChange={e => {
+            if (_.isEmpty(e.target.value)) {
+              return;
+            }
+            return this._prefillSelectedType(e.target.value);
+          }}
+        >
+          {options}
+        </FormControl>
+      </FormGroup>
     );
   },
 

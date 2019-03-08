@@ -1,8 +1,7 @@
 import React, {PropTypes} from 'react';
 import Select from 'react-select';
-import {Alert, Modal} from 'react-bootstrap';
+import {Alert, Col, ControlLabel, Modal, FormGroup, FormControl, HelpBlock} from 'react-bootstrap';
 import {Loader} from '@keboola/indigo-ui';
-import {Input} from './../../../../react/common/KbcBootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import SyncActionError from '../../../../utils/SyncActionError';
 import EmptyState from '../../../components/react/components/ComponentEmptyState';
@@ -58,9 +57,9 @@ export default React.createClass({
 
       return (
         <div className="form-horizontal">
-          <div className="form-group">
-            <label className="col-xs-3 control-label">Select billable project</label>
-            <div className="col-xs-9">
+          <FormGroup>
+            <Col xs={3} componentClass={ControlLabel}>Select billable project</Col>
+            <Col xs={9}>
               <Select
                 key="projectId"
                 name="projectId"
@@ -69,20 +68,19 @@ export default React.createClass({
                 onChange={({value: newValue}) => this.updateEditingValue('projectId', newValue)}
                 options={projectOptions}
               />
-            </div>
-          </div>
-          <div className="form-group">
-            <label className="col-xs-3 control-label">Cloud storage bucket</label>
-            <div className="col-xs-9">
-              <Input
+            </Col>
+          </FormGroup>
+          <FormGroup>
+            <Col xs={3} componentClass={ControlLabel}>Cloud storage bucket</Col>
+            <Col xs={9}>
+              <FormControl
                 type="text"
-                className="form-control"
                 value={this.props.google.get('storage', '')}
                 placeholder="gs://"
                 onChange={(e) => this.updateEditingValue('storage', e.target.value)}
               />
-            </div>
-          </div>
+            </Col>
+          </FormGroup>
         </div>
       );
     }
@@ -95,9 +93,9 @@ export default React.createClass({
   renderProjectSelect() {
     if (this.props.isPendingFn('projects')) {
       return (
-        <div className="form-group">
+        <FormGroup>
           <Loader/>
-        </div>
+        </FormGroup>
       );
     }
 
@@ -146,40 +144,39 @@ export default React.createClass({
   renderForm() {
     return (
       <div className="form-horizontal">
-        <div className="form-group">
-          <label className="col-xs-3 control-label">Select billable project</label>
-          <div className="col-xs-9">
+        <FormGroup>
+          <Col xs={3} componentClass={ControlLabel}>Select billable project</Col>
+          <Col xs={9}>
             {this.renderProjectSelect()}
-            <div className="help-block">
+            <HelpBlock>
               BigQuery charges for data storage, streaming inserts, and for querying data.
-            </div>
-          </div>
-        </div>
-        <div className="form-group">
-          <label className="col-xs-3 control-label">Cloud Storage bucket</label>
-          <div className="col-xs-9">
-            <Input
+            </HelpBlock>
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col xs={3} componentClass={ControlLabel}>Cloud Storage bucket</Col>
+          <Col xs={9}>
+            <FormControl
               type="text"
-              className="form-control"
               value={this.props.google.get('storage', '')}
               placeholder="gs://some-bucket-name"
               onChange={(e) => this.updateEditingValue('storage', e.target.value)}
             />
-            <div className="help-block">
+            <HelpBlock>
               Existing Google Cloud Storage bucket. There will be data temporarily exported,
               before load to KBC.
-            </div>
-          </div>
-        </div>
-        <div className="form-group">
-          <label className="col-xs-3 control-label">Dataset location</label>
-          <div className="col-xs-9">
+            </HelpBlock>
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col xs={3} componentClass={ControlLabel}>Dataset location</Col>
+          <Col xs={9}>
             {this.renderLocationSelect()}
-            <div className="help-block">
+            <HelpBlock>
               The geographic location where source data exists.
-            </div>
-          </div>
-        </div>
+            </HelpBlock>
+          </Col>
+        </FormGroup>
       </div>
     );
   },

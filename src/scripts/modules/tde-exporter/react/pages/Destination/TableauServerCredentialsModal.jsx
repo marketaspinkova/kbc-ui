@@ -1,9 +1,8 @@
 import React from 'react';
 import _ from 'underscore';
 import { Map } from 'immutable';
-import { Modal, Button, ButtonToolbar } from 'react-bootstrap';
+import { Col, Modal, Button, ButtonToolbar, HelpBlock, FormControl, FormGroup, ControlLabel } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
-import { Input } from '../../../../../react/common/KbcBootstrap';
 
 export default React.createClass({
   propTypes: {
@@ -87,20 +86,24 @@ export default React.createClass({
 
   _createInput(labelValue, propName, type = 'text', desc = '') {
     return (
-      <Input
-        label={labelValue}
-        help={desc}
-        placeholder={propName === 'site' ? 'default if empty' : null}
-        type={type}
-        value={this.state.credentials.get(propName)}
-        labelClassName="col-xs-4"
-        wrapperClassName="col-xs-8"
-        onChange={event => {
-          this.setState({
-            credentials: this.state.credentials.set(propName, event.target.value)
-          });
-        }}
-      />
+      <FormGroup>
+        <Col xs={4} componentClass={ControlLabel}>
+          {labelValue}
+        </Col>
+        <Col xs={8}>
+          <FormControl
+            type={type}
+            placeholder={propName === 'site' ? 'default if empty' : null}
+            value={this.state.credentials.get(propName)}
+            onChange={event => {
+              this.setState({
+                credentials: this.state.credentials.set(propName, event.target.value)
+              });
+            }}
+          />
+          {desc && <HelpBlock>{desc}</HelpBlock>}
+        </Col>
+      </FormGroup>
     );
   }
 });
