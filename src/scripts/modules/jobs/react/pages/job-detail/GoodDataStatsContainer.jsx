@@ -1,9 +1,8 @@
 import React from 'react';
+import { List } from 'immutable';
+import { startsWith } from 'underscore.string';
 import { factory as EventsServiceFactory } from '../../../../sapi-events/EventsService';
 import GoodDataStats from './GoodDataStats';
-import _ from 'underscore';
-import { startsWith } from 'underscore.string';
-import { List } from 'immutable';
 
 export default React.createClass({
   propTypes: {
@@ -50,14 +49,20 @@ export default React.createClass({
   },
 
   _getTaskEvents() {
-    const events = this.state.events.toJS();
-    const tasks = this.props.job.getIn(['params', 'tasks']).toJS();
+    if (!this.state.events || !this.state.events.count()) {
+      return this.props.job.getIn(['params', 'tasks'], List()).toJS();
+    }
 
-    return _.map(tasks, (task, taskId) => {
-      const msg = `Task ${taskId} `;
-      const event = _.find(_.values(events), item => startsWith(item.message, msg));
-      task.event = event;
-      return task;
-    });
+    return this.props.job
+      .getIn(['params', 'tasks'], List())
+      .map((task) => {
+        return task.set(
+          'event',
+          this.state.events.find((event) =>
+            startsWith(event.get('message'), `Task ${task.get('id')} `)
+          )
+        );
+      })
+      .toJS();
   }
 });
