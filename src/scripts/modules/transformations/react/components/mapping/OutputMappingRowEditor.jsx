@@ -169,6 +169,7 @@ export default React.createClass({
                   <FormControl
                     autoFocus
                     type="text"
+                    name="source"
                     value={this.props.value.get('source')}
                     disabled={this.props.disabled}
                     placeholder="File name"
@@ -189,6 +190,7 @@ export default React.createClass({
                 <Col xs={10}>
                   <FormControl
                     type="text"
+                    name="source"
                     autoFocus
                     value={this.props.value.get('source')}
                     disabled={this.props.disabled}
@@ -228,6 +230,7 @@ export default React.createClass({
         <FormGroup className="form-group">
           <Col sm={10} smOffset={2}>
             <Checkbox
+              name="incremental"
               checked={this.props.value.get('incremental')}
               disabled={this.props.disabled}
               onChange={this._handleChangeIncremental}

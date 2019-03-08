@@ -175,10 +175,8 @@ export default React.createClass({
                   >
                     Incremental
                   </Radio>
-                  <HelpBlock>
-                    {incrementalHelp}
-                    {this._renderFactGrainSelector(grain || '', incrementalLoad > 0)}
-                  </HelpBlock>
+                  <HelpBlock>{incrementalHelp}</HelpBlock>
+                  {this._renderFactGrainSelector(grain || '', incrementalLoad > 0)}
                 </Col>
               </FormGroup>
             </div>
