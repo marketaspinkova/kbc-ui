@@ -283,9 +283,7 @@ export default React.createClass({
             />
             {this.props.isDestinationDuplicate && (
               <HelpBlock>
-                <span className="error">
-                  Duplicate Destination <code>{this.props.value.get('destination')}</code>.
-                </span>
+                Duplicate Destination <code>{this.props.value.get('destination')}</code>.
               </HelpBlock>
             )}
           </Col>

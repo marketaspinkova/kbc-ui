@@ -218,10 +218,10 @@ export default React.createClass({
               bsStyle={this.props.isDestinationDuplicate ? 'error' : null}
             />
             {this.props.isDestinationDuplicate && (
-              <span className="error">
+              <HelpBlock>
                 {'Duplicate destination '}
                 <code>{this.props.value.get('destination')}</code>.
-              </span>
+              </HelpBlock>
             )}
           </Col>
         </FormGroup>
