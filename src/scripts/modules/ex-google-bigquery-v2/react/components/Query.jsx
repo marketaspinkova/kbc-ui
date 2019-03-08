@@ -9,7 +9,7 @@ export default React.createClass({
 
   propTypes: {
     value: PropTypes.shape({
-      sql: PropTypes.string.isRequired,
+      query: PropTypes.string.isRequired,
       useLegacySql: PropTypes.bool.isRequired
     }),
     onChange: PropTypes.func.isRequired,
