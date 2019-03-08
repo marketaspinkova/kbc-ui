@@ -30,9 +30,6 @@ export default React.createClass({
             >
               {this.regionOptions()}
             </FormControl>
-            <HelpBlock>
-              Field enclosure used in CSV file.
-            </HelpBlock>
           </Col>
         </FormGroup>
         {this.input('S3 Bucket', 's3bucket', 'my-bucket')}
@@ -82,9 +79,6 @@ export default React.createClass({
             value={this.props.parameters.get(field)}
             onChange={this.handleChange.bind(this, field)}
           />
-          <HelpBlock>
-            Name of the table stored in Storage.
-          </HelpBlock>
         </Col>
       </FormGroup>
     );
