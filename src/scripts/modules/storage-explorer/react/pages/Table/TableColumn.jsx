@@ -1,13 +1,16 @@
+
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
-import { Table, Button, Row } from 'react-bootstrap';
+import classnames from 'classnames';
+import { PanelGroup, Panel, Button, Row, Col } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 
 import Tooltip from '../../../../../react/common/Tooltip';
 import CreateColumnModal from '../../modals/CreateColumnModal';
 import DeleteColumnModal from '../../modals/DeleteColumnModal';
-import { deleteTableColumn, addTableColumn } from '../../../Actions';
+import ColumnMetadata from './ColumnMetadata';
+import { deleteTableColumn, addTableColumn, setOpenedColumns } from '../../../Actions';
 
 export default createReactClass({
   propTypes: {
@@ -19,7 +22,10 @@ export default createReactClass({
     urlTemplates: PropTypes.object.isRequired,
     addingColumn: PropTypes.object.isRequired,
     deletingColumn: PropTypes.object.isRequired,
-    canWriteTable: PropTypes.bool.isRequired
+    canWriteTable: PropTypes.bool.isRequired,
+    activeColumnId: PropTypes.string,
+    openColumns: PropTypes.object.isRequired,
+    expandAllColumns: PropTypes.bool.isRequired
   },
 
   getInitialState() {
@@ -53,14 +59,12 @@ export default createReactClass({
         </h2>
 
         <Row>
-          <Table responsive striped>
-            <tbody>
-              {this.props.table
-                .get('columns')
-                .map(this.renderColumn)
-                .toArray()}
-            </tbody>
-          </Table>
+          <PanelGroup className="kbc-accordion">
+            {this.props.table
+              .get('columns')
+              .map(this.renderColumnPanel)
+              .toArray()}
+          </PanelGroup>
         </Row>
 
         {this.renderCreateColumnModal()}
@@ -69,19 +73,42 @@ export default createReactClass({
     );
   },
 
-  renderColumn(column) {
+  renderColumnPanel(column) {
     return (
-      <tr key={column}>
-        <td>{column}</td>
-        <td>
-          {this.isColumnInPrimaryKey(column) && (
-            <span className="label label-info" title="Primary key">
+      <Panel
+        collapsible
+        expanded={this.isPanelExpanded(column)}
+        className={classnames('storage-panel', {
+          'is-active': this.props.activeColumnId === column.get('id')
+        })}
+        header={this.renderColumnHeader(column)}
+        key={column.get('id')}
+        onSelect={() => this.onSelectColumn(column.get('id'))}
+      >
+        <ColumnMetadata column={column}/>
+      </Panel>
+    );
+  },
+
+  renderColumnHeader(column) {
+    return (
+      <div>
+        <Row>
+          <Col>
+            {column.name}
+          </Col>
+          <Col>
+            {this.isColumnInPrimaryKey(column) && (
+              <span className="label label-info" tooltip="Primary key">
               PK
             </span>
-          )}
-        </td>
-        <td className="actions text-right">{this.renderActions(column)}</td>
-      </tr>
+            )}
+          </Col>
+          <Col className="actions text-right">
+            {this.renderActions(column)}
+          </Col>
+        </Row>
+      </div>
     );
   },
 
@@ -245,5 +272,27 @@ export default createReactClass({
       deleteColumnName: '',
       deleteColumnModal: false
     });
+  },
+
+  onSelectColum(columnId) {
+    const opened = this.props.openColumns;
+
+    setOpenedColumns(opened.has(columnId) ? opened.delete(columnId) : opened.add(columnId));
+  },
+
+  isPanelExpanded(column) {
+    if (this.props.activeColumnId === column.get('id')) {
+      return true;
+    }
+
+    if (this.props.openColumns.has(column.get('id'))) {
+      return true;
+    }
+
+    if (this.props.expandAllColumns && column.get('matchOnlyColumn')) {
+      return false;
+    }
+
+    return this.props.expandAllColumns;
   }
 });

@@ -11,6 +11,8 @@ import RoutesStore from '../../../../../stores/RoutesStore';
 import BucketsStore from '../../../../components/stores/StorageBucketsStore';
 import TablesStore from '../../../../components/stores/StorageTablesStore';
 import FilesStore from '../../../../components/stores/StorageFilesStore';
+import MetadataStore from '../../../../components/stores/MetadataStore';
+import ColumnsLocalStore from '../../../ColumnsLocalStore';
 import StorageApi from '../../../../components/StorageApi';
 import { factory as eventsFactory } from '../../../../sapi-events/TableEventsService';
 import { createAliasTable, deleteTable, truncateTable, exportTable, uploadFile, loadTable } from '../../../Actions';
@@ -69,7 +71,9 @@ export default createReactClass({
       uploadingProgress: FilesStore.getUploadingProgress(bucketId) || 0,
       exportingTable: TablesStore.getIsExportingTable(table.get('id')),
       tableLinks: this.getTableLinks(table, bucket),
-      tableAliases: this.getTableAliases(table, tables, sapiToken)
+      tableAliases: this.getTableAliases(table, tables, sapiToken),
+      columnMetadata: MetadataStore.getTableColumnsMetadata(table.get('id')),
+      openBuckets: ColumnsLocalStore.getOpenedColumns(),
     };
   },
 

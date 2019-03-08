@@ -295,6 +295,13 @@ const setOpenedBuckets = buckets => {
   });
 };
 
+const setOpenedColumns = columns => {
+  return dispatcher.handleViewAction({
+    type: localConstants.ActionTypes.SET_OPENED_COLUMNS,
+    columns
+  });
+};
+
 const resetFilesSearchQuery = () => {
   updateFilesSearchQuery('');
 };
@@ -339,5 +346,6 @@ export {
   updateFilesSearchQuery,
   resetFilesSearchQuery,
   setOpenedBuckets,
+  setOpenedColumns,
   filterFiles
 };
