@@ -1,5 +1,5 @@
 import React from 'react';
-import CodeEditor from '../../../../react/common/CodeEditor';
+import CodeMirror from 'react-code-mirror';
 import SapiTableLinkEx from '../../../components/react/components/StorageApiTableLinkEx';
 import editorMode from '../../../ex-db-generic/templates/editorMode';
 
@@ -59,11 +59,13 @@ const QueryDetailStatic = ({ query, componentId }) => {
           <div className="col-md-10">
             <div className="form-control-static">
               {query.get('query').length ? (
-                <CodeEditor
-                  readOnly={true}
-                  lineNumbers={false}
-                  value={query.get('query')}
+                <CodeMirror
+                  theme="solarized"
                   mode={editorMode(componentId)}
+                  value={query.get('query')}
+                  lineNumbers={false}
+                  lineWrapping={false}
+                  readOnly
                   style={{width: '100%'}}
                 />
               ) : (
