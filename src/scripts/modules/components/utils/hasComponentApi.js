@@ -20,7 +20,6 @@ const COMPONENTS_WITHOUT_API = [
   'rcp-segmentation',
   'rcp-var-characteristics',
   'ex-sklik',
-  'ex-dropbox',
   'ag-geocoding',
   'keboola.ex-db-pgsql',
   'keboola.ex-db-db2',

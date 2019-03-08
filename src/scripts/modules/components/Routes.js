@@ -17,7 +17,6 @@ import exAwsS3Routes from '../ex-aws-s3/routes';
 import exHttpRoutes from '../ex-http/routes';
 import appSnowflakeDwhManagerRoutes from '../app-snowflake-dwh-manager/routes';
 import goodDataWriterRoutes from '../gooddata-writer/routes';
-import dropoxExtractorRoutes from '../ex-dropbox/routes';
 import dropoxExtractorRoutesV2 from '../ex-dropbox-v2/routes';
 import emailAttachmentsExtractorRoutes from '../ex-email-attachments/routes';
 import createDbWriterRoutes from '../wr-db/routes';
@@ -96,7 +95,6 @@ const extractors = {
     createComponentRoute('keboola.ex-google-drive', [exGdriveNewRoutes]),
     createComponentRoute('ex-adform', [adformRoutes]),
     createComponentRoute('keboola.ex-twitter', [twitterRoutes]),
-    createComponentRoute('ex-dropbox', [dropoxExtractorRoutes]),
     createComponentRoute('radektomasek.ex-dropbox-v2', [dropoxExtractorRoutesV2]),
     createComponentRoute('keboola.ex-db-pgsql', [exDbGenericRoutes('keboola.ex-db-pgsql')]),
     createComponentRoute('keboola.ex-db-redshift', [exDbGenericRoutes('keboola.ex-db-redshift')]),
