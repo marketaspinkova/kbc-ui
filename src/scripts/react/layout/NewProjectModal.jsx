@@ -45,7 +45,7 @@ export default React.createClass({
           >
             <FormGroup>
               <Col componentClass={ControlLabel} sm={4}>Name</Col>
-              <Col sm={6}>
+              <Col sm={8}>
                 <FormControl
                   name="name"
                   autoFocus
@@ -91,7 +91,7 @@ export default React.createClass({
       return (
         <FormGroup>
           <Col componentClass={ControlLabel} sm={4}>Organization</Col>
-          <Col sm={6}>
+          <Col sm={8}>
             <FormControl
               componentClass="select"
               name="organizationId"
@@ -123,7 +123,7 @@ export default React.createClass({
           <label className="control-label col-sm-4">
             Type
           </label>
-          <div className="col-sm-6">
+          <div className="col-sm-8">
             <p className="form-control-static">
               <span className="help-block">
                       Project can be upgraded anytime later.
@@ -140,7 +140,7 @@ export default React.createClass({
     return this.props.projectTemplates.map((template) => {
       return (
         <FormGroup key={template.get('stringId')}>
-          <Col sm={6} smOffset={4}>
+          <Col sm={8} smOffset={4}>
             <Radio
               name="type"
               checked={template.get('stringId') === this.state.type}
