@@ -7,7 +7,7 @@ export default {
       parameters: {
         google: {
           storage: localState.get('storage', ''),
-          location: localState.get('location', 'US')
+          location: localState.get('location', DatasetLocations.MULTI_REGION_US)
         }
       }
     });
