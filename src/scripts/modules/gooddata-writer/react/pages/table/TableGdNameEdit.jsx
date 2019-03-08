@@ -33,7 +33,7 @@ export default React.createClass({
       this.props.configurationId,
       this.props.table.get('id'),
       this.props.fieldName,
-      this.props.table.getIn(['editingFields', this.props.fieldName]).trim()
+      this.props.table.getIn(['editingFields', this.props.fieldName], '').trim()
     );
   },
 
