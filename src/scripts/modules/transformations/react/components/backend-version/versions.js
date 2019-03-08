@@ -28,6 +28,11 @@ const versions = {
       version: ''
     },
     {
+      label: '1.1.18 (Python 3.7.2 without TQDM)',
+      version: '1.1.18',
+      until: '2019-03-22'
+    },    
+    {
       label: '1.1.12 (Python 3.6.4)',
       version: '1.1.12',
       until: '2019-02-11'
