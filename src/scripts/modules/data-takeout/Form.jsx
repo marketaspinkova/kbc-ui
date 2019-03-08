@@ -1,8 +1,7 @@
 import React, {PropTypes} from 'react';
-import {Input} from './../../react/common/KbcBootstrap';
-import {Button} from 'react-bootstrap';
-import {Loader} from '@keboola/indigo-ui';
 import {OrderedMap} from 'immutable';
+import {Button, Col, Checkbox, FormGroup, FormControl, ControlLabel, HelpBlock} from 'react-bootstrap';
+import {Loader} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -19,68 +18,84 @@ export default React.createClass({
       <div className="form-horizontal">
         {this.input('AWS Access Key ID', 'awsAccessKeyId', '', 'text', true)}
         {this.input('AWS Secret Access Key', '#awsSecretAccessKey', '', 'password')}
-        <Input
-          type="select"
-          labelClassName="col-xs-4"
-          wrapperClassName="col-xs-8"
-          label="S3 Region"
-          value={this.props.parameters.get('s3region')}
-          onChange={this.handleChange.bind(this, 's3region')}
-        >
-          {this.regionOptions()}
-        </Input>
+        <FormGroup>
+          <Col xs={4} componentClass={ControlLabel}>
+            S3 Region
+          </Col>
+          <Col xs={8}>
+            <FormControl
+              componentClass="select"
+              value={this.props.parameters.get('s3region')}
+              onChange={this.handleChange.bind(this, 's3region')}
+            >
+              {this.regionOptions()}
+            </FormControl>
+          </Col>
+        </FormGroup>
         {this.input('S3 Bucket', 's3bucket', 'my-bucket')}
         {this.input('S3 Path', 's3path', 'Optional path in S3')}
-        <Input type="checkbox"
-          wrapperClassName="col-xs-offset-4 col-xs-8"
-          label="Export project structure only"
-          help="Only bucket and table metadata and component configurations will be exported."
-          checked={this.props.parameters.get('onlyStructure')}
-          onChange={this.handleOnlyStructureChange}
-        />
-        <div className="form-group">
-          <div className="col-xs-offset-4 col-xs-8">
-            <p className="help-block">
+        <FormGroup>
+          <Col xs={8} xsOffset={4}>
+            <Checkbox
+              checked={this.props.parameters.get('onlyStructure')}
+              onChange={this.handleOnlyStructureChange}
+            >
+              Export project structure only
+            </Checkbox>
+            <HelpBlock>
+              Only bucket and table metadata and component configurations will be exported.
+            </HelpBlock>
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col xs={8} xsOffset={4}>
+            <HelpBlock>
               Data wil be exported to <strong>{this.s3Path()}</strong>
-            </p>
-          </div>
-        </div>
-        <div className="form-group">
-          <div className="col-xs-offset-4 col-xs-8">
+            </HelpBlock>
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col xs={8} xsOffset={4}>
             <Button bsStyle="success" onClick={this.props.onRun} disabled={!this.props.isValid || this.props.isSaving}>
               Run Export
             </Button> {this.loader()} {this.props.savedMessage}
-          </div>
-        </div>
+          </Col>
+        </FormGroup>
       </div>
     );
   },
 
   input(label, field, placeholder, type = 'text', autoFocus = false) {
     return (
-      <Input
-        type={type}
-        label={label}
-        ref={field}
-        placeholder={placeholder}
-        value={this.props.parameters.get(field)}
-        onChange={this.handleChange.bind(this, field)}
-        labelClassName="col-xs-4"
-        wrapperClassName="col-xs-8"
-        autoFocus={autoFocus}
-      />
+      <FormGroup>
+        <Col xs={4} componentClass={ControlLabel}>
+          {label}
+        </Col>
+        <Col xs={8}>
+          <FormControl
+            type={type}
+            autoFocus={autoFocus}
+            placeholder={placeholder}
+            value={this.props.parameters.get(field)}
+            onChange={this.handleChange.bind(this, field)}
+          />
+        </Col>
+      </FormGroup>
     );
   },
 
   s3Path() {
-    const s3path = `s3://${this.props.parameters.get('s3bucket')}`,
-      path = this.props.parameters.get('s3path');
+    const s3path = `s3://${this.props.parameters.get('s3bucket')}`;
+    const path = this.props.parameters.get('s3path');
+
     if (!this.props.parameters.get('s3bucket')) {
       return s3path;
     }
+
     if (!path) {
       return s3path + '/';
     }
+    
     return s3path + (path[0] === '/' ? path : `/${path}`);
   },
 
@@ -101,6 +116,7 @@ export default React.createClass({
       'ap-northeast-2': 'Asia Pacific (Seoul)',
       'sa-east-1': 'South America (Sao Paulo)'
     });
+
     return regions.map((regionName, regionValue) => {
       return <option value={regionValue} key={regionValue}>{regionName}</option>;
     });

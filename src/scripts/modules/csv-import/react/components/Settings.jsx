@@ -1,8 +1,8 @@
 import React, {PropTypes} from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
-import {Input} from './../../../../react/common/KbcBootstrap';
-import Select from '../../../../react/common/Select';
 import {List} from 'immutable';
+import {Col, Checkbox, FormGroup, FormControl, ControlLabel, HelpBlock} from 'react-bootstrap';
+import Select from '../../../../react/common/Select';
 import TableSelectorForm from '../../../../react/common/TableSelectorForm';
 
 export default React.createClass({
@@ -134,18 +134,23 @@ export default React.createClass({
           onEdit={this.onDestinationEdit}
           editing={this.props.destinationEditing}
         />
-        <Input
-          type="checkbox"
-          label="Incremental Load"
-          wrapperClassName="col-xs-8 col-xs-offset-4"
-          checked={this.props.settings.get('incremental')}
-          onChange={this.onChangeIncremental}
-          help={(<span>If incremental load is turned on, table will be updated instead of rewritten. Tables with primary key will update rows, tables without primary key will append rows.</span>)}
-          disabled={this.props.disabled}
-        />
-        <div className="form-group">
-          <div className="col-xs-4 control-label">Primary Key</div>
-          <div className="col-xs-8">
+        <FormGroup>
+          <Col xs={8} xsOffset={4}>
+            <Checkbox
+              checked={this.props.settings.get('incremental')}
+              onChange={this.onChangeIncremental}
+              disabled={this.props.disabled}
+            >
+              Incremental Load
+            </Checkbox>
+            <HelpBlock>
+              If incremental load is turned on, table will be updated instead of rewritten. Tables with primary key will update rows, tables without primary key will append rows.
+            </HelpBlock>
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col xs={4} componentClass={ControlLabel}>Primary Key</Col>
+          <Col xs={8}>
             <Select
               name="primaryKey"
               value={this.props.settings.get('primaryKey')}
@@ -157,29 +162,43 @@ export default React.createClass({
               onChange={this.onChangePrimaryKey}
               disabled={this.props.disabled || this.isExistingTable()}
             />
-            <div className="help-block">If primary key is set, updates can be done on table by selecting <strong>incremental loads</strong>. Primary key can consist of multiple columns. Primary key of an existing table cannot be changed.</div>
-          </div>
-        </div>
-        <Input
-          type="text"
-          label="Delimiter"
-          labelClassName="col-xs-4"
-          wrapperClassName="col-xs-8"
-          value={this.props.settings.get('delimiter')}
-          onChange={this.onChangeDelimiter}
-          help={(<span>Field delimiter used in CSV file. Default value is <code>,</code>. Use <code>\t</code> for tabulator.</span>)}
-          disabled={this.props.disabled}
-        />
-        <Input
-          type="text"
-          label="Enclosure"
-          labelClassName="col-xs-4"
-          wrapperClassName="col-xs-8"
-          value={this.props.settings.get('enclosure')}
-          onChange={this.onChangeEnclosure}
-          help="Field enclosure used in CSV file."
-          disabled={this.props.disabled}
-        />
+            <HelpBlock>
+              If primary key is set, updates can be done on table by selecting <strong>incremental loads</strong>. Primary key can consist of multiple columns. Primary key of an existing table cannot be changed.
+            </HelpBlock>
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col xs={4} componentClass={ControlLabel}>
+            Delimiter
+          </Col>
+          <Col xs={8}>
+            <FormControl
+              type="text"
+              value={this.props.settings.get('delimiter')}
+              onChange={this.onChangeDelimiter}
+              disabled={this.props.disabled}
+            />
+            <HelpBlock>
+              Field delimiter used in CSV file. Default value is <code>,</code>. Use <code>\t</code> for tabulator.
+            </HelpBlock>
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col xs={4} componentClass={ControlLabel}>
+            Enclosure
+          </Col>
+          <Col xs={8}>
+            <FormControl
+              type="text"
+              value={this.props.settings.get('enclosure')}
+              onChange={this.onChangeEnclosure}
+              disabled={this.props.disabled}
+            />
+            <HelpBlock>
+              Field enclosure used in CSV file.
+            </HelpBlock>
+          </Col>
+        </FormGroup>
       </div>
     );
   }
