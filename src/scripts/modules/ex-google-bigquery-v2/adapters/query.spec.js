@@ -2,7 +2,7 @@ import Immutable from 'immutable';
 import adapter from './query';
 import { cases } from './query.spec.def';
 
-describe('unload', function() {
+describe('query', function() {
   describe('createConfiguration()', function() {
     it('should return an empty config with defaults from an empty local state', function() {
       expect(cases.emptyWithDefaults.configuration).toEqual(adapter.createConfiguration(Immutable.fromJS({})).toJS());

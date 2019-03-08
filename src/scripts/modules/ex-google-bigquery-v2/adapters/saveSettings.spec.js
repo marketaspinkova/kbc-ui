@@ -2,7 +2,7 @@ import Immutable from 'immutable';
 import adapter from './saveSettings';
 import { cases } from './saveSettings.spec.def';
 
-describe('unload', function() {
+describe('saveSettings', function() {
   describe('createConfiguration()', function() {
     it('should return an empty config with defaults from an empty local state', function() {
       expect(cases.emptyWithDefaults.configuration).toEqual(adapter.createConfiguration(Immutable.fromJS({})).toJS());
