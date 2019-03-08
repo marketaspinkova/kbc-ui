@@ -71,7 +71,7 @@ export default React.createClass({
     return WishlistApi.sendRequest({ title, description })
       .then(() => {
         ApplicationActionCreators.sendNotification({
-          message: 'Your request was successfully sended.'
+          message: 'Your request was successfully sent.'
         });
       })
       .finally(() => {
