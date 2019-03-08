@@ -39,17 +39,32 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok 1`] = `
       />
     </Col>
   </FormGroup>
-  <Input
-    bsStyle={null}
-    disabled={false}
-    help={null}
-    label="Destination"
-    labelClassName="col-sm-2"
-    onChange={[Function]}
-    placeholder="Destination table name in transformation DB"
-    type="text"
-    wrapperClassName="col-sm-10"
-  />
+  <FormGroup
+    bsClass="form-group"
+  >
+    <Col
+      bsClass="col"
+      componentClass={[Function]}
+      sm={2}
+    >
+      Destination
+    </Col>
+    <Col
+      bsClass="col"
+      componentClass="div"
+      sm={10}
+    >
+      <FormControl
+        bsClass="form-control"
+        bsStyle={null}
+        componentClass="input"
+        disabled={false}
+        onChange={[Function]}
+        placeholder="Destination table name in transformation DB"
+        type="text"
+      />
+    </Col>
+  </FormGroup>
   <FormGroup
     bsClass="form-group"
   >
@@ -213,11 +228,12 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok 1`] = `
           componentClass="div"
           sm={2}
         >
-          <Input
+          <FormControl
+            bsClass="form-control"
+            componentClass="select"
             disabled={false}
             name="whereOperator"
             onChange={[Function]}
-            type="select"
           >
             <option
               value="eq"
@@ -229,7 +245,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok 1`] = `
             >
               not in
             </option>
-          </Input>
+          </FormControl>
         </Col>
         <Col
           bsClass="col"
@@ -366,18 +382,33 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source and des
       />
     </Col>
   </FormGroup>
-  <Input
-    bsStyle={null}
-    disabled={false}
-    help={null}
-    label="Destination"
-    labelClassName="col-sm-2"
-    onChange={[Function]}
-    placeholder="Destination table name in transformation DB"
-    type="text"
-    value="products"
-    wrapperClassName="col-sm-10"
-  />
+  <FormGroup
+    bsClass="form-group"
+  >
+    <Col
+      bsClass="col"
+      componentClass={[Function]}
+      sm={2}
+    >
+      Destination
+    </Col>
+    <Col
+      bsClass="col"
+      componentClass="div"
+      sm={10}
+    >
+      <FormControl
+        bsClass="form-control"
+        bsStyle={null}
+        componentClass="input"
+        disabled={false}
+        onChange={[Function]}
+        placeholder="Destination table name in transformation DB"
+        type="text"
+        value="products"
+      />
+    </Col>
+  </FormGroup>
   <FormGroup
     bsClass="form-group"
   >
@@ -541,11 +572,12 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source and des
           componentClass="div"
           sm={2}
         >
-          <Input
+          <FormControl
+            bsClass="form-control"
+            componentClass="select"
             disabled={false}
             name="whereOperator"
             onChange={[Function]}
-            type="select"
           >
             <option
               value="eq"
@@ -557,7 +589,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source and des
             >
               not in
             </option>
-          </Input>
+          </FormControl>
         </Col>
         <Col
           bsClass="col"
@@ -694,18 +726,33 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
       />
     </Col>
   </FormGroup>
-  <Input
-    bsStyle={null}
-    disabled={false}
-    help={null}
-    label="Destination"
-    labelClassName="col-sm-2"
-    onChange={[Function]}
-    placeholder="Destination table name in transformation DB"
-    type="text"
-    value="products"
-    wrapperClassName="col-sm-10"
-  />
+  <FormGroup
+    bsClass="form-group"
+  >
+    <Col
+      bsClass="col"
+      componentClass={[Function]}
+      sm={2}
+    >
+      Destination
+    </Col>
+    <Col
+      bsClass="col"
+      componentClass="div"
+      sm={10}
+    >
+      <FormControl
+        bsClass="form-control"
+        bsStyle={null}
+        componentClass="input"
+        disabled={false}
+        onChange={[Function]}
+        placeholder="Destination table name in transformation DB"
+        type="text"
+        value="products"
+      />
+    </Col>
+  </FormGroup>
   <FormGroup
     bsClass="form-group"
   >
@@ -869,11 +916,12 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
           componentClass="div"
           sm={2}
         >
-          <Input
+          <FormControl
+            bsClass="form-control"
+            componentClass="select"
             disabled={false}
             name="whereOperator"
             onChange={[Function]}
-            type="select"
             value="eq"
           >
             <option
@@ -886,7 +934,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
             >
               not in
             </option>
-          </Input>
+          </FormControl>
         </Col>
         <Col
           bsClass="col"
@@ -1023,18 +1071,33 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
       />
     </Col>
   </FormGroup>
-  <Input
-    bsStyle={null}
-    disabled={false}
-    help={null}
-    label="Destination"
-    labelClassName="col-sm-2"
-    onChange={[Function]}
-    placeholder="Destination table name in transformation DB"
-    type="text"
-    value="products"
-    wrapperClassName="col-sm-10"
-  />
+  <FormGroup
+    bsClass="form-group"
+  >
+    <Col
+      bsClass="col"
+      componentClass={[Function]}
+      sm={2}
+    >
+      Destination
+    </Col>
+    <Col
+      bsClass="col"
+      componentClass="div"
+      sm={10}
+    >
+      <FormControl
+        bsClass="form-control"
+        bsStyle={null}
+        componentClass="input"
+        disabled={false}
+        onChange={[Function]}
+        placeholder="Destination table name in transformation DB"
+        type="text"
+        value="products"
+      />
+    </Col>
+  </FormGroup>
   <FormGroup
     bsClass="form-group"
   >
@@ -1236,11 +1299,12 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
           componentClass="div"
           sm={2}
         >
-          <Input
+          <FormControl
+            bsClass="form-control"
+            componentClass="select"
             disabled={false}
             name="whereOperator"
             onChange={[Function]}
-            type="select"
             value="eq"
           >
             <option
@@ -1253,7 +1317,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
             >
               not in
             </option>
-          </Input>
+          </FormControl>
         </Col>
         <Col
           bsClass="col"

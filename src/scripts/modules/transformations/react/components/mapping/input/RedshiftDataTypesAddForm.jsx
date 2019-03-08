@@ -1,8 +1,7 @@
 import React from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import _ from 'underscore';
-import { Input } from '../../../../../../react/common/KbcBootstrap';
-import { Button } from 'react-bootstrap';
+import { Button, FormControl, Checkbox } from 'react-bootstrap';
 import Select from 'react-select';
 
 export default React.createClass({
@@ -78,7 +77,7 @@ export default React.createClass({
             />
           </span>
           <span className="col-xs-3">
-            <Input
+            <FormControl
               type="text"
               name="add-size"
               value={this.props.sizeValue}
@@ -100,18 +99,14 @@ export default React.createClass({
         </div>
         <div className="row">
           <span className="col-xs-6">
-            <Input
+            <Checkbox
               checked={this.props.convertEmptyValuesToNullValue}
               onChange={this._convertEmptyValuesToNullOnChange}
-              standalone={true}
-              type="checkbox"
-              label={
-                <span>
-                  {'Convert empty values to '}
-                  {<code>null</code>}
-                </span>
-              }
-            />
+            >
+              <span>
+                Convert empty values to <code>null</code>
+              </span>
+            </Checkbox>
           </span>
           <span className="col-xs-6 text-right">
             <Button
