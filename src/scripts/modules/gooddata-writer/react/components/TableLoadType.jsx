@@ -1,9 +1,8 @@
 import React from 'react';
 import { fromJS } from 'immutable';
-import { Modal } from 'react-bootstrap';
+import { Modal, FormGroup, Radio, Col, HelpBlock } from 'react-bootstrap';
 import { ExternalLink } from '@keboola/indigo-ui';
 
-import { Input } from './../../../../react/common/KbcBootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
 import actionCreators from '../../actionCreators';
@@ -134,7 +133,7 @@ export default React.createClass({
     );
 
     const incrementalHelp = (
-      <span>
+      <span className="form-group-sm">
         {'Data will be appended to the dataset. '}
         {'Only rows created or updated in last '}
         {numberInput} {incrementalLoad === 1 ? 'day' : 'days'}
@@ -151,34 +150,35 @@ export default React.createClass({
           </Modal.Header>
           <Modal.Body>
             <div className="form-horizontal">
-              <Input
-                bsSize="small"
-                type="radio"
-                wrapperClassName="col-sm-offset-2 col-sm-8"
-                help="All data in GoodData dataset will be replaced by current data in source Storage table."
-                label="Full Load"
-                checked={!incrementalLoad}
-                onChange={this._handleModeRadioChange.bind(this, 'full')}
-                disabled={isSaving}
-              />
-              <div className="form-group form-group-sm">
-                <div className="col-sm-offset-2 col-sm-8">
-                  <div className="radio">
-                    <label>
-                      <input
-                        type="radio"
-                        label="Incremental"
-                        checked={incrementalLoad > 0}
-                        onChange={this._handleModeRadioChange.bind(this, 'incremental')}
-                        disabled={isSaving}
-                      />
-                      <span>Incremental</span>
-                    </label>
-                  </div>
-                  <span className="help-block">{incrementalHelp}</span>
+              <FormGroup>
+                <Col sm={8} smOffset={2}>
+                  <Radio
+                    checked={!incrementalLoad}
+                    onChange={this._handleModeRadioChange.bind(this, 'full')}
+                    disabled={isSaving}
+                    name="table-load-type"
+                  >
+                    Full Load
+                  </Radio>
+                  <HelpBlock>
+                    All data in GoodData dataset will be replaced by current data in source Storage table.
+                  </HelpBlock>
+                </Col>
+              </FormGroup>
+              <FormGroup>
+                <Col sm={8} smOffset={2}>
+                  <Radio
+                    checked={incrementalLoad > 0}
+                    onChange={this._handleModeRadioChange.bind(this, 'incremental')}
+                    disabled={isSaving}
+                    name="table-load-type"
+                  >
+                    Incremental
+                  </Radio>
+                  <HelpBlock>{incrementalHelp}</HelpBlock>
                   {this._renderFactGrainSelector(grain || '', incrementalLoad > 0)}
-                </div>
-              </div>
+                </Col>
+              </FormGroup>
             </div>
           </Modal.Body>
           <Modal.Footer>

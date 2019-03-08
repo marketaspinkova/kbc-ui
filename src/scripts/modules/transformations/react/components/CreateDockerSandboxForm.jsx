@@ -1,5 +1,5 @@
 import React from 'react';
-import {Input} from './../../../../react/common/KbcBootstrap';
+import { FormControl, Col, FormGroup, HelpBlock, ControlLabel } from 'react-bootstrap';
 import Immutable from 'immutable';
 import Select from 'react-select';
 
@@ -35,20 +35,18 @@ export default React.createClass({
             </p>
           </div>
         </div>
-        <div className="form-group">
-          <label className="col-sm-3 control-label">
-            Sample rows
-          </label>
-          <div className="col-sm-9">
-            <Input
+        <FormGroup>
+          <Col componentClass={ControlLabel} sm={3}>Sample rows</Col>
+          <Col sm={9}>
+            <FormControl
               type="number"
               placeholder="Number of rows"
               value={this.state.rows}
               onChange={this.onChangeRows}
-              help="To import all rows, use 0."
             />
-          </div>
-        </div>
+            <HelpBlock>To import all rows, use 0.</HelpBlock>
+          </Col>
+        </FormGroup>
       </form>
     );
   },
