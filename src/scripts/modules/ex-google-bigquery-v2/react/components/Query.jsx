@@ -9,8 +9,8 @@ export default React.createClass({
 
   propTypes: {
     value: PropTypes.shape({
-      useLegacySql: PropTypes.bool.isRequired,
-      sql: PropTypes.string.isRequired
+      sql: PropTypes.string.isRequired,
+      useLegacySql: PropTypes.bool.isRequired
     }),
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired
