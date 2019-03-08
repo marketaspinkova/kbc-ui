@@ -6,6 +6,7 @@ import StoreUtils from '../utils/StoreUtils';
 import JobsStore from '../modules/jobs/stores/JobsStore';
 import { ActionTypes as ComponentsConstants, Routes } from '../modules/components/Constants';
 import * as Constants from '../constants/KbcConstants';
+import { ActionTypes as JobsActionTypes } from '../modules/jobs/Constants';
 
 let _store = Map({
   router: null,
@@ -343,6 +344,9 @@ Dispatcher.register(payload => {
         return breadcrumb;
       });
       _store = _store.set('breadcrumbs', breadcrumbs);
+      return RoutesStore.emitChange();
+
+    case JobsActionTypes.JOB_LOAD_SUCCESS:
       return RoutesStore.emitChange();
 
     default:
