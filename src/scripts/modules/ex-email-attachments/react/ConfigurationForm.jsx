@@ -95,8 +95,6 @@ export default React.createClass({
             <CsvDelimiterInput
               placeholder="Field delimeter used in CSV files"
               label="Delimiter"
-              labelClassName="col-sm-4"
-              wrapperClassName="col-sm-8"
               value={this.props.delimiter}
               onChange={this.onChangeDelimiter}
               help={(

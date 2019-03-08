@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
-import {Input} from './../../react/common/KbcBootstrap';
+import { FormControl, FormGroup, Col, HelpBlock, ControlLabel } from 'react-bootstrap';
 
 export default React.createClass({
   mixins: [immutableMixin],
@@ -12,16 +12,12 @@ export default React.createClass({
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired,
     label: PropTypes.node,
-    labelClassName: PropTypes.string,
-    wrapperClassName: PropTypes.string,
     help: PropTypes.node
   },
 
   getDefaultProps() {
     return {
       label: 'Delimiter',
-      labelClassName: 'col-xs-4',
-      wrapperClassName: 'col-xs-8',
       help: (<span>Field delimiter used in CSV file. Default value is <code>,</code>. Use <code>\t</code> for tabulator.</span>)
     };
   },
@@ -36,16 +32,18 @@ export default React.createClass({
 
   render() {
     return (
-      <Input
-        type="text"
-        label={this.props.label}
-        labelClassName={this.props.labelClassName}
-        wrapperClassName={this.props.wrapperClassName}
-        value={this.getValue()}
-        onChange={this.onChange}
-        help={this.props.help}
-        disabled={this.props.disabled}
-      />
+      <FormGroup>
+        <Col componentClass={ControlLabel} xs={4}>{this.props.label}</Col>
+        <Col xs={8}>
+          <FormControl
+            type="text"
+            value={this.getValue()}
+            onChange={this.onChange}
+            disabled={this.props.disabled}
+          />
+          <HelpBlock>{this.props.help}</HelpBlock>
+        </Col>
+      </FormGroup>
     );
   }
 });

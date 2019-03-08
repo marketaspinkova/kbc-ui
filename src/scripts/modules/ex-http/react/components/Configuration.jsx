@@ -110,8 +110,6 @@ export default React.createClass({
         </FormGroup>
         <CsvDelimiterInput
           type="text"
-          labelClassName="col-xs-4"
-          wrapperClassName="col-xs-8"
           value={this.props.value.delimiter}
           onChange={function(value) {
             props.onChange({delimiter: value});
