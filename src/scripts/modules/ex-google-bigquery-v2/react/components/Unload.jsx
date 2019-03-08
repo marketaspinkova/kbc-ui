@@ -58,7 +58,7 @@ export default React.createClass({
               clearable={false}
               searchable={false}
               value={value.location}
-              onChange={e => onChange({location: e.target.value})}
+              onChange={(location) => onChange({location: location})}
               options={locationOptions}/>
             <HelpBlock>
               The geographic location where source data exists.
