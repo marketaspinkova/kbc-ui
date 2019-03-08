@@ -1,6 +1,5 @@
 import React from 'react';
-import {Input} from './KbcBootstrap';
-import {Modal} from 'react-bootstrap';
+import { Modal, ControlLabel, FormControl, FormGroup, Col } from 'react-bootstrap';
 import moment from 'moment';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import ConfirmButtons from './ConfirmButtons';
@@ -33,16 +32,18 @@ export default React.createClass({
             This will copy version #{this.props.version.get('version')} created {moment(this.props.version.get('created')).fromNow()} by {this.props.version.getIn(['creatorToken', 'description'], 'unknown')} to a new configuration.
           </p>
           <form className="form-horizontal" onSubmit={this.handleSubmit}>
-            <Input
-              type="text"
-              label="New configuration name"
-              labelClassName="col-xs-5"
-              wrapperClassName="col-xs-7"
-              placeholder={defaultCopyVersionName(this.props.version)}
-              value={this.props.newVersionName}
-              onChange={this.onChange}
-              autoFocus={true}
-            />
+            <FormGroup>
+              <Col componentClass={ControlLabel} xs={5}>New configuration name</Col>
+              <Col xs={7}>
+                <FormControl
+                  type="text"
+                  placeholder={defaultCopyVersionName(this.props.version)}
+                  value={this.props.newVersionName}
+                  onChange={this.onChange}
+                  autoFocus
+                />
+              </Col>
+            </FormGroup>
           </form>
         </Modal.Body>
         <Modal.Footer>
