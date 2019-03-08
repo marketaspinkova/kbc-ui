@@ -18,8 +18,7 @@ const parseConfiguration = function(configuration) {
   return Immutable.fromJS({
     tableName: query.get('tableName', ''),
     incremental: query.get('incremental', false),
-    primaryKey: query.get('primaryKey', Immutable.List()).toJS(),
-    destinationEditing: true
+    primaryKey: query.get('primaryKey', Immutable.List()).toJS()
   });
 };
 
