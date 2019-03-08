@@ -1,16 +1,12 @@
 import React from 'react';
-import Immutable from 'immutable';
-import { Map } from 'immutable';
+import { Map, fromJS } from 'immutable';
 import keyMirror from 'fbjs/lib/keyMirror';
 import PureRenderMixin from 'react-immutable-render-mixin';
 import { FormControl, InputGroup, FormGroup } from 'react-bootstrap';
-import { Input, FormControls } from './../../../../../react/common/KbcBootstrap';
-const StaticText = FormControls.Static;
-
 import ColumnDataPreview from '../../../../components/react/components/ColumnDataPreview';
+import { ColumnTypes, DataTypes, SortOrderOptions } from '../../../constants';
 import DateDimensionModal from './DateDimensionSelectModal';
 import DateFormatHint from './DateFormatHint';
-import { ColumnTypes, DataTypes, SortOrderOptions } from '../../../constants';
 
 const visibleParts = keyMirror({
   DATA_TYPE: null,
@@ -63,7 +59,7 @@ export default React.createClass({
               disabled: this.props.isSaving,
               onChange: this._handleInputChange.bind(this, 'type')
             },
-            this._selectOptions(Immutable.fromJS(ColumnTypes))
+            this._selectOptions(fromJS(ColumnTypes))
           )}
         </td>
         <td>
@@ -202,7 +198,7 @@ export default React.createClass({
               disabled: this.props.isSaving,
               onChange: this._handleInputChange.bind(this, 'dataType')
             },
-            this._selectOptions(Immutable.fromJS(DataTypes).set('', ''))
+            this._selectOptions(fromJS(DataTypes).set('', ''))
           )}
           {[DataTypes.VARCHAR, DataTypes.DECIMAL].indexOf(this.props.column.get('dataType')) >= 0 &&
           this._createInput({
@@ -253,27 +249,58 @@ export default React.createClass({
     return this.props.onChange(this.props.column.set(propName, e.target.value));
   },
 
-  _createInputWithAddon(props, body) {
-    return (
-      <FormGroup>
-        <InputGroup>
-          <FormControl {...props}>{body}</FormControl>
-          <InputGroup.Addon>{props.addonAfter}</InputGroup.Addon>
-        </InputGroup>
-      </FormGroup>
-    );
-  },
-
   _createInput(props, body) {
     if (this.props.isEditing) {
       if (!props.addonAfter) {
-        return <Input {...props}>{body}</Input>;
-      } else {
-        return this._createInputWithAddon(props, body);
+        if (props.type === 'select') {
+          return (
+            <FormGroup>
+              <FormControl
+                componentClass="select"
+                value={props.value}
+                disabled={props.disabled}
+                onChange={props.onChange}
+              >
+                {body}
+              </FormControl>
+            </FormGroup>
+          )
+        }
+
+        return (
+          <FormGroup>
+            <FormControl
+              type="text"
+              value={props.value}
+              disabled={props.disabled}
+              onChange={props.onChange}
+            />
+          </FormGroup>
+        )
       }
-    } else {
-      return <StaticText>{props.value}</StaticText>;
+
+      return (
+        <FormGroup>
+          <InputGroup>
+            <FormControl
+              type="text"
+              value={props.value}
+              disabled={props.disabled}
+              onChange={props.onChange}
+            />
+            <InputGroup.Addon>{props.addonAfter}</InputGroup.Addon>
+          </InputGroup>
+        </FormGroup>
+      );
     }
+
+    return (
+      <FormGroup>
+        <FormControl.Static>
+          {props.value}
+        </FormControl.Static>
+      </FormGroup>
+    )
   },
 
   _shouldRenderPart(partName) {

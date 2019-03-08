@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'underscore';
 import { Check } from '@keboola/indigo-ui';
-import { Input } from './../../../../../react/common/KbcBootstrap';
+import { FormGroup, FormControl } from 'react-bootstrap';
 import ColumnDataPreview from '../../../../components/react/components/ColumnDataPreview';
 
 export default React.createClass({
@@ -47,28 +47,29 @@ export default React.createClass({
     const dtype = this.props.editingColumn.get('type');
     return (
       <td>
-        <Input
-          bsSize="small"
-          type="select"
-          value={dtype}
-          disabled={this.props.isSaving}
-          onChange={e => {
-            const { value } = e.target;
-            let newColumn = this.props.editingColumn.set('type', value);
-            if (value === 'IGNORE') {
-              newColumn = newColumn.set('default', '');
-            }
-            if (_.isString(this._getSizeParam(value))) {
-              const defaultSize = this._getSizeParam(value);
-              newColumn = newColumn.set('size', defaultSize);
-            } else {
-              newColumn = newColumn.set('size', '');
-            }
-            return this.props.editColumnFn(newColumn);
-          }}
-        >
-          {this._selectOptions()}
-        </Input>{' '}
+        <FormGroup bsSize="small">
+          <FormControl
+            componentClass="select"
+            value={dtype}
+            disabled={this.props.isSaving}
+            onChange={e => {
+              const { value } = e.target;
+              let newColumn = this.props.editingColumn.set('type', value);
+              if (value === 'IGNORE') {
+                newColumn = newColumn.set('default', '');
+              }
+              if (_.isString(this._getSizeParam(value))) {
+                const defaultSize = this._getSizeParam(value);
+                newColumn = newColumn.set('size', defaultSize);
+              } else {
+                newColumn = newColumn.set('size', '');
+              }
+              return this.props.editColumnFn(newColumn);
+            }}
+          >
+            {this._selectOptions()}
+          </FormControl>
+        </FormGroup>{' '}
         {_.isString(this._getSizeParam(dtype)) && this._createInput('size')}
       </td>
     );
@@ -123,26 +124,28 @@ export default React.createClass({
     );
   },
 
-  _createInput(property, type = 'text') {
+  _createInput(property) {
     if (property === 'default' && this.props.disabledFields.includes('default')) {
       return '';
     }
+
     if (this.props.editingColumn.get('type') === 'IGNORE') {
       return '';
     }
 
     return (
-      <Input
-        type={type}
-        bsSize="small"
-        value={this.props.editingColumn.get(property)}
-        disabled={this.props.isSaving}
-        onChange={e => {
-          const newValue = e.target.value;
-          const newColumn = this.props.editingColumn.set(property, newValue);
-          return this.props.editColumnFn(newColumn);
-        }}
-      />
+      <FormGroup bsSize="small">
+        <FormControl
+          type="text"
+          value={this.props.editingColumn.get(property)}
+          disabled={this.props.isSaving}
+          onChange={e => {
+            const newValue = e.target.value;
+            const newColumn = this.props.editingColumn.set(property, newValue);
+            return this.props.editColumnFn(newColumn);
+          }}
+        />
+      </FormGroup>
     );
   },
 
