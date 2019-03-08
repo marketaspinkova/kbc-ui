@@ -33,8 +33,8 @@ export default React.createClass({
           <form className="form-horizontal" ref="limitEditForm" method="post" action={this.state.actionUrl}>
             <p>You can change the limit because you are superadmin. This feature is hidden for all other users.</p>
             <FormGroup>
-              <Col componentClass={ControlLabel} sm={6}>{limit.get('name')}</Col>
-              <Col sm={6}>
+              <Col componentClass={ControlLabel} sm={4}>{limit.get('name')}</Col>
+              <Col sm={8}>
                 <FormControl
                   type="number"
                   name="limitValue"
