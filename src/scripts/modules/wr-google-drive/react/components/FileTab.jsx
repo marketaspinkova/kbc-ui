@@ -134,7 +134,7 @@ export default React.createClass({
   renderConvertCheckbox() {
     return (
       <FormGroup>
-        <Col md={10} xsOffset={2}>
+        <Col md={10} mdOffset={2}>
           <Checkbox
             checked={this.props.valueConvert}
             onChange={this.props.onToggleConvert}

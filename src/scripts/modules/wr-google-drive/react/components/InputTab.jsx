@@ -25,7 +25,7 @@ export default React.createClass({
     return (
       <div className="form-horizontal">
         <FormGroup>
-          <Col md={10} xsOffset={2}>
+          <Col md={10} mdOffset={2}>
             <Checkbox
               checked={this.state.showDetails}
               onChange={this.handleToggleShowDetails}
