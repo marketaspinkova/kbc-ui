@@ -121,6 +121,7 @@ const extractors = {
     createComponentRoute('keboola.ex-storage', [exStorageRoutes]),
     createComponentRoute('htns.ex-salesforce', [htnsExSalesforceRoutes]),
     createComponentRoute('keboola.ex-ftp', [exFtpRoutes]),
+    createComponentRoute('keboola.ex-google-bigquery-v2', [exGoogleBigqueryV2Routes]),
     createGenericDetailRoute('extractor')
   ]
 };
