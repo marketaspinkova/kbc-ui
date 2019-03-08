@@ -1,3 +1,6 @@
+import Promise from 'bluebird';
+import _ from 'underscore';
+import {List} from 'immutable';
 import dispatcher from '../../Dispatcher';
 import * as constants from './Constants';
 import * as installedComponentsConstants from '../components/Constants';
@@ -7,21 +10,17 @@ import TransformationBucketsStore from './stores/TransformationBucketsStore';
 import TransformationsStore from './stores/TransformationsStore';
 import InstalledComponentsActionCreators from '../components/InstalledComponentsActionCreators';
 import RoutesStore from '../../stores/RoutesStore';
-import Promise from 'bluebird';
-import _ from 'underscore';
 import parseQueries from './utils/parseQueries';
 import VersionActionCreators from '../components/VersionsActionCreators';
 import RowVersionActionCreators from '../configurations/RowVersionsActionCreators';
 import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
 import StringUtils from '../../utils/string';
-import {debounce} from 'lodash';
-import {List} from 'immutable';
 import restoreTransformationBucketNotification
   from './react/components/notifications/restoreTransformationBucketNotification';
 import deleteTransformationBucketNotification
   from './react/components/notifications/deleteTransformationBucketNotification';
 
-const updateTransformationEditingFieldQueriesStringDebouncer = debounce(function(bucketId, transformationId, queriesString) {
+const updateTransformationEditingFieldQueriesStringDebouncer = _.debounce(function(bucketId, transformationId, queriesString) {
   dispatcher.handleViewAction({
     type: constants.ActionTypes.TRANSFORMATION_UPDATE_PARSE_QUERIES_START,
     bucketId: bucketId,

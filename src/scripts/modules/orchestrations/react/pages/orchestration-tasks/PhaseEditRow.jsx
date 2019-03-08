@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import { DragSource, DropTarget } from 'react-dnd';
-import flow from 'lodash/flow';
 import Tooltip from '../../../../../react/common/Tooltip';
 
 const ItemType = 'PhaseRow';
@@ -43,7 +42,7 @@ function collectForDropTarget(connect) {
   };
 }
 
-const PhaseEditRow = React.createClass({
+let PhaseEditRow = React.createClass({
   propTypes: {
     toggleHide: PropTypes.func.isRequired,
     phase: PropTypes.object.isRequired,
@@ -156,7 +155,7 @@ const PhaseEditRow = React.createClass({
 
 });
 
-export default flow(
-  DragSource(ItemType, phaseRowSource, collectForDragSource),
-  DropTarget(ItemType, phaseRowTarget, collectForDropTarget)
-)(PhaseEditRow);
+PhaseEditRow = DragSource(ItemType, phaseRowSource, collectForDragSource)(PhaseEditRow);
+PhaseEditRow = DropTarget(ItemType, phaseRowTarget, collectForDropTarget)(PhaseEditRow);
+
+export default PhaseEditRow;
