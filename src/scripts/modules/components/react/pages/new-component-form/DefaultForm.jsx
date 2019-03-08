@@ -1,9 +1,8 @@
 import React from 'react';
 import ComponentIcon from '../../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../../react/common/ComponentName';
-import { Input } from './../../../../../react/common/KbcBootstrap';
 import AppVendorInfo from './AppVendorInfo';
-import { Modal, ButtonToolbar, Button } from 'react-bootstrap';
+import { Modal, ButtonToolbar, Button, ControlLabel, FormControl, FormGroup, Col } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 
 export default React.createClass({
@@ -40,27 +39,30 @@ export default React.createClass({
         </Modal.Header>
         <Modal.Body className="modal-configuration-body">
           <form className="form-horizontal" onSubmit={this._handleSubmit}>
-            <Input
-              type="text"
-              label="Name"
-              ref="name"
-              autoFocus={true}
-              value={this.props.configuration.get('name')}
-              placeholder={`My ${this.props.component.get('name')} ${this.props.component.get('type')}`}
-              labelClassName="col-xs-3"
-              wrapperClassName="col-xs-9"
-              onChange={this._handleChange.bind(this, 'name')}
-              disabled={this.props.isSaving}
-            />
-            <Input
-              type="textarea"
-              label="Description"
-              value={this.props.configuration.get('description')}
-              labelClassName="col-xs-3"
-              wrapperClassName="col-xs-9"
-              onChange={this._handleChange.bind(this, 'description')}
-              disabled={this.props.isSaving}
-            />
+            <FormGroup>
+              <Col componentClass={ControlLabel} xs={3}>Name</Col>
+              <Col xs={9}>
+                <FormControl
+                  type="text"
+                  autoFocus
+                  value={this.props.configuration.get('name')}
+                  placeholder={`My ${this.props.component.get('name')} ${this.props.component.get('type')}`}
+                  onChange={this._handleChange.bind(this, 'name')}
+                  disabled={this.props.isSaving}
+                />
+              </Col>
+            </FormGroup>
+            <FormGroup>
+              <Col componentClass={ControlLabel} xs={3}>Description</Col>
+              <Col xs={9}>
+                <FormControl
+                  componentClass="textarea"
+                  value={this.props.configuration.get('description')}
+                  onChange={this._handleChange.bind(this, 'description')}
+                  disabled={this.props.isSaving}
+                />
+              </Col>
+            </FormGroup>
             {this._is3rdPartyApp() && this._renderAppVendorInfo()}
           </form>
         </Modal.Body>
