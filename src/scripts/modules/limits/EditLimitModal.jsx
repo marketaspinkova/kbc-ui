@@ -34,7 +34,7 @@ export default React.createClass({
             <p>You can change the limit because you are superadmin. This feature is hidden for all other users.</p>
             <FormGroup>
               <Col componentClass={ControlLabel} sm={6}>{limit.get('name')}</Col>
-              <Col sm={4}>
+              <Col sm={6}>
                 <FormControl
                   type="number"
                   name="limitValue"
