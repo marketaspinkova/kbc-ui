@@ -1,7 +1,7 @@
 import React from 'react';
 import { Protected, Loader, ExternalLink } from '@keboola/indigo-ui';
+import { Col, FormGroup, Checkbox } from 'react-bootstrap';
 import Clipboard from '../../../../react/common/Clipboard';
-import { Input } from './../../../../react/common/KbcBootstrap';
 
 export default React.createClass({
   propTypes: {
@@ -91,16 +91,16 @@ export default React.createClass({
         <div className="form-horizontal clearfix">
           <div className="row">
             <div className="form-group-sm">
-              <span className="col-md-3">{''}</span>
-              <div className="col-md-9">
-                <Input
-                  standalone={true}
-                  type="checkbox"
-                  label={<small>Show JDBC strings</small>}
-                  checked={this.state.showDetails}
-                  onChange={this._handleToggleShowDetails}
-                />
-              </div>
+              <FormGroup>
+                <Col md={9} mdOffset={3}>
+                  <Checkbox
+                    checked={this.state.showDetails}
+                    onChange={this._handleToggleShowDetails}
+                  >
+                    <small>Show JDBC strings</small>
+                  </Checkbox>
+                </Col>
+              </FormGroup>
             </div>
           </div>
         </div>

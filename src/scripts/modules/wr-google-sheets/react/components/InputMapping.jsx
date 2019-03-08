@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Input} from '../../../../react/common/KbcBootstrap';
+import { FormGroup, Checkbox, Col } from 'react-bootstrap';
 import Select from '../../../../react/common/Select';
 import {List} from 'immutable';
 import ChangedSinceFilterInput from '../../../components/react/components/generic/ChangedSinceFilterInput';
@@ -24,17 +24,16 @@ export default React.createClass({
   render() {
     return (
       <div className="form-horizontal">
-        <div className="form-group">
-          <div className="col-xs-10 col-xs-offset-2">
-            <Input
-              standalone={true}
-              type="checkbox"
-              label="Show details"
+        <FormGroup>
+          <Col xs={10} xsOffset={2}>
+            <Checkbox
               checked={this.state.showDetails}
               onChange={this.handleToggleShowDetails}
-            />
-          </div>
-        </div>
+            >
+              Show details
+            </Checkbox>
+          </Col>
+        </FormGroup>
         <div className="form-group">
           <label className="col-md-2 control-label">
             Input Table

@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {RadioGroup} from 'react-radio-group';
+import { ControlLabel, HelpBlock, FormControl, FormGroup, Col } from 'react-bootstrap';
 import RadioGroupInput from '../../../../react/common/RadioGroupInput';
-import {Input} from '../../../../react/common/KbcBootstrap';
 
 export default React.createClass({
   propTypes: {
@@ -22,23 +22,20 @@ export default React.createClass({
 
   renderSheetTitle() {
     return (
-      <div className="form-group">
-        <label className="col-md-2 control-label">
-          Sheet title
-        </label>
-        <div className="col-md-10">
-          <Input
+      <FormGroup>
+        <Col componentClass={ControlLabel} md={2}>Sheet title</Col>
+        <Col md={10}>
+          <FormControl
             placeholder="Sheet1"
             type="text"
             value={this.props.valueSheetTitle}
             onChange={this.props.onChangeSheetTitle}
-            className="form-control"
           />
-          <span className="help-block">
+          <HelpBlock>
             Type a name of existing Sheet to import into it or type a unique name to add new Sheet into the Spreadsheet.
-          </span>
-        </div>
-      </div>
+          </HelpBlock>
+        </Col>
+      </FormGroup>
     );
   },
 
