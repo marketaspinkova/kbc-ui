@@ -159,6 +159,7 @@ export default React.createClass({
             <Col xs={10}>
               <FormControl
                 type="text"
+                name="source"
                 autoFocus
                 value={this.props.value.get('source')}
                 disabled={this.props.disabled}
@@ -194,6 +195,7 @@ the source file data will be loaded to - you can create a new table or use an ex
           <FormGroup>
             <Col xs={10} xsOffset={2}>
               <Checkbox
+                name="incremental"
                 checked={this.props.value.get('incremental')}
                 disabled={this.props.disabled}
                 onChange={this._handleChangeIncremental}
@@ -247,6 +249,7 @@ the source file data will be loaded to - you can create a new table or use an ex
               <Col xs={2}>
                 <FormControl
                   componentClass="select"
+                  name="deleteWhereOperator"
                   value={this.props.value.get('delete_where_operator')}
                   disabled={this.props.disabled}
                   onChange={this._handleChangeDeleteWhereOperator}
