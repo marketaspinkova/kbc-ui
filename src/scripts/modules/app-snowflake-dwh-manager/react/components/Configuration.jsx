@@ -1,9 +1,8 @@
 import React, { PropTypes } from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
-import { Input } from './../../../../react/common/KbcBootstrap';
+import { Col, ControlLabel, FormControl, FormGroup, HelpBlock, Checkbox } from 'react-bootstrap';
 import Select from '../../../../react/common/Select';
 import Immutable from 'immutable';
-import { ControlLabel, FormGroup } from 'react-bootstrap';
 
 export default React.createClass({
   mixins: [immutableMixin],
@@ -40,61 +39,69 @@ export default React.createClass({
     return (
       <div className="form-horizontal">
         <h2>Entity</h2>
-        <Input
-          type="select"
-          label="Type"
-          labelClassName="col-xs-4"
-          wrapperClassName="col-xs-8"
-          value={value.type}
-          onChange={(e) => onChange({ type: e.target.value })}
-          disabled={this.props.disabled}
-          help={
-            value.type === 'user' ? (
-              <p>
-                User entity gets its own write access schema as well as read-only access to
-                specified schemas (created by schema entity). Snowflake user credentials will be
-                displayed in the job log and the password must be changed after the first login.
-              </p>
-            ) : (
-              <p>
-                Schema entity will generate a Snowflake schema and a Snowflake user with write
-                access to the schema. This schema can be shared with user entities. Snowflake user
-                credentials will be displayed in the job log and the password must be changed after
-                the first login.
-              </p>
-            )
-          }
-        >
-          {this.allowedTypes.map((i) => (
-            <option value={i.get('value')} key={i.get('value')}>
-              {i.get('label')}
-            </option>
-          ))}
-        </Input>
+        <FormGroup>
+          <Col componentClass={ControlLabel} xs={4}>Type</Col>
+          <Col xs={8}>
+            <FormControl
+              componentClass="select"
+              value={value.type}
+              onChange={(e) => onChange({type: e.target.value})}
+              disabled={this.props.disabled}
+            >
+              {this.allowedTypes.map((i) => (
+                <option value={i.get('value')} key={i.get('value')}>
+                  {i.get('label')}
+                </option>
+              ))}
+            </FormControl>
+            <HelpBlock>
+              {
+                value.type === 'user' ? (
+                  <p>
+                    User entity gets its own write access schema as well as read-only access to
+                    specified schemas (created by schema entity). Snowflake user credentials will be
+                    displayed in the job log and the password must be changed after the first login.
+                  </p>
+                ) : (
+                  <p>
+                    Schema entity will generate a Snowflake schema and a Snowflake user with write
+                    access to the schema. This schema can be shared with user entities. Snowflake user
+                    credentials will be displayed in the job log and the password must be changed after
+                    the first login.
+                  </p>
+                )
+              }
+            </HelpBlock>
+          </Col>
+        </FormGroup>
         <h2>{value.type === 'user' ? 'User' : 'Schema'}</h2>
         {value.type === 'schema' && (
-          <Input
-            type="text"
-            label="Name"
-            labelClassName="col-xs-4"
-            wrapperClassName="col-xs-8"
-            value={value.schema_name}
-            onChange={(e) => onChange({ schema_name: e.target.value })}
-            disabled={this.props.disabled}
-            help="Name of the schema to be created."
-          />
+          <FormGroup>
+            <Col componentClass={ControlLabel} xs={4}>Name</Col>
+            <Col xs={8}>
+              <FormControl
+                type="text"
+                value={value.schema_name}
+                onChange={(e) => onChange({schema_name: e.target.value})}
+                disabled={this.props.disabled}
+              />
+              <HelpBlock>Name of the schema to be created.</HelpBlock>
+            </Col>
+          </FormGroup>
         )}
         {value.type === 'user' && (
-          <Input
-            type="text"
-            label="Email"
-            labelClassName="col-xs-4"
-            wrapperClassName="col-xs-8"
-            value={value.email}
-            onChange={(e) => onChange({ email: e.target.value })}
-            disabled={this.props.disabled}
-            help="Username will be generated from the email address."
-          />
+          <FormGroup>
+            <Col componentClass={ControlLabel} xs={4}>Email</Col>
+            <Col xs={8}>
+              <FormControl
+                type="text"
+                value={value.email}
+                onChange={(e) => onChange({email: e.target.value})}
+                disabled={this.props.disabled}
+              />
+              <HelpBlock>Username will be generated from the email address.</HelpBlock>
+            </Col>
+          </FormGroup>
         )}
         {value.type === 'user' && (
           <div>
@@ -129,15 +136,18 @@ export default React.createClass({
           </div>
         )}
         {value.type === 'user' && (
-          <Input
-            type="checkbox"
-            label="Disabled"
-            wrapperClassName="col-xs-8 col-xs-offset-4"
-            checked={value.disabled}
-            onChange={(e) => onChange({ disabled: e.target.checked })}
-            disabled={this.props.disabled}
-            help="Disabled users cannot log in."
-          />
+          <FormGroup>
+            <Col xs={8} xsOffset={4}>
+              <Checkbox
+                checked={value.disabled}
+                onChange={(e) => onChange({ disabled: e.target.checked })}
+                disabled={this.props.disabled}
+              >
+                Disabled
+              </Checkbox>
+              <HelpBlock>Disabled users cannot log in.</HelpBlock>
+            </Col>
+          </FormGroup>
         )}
       </div>
     );

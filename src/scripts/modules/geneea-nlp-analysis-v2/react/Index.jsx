@@ -1,7 +1,7 @@
 import React from 'react';
 import {List, Map} from 'immutable';
 import _ from 'underscore';
-import {FormControls} from './../../../react/common/KbcBootstrap';
+import {Col, ControlLabel, FormControl, FormGroup} from 'react-bootstrap';
 import {Check} from '@keboola/indigo-ui';
 import Select from 'react-select';
 import classnames from 'classnames';
@@ -19,7 +19,6 @@ import TablesFilterModal from '../../components/react/components/generic/TableFi
 import ResultsHelpModal from './ResultsHelpModal';
 import AdvancedSettings from './AdvancedSettings';
 
-const StaticText = FormControls.Static;
 import {params,
   getInTable,
   updateLocalState,
@@ -539,14 +538,16 @@ export default React.createClass({
 
   RenderStaticInput(label, value, isBetaCheckobx = false) {
     return (
-      <StaticText
-        label={label}
-        labelClassName="col-sm-3"
-        wrapperClassName="col-sm-9">
-        {isBetaCheckobx ? <Check
-          isChecked={value}/>
-          : value || 'n/a'}
-      </StaticText>
+      <FormGroup>
+        <Col componentClass={ControlLabel} sm={3}>{label}</Col>
+        <Col sm={9}>
+          <FormControl.Static>
+            {isBetaCheckobx ? <Check
+                isChecked={value}/>
+              : value || 'n/a'}
+          </FormControl.Static>
+        </Col>
+      </FormGroup>
     );
   },
 

@@ -1,11 +1,10 @@
 import React from 'react';
 import {Map} from 'immutable';
+import { Checkbox, Col, ControlLabel, FormControl, FormGroup } from 'react-bootstrap';
 
 import TestCredentialsButtonGroup from '../../../../../react/common/TestCredentialsButtonGroup';
-import {Input} from './../../../../../react/common/KbcBootstrap';
 import Tooltip from '../../../../../react/common/Tooltip';
 import NonStaticSshTunnelRow from '../../../../../react/common/NonStaticSshTunnelRow';
-
 import SSLForm from './SSLForm';
 
 export default React.createClass({
@@ -66,41 +65,58 @@ export default React.createClass({
   createProtectedInput(labelValue, propName) {
     let savedValue = this.props.savedCredentials.get(propName);
     return (
-      <Input
-        key={propName}
-        label={this.renderProtectedLabel(labelValue, !!savedValue)}
-        type="password"
-        disabled={!this.props.enabled}
-        labelClassName="col-xs-4"
-        wrapperClassName="col-xs-8"
-        placeholder={(savedValue) ? 'type new password to change it' : ''}
-        value={this.props.credentials.get(propName)}
-        onChange={this.handleChange.bind(this, propName)}/>
+      <FormGroup key={propName}>
+        <Col componentClass={ControlLabel} xs={4}>
+          {this.renderProtectedLabel(labelValue, !!savedValue)}
+        </Col>
+        <Col xs={8}>
+          <FormControl
+            type="password"
+            disabled={!this.props.enabled}
+            placeholder={(savedValue) ? 'type new password to change it' : ''}
+            value={this.props.credentials.get(propName)}
+            onChange={this.handleChange.bind(this, propName)}
+          />
+        </Col>
+      </FormGroup>
     );
   },
 
   createInput(labelValue, propName, type = 'text', isProtected = false) {
     if (isProtected) {
       return this.createProtectedInput(labelValue, propName);
-    } else {
+    }
+
+    if (type === 'checkbox') {
       return (
-        <Input
-          key={propName}
-          label={labelValue}
-          type={type}
-          disabled={!this.props.enabled}
-          labelClassName={(type === 'checkbox') ? '' : 'col-xs-4'}
-          wrapperClassName={(type === 'checkbox') ? 'col-xs-8 col-xs-offset-4' : 'col-xs-8'}
-          value={this.props.credentials.get(propName)}
-          checked={(type === 'checkbox') ? this.props.credentials.get(propName) : false}
-          onChange={
-            (type === 'checkbox') ?
-              this.handleCheckboxChange.bind(this, propName) :
-              this.handleChange.bind(this, propName)
-          }
-        />
+        <FormGroup key={propName}>
+          <Col xs={8} xsOffset={4}>
+            <Checkbox
+              checked={this.props.credentials.get(propName)}
+              onChange={this.handleCheckboxChange.bind(this, propName)}
+              disabled={!this.props.enabled}
+            >
+              {labelValue}
+            </Checkbox>
+          </Col>
+        </FormGroup>
       );
     }
+    return (
+      <FormGroup key={propName}>
+        <Col componentClass={ControlLabel} xs={4}>
+          {labelValue}
+        </Col>
+        <Col xs={8}>
+          <FormControl
+            type={type}
+            value={this.props.credentials.get(propName)}
+            onChange={this.handleChange.bind(this, propName)}
+            disabled={!this.props.enabled}
+          />
+        </Col>
+      </FormGroup>
+    );
   },
 
   renderFields() {

@@ -1,8 +1,6 @@
 import React from 'react';
-
 import Textarea from 'react-textarea-autosize';
-import {Input} from './../../../../../react/common/KbcBootstrap';
-import {HelpBlock} from 'react-bootstrap';
+import { Checkbox, Col, FormGroup, HelpBlock } from 'react-bootstrap';
 import {ExternalLink} from '@keboola/indigo-ui';
 
 const helpUrl = 'https://help.keboola.com/extractors/database/sqldb/#mysql-encryption';
@@ -36,14 +34,17 @@ export default React.createClass({
 
   renderSslCheckbox(propName) {
     return (
-      <Input
-        disabled={!this.props.isEditing || this.props.disabledCheckbox}
-        type="checkbox"
-        label={<span>Encrypted (SSL) connection {this.renderHelp()}</span>}
-        wrapperClassName="col-xs-8 col-xs-offset-4"
-        checked={this.isEnabled()}
-        onChange={this.handleToggle.bind(this, propName)}
-      />
+      <FormGroup>
+        <Col xs={8} xsOffset={4}>
+          <Checkbox
+            disabled={!this.props.isEditing || this.props.disabledCheckbox}
+            checked={this.isEnabled()}
+            onChange={this.handleToggle.bind(this, propName)}
+          >
+            Encrypted (SSL) connection {this.renderHelp()}
+          </Checkbox>
+        </Col>
+      </FormGroup>
     );
   },
 
