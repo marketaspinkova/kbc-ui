@@ -3,8 +3,7 @@ import _ from 'underscore';
 import { List, fromJS } from 'immutable';
 import Select from 'react-select';
 import { PanelWithDetails } from '@keboola/indigo-ui';
-import { HelpBlock } from 'react-bootstrap';
-import { Input } from '../../../../../react/common/KbcBootstrap';
+import { Col, FormGroup, FormControl, ControlLabel, Checkbox, HelpBlock } from 'react-bootstrap';
 
 export default React.createClass({
   propTypes: {
@@ -60,26 +59,28 @@ export default React.createClass({
   render() {
     return (
       <div className="form-horizontal">
-        <Input
-          type="text"
-          label="Source"
-          value={this.props.value.get('source')}
-          disabled={this.props.disabled}
-          placeholder=""
-          onChange={this._handleChangeSource}
-          labelClassName="col-xs-2"
-          wrapperClassName="col-xs-10"
-          autoFocus={true}
-          help={
-            <span>
-              {'File will be uploaded from '}
-              <code>{`/data/out/files/${this.props.value.get('source', '')}`}</code>
-            </span>
-          }
-        />
-        <div className="form-group">
-          <label className="col-xs-2 control-label">Tags</label>
-          <div className="col-xs-10">
+        <FormGroup>
+          <Col xs={2} componentClass={ControlLabel}>
+            Source
+          </Col>
+          <Col xs={10}>
+            <FormControl
+              type="text"
+              autoFocus
+              value={this.props.value.get('source')}
+              onChange={this._handleChangeSource}
+              disabled={this.props.disabled}
+            />
+            <HelpBlock>
+              File will be uploaded from <code>{`/data/out/files/${this.props.value.get('source', '')}`}</code>
+            </HelpBlock>
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col xs={2} componentClass={ControlLabel}>
+            Tags
+          </Col>
+          <Col xs={10}>
             <Select.Creatable
               options={[]}
               name="tags"
@@ -90,35 +91,37 @@ export default React.createClass({
               onChange={this._handleChangeTags}
             />
             <HelpBlock>File will be assigned these tags</HelpBlock>
-          </div>
-        </div>
+          </Col>
+        </FormGroup>
         <PanelWithDetails defaultExpanded={this.state.showDetails}>
-          <div className="form-group">
-            <div className="col-xs-10 col-xs-offset-2">
-              <Input
-                standalone={true}
-                type="checkbox"
-                label="Is public"
+          <FormGroup>
+            <Col xs={10} xsOffset={2}>
+              <Checkbox
                 checked={this.props.value.get('is_public')}
                 onChange={this._handleChangeIsPublic}
                 disabled={this.props.disabled}
-                help="File will be public (accessible outside Keboola Connection)"
-              />
-            </div>
-          </div>
-          <div className="form-group">
-            <div className="col-xs-10 col-xs-offset-2">
-              <Input
-                standalone={true}
-                type="checkbox"
-                label="Is permanent"
+              >
+                Is public
+              </Checkbox>
+              <HelpBlock>
+                File will be public (accessible outside Keboola Connection)
+              </HelpBlock>
+            </Col>
+          </FormGroup>
+          <FormGroup>
+            <Col xs={10} xsOffset={2}>
+              <Checkbox
                 checked={this.props.value.get('is_permanent')}
                 onChange={this._handleChangeIsPermanent}
                 disabled={this.props.disabled}
-                help="File will be stored permanently (otherwise will be deleted after 180 days)"
-              />
-            </div>
-          </div>
+              >
+                Is permanent
+              </Checkbox>
+              <HelpBlock>
+                File will be stored permanently (otherwise will be deleted after 180 days)
+              </HelpBlock>
+            </Col>
+          </FormGroup>
         </PanelWithDetails>
       </div>
     );

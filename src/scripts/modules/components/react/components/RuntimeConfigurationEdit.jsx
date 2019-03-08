@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import { ExternalLink } from '@keboola/indigo-ui';
-import {Input} from './../../../../react/common/KbcBootstrap';
+import { Col, FormGroup, Checkbox, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 import SaveButtons from '../../../../react/common/SaveButtons';
 
 export default React.createClass({
@@ -47,7 +47,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <p className="help-block">This information should be provided by the application developer.</p>
+        <HelpBlock>This information should be provided by the application developer.</HelpBlock>
         <div className="text-right" style={{padding: '1em 0'}}>
           <SaveButtons
             isSaving={this.props.isSaving}
@@ -56,63 +56,84 @@ export default React.createClass({
             onReset={this.props.onCancel} />
         </div>
         <div className="form-horizontal">
-          <Input
-            type="text"
-            label="Repository"
-            labelClassName="col-xs-3"
-            wrapperClassName="col-xs-9"
-            value={this.props.data.get('repository', '')}
-            onChange={this.onChangeRepository}
-            help="GitHub or Bitbucket repository URL"
-            placeholder="https://github.com/keboola/my-r-app"
-          />
-
-          <Input
-            type="text"
-            label="Version"
-            labelClassName="col-xs-3"
-            wrapperClassName="col-xs-9"
-            value={this.props.data.get('version', '')}
-            onChange={this.onChangeVersion}
-            help={(
-              <span>
-                Branch or tag in the repository. Using <code>master</code> as a version is inefficient and should not be used in a production setup.
-                {' '}We recommend using <ExternalLink href="http://semver.org/">Semantic versioning</ExternalLink>.
-              </span>
-            )}
-            placeholder="1.0.0"
-          />
-
-          <Input
-            type="checkbox"
-            label="Allow application to access the Internet"
-            wrapperClassName="col-xs-9 col-xs-offset-3"
-            checked={this.props.data.get('network', 'bridge') === 'bridge'}
-            onChange={this.onChangeNetwork}
-            help="Preventing access to the Internet may cause the application to fail. Please consult with the application author(s)."
-          />
-
-          <Input
-            type="text"
-            label="Username"
-            labelClassName="col-xs-3"
-            wrapperClassName="col-xs-9"
-            value={this.props.data.get('username', '')}
-            onChange={this.onChangeUsername}
-            help="Username and password are required only for private repositories"
-            placeholder=""
-          />
-
-          <Input
-            type="password"
-            label="Password"
-            labelClassName="col-xs-3"
-            wrapperClassName="col-xs-9"
-            value={this.props.data.get('#password', '')}
-            onChange={this.onChangePassword}
-            help="Password will be kept encrypted"
-          />
-
+          <FormGroup>
+            <Col xs={3} componentClass={ControlLabel}>
+              Repository
+            </Col>
+            <Col xs={9}>
+              <FormControl
+                type="text"
+                value={this.props.data.get('repository', '')}
+                onChange={this.onChangeRepository}
+                placeholder="https://github.com/keboola/my-r-app"
+              />
+              <HelpBlock>
+                GitHub or Bitbucket repository URL
+              </HelpBlock>
+            </Col>
+          </FormGroup>
+          <FormGroup>
+            <Col xs={3} componentClass={ControlLabel}>
+              Version
+            </Col>
+            <Col xs={9}>
+              <FormControl
+                type="text"
+                value={this.props.data.get('version', '')}
+                onChange={this.onChangeVersion}
+                placeholder="1.0.0"
+              />
+              <HelpBlock>
+                <span>
+                  Branch or tag in the repository. Using <code>master</code> as a version is inefficient and should not be used in a production setup.
+                  {' '}We recommend using <ExternalLink href="http://semver.org/">Semantic versioning</ExternalLink>.
+                </span>
+              </HelpBlock>
+            </Col>
+          </FormGroup>
+          <FormGroup>
+            <Col xs={9} xsOffset={3}>
+              <Checkbox
+                checked={this.props.data.get('network', 'bridge') === 'bridge'}
+                onChange={this.onChangeNetwork}
+              >
+                Allow application to access the Internet
+              </Checkbox>
+              <HelpBlock>
+                Preventing access to the Internet may cause the application to fail. Please consult with the application author(s).
+              </HelpBlock>
+            </Col>
+          </FormGroup>
+          <FormGroup>
+            <Col xs={3} componentClass={ControlLabel}>
+              Username
+            </Col>
+            <Col xs={9}>
+              <FormControl
+                type="text"
+                value={this.props.data.get('username', '')}
+                onChange={this.onChangeUsername}
+              />
+              <HelpBlock>
+                Username and password are required only for private repositories.
+              </HelpBlock>
+            </Col>
+          </FormGroup>
+          <FormGroup>
+            <Col xs={3} componentClass={ControlLabel}>
+              Password
+            </Col>
+            <Col xs={9}>
+              <FormControl
+                type="password"
+                value={this.props.data.get('#password', '')}
+                onChange={this.onChangePassword}
+              />
+              <HelpBlock>
+                Password will be kept encrypted
+              </HelpBlock>
+            </Col>
+          </FormGroup>
         </div>
       </div>
     );

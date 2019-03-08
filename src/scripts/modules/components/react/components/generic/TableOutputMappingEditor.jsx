@@ -2,7 +2,7 @@ import React from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { List, Map } from 'immutable';
 import { PanelWithDetails } from '@keboola/indigo-ui';
-import { Input } from '../../../../../react/common/KbcBootstrap';
+import { Col, Checkbox, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 import Select from '../../../../../react/common/Select';
 import AutosuggestWrapper from '../../../../transformations/react/components/mapping/AutoSuggestWrapper';
 import DestinationTableSelector from '../../../../../react/common/DestinationTableSelector';
@@ -152,30 +152,31 @@ export default React.createClass({
     return (
       <div className="form-horizontal">
         {!this.props.definition.has('source') && (
-          <Input
-            type="text"
-            name="source"
-            label="File"
-            value={this.props.value.get('source')}
-            disabled={this.props.disabled}
-            placeholder="File name"
-            onFocus={this._handleFocusSource}
-            onBlur={() => this.setState({overwriteDestination: false})}
-            onChange={this._handleChangeSource}
-            labelClassName="col-xs-2"
-            wrapperClassName="col-xs-10"
-            autoFocus={true}
-            help={
-              <span>
-                {'File will be uploaded from'}
-                <code>{`/data/out/tables/${this.props.value.get('source', '')}`}</code>
-              </span>
-            }
-          />
+          <FormGroup>
+            <Col xs={2} componentClass={ControlLabel}>
+              File
+            </Col>
+            <Col xs={10}>
+              <FormControl
+                type="text"
+                name="source"
+                autoFocus
+                value={this.props.value.get('source')}
+                disabled={this.props.disabled}
+                placeholder="File name"
+                onFocus={this._handleFocusSource}
+                onBlur={() => this.setState({overwriteDestination: false})}
+                onChange={this._handleChangeSource}
+              />
+              <HelpBlock>
+                File will be uploaded from <code>{`/data/out/tables/${this.props.value.get('source', '')}`}</code>
+              </HelpBlock>
+            </Col>
+          </FormGroup>
         )}
-        <div className="form-group">
-          <label className="col-xs-2 control-label">Destination</label>
-          <div className="col-xs-10">
+        <FormGroup>
+          <Col xs={2} componentClass={ControlLabel}>Destination</Col>
+          <Col xs={10}>
             <DestinationTableSelector
               currentSource={this.props.value.get('source')}
               updatePart={this._updateDestinationPart}
@@ -188,37 +189,33 @@ export default React.createClass({
 the source file data will be loaded to - you can create a new table or use an existing one.'
               }
             />
-          </div>
-        </div>
+          </Col>
+        </FormGroup>
         <PanelWithDetails defaultExpanded={this.props.initialShowDetails}>
-          <div className="form-group">
-            <label className="control-label col-xs-2">
-              <span/>
-            </label>
-            <div className="col-xs-10">
-              <Input
-                standalone={true}
+          <FormGroup>
+            <Col xs={10} xsOffset={2}>
+              <Checkbox
                 name="incremental"
-                type="checkbox"
-                label="Incremental"
                 checked={this.props.value.get('incremental')}
                 disabled={this.props.disabled}
                 onChange={this._handleChangeIncremental}
-                help={
-                  'If the destination table exists in Storage, output mapping does not overwrite the table, it only appends the data to it. Uses incremental write to Storage.'
-                }
-              />
-            </div>
-          </div>
-          <div className="form-group">
-            <label className="control-label col-xs-2">
-              <span>Primary key</span>
-            </label>
-            <div className="col-xs-10">
+              >
+                Incremental
+              </Checkbox>
+              <HelpBlock>
+                If the destination table exists in Storage, output mapping does not overwrite the table, it only appends the data to it. Uses incremental write to Storage.
+              </HelpBlock>
+            </Col>
+          </FormGroup>
+          <FormGroup>
+            <Col xs={2} componentClass={ControlLabel}>
+              Primary key
+            </Col>
+            <Col xs={10}>
               <Select
                 name="primary_key"
                 value={this.props.value.get('primary_key')}
-                multi={true}
+                multi
                 disabled={this.props.disabled}
                 allowCreate={this._getColumns().size === 0}
                 delimiter=","
@@ -234,22 +231,24 @@ the source file data will be loaded to - you can create a new table or use an ex
                   }))
                   .toJS()}
               />
-            </div>
-          </div>
+            </Col>
+          </FormGroup>
           {(this.props.value.get('incremental') || this.props.value.get('deleteWhereColumn', '') !== '') && (
-            <div className="form-group">
-              <label className="col-xs-2 control-label">Delete rows</label>
-              <div className="col-xs-4">
+            <FormGroup>
+              <Col xs={2} componentClass={ControlLabel}>
+                Delete rows
+              </Col>
+              <Col xs={4}>
                 <AutosuggestWrapper
                   suggestions={this._getColumns()}
                   placeholder="Select column"
                   value={this.props.value.get('delete_where_column', '')}
                   onChange={this._handleChangeDeleteWhereColumn}
                 />
-              </div>
-              <div className="col-xs-2">
-                <Input
-                  type="select"
+              </Col>
+              <Col xs={2}>
+                <FormControl
+                  componentClass="select"
                   name="deleteWhereOperator"
                   value={this.props.value.get('delete_where_operator')}
                   disabled={this.props.disabled}
@@ -259,25 +258,27 @@ the source file data will be loaded to - you can create a new table or use an ex
                   <option value={whereOperatorConstants.NOT_EQ_VALUE}>
                     {whereOperatorConstants.NOT_EQ_LABEL}
                   </option>
-                </Input>
-              </div>
-              <div className="col-xs-4">
+                </FormControl>
+              </Col>
+              <Col xs={4}>
                 <Select
                   name="deleteWhereValues"
                   value={this.props.value.get('delete_where_values')}
-                  multi={true}
+                  multi
                   disabled={this.props.disabled}
-                  allowCreate={true}
+                  allowCreate
                   delimiter=","
                   placeholder="Add a value..."
-                  emptyStrings={true}
+                  emptyStrings
                   onChange={this._handleChangeDeleteWhereValues}
                 />
-              </div>
-              <div className="col-xs-10 col-xs-offset-2 help-block bottom-margin">
-                Delete matching rows in the destination table before importing the result
-              </div>
-            </div>
+              </Col>
+              <Col xs={10} xsOffset={2}>
+                <HelpBlock className="bottom-margin">
+                  Delete matching rows in the destination table before importing the result
+                </HelpBlock>
+              </Col>
+            </FormGroup>
           )}
         </PanelWithDetails>
       </div>

@@ -1,8 +1,7 @@
 import React from 'react';
 import { Map, List } from 'immutable';
 import { PanelWithDetails } from '@keboola/indigo-ui';
-import { Alert, HelpBlock } from 'react-bootstrap';
-import { Input } from '../../../../../react/common/KbcBootstrap';
+import { Alert, Col, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 import SapiTableSelector from '../SapiTableSelector';
 import ChangedSinceFilterInput from './ChangedSinceFilterInput';
 import DataFilterRow from './DataFilterRow';
@@ -49,34 +48,30 @@ export default React.createClass({
           </div>
         </div>
         {!this.props.definition.has('destination') && (
-          <Input
-            type="text"
-            label="File name"
-            value={this.props.value.get('destination')}
-            disabled={this.props.disabled}
-            placeholder="File name"
-            onChange={this.handleChangeDestination}
-            labelClassName="col-xs-2"
-            wrapperClassName="col-xs-10"
-            bsStyle={this.props.isDestinationDuplicate ? 'error' : null}
-            help={
-              this.props.isDestinationDuplicate ? (
-                <small className="error">
-                  {'Duplicate destination '}
-                  <code>{this.props.value.get('destination')}</code>.
-                </small>
-              ) : (
-                <HelpBlock>
-                  {this.props.showFileHint && (
-                    <span>
-                        File will be available at
-                      <code>{`/data/in/tables/${this.getFileName()}`}</code>
-                    </span>
-                  )}
+          <FormGroup>
+            <Col xs={2} componentClass={ControlLabel}>
+              File name
+            </Col>
+            <Col xs={10}>
+              <FormControl
+                type="text"
+                value={this.props.value.get('destination')}
+                disabled={this.props.disabled}
+                placeholder="File name"
+                onChange={this.handleChangeDestination}
+              />
+              {this.props.isDestinationDuplicate && (
+                <HelpBlock className="error">
+                  Duplicate destination <code>{this.props.value.get('destination')}</code>.
                 </HelpBlock>
-              )
-            }
-          />
+              )}
+              {!this.props.isDestinationDuplicate && this.props.showFileHint && (
+                <HelpBlock>
+                  File will be available at <code>{`/data/in/tables/${this.getFileName()}`}</code>
+                </HelpBlock>
+              )}
+            </Col>
+          </FormGroup>
         )}
         <PanelWithDetails defaultExpanded={this.props.initialShowDetails}>
           <ColumnsSelectRow

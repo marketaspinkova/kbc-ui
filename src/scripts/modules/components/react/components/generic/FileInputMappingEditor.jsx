@@ -3,8 +3,7 @@ import _ from 'underscore';
 import { List, fromJS } from 'immutable';
 import Select from 'react-select';
 import { PanelWithDetails } from '@keboola/indigo-ui';
-import { HelpBlock } from 'react-bootstrap';
-import { Input } from '../../../../../react/common/KbcBootstrap';
+import { Col, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 
 export default React.createClass({
   propTypes: {
@@ -74,9 +73,9 @@ export default React.createClass({
   render() {
     return (
       <div className="form-horizontal">
-        <div className="form-group">
-          <label className="col-xs-2 control-label">Tags</label>
-          <div className="col-xs-10">
+        <FormGroup>
+          <Col xs={2} componentClass={ControlLabel}>Tags</Col>
+          <Col xs={10}>
             <Select.Creatable
               options={[]}
               name="tags"
@@ -87,23 +86,27 @@ export default React.createClass({
               multi={true}
               onChange={this._handleChangeTags}
             />
-          </div>
-        </div>
+          </Col>
+        </FormGroup>
         <PanelWithDetails defaultExpanded={this.props.initialShowDetails}>
-          <Input
-            type="text"
-            label="Query"
-            value={this.props.value.get('query')}
-            disabled={this.props.disabled}
-            placeholder="Search query"
-            onChange={this._handleChangeQuery}
-            labelClassName="col-xs-2"
-            wrapperClassName="col-xs-10"
-            help={<HelpBlock>Specify an Elasticsearch query to refine search</HelpBlock>}
-          />
-          <div className="form-group">
-            <label className="col-xs-2 control-label">Processed Tags</label>
-            <div className="col-xs-10">
+          <FormGroup>
+            <Col xs={2} componentClass={ControlLabel}>
+              Query
+            </Col>
+            <Col xs={10}>
+              <FormControl
+                type="text"
+                value={this.props.value.get('query')}
+                onChange={this._handleChangeQuery}
+                disabled={this.props.disabled}
+                placeholder="Search query"
+              />
+              <HelpBlock>Specify an Elasticsearch query to refine search</HelpBlock>
+            </Col>
+          </FormGroup>
+          <FormGroup>
+            <Col xs={2} componentClass={ControlLabel}>Processed Tags</Col>
+            <Col xs={10}>
               <Select.Creatable
                 options={[]}
                 name="processed_tags"
@@ -114,8 +117,8 @@ export default React.createClass({
                 onChange={this._handleChangeProcessedTags}
               />
               <HelpBlock>Add these tags to files that were successfully processed</HelpBlock>
-            </div>
-          </div>
+            </Col>
+          </FormGroup>
         </PanelWithDetails>
       </div>
     );
