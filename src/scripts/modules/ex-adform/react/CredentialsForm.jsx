@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Input} from './../../../react/common/KbcBootstrap';
+import { Col, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 
 export default React.createClass({
   propTypes: {
@@ -9,22 +9,32 @@ export default React.createClass({
   render() {
     return (
       <div className="form-horizontal">
-        <p className="help-block">Please provide your Adform credentials.</p>
-        <Input
-          type="text"
-          label="Username"
-          value={this.props.credentials.get('username')}
-          onChange={this.handleChange.bind(this, 'username')}
-          labelClassName="col-sm-4" wrapperClassName="col-sm-8"
-          autoFocus={true}
-        />
-        <Input
-          type="password"
-          label="Password"
-          value={this.props.credentials.get('#password')}
-          onChange={this.handleChange.bind(this, '#password')}
-          labelClassName="col-sm-4" wrapperClassName="col-sm-8"
-        />
+        <HelpBlock>Please provide your Adform credentials.</HelpBlock>
+        <FormGroup>
+          <Col sm={4} componentClass={ControlLabel}>
+            Username
+          </Col>
+          <Col sm={8}>
+            <FormControl
+              type="text"
+              autoFocus
+              value={this.props.credentials.get('username')}
+              onChange={this.handleChange.bind(this, 'username')}
+            />
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col sm={4} componentClass={ControlLabel}>
+            Password
+          </Col>
+          <Col sm={8}>
+            <FormControl
+              type="password"
+              value={this.props.credentials.get('#password')}
+              onChange={this.handleChange.bind(this, '#password')}
+            />
+          </Col>
+        </FormGroup>
       </div>
     );
   },

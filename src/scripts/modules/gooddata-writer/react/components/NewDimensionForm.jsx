@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import {Input} from './../../../../react/common/KbcBootstrap';
-import {Button} from 'react-bootstrap';
+import {Button, Col, Checkbox, Radio, FormGroup, FormControl, ControlLabel, HelpBlock} from 'react-bootstrap';
 import {Loader, ExternalLink} from '@keboola/indigo-ui';
 import {DateDimensionTemplates} from '../../constants';
 
@@ -30,80 +29,88 @@ export default React.createClass({
       <div>
         <h3>Add Dimension</h3>
         <div className={className}>
-          <Input
-            type="text"
-            label="Name"
-            value={dimension.get('name')}
-            onChange={this.handleInputChange.bind(this, 'name')}
-            labelClassName="col-sm-3"
-            wrapperClassName="col-sm-9"
-          />
-          <Input
-            type="checkbox"
-            label="Include time"
-            checked={dimension.get('includeTime')}
-            onChange={this.handleCheckboxChange.bind(this, 'includeTime')}
-            wrapperClassName="col-sm-offset-3 col-sm-9"
-          />
-          <Input
-            type="text"
-            label="Identifier"
-            value={dimension.get('identifier')}
-            placeholder="Optional"
-            onChange={this.handleInputChange.bind(this, 'identifier')}
-            labelClassName="col-sm-3"
-            wrapperClassName="col-sm-9"
-            bsSize="small"
-          />
-          <div className="form-group form-group-sm">
-            <div className="control-label col-sm-3">
+          <FormGroup>
+            <Col sm={3} componentClass={ControlLabel}>
+              Name
+            </Col>
+            <Col sm={9}>
+              <FormControl
+                type="text"
+                value={dimension.get('name')}
+                onChange={this.handleInputChange.bind(this, 'name')}
+              />
+            </Col>
+          </FormGroup>
+          <FormGroup>
+            <Col sm={9} smOffset={3}>
+              <Checkbox
+                checked={dimension.get('includeTime')}
+                onChange={this.handleCheckboxChange.bind(this, 'includeTime')}
+              >
+                Include time
+              </Checkbox>
+            </Col>
+          </FormGroup>
+          <FormGroup bsSize="small">
+            <Col sm={3} componentClass={ControlLabel}>
+              Identifier
+            </Col>
+            <Col sm={9}>
+              <FormControl
+                type="text"
+                value={dimension.get('identifier')}
+                placeholder="Optional"
+                onChange={this.handleInputChange.bind(this, 'identifier')}
+              />
+            </Col>
+          </FormGroup>
+          <FormGroup bsSize="sm">
+            <Col sm={3} componentClass={ControlLabel}>
               Template
-            </div>
-            <div className="col-sm-9">
-              <div className="radio">
-                <label>
-                  <input
-                    type="radio"
-                    value={DateDimensionTemplates.GOOD_DATA}
-                    name="template"
-                    onChange={this.handleInputChange.bind(this, 'template')}
-                    checked={this.props.dimension.get('template') === DateDimensionTemplates.GOOD_DATA}
-                  />
-                  <span>GoodData</span>
-                </label>
-              </div>
-              <span className="help-block">
-                <small>
-                  Default date dimension provided by GoodData
-                </small>
-              </span>
-            </div>
-          </div>
-          <Input
-            type="radio"
-            label="Keboola"
-            value={DateDimensionTemplates.KEBOOLA}
-            help={this.renderKeboolaDimHelp()}
-            name="template"
-            onChange={this.handleInputChange.bind(this, 'template')}
-            checked={this.props.dimension.get('template') === DateDimensionTemplates.KEBOOLA}
-            wrapperClassName="col-sm-offset-3 col-sm-9"
-            bsSize="small"
-          />
-          <Input
-            type="radio"
-            label="Custom"
-            value={DateDimensionTemplates.CUSTOM}
-            help={this.renderCustomDimHelp()}
-            name="template"
-            onChange={this.handleInputChange.bind(this, 'template')}
-            checked={this.props.dimension.get('template') === DateDimensionTemplates.CUSTOM}
-            wrapperClassName="col-sm-offset-3 col-sm-9"
-            bsSize="small"
-          />
+            </Col>
+            <Col sm={9}>
+              <Radio
+                value={DateDimensionTemplates.GOOD_DATA}
+                name="template"
+                onChange={this.handleInputChange.bind(this, 'template')}
+                checked={this.props.dimension.get('template') === DateDimensionTemplates.GOOD_DATA}
+              >
+                GoodData
+              </Radio>
+              <HelpBlock>
+                Default date dimension provided by GoodData
+              </HelpBlock>
+            </Col>
+          </FormGroup>
+          <FormGroup bsSize="small">
+            <Col sm={9} smOffset={3}>
+              <Radio
+                value={DateDimensionTemplates.KEBOOLA}
+                name="template"
+                onChange={this.handleInputChange.bind(this, 'template')}
+                checked={this.props.dimension.get('template') === DateDimensionTemplates.KEBOOLA}
+              >
+                Keboola
+              </Radio>
+              <HelpBlock>{this.renderKeboolaDimHelp()}</HelpBlock>
+            </Col>
+          </FormGroup>
+          <FormGroup bsSize="small">
+            <Col sm={9} smOffset={3}>
+              <Radio
+                value={DateDimensionTemplates.CUSTOM}
+                name="template"
+                onChange={this.handleInputChange.bind(this, 'template')}
+                checked={this.props.dimension.get('template') === DateDimensionTemplates.CUSTOM}
+              >
+                Custom
+              </Radio>
+              <HelpBlock>{this.renderCustomDimHelp()}</HelpBlock>
+            </Col>
+          </FormGroup>
           {this.customTemplateInput()}
-          <div className="form-group">
-            <div className="col-sm-offset-3 col-sm-10">
+          <FormGroup>
+            <Col sm={9} smOffset={3}>
               <Button
                 bsStyle="success"
                 disabled={this.props.isPending || !this.isValid()}
@@ -111,8 +118,8 @@ export default React.createClass({
               >
                 {this.props.buttonLabel}
               </Button> {isPending ? <Loader/> : null}
-            </div>
-          </div>
+            </Col>
+          </FormGroup>
         </div>
       </div>
     );
@@ -142,15 +149,18 @@ export default React.createClass({
     if (this.props.dimension.get('template') !== DateDimensionTemplates.CUSTOM) {
       return null;
     }
+
     return (
-      <Input
-        type="text"
-        bsSize="small"
-        placeholder="Your template id"
-        wrapperClassName="col-sm-offset-3 col-sm-9"
-        value={this.props.dimension.get('customTemplate')}
-        onChange={this.handleInputChange.bind(this, 'customTemplate')}
-      />
+      <FormGroup bsSize="small">
+        <Col sm={9} smOffset={3}>
+          <FormControl
+            type="text"
+            placeholder="Your template id"
+            value={this.props.dimension.get('customTemplate')}
+            onChange={this.handleInputChange.bind(this, 'customTemplate')}
+          />
+        </Col>
+      </FormGroup>
     );
   },
 
@@ -174,5 +184,4 @@ export default React.createClass({
   handleCheckboxChange(field, e) {
     this.props.onChange(this.props.dimension.set(field, e.target.checked));
   }
-
 });

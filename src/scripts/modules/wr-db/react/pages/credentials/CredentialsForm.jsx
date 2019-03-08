@@ -1,6 +1,8 @@
 import React from 'react';
 import { Map } from 'immutable';
 import _ from 'underscore';
+import { Col, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
+import { Protected, ExternalLink } from '@keboola/indigo-ui';
 import fieldsTemplates from '../../../templates/credentialsFields';
 import hasSshTunnel from '../../../templates/hasSshTunnel';
 import isDockerBasedWriter from '../../../templates/dockerProxyApi';
@@ -9,8 +11,6 @@ import Tooltip from '../../../../../react/common/Tooltip';
 import SshTunnelRow from '../../../../../react/common/SshTunnelRow';
 import TestCredentialsButton from '../../../../../react/common/TestCredentialsButtonGroup';
 import contactSupport from '../../../../../utils/contactSupport';
-import { Input, FormControls } from '../../../../../react/common/KbcBootstrap';
-import { Protected, ExternalLink } from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -58,7 +58,16 @@ export default React.createClass({
         </div>
         <div className="kbc-inner-padding">
           {_.map(fields, (field, index) => {
-            return this._createInput(index, field[0], field[1], field[2], field[3], field[4], field[5], field[7]);
+            return this._createInput(
+              index,
+              field[0],
+              field[1],
+              field[2],
+              field[3],
+              field[4],
+              field[5],
+              field[7]
+            );
           })}
           {this._renderSshTunnelRow()}
         </div>
@@ -105,7 +114,7 @@ export default React.createClass({
 
     return (
       <SshTunnelRow
-        onChange={newSshData => {
+        onChange={(newSshData) => {
           return this.props.changeCredentialsFn(this.props.credentials.set('ssh', newSshData));
         }}
         data={this.props.credentials.get('ssh', Map())}
@@ -125,16 +134,7 @@ export default React.createClass({
     options = [],
     helpText = null
   ) {
-    let allOptions;
     let propName = inputPropName;
-
-    if (type === 'select') {
-      allOptions = _.map(options, (label, value) => (
-        <option key={value} value={value}>
-          {label}
-        </option>
-      ));
-    }
 
     let isHashed = propName[0] === '#';
     if (this.props.isProvisioning && isHashed) {
@@ -147,22 +147,50 @@ export default React.createClass({
         return this._createProtectedInput(labelValue, propName, helpText, key);
       }
 
+      if (type === 'select') {
+        return (
+          <FormGroup key={key}>
+            <Col xs={4} componentClass={ControlLabel}>
+              {labelValue}
+            </Col>
+            <Col xs={8}>
+              <FormControl
+                componentClass="select"
+                disabled={this.props.isSaving}
+                value={this.props.credentials.get(propName) || defaultValue}
+                onChange={(event) => {
+                  return this.props.onChangeFn(propName, event);
+                }}
+              >
+                {_.map(options, (label, value) => (
+                  <option key={value} value={value}>
+                    {label}
+                  </option>
+                ))}
+              </FormControl>
+              {helpText && <HelpBlock>{helpText}</HelpBlock>}
+            </Col>
+          </FormGroup>
+        );
+      }
+
       return (
-        <Input
-          key={key}
-          label={labelValue}
-          type={type}
-          disabled={this.props.isSaving}
-          value={this.props.credentials.get(propName) || defaultValue}
-          help={helpText}
-          labelClassName="col-xs-4"
-          wrapperClassName="col-xs-8"
-          onChange={event => {
-            return this.props.onChangeFn(propName, event);
-          }}
-        >
-          {allOptions}
-        </Input>
+        <FormGroup key={key}>
+          <Col xs={4} componentClass={ControlLabel}>
+            {labelValue}
+          </Col>
+          <Col xs={8}>
+            <FormControl
+              type={type}
+              disabled={this.props.isSaving}
+              value={this.props.credentials.get(propName) || defaultValue}
+              onChange={(event) => {
+                return this.props.onChangeFn(propName, event);
+              }}
+            />
+            {helpText && <HelpBlock>{helpText}</HelpBlock>}
+          </Col>
+        </FormGroup>
       );
     }
 
@@ -171,25 +199,28 @@ export default React.createClass({
     }
 
     return (
-      <FormControls.Static key={key} label={labelValue} labelClassName="col-xs-4" wrapperClassName="col-xs-8">
-        {type === 'select'
-          ? _.find(options, (item, index) => {
-            return index === this.props.credentials.get(propName);
-          })
-          : this._renderStaticValue(propName)}
-        <Clipboard text={this.props.credentials.get(propName)} />
-      </FormControls.Static>
+      <FormGroup key={key}>
+        <Col xs={4} componentClass={ControlLabel}>
+          {labelValue}
+        </Col>
+        <Col xs={8}>
+          <FormControl.Static>
+            {type === 'select'
+              ? _.find(options, (item, index) => {
+                  return index === this.props.credentials.get(propName);
+                })
+              : this._renderStaticValue(propName)}
+            <Clipboard text={this.props.credentials.get(propName)} />
+          </FormControl.Static>
+        </Col>
+      </FormGroup>
     );
   },
 
   _renderStaticValue(propName) {
     const value = this.props.credentials.get(propName);
     if (this.props.componentId === 'keboola.wr-db-snowflake' && propName === 'host') {
-      return (
-        <ExternalLink href={`https://${value}`}>
-          {value}
-        </ExternalLink>
-      );
+      return <ExternalLink href={`https://${value}`}>{value}</ExternalLink>;
     } else {
       return value;
     }
@@ -197,38 +228,50 @@ export default React.createClass({
 
   _renderProtectedNoHash(labelValue, propName, key) {
     const isHashed = propName[0] === '#';
+
     return (
-      <FormControls.Static key={key} label={labelValue} labelClassName="col-xs-4" wrapperClassName="col-xs-8">
-        {isHashed ? (
-          <Tooltip tooltip="Encrypted password">
-            <span className="fa fa-fw fa-lock">{null}</span>
-          </Tooltip>
-        ) : (
-          <span>
-            <Protected>{this.props.credentials.get(propName)}</Protected>
-            <Clipboard text={this.props.credentials.get(propName)} />
-          </span>
-        )}
-      </FormControls.Static>
+      <FormGroup key={key}>
+        <Col xs={4} componentClass={ControlLabel}>
+          {labelValue}
+        </Col>
+        <Col xs={8}>
+          <FormControl.Static>
+            {isHashed ? (
+              <Tooltip tooltip="Encrypted password">
+                <span className="fa fa-fw fa-lock">{null}</span>
+              </Tooltip>
+            ) : (
+              <span>
+                <Protected>{this.props.credentials.get(propName)}</Protected>
+                <Clipboard text={this.props.credentials.get(propName)} />
+              </span>
+            )}
+          </FormControl.Static>
+        </Col>
+      </FormGroup>
     );
   },
 
   _createProtectedInput(labelValue, propName, helpText = null, key) {
     const savedValue = this.props.savedCredentials.get(propName);
+
     return (
-      <Input
-        key={key}
-        label={this._renderProtectedLabel(labelValue, !!savedValue)}
-        type="password"
-        placeholder={savedValue ? 'type new password to change it' : ''}
-        value={this.props.credentials.get(propName)}
-        help={helpText}
-        labelClassName="col-xs-4"
-        wrapperClassName="col-xs-8"
-        onChange={event => {
-          return this.props.onChangeFn(propName, event);
-        }}
-      />
+      <FormGroup key={key}>
+        <Col xs={4} componentClass={ControlLabel}>
+          {this._renderProtectedLabel(labelValue, !!savedValue)}
+        </Col>
+        <Col xs={8}>
+          <FormControl
+            type="password"
+            placeholder={savedValue ? 'type new password to change it' : ''}
+            value={this.props.credentials.get(propName)}
+            onChange={(event) => {
+              return this.props.onChangeFn(propName, event);
+            }}
+          />
+          {helpText && <HelpBlock>{helpText}</HelpBlock>}
+        </Col>
+      </FormGroup>
     );
   },
 
