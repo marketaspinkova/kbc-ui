@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {fromJS} from 'immutable';
 import callDockerAction from '../../modules/components/DockerActionsApi';
-import {Input} from './KbcBootstrap';
+import { Checkbox, Col, ControlLabel, FormControl, FormGroup } from 'react-bootstrap';
 import Clipboard from './Clipboard';
 import {Loader, ExternalLink} from '@keboola/indigo-ui';
 
@@ -43,14 +43,17 @@ export default React.createClass({
 
   renderEnableCheckbox() {
     return (
-      <Input
-        disabled={!this.props.isEditing || this.props.disabledCheckbox}
-        type="checkbox"
-        label={<span>Enable SSH Tunnel {this.renderHelp()}</span>}
-        wrapperClassName="col-xs-8 col-xs-offset-4"
-        checked={this.isEnabled()}
-        onChange={() => this.props.onChange(this.props.data.set('enabled', !this.isEnabled()))}
-      />
+      <FormGroup>
+        <Col xs={8} xsOffset={4}>
+          <Checkbox
+            disabled={!this.props.isEditing || this.props.disabledCheckbox}
+            checked={this.isEnabled()}
+            onChange={() => this.props.onChange(this.props.data.set('enabled', !this.isEnabled()))}
+          >
+            SSH Tunnel {this.renderHelp()}
+          </Checkbox>
+        </Col>
+      </FormGroup>
     );
   },
 
@@ -136,14 +139,17 @@ export default React.createClass({
 
   createInput(labelValue, propName, type = 'text') {
     return (
-      <Input
-        label={labelValue}
-        type={type}
-        disabled={!this.props.isEditing}
-        value={this.props.data.get(propName)}
-        labelClassName="col-xs-4"
-        wrapperClassName="col-xs-8"
-        onChange={this.handleChange.bind(this, propName)} />
+      <FormGroup>
+        <Col componentClass={ControlLabel} xs={4}>{labelValue}</Col>
+        <Col xs={8}>
+          <FormControl
+            type={type}
+            disabled={!this.props.isEditing}
+            value={this.props.data.get(propName)}
+            onChange={this.handleChange.bind(this, propName)}
+          />
+        </Col>
+      </FormGroup>
     );
   },
 

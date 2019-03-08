@@ -2,12 +2,10 @@ import React, {PropTypes} from 'react';
 import {fromJS} from 'immutable';
 import callDockerAction from '../../modules/components/DockerActionsApi';
 import {Check} from '@keboola/indigo-ui';
-import {Input, FormControls} from './KbcBootstrap';
+import { ControlLabel, Checkbox, FormGroup, FormControl, Col } from 'react-bootstrap';
 import {Protected} from '@keboola/indigo-ui';
 import Clipboard from './Clipboard';
 import {Loader, ExternalLink} from '@keboola/indigo-ui';
-const StaticText = FormControls.Static;
-
 
 export default React.createClass({
   propTypes: {
@@ -48,23 +46,30 @@ export default React.createClass({
   renderEnableCheckbox() {
     if (this.props.isEditing) {
       return (
-        <Input
-          disabled={!this.props.isEditing || this.props.disabledCheckbox}
-          type="checkbox"
-          label={<span>SSH Tunnel {this.renderHelp()}</span>}
-          wrapperClassName="col-xs-8 col-xs-offset-4"
-          checked={this.isEnabled()}
-          onChange={() => this.props.onChange(this.props.data.set('enabled', !this.isEnabled()))}
-        />
+        <FormGroup>
+          <Col xs={8} xsOffset={4}>
+            <Checkbox
+              disabled={!this.props.isEditing || this.props.disabledCheckbox}
+              checked={this.isEnabled()}
+              onChange={() => this.props.onChange(this.props.data.set('enabled', !this.isEnabled()))}
+            >
+              SSH Tunnel {this.renderHelp()}
+            </Checkbox>
+          </Col>
+        </FormGroup>
       );
     } else {
       return (
-        <StaticText
-          label={<span>SSH Tunnel <small>{this.renderHelp()}</small></span>}
-          labelClassName="col-xs-4"
-          wrapperClassName="col-xs-8">
-          <Check isChecked={this.isEnabled()} />
-        </StaticText>
+        <FormGroup>
+          <Col componentClass={ControlLabel} xs={4}>
+            SSH Tunnel <small>{this.renderHelp()}</small>
+          </Col>
+          <Col xs={8}>
+            <FormControl.Static>
+              <Check isChecked={this.isEnabled()} />
+            </FormControl.Static>
+          </Col>
+        </FormGroup>
       );
     }
   },
@@ -153,33 +158,43 @@ export default React.createClass({
     const value = this.props.data.get(propName);
     if (this.props.isEditing) {
       return (
-        <Input
-          label={labelValue}
-          type={type}
-          value={this.props.data.get(propName)}
-          labelClassName="col-xs-4"
-          wrapperClassName="col-xs-8"
-          onChange={this.handleChange.bind(this, propName)} />);
+        <FormGroup>
+          <Col componentClass={ControlLabel} xs={4}>{labelValue}</Col>
+          <Col xs={8}>
+            <FormControl
+              type={type}
+              value={this.props.data.get(propName)}
+              onChange={this.handleChange.bind(this, propName)}
+            />
+          </Col>
+        </FormGroup>
+      );
     } else if (isProtected) {
       return (
-        <StaticText
-          label={labelValue}
-          labelClassName="col-xs-4"
-          wrapperClassName="col-xs-8">
-          <Protected>
-            {this.props.data.get(propName)}
-          </Protected>
-          {this.renderClipboard(value)}
-        </StaticText>);
+        <FormGroup>
+          <Col componentClass={ControlLabel} xs={4}>{labelValue}</Col>
+          <Col xs={8}>
+            <FormControl.Static>
+              <Protected>
+                {this.props.data.get(propName)}
+              </Protected>
+              {this.renderClipboard(value)}
+            </FormControl.Static>
+          </Col>
+        </FormGroup>
+      );
     } else {
       return (
-        <StaticText
-          label={labelValue}
-          labelClassName="col-xs-4"
-          wrapperClassName="col-xs-8">
-          {this.props.data.get(propName)}
-          {this.renderClipboard(value)}
-        </StaticText>);
+        <FormGroup>
+          <Col componentClass={ControlLabel} xs={4}>{labelValue}</Col>
+          <Col xs={8}>
+            <FormControl.Static>
+              {this.props.data.get(propName)}
+              {this.renderClipboard(value)}
+            </FormControl.Static>
+          </Col>
+        </FormGroup>
+      );
     }
   },
 

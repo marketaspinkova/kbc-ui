@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Input} from './../common/KbcBootstrap';
-import {Modal} from 'react-bootstrap';
+import {Modal, FormControl, FormGroup, Col, ControlLabel, Radio, HelpBlock} from 'react-bootstrap';
 import ConfirmButtons from '../common/ConfirmButtons';
 import numeral from 'numeral';
 
@@ -44,20 +43,20 @@ export default React.createClass({
             method="post"
             action={this.props.urlTemplates.get('createProject')}
           >
-            <Input
-              label="Name"
-              name="name"
-              ref="name"
-              autoFocus={true}
-              value={this.state.name}
-              onChange={this.handleNameChange}
-              type="text"
-              placeholder="My Project"
-              labelClassName="col-sm-4"
-              wrapperClassName="col-sm-6"
-            />
+            <FormGroup>
+              <Col componentClass={ControlLabel} sm={4}>Name</Col>
+              <Col sm={8}>
+                <FormControl
+                  name="name"
+                  autoFocus
+                  value={this.state.name}
+                  onChange={this.handleNameChange}
+                  placeholder="My Project"
+                />
+              </Col>
+            </FormGroup>
             {this.organization()}
-            <Input
+            <FormControl
               type="hidden"
               name="xsrf"
               value={this.props.xsrf}
@@ -90,16 +89,19 @@ export default React.createClass({
       );
     } else {
       return (
-        <Input
-          label="Organization"
-          name="organizationId"
-          type="select"
-          value={this.state.organizationId}
-          onChange={this.handleOrganizationChange}
-          labelClassName="col-sm-4"
-          wrapperClassName="col-sm-6">
-          {this.organizationOptions()}
-        </Input>
+        <FormGroup>
+          <Col componentClass={ControlLabel} sm={4}>Organization</Col>
+          <Col sm={8}>
+            <FormControl
+              componentClass="select"
+              name="organizationId"
+              value={this.state.organizationId}
+              onChange={this.handleOrganizationChange}
+            >
+              {this.organizationOptions()}
+            </FormControl>
+          </Col>
+        </FormGroup>
       );
     }
   },
@@ -121,7 +123,7 @@ export default React.createClass({
           <label className="control-label col-sm-4">
             Type
           </label>
-          <div className="col-sm-6">
+          <div className="col-sm-8">
             <p className="form-control-static">
               <span className="help-block">
                       Project can be upgraded anytime later.
@@ -137,17 +139,21 @@ export default React.createClass({
   types() {
     return this.props.projectTemplates.map((template) => {
       return (
-        <Input
-          type="radio"
-          label={template.get('name')}
-          name="type"
-          checked={template.get('stringId') === this.state.type}
-          help={this.help(template)}
-          value={template.get('stringId')}
-          onChange={this.handleTypeChange}
-          wrapperClassName="col-xs-offset-4 col-xs-6"
-          key={template.get('stringId')}
-        />
+        <FormGroup key={template.get('stringId')}>
+          <Col sm={8} smOffset={4}>
+            <Radio
+              name="type"
+              checked={template.get('stringId') === this.state.type}
+              value={template.get('stringId')}
+              onChange={this.handleTypeChange}
+            >
+              {template.get('name')}
+            </Radio>
+            <HelpBlock>
+              {this.help(template)}
+            </HelpBlock>
+          </Col>
+        </FormGroup>
       );
     });
   },
