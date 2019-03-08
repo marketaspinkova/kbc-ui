@@ -71,6 +71,7 @@ export default React.createClass({
             <Col sm={9}>
               <Radio
                 value={DateDimensionTemplates.GOOD_DATA}
+                name="template"
                 onChange={this.handleInputChange.bind(this, 'template')}
                 checked={this.props.dimension.get('template') === DateDimensionTemplates.GOOD_DATA}
               >
@@ -85,6 +86,7 @@ export default React.createClass({
             <Col sm={9} smOffset={3}>
               <Radio
                 value={DateDimensionTemplates.KEBOOLA}
+                name="template"
                 onChange={this.handleInputChange.bind(this, 'template')}
                 checked={this.props.dimension.get('template') === DateDimensionTemplates.KEBOOLA}
               >
@@ -97,6 +99,7 @@ export default React.createClass({
             <Col sm={9} smOffset={3}>
               <Radio
                 value={DateDimensionTemplates.CUSTOM}
+                name="template"
                 onChange={this.handleInputChange.bind(this, 'template')}
                 checked={this.props.dimension.get('template') === DateDimensionTemplates.CUSTOM}
               >
