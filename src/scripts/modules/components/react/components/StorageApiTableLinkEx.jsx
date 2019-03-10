@@ -21,7 +21,7 @@ export default React.createClass({
 
   getStateFromStores() {
     return {
-      table: TablesStore.getAll().get(this.props.tableId, Map())
+      table: TablesStore.getTable(this.props.tableId, Map())
     };
   },
 
