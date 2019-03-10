@@ -18,8 +18,10 @@ import unloadAdapter from './adapters/unload';
 
 import {Check} from "@keboola/indigo-ui";
 
+import {ExGoogleBigQueryV2ComponentId} from "./helpers/constants";
+
 const routeSettings = {
-  componentId: 'keboola.ex-google-bigquery-v2',
+  componentId: ExGoogleBigQueryV2ComponentId,
   componentType: 'extractor',
   index: {
     sections: [

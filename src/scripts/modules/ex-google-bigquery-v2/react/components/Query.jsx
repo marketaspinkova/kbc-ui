@@ -4,6 +4,8 @@ import {Form, FormGroup, ControlLabel, Col, HelpBlock, Checkbox} from 'react-boo
 import CodeEditor from './../../../../react/common/CodeEditor';
 import editorMode from "../../../ex-db-generic/templates/editorMode";
 
+import {ExGoogleBigQueryV2ComponentId} from "../../helpers/constants";
+
 export default React.createClass({
   mixins: [immutableMixin],
 
@@ -45,7 +47,7 @@ export default React.createClass({
               readOnly={props.disabled}
               placeholder="e.g. SELECT `id`, `name` FROM `myTable`"
               value={props.value.query}
-              mode={editorMode('keboola.ex-google-bigquery-v2')}
+              mode={editorMode(ExGoogleBigQueryV2ComponentId)}
               onChange={function(e) {
                 props.onChange({query: e.value});
               }}
