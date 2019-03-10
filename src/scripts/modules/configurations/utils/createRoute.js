@@ -1,3 +1,5 @@
+import defaultsDeep from 'lodash.defaultsdeep';
+import Immutable from 'immutable';
 import IndexLegacyCompatibilityWrapper from '../react/pages/IndexLegacyCompatibilityWrapper';
 import Row from '../react/pages/Row';
 import Versions from '../react/pages/Versions';
@@ -9,8 +11,6 @@ import jobsActions from '../../jobs/ActionCreators';
 import InstalledComponentsStore from '../../components/stores/InstalledComponentsStore';
 import ComponentsStore from '../../components/stores/ComponentsStore';
 import ConfigurationRowsStore from '../ConfigurationRowsStore';
-import _ from 'lodash';
-import Immutable from 'immutable';
 import {createTablesRoute} from '../../table-browser/routes';
 import {loadCredentialsFromConfig as loadOauthCredentials} from '../../oauth-v2/OauthUtils';
 import matchByWords from '../../../utils/matchByWords';
@@ -44,7 +44,7 @@ const defaults = {
 };
 
 export default function(settings) {
-  const settingsWithDefaults = _.defaultsDeep(settings, defaults);
+  const settingsWithDefaults = defaultsDeep(settings, defaults);
   let route = {
     name: settingsWithDefaults.componentId,
     settings: settingsWithDefaults,
