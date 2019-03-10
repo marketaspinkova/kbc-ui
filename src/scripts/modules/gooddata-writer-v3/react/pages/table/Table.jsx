@@ -42,7 +42,7 @@ export default React.createClass({
     const table = tables.get(tableId);
     const configProvisioning = makeConfigProvisioning(configurationId);
     const {isSaving, isPendingFn} = configProvisioning;
-    const storageTable = TablesStore.get(tableId);
+    const storageTable = TablesStore.getTable(tableId);
     const isPendingToggleExport = isPendingFn([tableId, 'activate']);
     const loadOnly = tableLoadSettingsAdapter(configProvisioning).value.loadOnly;
 
