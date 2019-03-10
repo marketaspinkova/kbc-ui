@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
-import {createTwoFilesPatch} from 'diff';
-import CodeEditor from '../CodeEditor';
 import _ from 'underscore';
+import {createTwoFilesPatch} from 'diff';
+import CodeMirror from 'react-code-mirror';
 
 function multiDiffValueToString(value) {
   if (_.isArray(value)) {
@@ -89,14 +89,20 @@ export default React.createClass({
       this.props.firstPart.value,
       this.props.secondPart.value,
       this.props.firstPartDescription,
-      this.props.secondPartDescription);
+      this.props.secondPartDescription
+    );
+
     return (
-      <CodeEditor
-        readOnly={true}
-        lineNumbers={false}
+      <CodeMirror
+        theme="solarized"
         mode="diff"
         value={multiDiff}
-        style={{width: '100%'}}/>);
+        lineNumbers={false}
+        lineWrapping={false}
+        readOnly
+        style={{width: '100%'}}
+      />
+    );
   },
 
   containLineBreaks() {

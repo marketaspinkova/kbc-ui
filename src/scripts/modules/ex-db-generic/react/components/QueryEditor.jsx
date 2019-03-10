@@ -1,9 +1,9 @@
 import React from 'react';
 import Immutable from 'immutable';
 import _ from 'underscore';
+import CodeMirror from 'react-code-mirror';
 import { Button, Alert, FormGroup, ControlLabel, HelpBlock, Checkbox, Col } from 'react-bootstrap';
 
-import CodeEditor from '../../../../react/common/CodeEditor';
 import Select from '../../../../react/common/Select';
 import TableSelectorForm from '../../../../react/common/TableSelectorForm';
 import Tooltip from '../../../../react/common/Tooltip';
@@ -105,8 +105,8 @@ export default React.createClass({
     return this.props.onChange(this.props.query.set('state', Immutable.fromJS({})));
   },
 
-  handleQueryChange(data) {
-    return this.props.onChange(this.props.query.set('query', data.value));
+  handleQueryChange(value) {
+    return this.props.onChange(this.props.query.set('query', value));
   },
 
   handleNameChange(event) {
@@ -448,13 +448,14 @@ export default React.createClass({
         <div>
           <label className="control-label">SQL Query</label>
           {this.renderQueryHelpBlock()}
-          <CodeEditor
-            readOnly={false}
-            placeholder={getQueryEditorPlaceholder(this.props.componentId)}
-            value={this.getQuery()}
+          <CodeMirror
+            theme="solarized"
             mode={editorMode(this.props.componentId)}
-            onChange={this.handleQueryChange}
-            disabled={this.props.disabled}
+            value={this.getQuery()}
+            onChange={(e) => this.handleQueryChange(e.target.value)}
+            lineNumbers
+            lineWrapping={false}
+            placeholder={getQueryEditorPlaceholder(this.props.componentId)}
             style={{ width: '100%' }}
           />
         </div>

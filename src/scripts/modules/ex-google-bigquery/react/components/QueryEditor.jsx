@@ -1,5 +1,5 @@
 import React from 'react';
-import CodeEditor from '../../../../react/common/CodeEditor';
+import CodeMirror from 'react-code-mirror';
 import Select from '../../../../react/common/Select';
 import AutosuggestWrapper from '../../../transformations/react/components/mapping/AutoSuggestWrapper';
 import editorMode from '../../../ex-db-generic/templates/editorMode';
@@ -29,8 +29,8 @@ export default React.createClass({
     return this.props.onChange(this.props.query.set('useLegacySql', event.target.checked));
   },
 
-  _handleQueryChange(data) {
-    return this.props.onChange(this.props.query.set('query', data.value));
+  _handleQueryChange(value) {
+    return this.props.onChange(this.props.query.set('query', value));
   },
 
   _handleNameChange(event) {
@@ -120,12 +120,14 @@ export default React.createClass({
             <label className="col-md-2 control-label">SQL query</label>
             <div className="col-md-10 ">
               <div className="form-control-static">
-                <CodeEditor
-                  readOnly={false}
-                  placeholder="e.g. SELECT `id`, `name` FROM `myTable`"
-                  value={this.props.query.get('query')}
+                <CodeMirror
+                  theme="solarized"
                   mode={editorMode(this.props.componentId)}
-                  onChange={this._handleQueryChange}
+                  value={this.props.query.get('query')}
+                  onChange={(e) => this._handleQueryChange(e.target.value)}
+                  lineNumbers
+                  lineWrapping={false}
+                  placeholder="e.g. SELECT `id`, `name` FROM `myTable`"
                   style={{width: '100%'}}
                 />
               </div>
