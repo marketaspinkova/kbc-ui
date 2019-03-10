@@ -16,7 +16,7 @@ export default React.createClass({
       error: null,
       loading: false,
       filtered: false,
-      filterColumn: '',
+      filterColumn: null,
       filterValue: ''
     };
   },
@@ -44,8 +44,6 @@ export default React.createClass({
         <FormGroup>
           <Col sm={4}>
             <Select
-              clearable={false}
-              disabled={false}
               placeholder="Filter by column"
               value={this.state.filterColumn}
               onChange={this.handleSearchColumn}
@@ -122,7 +120,7 @@ export default React.createClass({
 
   handleSearchColumn(column) {
     this.setState({
-      filterColumn: column.value
+      filterColumn: column ? column.value : null
     });
   },
 
@@ -152,7 +150,7 @@ export default React.createClass({
 
     this.setState({
       filtered: false,
-      filterColumn: '',
+      filterColumn: null,
       filterValue: ''
     });
   },
@@ -188,7 +186,7 @@ export default React.createClass({
           }
         }
 
-        this.setState({ 
+        this.setState({
           data: [],
           loading: false,
           error: errorMessage
