@@ -31,7 +31,7 @@ export default React.createClass({
       <Form horizontal>
         <FormGroup>
         <Col componentClass={ControlLabel} sm={4}>
-          Cloud Storage bucket
+          Cloud Storage Bucket
         </Col>
         <Col sm={8}>
           <FormControl
@@ -49,7 +49,7 @@ export default React.createClass({
       </FormGroup>
         <FormGroup>
           <Col componentClass={ControlLabel} sm={4}>
-            Dataset location
+            Dataset Location
           </Col>
           <Col sm={8}>
             <Select

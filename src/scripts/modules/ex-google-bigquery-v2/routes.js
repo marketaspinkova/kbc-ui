@@ -91,7 +91,7 @@ const routeSettings = {
         }
       },
       {
-        name: 'Primary key',
+        name: 'Primary Key',
         type: columnTypes.VALUE,
         value: function(row) {
           return row.getIn(['configuration', 'parameters', 'query', 'primaryKey'], []).join(', ');
