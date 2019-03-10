@@ -31,7 +31,7 @@ export default React.createClass({
       <Form horizontal>
         <FormGroup>
         <Col componentClass={ControlLabel} sm={4}>
-          Cloud Storage Bucket
+          Cloud Storage Bucket Name
         </Col>
         <Col sm={8}>
           <FormControl
@@ -39,7 +39,7 @@ export default React.createClass({
             disabled={disabled}
             onChange={e => onChange({storage: e.target.value})}
             value={value.storage}
-            placeholder="gs://"
+            placeholder="my-cloud-storage-bucket"
           />
           <HelpBlock>
             Existing Google Cloud Storage bucket. There will be data temporarily exported,
