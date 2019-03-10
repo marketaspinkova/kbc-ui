@@ -1,9 +1,7 @@
 import React, {PropTypes} from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
-import {Form, FormGroup, ControlLabel, Col, HelpBlock, Checkbox} from 'react-bootstrap';
+import {Form, FormGroup, ControlLabel, Col, HelpBlock, Checkbox, FormControl} from 'react-bootstrap';
 import Select from '../../../../react/common/Select';
-import {Input} from "../../../../react/common/KbcBootstrap";
-
 
 export default React.createClass({
   mixins: [immutableMixin],
@@ -29,19 +27,21 @@ export default React.createClass({
     return (
       <Form horizontal>
         <h3>Save Settings</h3>
-        <Input
-          type="text"
-          label="Storage Table Name"
-          labelClassName="col-sm-4"
-          wrapperClassName="col-sm-8"
-          value={props.value.tableName}
-          onChange={function(e) {
-            props.onChange({tableName: e.target.value});
-          }}
-          placeholder="mytable"
-          disabled={props.disabled}
-          help={(<span>Name of the table stored in Storage.</span>)}
-        />
+        <FormGroup>
+          <Col componentClass={ControlLabel} sm={4}>Storage Table Name</Col>
+          <Col sm={8}>
+            <FormControl
+              type="text"
+              value={props.value.tableName}
+              onChange={function(e) {
+                props.onChange({tableName: e.target.value});
+              }}
+              placeholder="mytable"
+              disabled={props.disabled}
+            />
+            <HelpBlock>Name of the table stored in Storage.</HelpBlock>
+          </Col>
+        </FormGroup>
         <FormGroup>
           <Col smOffset={4} sm={8}>
             <Checkbox
