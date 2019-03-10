@@ -28,6 +28,7 @@ import SidebarJobsContainer from '../../../components/react/components/SidebarJo
 import isParsableConfiguration from '../../utils/isParsableConfiguration';
 import sections from '../../utils/sections';
 import dockerActions from '../../DockerActionsActionCreators';
+import { isEmptyComponentState } from '../../utils/componentState';
 
 export default React.createClass({
   mixins: [createStoreMixin(Store, TablesStore, DockerActionsStore)],
@@ -98,9 +99,7 @@ export default React.createClass({
         Store.getPendingActions(componentId, configurationId, rowId).has('enable') ||
         Store.getPendingActions(componentId, configurationId, rowId).has('disable'),
 
-      hasState: !Store.get(componentId, configurationId, rowId)
-        .get('state', Immutable.Map())
-        .isEmpty(),
+      hasState: !isEmptyComponentState(Store.get(componentId, configurationId, rowId).get('state', Immutable.Map())),
       isClearStatePending: Store.getPendingActions(componentId, configurationId, rowId).has('clear-state')
     };
   },

@@ -14,6 +14,7 @@ import preferEncryptedAttributes from '../components/utils/preferEncryptedAttrib
 import stringUtils from '../../utils/string';
 import DockerActionsActionCreators from './DockerActionsActionCreators';
 const { webalize } = stringUtils;
+import { emptyComponentState } from './utils/componentState';
 
 const storeEncodedConfigurationRow = function(componentId, configurationId, rowId, configuration, changeDescription) {
   const dataToSavePrepared = JSON.stringify(preferEncryptedAttributes(configuration));
@@ -293,25 +294,32 @@ export default {
       configurationId: configurationId,
       rowId: rowId
     });
-    return InstalledComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, {state: '{}'})
-      .then(function(response) {
-        VersionActionCreators.loadVersionsForce(componentId, configurationId);
-        Dispatcher.handleViewAction({
-          type: Constants.ActionTypes.CONFIGURATION_ROWS_CLEAR_STATE_SUCCESS,
-          componentId: componentId,
-          configurationId: configurationId,
-          rowId: rowId,
-          row: response
+    return InstalledComponentsApi.getConfigurationRow(componentId, configurationId, rowId).then(function(response) {
+      const data = {
+        state: JSON.stringify(
+          emptyComponentState(Immutable.fromJS(response.state)).toJS()
+        )
+      };
+      return InstalledComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, data)
+        .then(function(response) {
+          VersionActionCreators.loadVersionsForce(componentId, configurationId);
+          Dispatcher.handleViewAction({
+            type: Constants.ActionTypes.CONFIGURATION_ROWS_CLEAR_STATE_SUCCESS,
+            componentId: componentId,
+            configurationId: configurationId,
+            rowId: rowId,
+            row: response
+          });
+        }).catch(function(e) {
+          Dispatcher.handleViewAction({
+            type: Constants.ActionTypes.CONFIGURATION_ROWS_CLEAR_STATE_ERROR,
+            componentId: componentId,
+            configurationId: configurationId,
+            rowId: rowId,
+            error: e
+          });
+          throw e;
         });
-      }).catch(function(e) {
-        Dispatcher.handleViewAction({
-          type: Constants.ActionTypes.CONFIGURATION_ROWS_CLEAR_STATE_ERROR,
-          componentId: componentId,
-          configurationId: configurationId,
-          rowId: rowId,
-          error: e
-        });
-        throw e;
-      });
+    });
   }
 };
