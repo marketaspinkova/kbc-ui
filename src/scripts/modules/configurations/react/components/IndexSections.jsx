@@ -97,13 +97,19 @@ export default React.createClass({
   },
 
   onSaveSection(sectionKey, diff) {
-    const {configurationBySections, componentId, configurationId} = this.state;
-    const newConfigurationBySections = configurationBySections.set(
+    const {componentId, configurationId, storedConfigurationSections, configurationBySections} = this.state;
+    const newConfigurationBySections = storedConfigurationSections.set(
       sectionKey,
       configurationBySections.get(sectionKey)
         .merge(Immutable.fromJS(diff)));
     const created = this.state.createBySectionsFn(newConfigurationBySections);
-    return Actions.saveForcedConfiguration(componentId, configurationId, created);
+    return Actions.saveForcedConfiguration(componentId, configurationId, created).then(() => {
+      const newEditingSections = configurationBySections
+        .map((editingSection, editingSectionKey) => editingSectionKey === sectionKey ? newConfigurationBySections.get(sectionKey) : editingSection);
+      const created = this.state.createBySectionsFn(newEditingSections);
+      const parsed = this.state.parseBySectionsFn(created);
+      return Actions.updateConfiguration(componentId, configurationId, parsed);
+    });
   },
 
   renderSections() {
