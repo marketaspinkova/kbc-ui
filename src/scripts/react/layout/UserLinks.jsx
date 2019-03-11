@@ -1,13 +1,13 @@
 import React from 'react';
 import { ExternalLink } from '@keboola/indigo-ui';
-import ApplicationStore from '../../stores/ApplicationStore';
+import _ from 'underscore';
 import contactSupport from '../../utils/contactSupport';
 
 export default React.createClass({
-  _openSupportModal(e) {
-    contactSupport({type: 'project'});
-    e.preventDefault();
-    e.stopPropagation();
+  propTypes: {
+    urlTemplates: React.PropTypes.object.isRequired,
+    currentProject: React.PropTypes.object.isRequired,
+    xsrf: React.PropTypes.string.isRequired
   },
 
   render() {
@@ -15,7 +15,7 @@ export default React.createClass({
       <div className="kbc-user-links">
         <ul className="nav">
           <li>
-            <a href="" onClick={this._openSupportModal}>
+            <a href="" onClick={this.openSupportModal}>
               <span className="fa fa-comment" />
               {' Support '}
             </a>
@@ -27,7 +27,13 @@ export default React.createClass({
             </ExternalLink>
           </li>
           <li>
-            <a href={ApplicationStore.getProjectPageUrl('settings-users')}>
+            <a
+              href={
+                _.template(this.props.urlTemplates.get('project'))({
+                  projectId: this.props.currentProject.get('id')
+                }) + '/settings-users'
+              }
+            >
               <span className="fa fa-user" />
               {' Users & Settings '}
             </a>
@@ -41,5 +47,11 @@ export default React.createClass({
         </ul>
       </div>
     );
-  }
+  },
+
+  openSupportModal(e) {
+    contactSupport({type: 'project'});
+    e.preventDefault();
+    e.stopPropagation();
+  },
 });
