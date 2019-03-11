@@ -46,8 +46,7 @@ export default createReactClass({
       isLoading: VersionsStore.isLoadingVersions(componentId, configId),
       versionsConfigs: VersionsStore.getVersionsConfigs(componentId, configId),
       pendingMultiLoad: VersionsStore.getPendingMultiLoad(componentId, configId),
-      isPending: VersionsStore.isPendingConfig(componentId, configId),
-      hasVerionsMishmash: VersionsStore.hasVerionsMishmash(componentId, configId)
+      isPending: VersionsStore.isPendingConfig(componentId, configId)
     };
   },
 
@@ -80,9 +79,6 @@ export default createReactClass({
         versionsConfigs={this.state.versionsConfigs}
         pendingMultiLoad={this.state.pendingMultiLoad}
         isPending={this.state.isPending}
-        hasVerionsMishmash={this.state.hasVerionsMishmash}
-        dismissMishmashWarning={this.dismissMishmashWarning}
-        latestVersion={this.state.versions.first()}
       />
     );
   },
@@ -94,9 +90,5 @@ export default createReactClass({
       version1.get('version'),
       version2.get('version')
     );
-  },
-
-  dismissMishmashWarning() {
-    VersionsActionCreators.dismissMishmashWarning(this.state.componentId, this.state.configId);
   }
 });

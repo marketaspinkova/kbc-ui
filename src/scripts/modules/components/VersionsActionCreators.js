@@ -51,20 +51,19 @@ export default {
         const newVersions = fromJS(versions);
 
         if (!previousVersions.equals(newVersions)) {
-          // if document has focus, show the notification, otherwise store the info for later use.
-          if (document.hasFocus()) {
+          const notification = () => {
             ApplicationActionCreators.sendNotification({
               message: versionsMishmashDetected(newVersions.first()),
               id: 'versions-mishmash',
               timeout: 20000,
               type: 'error',
             })
+          };
+          
+          if (!document.hasFocus()) {
+            window.addEventListener('focus', notification, { passive: true, once: true });
           } else {
-            dispatcher.handleViewAction({
-              componentId: componentId,
-              configId: configId,
-              type: Constants.ActionTypes.VERSIONS_SHOW_MISHMASH_WARNING
-            });
+            notification();
           }
         }
 

@@ -2,12 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import ImmutableMixin from 'react-immutable-render-mixin';
-import moment from 'moment';
 import { Map } from 'immutable';
 import { Link } from 'react-router';
-import { Alert } from 'react-bootstrap';
 import { getPreviousVersion } from '../../../../utils/VersionsDiffUtils';
-import ApplicationStore from '../../../../stores/ApplicationStore';
 import DiffVersionButton from '../../../../react/common/DiffVersionButton';
 import SidebarVersionsRow from './SidebarVersionsRow';
 
@@ -20,9 +17,6 @@ export default createReactClass({
     isLoading: PropTypes.bool.isRequired,
     configId: PropTypes.string.isRequired,
     componentId: PropTypes.string.isRequired,
-    hasVerionsMishmash: PropTypes.bool.isRequired,
-    dismissMishmashWarning: PropTypes.func.isRequired,
-    latestVersion: PropTypes.object,
     limit: PropTypes.number,
     versionsLinkTo: PropTypes.string,
     versionsLinkParams: PropTypes.object,
@@ -33,8 +27,7 @@ export default createReactClass({
 
   getDefaultProps() {
     return {
-      limit: 5,
-      latestVersion: Map()
+      limit: 5
     };
   },
 
@@ -45,7 +38,6 @@ export default createReactClass({
           Updates
           {this.props.versions.count() > 1 && this.renderLatestChangeDiffButton()}
         </h4>
-        {this.renderVersionsMishmash()}
         <div className="kbc-sidebar-versions">
           {this.renderVersions()}
           {this.renderAllVersionsLink()}
@@ -124,40 +116,6 @@ export default createReactClass({
         previousVersionConfig={previousVersionConfig}
       />
     );
-  },
-
-  renderVersionsMishmash() {
-    if (!this.props.hasVerionsMishmash) {
-      return null;
-    }
-
-    const creatorId = this.props.latestVersion.getIn(['creatorToken', 'id']);
-    const currentAdminId = ApplicationStore.getCurrentAdmin().get('id');
-    const createdByCurrentAdmin = parseInt(creatorId, 10) === parseInt(currentAdminId, 10);
-
-    return (
-      <Alert bsStyle="danger" onDismiss={this.handleDismissWarning} closeLabel="Close warning">
-        <p>
-            {'New configuration created by '}
-            <b>
-              {createdByCurrentAdmin ? 'you' : this.props.latestVersion.getIn(['creatorToken', 'description'])}{' '}
-              {moment(this.props.latestVersion.get('created')).fromNow()}
-            </b>
-            {' was detected.'}
-          </p>
-          <p>
-            {'Editing same configuration'}
-            {createdByCurrentAdmin ? ' from multiple places ' : ' by several users '}
-            {
-              'is not supported. If you save the current configuration you may overwrite the latest changes.'
-            }
-          </p>
-      </Alert>
-    );
-  },
-
-  handleDismissWarning() {
-    this.props.dismissMishmashWarning();
   },
 
   getVersionsLinkParams() {

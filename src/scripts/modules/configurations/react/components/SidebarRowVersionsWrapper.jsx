@@ -6,7 +6,6 @@ import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import InstalledComponentStore from '../../../components/stores/InstalledComponentsStore';
 import ComponentStore from '../../../components/stores/ComponentsStore';
 import VersionsStore from '../../../components/stores/VersionsStore';
-import VersionsActionCreators from '../../../components/VersionsActionCreators';
 import RowVersionsActionCreators from '../../RowVersionsActionCreators';
 import RowVersionsStore from '../../RowVersionsStore';
 
@@ -29,9 +28,7 @@ export default createReactClass({
       isLoading: RowVersionsStore.isLoadingVersions(componentId, configId, rowId),
       versionsConfigs: RowVersionsStore.getVersionsConfigs(componentId, configId, rowId),
       pendingMultiLoad: RowVersionsStore.getPendingMultiLoad(componentId, configId, rowId),
-      isPending: RowVersionsStore.isPendingConfig(componentId, configId, rowId),
-      hasVerionsMishmash: VersionsStore.hasVerionsMishmash(componentId, configId),
-      latestVersion: VersionsStore.getVersions(componentId, configId).first()
+      isPending: RowVersionsStore.isPendingConfig(componentId, configId, rowId)
     };
   },
 
@@ -63,9 +60,6 @@ export default createReactClass({
         versionsConfigs={this.state.versionsConfigs}
         pendingMultiLoad={this.state.pendingMultiLoad}
         isPending={this.state.isPending}
-        hasVerionsMishmash={this.state.hasVerionsMishmash}
-        dismissMishmashWarning={this.dismissMishmashWarning}
-        latestVersion={this.state.latestVersion}
       />
     );
   },
@@ -78,9 +72,5 @@ export default createReactClass({
       version1.get('version'),
       version2.get('version')
     );
-  },
-
-  dismissMishmashWarning() {
-    VersionsActionCreators.dismissMishmashWarning(this.state.componentId, this.state.configId);
   }
 });

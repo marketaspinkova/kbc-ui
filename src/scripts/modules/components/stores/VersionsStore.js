@@ -6,7 +6,6 @@ import Constants from '../VersionsConstants';
 var _store = Map({
   loadingVersions: Map(),
   versions: Map(),
-  versionsMishmash: Map(),
   versionsConfigs: Map(),
   newVersionNames: Map(),
   searchFilters: Map(),
@@ -69,10 +68,6 @@ var VersionsStore = StoreUtils.createStore({
 
   getPendingMultiLoad(componentId, configId) {
     return _store.getIn(['multiLoadPending', componentId, configId], Map());
-  },
-
-  hasVerionsMishmash: function(componentId, configId) {
-    return _store.getIn(['versionsMishmash', componentId, configId], false);
   }
 });
 
@@ -139,14 +134,6 @@ dispatcher.register(function(payload) {
 
     case Constants.ActionTypes.VERSIONS_RELOAD:
       _store = _store.setIn(['versions', action.componentId, action.configId], action.versions);
-      return VersionsStore.emitChange();
-
-    case Constants.ActionTypes.VERSIONS_SHOW_MISHMASH_WARNING:
-      _store = _store.setIn(['versionsMishmash', action.componentId, action.configId], true)
-      return VersionsStore.emitChange();
-    
-    case Constants.ActionTypes.VERSIONS_DISMISS_MISHMASH_WARNING:
-      _store = _store.deleteIn(['versionsMishmash', action.componentId, action.configId])
       return VersionsStore.emitChange();
 
     default:
