@@ -7,7 +7,7 @@ export default {
     VERSIONS_LOAD_SUCCESS: null,
     VERSIONS_LOAD_ERROR: null,
 
-    VERSIONS_RELOAD_SUCCESS: null,
+    VERSIONS_RELOAD: null,
 
     VERSIONS_ROLLBACK_START: null,
     VERSIONS_ROLLBACK_SUCCESS: null,

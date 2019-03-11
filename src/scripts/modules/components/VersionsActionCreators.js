@@ -62,7 +62,7 @@ export default {
         dispatcher.handleViewAction({
           componentId: componentId,
           configId: configId,
-          type: Constants.ActionTypes.VERSIONS_RELOAD_SUCCESS,
+          type: Constants.ActionTypes.VERSIONS_RELOAD,
           versions: newVersions
         });
       });

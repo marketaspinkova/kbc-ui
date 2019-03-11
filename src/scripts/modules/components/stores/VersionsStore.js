@@ -133,7 +133,7 @@ dispatcher.register(function(payload) {
       _store = _store.deleteIn(['multiLoadPending', action.componentId, action.configId, action.pivotVersion]);
       return VersionsStore.emitChange();
 
-    case Constants.ActionTypes.VERSIONS_RELOAD_SUCCESS:
+    case Constants.ActionTypes.VERSIONS_RELOAD:
       _store = _store.setIn(['versions', action.componentId, action.configId], action.versions);
       return VersionsStore.emitChange();
 
