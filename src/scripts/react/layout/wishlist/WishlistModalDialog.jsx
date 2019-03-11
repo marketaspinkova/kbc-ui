@@ -28,6 +28,7 @@ export default React.createClass({
           <Modal.Body>
             <FormControl
               componentClass="textarea"
+              autoFocus
               rows="6"
               value={this.state.description}
               onChange={this.handleDescription}
