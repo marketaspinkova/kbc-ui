@@ -1,9 +1,7 @@
 import StoreUtils from '../../../utils/StoreUtils';
-import Immutable from 'immutable';
+import { Map, List, fromJS } from 'immutable';
 import dispatcher from '../../../Dispatcher';
 import Constants from '../VersionsConstants';
-
-var Map = Immutable.Map, List = Immutable.List;
 
 var _store = Map({
   loadingVersions: Map(),
@@ -12,7 +10,6 @@ var _store = Map({
   newVersionNames: Map(),
   searchFilters: Map(),
   pending: Map(),
-  reloading: Map(),
   multiLoadPending: Map()
 });
 
@@ -85,7 +82,7 @@ dispatcher.register(function(payload) {
       return VersionsStore.emitChange();
 
     case Constants.ActionTypes.VERSIONS_LOAD_SUCCESS:
-      _store = _store.setIn(['versions', action.componentId, action.configId], Immutable.fromJS(action.versions));
+      _store = _store.setIn(['versions', action.componentId, action.configId], fromJS(action.versions));
       _store = _store.setIn(['rollbackVersions', action.componentId, action.configId], false);
       _store = _store.setIn(['loadingVersions', action.componentId, action.configId], false);
       return VersionsStore.emitChange();
@@ -99,7 +96,7 @@ dispatcher.register(function(payload) {
       return VersionsStore.emitChange();
 
     case Constants.ActionTypes.VERSIONS_CONFIG_LOAD_SUCCESS:
-      _store = _store.setIn(['versionsConfigs', action.componentId, action.configId, action.version], Immutable.fromJS(action.data));
+      _store = _store.setIn(['versionsConfigs', action.componentId, action.configId, action.version], fromJS(action.data));
       _store = _store.setIn(['loadingVersionConfig', action.componentId, action.configId, action.version], false);
       return VersionsStore.emitChange();
 
@@ -137,8 +134,7 @@ dispatcher.register(function(payload) {
       return VersionsStore.emitChange();
 
     case Constants.ActionTypes.VERSIONS_RELOAD_SUCCESS:
-      _store = _store.setIn(['versions', action.componentId, action.configId], Immutable.fromJS(action.versions));
-      _store = _store.deleteIn(['reloading', action.componentId, action.configId]);
+      _store = _store.setIn(['versions', action.componentId, action.configId], fromJS(action.versions));
       return VersionsStore.emitChange();
 
     default:
