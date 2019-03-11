@@ -4,7 +4,7 @@ import _ from 'underscore';
 
 import contactSupport from '../../utils/contactSupport';
 import WishlistModalDialog from './wishlist/WishlistModalDialog';
-import WishlistApi from './wishlist/WishlistApi';
+import { sendWishlistRequest } from './wishlist/WishlistApi';
 
 export default React.createClass({
   propTypes: {
@@ -65,7 +65,7 @@ export default React.createClass({
   },
 
   handleSubmit(description) {
-    return WishlistApi.sendRequest({
+    return sendWishlistRequest({
       description,
       xsrf: this.props.xsrf
     });

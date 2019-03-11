@@ -1,32 +1,28 @@
 import request from '../../../utils/request';
-import ApplicationStore from '../../../stores/ApplicationStore';
 import AdminActionError from '../../../utils/AdminActionError';
 
-var createUrl = function(path) {
-  return ApplicationStore.getSapiUrl() + path;
+const createRequest = () => {
+  return request('POST', '/admin/index/send-wishlist-request');
 };
 
-
-function createRequest(method, path) {
-  return request(method, createUrl(path));
-}
-
-export default {
-  sendRequest(params) {
-    return createRequest('POST', '/admin/index/send-wishlist-request')
-      .type('form')
-      .send(params)
-      .promise()
-      .then(
-        () => {
-          // this is empty, because successful action doesn't return any data
-        },
-        (error) => {
-          if (error.response && error.response.body && error.response.body.errors) {
-            throw new AdminActionError(error.response.body.errors);
-          }
-          throw error;
+const sendWishlistRequest = (params) => {
+  return createRequest()
+    .type('form')
+    .send(params)
+    .promise()
+    .then(
+      () => {
+        // this is empty, because successful action doesn't return any data
+      },
+      (error) => {
+        if (error.response && error.response.body && error.response.body.errors) {
+          throw new AdminActionError(error.response.body.errors);
         }
-      );
-  }
+        throw error;
+      }
+    );
 };
+
+export {
+  sendWishlistRequest
+}
