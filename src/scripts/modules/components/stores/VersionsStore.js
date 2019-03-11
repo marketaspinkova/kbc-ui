@@ -65,10 +65,6 @@ var VersionsStore = StoreUtils.createStore({
     return _store.hasIn(['pending', componentId, configId], false);
   },
 
-  isReloadingConfig: function(componentId, configId) {
-    return _store.hasIn(['reloading', componentId, configId], false);
-  },
-
   getPendingVersions: function(componentId, configId) {
     return _store.getIn(['pending', componentId, configId], Map());
   },
@@ -140,16 +136,8 @@ dispatcher.register(function(payload) {
       _store = _store.deleteIn(['multiLoadPending', action.componentId, action.configId, action.pivotVersion]);
       return VersionsStore.emitChange();
 
-    case Constants.ActionTypes.VERSIONS_RELOAD_START:
-      _store = _store.setIn(['reloading', action.componentId, action.configId], true);
-      return VersionsStore.emitChange();
-
     case Constants.ActionTypes.VERSIONS_RELOAD_SUCCESS:
       _store = _store.setIn(['versions', action.componentId, action.configId], Immutable.fromJS(action.versions));
-      _store = _store.deleteIn(['reloading', action.componentId, action.configId]);
-      return VersionsStore.emitChange();
-
-    case Constants.ActionTypes.VERSIONS_RELOAD_ERROR:
       _store = _store.deleteIn(['reloading', action.componentId, action.configId]);
       return VersionsStore.emitChange();
 

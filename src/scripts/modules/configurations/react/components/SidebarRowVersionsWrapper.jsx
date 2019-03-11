@@ -6,30 +6,29 @@ import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import InstalledComponentStore from '../../../components/stores/InstalledComponentsStore';
 import ComponentStore from '../../../components/stores/ComponentsStore';
 import VersionsStore from '../../../components/stores/VersionsStore';
-import VersionsActionCreators from '../../RowVersionsActionCreators'
+import VersionsActionCreators from '../../RowVersionsActionCreators';
 import RowVersionsStore from '../../RowVersionsStore';
 
 export default createReactClass({
   mixins: [createStoreMixin(InstalledComponentStore, ComponentStore, VersionsStore, RowVersionsStore)],
 
   getStateFromStores() {
-    const versionsLinkTo = this.props.componentId + '-row-versions';
+    const { componentId, configId, rowId } = this.props;
+    const versionsLinkTo = componentId + '-row-versions';
     const versionsLinkParams = {
-      component: this.props.componentId,
-      config: this.props.configId,
-      row: this.props.rowId
+      component: componentId,
+      config: configId,
+      row: rowId
     };
 
     return {
       versionsLinkTo,
       versionsLinkParams,
-      rowVersions: RowVersionsStore.getVersions(this.props.componentId, this.props.configId, this.props.rowId),
-      isLoading: RowVersionsStore.isLoadingVersions(this.props.componentId, this.props.configId, this.props.rowId),
-      versionsConfigs: RowVersionsStore.getVersionsConfigs(this.props.componentId, this.props.configId, this.props.rowId),
-      pendingMultiLoad: RowVersionsStore.getPendingMultiLoad(this.props.componentId, this.props.configId, this.props.rowId),
-      isPending: RowVersionsStore.isPendingConfig(this.props.componentId, this.props.configId, this.props.rowId),
-      versions: VersionsStore.getVersions(this.props.componentId, this.props.configId),
-      isReloading: VersionsStore.isReloadingConfig(this.props.componentId, this.props.configId)
+      rowVersions: RowVersionsStore.getVersions(componentId, configId, rowId),
+      isLoading: RowVersionsStore.isLoadingVersions(componentId, configId, rowId),
+      versionsConfigs: RowVersionsStore.getVersionsConfigs(componentId, configId, rowId),
+      pendingMultiLoad: RowVersionsStore.getPendingMultiLoad(componentId, configId, rowId),
+      isPending: RowVersionsStore.isPendingConfig(componentId, configId, rowId)
     };
   },
 
@@ -61,16 +60,17 @@ export default createReactClass({
         versionsConfigs={this.state.versionsConfigs}
         pendingMultiLoad={this.state.pendingMultiLoad}
         isPending={this.state.isPending}
-        configurationVersions={this.state.versions}
-        isReloading={this.state.isReloading}
       />
     );
   },
 
   prepareVersionsDiffData(version1, version2) {
-    const configId = this.props.configId;
-    const rowId = this.props.rowId;
     return VersionsActionCreators.loadTwoComponentConfigVersions(
-      this.props.componentId, configId, rowId, version1.get('version'), version2.get('version'));
+      this.props.componentId,
+      this.props.configId,
+      this.props.rowId,
+      version1.get('version'),
+      version2.get('version')
+    );
   }
 });

@@ -13,7 +13,9 @@ export default createReactClass({
   mixins: [createStoreMixin(InstalledComponentStore, ComponentStore, VersionsStore)],
 
   getStateFromStores() {
-    const configId = RoutesStore.getCurrentRouteParam('config') || RoutesStore.getCurrentRouteParam('orchestrationId');
+    const configId =
+      RoutesStore.getCurrentRouteParam('config') ||
+      RoutesStore.getCurrentRouteParam('orchestrationId');
     const componentId = this.props.componentId || RoutesStore.getCurrentRouteParam('component');
     const component = ComponentStore.getComponent(componentId);
 
@@ -44,8 +46,7 @@ export default createReactClass({
       isLoading: VersionsStore.isLoadingVersions(componentId, configId),
       versionsConfigs: VersionsStore.getVersionsConfigs(componentId, configId),
       pendingMultiLoad: VersionsStore.getPendingMultiLoad(componentId, configId),
-      isPending: VersionsStore.isPendingConfig(componentId, configId),
-      isReloading: VersionsStore.isReloadingConfig(componentId, configId)
+      isPending: VersionsStore.isPendingConfig(componentId, configId)
     };
   },
 
@@ -78,15 +79,16 @@ export default createReactClass({
         versionsConfigs={this.state.versionsConfigs}
         pendingMultiLoad={this.state.pendingMultiLoad}
         isPending={this.state.isPending}
-        configurationVersions={this.state.versions}
-        isReloading={this.state.isReloading}
       />
     );
   },
 
   prepareVersionsDiffData(version1, version2) {
-    const configId = this.state.configId;
     return VersionsActionCreators.loadTwoComponentConfigVersions(
-      this.state.componentId, configId, version1.get('version'), version2.get('version'));
+      this.state.componentId,
+      this.state.configId,
+      version1.get('version'),
+      version2.get('version')
+    );
   }
 });

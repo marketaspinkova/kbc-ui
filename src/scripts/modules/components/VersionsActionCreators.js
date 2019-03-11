@@ -1,13 +1,15 @@
-import dispatcher from '../../Dispatcher';
-import Promise from 'bluebird';
-import Store from './stores/VersionsStore';
-import Api from './InstalledComponentsApi';
-import Constants from './VersionsConstants';
-import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
+import Promise from 'bluebird';
+import { fromJS } from 'immutable';
+import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
 import createReactClass from 'create-react-class';
+import dispatcher from '../../Dispatcher';
 import ConfigurationCopiedNotification from './react/components/ConfigurationCopiedNotification';
+import versionsMishmashDetected from './react/components/notifications/versionsMishmashDetected';
+import Api from './InstalledComponentsApi';
+import Store from './stores/VersionsStore';
+import Constants from './VersionsConstants';
 
 export default {
   loadVersions: function(componentId, configId) {
@@ -43,26 +45,26 @@ export default {
   },
 
   reloadVersions: function(componentId, configId) {
-    dispatcher.handleViewAction({
-      componentId: componentId,
-      configId: configId,
-      type: Constants.ActionTypes.VERSIONS_RELOAD_START
-    });
-    Api.getComponentConfigVersions(componentId, configId).then((versions) => {
-      dispatcher.handleViewAction({
-        componentId: componentId,
-        configId: configId,
-        type: Constants.ActionTypes.VERSIONS_RELOAD_SUCCESS,
-        versions
+    const currentVersions = Store.getVersions(componentId, configId);
+    Api.getComponentConfigVersions(componentId, configId)
+      .then((versions) => {
+        dispatcher.handleViewAction({
+          componentId: componentId,
+          configId: configId,
+          type: Constants.ActionTypes.VERSIONS_RELOAD_SUCCESS,
+          versions
+        });
+        return fromJS(versions);
+      })
+      .then((actualVersions) => {
+        if (!currentVersions.equals(actualVersions)) {
+          ApplicationActionCreators.sendNotification({
+            id: 'versions-mishmash',
+            type: 'error',
+            message: versionsMishmashDetected(actualVersions.first())
+          })
+        }
       });
-    }).catch((error) => {
-      dispatcher.handleViewAction({
-        componentId: componentId,
-        configId: configId,
-        type: Constants.ActionTypes.VERSIONS_RELOAD_ERROR
-      });
-      throw error;
-    });
   },
 
   loadComponentConfigByVersion(componentId, configId, version) {
