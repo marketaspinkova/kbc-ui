@@ -65,6 +65,12 @@ export default function(componentId) {
         requireData: [
           () => StorageActionCreators.loadTables()
         ],
+        poll: {
+          interval: 15,
+          action: (params) => {
+            VersionsActionCreators.reloadVersions(componentId, params.config);
+          }
+        },
         defaultRouteHandler: ExDbQueryDetail(componentId, actionsProvisioning, storeProvisioning),
         headerButtonsHandler: ExDbQueryHeaderButtons(componentId, actionsProvisioning, storeProvisioning),
         childRoutes: [ createTablesRoute('ex-db-generic-' + componentId + '-query')]
