@@ -1,11 +1,13 @@
 import React, { PropTypes } from 'react';
-import { Modal, Form, FormControl } from 'react-bootstrap';
+import { Modal, Form, FormControl, Alert } from 'react-bootstrap';
 import ConfirmButtons from '../../common/ConfirmButtons';
+import AdminActionError from '../../../utils/AdminActionError';
 
 const INITIAL_STATE = {
   description: '',
   requestSent: false,
-  isSending: false
+  isSending: false,
+  hasError: false
 };
 
 export default React.createClass({
@@ -53,6 +55,11 @@ export default React.createClass({
               <Modal.Title>Submit new idea</Modal.Title>
             </Modal.Header>
             <Modal.Body>
+              {this.state.hasError && (
+                <Alert bsStyle="danger">
+                  There was a problem while sending your request.
+                </Alert>
+              )}
               <FormControl
                 componentClass="textarea"
                 autoFocus
@@ -92,6 +99,11 @@ export default React.createClass({
         this.setState({
           requestSent: true
         });
+      })
+      .catch(AdminActionError, () => {
+        this.setState({
+          hasError: true
+        })
       })
       .finally(() => {
         this.setState({
