@@ -1,6 +1,7 @@
 import React from 'react';
 import { ExternalLink } from '@keboola/indigo-ui';
 import _ from 'underscore';
+
 import contactSupport from '../../utils/contactSupport';
 import WishlistModalDialog from './wishlist/WishlistModalDialog';
 import WishlistApi from './wishlist/WishlistApi';
@@ -64,7 +65,10 @@ export default React.createClass({
   },
 
   handleSubmit(description) {
-    return WishlistApi.sendRequest({ description });
+    return WishlistApi.sendRequest({
+      description,
+      xsrf: this.props.xsrf
+    });
   },
 
   openSupportModal(e) {

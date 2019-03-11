@@ -15,7 +15,7 @@ export default {
   sendRequest(params) {
     return createRequest('POST', '/admin/index/send-wishlist-request')
       .type('form')
-      .send({...params, xsrf: ApplicationStore.getXsrfToken()})
+      .send(params)
       .promise()
       .then(
         () => {
