@@ -4,18 +4,12 @@ import ApplicationStore from '../../stores/ApplicationStore';
 import contactSupport from '../../utils/contactSupport';
 
 export default React.createClass({
-  _openSupportModal(e) {
-    contactSupport({type: 'project'});
-    e.preventDefault();
-    e.stopPropagation();
-  },
-
   render() {
     return (
       <div className="kbc-user-links">
         <ul className="nav">
           <li>
-            <a href="" onClick={this._openSupportModal}>
+            <a href="" onClick={this.openSupportModal}>
               <span className="fa fa-comment" />
               {' Support '}
             </a>
@@ -41,5 +35,11 @@ export default React.createClass({
         </ul>
       </div>
     );
-  }
+  },
+
+  openSupportModal(e) {
+    contactSupport({type: 'project'});
+    e.preventDefault();
+    e.stopPropagation();
+  },
 });
