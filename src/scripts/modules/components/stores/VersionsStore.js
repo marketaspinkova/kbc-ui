@@ -134,7 +134,7 @@ dispatcher.register(function(payload) {
       return VersionsStore.emitChange();
 
     case Constants.ActionTypes.VERSIONS_RELOAD_SUCCESS:
-      _store = _store.setIn(['versions', action.componentId, action.configId], fromJS(action.versions));
+      _store = _store.setIn(['versions', action.componentId, action.configId], action.versions);
       return VersionsStore.emitChange();
 
     default:

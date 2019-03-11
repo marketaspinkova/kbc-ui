@@ -45,26 +45,26 @@ export default {
   },
 
   reloadVersions: function(componentId, configId) {
-    const currentVersions = Store.getVersions(componentId, configId);
     Api.getComponentConfigVersions(componentId, configId)
       .then((versions) => {
-        dispatcher.handleViewAction({
-          componentId: componentId,
-          configId: configId,
-          type: Constants.ActionTypes.VERSIONS_RELOAD_SUCCESS,
-          versions
-        });
-        return fromJS(versions);
-      })
-      .then((actualVersions) => {
-        if (!currentVersions.equals(actualVersions)) {
+        const previousVersions = Store.getVersions(componentId, configId);
+        const newVersions = fromJS(versions);
+
+        if (!previousVersions.equals(newVersions)) {
           ApplicationActionCreators.sendNotification({
-            message: versionsMishmashDetected(actualVersions.first()),
+            message: versionsMishmashDetected(newVersions.first()),
             id: 'versions-mishmash',
             timeout: 30000,
             type: 'error',
           })
         }
+
+        dispatcher.handleViewAction({
+          componentId: componentId,
+          configId: configId,
+          type: Constants.ActionTypes.VERSIONS_RELOAD_SUCCESS,
+          versions: newVersions
+        });
       });
   },
 
