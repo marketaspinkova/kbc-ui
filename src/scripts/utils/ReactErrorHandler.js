@@ -26,7 +26,9 @@ function logError(Component, error) {
 
   /* global Sentry */
   if (!process.env.__DEV__ && typeof Sentry !== 'undefined' && typeof Sentry.captureException === 'function') {
-    Sentry.setExtra('errorStack', error.stack);
+    Sentry.configureScope((scope) => {
+      scope.setExtra('errorStack', error.stack);
+    })
     Sentry.captureException(new Error(errorMsg));
   }
 }
