@@ -6,7 +6,8 @@ import contactSupport from '../../utils/contactSupport';
 export default React.createClass({
   propTypes: {
     urlTemplates: React.PropTypes.object.isRequired,
-    currentProject: React.PropTypes.object.isRequired
+    currentProject: React.PropTypes.object.isRequired,
+    xsrf: React.PropTypes.string.isRequired
   },
 
   render() {

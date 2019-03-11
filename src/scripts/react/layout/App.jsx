@@ -78,6 +78,7 @@ export default React.createClass({
                 <UserLinks
                   urlTemplates={this.state.urlTemplates}
                   currentProject={this.state.currentProject}
+                  xsrf={this.state.xsrf}
                 />
               </div>
             </div>
