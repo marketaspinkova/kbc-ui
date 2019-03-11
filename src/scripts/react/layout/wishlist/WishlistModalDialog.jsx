@@ -23,7 +23,7 @@ export default React.createClass({
       <Modal show={this.props.show} onHide={this.onHide}>
         <Form horizontal>
           <Modal.Header closeButton>
-            <Modal.Title>Wishlist request</Modal.Title>
+            <Modal.Title>Submit new idea</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <FormControl
