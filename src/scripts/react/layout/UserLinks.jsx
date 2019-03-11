@@ -1,7 +1,6 @@
 import React from 'react';
 import { ExternalLink } from '@keboola/indigo-ui';
 import _ from 'underscore';
-import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
 import contactSupport from '../../utils/contactSupport';
 import WishlistModalDialog from './wishlist/WishlistModalDialog';
 import WishlistApi from './wishlist/WishlistApi';
@@ -69,20 +68,14 @@ export default React.createClass({
   handleSubmit(description) {
     this.setState({ sendingWishlish: true });
     return WishlistApi.sendRequest({ description })
-      .then(() => {
-        ApplicationActionCreators.sendNotification({
-          message: 'Your request was successfully sent.'
-        });
-      })
       .finally(() => {
         this.setState({ sendingWishlish: false });
       });
   },
 
   openSupportModal(e) {
-    contactSupport({type: 'project'});
     e.preventDefault();
-    e.stopPropagation();
+    contactSupport({ type: 'project' });
   },
 
   openWishlistModal(e) {
