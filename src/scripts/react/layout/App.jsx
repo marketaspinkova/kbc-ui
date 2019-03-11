@@ -75,7 +75,10 @@ export default React.createClass({
                   canManageApps={this.state.canManageApps}
                   dropup={true}
                 />
-                <UserLinks />
+                <UserLinks
+                  urlTemplates={this.state.urlTemplates}
+                  currentProject={this.state.currentProject}
+                />
               </div>
             </div>
             <div className="col-xs-9 col-xs-offset-3 kbc-main">
