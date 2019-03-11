@@ -17,28 +17,21 @@ export default {
       id - notification id, used for duplicate messages filter
   */
   sendNotification(newNotification) {
-    const timeout = 10000;
-    const defaults = {
+    const notification = _.extend({
       pause: false,
       message: '',
       type: 'success',
-      id: _.uniqueId('notification'),
+      id: newNotification.id ? newNotification.id : _.uniqueId('notification'),
       created: new Date(),
-      timeout
-    };
-
-    if (!newNotification.id) {
-      delete newNotification.id;
-    }
-
-    const notification = _.extend(defaults, newNotification);
+      timeout: 10000
+    }, newNotification);
 
     dispatcher.handleViewAction({
       type: constants.ActionTypes.APPLICATION_SEND_NOTIFICATION,
       notification
     });
 
-    return setTimeout(this.deleteNotification.bind(this, notification.id), timeout);
+    return setTimeout(this.deleteNotification.bind(this, notification.id), notification.timeout);
   },
 
   deleteNotification(id, forceDelete) {
