@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
 import {Form, FormGroup, ControlLabel, Col, HelpBlock, Checkbox} from 'react-bootstrap';
-import CodeEditor from './../../../../react/common/CodeEditor';
+import CodeMirror from 'react-code-mirror';
+
 import editorMode from "../../../ex-db-generic/templates/editorMode";
 
 import {ExGoogleBigQueryV2ComponentId} from "../../helpers/constants";
@@ -43,15 +44,16 @@ export default React.createClass({
             SQL Query
           </Col>
           <Col sm={8}>
-            <CodeEditor
-              readOnly={props.disabled}
-              placeholder="e.g. SELECT `id`, `name` FROM `myTable`"
-              value={props.value.query}
+            <CodeMirror
+              theme="solarized"
               mode={editorMode(ExGoogleBigQueryV2ComponentId)}
-              onChange={function(e) {
-                props.onChange({query: e.value});
-              }}
-              style={{width: '100%'}}
+              value={props.value.query}
+              onChange={(e) => props.onChange({query: e.target.value})}
+              lineNumbers
+              lineWrapping={false}
+              placeholder="e.g. SELECT `id`, `name` FROM `myTable`"
+              style={{ width: '100%' }}
+              readOnly={props.disabled}
             />
           </Col>
         </FormGroup>
