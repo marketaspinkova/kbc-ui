@@ -1,7 +1,6 @@
 import { OperationalError } from 'bluebird';
 import HttpError from './HttpError';
-
-const SUPER_AGENT_ABORTED = 'ABORTED';
+import { REQUEST_ABORTED_ERROR } from '../constants/superagent';
 
 /*
   Error object used for presentation in error page
@@ -43,7 +42,7 @@ const createFromException = exception => {
     error.isUserError = true;
     error.id = 'connectTimeout';
     return error;
-  } else if (error.code === SUPER_AGENT_ABORTED) {
+  } else if (error.code === REQUEST_ABORTED_ERROR) {
     error = new Error('Request timed out', 'Please try again later.');
     error.isUserError = true;
     error.id = 'connectTimeoutRequestAborted';

@@ -2,6 +2,7 @@ import request, { Request } from 'superagent';
 import Promise from 'bluebird';
 import HttpError from './HttpError';
 import qs from 'qs';
+import { REQUEST_TIMEOUT_MS } from '../constants/superagent';
 
 request.serialize['application/x-www-form-urlencoded'] = (data) => {
   return qs.stringify(data);
@@ -27,5 +28,5 @@ Request.prototype.promise = function() {
 };
 
 export default (method, url) => {
-  return request(method, url).timeout(60000);
+  return request(method, url).timeout(REQUEST_TIMEOUT_MS);
 };
