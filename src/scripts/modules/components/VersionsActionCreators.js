@@ -59,9 +59,10 @@ export default {
       .then((actualVersions) => {
         if (!currentVersions.equals(actualVersions)) {
           ApplicationActionCreators.sendNotification({
+            message: versionsMishmashDetected(actualVersions.first()),
             id: 'versions-mishmash',
+            timeout: 30000,
             type: 'error',
-            message: versionsMishmashDetected(actualVersions.first())
           })
         }
       });
