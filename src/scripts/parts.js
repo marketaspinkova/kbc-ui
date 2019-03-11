@@ -8,6 +8,7 @@ import Wizard from './modules/guide-mode/react/Wizard';
 import CurrentUser from './react/layout/CurrentUser';
 import ProjectsList from './react/layout/project-select/List';
 import NewProjectModal from './react/layout/NewProjectModal';
+import UserLinks from './react/layout/UserLinks';
 
 export default {
   helpers,
@@ -17,6 +18,7 @@ export default {
       Wizard
     },
     CurrentUser,
+    UserLinks,
     ProjectsList,
     NewProjectModal
   }
