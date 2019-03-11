@@ -1,9 +1,8 @@
 import React, { PropTypes } from 'react';
-import { Col, ControlLabel, Modal, Form, FormGroup, FormControl } from 'react-bootstrap';
+import { Modal, Form, FormControl } from 'react-bootstrap';
 import ConfirmButtons from '../../common/ConfirmButtons';
 
 const INITIAL_STATE = {
-  title: '',
   description: ''
 };
 
@@ -27,33 +26,13 @@ export default React.createClass({
             <Modal.Title>Wishlist request</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <FormGroup>
-              <Col sm={3} componentClass={ControlLabel}>
-                Title
-              </Col>
-              <Col sm={9}>
-                <FormControl
-                  autoFocus
-                  type="text"
-                  value={this.state.title}
-                  onChange={this.handleTitle}
-                />
-              </Col>
-            </FormGroup>
-
-            <FormGroup>
-              <Col sm={3} componentClass={ControlLabel}>
-                Description
-              </Col>
-              <Col sm={9}>
-                <FormControl
-                  componentClass="textarea"
-                  rows="6"
-                  value={this.state.description}
-                  onChange={this.handleDescription}
-                />
-              </Col>
-            </FormGroup>
+            <FormControl
+              componentClass="textarea"
+              rows="6"
+              value={this.state.description}
+              onChange={this.handleDescription}
+              placeholder="What would you like to be able to do? How would that help you?"
+            />
           </Modal.Body>
           <Modal.Footer>
             <ConfirmButtons
@@ -70,17 +49,13 @@ export default React.createClass({
     );
   },
 
-  handleTitle(event) {
-    this.setState({ title: event.target.value });
-  },
-
   handleDescription(event) {
     this.setState({ description: event.target.value });
   },
 
   onSubmit(event) {
     event.preventDefault();
-    this.props.onSubmit(this.state.title, this.state.description).then(this.onHide);
+    this.props.onSubmit(this.state.description).then(this.onHide);
   },
 
   onHide() {
@@ -89,6 +64,6 @@ export default React.createClass({
   },
 
   isDisabled() {
-    return !this.state.title || !this.state.description;
+    return !this.state.description;
   }
 });
