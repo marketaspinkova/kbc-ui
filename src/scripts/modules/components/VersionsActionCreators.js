@@ -51,12 +51,21 @@ export default {
         const newVersions = fromJS(versions);
 
         if (!previousVersions.equals(newVersions)) {
-          ApplicationActionCreators.sendNotification({
-            message: versionsMishmashDetected(newVersions.first()),
-            id: 'versions-mishmash',
-            timeout: 30000,
-            type: 'error',
-          })
+          // if document has focus, show the notification, otherwise store the info for later use.
+          if (document.hasFocus()) {
+            ApplicationActionCreators.sendNotification({
+              message: versionsMishmashDetected(newVersions.first()),
+              id: 'versions-mishmash',
+              timeout: 20000,
+              type: 'error',
+            })
+          } else {
+            dispatcher.handleViewAction({
+              componentId: componentId,
+              configId: configId,
+              type: Constants.ActionTypes.VERSIONS_SHOW_MISHMASH_WARNING
+            });
+          }
         }
 
         dispatcher.handleViewAction({
@@ -66,6 +75,14 @@ export default {
           versions: newVersions
         });
       });
+  },
+
+  dismissMishmashWarning(componentId, configId) {
+    dispatcher.handleViewAction({
+      componentId: componentId,
+      configId: configId,
+      type: Constants.ActionTypes.VERSIONS_DISMISS_MISHMASH_WARNING
+    });
   },
 
   loadComponentConfigByVersion(componentId, configId, version) {
