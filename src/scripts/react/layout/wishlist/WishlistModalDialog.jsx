@@ -4,13 +4,13 @@ import ConfirmButtons from '../../common/ConfirmButtons';
 
 const INITIAL_STATE = {
   description: '',
-  requestSent: false
+  requestSent: false,
+  isSending: false
 };
 
 export default React.createClass({
   propTypes: {
     show: PropTypes.bool.isRequired,
-    isSaving: PropTypes.bool.isRequired,
     onSubmit: PropTypes.func.isRequired,
     onHide: PropTypes.func.isRequired
   },
@@ -67,7 +67,7 @@ export default React.createClass({
                 saveLabel="Send"
                 saveButtonType="submit"
                 isDisabled={this.isDisabled()}
-                isSaving={this.props.isSaving}
+                isSaving={this.state.isSending}
                 onCancel={this.onHide}
                 onSave={this.onSubmit}
               />
@@ -84,10 +84,18 @@ export default React.createClass({
 
   onSubmit(event) {
     event.preventDefault();
+    this.setState({
+      isSending: true
+    });
     this.props.onSubmit(this.state.description)
       .then(() => {
         this.setState({
           requestSent: true
+        });
+      })
+      .finally(() => {
+        this.setState({
+          isSending: false
         });
       });
   },

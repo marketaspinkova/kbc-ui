@@ -14,8 +14,7 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      showWishlistModal: false,
-      sendingWishlish: false
+      showWishlistModal: false
     };
   },
 
@@ -57,7 +56,6 @@ export default React.createClass({
 
         <WishlistModalDialog
           show={this.state.showWishlistModal}
-          isSaving={this.state.sendingWishlish}
           onSubmit={this.handleSubmit}
           onHide={this.closeWishlistModal}
         />
@@ -66,11 +64,7 @@ export default React.createClass({
   },
 
   handleSubmit(description) {
-    this.setState({ sendingWishlish: true });
-    return WishlistApi.sendRequest({ description })
-      .finally(() => {
-        this.setState({ sendingWishlish: false });
-      });
+    return WishlistApi.sendRequest({ description });
   },
 
   openSupportModal(e) {
