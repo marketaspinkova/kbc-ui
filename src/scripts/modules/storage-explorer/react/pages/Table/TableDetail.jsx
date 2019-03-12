@@ -1,4 +1,5 @@
 import React from 'react';
+import Promise from 'bluebird';
 import { Map } from 'immutable';
 import { Tab, Nav, NavItem, NavDropdown, MenuItem, Row } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
@@ -353,8 +354,8 @@ export default React.createClass({
           'tags[]': ['storage-merged-export']
         })
         .then(files => {
-          if (!files || files.length === 0) {
-            throw new Error('Loading a file for download failed. Please try it again.');
+          if (!files || files.length === 1) {
+            return Promise.reject('Loading a file for download failed. Please try it again.');
           }
 
           return files[0]

@@ -76,7 +76,7 @@ export default React.createClass({
     }, this.handleError);
   },
 
-  handleError(error) {
-    this.setState({ error: error.message ? error.message : error });
+  handleError(message) {
+    this.setState({ error: message });
   }
 });
