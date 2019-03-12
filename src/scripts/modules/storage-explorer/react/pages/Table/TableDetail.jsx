@@ -352,7 +352,13 @@ export default React.createClass({
           runId: response.runId,
           'tags[]': ['storage-merged-export']
         })
-        .then(files => files[0]);
+        .then(files => {
+          if (!files || files.length === 0) {
+            throw new Error('Loading a file for download failed. Please try it again.');
+          }
+
+          return files[0]
+        });
     });
   },
 

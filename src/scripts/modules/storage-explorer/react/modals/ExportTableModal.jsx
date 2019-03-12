@@ -70,12 +70,13 @@ export default React.createClass({
 
   handleSubmit(event) {
     event.preventDefault();
+    this.setState({ error: null });
     this.props.onSubmit().then(file => {
       this.setState({ url: file.url });
     }, this.handleError);
   },
 
-  handleError(message) {
-    this.setState({ error: message });
+  handleError(error) {
+    this.setState({ error: error.message ? error.message : error });
   }
 });
