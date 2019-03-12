@@ -16,7 +16,7 @@ import * as helpers from './helpers';
 import appRoutes from './routes';
 import createReactRouterRoutes from './utils/createReactRouterRoutes';
 import Timer from './utils/Timer';
-import Error from './utils/Error';
+import Error from './utils/errors/helpers';
 
 import ApplicationActionCreators from './actions/ApplicationActionCreators';
 import RouterActionCreators from './actions/RouterActionCreators';

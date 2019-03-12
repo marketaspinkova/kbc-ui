@@ -1,7 +1,7 @@
 import { OperationalError } from 'bluebird';
 import _ from 'underscore';
-import HttpError from './errors/HttpError';
-import { REQUEST_ABORTED_ERROR } from '../constants/superagent';
+import HttpError from './HttpError';
+import { REQUEST_ABORTED_ERROR } from '../../constants/superagent';
 
 /*
   Error object used for presentation in error page

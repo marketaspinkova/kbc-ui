@@ -1,7 +1,7 @@
 import Dispatcher from '../Dispatcher';
 import _ from 'underscore';
 import { Map, List, fromJS } from 'immutable';
-import Error from '../utils/Error';
+import Error from '../utils/errors/helpers';
 import StoreUtils from '../utils/StoreUtils';
 import JobsStore from '../modules/jobs/stores/JobsStore';
 import { ActionTypes as ComponentsConstants, Routes } from '../modules/components/Constants';
