@@ -71,6 +71,14 @@ module.exports = function(options) {
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': '*'
+      },
+      proxy: {
+        '/graph': {
+          target: 'https://graph.keboola.com',
+          pathRewrite: {'^/graph' : ''},
+          secure: false,
+          changeOrigin: true
+        }
       }
     },
     module: {
