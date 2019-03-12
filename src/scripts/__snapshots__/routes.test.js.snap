@@ -68,7 +68,7 @@ exports[`routes config should get router configuration 1`] = `
   </Route>
   <Route
     handler={[Function]}
-    key="313"
+    key="322"
     name="extractors"
   >
     <DefaultRoute
@@ -1724,9 +1724,9 @@ exports[`routes config should get router configuration 1`] = `
     </Route>
     <Route
       handler={[Function]}
-      key="312"
-      name="generic-detail-extractor"
-      path=":component"
+      key="313"
+      name="keboola.ex-google-bigquery-v2-index"
+      path="keboola.ex-google-bigquery-v2"
     >
       <DefaultRoute
         handler={[Function]}
@@ -1734,8 +1734,8 @@ exports[`routes config should get router configuration 1`] = `
       />
       <Route
         handler={[Function]}
-        key="311"
-        name="generic-detail-extractor-config"
+        key="312"
+        name="keboola.ex-google-bigquery-v2"
         path=":config"
       >
         <DefaultRoute
@@ -1744,24 +1744,74 @@ exports[`routes config should get router configuration 1`] = `
         />
         <Route
           handler={[Function]}
-          key="307"
+          key="311"
+          name="keboola.ex-google-bigquery-v2-row"
+          path="rows/:row"
+        >
+          <DefaultRoute
+            handler={[Function]}
+            key="307"
+          />
+          <Route
+            handler={[Function]}
+            key="308"
+            name="keboola.ex-google-bigquery-v2-row-tables"
+            path="tables/:tableId"
+          />
+          <Route
+            handler={[Function]}
+            key="310"
+            name="keboola.ex-google-bigquery-v2-row-versions"
+            path="versions"
+          >
+            <DefaultRoute
+              handler={[Function]}
+              key="309"
+            />
+          </Route>
+        </Route>
+      </Route>
+    </Route>
+    <Route
+      handler={[Function]}
+      key="321"
+      name="generic-detail-extractor"
+      path=":component"
+    >
+      <DefaultRoute
+        handler={[Function]}
+        key="314"
+      />
+      <Route
+        handler={[Function]}
+        key="320"
+        name="generic-detail-extractor-config"
+        path=":config"
+      >
+        <DefaultRoute
+          handler={[Function]}
+          key="315"
+        />
+        <Route
+          handler={[Function]}
+          key="316"
           name="generic-detail-extractor-config-tables"
           path="tables/:tableId"
         />
         <Route
           handler={[Function]}
-          key="309"
+          key="318"
           name="extractor-versions"
           path="versions"
         >
           <DefaultRoute
             handler={[Function]}
-            key="308"
+            key="317"
           />
         </Route>
         <Route
           handler={[Function]}
-          key="310"
+          key="319"
           name="generic-extractor-oauth-redirect"
           path="oauth-redirect"
         />
@@ -1770,64 +1820,64 @@ exports[`routes config should get router configuration 1`] = `
   </Route>
   <Route
     handler={[Function]}
-    key="508"
+    key="517"
     name="writers"
   >
     <DefaultRoute
       handler={[Function]}
-      key="314"
+      key="323"
     />
     <Route
       handler={[Function]}
-      key="316"
+      key="325"
       name="new-writer"
     >
       <DefaultRoute
         handler={[Function]}
-        key="315"
+        key="324"
       />
     </Route>
     <Route
       handler={[Function]}
-      key="324"
+      key="333"
       name="gooddata-writer-index"
       path="gooddata-writer"
     >
       <DefaultRoute
         handler={[Function]}
-        key="317"
+        key="326"
       />
       <Route
         handler={[Function]}
-        key="323"
+        key="332"
         name="gooddata-writer"
         path=":config"
       >
         <DefaultRoute
           handler={[Function]}
-          key="318"
+          key="327"
         />
         <Route
           handler={[Function]}
-          key="319"
+          key="328"
           name="gooddata-writer-tables"
           path="tables/:tableId"
         />
         <Route
           handler={[Function]}
-          key="320"
+          key="329"
           name="gooddata-writer-table"
           path="table/:table"
         />
         <Route
           handler={[Function]}
-          key="321"
+          key="330"
           name="gooddata-writer-date-dimensions"
           path="dimensions"
         />
         <Route
           handler={[Function]}
-          key="322"
+          key="331"
           name="gooddata-writer-model"
           path="model"
         />
@@ -1835,55 +1885,55 @@ exports[`routes config should get router configuration 1`] = `
     </Route>
     <Route
       handler={[Function]}
-      key="334"
+      key="343"
       name="tde-exporter-index"
       path="tde-exporter"
     >
       <DefaultRoute
         handler={[Function]}
-        key="325"
+        key="334"
       />
       <Route
         handler={[Function]}
-        key="333"
+        key="342"
         name="tde-exporter"
         path=":config"
       >
         <DefaultRoute
           handler={[Function]}
-          key="326"
+          key="335"
         />
         <Route
           handler={[Function]}
-          key="327"
+          key="336"
           name="tde-exporter-tables"
           path="tables/:tableId"
         />
         <Route
           handler={[Function]}
-          key="328"
+          key="337"
           name="tde-exporter-table"
           path="table/:tableId"
         />
         <Route
           handler={[Function]}
-          key="332"
+          key="341"
           name="tde-exporter-destination"
           path="destination"
         >
           <DefaultRoute
             handler={[Function]}
-            key="329"
+            key="338"
           />
           <Route
             handler={[Function]}
-            key="330"
+            key="339"
             name="tde-oauth-v2-redirect-keboola.wr-dropbox-v2"
             path="oauth-redirect-keboola.wr-dropbox-v2"
           />
           <Route
             handler={[Function]}
-            key="331"
+            key="340"
             name="tde-oauth-v2-redirect-keboola.wr-google-drive"
             path="oauth-redirect-keboola.wr-google-drive"
           />
@@ -1892,27 +1942,27 @@ exports[`routes config should get router configuration 1`] = `
     </Route>
     <Route
       handler={[Function]}
-      key="339"
+      key="348"
       name="keboola.wr-google-sheets-index"
       path="keboola.wr-google-sheets"
     >
       <DefaultRoute
         handler={[Function]}
-        key="335"
+        key="344"
       />
       <Route
         handler={[Function]}
-        key="338"
+        key="347"
         name="keboola.wr-google-sheets"
         path=":config"
       >
         <DefaultRoute
           handler={[Function]}
-          key="336"
+          key="345"
         />
         <Route
           handler={[Function]}
-          key="337"
+          key="346"
           name="keboola.wr-google-sheets-tables"
           path="tables/:tableId"
         />
@@ -1920,27 +1970,27 @@ exports[`routes config should get router configuration 1`] = `
     </Route>
     <Route
       handler={[Function]}
-      key="344"
+      key="353"
       name="keboola.wr-google-drive-index"
       path="keboola.wr-google-drive"
     >
       <DefaultRoute
         handler={[Function]}
-        key="340"
+        key="349"
       />
       <Route
         handler={[Function]}
-        key="343"
+        key="352"
         name="keboola.wr-google-drive"
         path=":config"
       >
         <DefaultRoute
           handler={[Function]}
-          key="341"
+          key="350"
         />
         <Route
           handler={[Function]}
-          key="342"
+          key="351"
           name="keboola.wr-google-drive-tables"
           path="tables/:tableId"
         />
@@ -1948,39 +1998,39 @@ exports[`routes config should get router configuration 1`] = `
     </Route>
     <Route
       handler={[Function]}
-      key="351"
+      key="360"
       name="wr-db-index"
       path="wr-db"
     >
       <DefaultRoute
         handler={[Function]}
-        key="345"
+        key="354"
       />
       <Route
         handler={[Function]}
-        key="350"
+        key="359"
         name="wr-db"
         path=":config"
       >
         <DefaultRoute
           handler={[Function]}
-          key="346"
+          key="355"
         />
         <Route
           handler={[Function]}
-          key="347"
+          key="356"
           name="wr-db-tables"
           path="tables/:tableId"
         />
         <Route
           handler={[Function]}
-          key="348"
+          key="357"
           name="wr-db-table"
           path="table/:tableId"
         />
         <Route
           handler={[Function]}
-          key="349"
+          key="358"
           name="wr-db-credentials"
           path="credentials"
         />
@@ -1988,39 +2038,39 @@ exports[`routes config should get router configuration 1`] = `
     </Route>
     <Route
       handler={[Function]}
-      key="358"
+      key="367"
       name="wr-db-mysql-index"
       path="wr-db-mysql"
     >
       <DefaultRoute
         handler={[Function]}
-        key="352"
+        key="361"
       />
       <Route
         handler={[Function]}
-        key="357"
+        key="366"
         name="wr-db-mysql"
         path=":config"
       >
         <DefaultRoute
           handler={[Function]}
-          key="353"
+          key="362"
         />
         <Route
           handler={[Function]}
-          key="354"
+          key="363"
           name="wr-db-mysql-tables"
           path="tables/:tableId"
         />
         <Route
           handler={[Function]}
-          key="355"
+          key="364"
           name="wr-db-mysql-table"
           path="table/:tableId"
         />
         <Route
           handler={[Function]}
-          key="356"
+          key="365"
           name="wr-db-mysql-credentials"
           path="credentials"
         />
@@ -2028,39 +2078,39 @@ exports[`routes config should get router configuration 1`] = `
     </Route>
     <Route
       handler={[Function]}
-      key="365"
+      key="374"
       name="wr-db-oracle-index"
       path="wr-db-oracle"
     >
       <DefaultRoute
         handler={[Function]}
-        key="359"
+        key="368"
       />
       <Route
         handler={[Function]}
-        key="364"
+        key="373"
         name="wr-db-oracle"
         path=":config"
       >
         <DefaultRoute
           handler={[Function]}
-          key="360"
+          key="369"
         />
         <Route
           handler={[Function]}
-          key="361"
+          key="370"
           name="wr-db-oracle-tables"
           path="tables/:tableId"
         />
         <Route
           handler={[Function]}
-          key="362"
+          key="371"
           name="wr-db-oracle-table"
           path="table/:tableId"
         />
         <Route
           handler={[Function]}
-          key="363"
+          key="372"
           name="wr-db-oracle-credentials"
           path="credentials"
         />
@@ -2068,39 +2118,39 @@ exports[`routes config should get router configuration 1`] = `
     </Route>
     <Route
       handler={[Function]}
-      key="372"
+      key="381"
       name="wr-db-redshift-index"
       path="wr-db-redshift"
     >
       <DefaultRoute
         handler={[Function]}
-        key="366"
+        key="375"
       />
       <Route
         handler={[Function]}
-        key="371"
+        key="380"
         name="wr-db-redshift"
         path=":config"
       >
         <DefaultRoute
           handler={[Function]}
-          key="367"
+          key="376"
         />
         <Route
           handler={[Function]}
-          key="368"
+          key="377"
           name="wr-db-redshift-tables"
           path="tables/:tableId"
         />
         <Route
           handler={[Function]}
-          key="369"
+          key="378"
           name="wr-db-redshift-table"
           path="table/:tableId"
         />
         <Route
           handler={[Function]}
-          key="370"
+          key="379"
           name="wr-db-redshift-credentials"
           path="credentials"
         />
@@ -2108,39 +2158,39 @@ exports[`routes config should get router configuration 1`] = `
     </Route>
     <Route
       handler={[Function]}
-      key="379"
+      key="388"
       name="keboola.wr-looker-index"
       path="keboola.wr-looker"
     >
       <DefaultRoute
         handler={[Function]}
-        key="373"
+        key="382"
       />
       <Route
         handler={[Function]}
-        key="378"
+        key="387"
         name="keboola.wr-looker"
         path=":config"
       >
         <DefaultRoute
           handler={[Function]}
-          key="374"
+          key="383"
         />
         <Route
           handler={[Function]}
-          key="375"
+          key="384"
           name="keboola.wr-looker-tables"
           path="tables/:tableId"
         />
         <Route
           handler={[Function]}
-          key="376"
+          key="385"
           name="keboola.wr-looker-table"
           path="table/:tableId"
         />
         <Route
           handler={[Function]}
-          key="377"
+          key="386"
           name="keboola.wr-looker-credentials"
           path="credentials"
         />
@@ -2148,39 +2198,39 @@ exports[`routes config should get router configuration 1`] = `
     </Route>
     <Route
       handler={[Function]}
-      key="386"
+      key="395"
       name="keboola.wr-qlik-index"
       path="keboola.wr-qlik"
     >
       <DefaultRoute
         handler={[Function]}
-        key="380"
+        key="389"
       />
       <Route
         handler={[Function]}
-        key="385"
+        key="394"
         name="keboola.wr-qlik"
         path=":config"
       >
         <DefaultRoute
           handler={[Function]}
-          key="381"
+          key="390"
         />
         <Route
           handler={[Function]}
-          key="382"
+          key="391"
           name="keboola.wr-qlik-tables"
           path="tables/:tableId"
         />
         <Route
           handler={[Function]}
-          key="383"
+          key="392"
           name="keboola.wr-qlik-table"
           path="table/:tableId"
         />
         <Route
           handler={[Function]}
-          key="384"
+          key="393"
           name="keboola.wr-qlik-credentials"
           path="credentials"
         />
@@ -2188,39 +2238,39 @@ exports[`routes config should get router configuration 1`] = `
     </Route>
     <Route
       handler={[Function]}
-      key="393"
+      key="402"
       name="wr-tableau-index"
       path="wr-tableau"
     >
       <DefaultRoute
         handler={[Function]}
-        key="387"
+        key="396"
       />
       <Route
         handler={[Function]}
-        key="392"
+        key="401"
         name="wr-tableau"
         path=":config"
       >
         <DefaultRoute
           handler={[Function]}
-          key="388"
+          key="397"
         />
         <Route
           handler={[Function]}
-          key="389"
+          key="398"
           name="wr-tableau-tables"
           path="tables/:tableId"
         />
         <Route
           handler={[Function]}
-          key="390"
+          key="399"
           name="wr-tableau-table"
           path="table/:tableId"
         />
         <Route
           handler={[Function]}
-          key="391"
+          key="400"
           name="wr-tableau-credentials"
           path="credentials"
         />
@@ -2228,39 +2278,39 @@ exports[`routes config should get router configuration 1`] = `
     </Route>
     <Route
       handler={[Function]}
-      key="400"
+      key="409"
       name="wr-db-mssql-index"
       path="wr-db-mssql"
     >
       <DefaultRoute
         handler={[Function]}
-        key="394"
+        key="403"
       />
       <Route
         handler={[Function]}
-        key="399"
+        key="408"
         name="wr-db-mssql"
         path=":config"
       >
         <DefaultRoute
           handler={[Function]}
-          key="395"
+          key="404"
         />
         <Route
           handler={[Function]}
-          key="396"
+          key="405"
           name="wr-db-mssql-tables"
           path="tables/:tableId"
         />
         <Route
           handler={[Function]}
-          key="397"
+          key="406"
           name="wr-db-mssql-table"
           path="table/:tableId"
         />
         <Route
           handler={[Function]}
-          key="398"
+          key="407"
           name="wr-db-mssql-credentials"
           path="credentials"
         />
@@ -2268,39 +2318,39 @@ exports[`routes config should get router configuration 1`] = `
     </Route>
     <Route
       handler={[Function]}
-      key="407"
+      key="416"
       name="keboola.wr-db-mssql-v2-index"
       path="keboola.wr-db-mssql-v2"
     >
       <DefaultRoute
         handler={[Function]}
-        key="401"
+        key="410"
       />
       <Route
         handler={[Function]}
-        key="406"
+        key="415"
         name="keboola.wr-db-mssql-v2"
         path=":config"
       >
         <DefaultRoute
           handler={[Function]}
-          key="402"
+          key="411"
         />
         <Route
           handler={[Function]}
-          key="403"
+          key="412"
           name="keboola.wr-db-mssql-v2-tables"
           path="tables/:tableId"
         />
         <Route
           handler={[Function]}
-          key="404"
+          key="413"
           name="keboola.wr-db-mssql-v2-table"
           path="table/:tableId"
         />
         <Route
           handler={[Function]}
-          key="405"
+          key="414"
           name="keboola.wr-db-mssql-v2-credentials"
           path="credentials"
         />
@@ -2308,39 +2358,39 @@ exports[`routes config should get router configuration 1`] = `
     </Route>
     <Route
       handler={[Function]}
-      key="414"
+      key="423"
       name="keboola.wr-redshift-v2-index"
       path="keboola.wr-redshift-v2"
     >
       <DefaultRoute
         handler={[Function]}
-        key="408"
+        key="417"
       />
       <Route
         handler={[Function]}
-        key="413"
+        key="422"
         name="keboola.wr-redshift-v2"
         path=":config"
       >
         <DefaultRoute
           handler={[Function]}
-          key="409"
+          key="418"
         />
         <Route
           handler={[Function]}
-          key="410"
+          key="419"
           name="keboola.wr-redshift-v2-tables"
           path="tables/:tableId"
         />
         <Route
           handler={[Function]}
-          key="411"
+          key="420"
           name="keboola.wr-redshift-v2-table"
           path="table/:tableId"
         />
         <Route
           handler={[Function]}
-          key="412"
+          key="421"
           name="keboola.wr-redshift-v2-credentials"
           path="credentials"
         />
@@ -2348,39 +2398,39 @@ exports[`routes config should get router configuration 1`] = `
     </Route>
     <Route
       handler={[Function]}
-      key="421"
+      key="430"
       name="keboola.wr-db-impala-index"
       path="keboola.wr-db-impala"
     >
       <DefaultRoute
         handler={[Function]}
-        key="415"
+        key="424"
       />
       <Route
         handler={[Function]}
-        key="420"
+        key="429"
         name="keboola.wr-db-impala"
         path=":config"
       >
         <DefaultRoute
           handler={[Function]}
-          key="416"
+          key="425"
         />
         <Route
           handler={[Function]}
-          key="417"
+          key="426"
           name="keboola.wr-db-impala-tables"
           path="tables/:tableId"
         />
         <Route
           handler={[Function]}
-          key="418"
+          key="427"
           name="keboola.wr-db-impala-table"
           path="table/:tableId"
         />
         <Route
           handler={[Function]}
-          key="419"
+          key="428"
           name="keboola.wr-db-impala-credentials"
           path="credentials"
         />
@@ -2388,39 +2438,39 @@ exports[`routes config should get router configuration 1`] = `
     </Route>
     <Route
       handler={[Function]}
-      key="428"
+      key="437"
       name="keboola.wr-db-mysql-index"
       path="keboola.wr-db-mysql"
     >
       <DefaultRoute
         handler={[Function]}
-        key="422"
+        key="431"
       />
       <Route
         handler={[Function]}
-        key="427"
+        key="436"
         name="keboola.wr-db-mysql"
         path=":config"
       >
         <DefaultRoute
           handler={[Function]}
-          key="423"
+          key="432"
         />
         <Route
           handler={[Function]}
-          key="424"
+          key="433"
           name="keboola.wr-db-mysql-tables"
           path="tables/:tableId"
         />
         <Route
           handler={[Function]}
-          key="425"
+          key="434"
           name="keboola.wr-db-mysql-table"
           path="table/:tableId"
         />
         <Route
           handler={[Function]}
-          key="426"
+          key="435"
           name="keboola.wr-db-mysql-credentials"
           path="credentials"
         />
@@ -2428,39 +2478,39 @@ exports[`routes config should get router configuration 1`] = `
     </Route>
     <Route
       handler={[Function]}
-      key="435"
+      key="444"
       name="keboola.wr-db-oracle-index"
       path="keboola.wr-db-oracle"
     >
       <DefaultRoute
         handler={[Function]}
-        key="429"
+        key="438"
       />
       <Route
         handler={[Function]}
-        key="434"
+        key="443"
         name="keboola.wr-db-oracle"
         path=":config"
       >
         <DefaultRoute
           handler={[Function]}
-          key="430"
+          key="439"
         />
         <Route
           handler={[Function]}
-          key="431"
+          key="440"
           name="keboola.wr-db-oracle-tables"
           path="tables/:tableId"
         />
         <Route
           handler={[Function]}
-          key="432"
+          key="441"
           name="keboola.wr-db-oracle-table"
           path="table/:tableId"
         />
         <Route
           handler={[Function]}
-          key="433"
+          key="442"
           name="keboola.wr-db-oracle-credentials"
           path="credentials"
         />
@@ -2468,39 +2518,39 @@ exports[`routes config should get router configuration 1`] = `
     </Route>
     <Route
       handler={[Function]}
-      key="442"
+      key="451"
       name="keboola.wr-db-pgsql-index"
       path="keboola.wr-db-pgsql"
     >
       <DefaultRoute
         handler={[Function]}
-        key="436"
+        key="445"
       />
       <Route
         handler={[Function]}
-        key="441"
+        key="450"
         name="keboola.wr-db-pgsql"
         path=":config"
       >
         <DefaultRoute
           handler={[Function]}
-          key="437"
+          key="446"
         />
         <Route
           handler={[Function]}
-          key="438"
+          key="447"
           name="keboola.wr-db-pgsql-tables"
           path="tables/:tableId"
         />
         <Route
           handler={[Function]}
-          key="439"
+          key="448"
           name="keboola.wr-db-pgsql-table"
           path="table/:tableId"
         />
         <Route
           handler={[Function]}
-          key="440"
+          key="449"
           name="keboola.wr-db-pgsql-credentials"
           path="credentials"
         />
@@ -2508,39 +2558,39 @@ exports[`routes config should get router configuration 1`] = `
     </Route>
     <Route
       handler={[Function]}
-      key="449"
+      key="458"
       name="keboola.wr-db-snowflake-index"
       path="keboola.wr-db-snowflake"
     >
       <DefaultRoute
         handler={[Function]}
-        key="443"
+        key="452"
       />
       <Route
         handler={[Function]}
-        key="448"
+        key="457"
         name="keboola.wr-db-snowflake"
         path=":config"
       >
         <DefaultRoute
           handler={[Function]}
-          key="444"
+          key="453"
         />
         <Route
           handler={[Function]}
-          key="445"
+          key="454"
           name="keboola.wr-db-snowflake-tables"
           path="tables/:tableId"
         />
         <Route
           handler={[Function]}
-          key="446"
+          key="455"
           name="keboola.wr-db-snowflake-table"
           path="table/:tableId"
         />
         <Route
           handler={[Function]}
-          key="447"
+          key="456"
           name="keboola.wr-db-snowflake-credentials"
           path="credentials"
         />
@@ -2548,39 +2598,39 @@ exports[`routes config should get router configuration 1`] = `
     </Route>
     <Route
       handler={[Function]}
-      key="456"
+      key="465"
       name="keboola.wr-thoughtspot-index"
       path="keboola.wr-thoughtspot"
     >
       <DefaultRoute
         handler={[Function]}
-        key="450"
+        key="459"
       />
       <Route
         handler={[Function]}
-        key="455"
+        key="464"
         name="keboola.wr-thoughtspot"
         path=":config"
       >
         <DefaultRoute
           handler={[Function]}
-          key="451"
+          key="460"
         />
         <Route
           handler={[Function]}
-          key="452"
+          key="461"
           name="keboola.wr-thoughtspot-tables"
           path="tables/:tableId"
         />
         <Route
           handler={[Function]}
-          key="453"
+          key="462"
           name="keboola.wr-thoughtspot-table"
           path="table/:tableId"
         />
         <Route
           handler={[Function]}
-          key="454"
+          key="463"
           name="keboola.wr-thoughtspot-credentials"
           path="credentials"
         />
@@ -2588,37 +2638,37 @@ exports[`routes config should get router configuration 1`] = `
     </Route>
     <Route
       handler={[Function]}
-      key="463"
+      key="472"
       name="keboola.gooddata-writer-index"
       path="keboola.gooddata-writer"
     >
       <DefaultRoute
         handler={[Function]}
-        key="457"
+        key="466"
       />
       <Route
         handler={[Function]}
-        key="462"
+        key="471"
         name="keboola.gooddata-writer"
         path=":config"
       >
         <DefaultRoute
           handler={[Function]}
-          key="458"
+          key="467"
         />
         <Route
           handler={[Function]}
-          key="461"
+          key="470"
           name="keboola.gooddata-writer-table"
           path="table/:table"
         >
           <DefaultRoute
             handler={[Function]}
-            key="459"
+            key="468"
           />
           <Route
             handler={[Function]}
-            key="460"
+            key="469"
             name="keboola.gooddata-writer-tables"
             path="tables/:tableId"
           />
@@ -2627,59 +2677,9 @@ exports[`routes config should get router configuration 1`] = `
     </Route>
     <Route
       handler={[Function]}
-      key="472"
+      key="481"
       name="keboola.wr-storage-index"
       path="keboola.wr-storage"
-    >
-      <DefaultRoute
-        handler={[Function]}
-        key="464"
-      />
-      <Route
-        handler={[Function]}
-        key="471"
-        name="keboola.wr-storage"
-        path=":config"
-      >
-        <DefaultRoute
-          handler={[Function]}
-          key="465"
-        />
-        <Route
-          handler={[Function]}
-          key="470"
-          name="keboola.wr-storage-row"
-          path="rows/:row"
-        >
-          <DefaultRoute
-            handler={[Function]}
-            key="466"
-          />
-          <Route
-            handler={[Function]}
-            key="467"
-            name="keboola.wr-storage-row-tables"
-            path="tables/:tableId"
-          />
-          <Route
-            handler={[Function]}
-            key="469"
-            name="keboola.wr-storage-row-versions"
-            path="versions"
-          >
-            <DefaultRoute
-              handler={[Function]}
-              key="468"
-            />
-          </Route>
-        </Route>
-      </Route>
-    </Route>
-    <Route
-      handler={[Function]}
-      key="481"
-      name="keboola.wr-aws-s3-index"
-      path="keboola.wr-aws-s3"
     >
       <DefaultRoute
         handler={[Function]}
@@ -2688,7 +2688,7 @@ exports[`routes config should get router configuration 1`] = `
       <Route
         handler={[Function]}
         key="480"
-        name="keboola.wr-aws-s3"
+        name="keboola.wr-storage"
         path=":config"
       >
         <DefaultRoute
@@ -2698,7 +2698,7 @@ exports[`routes config should get router configuration 1`] = `
         <Route
           handler={[Function]}
           key="479"
-          name="keboola.wr-aws-s3-row"
+          name="keboola.wr-storage-row"
           path="rows/:row"
         >
           <DefaultRoute
@@ -2708,13 +2708,13 @@ exports[`routes config should get router configuration 1`] = `
           <Route
             handler={[Function]}
             key="476"
-            name="keboola.wr-aws-s3-row-tables"
+            name="keboola.wr-storage-row-tables"
             path="tables/:tableId"
           />
           <Route
             handler={[Function]}
             key="478"
-            name="keboola.wr-aws-s3-row-versions"
+            name="keboola.wr-storage-row-versions"
             path="versions"
           >
             <DefaultRoute
@@ -2728,8 +2728,8 @@ exports[`routes config should get router configuration 1`] = `
     <Route
       handler={[Function]}
       key="490"
-      name="keboola.wr-google-bigquery-index"
-      path="keboola.wr-google-bigquery"
+      name="keboola.wr-aws-s3-index"
+      path="keboola.wr-aws-s3"
     >
       <DefaultRoute
         handler={[Function]}
@@ -2738,7 +2738,7 @@ exports[`routes config should get router configuration 1`] = `
       <Route
         handler={[Function]}
         key="489"
-        name="keboola.wr-google-bigquery"
+        name="keboola.wr-aws-s3"
         path=":config"
       >
         <DefaultRoute
@@ -2748,7 +2748,7 @@ exports[`routes config should get router configuration 1`] = `
         <Route
           handler={[Function]}
           key="488"
-          name="keboola.wr-google-bigquery-row"
+          name="keboola.wr-aws-s3-row"
           path="rows/:row"
         >
           <DefaultRoute
@@ -2758,13 +2758,13 @@ exports[`routes config should get router configuration 1`] = `
           <Route
             handler={[Function]}
             key="485"
-            name="keboola.wr-google-bigquery-row-tables"
+            name="keboola.wr-aws-s3-row-tables"
             path="tables/:tableId"
           />
           <Route
             handler={[Function]}
             key="487"
-            name="keboola.wr-google-bigquery-row-versions"
+            name="keboola.wr-aws-s3-row-versions"
             path="versions"
           >
             <DefaultRoute
@@ -2778,8 +2778,8 @@ exports[`routes config should get router configuration 1`] = `
     <Route
       handler={[Function]}
       key="499"
-      name="keboola.wr-google-bigquery-v2-index"
-      path="keboola.wr-google-bigquery-v2"
+      name="keboola.wr-google-bigquery-index"
+      path="keboola.wr-google-bigquery"
     >
       <DefaultRoute
         handler={[Function]}
@@ -2788,7 +2788,7 @@ exports[`routes config should get router configuration 1`] = `
       <Route
         handler={[Function]}
         key="498"
-        name="keboola.wr-google-bigquery-v2"
+        name="keboola.wr-google-bigquery"
         path=":config"
       >
         <DefaultRoute
@@ -2798,7 +2798,7 @@ exports[`routes config should get router configuration 1`] = `
         <Route
           handler={[Function]}
           key="497"
-          name="keboola.wr-google-bigquery-v2-row"
+          name="keboola.wr-google-bigquery-row"
           path="rows/:row"
         >
           <DefaultRoute
@@ -2808,13 +2808,13 @@ exports[`routes config should get router configuration 1`] = `
           <Route
             handler={[Function]}
             key="494"
-            name="keboola.wr-google-bigquery-v2-row-tables"
+            name="keboola.wr-google-bigquery-row-tables"
             path="tables/:tableId"
           />
           <Route
             handler={[Function]}
             key="496"
-            name="keboola.wr-google-bigquery-v2-row-versions"
+            name="keboola.wr-google-bigquery-row-versions"
             path="versions"
           >
             <DefaultRoute
@@ -2827,9 +2827,9 @@ exports[`routes config should get router configuration 1`] = `
     </Route>
     <Route
       handler={[Function]}
-      key="507"
-      name="generic-detail-writer"
-      path=":component"
+      key="508"
+      name="keboola.wr-google-bigquery-v2-index"
+      path="keboola.wr-google-bigquery-v2"
     >
       <DefaultRoute
         handler={[Function]}
@@ -2837,8 +2837,8 @@ exports[`routes config should get router configuration 1`] = `
       />
       <Route
         handler={[Function]}
-        key="506"
-        name="generic-detail-writer-config"
+        key="507"
+        name="keboola.wr-google-bigquery-v2"
         path=":config"
       >
         <DefaultRoute
@@ -2847,24 +2847,74 @@ exports[`routes config should get router configuration 1`] = `
         />
         <Route
           handler={[Function]}
-          key="502"
+          key="506"
+          name="keboola.wr-google-bigquery-v2-row"
+          path="rows/:row"
+        >
+          <DefaultRoute
+            handler={[Function]}
+            key="502"
+          />
+          <Route
+            handler={[Function]}
+            key="503"
+            name="keboola.wr-google-bigquery-v2-row-tables"
+            path="tables/:tableId"
+          />
+          <Route
+            handler={[Function]}
+            key="505"
+            name="keboola.wr-google-bigquery-v2-row-versions"
+            path="versions"
+          >
+            <DefaultRoute
+              handler={[Function]}
+              key="504"
+            />
+          </Route>
+        </Route>
+      </Route>
+    </Route>
+    <Route
+      handler={[Function]}
+      key="516"
+      name="generic-detail-writer"
+      path=":component"
+    >
+      <DefaultRoute
+        handler={[Function]}
+        key="509"
+      />
+      <Route
+        handler={[Function]}
+        key="515"
+        name="generic-detail-writer-config"
+        path=":config"
+      >
+        <DefaultRoute
+          handler={[Function]}
+          key="510"
+        />
+        <Route
+          handler={[Function]}
+          key="511"
           name="generic-detail-writer-config-tables"
           path="tables/:tableId"
         />
         <Route
           handler={[Function]}
-          key="504"
+          key="513"
           name="writer-versions"
           path="versions"
         >
           <DefaultRoute
             handler={[Function]}
-            key="503"
+            key="512"
           />
         </Route>
         <Route
           handler={[Function]}
-          key="505"
+          key="514"
           name="generic-writer-oauth-redirect"
           path="oauth-redirect"
         />
@@ -2873,46 +2923,46 @@ exports[`routes config should get router configuration 1`] = `
   </Route>
   <Route
     handler={[Function]}
-    key="543"
+    key="552"
     name="applications"
   >
     <DefaultRoute
       handler={[Function]}
-      key="509"
+      key="518"
     />
     <Route
       handler={[Function]}
-      key="511"
+      key="520"
       name="new-application"
     >
       <DefaultRoute
         handler={[Function]}
-        key="510"
+        key="519"
       />
     </Route>
     <Route
       handler={[Function]}
-      key="516"
+      key="525"
       name="geneea-nlp-analysis-index"
       path="geneea-nlp-analysis"
     >
       <DefaultRoute
         handler={[Function]}
-        key="512"
+        key="521"
       />
       <Route
         handler={[Function]}
-        key="515"
+        key="524"
         name="geneea-nlp-analysis"
         path=":config"
       >
         <DefaultRoute
           handler={[Function]}
-          key="513"
+          key="522"
         />
         <Route
           handler={[Function]}
-          key="514"
+          key="523"
           name="geneea-nlp-analysis-tables"
           path="tables/:tableId"
         />
@@ -2920,59 +2970,9 @@ exports[`routes config should get router configuration 1`] = `
     </Route>
     <Route
       handler={[Function]}
-      key="521"
+      key="530"
       name="geneea.nlp-analysis-v2-index"
       path="geneea.nlp-analysis-v2"
-    >
-      <DefaultRoute
-        handler={[Function]}
-        key="517"
-      />
-      <Route
-        handler={[Function]}
-        key="520"
-        name="geneea.nlp-analysis-v2"
-        path=":config"
-      >
-        <DefaultRoute
-          handler={[Function]}
-          key="518"
-        />
-        <Route
-          handler={[Function]}
-          key="519"
-          name="geneea.nlp-analysis-v2-tables"
-          path="tables/:tableId"
-        />
-      </Route>
-    </Route>
-    <Route
-      handler={[Function]}
-      key="525"
-      name="custom-science-index"
-      path="custom-science"
-    >
-      <DefaultRoute
-        handler={[Function]}
-        key="522"
-      />
-      <Route
-        handler={[Function]}
-        key="524"
-        name="custom-science"
-        path=":config"
-      >
-        <DefaultRoute
-          handler={[Function]}
-          key="523"
-        />
-      </Route>
-    </Route>
-    <Route
-      handler={[Function]}
-      key="534"
-      name="keboola.app-snowflake-dwh-manager-index"
-      path="keboola.app-snowflake-dwh-manager"
     >
       <DefaultRoute
         handler={[Function]}
@@ -2980,8 +2980,8 @@ exports[`routes config should get router configuration 1`] = `
       />
       <Route
         handler={[Function]}
-        key="533"
-        name="keboola.app-snowflake-dwh-manager"
+        key="529"
+        name="geneea.nlp-analysis-v2"
         path=":config"
       >
         <DefaultRoute
@@ -2990,39 +2990,39 @@ exports[`routes config should get router configuration 1`] = `
         />
         <Route
           handler={[Function]}
-          key="532"
-          name="keboola.app-snowflake-dwh-manager-row"
-          path="rows/:row"
-        >
-          <DefaultRoute
-            handler={[Function]}
-            key="528"
-          />
-          <Route
-            handler={[Function]}
-            key="529"
-            name="keboola.app-snowflake-dwh-manager-row-tables"
-            path="tables/:tableId"
-          />
-          <Route
-            handler={[Function]}
-            key="531"
-            name="keboola.app-snowflake-dwh-manager-row-versions"
-            path="versions"
-          >
-            <DefaultRoute
-              handler={[Function]}
-              key="530"
-            />
-          </Route>
-        </Route>
+          key="528"
+          name="geneea.nlp-analysis-v2-tables"
+          path="tables/:tableId"
+        />
       </Route>
     </Route>
     <Route
       handler={[Function]}
-      key="542"
-      name="generic-detail-application"
-      path=":component"
+      key="534"
+      name="custom-science-index"
+      path="custom-science"
+    >
+      <DefaultRoute
+        handler={[Function]}
+        key="531"
+      />
+      <Route
+        handler={[Function]}
+        key="533"
+        name="custom-science"
+        path=":config"
+      >
+        <DefaultRoute
+          handler={[Function]}
+          key="532"
+        />
+      </Route>
+    </Route>
+    <Route
+      handler={[Function]}
+      key="543"
+      name="keboola.app-snowflake-dwh-manager-index"
+      path="keboola.app-snowflake-dwh-manager"
     >
       <DefaultRoute
         handler={[Function]}
@@ -3030,8 +3030,8 @@ exports[`routes config should get router configuration 1`] = `
       />
       <Route
         handler={[Function]}
-        key="541"
-        name="generic-detail-application-config"
+        key="542"
+        name="keboola.app-snowflake-dwh-manager"
         path=":config"
       >
         <DefaultRoute
@@ -3040,24 +3040,74 @@ exports[`routes config should get router configuration 1`] = `
         />
         <Route
           handler={[Function]}
-          key="537"
+          key="541"
+          name="keboola.app-snowflake-dwh-manager-row"
+          path="rows/:row"
+        >
+          <DefaultRoute
+            handler={[Function]}
+            key="537"
+          />
+          <Route
+            handler={[Function]}
+            key="538"
+            name="keboola.app-snowflake-dwh-manager-row-tables"
+            path="tables/:tableId"
+          />
+          <Route
+            handler={[Function]}
+            key="540"
+            name="keboola.app-snowflake-dwh-manager-row-versions"
+            path="versions"
+          >
+            <DefaultRoute
+              handler={[Function]}
+              key="539"
+            />
+          </Route>
+        </Route>
+      </Route>
+    </Route>
+    <Route
+      handler={[Function]}
+      key="551"
+      name="generic-detail-application"
+      path=":component"
+    >
+      <DefaultRoute
+        handler={[Function]}
+        key="544"
+      />
+      <Route
+        handler={[Function]}
+        key="550"
+        name="generic-detail-application-config"
+        path=":config"
+      >
+        <DefaultRoute
+          handler={[Function]}
+          key="545"
+        />
+        <Route
+          handler={[Function]}
+          key="546"
           name="generic-detail-application-config-tables"
           path="tables/:tableId"
         />
         <Route
           handler={[Function]}
-          key="539"
+          key="548"
           name="application-versions"
           path="versions"
         >
           <DefaultRoute
             handler={[Function]}
-            key="538"
+            key="547"
           />
         </Route>
         <Route
           handler={[Function]}
-          key="540"
+          key="549"
           name="generic-application-oauth-redirect"
           path="oauth-redirect"
         />
@@ -3066,27 +3116,27 @@ exports[`routes config should get router configuration 1`] = `
   </Route>
   <Route
     handler={[Function]}
-    key="548"
+    key="557"
     name="jobs"
     path="jobs"
   >
     <DefaultRoute
       handler={[Function]}
-      key="544"
+      key="553"
     />
     <Route
       handler={[Function]}
-      key="547"
+      key="556"
       name="jobDetail"
       path=":jobId"
     >
       <DefaultRoute
         handler={[Function]}
-        key="545"
+        key="554"
       />
       <Route
         handler={[Function]}
-        key="546"
+        key="555"
         name="jobDetail-tables"
         path="tables/:tableId"
       />
@@ -3094,233 +3144,233 @@ exports[`routes config should get router configuration 1`] = `
   </Route>
   <Route
     handler={[Function]}
-    key="550"
+    key="559"
     name="settings-project-power"
     path="settings-project-power"
   >
     <DefaultRoute
       handler={[Function]}
-      key="549"
+      key="558"
     />
   </Route>
   <Route
     handler={[Function]}
-    key="565"
+    key="574"
     name="transformations"
   >
     <DefaultRoute
       handler={[Function]}
-      key="551"
+      key="560"
     />
     <Route
       handler={[Function]}
-      key="562"
+      key="571"
       name="transformationBucket"
       path="bucket/:config"
     >
       <DefaultRoute
         handler={[Function]}
-        key="552"
+        key="561"
       />
       <Route
         handler={[Function]}
-        key="554"
+        key="563"
         name="transformation-versions"
         path="versions"
       >
         <DefaultRoute
           handler={[Function]}
-          key="553"
+          key="562"
         />
       </Route>
       <Route
         handler={[Function]}
-        key="561"
+        key="570"
         name="transformationDetail"
         path="transformation/:row"
       >
         <DefaultRoute
           handler={[Function]}
-          key="555"
+          key="564"
         />
         <Route
           handler={[Function]}
-          key="557"
+          key="566"
           name="transformation-row-versions"
           path="versions"
         >
           <DefaultRoute
             handler={[Function]}
-            key="556"
+            key="565"
           />
         </Route>
         <Route
           handler={[Function]}
-          key="558"
+          key="567"
           name="transformationDetail-tables"
           path="tables/:tableId"
         />
         <Route
           handler={[Function]}
-          key="560"
+          key="569"
           name="transformationDetailGraph"
           path="graph"
         >
           <DefaultRoute
             handler={[Function]}
-            key="559"
+            key="568"
           />
         </Route>
       </Route>
     </Route>
     <Route
       handler={[Function]}
-      key="564"
+      key="573"
       name="sandbox"
     >
       <DefaultRoute
         handler={[Function]}
-        key="563"
+        key="572"
       />
     </Route>
   </Route>
   <Route
     handler={[Function]}
-    key="575"
+    key="584"
     name="storage-explorer"
   >
     <DefaultRoute
       handler={[Function]}
-      key="566"
+      key="575"
     />
     <Route
       handler={[Function]}
-      key="568"
+      key="577"
       name="storage-explorer-files"
       path="files"
     >
       <DefaultRoute
         handler={[Function]}
-        key="567"
+        key="576"
       />
     </Route>
     <Route
       handler={[Function]}
-      key="570"
+      key="579"
       name="storage-explorer-jobs"
       path="jobs"
     >
       <DefaultRoute
         handler={[Function]}
-        key="569"
+        key="578"
       />
     </Route>
     <Route
       handler={[Function]}
-      key="574"
+      key="583"
       name="storage-explorer-bucket"
       path=":bucketId"
     >
       <DefaultRoute
         handler={[Function]}
-        key="571"
+        key="580"
       />
       <Route
         handler={[Function]}
-        key="573"
+        key="582"
         name="storage-explorer-table"
         path=":tableName"
       >
         <DefaultRoute
           handler={[Function]}
-          key="572"
+          key="581"
         />
       </Route>
     </Route>
   </Route>
   <Route
     handler={[Function]}
-    key="577"
+    key="586"
     name="tables"
     path="tables/:tableId"
   >
     <DefaultRoute
       handler={[Function]}
-      key="576"
+      key="585"
     />
   </Route>
   <Route
     handler={[Function]}
-    key="579"
+    key="588"
     name="settings-trash"
     path="settings-trash"
   >
     <DefaultRoute
       handler={[Function]}
-      key="578"
+      key="587"
     />
   </Route>
   <Route
     handler={[Function]}
-    key="583"
+    key="592"
     name="tokens"
   >
     <DefaultRoute
       handler={[Function]}
-      key="580"
+      key="589"
     />
     <Route
       handler={[Function]}
-      key="581"
+      key="590"
       name="tokens-new"
       path="new-token"
     />
     <Route
       handler={[Function]}
-      key="582"
+      key="591"
       name="tokens-detail"
       path=":tokenId"
     />
   </Route>
   <Route
     handler={[Function]}
-    key="585"
+    key="594"
     name="migrations"
     path="migrations"
   >
     <DefaultRoute
       handler={[Function]}
-      key="584"
+      key="593"
     />
   </Route>
   <Route
     handler={[Function]}
-    key="587"
+    key="596"
     name="data-takeout"
   >
     <DefaultRoute
       handler={[Function]}
-      key="586"
+      key="595"
     />
   </Route>
   <Route
     handler={[Function]}
-    key="589"
+    key="598"
     name="settings-limits"
   >
     <DefaultRoute
       handler={[Function]}
-      key="588"
+      key="597"
     />
   </Route>
   <Route
     handler={[Function]}
-    key="591"
+    key="600"
     name="limits"
   >
     <DefaultRoute
       handler={[Function]}
-      key="590"
+      key="599"
     />
   </Route>
 </span>

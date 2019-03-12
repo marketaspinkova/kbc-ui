@@ -8,6 +8,7 @@ import exApifyRoutes from '../apify/routes';
 import exDbGenericRoutes from '../ex-db-generic/routes';
 import exMongoDbRoutes from '../ex-mongodb/routes';
 import exGoogleBigqueryRoutes from '../ex-google-bigquery/routes';
+import exGoogleBigqueryV2Routes from '../ex-google-bigquery-v2/routes';
 import exGaV4Routes from '../ex-google-analytics-v4/routes';
 import exFacebookRoutes from '../ex-facebook/routes.js';
 import exGdriveNewRoutes from '../ex-google-drive/routes';
@@ -120,6 +121,7 @@ const extractors = {
     createComponentRoute('keboola.ex-storage', [exStorageRoutes]),
     createComponentRoute('htns.ex-salesforce', [htnsExSalesforceRoutes]),
     createComponentRoute('keboola.ex-ftp', [exFtpRoutes]),
+    createComponentRoute('keboola.ex-google-bigquery-v2', [exGoogleBigqueryV2Routes]),
     createGenericDetailRoute('extractor')
   ]
 };
