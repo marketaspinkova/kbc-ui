@@ -354,7 +354,7 @@ export default React.createClass({
           'tags[]': ['storage-merged-export']
         })
         .then(files => {
-          if (!files || files.length === 1) {
+          if (!files || files.length === 0) {
             return Promise.reject('Loading a file for download failed. Please try it again.');
           }
 
