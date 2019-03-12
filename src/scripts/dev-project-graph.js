@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { fromJS } from 'immutable';
 
 import * as helpers from './helpers';
+import ProjectGraph from './react/admin/project-graph/Index';
 
 const Navigation = () => {
   return (
@@ -117,7 +118,9 @@ const Container = React.createClass({
                   </ul>
                 </div>
                 <div className="col-md-9">
-                  project lineage and graph
+                  <ProjectGraph
+                    appData={this.props.data}
+                  />
                 </div>
               </div>
             </div>
