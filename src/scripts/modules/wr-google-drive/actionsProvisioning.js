@@ -5,7 +5,7 @@ import InstalledComponentStore from '../components/stores/InstalledComponentsSto
 import componentsActions from '../components/InstalledComponentsActionCreators';
 import callDockerAction from '../components/DockerActionsApi';
 import generateId from '../../utils/generateId';
-import SyncActionError from '../../utils/SyncActionError';
+import SyncActionError from '../../utils/errors/SyncActionError';
 
 export default function(COMPONENT_ID, configId) {
   const store = storeProvisioning(COMPONENT_ID, configId);
