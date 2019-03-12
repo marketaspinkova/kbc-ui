@@ -37,7 +37,7 @@ export default React.createClass({
           <FormControl
             type="text"
             disabled={disabled}
-            onChange={e => onChange({storage: e.target.value})}
+            onChange={e => onChange({storage: e.target.value.trim()})}
             value={value.storage}
             placeholder="my-cloud-storage-bucket"
           />

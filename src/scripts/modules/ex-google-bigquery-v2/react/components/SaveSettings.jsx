@@ -16,11 +16,6 @@ export default React.createClass({
     disabled: PropTypes.bool.isRequired
   },
 
-  onDestinationEdit() {
-    const value = this.props.value;
-    this.props.onChange(value);
-  },
-
   render() {
     const props = this.props;
 
@@ -34,7 +29,7 @@ export default React.createClass({
               type="text"
               value={props.value.tableName}
               onChange={function(e) {
-                props.onChange({tableName: e.target.value});
+                props.onChange({tableName: e.target.value.trim()});
               }}
               placeholder="mytable"
               disabled={props.disabled}
