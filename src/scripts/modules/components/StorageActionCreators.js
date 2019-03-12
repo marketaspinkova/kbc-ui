@@ -936,7 +936,8 @@ export default {
         Bucket: response.uploadParams.bucket,
         ACL: response.uploadParams.acl,
         ServerSideEncryption: response.uploadParams['x-amz-server-side-encryption'],
-        Body: file
+        Body: file,
+        ContentType: file.type
       };
 
       AWS.config.setPromisesDependency(Promise);
