@@ -36,7 +36,7 @@ export default React.createClass({
               isLast={this.props.isLast}
             />
           </span>
-          <span className="td">
+          <span className="td kbc-break-all kbc-break-word">
             <div>
               {this.getVersionDescription()}
             </div>
