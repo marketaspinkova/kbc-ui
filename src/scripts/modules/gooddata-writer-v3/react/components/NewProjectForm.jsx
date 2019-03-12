@@ -99,7 +99,7 @@ export default React.createClass({
           </div>
           <div>
             <Radio
-              disabled={this.props.canCreateProdProject || disabled}
+              disabled={!this.props.canCreateProdProject || disabled}
               value={TokenTypes.PRODUCTION}
               onChange={e => this.handleChange({tokenType: e.target.value})}
               checked={tokenType === TokenTypes.PRODUCTION}
