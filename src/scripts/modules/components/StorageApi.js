@@ -1,5 +1,6 @@
 import request from '../../utils/request';
 import ApplicationStore from '../../stores/ApplicationStore';
+import Promise from 'bluebird';
 
 var createUrl = function(path) {
   var baseUrl;
@@ -100,6 +101,28 @@ export default {
     return createRequest('GET', 'files').query(params).promise().then(function(response) {
       return response.body;
     });
+  },
+
+  getFilesWithRetry: function(params) {
+    const maxRetries = 3;
+
+    const withRetry = (attempt = 1) => {
+      return this.getFiles(params)
+        .then(files => {
+          if (files.length === 0 && attempt < maxRetries) {
+            return Promise.reject(new Error("No files found yet"));
+          }
+          return Promise.resolve(files);
+        })
+        .catch(() => {
+          return (new Promise((res) => {
+            return setTimeout(res, Math.pow(2, attempt) * 500);
+          })).then(() => {
+            return withRetry(attempt + 1);
+          })
+        });
+    };
+    return withRetry();
   },
 
   deleteFile: function(fileId) {

@@ -349,7 +349,7 @@ export default React.createClass({
 
     return exportTable(tableId).then(response => {
       return StorageApi
-        .getFiles({
+        .getFilesWithRetry({
           runId: response.runId,
           'tags[]': ['storage-merged-export']
         })
