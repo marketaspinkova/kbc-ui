@@ -63,6 +63,7 @@
     "start-http": "webpack-dev-server --config webpack/dev-server.config.js --hot --progress --colors --host 0.0.0.0 --port 3000 --inline",
     "start-projects-list": "webpack-dev-server --config webpack/dev-server-projects-list.config.js --hot --progress --colors --host 0.0.0.0 --port 3000 --inline --https",
     "start-settings-users": "webpack-dev-server --config webpack/dev-server-setting-user.config.js --hot --progress --colors --host 0.0.0.0 --port 3000 --inline --https",
+    "start-project-graph": "webpack-dev-server --config webpack/dev-server-project-graph.config.js --hot --progress --colors --host 0.0.0.0 --port 3000 --inline --https",
     "build": "webpack --config webpack/production.config.js --profile --colors --bail && node webpack/generate-manifest.js",
     "pretest": "yarn run lint",
     "test": "yarn run jest",
