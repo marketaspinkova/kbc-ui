@@ -55,6 +55,8 @@ export default React.createClass({
             <Select
               key="location"
               name="location"
+              backspaceRemoves={false}
+              deleteRemoves={false}
               clearable={false}
               searchable={false}
               value={value.location}
