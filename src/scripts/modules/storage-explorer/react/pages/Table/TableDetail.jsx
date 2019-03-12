@@ -355,7 +355,7 @@ export default React.createClass({
         })
         .then(files => {
           if (!files || files.length === 0) {
-            return Promise.reject('Loading a file for download failed. Please try it again.');
+            return Promise.reject('Loading a file for download failed. Please try again.');
           }
 
           return files[0]
