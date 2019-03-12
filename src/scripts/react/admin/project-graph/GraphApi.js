@@ -1,7 +1,7 @@
 import request from '../../../utils/request';
 
 function createUrl(path) {
-  return 'https://graph.keboola.com/' + path;
+  return '/graph/' + path;
 }
 
 function createRequest(token, method, path) {
