@@ -2,36 +2,7 @@ import { OperationalError } from 'bluebird';
 import _ from 'underscore';
 import HttpError from './HttpError';
 import { REQUEST_ABORTED_ERROR } from '../../constants/superagent';
-
-/*
-  Error object used for presentation in error page
-*/
-class Error {
-  constructor(title, text, data, exceptionId) {
-    this.title = title;
-    this.text = text;
-    this.data = data;
-    this.exceptionId = exceptionId;
-    this.id = null;
-    this.isUserError = false;
-  }
-
-  getTitle() {
-    return this.title;
-  }
-
-  getText() {
-    return this.text;
-  }
-
-  data() {
-    return this.data;
-  }
-
-  getExceptionId() {
-    return this.exceptionId;
-  }
-}
+import Error from './Error';
 
 const createFromException = exception => {
   let error = exception;
@@ -100,6 +71,5 @@ var createFromXhrError = httpError => {
 };
 
 export default {
-  Error,
   create: createFromException
 };
