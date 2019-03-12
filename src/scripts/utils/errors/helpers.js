@@ -1,8 +1,8 @@
 import { OperationalError } from 'bluebird';
-import _ from 'underscore';
 import HttpError from './HttpError';
 import { REQUEST_ABORTED_ERROR } from '../../constants/superagent';
 import Error from './Error';
+import SimpleError from './SimpleError';
 
 const createPresentationalError = exception => {
   let error = exception;
@@ -27,8 +27,8 @@ const createPresentationalError = exception => {
   } else if (error instanceof OperationalError || error.isOperational) {
     // error from bluebird
     return new Error('Connection error', error.message);
-  } else if (_.isString(error)) {
-    return new Error('Error', error);
+  } else if (error instanceof SimpleError) {
+    return new Error('Error', error.message);
   }
 
   return new Error('Application error', 'Please try reload the browser');
