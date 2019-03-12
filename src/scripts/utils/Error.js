@@ -1,6 +1,6 @@
 import { OperationalError } from 'bluebird';
 import _ from 'underscore';
-import HttpError from './HttpError';
+import HttpError from './errors/HttpError';
 import { REQUEST_ABORTED_ERROR } from '../constants/superagent';
 
 /*

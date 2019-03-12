@@ -2,7 +2,7 @@ import {ProvisioningActionTypes} from '../constants';
 import dispatcher from '../../../Dispatcher';
 import * as utils from './utils';
 import api from './api';
-import HttpError from '../../../utils/HttpError';
+import HttpError from '../../../utils/errors/HttpError';
 
 function handleError(error) {
   if (error.response) {
