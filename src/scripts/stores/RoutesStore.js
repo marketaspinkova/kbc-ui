@@ -1,7 +1,7 @@
 import Dispatcher from '../Dispatcher';
 import _ from 'underscore';
 import { Map, List, fromJS } from 'immutable';
-import errorHelpers from '../utils/errors/helpers';
+import { createPresentationalError } from '../utils/errors/helpers';
 import Error from '../utils/errors/Error';
 import StoreUtils from '../utils/StoreUtils';
 import JobsStore from '../modules/jobs/stores/JobsStore';
@@ -313,7 +313,7 @@ Dispatcher.register(payload => {
       _store = _store.withMutations(store => {
         return store
           .set('isPending', false)
-          .set('error', errorHelpers.create(action.error))
+          .set('error', createPresentationalError(action.error))
           .set('breadcrumbs', generateBreadcrumbs(store));
       });
       return RoutesStore.emitChange();

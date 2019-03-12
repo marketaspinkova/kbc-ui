@@ -16,7 +16,7 @@ import * as helpers from './helpers';
 import appRoutes from './routes';
 import createReactRouterRoutes from './utils/createReactRouterRoutes';
 import Timer from './utils/Timer';
-import errorHelpers from './utils/errors/helpers';
+import { createPresentationalError } from './utils/errors/helpers';
 
 import ApplicationActionCreators from './actions/ApplicationActionCreators';
 import RouterActionCreators from './actions/RouterActionCreators';
@@ -66,7 +66,7 @@ const startApp = appOptions => {
 
   // error thrown during application live not on route chage
   Promise.onPossiblyUnhandledRejection(e => {
-    const error = errorHelpers.create(e);
+    const error = createPresentationalError(e);
 
     ApplicationActionCreators.sendNotification({
       message: () => <ErrorNotification error={error} />,

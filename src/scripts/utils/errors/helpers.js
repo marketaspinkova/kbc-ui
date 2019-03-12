@@ -4,7 +4,7 @@ import HttpError from './HttpError';
 import { REQUEST_ABORTED_ERROR } from '../../constants/superagent';
 import Error from './Error';
 
-const createFromException = exception => {
+const createPresentationalError = exception => {
   let error = exception;
 
   if (error instanceof HttpError) {
@@ -70,6 +70,6 @@ var createFromXhrError = httpError => {
   return error;
 };
 
-export default {
-  create: createFromException
-};
+export {
+  createPresentationalError
+}
