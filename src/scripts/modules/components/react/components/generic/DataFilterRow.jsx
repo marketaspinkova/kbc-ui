@@ -39,17 +39,19 @@ export default React.createClass({
         </div>
         <div className="col-xs-2">
           <ReactSelect
-            type="select"
+            clearable={false}
+            backspaceRemoves={false}
+            deleteRemoves={false}
             searchable={false}
             name="where_operator"
             value={this.props.value.get('where_operator') || 'eq'}
             disabled={this.props.disabled}
-            clearable={false}
             options={[
               {label: whereOperatorConstants.EQ_LABEL, value: whereOperatorConstants.EQ_VALUE},
               {label: whereOperatorConstants.NOT_EQ_LABEL, value: whereOperatorConstants.NOT_EQ_VALUE}
             ]}
-            onChange={this._handleChangeWhereOperator}/>
+            onChange={this._handleChangeWhereOperator}
+          />
         </div>
         <div className="col-xs-4">
           <Select
