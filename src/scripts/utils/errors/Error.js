@@ -1,6 +1,7 @@
-/*
-  Error object used for presentation in error page
-*/
+//
+// Error object used for presentation in error page.
+// You should not throw/return this error directly. Check ./helpers.js file.
+//
 export default class Error {
   constructor(title, text, data, exceptionId) {
     this.title = title;
