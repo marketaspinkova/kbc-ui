@@ -82,6 +82,18 @@ export default React.createClass({
       );
     }
 
+    if (!this.state.data) {
+      return (
+        <p>
+          Could not load data sample.{' '}
+          <Button bsStyle="link" className="btn-link-inline" onClick={() => this.fetchDataPreview()}>
+            Try again
+          </Button>
+          .
+        </p>
+      );
+    }
+
     if (!this.haveDataRows()) {
       return <p>{this.state.filtered ? 'No data found.' : 'Table is empty.'}</p>;
     }
