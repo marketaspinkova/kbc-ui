@@ -104,12 +104,12 @@ export default {
   },
 
   getFilesWithRetry: function(params) {
-    const maxRetries = 3;
+    const maxRetries = 3; // total attempts = max retries + 1
 
     const withRetry = (attempt = 1) => {
       return this.getFiles(params)
         .then(files => {
-          if (files.length === 0 && attempt < maxRetries) {
+          if (files.length === 0 && attempt <= maxRetries) {
             return Promise.reject(new Error("No files found yet"));
           }
           return Promise.resolve(files);
