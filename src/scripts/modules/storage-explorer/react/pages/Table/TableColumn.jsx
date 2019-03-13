@@ -73,7 +73,7 @@ export default React.createClass({
         <td>{column}</td>
         <td>
           {this.isColumnInPrimaryKey(column) && (
-            <span className="label label-info" tooltip="Primary key">
+            <span className="label label-info" title="Primary key">
               PK
             </span>
           )}
