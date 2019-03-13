@@ -6,7 +6,7 @@ import InputTab from './InputTab';
 import SpreadsheetTab from './SpreadsheetTab';
 import SheetTab from './SheetTab';
 import StorageTablesStore from '../../../components/stores/StorageTablesStore';
-import SyncActionError from '../../../../utils/SyncActionError';
+import SyncActionError from '../../../../utils/errors/SyncActionError';
 
 export default React.createClass({
   propTypes: {

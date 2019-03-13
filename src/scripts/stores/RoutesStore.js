@@ -1,7 +1,8 @@
 import Dispatcher from '../Dispatcher';
 import _ from 'underscore';
 import { Map, List, fromJS } from 'immutable';
-import Error from '../utils/Error';
+import { createPresentationalError } from '../utils/errors/helpers';
+import Error from '../utils/errors/Error';
 import StoreUtils from '../utils/StoreUtils';
 import JobsStore from '../modules/jobs/stores/JobsStore';
 import { ActionTypes as ComponentsConstants, Routes } from '../modules/components/Constants';
@@ -298,7 +299,7 @@ Dispatcher.register(payload => {
 
         store.set('isPending', false);
         if (notFound) {
-          store.set('error', new Error.Error('Page not found', 'Page not found')).set('routerState', newState);
+          store.set('error', new Error('Page not found', 'Page not found')).set('routerState', newState);
         } else {
           store.remove('error').set('routerState', newState);
         }
@@ -312,7 +313,7 @@ Dispatcher.register(payload => {
       _store = _store.withMutations(store => {
         return store
           .set('isPending', false)
-          .set('error', Error.create(action.error))
+          .set('error', createPresentationalError(action.error))
           .set('breadcrumbs', generateBreadcrumbs(store));
       });
       return RoutesStore.emitChange();

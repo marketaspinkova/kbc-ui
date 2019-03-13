@@ -4,7 +4,7 @@ import {Map, fromJS} from 'immutable';
 import componentsActions from '../components/InstalledComponentsActionCreators';
 import callDockerAction from '../components/DockerActionsApi';
 import storeProvisioning from './storeProvisioning';
-import SyncActionError from '../../utils/SyncActionError';
+import SyncActionError from '../../utils/errors/SyncActionError';
 
 const COMPONENT_ID = 'keboola.ex-google-bigquery';
 

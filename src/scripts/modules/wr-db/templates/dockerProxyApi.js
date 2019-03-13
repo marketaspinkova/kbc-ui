@@ -1,5 +1,6 @@
 import Promise from 'bluebird';
 import {List, Map, fromJS} from 'immutable';
+import SimpleError from '../../../utils/errors/SimpleError';
 import * as columnsMetadata from './columnsMetadata';
 import InstalledComponentsActions from '../../components/InstalledComponentsActionCreators';
 import InstalledComponentsStore from '../../components/stores/InstalledComponentsStore';
@@ -277,7 +278,7 @@ export default function(componentId) {
           const tables = data.getIn(['parameters', 'tables'], List());
           var table = tables.find( (t) => t.get('tableId') === tableId);
           if (!table) {
-            return Promise.reject('Table ' + tableId + ' not exits in the config');
+            return Promise.reject(new SimpleError('Table not found', 'Table ' + tableId + ' not exits in the config'));
           }
           const columns = table.get('items', List()).map((c) => {
             return c.set('null', c.get('nullable', false) ? '1' : '0');

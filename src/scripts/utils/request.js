@@ -1,6 +1,6 @@
 import request, { Request } from 'superagent';
 import Promise from 'bluebird';
-import HttpError from './HttpError';
+import HttpError from './errors/HttpError';
 import qs from 'qs';
 import { REQUEST_TIMEOUT_MS } from '../constants/superagent';
 

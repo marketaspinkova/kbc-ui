@@ -8,7 +8,7 @@ import ApplicationStore from '../../stores/ApplicationStore';
 import StorageActionCreators from '../components/StorageActionCreators';
 import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
 import jobPoller from '../../utils/jobPoller';
-import HttpError from '../../utils/HttpError';
+import HttpError from '../../utils/errors/HttpError';
 import StorageApi from '../components/StorageApi';
 import exportTableApi from './ExportTableApi';
 

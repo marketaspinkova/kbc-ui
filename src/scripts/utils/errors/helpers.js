@@ -1,39 +1,10 @@
 import { OperationalError } from 'bluebird';
-import _ from 'underscore';
 import HttpError from './HttpError';
-import { REQUEST_ABORTED_ERROR } from '../constants/superagent';
+import { REQUEST_ABORTED_ERROR } from '../../constants/superagent';
+import Error from './Error';
+import SimpleError from './SimpleError';
 
-/*
-  Error object used for presentation in error page
-*/
-class Error {
-  constructor(title, text, data, exceptionId) {
-    this.title = title;
-    this.text = text;
-    this.data = data;
-    this.exceptionId = exceptionId;
-    this.id = null;
-    this.isUserError = false;
-  }
-
-  getTitle() {
-    return this.title;
-  }
-
-  getText() {
-    return this.text;
-  }
-
-  data() {
-    return this.data;
-  }
-
-  getExceptionId() {
-    return this.exceptionId;
-  }
-}
-
-const createFromException = exception => {
+const createPresentationalError = exception => {
   let error = exception;
 
   if (error instanceof HttpError) {
@@ -56,8 +27,8 @@ const createFromException = exception => {
   } else if (error instanceof OperationalError || error.isOperational) {
     // error from bluebird
     return new Error('Connection error', error.message);
-  } else if (_.isString(error)) {
-    return new Error('Error', error);
+  } else if (error instanceof SimpleError) {
+    return new Error(error.title, error.message);
   }
 
   return new Error('Application error', 'Please try reload the browser');
@@ -99,7 +70,6 @@ var createFromXhrError = httpError => {
   return error;
 };
 
-export default {
-  Error,
-  create: createFromException
-};
+export {
+  createPresentationalError
+}

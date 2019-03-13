@@ -7,7 +7,7 @@ import rStudioSandboxCredentialsStore from './stores/RStudioSandboxCredentialsSt
 import jupyterSandboxCredentialsStore from './stores/JupyterSandboxCredentialsStore';
 import WrDbCredentialsStore from './stores/WrDbCredentialsStore';
 import Promise from 'bluebird';
-import HttpError from '../../utils/HttpError';
+import HttpError from '../../utils/errors/HttpError';
 
 export default {
   getRedshiftBackend: function() {

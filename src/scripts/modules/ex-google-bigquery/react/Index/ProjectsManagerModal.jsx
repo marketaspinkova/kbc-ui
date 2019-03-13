@@ -3,7 +3,7 @@ import Select from 'react-select';
 import {Alert, Col, ControlLabel, Modal, FormGroup, FormControl, HelpBlock} from 'react-bootstrap';
 import {Loader} from '@keboola/indigo-ui';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
-import SyncActionError from '../../../../utils/SyncActionError';
+import SyncActionError from '../../../../utils/errors/SyncActionError';
 import EmptyState from '../../../components/react/components/ComponentEmptyState';
 import { DatasetLocations } from '../../constants';
 
