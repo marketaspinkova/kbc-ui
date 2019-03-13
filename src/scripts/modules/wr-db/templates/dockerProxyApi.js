@@ -278,7 +278,7 @@ export default function(componentId) {
           const tables = data.getIn(['parameters', 'tables'], List());
           var table = tables.find( (t) => t.get('tableId') === tableId);
           if (!table) {
-            return Promise.reject(new SimpleError('Table ' + tableId + ' not exits in the config'));
+            return Promise.reject(new SimpleError('Table not found', 'Table ' + tableId + ' not exits in the config'));
           }
           const columns = table.get('items', List()).map((c) => {
             return c.set('null', c.get('nullable', false) ? '1' : '0');

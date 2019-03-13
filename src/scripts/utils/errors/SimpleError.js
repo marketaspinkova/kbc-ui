@@ -1,6 +1,7 @@
 class SimpleError extends Error {
-  constructor(...args) {
-    super(...args);
+  constructor(title, message) {
+    super(message);
+    this.title = title;
   }
 }
 

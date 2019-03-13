@@ -28,7 +28,7 @@ const createPresentationalError = exception => {
     // error from bluebird
     return new Error('Connection error', error.message);
   } else if (error instanceof SimpleError) {
-    return new Error('Error', error.message);
+    return new Error(error.title, error.message);
   }
 
   return new Error('Application error', 'Please try reload the browser');
