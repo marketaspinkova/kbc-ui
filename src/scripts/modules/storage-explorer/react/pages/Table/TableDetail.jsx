@@ -305,7 +305,6 @@ export default React.createClass({
         table={this.state.table}
         onSubmit={this.handleExportTable}
         onHide={this.closeActionModal}
-        isExporting={this.state.exportingTable}
       />
     );
   },

@@ -7,15 +7,15 @@ export default React.createClass({
     show: PropTypes.bool.isRequired,
     table: PropTypes.object.isRequired,
     onSubmit: PropTypes.func.isRequired,
-    onHide: PropTypes.func.isRequired,
-    isExporting: PropTypes.bool.isRequired
+    onHide: PropTypes.func.isRequired
   },
 
   getInitialState() {
     return {
       file: null,
       url: '',
-      error: null
+      error: null,
+      isExporting: false
     };
   },
 
@@ -36,7 +36,7 @@ export default React.createClass({
           </Modal.Body>
           <Modal.Footer>
             <ButtonToolbar>
-              {this.props.isExporting && (
+              {this.state.isExporting && (
                 <span>
                   <Loader />{' '}
                 </span>
@@ -49,7 +49,7 @@ export default React.createClass({
                   <i className="fa fa-download" /> Download
                 </ExternalLink>
               ) : (
-                <Button type="submit" bsStyle="success" disabled={this.props.isExporting}>
+                <Button type="submit" bsStyle="success" disabled={this.state.isExporting}>
                   Export
                 </Button>
               )}
@@ -70,10 +70,19 @@ export default React.createClass({
 
   handleSubmit(event) {
     event.preventDefault();
-    this.setState({ error: null });
-    this.props.onSubmit().then(file => {
-      this.setState({ url: file.url });
-    }, this.handleError);
+    this.setState({
+      error: null,
+      isExporting: true
+    });
+    this.props.onSubmit()
+      .then(file => {
+        this.setState({ url: file.url });
+      }, this.handleError)
+      .finally(() => {
+        this.setState({
+          isExporting: false
+        })
+      });
   },
 
   handleError(message) {
