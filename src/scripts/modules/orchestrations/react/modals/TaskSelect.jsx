@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import TaskSelectTable from '../components/TaskSelectTable';
 import { Modal, Button } from 'react-bootstrap';
@@ -6,12 +7,12 @@ import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
 export default React.createClass({
   propTypes: {
-    tasks: React.PropTypes.object.isRequired,
-    onTaskUpdate: React.PropTypes.func.isRequired,
-    onTasksUpdate: React.PropTypes.func.isRequired,
-    onRun: React.PropTypes.func.isRequired,
-    onOpen: React.PropTypes.func.isRequired,
-    isSaving: React.PropTypes.bool.isRequired
+    tasks: PropTypes.object.isRequired,
+    onTaskUpdate: PropTypes.func.isRequired,
+    onTasksUpdate: PropTypes.func.isRequired,
+    onRun: PropTypes.func.isRequired,
+    onOpen: PropTypes.func.isRequired,
+    isSaving: PropTypes.bool.isRequired
   },
 
   getInitialState() {

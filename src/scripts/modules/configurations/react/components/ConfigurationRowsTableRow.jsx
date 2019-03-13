@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
 import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
@@ -11,20 +12,20 @@ const TableRow = React.createClass({
   mixins: [immutableMixin],
 
   propTypes: {
-    componentId: React.PropTypes.string.isRequired,
-    component: React.PropTypes.object.isRequired,
-    configurationId: React.PropTypes.string.isRequired,
-    row: React.PropTypes.object.isRequired,
-    rowNumber: React.PropTypes.number.isRequired,
-    columns: React.PropTypes.object.isRequired,
-    linkTo: React.PropTypes.string.isRequired,
-    isDeletePending: React.PropTypes.bool.isRequired,
-    onDelete: React.PropTypes.func.isRequired,
-    isEnableDisablePending: React.PropTypes.bool.isRequired,
-    onEnableDisable: React.PropTypes.func.isRequired,
-    disabledMove: React.PropTypes.bool.isRequired,
-    disabledMoveLabel: React.PropTypes.string.isRequired,
-    orderPending: React.PropTypes.bool.isRequired
+    componentId: PropTypes.string.isRequired,
+    component: PropTypes.object.isRequired,
+    configurationId: PropTypes.string.isRequired,
+    row: PropTypes.object.isRequired,
+    rowNumber: PropTypes.number.isRequired,
+    columns: PropTypes.object.isRequired,
+    linkTo: PropTypes.string.isRequired,
+    isDeletePending: PropTypes.bool.isRequired,
+    onDelete: PropTypes.func.isRequired,
+    isEnableDisablePending: PropTypes.bool.isRequired,
+    onEnableDisable: PropTypes.func.isRequired,
+    disabledMove: PropTypes.bool.isRequired,
+    disabledMoveLabel: PropTypes.string.isRequired,
+    orderPending: PropTypes.bool.isRequired
   },
 
   renderDragHandle() {

@@ -4,6 +4,7 @@ import Store from './stores/VersionsStore';
 import Api from './InstalledComponentsApi';
 import Constants from './VersionsConstants';
 import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
+import PropTypes from 'prop-types';
 import React from 'react';
 import ConfigurationCopiedNotification from './react/components/ConfigurationCopiedNotification';
 
@@ -176,7 +177,7 @@ export default {
         ApplicationActionCreators.sendNotification({
           message: React.createClass({
             propTypes: {
-              onClick: React.PropTypes.func
+              onClick: PropTypes.func
             },
 
             render() {

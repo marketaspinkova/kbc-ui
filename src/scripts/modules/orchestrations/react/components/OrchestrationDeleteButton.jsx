@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import OrchestrationActionCreators from '../../ActionCreators';
 import Router from 'react-router';
@@ -10,11 +11,11 @@ export default React.createClass({
   mixins: [Router.Navigation],
 
   propTypes: {
-    orchestration: React.PropTypes.object.isRequired,
-    isPending: React.PropTypes.bool.isRequired,
-    tooltipPlacement: React.PropTypes.string,
-    buttonLabel: React.PropTypes.string,
-    buttonBlock: React.PropTypes.bool
+    orchestration: PropTypes.object.isRequired,
+    isPending: PropTypes.bool.isRequired,
+    tooltipPlacement: PropTypes.string,
+    buttonLabel: PropTypes.string,
+    buttonBlock: PropTypes.bool
   },
 
   getDefaultProps() {

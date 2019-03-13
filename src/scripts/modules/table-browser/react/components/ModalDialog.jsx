@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import TablesPaginator from './TablesPaginator';
 import EventsTab from './EventsTab';
 import GeneralInfoTab from './GeneralInfoTab';
@@ -16,7 +17,7 @@ import {RefreshIcon} from '@keboola/indigo-ui';
 export default React.createClass({
 
   propTypes: {
-    moreTables: React.PropTypes.array,
+    moreTables: PropTypes.array,
     tableId: PropTypes.string.isRequired,
     reload: PropTypes.func.isRequired,
     tableExists: PropTypes.bool.isRequired,

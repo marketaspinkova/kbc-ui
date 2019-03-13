@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import {Button, Tabs, Tab} from 'react-bootstrap';
 import {Steps} from '../constants';
 import Select from 'react-select';

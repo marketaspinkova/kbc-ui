@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import TableSizeLabel from '../../components/TableSizeLabel';
@@ -10,18 +11,18 @@ export default React.createClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {
-    outputMapping: React.PropTypes.object.isRequired,
-    mappingIndex: React.PropTypes.number.isRequired,
-    editingOutputMapping: React.PropTypes.object.isRequired,
-    editingId: React.PropTypes.string.isRequired,
-    transformation: React.PropTypes.object.isRequired,
-    tables: React.PropTypes.object.isRequired,
-    buckets: React.PropTypes.object.isRequired,
-    bucket: React.PropTypes.object.isRequired,
-    pendingActions: React.PropTypes.object.isRequired,
-    definition: React.PropTypes.object,
-    otherOutputMappings: React.PropTypes.object,
-    disabled: React.PropTypes.bool
+    outputMapping: PropTypes.object.isRequired,
+    mappingIndex: PropTypes.number.isRequired,
+    editingOutputMapping: PropTypes.object.isRequired,
+    editingId: PropTypes.string.isRequired,
+    transformation: PropTypes.object.isRequired,
+    tables: PropTypes.object.isRequired,
+    buckets: PropTypes.object.isRequired,
+    bucket: PropTypes.object.isRequired,
+    pendingActions: PropTypes.object.isRequired,
+    definition: PropTypes.object,
+    otherOutputMappings: PropTypes.object,
+    disabled: PropTypes.bool
   },
 
   getDefaultProps() {

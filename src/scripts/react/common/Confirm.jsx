@@ -1,16 +1,17 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ConfirmModal from './ConfirmModal';
 
 export default React.createClass({
   propTypes: {
-    title: React.PropTypes.string.isRequired,
-    text: React.PropTypes.node.isRequired,
-    onConfirm: React.PropTypes.func.isRequired,
-    buttonLabel: React.PropTypes.string.isRequired,
-    buttonType: React.PropTypes.string,
-    isLoading: React.PropTypes.bool,
-    children: React.PropTypes.any,
-    childrenRootElement: React.PropTypes.any
+    title: PropTypes.string.isRequired,
+    text: PropTypes.node.isRequired,
+    onConfirm: PropTypes.func.isRequired,
+    buttonLabel: PropTypes.string.isRequired,
+    buttonType: PropTypes.string,
+    isLoading: PropTypes.bool,
+    children: PropTypes.any,
+    childrenRootElement: PropTypes.any
   },
 
   getDefaultProps() {

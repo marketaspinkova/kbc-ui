@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { List, Map } from 'immutable';
@@ -14,14 +15,14 @@ export default React.createClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {
-    value: React.PropTypes.object.isRequired,
-    tables: React.PropTypes.object.isRequired,
-    buckets: React.PropTypes.object.isRequired,
-    onChange: React.PropTypes.func.isRequired,
-    disabled: React.PropTypes.bool.isRequired,
-    backend: React.PropTypes.string.isRequired,
-    definition: React.PropTypes.object,
-    initialShowDetails: React.PropTypes.bool.isRequired
+    value: PropTypes.object.isRequired,
+    tables: PropTypes.object.isRequired,
+    buckets: PropTypes.object.isRequired,
+    onChange: PropTypes.func.isRequired,
+    disabled: PropTypes.bool.isRequired,
+    backend: PropTypes.string.isRequired,
+    definition: PropTypes.object,
+    initialShowDetails: PropTypes.bool.isRequired
   },
 
   getDefaultProps() {

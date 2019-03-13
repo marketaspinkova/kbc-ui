@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
 import Row from './ConfigurationRowsTableRow';
@@ -8,19 +9,19 @@ export default React.createClass({
   mixins: [immutableMixin],
 
   propTypes: {
-    rows: React.PropTypes.object.isRequired,
-    configurationId: React.PropTypes.string.isRequired,
-    componentId: React.PropTypes.string.isRequired,
-    component: React.PropTypes.object.isRequired,
-    columns: React.PropTypes.object,
-    rowDelete: React.PropTypes.func.isRequired,
-    rowEnableDisable: React.PropTypes.func.isRequired,
-    rowDeletePending: React.PropTypes.func.isRequired,
-    rowEnableDisablePending: React.PropTypes.func.isRequired,
-    rowLinkTo: React.PropTypes.string.isRequired,
-    onOrder: React.PropTypes.func.isRequired,
-    orderPending: React.PropTypes.object.isRequired,
-    disabledMove: React.PropTypes.bool.isRequired
+    rows: PropTypes.object.isRequired,
+    configurationId: PropTypes.string.isRequired,
+    componentId: PropTypes.string.isRequired,
+    component: PropTypes.object.isRequired,
+    columns: PropTypes.object,
+    rowDelete: PropTypes.func.isRequired,
+    rowEnableDisable: PropTypes.func.isRequired,
+    rowDeletePending: PropTypes.func.isRequired,
+    rowEnableDisablePending: PropTypes.func.isRequired,
+    rowLinkTo: PropTypes.string.isRequired,
+    onOrder: PropTypes.func.isRequired,
+    orderPending: PropTypes.object.isRequired,
+    disabledMove: PropTypes.bool.isRequired
   },
 
   getInitialState() {

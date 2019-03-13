@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import {capitalize} from 'underscore.string';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Modal} from 'react-bootstrap';
@@ -9,11 +10,11 @@ export default React.createClass({
   mixins: [PureRenderMixin],
   propTypes: {
     phases: PropTypes.object.isRequired,
-    onMoveTasks: React.PropTypes.func.isRequired,
-    onHide: React.PropTypes.func.isRequired,
-    show: React.PropTypes.bool.isRequired,
-    title: React.PropTypes.string,
-    ignorePhaseId: React.PropTypes.string
+    onMoveTasks: PropTypes.func.isRequired,
+    onHide: PropTypes.func.isRequired,
+    show: PropTypes.bool.isRequired,
+    title: PropTypes.string,
+    ignorePhaseId: PropTypes.string
   },
 
   getInitialState() {

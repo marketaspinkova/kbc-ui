@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { ExternalLink } from '@keboola/indigo-ui';
 import _ from 'underscore';
@@ -8,9 +9,9 @@ import { sendWishlistRequest } from './wishlist/WishlistApi';
 
 export default React.createClass({
   propTypes: {
-    urlTemplates: React.PropTypes.object.isRequired,
-    currentProject: React.PropTypes.object.isRequired,
-    xsrf: React.PropTypes.string.isRequired
+    urlTemplates: PropTypes.object.isRequired,
+    currentProject: PropTypes.object.isRequired,
+    xsrf: PropTypes.string.isRequired
   },
 
   getInitialState() {

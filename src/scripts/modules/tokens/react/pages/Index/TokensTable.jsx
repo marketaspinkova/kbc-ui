@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import {Link} from 'react-router';
 import {List, Map} from 'immutable';
 import {Check, Loader, ExternalLink} from '@keboola/indigo-ui';

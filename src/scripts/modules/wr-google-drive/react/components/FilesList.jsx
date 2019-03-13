@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import {Loader} from '@keboola/indigo-ui';
 import {Map} from 'immutable';
 import Tooltip from '../../../../react/common/Tooltip';

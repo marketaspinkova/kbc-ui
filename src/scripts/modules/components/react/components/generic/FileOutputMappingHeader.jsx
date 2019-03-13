@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import DeleteButton from '../../../../../react/common/DeleteButton';
@@ -7,15 +8,15 @@ export default React.createClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {
-    value: React.PropTypes.object.isRequired,
-    editingValue: React.PropTypes.object.isRequired,
-    mappingIndex: React.PropTypes.number.isRequired,
-    onChange: React.PropTypes.func.isRequired,
-    onSave: React.PropTypes.func.isRequired,
-    onCancel: React.PropTypes.func.isRequired,
-    onDelete: React.PropTypes.func.isRequired,
-    pendingActions: React.PropTypes.object.isRequired,
-    onEditStart: React.PropTypes.func.isRequired
+    value: PropTypes.object.isRequired,
+    editingValue: PropTypes.object.isRequired,
+    mappingIndex: PropTypes.number.isRequired,
+    onChange: PropTypes.func.isRequired,
+    onSave: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
+    pendingActions: PropTypes.object.isRequired,
+    onEditStart: PropTypes.func.isRequired
   },
 
   render() {

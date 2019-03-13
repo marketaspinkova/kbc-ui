@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import {Form, FormControl, FormGroup, ControlLabel, Col, Button} from 'react-bootstrap';
 import Modal from './ServiceAccountModal';
 import Immutable from 'immutable';

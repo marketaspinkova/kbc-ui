@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import FileSize from '../../../../react/common/FileSize';
 
@@ -8,7 +9,7 @@ const TableSizeLabel = ({ size }) => (
 );
 
 TableSizeLabel.propTypes = {
-  size: React.PropTypes.number
+  size: PropTypes.number
 };
 
 export default TableSizeLabel;

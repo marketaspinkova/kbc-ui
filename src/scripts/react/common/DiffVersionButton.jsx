@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Tooltip from './Tooltip';
 import VersionsDiffModal from './VersionsDiffModal';
@@ -5,18 +6,18 @@ import { Loader } from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
-    version: React.PropTypes.object.isRequired,
-    versionConfig: React.PropTypes.object.isRequired,
-    previousVersion: React.PropTypes.object.isRequired,
-    previousVersionConfig: React.PropTypes.object.isRequired,
-    isPending: React.PropTypes.bool,
-    isDisabled: React.PropTypes.bool,
-    isSmall: React.PropTypes.bool,
-    onLoadVersionConfig: React.PropTypes.func,
-    tooltipMsg: React.PropTypes.string,
-    buttonText: React.PropTypes.string,
-    buttonClassName: React.PropTypes.string,
-    buttonAsSpan: React.PropTypes.bool
+    version: PropTypes.object.isRequired,
+    versionConfig: PropTypes.object.isRequired,
+    previousVersion: PropTypes.object.isRequired,
+    previousVersionConfig: PropTypes.object.isRequired,
+    isPending: PropTypes.bool,
+    isDisabled: PropTypes.bool,
+    isSmall: PropTypes.bool,
+    onLoadVersionConfig: PropTypes.func,
+    tooltipMsg: PropTypes.string,
+    buttonText: PropTypes.string,
+    buttonClassName: PropTypes.string,
+    buttonAsSpan: PropTypes.bool
   },
 
   getInitialState() {

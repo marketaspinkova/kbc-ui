@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 export default React.createClass({
   propTypes: {
-    runId: React.PropTypes.string
+    runId: PropTypes.string
   },
 
   render() {

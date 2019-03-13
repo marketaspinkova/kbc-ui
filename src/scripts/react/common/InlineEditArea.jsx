@@ -1,19 +1,20 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import StaticArea from './InlineEditAreaStatic';
 import EditArea from './InlineEditAreaEdit';
 
 export default React.createClass({
   propTypes: {
-    onEditStart: React.PropTypes.func.isRequired,
-    onEditCancel: React.PropTypes.func.isRequired,
-    onEditChange: React.PropTypes.func.isRequired,
-    onEditSubmit: React.PropTypes.func.isRequired,
-    text: React.PropTypes.string,
-    isSaving: React.PropTypes.bool,
-    isEditing: React.PropTypes.bool,
-    editTooltip: React.PropTypes.string,
-    placeholder: React.PropTypes.string,
-    collapsible: React.PropTypes.bool
+    onEditStart: PropTypes.func.isRequired,
+    onEditCancel: PropTypes.func.isRequired,
+    onEditChange: PropTypes.func.isRequired,
+    onEditSubmit: PropTypes.func.isRequired,
+    text: PropTypes.string,
+    isSaving: PropTypes.bool,
+    isEditing: PropTypes.bool,
+    editTooltip: PropTypes.string,
+    placeholder: PropTypes.string,
+    collapsible: PropTypes.bool
   },
 
   getDefaultProps() {

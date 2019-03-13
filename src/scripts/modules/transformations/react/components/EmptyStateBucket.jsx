@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import NewTransformation from '../modals/NewTransformation';
 import TransformationBucketEmptyImage from '../../../../../images/transformation-bucket-empty.png';
@@ -5,7 +6,7 @@ import ApplicationStore from '../../../../stores/ApplicationStore';
 
 export default React.createClass({
   propTypes: {
-    bucket: React.PropTypes.object.isRequired
+    bucket: PropTypes.object.isRequired
   },
 
   imageUrl(image) {

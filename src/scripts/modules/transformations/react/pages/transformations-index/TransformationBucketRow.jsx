@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import RunComponentButton from '../../../../components/react/components/RunComponentButton';
@@ -11,9 +12,9 @@ export default React.createClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {
-    bucket: React.PropTypes.object.isRequired,
-    pendingActions: React.PropTypes.object.isRequired,
-    description: React.PropTypes.string
+    bucket: PropTypes.object.isRequired,
+    pendingActions: PropTypes.object.isRequired,
+    description: PropTypes.string
   },
 
   render() {

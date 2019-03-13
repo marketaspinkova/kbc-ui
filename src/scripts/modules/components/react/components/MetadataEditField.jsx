@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import _ from 'underscore';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';

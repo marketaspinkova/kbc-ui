@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import _ from 'underscore';
 import { List, fromJS } from 'immutable';
@@ -5,12 +6,12 @@ import TasksEditTable from './TasksEditTable';
 
 export default React.createClass({
   propTypes: {
-    tasks: React.PropTypes.object.isRequired,
-    components: React.PropTypes.object.isRequired,
-    isSaving: React.PropTypes.bool.isRequired,
-    onChange: React.PropTypes.func.isRequired,
-    updateLocalState: React.PropTypes.func.isRequired,
-    localState: React.PropTypes.object.isRequired
+    tasks: PropTypes.object.isRequired,
+    components: PropTypes.object.isRequired,
+    isSaving: PropTypes.bool.isRequired,
+    onChange: PropTypes.func.isRequired,
+    updateLocalState: PropTypes.func.isRequired,
+    localState: PropTypes.object.isRequired
   },
 
   render() {

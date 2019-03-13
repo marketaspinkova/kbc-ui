@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Navigation } from 'react-router';
 
@@ -5,10 +6,10 @@ export default React.createClass({
   displayName: 'CreateQueryElement',
   mixins: [Navigation],
   propTypes: {
-    isNav: React.PropTypes.bool.isRequired,
-    configurationId: React.PropTypes.string.isRequired,
-    componentId: React.PropTypes.string,
-    actionCreators: React.PropTypes.object.isRequired
+    isNav: PropTypes.bool.isRequired,
+    configurationId: PropTypes.string.isRequired,
+    componentId: PropTypes.string,
+    actionCreators: PropTypes.object.isRequired
   },
 
   createQuery() {

@@ -3,21 +3,23 @@
   When editing Save and Cancel buttons are shown. These buttons are disabled and loader is shown when saving.
   Edit butotn is shown when editing mode is disabled.
 */
+import PropTypes from 'prop-types';
+
 import React from 'react';
 import ConfirmButtons from './ConfirmButtons';
 import { Button } from 'react-bootstrap';
 
 export default React.createClass({
   propTypes: {
-    isEditing: React.PropTypes.bool.isRequired,
-    isSaving: React.PropTypes.bool.isRequired,
-    onCancel: React.PropTypes.func.isRequired,
-    onSave: React.PropTypes.func.isRequired,
-    onEditStart: React.PropTypes.func.isRequired,
-    isDisabled: React.PropTypes.bool,
-    editLabel: React.PropTypes.string,
-    cancelLabel: React.PropTypes.string,
-    saveLabel: React.PropTypes.string
+    isEditing: PropTypes.bool.isRequired,
+    isSaving: PropTypes.bool.isRequired,
+    onCancel: PropTypes.func.isRequired,
+    onSave: PropTypes.func.isRequired,
+    onEditStart: PropTypes.func.isRequired,
+    isDisabled: PropTypes.bool,
+    editLabel: PropTypes.string,
+    cancelLabel: PropTypes.string,
+    saveLabel: PropTypes.string
   },
 
   getDefaultProps() {

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import numeral from 'numeral';
 import date from '../../../../utils/date';
 import dimple from '../../../../utils/dimple';

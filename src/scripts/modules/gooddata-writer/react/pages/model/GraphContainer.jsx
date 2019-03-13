@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Immutable from 'immutable';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
@@ -9,7 +10,7 @@ import Graph from './Graph';
 export default React.createClass({
   mixins: [PureRenderMixin],
   propTypes: {
-    configurationId: React.PropTypes.string.isRequired
+    configurationId: PropTypes.string.isRequired
   },
 
   getInitialState() {

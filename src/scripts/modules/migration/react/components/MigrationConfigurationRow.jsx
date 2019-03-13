@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import descriptionExcerpt from '../../../../utils/descriptionExcerpt';
 import ComponentConfigurationLink from '../../../components/react/components/ComponentConfigurationLink';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';

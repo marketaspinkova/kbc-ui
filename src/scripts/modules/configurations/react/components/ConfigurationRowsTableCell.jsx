@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
 import StorageApiTableLinkEx from '../../../components/react/components/StorageApiTableLinkEx';
@@ -9,12 +10,12 @@ const TableCell = React.createClass({
   mixins: [immutableMixin],
 
   propTypes: {
-    type: React.PropTypes.string.isRequired,
-    valueFn: React.PropTypes.func.isRequired,
-    row: React.PropTypes.object.isRequired,
-    component: React.PropTypes.object.isRequired,
-    componentId: React.PropTypes.string.isRequired,
-    configurationId: React.PropTypes.string.isRequired
+    type: PropTypes.string.isRequired,
+    valueFn: PropTypes.func.isRequired,
+    row: PropTypes.object.isRequired,
+    component: PropTypes.object.isRequired,
+    componentId: PropTypes.string.isRequired,
+    configurationId: PropTypes.string.isRequired
   },
 
   render() {

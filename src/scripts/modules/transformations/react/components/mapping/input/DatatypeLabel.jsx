@@ -1,13 +1,14 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import getDatatypeLabel from './getDatatypeLabel';
 import {Map} from 'immutable';
 
 export default React.createClass({
   propTypes: {
-    column: React.PropTypes.string.isRequired,
-    datatype: React.PropTypes.oneOfType([
-      React.PropTypes.string,
-      React.PropTypes.object
+    column: PropTypes.string.isRequired,
+    datatype: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.object
     ])
   },
 

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Modal } from 'react-bootstrap';
 import { ExternalLink } from '@keboola/indigo-ui';
@@ -30,10 +31,10 @@ const isJsonValid = (jsonString) => {
 
 export default React.createClass({
   propTypes: {
-    onHide: React.PropTypes.func.isRequired,
-    onSubmit: React.PropTypes.func.isRequired,
-    show: React.PropTypes.bool.isRequired,
-    documentationLink: React.PropTypes.string.isRequired
+    onHide: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func.isRequired,
+    show: PropTypes.bool.isRequired,
+    documentationLink: PropTypes.string.isRequired
   },
 
   getInitialState() {

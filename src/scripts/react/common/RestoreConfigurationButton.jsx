@@ -2,6 +2,8 @@
   Delete button with confirm and loading state
 */
 
+import PropTypes from 'prop-types';
+
 import React from 'react';
 import classnames from 'classnames';
 import Tooltip from './Tooltip';
@@ -10,12 +12,12 @@ import Confirm from './Confirm';
 
 export default React.createClass({
   propTypes: {
-    tooltip: React.PropTypes.string,
-    confirm: React.PropTypes.object, // Confirm props
-    isPending: React.PropTypes.bool,
-    isEnabled: React.PropTypes.bool,
-    label: React.PropTypes.string,
-    fixedWidth: React.PropTypes.bool
+    tooltip: PropTypes.string,
+    confirm: PropTypes.object, // Confirm props
+    isPending: PropTypes.bool,
+    isEnabled: PropTypes.bool,
+    label: PropTypes.string,
+    fixedWidth: PropTypes.bool
   },
 
   getDefaultProps() {

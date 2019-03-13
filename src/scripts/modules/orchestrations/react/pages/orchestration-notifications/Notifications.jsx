@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Map, List } from 'immutable';
 import Select from 'react-select';
@@ -6,12 +7,12 @@ import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
 
 export default React.createClass({
   propTypes: {
-    notifications: React.PropTypes.object.isRequired, // notifications in structure from API
-    isEditing: React.PropTypes.bool.isRequired,
-    isSaving: React.PropTypes.bool.isRequired,
-    onNotificationsChange: React.PropTypes.func.isRequired,
-    onSave: React.PropTypes.func.isRequired,
-    onCancel: React.PropTypes.func.isRequired
+    notifications: PropTypes.object.isRequired, // notifications in structure from API
+    isEditing: PropTypes.bool.isRequired,
+    isSaving: PropTypes.bool.isRequired,
+    onNotificationsChange: PropTypes.func.isRequired,
+    onSave: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired
   },
 
   render() {

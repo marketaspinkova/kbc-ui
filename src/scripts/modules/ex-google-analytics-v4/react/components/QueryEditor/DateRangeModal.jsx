@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import moment from 'moment';
 import { Button, Modal, Tabs, Tab, Form, FormGroup, FormControl, ControlLabel, Col } from 'react-bootstrap';
 import DateTime from 'react-datetime';

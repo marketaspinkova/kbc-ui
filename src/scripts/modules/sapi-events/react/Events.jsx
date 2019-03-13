@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {Alert, Button} from 'react-bootstrap';
 import Immutable from 'immutable';
@@ -13,10 +14,10 @@ import {Loader, SearchBar} from '@keboola/indigo-ui';
 export default React.createClass({
   mixins: [PureRendererMixin],
   propTypes: {
-    params: React.PropTypes.object,
-    autoReload: React.PropTypes.bool,
-    link: React.PropTypes.object,
-    eventsApi: React.PropTypes.object
+    params: PropTypes.object,
+    autoReload: PropTypes.bool,
+    link: PropTypes.object,
+    eventsApi: PropTypes.object
   },
 
   _handleChange() {

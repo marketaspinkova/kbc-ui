@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import moment from 'moment';
 export default React.createClass({
   propTypes: {
-    lastVersion: React.PropTypes.object.isRequired
+    lastVersion: PropTypes.object.isRequired
   },
 
   render() {

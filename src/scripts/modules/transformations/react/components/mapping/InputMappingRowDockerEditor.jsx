@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import _ from 'underscore';
 import Immutable from 'immutable';
@@ -10,13 +11,13 @@ import whereOperatorConstants from '../../../../../react/common/whereOperatorCon
 
 export default React.createClass({
   propTypes: {
-    value: React.PropTypes.object.isRequired,
-    tables: React.PropTypes.object.isRequired,
-    onChange: React.PropTypes.func.isRequired,
-    disabled: React.PropTypes.bool.isRequired,
-    initialShowDetails: React.PropTypes.bool.isRequired,
-    isDestinationDuplicate: React.PropTypes.bool.isRequired,
-    definition: React.PropTypes.object
+    value: PropTypes.object.isRequired,
+    tables: PropTypes.object.isRequired,
+    onChange: PropTypes.func.isRequired,
+    disabled: PropTypes.bool.isRequired,
+    initialShowDetails: PropTypes.bool.isRequired,
+    isDestinationDuplicate: PropTypes.bool.isRequired,
+    definition: PropTypes.object
   },
 
   getDefaultProps() {

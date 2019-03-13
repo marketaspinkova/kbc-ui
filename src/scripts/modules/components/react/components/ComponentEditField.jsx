@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
@@ -8,12 +9,12 @@ export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore), immutableMixin],
 
   propTypes: {
-    componentId: React.PropTypes.string.isRequired,
-    configId: React.PropTypes.string.isRequired,
-    fieldName: React.PropTypes.string.isRequired,
-    editElement: React.PropTypes.func.isRequired,
-    placeholder: React.PropTypes.string,
-    tooltipPlacement: React.PropTypes.string
+    componentId: PropTypes.string.isRequired,
+    configId: PropTypes.string.isRequired,
+    fieldName: PropTypes.string.isRequired,
+    editElement: PropTypes.func.isRequired,
+    placeholder: PropTypes.string,
+    tooltipPlacement: PropTypes.string
   },
 
   getDefaultProps() {

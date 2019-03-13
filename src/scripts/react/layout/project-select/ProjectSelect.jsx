@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import ProjectsList from './List';
@@ -8,12 +9,12 @@ import { Dropdown } from 'react-bootstrap';
 export default React.createClass({
 
   propTypes: {
-    organizations: React.PropTypes.object.isRequired,
-    currentProject: React.PropTypes.object.isRequired,
-    urlTemplates: React.PropTypes.object.isRequired,
-    projectTemplates: React.PropTypes.object.isRequired,
-    xsrf: React.PropTypes.string.isRequired,
-    canCreateProject: React.PropTypes.bool.isRequired
+    organizations: PropTypes.object.isRequired,
+    currentProject: PropTypes.object.isRequired,
+    urlTemplates: PropTypes.object.isRequired,
+    projectTemplates: PropTypes.object.isRequired,
+    xsrf: PropTypes.string.isRequired,
+    canCreateProject: PropTypes.bool.isRequired
   },
 
   getInitialState() {

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Map, List, fromJS } from 'immutable';
 import underscoreString from 'underscore.string';
@@ -14,17 +15,17 @@ import ComponentsStore from '../../../../components/stores/ComponentsStore';
 
 export default React.createClass({
   propTypes: {
-    tasks: React.PropTypes.object.isRequired,
-    components: React.PropTypes.object.isRequired,
-    disabled: React.PropTypes.bool.isRequired,
-    onTaskDelete: React.PropTypes.func.isRequired,
-    onTaskUpdate: React.PropTypes.func.isRequired,
-    updateLocalState: React.PropTypes.func.isRequired,
-    localState: React.PropTypes.object.isRequired,
-    handlePhaseMove: React.PropTypes.func.isRequired,
-    handlePhaseUpdate: React.PropTypes.func.isRequired,
-    handlePhasesSet: React.PropTypes.func.isRequired,
-    handleAddTask: React.PropTypes.func.isRequired
+    tasks: PropTypes.object.isRequired,
+    components: PropTypes.object.isRequired,
+    disabled: PropTypes.bool.isRequired,
+    onTaskDelete: PropTypes.func.isRequired,
+    onTaskUpdate: PropTypes.func.isRequired,
+    updateLocalState: PropTypes.func.isRequired,
+    localState: PropTypes.object.isRequired,
+    handlePhaseMove: PropTypes.func.isRequired,
+    handlePhaseUpdate: PropTypes.func.isRequired,
+    handlePhasesSet: PropTypes.func.isRequired,
+    handleAddTask: PropTypes.func.isRequired
   },
 
   render() {

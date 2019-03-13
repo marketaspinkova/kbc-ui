@@ -1,12 +1,13 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Confirm from './Confirm';
 import {Loader} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
-    job: React.PropTypes.object.isRequired,
-    isTerminating: React.PropTypes.bool.isRequired,
-    onTerminate: React.PropTypes.func.isRequired
+    job: PropTypes.object.isRequired,
+    isTerminating: PropTypes.bool.isRequired,
+    onTerminate: PropTypes.func.isRequired
   },
 
   render() {

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import Keen from 'keen-js';
 import { fromJS } from 'immutable';
 

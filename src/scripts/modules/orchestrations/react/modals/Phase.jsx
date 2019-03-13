@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import underscoreString from 'underscore.string';
 import classnames from 'classnames';
@@ -11,9 +12,9 @@ export default React.createClass({
   propTypes: {
     phaseId: PropTypes.string,
     existingIds: PropTypes.object.isRequired,
-    onPhaseUpdate: React.PropTypes.func.isRequired,
-    onHide: React.PropTypes.func.isRequired,
-    show: React.PropTypes.bool.isRequired
+    onPhaseUpdate: PropTypes.func.isRequired,
+    onHide: PropTypes.func.isRequired,
+    show: PropTypes.bool.isRequired
   },
 
   getInitialState() {

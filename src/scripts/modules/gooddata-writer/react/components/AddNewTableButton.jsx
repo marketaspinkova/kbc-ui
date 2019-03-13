@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {Map, fromJS} from 'immutable';
 import _ from 'underscore';
@@ -8,11 +9,11 @@ import {Modal, Button} from 'react-bootstrap';
 
 export default React.createClass({
   propTypes: {
-    configuredTables: React.PropTypes.object.isRequired,
-    localState: React.PropTypes.object.isRequired,
-    isDisabled: React.PropTypes.bool.isRequired,
-    addNewTableFn: React.PropTypes.func.isRequired,
-    updateLocalStateFn: React.PropTypes.func.isRequired
+    configuredTables: PropTypes.object.isRequired,
+    localState: PropTypes.object.isRequired,
+    isDisabled: PropTypes.bool.isRequired,
+    addNewTableFn: PropTypes.func.isRequired,
+    updateLocalStateFn: PropTypes.func.isRequired
   },
 
   render() {

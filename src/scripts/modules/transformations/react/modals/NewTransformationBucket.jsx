@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
@@ -5,7 +6,7 @@ import TransformationActionCreators from '../../ActionCreators';
 
 export default React.createClass({
   propTypes: {
-    label: React.PropTypes.string.isRequired
+    label: PropTypes.string.isRequired
   },
 
   getInitialState() {

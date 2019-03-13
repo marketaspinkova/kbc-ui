@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Check, Loader } from '@keboola/indigo-ui';
 import Tooltip from './Tooltip';
@@ -7,15 +8,15 @@ const MODE_BUTTON = 'button',
 
 export default React.createClass({
   propTypes: {
-    activateTooltip: React.PropTypes.string,
-    deactivateTooltip: React.PropTypes.string,
-    isActive: React.PropTypes.bool.isRequired,
-    isPending: React.PropTypes.bool,
-    buttonDisabled: React.PropTypes.bool,
-    onChange: React.PropTypes.func.isRequired,
-    mode: React.PropTypes.oneOf([MODE_BUTTON, MODE_LINK]),
-    tooltipPlacement: React.PropTypes.string,
-    buttonStyle: React.PropTypes.object
+    activateTooltip: PropTypes.string,
+    deactivateTooltip: PropTypes.string,
+    isActive: PropTypes.bool.isRequired,
+    isPending: PropTypes.bool,
+    buttonDisabled: PropTypes.bool,
+    onChange: PropTypes.func.isRequired,
+    mode: PropTypes.oneOf([MODE_BUTTON, MODE_LINK]),
+    tooltipPlacement: PropTypes.string,
+    buttonStyle: PropTypes.object
   },
 
   getDefaultProps() {

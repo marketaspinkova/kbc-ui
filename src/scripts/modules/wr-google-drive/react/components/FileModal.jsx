@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import {Map} from 'immutable';
 import {Modal, Tab, Tabs, Alert} from 'react-bootstrap';
 import WizardButtons from '../../../components/react/components/WizardButtons';

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import contactSupport from '../../../../../utils/contactSupport';
 import ComponentIcon from '../../../../../react/common/ComponentIcon';
@@ -6,10 +7,10 @@ import { Modal, Button, ButtonToolbar } from 'react-bootstrap';
 
 export default React.createClass({
   propTypes: {
-    component: React.PropTypes.object.isRequired,
-    configuration: React.PropTypes.object.isRequired,
-    onCancel: React.PropTypes.func.isRequired,
-    onClose: React.PropTypes.func.isRequired
+    component: PropTypes.object.isRequired,
+    configuration: PropTypes.object.isRequired,
+    onCancel: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired
   },
 
   render() {

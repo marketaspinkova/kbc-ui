@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import Select from 'react-select';
 import stringUtils from '../../utils/string';
 const { webalize } = stringUtils;
@@ -8,9 +9,9 @@ export default React.createClass({
   propTypes: {
     currentSource: PropTypes.string,
     disabled: PropTypes.bool.isRequired,
-    tables: React.PropTypes.object.isRequired,
-    buckets: React.PropTypes.object.isRequired,
-    parts: React.PropTypes.object.isRequired,
+    tables: PropTypes.object.isRequired,
+    buckets: PropTypes.object.isRequired,
+    parts: PropTypes.object.isRequired,
     updatePart: PropTypes.func.isRequired,
     placeholder: PropTypes.string.isRequired
   },

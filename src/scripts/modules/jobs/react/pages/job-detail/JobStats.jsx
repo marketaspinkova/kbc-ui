@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {List} from 'immutable';
@@ -8,9 +9,9 @@ import JobMetrics from './JobMetrics';
 
 export default React.createClass({
   propTypes: {
-    stats: React.PropTypes.object.isRequired,
-    isLoading: React.PropTypes.bool.isRequired,
-    jobMetrics: React.PropTypes.object.isRequired
+    stats: PropTypes.object.isRequired,
+    isLoading: PropTypes.bool.isRequired,
+    jobMetrics: PropTypes.object.isRequired
   },
 
   mixins: [PureRenderMixin],

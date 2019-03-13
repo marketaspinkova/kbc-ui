@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router';
 import { Finished, JobStatusCircle } from '@keboola/indigo-ui';
@@ -6,7 +7,7 @@ import JobPartialRunLabel from '../../../../react/common/JobPartialRunLabel';
 
 export default React.createClass({
   propTypes: {
-    job: React.PropTypes.object.isRequired
+    job: PropTypes.object.isRequired
   },
 
   render() {

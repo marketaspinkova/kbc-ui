@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import later from 'later';
 import _ from 'underscore';
@@ -5,8 +6,8 @@ import Scheduler from './Scheduler';
 
 export default React.createClass({
   propTypes: {
-    crontabRecord: React.PropTypes.string.isRequired,
-    onChange: React.PropTypes.func.isRequired
+    crontabRecord: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired
   },
 
   getInitialState() {

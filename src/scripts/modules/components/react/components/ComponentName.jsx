@@ -1,11 +1,12 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { InlineEditInput } from '@keboola/indigo-ui';
 import ComponentEditField from './ComponentEditField';
 
 export default React.createClass({
   propTypes: {
-    componentId: React.PropTypes.string.isRequired,
-    configId: React.PropTypes.string.isRequired
+    componentId: PropTypes.string.isRequired,
+    configId: PropTypes.string.isRequired
   },
 
   render() {

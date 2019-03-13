@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { List } from 'immutable';
 import { Table } from 'react-bootstrap';
@@ -9,9 +10,9 @@ export default React.createClass({
   mixins: [immutableMixin],
 
   propTypes: {
-    tasks: React.PropTypes.object.isRequired,
-    onTaskUpdate: React.PropTypes.func.isRequired,
-    onTasksUpdate: React.PropTypes.func.isRequired
+    tasks: PropTypes.object.isRequired,
+    onTaskUpdate: PropTypes.func.isRequired,
+    onTasksUpdate: PropTypes.func.isRequired
   },
 
   getInitialState() {

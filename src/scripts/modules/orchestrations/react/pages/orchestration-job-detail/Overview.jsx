@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { List } from 'immutable';
 import JobTasks from './JobTasks';
@@ -8,7 +9,7 @@ import date from '../../../../../utils/date';
 
 export default React.createClass({
   propTypes: {
-    job: React.PropTypes.object.isRequired
+    job: PropTypes.object.isRequired
   },
 
   render() {

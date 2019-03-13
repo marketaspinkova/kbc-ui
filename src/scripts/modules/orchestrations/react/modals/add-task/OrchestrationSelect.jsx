@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ComponentIcon from '../../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../../react/common/ComponentName';
@@ -5,11 +6,11 @@ import descriptionExcerpt from '../../../../../utils/descriptionExcerpt';
 
 export default React.createClass({
   propTypes: {
-    component: React.PropTypes.object.isRequired,
-    orchestrations: React.PropTypes.object.isRequired,
-    orchestratorConfigurations: React.PropTypes.object.isRequired,
-    onReset: React.PropTypes.func.isRequired,
-    onConfigurationSelect: React.PropTypes.func.isRequired
+    component: PropTypes.object.isRequired,
+    orchestrations: PropTypes.object.isRequired,
+    orchestratorConfigurations: PropTypes.object.isRequired,
+    onReset: PropTypes.func.isRequired,
+    onConfigurationSelect: PropTypes.func.isRequired
   },
 
   render() {

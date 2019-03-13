@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import DeleteButton from '../../../../react/common/DeleteButton';
@@ -24,8 +25,8 @@ export default React.createClass({
   },
 
   propTypes: {
-    isAutoLoad: React.PropTypes.bool.isRequired,
-    type: React.PropTypes.string
+    isAutoLoad: PropTypes.bool.isRequired,
+    type: PropTypes.string
   },
 
   getStateFromStores() {

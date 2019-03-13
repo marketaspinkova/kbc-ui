@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ColumnRow from './ColumnRow';
 import Hint from '../../../../../react/common/Hint';
@@ -5,20 +6,20 @@ import Tooltip from '../../../../../react/common/Tooltip';
 
 export default React.createClass({
   propTypes: {
-    columns: React.PropTypes.object.isRequired,
-    filterColumnFn: React.PropTypes.func.isRequired,
-    onToggleHideIgnored: React.PropTypes.func.isRequired,
-    editButtons: React.PropTypes.object.isRequired,
-    disabledColumnFields: React.PropTypes.array.isRequired,
-    onSetAllColumnsNull: React.PropTypes.func.isRequired,
-    editingColumns: React.PropTypes.object,
-    editColumnFn: React.PropTypes.func,
-    dataTypes: React.PropTypes.array,
-    isSaving: React.PropTypes.bool,
-    dataPreview: React.PropTypes.object,
-    columnsValidation: React.PropTypes.object,
-    setAllColumnsType: React.PropTypes.object,
-    setAllColumnsName: React.PropTypes.object
+    columns: PropTypes.object.isRequired,
+    filterColumnFn: PropTypes.func.isRequired,
+    onToggleHideIgnored: PropTypes.func.isRequired,
+    editButtons: PropTypes.object.isRequired,
+    disabledColumnFields: PropTypes.array.isRequired,
+    onSetAllColumnsNull: PropTypes.func.isRequired,
+    editingColumns: PropTypes.object,
+    editColumnFn: PropTypes.func,
+    dataTypes: PropTypes.array,
+    isSaving: PropTypes.bool,
+    dataPreview: PropTypes.object,
+    columnsValidation: PropTypes.object,
+    setAllColumnsType: PropTypes.object,
+    setAllColumnsName: PropTypes.object
   },
 
   render() {

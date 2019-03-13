@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ActivateDeactivateButton from '../../../../../react/common/ActivateDeactivateButton';
 import Tooltip from '../../../../../react/common/Tooltip';
@@ -13,19 +14,19 @@ export default React.createClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {
-    tableExists: React.PropTypes.bool.isRequired,
-    isTableExported: React.PropTypes.bool.isRequired,
-    isPending: React.PropTypes.bool.isRequired,
-    isUpdating: React.PropTypes.bool.isRequired,
-    isV2: React.PropTypes.bool.isRequired,
-    onExportChangeFn: React.PropTypes.func.isRequired,
-    table: React.PropTypes.object.isRequired,
-    v2ConfigTable: React.PropTypes.object.isRequired,
-    tableDbName: React.PropTypes.string.isRequired,
-    configId: React.PropTypes.string.isRequired,
-    componentId: React.PropTypes.string.isRequired,
-    deleteTableFn: React.PropTypes.func.isRequired,
-    isDeleting: React.PropTypes.bool.isRequired
+    tableExists: PropTypes.bool.isRequired,
+    isTableExported: PropTypes.bool.isRequired,
+    isPending: PropTypes.bool.isRequired,
+    isUpdating: PropTypes.bool.isRequired,
+    isV2: PropTypes.bool.isRequired,
+    onExportChangeFn: PropTypes.func.isRequired,
+    table: PropTypes.object.isRequired,
+    v2ConfigTable: PropTypes.object.isRequired,
+    tableDbName: PropTypes.string.isRequired,
+    configId: PropTypes.string.isRequired,
+    componentId: PropTypes.string.isRequired,
+    deleteTableFn: PropTypes.func.isRequired,
+    isDeleting: PropTypes.bool.isRequired
   },
 
   render() {

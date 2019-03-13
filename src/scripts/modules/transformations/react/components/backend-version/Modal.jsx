@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { Modal } from 'react-bootstrap';
 import { RadioGroup } from 'react-radio-group';
 import ConfirmButtons from '../../../../../react/common/ConfirmButtons';

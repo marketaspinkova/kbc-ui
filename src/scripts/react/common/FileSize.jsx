@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import fileSize from 'filesize';
 
@@ -10,7 +11,7 @@ const FileSize = ({ size }) => {
 };
 
 FileSize.propTypes = {
-  size: React.PropTypes.number
+  size: PropTypes.number
 };
 
 export default FileSize;

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
@@ -8,7 +9,7 @@ import dimple from '../../../../../utils/dimple';
 
 export default React.createClass({
   propTypes: {
-    jobs: React.PropTypes.object.isRequired
+    jobs: PropTypes.object.isRequired
   },
 
   componentDidMount() {

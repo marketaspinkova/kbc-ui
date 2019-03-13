@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { FormControl, Col, FormGroup, HelpBlock, ControlLabel } from 'react-bootstrap';
 import Immutable from 'immutable';
@@ -5,9 +6,9 @@ import Select from 'react-select';
 
 export default React.createClass({
   propTypes: {
-    tables: React.PropTypes.object.isRequired,
-    onChange: React.PropTypes.func.isRequired,
-    type: React.PropTypes.string.isRequired
+    tables: PropTypes.object.isRequired,
+    onChange: PropTypes.func.isRequired,
+    type: PropTypes.string.isRequired
   },
   getInitialState() {
     return {

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {Image} from 'react-bootstrap';
 import ApplicationStore from '../../../stores/ApplicationStore';
@@ -5,8 +6,8 @@ import ApplicationStore from '../../../stores/ApplicationStore';
 
 export default React.createClass({
   propTypes: {
-    currentBadge: React.PropTypes.number,
-    badgeCount: React.PropTypes.number
+    currentBadge: PropTypes.number,
+    badgeCount: PropTypes.number
   },
   getImagePath() {
     return ApplicationStore.getScriptsBasePath() + require('../media/kblw.png');

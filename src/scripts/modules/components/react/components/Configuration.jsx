@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { ExternalLink } from '@keboola/indigo-ui';
 import Edit from './ConfigurationEdit';
 import Immutable from 'immutable';

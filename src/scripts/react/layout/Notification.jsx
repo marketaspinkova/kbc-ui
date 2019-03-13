@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Alert } from 'react-bootstrap';
 
@@ -12,10 +13,10 @@ function computeNotificationAge(notification) {
 
 export default React.createClass({
   propTypes: {
-    notification: React.PropTypes.object.isRequired,
-    onCancel: React.PropTypes.func.isRequired,
-    onMouseEnter: React.PropTypes.func.isRequired,
-    onMouseLeave: React.PropTypes.func.isRequired
+    notification: PropTypes.object.isRequired,
+    onCancel: PropTypes.func.isRequired,
+    onMouseEnter: PropTypes.func.isRequired,
+    onMouseLeave: PropTypes.func.isRequired
   },
 
   getInitialState() {

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
@@ -7,8 +8,8 @@ export default React.createClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {
-    datatypes: React.PropTypes.object.isRequired,
-    handleRemoveDataType: React.PropTypes.func.isRequired
+    datatypes: PropTypes.object.isRequired,
+    handleRemoveDataType: PropTypes.func.isRequired
   },
 
   render() {

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import _ from 'underscore';
 import fuzzy from 'fuzzy';
@@ -10,15 +11,15 @@ import InvitationsButton from './InvitationsButton';
 
 export default React.createClass({
   propTypes: {
-    organizations: React.PropTypes.object.isRequired,
-    currentProjectId: React.PropTypes.number.isRequired,
-    urlTemplates: React.PropTypes.object.isRequired,
-    projectTemplates: React.PropTypes.object.isRequired,
-    focus: React.PropTypes.bool.isRequired,
-    canCreateProject: React.PropTypes.bool.isRequired,
-    invitationsCount: React.PropTypes.number,
-    xsrf: React.PropTypes.string.isRequired,
-    theme: React.PropTypes.string
+    organizations: PropTypes.object.isRequired,
+    currentProjectId: PropTypes.number.isRequired,
+    urlTemplates: PropTypes.object.isRequired,
+    projectTemplates: PropTypes.object.isRequired,
+    focus: PropTypes.bool.isRequired,
+    canCreateProject: PropTypes.bool.isRequired,
+    invitationsCount: PropTypes.number,
+    xsrf: PropTypes.string.isRequired,
+    theme: PropTypes.string
   },
 
   getInitialState() {

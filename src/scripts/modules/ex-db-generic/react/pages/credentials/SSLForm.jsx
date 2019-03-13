@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Textarea from 'react-textarea-autosize';
 import { Checkbox, Col, FormGroup, HelpBlock } from 'react-bootstrap';
@@ -8,10 +9,10 @@ const helpUrl = 'https://help.keboola.com/extractors/database/sqldb/#mysql-encry
 export default React.createClass({
   displayName: 'SSLForm',
   propTypes: {
-    onChange: React.PropTypes.func,
-    data: React.PropTypes.object.isRequired,
-    isEditing: React.PropTypes.bool.isRequired,
-    disabledCheckbox: React.PropTypes.bool.isRequired
+    onChange: PropTypes.func,
+    data: PropTypes.object.isRequired,
+    isEditing: PropTypes.bool.isRequired,
+    disabledCheckbox: PropTypes.bool.isRequired
   },
 
   getDefaultProps() {

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { Loader } from '@keboola/indigo-ui';
@@ -9,11 +10,11 @@ export default React.createClass({
   mixins: [PureRenderMixin],
 
   propTypes: {
-    jobs: React.PropTypes.object.isRequired,
-    componentId: React.PropTypes.string.isRequired,
-    configId: React.PropTypes.string.isRequired,
-    rowId: React.PropTypes.string,
-    limit: React.PropTypes.number
+    jobs: PropTypes.object.isRequired,
+    componentId: PropTypes.string.isRequired,
+    configId: PropTypes.string.isRequired,
+    rowId: PropTypes.string,
+    limit: PropTypes.number
   },
 
   getDefaultProps() {

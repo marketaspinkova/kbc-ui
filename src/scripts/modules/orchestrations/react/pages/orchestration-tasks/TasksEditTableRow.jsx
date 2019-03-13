@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { fromJS } from 'immutable';
 import { HelpBlock } from 'react-bootstrap';
@@ -10,14 +11,14 @@ import descriptionExcerpt from '../../../../../utils/descriptionExcerpt';
 
 export default React.createClass({
   propTypes: {
-    task: React.PropTypes.object.isRequired,
-    component: React.PropTypes.object,
-    disabled: React.PropTypes.bool.isRequired,
-    onTaskDelete: React.PropTypes.func.isRequired,
-    onTaskUpdate: React.PropTypes.func.isRequired,
-    toggleMarkTask: React.PropTypes.func.isRequired,
-    isMarked: React.PropTypes.bool.isRequired,
-    color: React.PropTypes.string
+    task: PropTypes.object.isRequired,
+    component: PropTypes.object,
+    disabled: PropTypes.bool.isRequired,
+    onTaskDelete: PropTypes.func.isRequired,
+    onTaskUpdate: PropTypes.func.isRequired,
+    toggleMarkTask: PropTypes.func.isRequired,
+    isMarked: PropTypes.bool.isRequired,
+    color: PropTypes.string
   },
 
   render() {

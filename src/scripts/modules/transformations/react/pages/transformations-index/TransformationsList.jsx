@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import pureRendererMixin from 'react-immutable-render-mixin';
 import { Map } from 'immutable';
@@ -7,9 +8,9 @@ export default React.createClass({
   mixins: [pureRendererMixin],
 
   propTypes: {
-    bucket: React.PropTypes.object.isRequired,
-    transformations: React.PropTypes.object,
-    pendingActions: React.PropTypes.object
+    bucket: PropTypes.object.isRequired,
+    transformations: PropTypes.object,
+    pendingActions: PropTypes.object
   },
 
   render() {

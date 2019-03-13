@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import ApplicationStore from '../../../../stores/ApplicationStore';
 import ComponentsStore from '../../stores/ComponentsStore';

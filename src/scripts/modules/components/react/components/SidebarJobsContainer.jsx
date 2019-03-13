@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import LatestJobsStore from '../../../jobs/stores/LatestJobsStore';
@@ -7,10 +8,10 @@ export default React.createClass({
   mixins: [createStoreMixin(LatestJobsStore)],
 
   propTypes: {
-    componentId: React.PropTypes.string.isRequired,
-    configId: React.PropTypes.string.isRequired,
-    rowId: React.PropTypes.string,
-    limit: React.PropTypes.number
+    componentId: PropTypes.string.isRequired,
+    configId: PropTypes.string.isRequired,
+    rowId: PropTypes.string,
+    limit: PropTypes.number
   },
 
   getStateFromStores() {

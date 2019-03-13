@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import ComponentDetailLink from './ComponentDetailLink';
@@ -8,7 +9,7 @@ import { getComponentBadgesIncluding } from './componentHelpers';
 
 export default React.createClass({
   propTypes: {
-    component: React.PropTypes.object.isRequired
+    component: PropTypes.object.isRequired
   },
 
   render() {

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {Loader} from '@keboola/indigo-ui';
 import Tooltip from '../../../../react/common/Tooltip';
@@ -5,14 +6,14 @@ import Modal from './ClearStateButtonModal';
 
 export default React.createClass({
   propTypes: {
-    onClick: React.PropTypes.func.isRequired,
-    isPending: React.PropTypes.bool.isRequired,
-    disabled: React.PropTypes.bool.isRequired,
-    children: React.PropTypes.node.isRequired,
-    disabledTooltip: React.PropTypes.string,
-    label: React.PropTypes.string,
-    tooltipPlacement: React.PropTypes.string,
-    tooltip: React.PropTypes.string
+    onClick: PropTypes.func.isRequired,
+    isPending: PropTypes.bool.isRequired,
+    disabled: PropTypes.bool.isRequired,
+    children: PropTypes.node.isRequired,
+    disabledTooltip: PropTypes.string,
+    label: PropTypes.string,
+    tooltipPlacement: PropTypes.string,
+    tooltip: PropTypes.string
   },
 
   getDefaultProps() {

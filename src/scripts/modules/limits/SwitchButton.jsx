@@ -1,5 +1,6 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import EditLimitModal from './EditLimitModal';
+import PropTypes from 'prop-types';
 import Switch from 'rc-switch';
 import contactSupport from '../../utils/contactSupport';
 

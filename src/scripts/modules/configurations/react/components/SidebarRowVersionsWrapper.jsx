@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import SidebarVesions from '../../../components/react/components/SidebarVersions';
 
@@ -30,10 +31,10 @@ export default React.createClass({
   },
 
   propTypes: {
-    limit: React.PropTypes.number,
-    componentId: React.PropTypes.string.isRequired,
-    configId: React.PropTypes.string.isRequired,
-    rowId: React.PropTypes.string.isRequired
+    limit: PropTypes.number,
+    componentId: PropTypes.string.isRequired,
+    configId: PropTypes.string.isRequired,
+    rowId: PropTypes.string.isRequired
   },
 
   getDefaultProps: function() {

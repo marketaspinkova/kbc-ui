@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Loader } from '@keboola/indigo-ui';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
@@ -10,11 +11,11 @@ export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore)],
 
   propTypes: {
-    componentId: React.PropTypes.string.isRequired,
-    configId: React.PropTypes.string.isRequired,
-    fieldName: React.PropTypes.string,
-    preDeleteFn: React.PropTypes.func,
-    postDeleteFn: React.PropTypes.func
+    componentId: PropTypes.string.isRequired,
+    configId: PropTypes.string.isRequired,
+    fieldName: PropTypes.string,
+    preDeleteFn: PropTypes.func,
+    postDeleteFn: PropTypes.func
   },
 
   getStateFromStores() {

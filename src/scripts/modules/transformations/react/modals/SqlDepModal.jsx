@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Modal } from 'react-bootstrap';
 import { ButtonToolbar, Button } from 'react-bootstrap';
@@ -6,11 +7,11 @@ import { ExternalLink } from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
-    transformationId: React.PropTypes.string.isRequired,
-    bucketId: React.PropTypes.string.isRequired,
-    backend: React.PropTypes.string.isRequired,
-    show: React.PropTypes.bool.isRequired,
-    onHide: React.PropTypes.func.isRequired
+    transformationId: PropTypes.string.isRequired,
+    bucketId: PropTypes.string.isRequired,
+    backend: PropTypes.string.isRequired,
+    show: PropTypes.bool.isRequired,
+    onHide: PropTypes.func.isRequired
   },
 
   getInitialState() {

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ComponentConfigurationRowLink from '../../../../components/react/components/ComponentConfigurationRowLink';
 import TransformationsStore from '../../../stores/TransformationsStore';
@@ -8,11 +9,11 @@ export default React.createClass({
   mixins: [createStoreMixin(TransformationsStore)],
 
   propTypes: {
-    bucketId: React.PropTypes.string.isRequired,
-    transformationId: React.PropTypes.string.isRequired,
-    tableId: React.PropTypes.string.isRequired,
-    onClick: React.PropTypes.func.isRequired,
-    message: React.PropTypes.string.isRequired
+    bucketId: PropTypes.string.isRequired,
+    transformationId: PropTypes.string.isRequired,
+    tableId: PropTypes.string.isRequired,
+    onClick: PropTypes.func.isRequired,
+    message: PropTypes.string.isRequired
   },
 
   getStateFromStores() {

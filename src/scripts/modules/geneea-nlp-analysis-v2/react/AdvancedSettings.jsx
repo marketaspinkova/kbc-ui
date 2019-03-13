@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import CodeMirror from 'react-code-mirror';
 
 export default React.createClass({

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router';
 import ComponentsStore from '../../../../components/stores/ComponentsStore';
@@ -12,7 +13,7 @@ import date from '../../../../../utils/date';
 
 export default React.createClass({
   propTypes: {
-    tasks: React.PropTypes.object.isRequired
+    tasks: PropTypes.object.isRequired
   },
 
   getInitialState() {

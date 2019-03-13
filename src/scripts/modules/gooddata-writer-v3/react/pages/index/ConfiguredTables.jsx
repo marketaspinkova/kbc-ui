@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { Loader, SearchBar } from '@keboola/indigo-ui';
 import RoutesStore from '../../../../../stores/RoutesStore';
 import StorageApiTableLinkEx from '../../../../components/react/components/StorageApiTableLinkEx';

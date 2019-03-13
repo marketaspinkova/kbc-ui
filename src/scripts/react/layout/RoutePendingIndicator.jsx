@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Loader } from '@keboola/indigo-ui';
 
@@ -6,7 +7,7 @@ import { Loader } from '@keboola/indigo-ui';
 */
 export default React.createClass({
   propTypes: {
-    timeout: React.PropTypes.number
+    timeout: PropTypes.number
   },
 
   getInitialState() {

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router';
 import { Map, List, fromJS } from 'immutable';
@@ -38,22 +39,22 @@ export default React.createClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {
-    bucket: React.PropTypes.object.isRequired,
-    transformation: React.PropTypes.object.isRequired,
-    editingFields: React.PropTypes.object.isRequired,
-    isEditingValid: React.PropTypes.bool.isRequired,
-    isQueriesProcessing: React.PropTypes.bool.isRequired,
-    transformations: React.PropTypes.object.isRequired,
-    pendingActions: React.PropTypes.object.isRequired,
-    tables: React.PropTypes.object.isRequired,
-    buckets: React.PropTypes.object.isRequired,
-    bucketId: React.PropTypes.string.isRequired,
-    transformationId: React.PropTypes.string.isRequired,
-    openInputMappings: React.PropTypes.object.isRequired,
-    openOutputMappings: React.PropTypes.object.isRequired,
-    showDetails: React.PropTypes.bool.isRequired,
-    highlightQueryNumber: React.PropTypes.number,
-    highlightingQueryDisabled: React.PropTypes.bool
+    bucket: PropTypes.object.isRequired,
+    transformation: PropTypes.object.isRequired,
+    editingFields: PropTypes.object.isRequired,
+    isEditingValid: PropTypes.bool.isRequired,
+    isQueriesProcessing: PropTypes.bool.isRequired,
+    transformations: PropTypes.object.isRequired,
+    pendingActions: PropTypes.object.isRequired,
+    tables: PropTypes.object.isRequired,
+    buckets: PropTypes.object.isRequired,
+    bucketId: PropTypes.string.isRequired,
+    transformationId: PropTypes.string.isRequired,
+    openInputMappings: PropTypes.object.isRequired,
+    openOutputMappings: PropTypes.object.isRequired,
+    showDetails: PropTypes.bool.isRequired,
+    highlightQueryNumber: PropTypes.number,
+    highlightingQueryDisabled: PropTypes.bool
   },
 
   // TODO move this to component definition UI Options

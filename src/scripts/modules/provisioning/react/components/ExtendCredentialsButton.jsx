@@ -1,11 +1,12 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {Loader} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
-    isExtending: React.PropTypes.bool.isRequired,
-    onExtend: React.PropTypes.func.isRequired,
-    disabled: React.PropTypes.bool.isRequired
+    isExtending: PropTypes.bool.isRequired,
+    onExtend: PropTypes.func.isRequired,
+    disabled: PropTypes.bool.isRequired
   },
 
   render: function() {

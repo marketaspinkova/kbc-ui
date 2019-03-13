@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { Label } from 'react-bootstrap';
 import Modal from '../modals/ValidateQueriesModal';
 

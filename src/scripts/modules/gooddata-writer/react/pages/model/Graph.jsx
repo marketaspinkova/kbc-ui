@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
@@ -7,7 +8,7 @@ import graphUtils from '../../../../../utils/graphUtils';
 
 export default React.createClass({
   propTypes: {
-    model: React.PropTypes.object.isRequired
+    model: PropTypes.object.isRequired
   },
   mixins: [ImmutableRenderMixin],
 

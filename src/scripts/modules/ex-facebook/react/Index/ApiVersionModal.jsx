@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Modal, FormControl, FormGroup, ControlLabel, Form, Col} from 'react-bootstrap';
 import { ExternalLink } from '@keboola/indigo-ui';
@@ -8,9 +9,9 @@ export default React.createClass({
   mixins: [PureRenderMixin],
 
   propTypes: {
-    onHide: React.PropTypes.func.isRequired,
-    show: React.PropTypes.bool.isRequired,
-    isSaving: React.PropTypes.bool.isRequired,
+    onHide: PropTypes.func.isRequired,
+    show: PropTypes.bool.isRequired,
+    isSaving: PropTypes.bool.isRequired,
     localState: PropTypes.object.isRequired,
     onSave: PropTypes.func.isRequired,
     updateLocalState: PropTypes.func.isRequired,

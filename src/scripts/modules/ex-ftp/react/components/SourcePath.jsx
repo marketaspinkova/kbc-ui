@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
 import { Col, Checkbox, ControlLabel, FormGroup, FormControl, HelpBlock } from 'react-bootstrap';
 import CsvDelimiterInput from '../../../../react/common/CsvDelimiterInput';

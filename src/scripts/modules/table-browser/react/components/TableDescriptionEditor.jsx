@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import InlineEditArea  from '../../../../react/common/InlineEditArea';
 import MetadataEditField from '../../../components/react/components/MetadataEditField';
 

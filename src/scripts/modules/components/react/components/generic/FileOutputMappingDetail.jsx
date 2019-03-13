@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { Check } from '@keboola/indigo-ui';
@@ -7,7 +8,7 @@ export default React.createClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {
-    value: React.PropTypes.object.isRequired
+    value: PropTypes.object.isRequired
   },
 
   render() {

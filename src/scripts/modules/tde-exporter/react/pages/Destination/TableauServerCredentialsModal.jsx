@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import _ from 'underscore';
 import { Map } from 'immutable';
@@ -6,10 +7,10 @@ import { Loader } from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
-    saveCredentialsFn: React.PropTypes.func.isRequired,
-    credentials: React.PropTypes.object,
-    localState: React.PropTypes.object,
-    updateLocalState: React.PropTypes.func
+    saveCredentialsFn: PropTypes.func.isRequired,
+    credentials: PropTypes.object,
+    localState: PropTypes.object,
+    updateLocalState: PropTypes.func
   },
 
   getInitialState() {

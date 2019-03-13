@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { Link } from 'react-router';
 import { Modal, Button, Alert } from 'react-bootstrap';
 import Tooltip from '../../../../react/common/Tooltip';

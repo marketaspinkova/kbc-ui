@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import Clipboard from '../../../../react/common/Clipboard';
 
 const TokenString = ({token, sendTokenComponent}) => {

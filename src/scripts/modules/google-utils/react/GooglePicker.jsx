@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import _ from 'underscore';
 import {Button} from 'react-bootstrap';
@@ -54,15 +55,15 @@ export default React.createClass({
   displayName: 'googlePicker',
   mixins: [createStoreMixin(GapiStore)],
   propTypes: {
-    dialogTitle: React.PropTypes.string.isRequired,
-    buttonLabel: React.PropTypes.node.isRequired,
-    onPickedFn: React.PropTypes.func.isRequired,
-    views: React.PropTypes.array,
-    viewGroups: React.PropTypes.array,
-    email: React.PropTypes.string,
-    buttonProps: React.PropTypes.object,
-    requireSheetsApi: React.PropTypes.bool,
-    multiselectEnabled: React.PropTypes.bool
+    dialogTitle: PropTypes.string.isRequired,
+    buttonLabel: PropTypes.node.isRequired,
+    onPickedFn: PropTypes.func.isRequired,
+    views: PropTypes.array,
+    viewGroups: PropTypes.array,
+    email: PropTypes.string,
+    buttonProps: PropTypes.object,
+    requireSheetsApi: PropTypes.bool,
+    multiselectEnabled: PropTypes.bool
   },
 
   getDefaultProps() {

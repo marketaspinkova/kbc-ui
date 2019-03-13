@@ -1,13 +1,14 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import FileSize from '../../../react/common/FileSize';
 import ModalHandler from '../sliced-files-downloader/ModalHandler';
 
 export default React.createClass({
   propTypes: {
-    file: React.PropTypes.object,
-    showFilesize: React.PropTypes.bool,
-    linkClass: React.PropTypes.string,
-    children: React.PropTypes.any
+    file: PropTypes.object,
+    showFilesize: PropTypes.bool,
+    linkClass: PropTypes.string,
+    children: PropTypes.any
   },
 
   getDefaultProps() {

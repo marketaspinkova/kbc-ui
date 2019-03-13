@@ -1,5 +1,7 @@
 /* eslint-disable react/no-multi-comp */
 // ^ due to false positive
+import PropTypes from 'prop-types';
+
 import React from 'react';
 import { Link } from 'react-router';
 import RoutesStore from '../../stores/RoutesStore';
@@ -162,7 +164,7 @@ export default {
         return ApplicationActionCreators.sendNotification({
           message: React.createClass({
             propTypes: {
-              onClick: React.PropTypes.func.isRequired
+              onClick: PropTypes.func.isRequired
             },
 
             render() {
@@ -542,7 +544,7 @@ export default {
         return ApplicationActionCreators.sendNotification({
           message: React.createClass({
             propTypes: {
-              onClick: React.PropTypes.func.isRequired
+              onClick: PropTypes.func.isRequired
             },
 
             render() {
@@ -613,7 +615,7 @@ export default {
           return ApplicationActionCreators.sendNotification({
             message: React.createClass({
               propTypes: {
-                onClick: React.PropTypes.func.isRequired
+                onClick: PropTypes.func.isRequired
               },
 
               render() {

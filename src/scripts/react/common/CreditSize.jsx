@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 export function convertToCredits(nanoCredits, precision) {
@@ -6,7 +7,7 @@ export function convertToCredits(nanoCredits, precision) {
 
 export default React.createClass({
   propTypes: {
-    nanoCredits: React.PropTypes.number
+    nanoCredits: PropTypes.number
   },
 
   render() {

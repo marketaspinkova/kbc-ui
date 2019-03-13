@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import Tooltip from '../../../../react/common/Tooltip';
@@ -7,12 +8,12 @@ const MODE_BUTTON = 'button', MODE_LINK = 'link';
 
 export default React.createClass({
   propTypes: {
-    onClick: React.PropTypes.func.isRequired,
-    isPending: React.PropTypes.bool.isRequired,
-    label: React.PropTypes.string,
-    buttonDisabled: React.PropTypes.bool,
-    mode: React.PropTypes.oneOf([MODE_BUTTON, MODE_LINK]),
-    tooltipPlacement: React.PropTypes.string
+    onClick: PropTypes.func.isRequired,
+    isPending: PropTypes.bool.isRequired,
+    label: PropTypes.string,
+    buttonDisabled: PropTypes.bool,
+    mode: PropTypes.oneOf([MODE_BUTTON, MODE_LINK]),
+    tooltipPlacement: PropTypes.string
   },
 
   getDefaultProps() {

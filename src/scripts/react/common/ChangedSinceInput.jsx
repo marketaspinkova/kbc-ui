@@ -1,6 +1,8 @@
 /*
    ChangedSinceInput
  */
+import PropTypes from 'prop-types';
+
 import React from 'react';
 import { Creatable } from 'react-select';
 import changedSinceOptionCreator from './changedSinceOptionCreator';
@@ -75,10 +77,10 @@ export default React.createClass({
   ],
 
   propTypes: {
-    onChange: React.PropTypes.func.isRequired,
-    value: React.PropTypes.string,
-    disabled: React.PropTypes.bool.isRequired,
-    helpBlock: React.PropTypes.string
+    onChange: PropTypes.func.isRequired,
+    value: PropTypes.string,
+    disabled: PropTypes.bool.isRequired,
+    helpBlock: PropTypes.string
   },
 
   getSelectOptions() {

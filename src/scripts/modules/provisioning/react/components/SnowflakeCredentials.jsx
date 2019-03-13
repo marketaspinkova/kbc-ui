@@ -1,11 +1,12 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Protected, Loader } from '@keboola/indigo-ui';
 import Clipboard from '../../../../react/common/Clipboard';
 
 export default React.createClass({
   propTypes: {
-    credentials: React.PropTypes.object,
-    isCreating: React.PropTypes.bool
+    credentials: PropTypes.object,
+    isCreating: PropTypes.bool
   },
 
   render() {

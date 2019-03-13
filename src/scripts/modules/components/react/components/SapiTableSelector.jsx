@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Select from 'react-select';
 import storageActionCreators from '../../StorageActionCreators';
@@ -8,14 +9,14 @@ export default React.createClass({
   mixins: [createStoreMixin(storageTablesStore)],
 
   propTypes: {
-    onSelectTableFn: React.PropTypes.func.isRequired,
-    placeholder: React.PropTypes.string.isRequired,
-    value: React.PropTypes.string,
-    excludeTableFn: React.PropTypes.func,
-    allowedBuckets: React.PropTypes.array,
-    disabled: React.PropTypes.bool,
-    clearable: React.PropTypes.bool,
-    autoFocus: React.PropTypes.bool
+    onSelectTableFn: PropTypes.func.isRequired,
+    placeholder: PropTypes.string.isRequired,
+    value: PropTypes.string,
+    excludeTableFn: PropTypes.func,
+    allowedBuckets: PropTypes.array,
+    disabled: PropTypes.bool,
+    clearable: PropTypes.bool,
+    autoFocus: PropTypes.bool
   },
 
   getDefaultProps() {

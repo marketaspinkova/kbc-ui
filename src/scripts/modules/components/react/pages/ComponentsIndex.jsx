@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Map } from 'immutable';
 
@@ -27,7 +28,7 @@ const TEXTS = {
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore, ComponentsStore)],
   propTypes: {
-    type: React.PropTypes.string.isRequired
+    type: PropTypes.string.isRequired
   },
   getStateFromStores() {
     const components = ComponentsStore.getFilteredForType(this.props.type)

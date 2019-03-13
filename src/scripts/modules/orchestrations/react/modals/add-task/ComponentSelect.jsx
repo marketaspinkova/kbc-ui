@@ -1,12 +1,13 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ComponentIcon from '../../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../../react/common/ComponentName';
 
 export default React.createClass({
   propTypes: {
-    components: React.PropTypes.object.isRequired,
-    orchestrations: React.PropTypes.object.isRequired,
-    onComponentSelect: React.PropTypes.func.isRequired
+    components: PropTypes.object.isRequired,
+    orchestrations: PropTypes.object.isRequired,
+    onComponentSelect: PropTypes.func.isRequired
   },
 
   render() {

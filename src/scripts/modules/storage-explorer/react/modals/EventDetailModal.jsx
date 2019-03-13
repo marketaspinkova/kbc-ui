@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { Table, Button, Modal, Alert, Row } from 'react-bootstrap';
 import { ExternalLink, Tree } from '@keboola/indigo-ui';
 import { format } from '../../../../utils/date';

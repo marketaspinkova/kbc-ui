@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import moment from 'moment';
 import { Map } from 'immutable';
@@ -14,9 +15,9 @@ export default React.createClass({
   mixins: [createStoreMixin(TablesStore)],
 
   propTypes: {
-    tableId: React.PropTypes.string.isRequired,
-    linkLabel: React.PropTypes.string,
-    children: React.PropTypes.any
+    tableId: PropTypes.string.isRequired,
+    linkLabel: PropTypes.string,
+    children: PropTypes.any
   },
 
   getStateFromStores() {

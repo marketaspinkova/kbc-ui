@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {Link} from 'react-router';
 import {Routes} from '../../Constants';
@@ -8,11 +9,11 @@ const {GENERIC_DETAIL_PREFIX} = Routes;
 export default React.createClass({
 
   propTypes: {
-    componentId: React.PropTypes.string.isRequired,
-    configId: React.PropTypes.string.isRequired,
-    message: React.PropTypes.string,
-    linkLabel: React.PropTypes.string,
-    onClick: React.PropTypes.func
+    componentId: PropTypes.string.isRequired,
+    configId: PropTypes.string.isRequired,
+    message: PropTypes.string,
+    linkLabel: PropTypes.string,
+    onClick: PropTypes.func
   },
 
   getDefaultProps() {

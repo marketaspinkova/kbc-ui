@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import {Map} from 'immutable';
@@ -9,11 +10,11 @@ export default React.createClass({
   displayName: 'QueryTable',
   mixins: [ImmutableRenderMixin],
   propTypes: {
-    queries: React.PropTypes.object,
-    configurationId: React.PropTypes.string,
-    componentId: React.PropTypes.string,
-    pendingActions: React.PropTypes.object,
-    isRowConfiguration: React.PropTypes.bool
+    queries: PropTypes.object,
+    configurationId: PropTypes.string,
+    componentId: PropTypes.string,
+    pendingActions: PropTypes.object,
+    isRowConfiguration: PropTypes.bool
   },
 
   render() {

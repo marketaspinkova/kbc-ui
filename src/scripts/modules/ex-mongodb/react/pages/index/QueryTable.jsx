@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Map } from 'immutable';
 
@@ -7,11 +8,11 @@ import CreateQueryElement from '../../components/CreateQueryElement';
 
 export default React.createClass({
   propTypes: {
-    queries: React.PropTypes.object,
-    configurationId: React.PropTypes.string,
-    componentId: React.PropTypes.string,
-    pendingActions: React.PropTypes.object,
-    actionCreators: React.PropTypes.object
+    queries: PropTypes.object,
+    configurationId: PropTypes.string,
+    componentId: PropTypes.string,
+    pendingActions: PropTypes.object,
+    actionCreators: PropTypes.object
   },
   render() {
     return (

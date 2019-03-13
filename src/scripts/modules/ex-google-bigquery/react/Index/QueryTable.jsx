@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import {Check} from '@keboola/indigo-ui';
 
@@ -13,8 +14,8 @@ import {Link} from 'react-router';
 
 export default React.createClass({
   propTypes: {
-    componentId: React.PropTypes.string.isRequired,
-    queryDetailRoute: React.PropTypes.string.isRequired,
+    componentId: PropTypes.string.isRequired,
+    queryDetailRoute: PropTypes.string.isRequired,
     configId: PropTypes.string.isRequired,
     deleteQueryFn: PropTypes.func.isRequired,
     isPendingFn: PropTypes.func.isRequired,

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
@@ -9,16 +10,16 @@ import SapiTableLinkEx from '../../../../components/react/components/StorageApiT
 
 export default React.createClass({
   propTypes: {
-    table: React.PropTypes.object.isRequired,
-    configId: React.PropTypes.string.isRequired,
-    tdeFile: React.PropTypes.object,
-    deleteRowFn: React.PropTypes.func,
-    prepareRunDataFn: React.PropTypes.func,
-    configData: React.PropTypes.object,
-    uploadComponentId: React.PropTypes.string,
-    tdeFileName: React.PropTypes.string,
-    uploadComponentIdSetFn: React.PropTypes.func,
-    isDeleted: React.PropTypes.bool
+    table: PropTypes.object.isRequired,
+    configId: PropTypes.string.isRequired,
+    tdeFile: PropTypes.object,
+    deleteRowFn: PropTypes.func,
+    prepareRunDataFn: PropTypes.func,
+    configData: PropTypes.object,
+    uploadComponentId: PropTypes.string,
+    tdeFileName: PropTypes.string,
+    uploadComponentIdSetFn: PropTypes.func,
+    isDeleted: PropTypes.bool
   },
 
   render() {

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
@@ -7,7 +8,7 @@ import CredentialsActionCreators from '../../../provisioning/ActionCreators';
 
 export default React.createClass({
   propTypes: {
-    isAutoLoad: React.PropTypes.bool.isRequired
+    isAutoLoad: PropTypes.bool.isRequired
   },
 
   mixins: [createStoreMixin(SnowflakeSandboxCredentialsStore)],

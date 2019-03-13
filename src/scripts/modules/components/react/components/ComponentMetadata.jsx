@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
@@ -8,8 +9,8 @@ export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore), immutableMixin],
 
   propTypes: {
-    componentId: React.PropTypes.string.isRequired,
-    configId: React.PropTypes.string.isRequired
+    componentId: PropTypes.string.isRequired,
+    configId: PropTypes.string.isRequired
   },
 
   getStateFromStores() {

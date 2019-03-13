@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import TableRow from './EventsTableRow';
 import { Loader } from '@keboola/indigo-ui';
@@ -7,10 +8,10 @@ export default React.createClass({
   mixins: [PureRendererMixin],
 
   propTypes: {
-    events: React.PropTypes.object.isRequired,
-    link: React.PropTypes.object.isRequired,
-    isLoading: React.PropTypes.bool.isRequired,
-    onEventSelect: React.PropTypes.func
+    events: PropTypes.object.isRequired,
+    link: PropTypes.object.isRequired,
+    isLoading: PropTypes.bool.isRequired,
+    onEventSelect: PropTypes.func
   },
 
   render() {

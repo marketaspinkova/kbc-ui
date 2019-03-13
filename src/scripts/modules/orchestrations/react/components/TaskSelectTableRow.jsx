@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
@@ -7,9 +8,9 @@ import { Tree } from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
-    task: React.PropTypes.object.isRequired,
-    component: React.PropTypes.object,
-    onTaskUpdate: React.PropTypes.func.isRequired
+    task: PropTypes.object.isRequired,
+    component: PropTypes.object,
+    onTaskUpdate: PropTypes.func.isRequired
   },
 
   render() {
