@@ -1,13 +1,22 @@
 import React from 'react';
 import { ExternalLink } from '@keboola/indigo-ui';
 import _ from 'underscore';
+
 import contactSupport from '../../utils/contactSupport';
+import WishlistModalDialog from './wishlist/WishlistModalDialog';
+import { sendWishlistRequest } from './wishlist/WishlistApi';
 
 export default React.createClass({
   propTypes: {
     urlTemplates: React.PropTypes.object.isRequired,
     currentProject: React.PropTypes.object.isRequired,
     xsrf: React.PropTypes.string.isRequired
+  },
+
+  getInitialState() {
+    return {
+      showWishlistModal: false
+    };
   },
 
   render() {
@@ -39,19 +48,40 @@ export default React.createClass({
             </a>
           </li>
           <li>
-            <ExternalLink href="https://portal.productboard.com/ltulbdlwnurf2accjn3ukkww">
+            <a href="" onClick={this.openWishlistModal}>
               <span className="fa fa-tasks" />
               {' Feature Wishlist '}
-            </ExternalLink>
+            </a>
           </li>
         </ul>
+
+        <WishlistModalDialog
+          show={this.state.showWishlistModal}
+          onSubmit={this.handleSubmit}
+          onHide={this.closeWishlistModal}
+        />
       </div>
     );
   },
 
-  openSupportModal(e) {
-    contactSupport({type: 'project'});
-    e.preventDefault();
-    e.stopPropagation();
+  handleSubmit(description) {
+    return sendWishlistRequest({
+      description,
+      xsrf: this.props.xsrf
+    });
   },
+
+  openSupportModal(e) {
+    e.preventDefault();
+    contactSupport({ type: 'project' });
+  },
+
+  openWishlistModal(e) {
+    e.preventDefault();
+    this.setState({ showWishlistModal: true });
+  },
+
+  closeWishlistModal() {
+    this.setState({ showWishlistModal: false });
+  }
 });
