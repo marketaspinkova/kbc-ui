@@ -75,7 +75,7 @@ export default React.createClass({
             runParams={() => {
               return runParams;
             }}
-          >You are about to run extraction</RunExtractionButton>
+          >You are about to run an extraction</RunExtractionButton>
         </span>
       </Link>
     );

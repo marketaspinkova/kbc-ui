@@ -8,12 +8,12 @@ import {Modal, Tabs, Tab} from 'react-bootstrap';
 import {ExternalLink} from '@keboola/indigo-ui';
 import Select from 'react-select';
 
-const NAME_HELP = 'Helps describing the query and also used to prefix output tables name resulting from the query if they differ.';
-const ENDPOINT_HELP = 'Url part of Facebook Graph API request specifying node-id and/or edge-name, e.g. feed, me/photos etc. Can be empty.';
-const FIELDS_HELP = 'Parameter of Facebook Graph API nested request specifying fields and/or additional parameters of the endpoint.';
-const SINCE_HELP = 'Parameter of Facebook Graph API nested request. Applies only if endpoint parameter is given and specifies the date since data of the given endpoint will be retrieved. Can by specified absolutely(yyyy-mm-dd) or relatively(e.g. 15 days ago)';
-const UNTIL_HELP = 'Parameter of Facebook Graph API nested request. Applies only if endpoint parameter is given and specifies the date until data of the given endpoint will be retrieved. Can by specified absolutely(yyyy-mm-dd) or relatively(e.g. 15 days ago)';
-const LIMIT_HELP = 'Parameter of Facebook Graph API nested request. Specifies size of data returned in one page of the request. Maximum is 100, default 25.';
+const NAME_HELP = 'Helps describe the query and is also used to prefix names of output tables resulting from the query if they differ.';
+const ENDPOINT_HELP = 'URL part of the Facebook Graph API request specifying node-id and/or edge-name, e.g. feed, me/photos etc. Can be empty.';
+const FIELDS_HELP = 'Parameter of the Facebook Graph API nested request specifying fields and/or additional parameters of the endpoint.';
+const SINCE_HELP = 'Parameter of the Facebook Graph API nested request. Applies only if the endpoint parameter is given and specifies the date since data of the given endpoint will be retrieved. Can by specified absolutely (yyyy-mm-dd) or relatively (e.g. 15 days ago)';
+const UNTIL_HELP = 'Parameter of the Facebook Graph API nested request. Applies only if the endpoint parameter is given and specifies the date until data of the given endpoint will be retrieved. Can by specified absolutely (yyyy-mm-dd) or relatively (e.g. 15 days ago)';
+const LIMIT_HELP = 'Parameter of the Facebook Graph API nested request. Specifies the size of data returned in one page of the request. Maximum is 100, the default 25.';
 
 export default React.createClass({
 
@@ -101,7 +101,7 @@ export default React.createClass({
 
   nameInvalidReason() {
     const name = this.query('name');
-    if (name && !(/^[a-zA-Z0-9_.]+$/.test(name))) return 'Can only contain alphanumeric characters, underscore or dot.';
+    if (name && !(/^[a-zA-Z0-9_.]+$/.test(name))) return 'Can only contain alphanumeric characters, underscores and dots.';
     return null;
   },
 
@@ -211,7 +211,7 @@ export default React.createClass({
         onChange={this.onSelectAccount}/>
     );
     const descFn = this.props.accountDescFn;
-    const accountsHelp = `Specifies ${descFn('page')} that will be applied to the query. Could be either none, all or one of the selected ${descFn('pages')}. It is represented by Facebook Graph API nested request parameter ids.`;
+    const accountsHelp = `Specifies ${descFn('page')} that will be applied to the query. Could be either none, all or one of the selected ${descFn('pages')}. It is represented by the Facebook Graph API nested request parameter ids.`;
     return this.renderFormControl(this.props.accountDescFn('Pages'), selectControl, accountsHelp);
   },
 

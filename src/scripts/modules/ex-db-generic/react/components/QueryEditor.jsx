@@ -192,14 +192,14 @@ export default React.createClass({
     if (Immutable.is(query.get('primaryKey'), destinationPKs)) {
       return (
         <div className="help-block">
-          The output table already exists so the primary key cannot be changed here.
+          The output table already exists, so the primary key cannot be changed here.
         </div>
       );
     } else {
       return (
         <div className="help-block">
           <span className="text-warning">
-            The existing output table primary key is different than that saved here.
+            The primary key of the existing output table is different than the one saved here.
           </span>
           {' '}
           <a
@@ -208,7 +208,7 @@ export default React.createClass({
               this.handlePrimaryKeyChange(destinationPKs);
             }}
           >
-            Set primary key from output table.
+            Set the primary key from the output table.
           </a>
         </div>
       );
@@ -395,7 +395,7 @@ export default React.createClass({
         <Alert bsStyle="warning">
           It is recommended to enable incremental loading if using incremental fetching.
           If incremental loading is <strong>not</strong> enabled,
-          the storage table will only ever contain the most recently fetched results.
+          the storage table will always contain only the most recently fetched results.
         </Alert>
       );
     }
@@ -413,7 +413,7 @@ export default React.createClass({
           </label>
           <div className="help-block">
             If incremental load is turned on, the table will be updated instead of rewritten.
-            Tables with primary keys will update rows, tables without primary keys will append rows.
+            Tables with a primary key will have rows updated, tables without a primary key will have rows appended.
             {helpAlert}
           </div>
         </div>
@@ -521,7 +521,7 @@ export default React.createClass({
             options={columnsOptions}
           />
           <HelpBlock>
-            If you only need to exclude a couple columns, you can{' '}
+            If you only need to exclude a couple of columns, you can{' '}
             <Button
               bsStyle="link"
               className="btn-link-inline"
@@ -551,14 +551,14 @@ export default React.createClass({
     } else if (this.props.componentId === 'keboola.ex-db-mysql' && !this.props.credentialsHasDatabase) {
       return (
         <div className="help-block">
-          <i className="fa fa-exclamation-triangle"/> This connection does not have a database specified so please be sure to prefix table names with the schema
+          <i className="fa fa-exclamation-triangle"/> This connection does not have a database specified, so please be sure to prefix table names with the schema
           <br/>(e.g. `schemaName`.`tableName`)
         </div>
       );
     } else if (this.props.componentId === 'keboola.ex-db-snowflake' && !this.props.credentialsHasSchema) {
       return (
         <div className="help-block">
-          <i className="fa fa-exclamation-triangle"/> This connection does not have a schema specified so please be sure to prefix table names with the schema
+          <i className="fa fa-exclamation-triangle"/> This connection does not have a schema specified, so please be sure to prefix table names with the schema
           <br/>(e.g. &quot;schemaName&quot;.&quot;tableName&quot;)
         </div>
       );
@@ -655,7 +655,7 @@ export default React.createClass({
               <strong>{lastFetchedRowValue}</strong>
             </div>
             <div className="help-block">
-              To start from the beginning of the table you can
+              To start from the beginning of the table, you can
               {' '}
               <a onClick={this.handleStateReset}>
                 <Tooltip
@@ -710,7 +710,7 @@ export default React.createClass({
             ' not deletes.';
         }
       } else {
-        infoMessage = 'In order to enable incremental fetching the source table must contain a timestamp column or' +
+        infoMessage = 'In order to enable incremental fetching, the source table must contain a timestamp column or' +
           ' an auto-incrementing primary key';
       }
     }

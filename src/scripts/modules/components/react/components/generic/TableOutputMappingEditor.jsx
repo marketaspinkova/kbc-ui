@@ -222,7 +222,7 @@ the source file data will be loaded to - you can create a new table or use an ex
                 placeholder="Add a column to primary key..."
                 emptyStrings={false}
                 noResultsText="No matching column found"
-                help="Primary key of the table in Storage. If the table already exists, primary key must match."
+                help="Primary key of the table in Storage. If the table already exists, the primary key must match."
                 onChange={this._handleChangePrimaryKey}
                 options={this._getColumns()
                   .map(option => ({

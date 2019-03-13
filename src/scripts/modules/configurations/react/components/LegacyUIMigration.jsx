@@ -52,7 +52,7 @@ export default React.createClass({
 
   render() {
     return (
-      <AlertBlock type="warning" title="This configuration is in a legacy format">
+      <AlertBlock type="warning" title="This configuration is in the legacy format">
         <div className="row">
           <div className="col-md-9">
             <p>Please migrate the configuration to the newest format to unlock the latest features.</p>

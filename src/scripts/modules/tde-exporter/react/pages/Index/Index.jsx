@@ -117,7 +117,7 @@ export default React.createClass({
                 return { config: this.state.configId };
               }}
             >
-              You are about to run export of all configured tables to TDE
+              You are about to run an export of all configured tables to TDE
             </RunButtonModal>
           </li>
           <li>{this._renderSetupDestinationLink()}</li>

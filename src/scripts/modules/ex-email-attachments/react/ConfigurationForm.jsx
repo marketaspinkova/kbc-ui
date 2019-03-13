@@ -98,7 +98,7 @@ export default React.createClass({
               value={this.props.delimiter}
               onChange={this.onChangeDelimiter}
               help={(
-                <span>Field delimiter used in CSV file. Default value is <code>,</code>. Use <code>\t</code> for tabulator.</span>)}
+                <span>Field delimiter used in the CSV file. The default value is <code>,</code>. Use <code>\t</code> for tabulator.</span>)}
               disabled={false}
             />
             <FormGroup>
@@ -108,11 +108,11 @@ export default React.createClass({
               <Col sm={8}>
                 <FormControl
                   type="text"
-                  placeholder="Field enclosure used in CSV files"
+                  placeholder="Field enclosure used in the CSV files"
                   value={this.props.enclosure}
                   onChange={this.onChangeEnclosure}
                 />
-                <HelpBlock>Field enclosure used in CSV file. Default value is <code>&quot;</code>.</HelpBlock>
+                <HelpBlock>Field enclosure used in the CSV file. The default value is <code>&quot;</code>.</HelpBlock>
               </Col>
             </FormGroup>
             <FormGroup>
@@ -130,7 +130,7 @@ export default React.createClass({
                   emptyStrings={false}
                   onChange={this.onChangePrimaryKey}
                 />
-                <HelpBlock>Primary key of the table. If primary key is set, updates can be done on table by selecting <strong>incremental loads</strong>. Primary key can consist of multiple columns.</HelpBlock>
+                <HelpBlock>Primary key of the table. If a primary key is set, updates can be done on the table by selecting <strong>incremental loads</strong>. The primary key can consist of multiple columns.</HelpBlock>
               </Col>
             </FormGroup>
             <FormGroup>
@@ -140,8 +140,8 @@ export default React.createClass({
                   onChange={this.onChangeIncremental}>
                   Incremental load
                 </Checkbox>
-                <HelpBlock>If incremental load is turned on, table will be updated instead of rewritten. Tables with
-                  primary key will update rows, tables without primary key will append rows.</HelpBlock>
+                <HelpBlock>If incremental load is turned on, the table will be updated instead of rewritten. Tables with
+                  a primary key will have rows updated, tables without a primary key will have rows appended.</HelpBlock>
               </Col>
             </FormGroup>
           </Form>

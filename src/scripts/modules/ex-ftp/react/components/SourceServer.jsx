@@ -117,7 +117,7 @@ export default React.createClass({
               }}
             />
             <HelpBlock>
-              Only to use with SFTP connection type. You can paste private key with or without
+              Only to use with an SFTP connection type. You can paste a private key with or without
               {' '}<code>---BEGIN/END PRIVATE KEY---</code> block.
             </HelpBlock>
           </Col>

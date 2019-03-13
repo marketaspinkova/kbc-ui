@@ -118,7 +118,7 @@ export default React.createClass({
                 Is permanent
               </Checkbox>
               <HelpBlock>
-                File will be stored permanently (otherwise will be deleted after 180 days)
+                File will be stored permanently (otherwise it will be deleted after 180 days)
               </HelpBlock>
             </Col>
           </FormGroup>

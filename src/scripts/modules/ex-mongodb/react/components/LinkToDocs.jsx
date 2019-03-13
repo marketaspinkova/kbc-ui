@@ -10,7 +10,7 @@ export default React.createClass({
   render() {
     return (
       <p className="small">
-        {'For more information about configuring MongoDB Extractor follow the '}
+        {'For more information on how to configure the MongoDB extractor, follow the '}
         <ExternalLink href={this.props.documentationUrl}>guide</ExternalLink>.
       </p>
     );

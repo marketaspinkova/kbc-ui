@@ -54,8 +54,8 @@ export default React.createClass({
                 value={this.props.query.get('name')}
               />
               <HelpBlock>
-                {this.props.outTableExist && <span className="text-danger">Export with such name already exists.{' '}</span>}
-                Name has to be unique across all exports in current configuration
+                {this.props.outTableExist && <span className="text-danger">Export with this name already exists.{' '}</span>}
+                Names have to be unique across all exports in the current configuration
               </HelpBlock>
             </Col>
           </FormGroup>
@@ -137,7 +137,7 @@ export default React.createClass({
                 <option value="mapping">Mapping</option>
                 <option value="raw">Raw</option>
               </FormControl>
-              <HelpBlock>Mapping mode allows you to define more precise structure. In raw mode, only JSON objects are exported.</HelpBlock>
+              <HelpBlock>Mapping mode allows you to define a more precise structure. In raw mode, only JSON objects are exported.</HelpBlock>
             </Col>
           </FormGroup>
 
@@ -174,7 +174,7 @@ export default React.createClass({
               theme="solarized"
               value={mappingValue}
             />
-            <HelpBlock>Mapping to define structure of exported tables. Has to be valid JSON.</HelpBlock>
+            <HelpBlock>Mapping to define the structure of exported tables. Has to be valid JSON.</HelpBlock>
           </Col>
         </FormGroup>
       );

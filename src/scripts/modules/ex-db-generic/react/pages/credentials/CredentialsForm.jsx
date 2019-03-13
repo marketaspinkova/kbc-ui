@@ -73,7 +73,7 @@ export default React.createClass({
           <FormControl
             type="password"
             disabled={!this.props.enabled}
-            placeholder={(savedValue) ? 'type new password to change it' : ''}
+            placeholder={(savedValue) ? 'type a new password to change it' : ''}
             value={this.props.credentials.get(propName)}
             onChange={this.handleChange.bind(this, propName)}
           />

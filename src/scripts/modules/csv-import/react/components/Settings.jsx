@@ -130,7 +130,7 @@ export default React.createClass({
           onChange={this.onChangeDestination}
           disabled={this.props.disabled}
           label="Destination"
-          help="Table in Storage, where the CSV file will be imported. If the table or bucket does not exist, it will be created."
+          help="Table in Storage where the CSV file will be imported. If the table or bucket does not exist, it will be created."
           onEdit={this.onDestinationEdit}
           editing={this.props.destinationEditing}
         />
@@ -144,7 +144,9 @@ export default React.createClass({
               Incremental Load
             </Checkbox>
             <HelpBlock>
-              If incremental load is turned on, table will be updated instead of rewritten. Tables with primary key will update rows, tables without primary key will append rows.
+              If incremental load is turned on, the table will be updated instead of rewritten.
+              {' '}Tables with a primary key will have rows updated, tables without a primary key
+              {' '}will have rows appended.
             </HelpBlock>
           </Col>
         </FormGroup>
@@ -163,7 +165,9 @@ export default React.createClass({
               disabled={this.props.disabled || this.isExistingTable()}
             />
             <HelpBlock>
-              If primary key is set, updates can be done on table by selecting <strong>incremental loads</strong>. Primary key can consist of multiple columns. Primary key of an existing table cannot be changed.
+              If a primary key is set, updates can be done on the table by selecting
+              {' '}<strong>incremental loads</strong>. The primary key can consist of multiple
+              {' '}columns. The primary key of an existing table cannot be changed.
             </HelpBlock>
           </Col>
         </FormGroup>
@@ -179,7 +183,8 @@ export default React.createClass({
               disabled={this.props.disabled}
             />
             <HelpBlock>
-              Field delimiter used in CSV file. Default value is <code>,</code>. Use <code>\t</code> for tabulator.
+              Field delimiter used in the CSV file. The default value is <code>,</code>.
+              {' '}Use <code>\t</code> for tabulator.
             </HelpBlock>
           </Col>
         </FormGroup>

@@ -126,7 +126,7 @@ export default React.createClass({
   parseUrl(url) {
     if (url.indexOf(ANALYTICS_BASE_URL) !== 0) {
       this.setState({
-        errors: url ? ['Url is not valid direct link to report from Google Analytics Query Explorer.'] : []
+        errors: url ? ['The URL is not a valid direct link to a report from Google Analytics Query Explorer.'] : []
       });
       return null;
     }

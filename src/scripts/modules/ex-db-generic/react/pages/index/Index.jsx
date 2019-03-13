@@ -111,7 +111,7 @@ export default function(componentId) {
       if (!this.state.hasCredentials) {
         return (
           <div className="row component-empty-state text-center">
-            <p>Please setup database credentials for this extractor</p>
+            <p>Please set up database credentials for this extractor</p>
             <button
               className="btn btn-success"
               onClick={this.handleCredentialsSetup}
@@ -293,7 +293,7 @@ export default function(componentId) {
                   disabledReason="There are no tables configured"
                   runParams={function() { return { config: configurationId }; }}
                 >
-                  You are about to run the extraction
+                  You are about to run an extraction
                 </RunComponentButton>
               </li>
               <li>

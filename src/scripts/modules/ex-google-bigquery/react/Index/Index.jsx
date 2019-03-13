@@ -108,7 +108,7 @@ export default React.createClass({
                 disabled={!!this.invalidToRun()}
                 disabledReason={this.invalidToRun()}
               >
-                You are about to run component.
+                You are about to run the component.
               </RunComponentButton>
             </li>
             <li>

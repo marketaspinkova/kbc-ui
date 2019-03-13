@@ -65,7 +65,7 @@ export default function(componentId) {
 
           {!this.state.hasCredentials && (
             <div className="row component-empty-state text-center">
-              <p>Please setup database credentials for this extractor.</p>
+              <p>Please set up database credentials for this extractor.</p>
               <Link to="ex-mongodb-credentials" params={{ config: this.state.configId }}>
                 <button className="btn btn-success">Setup Database Credentials</button>
               </Link>

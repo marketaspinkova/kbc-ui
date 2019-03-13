@@ -157,7 +157,7 @@ export default React.createClass({
               mode="link"
               runParams={() => ({config: this.state.configId})}
             >
-              You are about to run component.
+              You are about to run the component.
             </RunComponentButton>
           </li>
           <li>

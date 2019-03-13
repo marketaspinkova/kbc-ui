@@ -223,7 +223,7 @@ export default React.createClass({
               disabledReason="A Dropbox file must be selected."
               runParams={this.runParams()}
             >
-              You are about to run an extraction of all configured csv files from Dropbox.
+              You are about to run an extraction of all configured CSV files from Dropbox.
             </RunButtonModal>
           </li>
           <li>

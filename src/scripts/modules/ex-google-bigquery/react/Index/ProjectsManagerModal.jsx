@@ -163,8 +163,7 @@ export default React.createClass({
               onChange={(e) => this.updateEditingValue('storage', e.target.value)}
             />
             <HelpBlock>
-              Existing Google Cloud Storage bucket. There will be data temporarily exported,
-              before load to KBC.
+              Existing Google Cloud Storage bucket. Data will be temporarily exported there before being loaded to KBC.
             </HelpBlock>
           </Col>
         </FormGroup>
