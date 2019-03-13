@@ -1,9 +1,9 @@
 import React from 'react';
 import { Popover, OverlayTrigger } from 'react-bootstrap';
-import PureRenderMixin from 'react-immutable-render-mixin';
+import ImmutableRenderMixin from 'react-immutable-render-mixin';
 
 export default React.createClass({
-  mixins: [PureRenderMixin],
+  mixins: [ImmutableRenderMixin],
   render() {
     return (
       <OverlayTrigger overlay={this._renderPopover()}>
