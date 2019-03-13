@@ -1,7 +1,7 @@
 import React from 'react';
 import { Map, fromJS } from 'immutable';
 import keyMirror from 'fbjs/lib/keyMirror';
-import PureRenderMixin from 'react-immutable-render-mixin';
+import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { FormControl, InputGroup, FormGroup } from 'react-bootstrap';
 import ColumnDataPreview from '../../../../components/react/components/ColumnDataPreview';
 import { ColumnTypes, DataTypes, SortOrderOptions } from '../../../constants';
@@ -19,7 +19,7 @@ const visibleParts = keyMirror({
 });
 
 export default React.createClass({
-  mixins: [PureRenderMixin],
+  mixins: [ImmutableRenderMixin],
   propTypes: {
     column: React.PropTypes.object.isRequired,
     referenceableColumns: React.PropTypes.object.isRequired,

@@ -1,11 +1,11 @@
 import React from 'react';
-import PureRenderMixin from 'react-immutable-render-mixin';
+import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { fromJS } from 'immutable';
 import { Button, OverlayTrigger, Popover } from 'react-bootstrap';
 import { truncate } from 'underscore.string';
 
 export default React.createClass({
-  mixins: [PureRenderMixin],
+  mixins: [ImmutableRenderMixin],
 
   propTypes: {
     columnName: React.PropTypes.string.isRequired,
