@@ -1,4 +1,6 @@
 import React from 'react';
+// actions
+import InstalledComponentsActionCreators from '../../../../components/InstalledComponentsActionCreators';
 
 import createReactClass from 'create-react-class';
 
@@ -21,7 +23,6 @@ import tablesLoadSettingsAdapter from '../../../adapters/tablesLoadSettingsAdapt
 import RunComponentButton from '../../../../components/react/components/RunComponentButton';
 import ComponentDescription from '../../../../components/react/components/ComponentDescription';
 import ComponentMetadata from '../../../../components/react/components/ComponentMetadata';
-import DeleteConfigurationButton from '../../../../components/react/components/DeleteConfigurationButton';
 import LatestVersions from '../../../../components/react/components/SidebarVersionsWrapper';
 import SidebarJobsContainer from '../../../../components/react/components/SidebarJobsContainer';
 import {CollapsibleSection} from '../../../../configurations/utils/renderHelpers';
@@ -30,6 +31,7 @@ import ConfiguredTables from './ConfiguredTables';
 import DimensionsSection from '../../components/DimensionsSection';
 import CredentialsContainer from '../../components/CredentialsContainer';
 import TablesLoadSettings from '../../components/TablesLoadSettings';
+import DeleteGoodDataWriterButton from '../../components/DeleteGoodDataWriterButton';
 
 const COMPONENT_ID = 'keboola.gooddata-writer';
 
@@ -66,7 +68,11 @@ export default createReactClass({
     const tableLoadSettingsSectionProps = tablesLoadSettingsAdapter(configProvisioning);
     const credentialsSectionProps = credentialsAdapter(configProvisioning, localStateProvisioning);
 
+    const isDeletingConfig = InstalledComponentsStore.isDeletingConfig(COMPONENT_ID,configurationId);
+
+
     return {
+      isDeletingConfig,
       dimensionsSectionProps,
       tableLoadSettingsSectionProps,
       credentialsSectionProps,
@@ -113,9 +119,11 @@ export default createReactClass({
               </RunComponentButton>
             </li>
             <li>
-              <DeleteConfigurationButton
-                componentId={COMPONENT_ID}
+              <DeleteGoodDataWriterButton
+                renderWithCaption={true}
                 configId={this.state.configurationId}
+                deleteConfigFn={() => InstalledComponentsActionCreators.deleteConfiguration(COMPONENT_ID, this.state.configurationId, true)}
+                isDeletingConfig={this.state.isDeletingConfig}
               />
             </li>
           </ul>
