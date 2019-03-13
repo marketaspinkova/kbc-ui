@@ -1,5 +1,5 @@
 import request from '../../../utils/request';
-import AdminActionError from '../../../utils/AdminActionError';
+import AdminActionError from '../../../utils/errors/AdminActionError';
 
 const createRequest = () => {
   return request('POST', '/admin/index/send-wishlist-request');

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Modal, Form, FormControl, Alert } from 'react-bootstrap';
 import ConfirmButtons from '../../common/ConfirmButtons';
-import AdminActionError from '../../../utils/AdminActionError';
+import AdminActionError from '../../../utils/errors/AdminActionError';
 
 const INITIAL_STATE = {
   description: '',
