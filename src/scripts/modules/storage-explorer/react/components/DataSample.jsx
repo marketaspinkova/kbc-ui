@@ -12,7 +12,7 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      data: [],
+      data: {},
       error: null,
       loading: false,
       filtered: false,
@@ -174,7 +174,7 @@ export default React.createClass({
 
     this.cancellablePromise = dataPreview(this.props.table.get('id'), params)
       .then(json => {
-        this.setState({ data: json || [], loading: false });
+        this.setState({ data: json || {}, loading: false });
       })
       .catch((error) => {
         let errorMessage = null;
@@ -187,7 +187,7 @@ export default React.createClass({
         }
 
         this.setState({
-          data: [],
+          data: {},
           loading: false,
           error: errorMessage
         });
