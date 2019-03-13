@@ -1,4 +1,5 @@
 import React from 'react';
+import Promise from 'bluebird';
 import { Map } from 'immutable';
 import { Tab, Nav, NavItem, NavDropdown, MenuItem, Row } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
@@ -304,7 +305,6 @@ export default React.createClass({
         table={this.state.table}
         onSubmit={this.handleExportTable}
         onHide={this.closeActionModal}
-        isExporting={this.state.exportingTable}
       />
     );
   },
@@ -348,11 +348,17 @@ export default React.createClass({
 
     return exportTable(tableId).then(response => {
       return StorageApi
-        .getFiles({
+        .getFilesWithRetry({
           runId: response.runId,
           'tags[]': ['storage-merged-export']
         })
-        .then(files => files[0]);
+        .then(files => {
+          if (!files || files.length === 0) {
+            return Promise.reject('Loading a file for download failed. Please try again.');
+          }
+
+          return files[0]
+        });
     });
   },
 
