@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { Modal, Form, FormControl, Alert } from 'react-bootstrap';
 import ConfirmButtons from '../../common/ConfirmButtons';
 import AdminActionError from '../../../utils/errors/AdminActionError';
