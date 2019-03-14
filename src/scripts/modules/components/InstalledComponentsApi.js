@@ -138,6 +138,11 @@ const installedComponentsApi = {
       return response.body;
     });
   },
+  getConfigurationRow: function(componentId, configurationId, rowId) {
+    return createRequest('GET', 'components/' + componentId + '/configs/' + configurationId + '/rows/' + rowId).send().promise().then(function(response) {
+      return response.body;
+    });
+  },
   deleteConfigurationRow: function(componentId, configurationId, rowId, changeDescription) {
     const data = {
       changeDescription: changeDescription
