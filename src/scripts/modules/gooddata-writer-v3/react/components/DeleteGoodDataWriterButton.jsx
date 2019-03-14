@@ -5,9 +5,9 @@ import Tooltip from '../../../../react/common/Tooltip';
 import ConfirmModal from '../../../../react/common/ConfirmModal';
 import InstalledComponentsActions from '../../../components/InstalledComponentsActionCreators';
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
-import { loadProvisioningData } from '../../../gooddata-writer-v3/goodDataProvisioning/utils';
+import { loadProvisioningData } from '../../../gooddata-writer-v3/gooddataProvisioning/utils';
 
-import GoodDataProvisioningActions from '../../../gooddata-writer-v3/goodDataProvisioning/actions';
+import GoodDataProvisioningActions from '../../../gooddata-writer-v3/gooddataProvisioning/actions';
 
 const COMPONENT_ID = 'keboola.gooddata-writer';
 
