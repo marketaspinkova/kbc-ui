@@ -138,7 +138,6 @@ export default React.createClass({
       return (
         <span>
           <Select.Creatable
-            emptyStrings={this.props.emptyStrings}
             multi={this.props.multi}
             delimiter={this.props.delimiter}
             optionRenderer={this.props.optionRenderer}
@@ -166,7 +165,6 @@ export default React.createClass({
     return (
       <span>
         <Select
-          emptyStrings={this.props.emptyStrings}
           multi={this.props.multi}
           delimiter={this.props.delimiter}
           optionRenderer={this.props.optionRenderer}
