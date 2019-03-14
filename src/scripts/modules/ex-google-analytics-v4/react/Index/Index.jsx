@@ -103,7 +103,7 @@ export default function(componentId) {
                   disabled={!!this.invalidToRun()}
                   disabledReason={this.invalidToRun()}
                 >
-                  You are about to run component.
+                  You are about to run the component.
                 </RunComponentButton>
               </li>
               {this.hasProfiles() ?

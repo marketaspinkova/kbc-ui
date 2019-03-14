@@ -116,7 +116,7 @@ export default React.createClass({
                 multi={true}
                 onChange={this._handleChangeProcessedTags}
               />
-              <HelpBlock>Add these tags to files that were successfully processed</HelpBlock>
+              <HelpBlock>Add these tags to the files that were successfully processed</HelpBlock>
             </Col>
           </FormGroup>
         </PanelWithDetails>

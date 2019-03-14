@@ -79,7 +79,7 @@ export default React.createClass({
                   return (api ? api.getTableRunParams(configId, tableId) : null) || params;
                 }}
               >
-                {`You are about to run the upload of ${this.props.table.get('id')} to the database.`}
+                {`You are about to run an upload of ${this.props.table.get('id')} to the database.`}
               </RunButtonModal>
             </Tooltip>
           )}

@@ -53,7 +53,7 @@ export default {
           configurationId: configurationId
         });
         return ApplicationActionCreators.sendNotification({
-          message: 'Migration encountered an error. Please rollback to previous version and try again.',
+          message: 'Migration encountered an error. Please roll back to the previous version and try again.',
           type: 'error'
         });
       });

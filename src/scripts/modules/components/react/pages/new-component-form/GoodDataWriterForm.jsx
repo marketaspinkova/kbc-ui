@@ -270,7 +270,7 @@ export default React.createClass({
           <div>
             {'Please '}
             <a onClick={contactSupport}>contact support</a>
-            {' to enable production project.'}
+            {' to enable the production project.'}
           </div>
         )}
       </span>
@@ -328,12 +328,12 @@ export default React.createClass({
                   return this.props.onChange(this.props.configuration.set('readModel', e.target.checked));
                 }}
               />
-              {' Read project model to writer configuration'}
+              {' Read a project model to the writer configuration'}
             </label>
             <p className="help-block">
               {'If checked, data bucket '}
               <code>{'out.c-wr-gooddata-{writer_name}'}</code>
-              {' will be created  along with the configuration. The bucket cannot exist already.'}
+              {' will be created along with the configuration. The bucket cannot exist yet.'}
             </p>
           </div>
         </div>

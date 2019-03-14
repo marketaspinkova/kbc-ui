@@ -202,7 +202,7 @@ export default React.createClass({
     return (
       <span>
         <p>
-          You are about to run load of all tables.
+          You are about to run a load of all tables.
         </p>
       </span>
     );

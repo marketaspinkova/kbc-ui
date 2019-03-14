@@ -248,7 +248,7 @@ export default componentId => {
                   return api && api.getRunParams(this.state.configId) ? api.getRunParams(this.state.configId) : params;
                 }}
               >
-                You are about to run upload of all seleted tables
+                You are about to run an upload of all selected tables
               </RunButtonModal>
             </li>
             <li>

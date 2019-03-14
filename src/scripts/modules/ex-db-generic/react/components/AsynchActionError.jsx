@@ -26,7 +26,7 @@ export default React.createClass({
     if (connectionError) {
       return (
         <Alert bsStyle="warning">
-          <h4>Connecting to the database failed, please check database credentials</h4>
+          <h4>Connecting to the database failed, please check the database credentials</h4>
           <p>{connectionError}</p>
           <p>
             {connectionTesting && (
@@ -40,12 +40,12 @@ export default React.createClass({
     } else if (sourceTablesError) {
       return (
         <Alert bsStyle="danger">
-          <h4>An Error occurred fetching table listing</h4>
+          <h4>An error occurred while fetching the list of tables</h4>
           <p>{sourceTablesError}</p>
           <p>
             {sourceTablesLoading ? (
               <span>
-                <Loader /> Retrying fetch of table list from source database
+                <Loader /> Retrying fetch of the list of tables from the source database
               </span>
             ) : (
               <button

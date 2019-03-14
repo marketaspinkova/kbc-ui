@@ -153,7 +153,7 @@ export default React.createClass({
                 runParams={this.runParams()}
                 disabledReason="Component is not configured yet"
               >
-                You are about to run component.
+                You are about to run the component.
               </RunComponentButton>
             </li>
             <li>

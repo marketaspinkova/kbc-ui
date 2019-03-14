@@ -40,10 +40,10 @@ export default React.createClass({
           <p>
             Facebook has its own specific platform {' '}
             <ExternalLink href="https://developers.facebook.com/docs/apps/versions">versioning</ExternalLink>.
-            If you change the api version some api calls specified in queries may not work resulting in error,
-            or no data as well as data with different columns might be retrieved. To review the api changes
+            If you change the API version, some API calls specified in queries may not work, producing an error,
+            or no data or data with different columns might be retrieved. To review the API changes,
             see <ExternalLink href="https://developers.facebook.com/docs/apps/changelog">changelog</ExternalLink>.
-            The most recent api version is {this.props.defaultVersion}.
+            The most recent API version is {this.props.defaultVersion}.
           </p>
           <Form
             horizontal

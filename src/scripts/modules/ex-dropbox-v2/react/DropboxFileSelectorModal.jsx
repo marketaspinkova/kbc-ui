@@ -59,7 +59,7 @@ export default React.createClass({
           <Tabs className="tabs-inside-modal" activeKey={this.state.activeTab} onSelect={this.goToTab} animation={false}
             id="ex-dropbox-v2-dropbox-file-selector-modal-tabs">
             <Tab eventKey="instant" title="Choose From Dropbox">
-              <p>Please choose a CSV file you want to extract via Dropbox Chooser that uses a pop up window, hence disable windows pop up blocking for this site in the browser settings please.</p>
+              <p>Please choose a CSV file you want to extract via Dropbox Chooser. It uses a pop up window, hence disable pop up blocking for this site in the browser settings.</p>
               <DropboxChooser
                 appKey={'2is8jmvnwbchcyr'}
                 cancel={() => {}}
@@ -133,7 +133,7 @@ export default React.createClass({
               autoFocus={true}
             />
             <span className="help-block">
-              Link to a csv file shared by a Dropbox account
+              Link to a CSV file shared by a Dropbox account
             </span>
           </div>
         </div>
@@ -151,7 +151,7 @@ export default React.createClass({
               autoFocus={true}
             />
             <span className="help-block">
-              Name of the csv file and output table
+              Name of the CSV file and the output table
             </span>
           </div>
         </div>

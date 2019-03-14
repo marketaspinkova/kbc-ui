@@ -20,7 +20,7 @@ export default React.createClass({
       label: 'Clear State',
       disabledTooltip: 'No stored state',
       tooltipPlacement: 'top',
-      tooltip: 'State stores information from the previous run(s) and allows eg. incremental loads.'
+      tooltip: 'State stores information from the previous run(s) and allows e.g. incremental loads.'
     };
   },
 

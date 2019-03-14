@@ -6,15 +6,15 @@ import Select from '../../../../react/common/Select';
 
 const columnsFromOptions = [
   {
-    label: 'Set header manually',
+    label: 'Set the header manually',
     value: 'manual'
   },
   {
-    label: 'Read header from the file(s) header',
+    label: 'Read the header from the file(s) header',
     value: 'header'
   },
   {
-    label: 'Create header automatically',
+    label: 'Create the header automatically',
     value: 'auto'
   }
 ];
@@ -69,7 +69,8 @@ export default React.createClass({
               Decompress
             </Checkbox>
             <HelpBlock>
-              Decompress downloaded file(s). All files in all archives will be imported into a single Storage table.
+              Decompress the downloaded file(s). All files in all archives will be imported into
+              {' '}a single Storage table.
             </HelpBlock>
           </Col>
         </FormGroup>
@@ -103,8 +104,8 @@ export default React.createClass({
               Incremental Load
             </Checkbox>
             <HelpBlock>
-              If incremental load is turned on, table will be updated instead of rewritten. Tables
-              {' '}with primary key will update rows, tables without primary key will append rows.
+              If incremental load is turned on, the table will be updated instead of rewritten.
+              {' '}Tables with a primary key will have rows updated, tables without a primary key will have rows appended.
             </HelpBlock>
           </Col>
         </FormGroup>
@@ -129,7 +130,7 @@ export default React.createClass({
               disabled={this.props.disabled}
             />
             <HelpBlock>
-              Field enclosure used in CSV file. Default value is <code>&quot;</code>.
+              Field enclosure used in the CSV file. The default value is <code>&quot;</code>.
             </HelpBlock>
           </Col>
         </FormGroup>
@@ -193,7 +194,7 @@ export default React.createClass({
               }}
               disabled={this.props.disabled}
             />
-            <div className="help-block">If primary key is set, updates can be done on table by selecting <strong>incremental loads</strong>. Primary key can consist of multiple columns. Primary key of an existing table cannot be changed.</div>
+            <div className="help-block">If a primary key is set, updates can be done on the table by selecting <strong>incremental loads</strong>. The primary key can consist of multiple columns. The primary key of an existing table cannot be changed.</div>
           </div>
         </div>
       </div>

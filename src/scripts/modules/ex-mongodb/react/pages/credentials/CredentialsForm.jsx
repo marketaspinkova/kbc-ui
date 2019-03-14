@@ -70,7 +70,7 @@ export default React.createClass({
         <Col xs={8}>
           <FormControl
             type="password"
-            placeholder={(savedValue) ? 'type new password to change it' : ''}
+            placeholder={(savedValue) ? 'type a new password to change it' : ''}
             value={this.props.credentials.get(propName)}
             onChange={this.handleChange.bind(this, propName)}
           />

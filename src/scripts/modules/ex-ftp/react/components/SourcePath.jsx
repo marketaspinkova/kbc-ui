@@ -6,15 +6,15 @@ import Select from '../../../../react/common/Select';
 
 const columnsFromOptions = [
   {
-    label: 'Set header manually',
+    label: 'Set the header manually',
     value: 'manual'
   },
   {
-    label: 'Read header from the file(s) header',
+    label: 'Read the header from the file(s) header',
     value: 'header'
   },
   {
-    label: 'Create header automatically',
+    label: 'Create the header automatically',
     value: 'auto'
   }
 ];
@@ -61,11 +61,11 @@ export default React.createClass({
             />
             <HelpBlock>
               <span>
-                Exact path to file or glob syntax. Use absolute path for FTP(s) connection and relative for SFTP connection.
+                Exact path to a file or glob syntax. Use an absolute path for FTP(s) connections and a relative path for SFTP connections.
                 <ul>
                   <li><code>**/*.csv</code> will download all CSV files in all subdirectories</li>
                   <li><code>files/*.csv</code> will download all CSV files in files/ directory</li>
-                  <li><code>files/directory/file.txt</code> will download exact TXT file</li>
+                  <li><code>files/directory/file.txt</code> will download a particular text file</li>
                 </ul>
               </span>
             </HelpBlock>
@@ -136,7 +136,7 @@ export default React.createClass({
               Incremental Load
             </Checkbox>
             <HelpBlock>
-              If incremental load is turned on, table will be updated instead of rewritten. Tables with primary key will update rows, tables without primary key will append rows.
+              If incremental load is turned on, the table will be updated instead of rewritten. Tables with a primary key will have rows updated, tables without a primary key will have rows appended.
             </HelpBlock>
           </Col>
         </FormGroup>
@@ -165,7 +165,7 @@ export default React.createClass({
               placeholder={'"'}
             />
             <HelpBlock>
-              Field enclosure used in CSV file. Default value is <code>&quot;</code>.
+              Field enclosure used in the CSV file. The default value is <code>&quot;</code>.
             </HelpBlock>
           </Col>
         </FormGroup>
@@ -231,7 +231,7 @@ export default React.createClass({
               disabled={this.props.disabled}
             />
             <HelpBlock>
-              If primary key is set, updates can be done on table by selecting <strong>incremental loads</strong>. Primary key can consist of multiple columns. Primary key of an existing table cannot be changed.
+              If a primary key is set, updates can be done on the table by selecting <strong>incremental loads</strong>. The primary key can consist of multiple columns. The primary key of an existing table cannot be changed.
             </HelpBlock>
           </div>
         </div>

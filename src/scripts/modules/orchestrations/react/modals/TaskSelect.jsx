@@ -41,7 +41,7 @@ export default React.createClass({
           </Modal.Header>
           <Modal.Body>
             <div>
-              <p>You are about to run orchestration again</p>
+              <p>You are about to run the orchestration again</p>
               <TaskSelectTable
                 tasks={this.props.tasks}
                 onTaskUpdate={this.props.onTaskUpdate}

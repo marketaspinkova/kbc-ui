@@ -160,7 +160,7 @@ export default React.createClass({
             isPending={this.state.isClearStatePending}
             disabled={!this.state.hasState}
           >
-            Delete the current stored state of the configuration, eg. progress of an incremental processes.
+            Delete the current stored state of the configuration, e.g. progress of an incremental processes.
           </ClearStateButton>
         </li>
       );

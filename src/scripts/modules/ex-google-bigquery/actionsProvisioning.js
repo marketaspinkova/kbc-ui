@@ -175,7 +175,7 @@ export default function(configId) {
       return callDockerAction(COMPONENT_ID, 'listProjects', params)
         .then((result) => {
           if (result.status === 'error') {
-            throw new SyncActionError(result.message || 'There was an error while loading projects list');
+            throw new SyncActionError(result.message || 'An error occurred while loading the list of projects');
           }
           return result.projects;
         })

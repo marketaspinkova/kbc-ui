@@ -50,7 +50,7 @@ export default React.createClass({
   },
 
   getMessage() {
-    let message = `You are about to run load of ${this.props.tableId} table.`;
+    let message = `You are about to run a load of ${this.props.tableId} table.`;
     if (this.props.isTableDisabled) {
       message += ' Load to GooDataProject is disabled and will be forced to run.';
     }
