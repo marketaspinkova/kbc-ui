@@ -146,6 +146,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok 1`] = `
         >
           <Select
             allowCreate={false}
+            clearable={true}
             delimiter=","
             disabled={true}
             emptyStrings={false}
@@ -157,6 +158,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok 1`] = `
             onChange={[Function]}
             options={Array []}
             placeholder="All columns will be imported"
+            searchable={true}
             trimMultiCreatedValues={false}
             value={Array []}
             valueKey="value"
@@ -207,6 +209,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok 1`] = `
         >
           <Select
             allowCreate={false}
+            clearable={true}
             delimiter=","
             disabled={true}
             emptyStrings={false}
@@ -218,6 +221,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok 1`] = `
             onChange={[Function]}
             options={Array []}
             placeholder="Select column"
+            searchable={true}
             trimMultiCreatedValues={false}
             value=""
             valueKey="value"
@@ -254,6 +258,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok 1`] = `
         >
           <Select
             allowCreate={true}
+            clearable={true}
             delimiter=","
             disabled={false}
             emptyStrings={true}
@@ -264,6 +269,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok 1`] = `
             name="whereValues"
             onChange={[Function]}
             placeholder="Add a value..."
+            searchable={true}
             trimMultiCreatedValues={false}
             value=""
             valueKey="value"
@@ -490,6 +496,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source and des
         >
           <Select
             allowCreate={false}
+            clearable={true}
             delimiter=","
             disabled={false}
             emptyStrings={false}
@@ -501,6 +508,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source and des
             onChange={[Function]}
             options={Array []}
             placeholder="All columns will be imported"
+            searchable={true}
             trimMultiCreatedValues={false}
             value={Array []}
             valueKey="value"
@@ -551,6 +559,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source and des
         >
           <Select
             allowCreate={false}
+            clearable={true}
             delimiter=","
             disabled={false}
             emptyStrings={false}
@@ -562,6 +571,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source and des
             onChange={[Function]}
             options={Array []}
             placeholder="Select column"
+            searchable={true}
             trimMultiCreatedValues={false}
             value=""
             valueKey="value"
@@ -598,6 +608,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source and des
         >
           <Select
             allowCreate={true}
+            clearable={true}
             delimiter=","
             disabled={false}
             emptyStrings={true}
@@ -608,6 +619,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source and des
             name="whereValues"
             onChange={[Function]}
             placeholder="Add a value..."
+            searchable={true}
             trimMultiCreatedValues={false}
             value=""
             valueKey="value"
@@ -834,6 +846,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
         >
           <Select
             allowCreate={false}
+            clearable={true}
             delimiter=","
             disabled={false}
             emptyStrings={false}
@@ -845,6 +858,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
             onChange={[Function]}
             options={Array []}
             placeholder="All columns will be imported"
+            searchable={true}
             trimMultiCreatedValues={false}
             value={Array []}
             valueKey="value"
@@ -895,6 +909,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
         >
           <Select
             allowCreate={false}
+            clearable={true}
             delimiter=","
             disabled={false}
             emptyStrings={false}
@@ -906,6 +921,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
             onChange={[Function]}
             options={Array []}
             placeholder="Select column"
+            searchable={true}
             trimMultiCreatedValues={false}
             value=""
             valueKey="value"
@@ -943,6 +959,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
         >
           <Select
             allowCreate={true}
+            clearable={true}
             delimiter=","
             disabled={false}
             emptyStrings={true}
@@ -953,6 +970,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
             name="whereValues"
             onChange={[Function]}
             placeholder="Add a value..."
+            searchable={true}
             trimMultiCreatedValues={false}
             value={Immutable.List []}
             valueKey="value"
@@ -1179,6 +1197,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
         >
           <Select
             allowCreate={false}
+            clearable={true}
             delimiter=","
             disabled={false}
             emptyStrings={false}
@@ -1209,6 +1228,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
               ]
             }
             placeholder="All columns will be imported"
+            searchable={true}
             trimMultiCreatedValues={false}
             value={Array []}
             valueKey="value"
@@ -1259,6 +1279,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
         >
           <Select
             allowCreate={false}
+            clearable={true}
             delimiter=","
             disabled={false}
             emptyStrings={false}
@@ -1289,6 +1310,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
               ]
             }
             placeholder="Select column"
+            searchable={true}
             trimMultiCreatedValues={false}
             value=""
             valueKey="value"
@@ -1326,6 +1348,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
         >
           <Select
             allowCreate={true}
+            clearable={true}
             delimiter=","
             disabled={false}
             emptyStrings={true}
@@ -1336,6 +1359,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
             name="whereValues"
             onChange={[Function]}
             placeholder="Add a value..."
+            searchable={true}
             trimMultiCreatedValues={false}
             value={Immutable.List []}
             valueKey="value"

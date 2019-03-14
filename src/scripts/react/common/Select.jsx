@@ -1,39 +1,52 @@
 import React, {PropTypes} from 'react';
+import { fromJS } from 'immutable';
 import Select from 'react-select';
-import Immutable from 'immutable';
 
 export default React.createClass({
   propTypes: {
     value: PropTypes.any,
     emptyStrings: PropTypes.bool,
+    multi: PropTypes.bool,
+    delimiter: PropTypes.string,
+    onChange: PropTypes.func.isRequired,
+    optionRenderer: PropTypes.func,
+    options: PropTypes.array,
+    searchable: PropTypes.bool,
+    clearable: PropTypes.bool,
+    autoFocus: PropTypes.bool,
+    disabled: PropTypes.bool,
+    name: PropTypes.string,
+    placeholder: PropTypes.string,
+    noResultsText: PropTypes.string,
+    promptTextCreator: PropTypes.func,
+
+    trimMultiCreatedValues: PropTypes.bool,
+    help: PropTypes.any,
     allowCreate: PropTypes.bool,
     ignoreCase: PropTypes.bool,
-    multi: PropTypes.bool,
     matchProp: PropTypes.string,
     labelKey: PropTypes.string,
     valueKey: PropTypes.string,
     matchPos: PropTypes.string,
-    help: PropTypes.any,
-    delimiter: PropTypes.string,
-    trimMultiCreatedValues: PropTypes.bool,
-    onChange: PropTypes.func.isRequired,
-    optionRenderer: PropTypes.func,
-    options: PropTypes.array,
-    filterOption: PropTypes.func
+    filterOption: PropTypes.func,
+    isLoading: PropTypes.bool,
   },
 
   getDefaultProps() {
     return {
-      trimMultiCreatedValues: false,
       value: '',
       emptyStrings: false,
-      allowCreate: false,
       multi: false,
+      delimiter: ',',
+      trimMultiCreatedValues: false,
+      searchable: true,
+      clearable: true,
+      disabled: false,
+      allowCreate: false,
       ignoreCase: true,
       matchProp: 'any',
       labelKey: 'label',
       valueKey: 'value',
-      delimiter: ','
     };
   },
 
@@ -93,7 +106,7 @@ export default React.createClass({
     }
 
     var filterOption = function(op) {
-      if (this.props.multi && exclude && Immutable.fromJS(exclude).toMap().find(function(item) {
+      if (this.props.multi && exclude && fromJS(exclude).toMap().find(function(item) {
         return item.get('value') === op.value;
       }, op)) {
         return false;
@@ -125,37 +138,60 @@ export default React.createClass({
       return (
         <span>
           <Select.Creatable
+            multi={this.props.multi}
+            delimiter={this.props.delimiter}
+            optionRenderer={this.props.optionRenderer}
+            searchable={this.props.searchable}
+            clearable={this.props.clearable}
+            autoFocus={this.props.autoFocus}
+            disabled={this.props.disabled}
+            name={this.props.name}
+            placeholder={this.props.placeholder}
+            noResultsText={this.props.noResultsText}
+            promptTextCreator={this.props.promptTextCreator}
             isOptionUnique={this.isOptionUnique}
-            {...this.props}
             value={this.props.value.toJS ? this.mapValues(this.props.value.toJS()) : this.mapValues(this.props.value)}
             valueRenderer={this.valueRenderer}
             filterOptions={this.filterOptions}
             onChange={this.onChange}
             options={this.props.options || []}
-          />
-          {this.props.help ? (<span className="help-block">{this.props.help}</span>) : null}
-        </span>
-      );
-    } else {
-      return (
-        <span>
-          <Select
-            {...this.props}
-            value={this.props.value.toJS ? this.mapValues(this.props.value.toJS()) : this.mapValues(this.props.value)}
-            valueRenderer={this.valueRenderer}
-            filterOptions={this.filterOptions}
-            onChange={this.onChange}
+            isLoading={this.props.isLoading}
           />
           {this.props.help ? (<span className="help-block">{this.props.help}</span>) : null}
         </span>
       );
     }
+
+    return (
+      <span>
+        <Select
+          multi={this.props.multi}
+          delimiter={this.props.delimiter}
+          optionRenderer={this.props.optionRenderer}
+          searchable={this.props.searchable}
+          clearable={this.props.clearable}
+          autoFocus={this.props.autoFocus}
+          disabled={this.props.disabled}
+          name={this.props.name}
+          placeholder={this.props.placeholder}
+          noResultsText={this.props.noResultsText}
+          promptTextCreator={this.props.promptTextCreator}
+          value={this.props.value.toJS ? this.mapValues(this.props.value.toJS()) : this.mapValues(this.props.value)}
+          valueRenderer={this.valueRenderer}
+          filterOptions={this.filterOptions}
+          onChange={this.onChange}
+          options={this.props.options}
+          isLoading={this.props.isLoading}
+        />
+        {this.props.help ? (<span className="help-block">{this.props.help}</span>) : null}
+      </span>
+    );
   },
 
   onChange(selected) {
     const {trimMultiCreatedValues} = this.props;
     if (this.props.multi) {
-      this.props.onChange(Immutable.fromJS(selected.map(function(value) {
+      this.props.onChange(fromJS(selected.map(function(value) {
         if (value.value === '%_EMPTY_STRING_%') {
           return '';
         }
@@ -233,5 +269,4 @@ export default React.createClass({
       return [];
     }
   }
-
 });
