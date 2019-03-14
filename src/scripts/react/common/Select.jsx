@@ -29,6 +29,7 @@ export default React.createClass({
     valueKey: PropTypes.string,
     matchPos: PropTypes.string,
     filterOption: PropTypes.func,
+    isLoading: PropTypes.bool,
   },
 
   getDefaultProps() {
@@ -155,6 +156,7 @@ export default React.createClass({
             filterOptions={this.filterOptions}
             onChange={this.onChange}
             options={this.props.options || []}
+            isLoading={this.props.isLoading}
           />
           {this.props.help ? (<span className="help-block">{this.props.help}</span>) : null}
         </span>
@@ -181,6 +183,7 @@ export default React.createClass({
           filterOptions={this.filterOptions}
           onChange={this.onChange}
           options={this.props.options}
+          isLoading={this.props.isLoading}
         />
         {this.props.help ? (<span className="help-block">{this.props.help}</span>) : null}
       </span>
