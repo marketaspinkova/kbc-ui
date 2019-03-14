@@ -10,6 +10,12 @@ import ChangedSinceInput from '../../../../../react/common/ChangedSinceInput';
 import { PanelWithDetails } from '@keboola/indigo-ui';
 import whereOperatorConstants from '../../../../../react/common/whereOperatorConstants';
 
+const distStyleOptions = [
+  { label: 'EVEN', value: 'EVEN' },
+  { label: 'KEY', value: 'KEY' },
+  { label: 'ALL', value: 'ALL' }
+];
+
 export default React.createClass({
   propTypes: {
     value: PropTypes.object.isRequired,
@@ -19,21 +25,6 @@ export default React.createClass({
     initialShowDetails: PropTypes.bool.isRequired,
     isDestinationDuplicate: PropTypes.bool.isRequired
   },
-
-  distStyleOptions: [
-    {
-      label: 'EVEN',
-      value: 'EVEN'
-    },
-    {
-      label: 'KEY',
-      value: 'KEY'
-    },
-    {
-      label: 'ALL',
-      value: 'ALL'
-    }
-  ],
 
   _handleChangeSource(value) {
     // use only table name from the table identifier
@@ -349,7 +340,7 @@ export default React.createClass({
                 disabled={this.props.disabled || !this.props.value.get('source')}
                 placeholder="Style"
                 onChange={this._handleChangeDistStyle}
-                options={this.distStyleOptions}
+                options={distStyleOptions}
               />
             </Col>
             <Col sm={5}>

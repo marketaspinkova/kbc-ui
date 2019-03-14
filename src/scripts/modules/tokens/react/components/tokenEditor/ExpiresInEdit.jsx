@@ -5,23 +5,23 @@ import Select from 'react-select';
 const NEVER_EXPIRES = -2;
 const CUSTOM_VALUE = -1;
 const DEFAULT_CUSTOM_VALUE = 0;
-export default React.createClass({
 
+const selectOptions = [
+  {label: 'Never',    value: NEVER_EXPIRES},
+  {label: '1 hour',   value: 1 * 3600},
+  {label: '2 hours',  value: 2 * 3600},
+  {label: '12 hours', value: 12 * 3600},
+  {label: '24 hours', value: 24 * 3600},
+  {label: '48 hours', value: 48 * 3600},
+  {label: 'Custom',   value: CUSTOM_VALUE}
+];
+
+export default React.createClass({
   propTypes: {
     value: PropTypes.number,
     disabled: PropTypes.bool.isRequired,
     onChange: PropTypes.func.isRequired
   },
-
-  selectOptions: [
-    {label: 'Never',    value: NEVER_EXPIRES},
-    {label: '1 hour',   value: 1 * 3600},
-    {label: '2 hours',  value: 2 * 3600},
-    {label: '12 hours', value: 12 * 3600},
-    {label: '24 hours', value: 24 * 3600},
-    {label: '48 hours', value: 48 * 3600},
-    {label: 'Custom',   value: CUSTOM_VALUE}
-  ],
 
   getInitialState() {
     return this.getStateFromProps(this.props);
@@ -32,7 +32,7 @@ export default React.createClass({
   },
 
   getStateFromProps(props) {
-    const hasSelectValue = props.value === null || this.selectOptions.reduce((memo, option) => memo || option.value === props.value, false);
+    const hasSelectValue = props.value === null || selectOptions.reduce((memo, option) => memo || option.value === props.value, false);
     const initSelectValue = props.value === null ? NEVER_EXPIRES : props.value;
     const selectValue = this.state ? this.state.selectValue : initSelectValue;
 
@@ -49,7 +49,7 @@ export default React.createClass({
             disabled={this.props.disabled}
             clearable={false}
             searchable={false}
-            options={this.selectOptions}
+            options={selectOptions}
             value={this.state.selectValue}
             onChange={this.handleSelectChange}
           />
