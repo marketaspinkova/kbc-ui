@@ -1,7 +1,8 @@
 import Dispatcher from '../../Dispatcher';
-import { Map, fromJS } from 'immutable';
+import { Map, List, fromJS } from 'immutable';
 import _ from 'underscore';
 import StoreUtils from '../../utils/StoreUtils';
+import * as installedComponentsConstants from '../components/Constants';
 import versionsConstants from '../components/VersionsConstants';
 import constants from './constants';
 
@@ -199,6 +200,20 @@ Dispatcher.register(payload => {
       _store = _store.deleteIn(['tables', action.componentId, action.configId]);
       _store = _store.deleteIn(['tablesConfig', action.componentId, action.configId]);
       return WrDbStore.emitChange();
+
+    case installedComponentsConstants.ActionTypes.INSTALLED_COMPONENTS_CONFIGDATA_LOAD_SUCCESS:
+      if (WrDbStore.hasTables(action.componentId, action.configId)) {
+        const tables = WrDbStore.getTables(action.componentId, action.configId);
+        const alowedTables = fromJS(action.data)
+          .getIn(['configuration', 'storage', 'input', 'tables'], List())
+          .map((table) => table.get('source'))
+          .toArray();
+        _store = _store.setIn(['tables', action.componentId, action.configId], tables.filter((table) => {
+          return alowedTables.includes(table.get('tableId'));
+        }));
+        return WrDbStore.emitChange();
+      }
+      break;
 
     default:
   }
