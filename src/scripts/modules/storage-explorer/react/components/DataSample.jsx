@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import _ from 'underscore';
 import { Alert, Form, FormGroup, FormControl, Col, ButtonGroup, Button, Table, Row } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 import Select from 'react-select';
@@ -78,6 +79,18 @@ export default React.createClass({
       return (
         <p>
           <Loader /> Loading data..
+        </p>
+      );
+    }
+
+    if (_.isEmpty(this.state.data)) {
+      return (
+        <p>
+          Could not load data sample.{' '}
+          <Button bsStyle="link" className="btn-link-inline" onClick={() => this.fetchDataPreview()}>
+            Try again
+          </Button>
+          .
         </p>
       );
     }
@@ -173,7 +186,7 @@ export default React.createClass({
     this.setState({ loading: true });
 
     this.cancellablePromise = dataPreview(this.props.table.get('id'), params)
-      .then(json => {
+      .then((json) => {
         this.setState({ data: json || {}, loading: false });
       })
       .catch((error) => {
