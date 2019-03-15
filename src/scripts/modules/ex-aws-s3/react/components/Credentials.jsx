@@ -17,7 +17,6 @@ export default React.createClass({
   },
 
   render() {
-    const props = this.props;
     return (
       <div className="form-horizontal">
         <FormGroup>
@@ -26,8 +25,8 @@ export default React.createClass({
             <FormControl
               type="text"
               value={this.props.value.awsAccessKeyId}
-              onChange={function(e) {
-                props.onChange({awsAccessKeyId: e.target.value});
+              onChange={(e) => {
+                this.props.onChange({awsAccessKeyId: e.target.value});
               }}
               placeholder="MYAWSACCESSKEYID123"
               disabled={this.props.disabled}
@@ -50,8 +49,8 @@ export default React.createClass({
             <FormControl
               type="password"
               value={this.props.value.awsSecretAccessKey}
-              onChange={function(e) {
-                props.onChange({awsSecretAccessKey: e.target.value});
+              onChange={(e) => {
+                this.props.onChange({awsSecretAccessKey: e.target.value});
               }}
               disabled={this.props.disabled}
             />

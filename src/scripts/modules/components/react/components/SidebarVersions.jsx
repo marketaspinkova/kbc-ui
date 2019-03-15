@@ -24,13 +24,13 @@ export default React.createClass({
     prepareVersionsDiffData: PropTypes.func
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       limit: 5
     };
   },
 
-  getVersionsLinkParams: function() {
+  getVersionsLinkParams() {
     if (this.props.versionsLinkParams) {
       return this.props.versionsLinkParams;
     }
@@ -40,19 +40,18 @@ export default React.createClass({
     };
   },
 
-  getVersionsLinkTo: function() {
+  getVersionsLinkTo() {
     if (this.props.versionsLinkTo) {
       return this.props.versionsLinkTo;
     }
     return this.props.componentId + '-versions';
   },
 
-  renderVersions: function() {
-    const props = this.props;
+  renderVersions() {
     const self = this;
     if (this.props.versions.count() || this.props.isLoading) {
-      return this.props.versions.slice(0, 3).map(function(version) {
-        const isLast = (version.get('version') === props.versions.first().get('version'));
+      return this.props.versions.slice(0, 3).map((version) => {
+        const isLast = (version.get('version') === this.props.versions.first().get('version'));
         return (
           <Link
             className="list-group-item"
@@ -115,7 +114,7 @@ export default React.createClass({
   },
 
 
-  render: function() {
+  render() {
     return (
       <div>
         <h4>Updates

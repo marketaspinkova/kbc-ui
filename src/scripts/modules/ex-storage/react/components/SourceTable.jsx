@@ -18,7 +18,6 @@ export default React.createClass({
   },
 
   render() {
-    const props = this.props;
     const panelExpanded = this.props.value.changedSince !== '';
     return (
       <Form horizontal>
@@ -31,8 +30,8 @@ export default React.createClass({
             <FormControl
               type="text"
               value={this.props.value.source}
-              onChange={function(e) {
-                props.onChange({source: e.target.value});
+              onChange={(e) => {
+                this.props.onChange({source: e.target.value});
               }}
               disabled={this.props.disabled}
             />
@@ -54,8 +53,8 @@ export default React.createClass({
             <Col sm={8}>
               <ChangedSinceInput
                 value={this.props.value.changedSince}
-                onChange={function(value) {
-                  props.onChange({changedSince: value});
+                onChange={(value) => {
+                  this.props.onChange({changedSince: value});
                 }}
                 disabled={this.props.disabled}
               />

@@ -84,11 +84,10 @@ export default React.createClass({
   },
 
   renderTableRows() {
-    const props = this.props;
     const state = this.state;
-    return this.props.rows.map(function(row, rowIndex) {
-      const thisRowOrderPending = props.orderPending.get(row.get('id'), false);
-      const rowsOrderPending = props.orderPending.count() > 0;
+    return this.props.rows.map((row, rowIndex) => {
+      const thisRowOrderPending = this.props.orderPending.get(row.get('id'), false);
+      const rowsOrderPending = this.props.orderPending.count() > 0;
       let disabledMoveLabel;
       if (rowsOrderPending) {
         disabledMoveLabel = 'Order saving';
@@ -97,23 +96,23 @@ export default React.createClass({
       }
       return (
         <Row
-          columns={props.columns}
+          columns={this.props.columns}
           row={row}
-          componentId={props.componentId}
-          component={props.component}
-          configurationId={props.configurationId}
+          componentId={this.props.componentId}
+          component={this.props.component}
+          configurationId={this.props.configurationId}
           key={state.sortableKeyPrefix + '_' + row.get('id')}
           rowNumber={rowIndex + 1}
-          linkTo={props.rowLinkTo}
-          isDeletePending={props.rowDeletePending(row.get('id'))}
-          onDelete={function() {
-            return props.rowDelete(row.get('id'));
+          linkTo={this.props.rowLinkTo}
+          isDeletePending={this.props.rowDeletePending(row.get('id'))}
+          onDelete={() => {
+            return this.props.rowDelete(row.get('id'));
           }}
-          isEnableDisablePending={props.rowEnableDisablePending(row.get('id'))}
-          onEnableDisable={function() {
-            return props.rowEnableDisable(row.get('id'));
+          isEnableDisablePending={this.props.rowEnableDisablePending(row.get('id'))}
+          onEnableDisable={() => {
+            return this.props.rowEnableDisable(row.get('id'));
           }}
-          disabledMove={props.disabledMove || rowsOrderPending}
+          disabledMove={this.props.disabledMove || rowsOrderPending}
           disabledMoveLabel={disabledMoveLabel}
           orderPending={thisRowOrderPending}
         />

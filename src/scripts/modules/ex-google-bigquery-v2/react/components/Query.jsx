@@ -21,17 +21,16 @@ export default React.createClass({
   },
 
   render() {
-    const props = this.props;
     return (
       <Form horizontal>
         <h3>Query</h3>
         <FormGroup>
           <Col smOffset={4} sm={8}>
             <Checkbox
-              checked={props.value.useLegacySql}
-              disabled={props.disabled}
-              onChange={function(e) {
-                props.onChange({useLegacySql: e.target.checked});
+              checked={this.props.value.useLegacySql}
+              disabled={this.props.disabled}
+              onChange={(e) => {
+                this.props.onChange({useLegacySql: e.target.checked});
               }}
             >Use Legacy SQL</Checkbox>
             <HelpBlock>
@@ -48,13 +47,13 @@ export default React.createClass({
             <CodeMirror
               theme="solarized"
               mode={editorMode(ExGoogleBigQueryV2ComponentId)}
-              value={props.value.query}
-              onChange={(e) => props.onChange({query: e.target.value})}
+              value={this.props.value.query}
+              onChange={(e) => this.props.onChange({query: e.target.value})}
               lineNumbers
               lineWrapping={false}
               placeholder="e.g. SELECT `id`, `name` FROM `myTable`"
               style={{ width: '100%' }}
-              readOnly={props.disabled}
+              readOnly={this.props.disabled}
             />
           </Col>
         </FormGroup>

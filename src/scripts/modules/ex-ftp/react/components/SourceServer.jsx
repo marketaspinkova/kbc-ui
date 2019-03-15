@@ -20,7 +20,6 @@ export default React.createClass({
   },
 
   render() {
-    const props = this.props;
     return (
       <Form horizontal>
         <FormGroup>
@@ -30,14 +29,14 @@ export default React.createClass({
               componentClass="select"
               placeholder="select"
               value={this.props.value.connectionType}
-              onChange={function(e) {
+              onChange={(e) => {
                 let port;
                 if (e.target.value === 'SFTP') {
                   port = 22;
                 } else {
                   port = 21;
                 }
-                props.onChange({connectionType: e.target.value, port: port});
+                this.props.onChange({connectionType: e.target.value, port: port});
               }}
             >
               <option value="" disabled>Select type</option>
@@ -55,8 +54,8 @@ export default React.createClass({
             <FormControl
               type="text"
               value={this.props.value.host}
-              onChange={function(e) {
-                props.onChange({host: e.target.value});
+              onChange={(e) => {
+                this.props.onChange({host: e.target.value});
               }}
             />
           </Col>
@@ -69,8 +68,8 @@ export default React.createClass({
             <FormControl
               type="number"
               value={this.props.value.port}
-              onChange={function(e) {
-                props.onChange({port: e.target.value});
+              onChange={(e) => {
+                this.props.onChange({port: e.target.value});
               }}
             />
           </Col>
@@ -83,8 +82,8 @@ export default React.createClass({
             <FormControl
               type="text"
               value={this.props.value.username}
-              onChange={function(e) {
-                props.onChange({username: e.target.value});
+              onChange={(e) => {
+                this.props.onChange({username: e.target.value});
               }}
             />
           </Col>
@@ -97,8 +96,8 @@ export default React.createClass({
             <FormControl
               type="password"
               value={this.props.value.password}
-              onChange={function(e) {
-                props.onChange({password: e.target.value});
+              onChange={(e) => {
+                this.props.onChange({password: e.target.value});
               }}
             />
           </Col>
@@ -113,8 +112,8 @@ export default React.createClass({
             <FormControl
               type="password"
               value={this.props.value.privateKey}
-              onChange={function(e) {
-                props.onChange({privateKey: e.target.value});
+              onChange={(e) => {
+                this.props.onChange({privateKey: e.target.value});
               }}
             />
             <HelpBlock>

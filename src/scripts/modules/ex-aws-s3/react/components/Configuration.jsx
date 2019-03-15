@@ -48,7 +48,6 @@ export default React.createClass({
 
   renderCsvHeader() {
     if (this.props.value.columnsFrom === 'manual') {
-      const props = this.props;
       return (
         <div className="form-group">
           <div className="col-xs-4 control-label">Column Names</div>
@@ -61,8 +60,8 @@ export default React.createClass({
               delimiter=","
               placeholder="Add a column"
               emptyStrings={false}
-              onChange={function(value) {
-                props.onChange({columns: value});
+              onChange={(value) => {
+                this.props.onChange({columns: value});
               }}
               disabled={this.props.disabled || this.props.value.columnsFrom === 'header'}
             />
@@ -76,7 +75,6 @@ export default React.createClass({
   },
 
   render() {
-    const props = this.props;
     return (
       <div className="form-horizontal">
         <h3>Source</h3>
@@ -86,8 +84,8 @@ export default React.createClass({
             <FormControl
               type="text"
               value={this.props.value.bucket}
-              onChange={function(e) {
-                props.onChange({bucket: e.target.value});
+              onChange={(e) => {
+                this.props.onChange({bucket: e.target.value});
               }}
               placeholder="mybucket"
               disabled={this.props.disabled}
@@ -100,8 +98,8 @@ export default React.createClass({
             <FormControl
               type="text"
               value={this.props.value.key}
-              onChange={function(e) {
-                props.onChange({key: e.target.value});
+              onChange={(e) => {
+                this.props.onChange({key: e.target.value});
               }}
               placeholder="myfolder/myfile.csv"
               disabled={this.props.disabled}
@@ -122,8 +120,8 @@ export default React.createClass({
             <Col xs={8} xsOffset={4}>
               <Checkbox
                 checked={this.props.value.newFilesOnly}
-                onChange={function(e) {
-                  props.onChange({newFilesOnly: e.target.checked});
+                onChange={(e) => {
+                  this.props.onChange({newFilesOnly: e.target.checked});
                 }}
                 disabled={this.props.disabled}
               >
@@ -138,12 +136,12 @@ export default React.createClass({
             <Col xs={8} xsOffset={4}>
               <Checkbox
                 checked={this.props.value.wildcard}
-                onChange={function(e) {
+                onChange={(e) => {
                   let change = {wildcard: e.target.checked};
                   if (change.wildcard === false) {
                     change.subfolders = false;
                   }
-                  props.onChange(change);
+                  this.props.onChange(change);
                 }}
                 disabled={this.props.disabled}
               >
@@ -156,8 +154,8 @@ export default React.createClass({
             <Col xs={8} xsOffset={4}>
               <Checkbox
                 checked={this.props.value.subfolders}
-                onChange={function(e) {
-                  props.onChange({subfolders: e.target.checked});
+                onChange={(e) => {
+                  this.props.onChange({subfolders: e.target.checked});
                 }}
                 disabled={this.props.disabled || !this.props.value.wildcard}
               >
@@ -171,8 +169,8 @@ export default React.createClass({
         <CsvDelimiterInput
           type="text"
           value={this.props.value.delimiter}
-          onChange={function(value) {
-            props.onChange({delimiter: value});
+          onChange={(value) => {
+            this.props.onChange({delimiter: value});
           }}
           disabled={this.props.disabled}
           help={<span>Field delimiter used in the CSV file. Use <code>\t</code> for tabulator.</span>}
@@ -183,8 +181,8 @@ export default React.createClass({
             <FormControl
               type="text"
               value={this.props.value.enclosure}
-              onChange={function(e) {
-                props.onChange({enclosure: e.target.value});
+              onChange={(e) => {
+                this.props.onChange({enclosure: e.target.value});
               }}
               disabled={this.props.disabled}
             />
@@ -204,8 +202,8 @@ export default React.createClass({
               clearable={false}
               options={columnsFromOptions}
               disabled={this.props.disabled}
-              onChange={function(value) {
-                props.onChange({columnsFrom: value});
+              onChange={(value) => {
+                this.props.onChange({columnsFrom: value});
               }}
             />
           </div>
@@ -218,8 +216,8 @@ export default React.createClass({
             <FormControl
               type="text"
               value={this.props.value.name}
-              onChange={function(e) {
-                props.onChange({name: e.target.value});
+              onChange={(e) => {
+                this.props.onChange({name: e.target.value});
               }}
               placeholder="mytable"
               disabled={this.props.disabled}
@@ -231,8 +229,8 @@ export default React.createClass({
           <Col xs={8} xsOffset={4}>
             <Checkbox
               checked={this.props.value.incremental}
-              onChange={function(e) {
-                props.onChange({incremental: e.target.checked});
+              onChange={(e) => {
+                this.props.onChange({incremental: e.target.checked});
               }}
               disabled={this.props.disabled}
             >
@@ -256,8 +254,8 @@ export default React.createClass({
               delimiter=","
               placeholder="Add a column to the primary key"
               emptyStrings={false}
-              onChange={function(value) {
-                props.onChange({primaryKey: value});
+              onChange={(value) => {
+                this.props.onChange({primaryKey: value});
               }}
               disabled={this.props.disabled}
             />
@@ -269,8 +267,8 @@ export default React.createClass({
           <Col xs={8} xsOffset={4}>
             <Checkbox
               checked={this.props.value.decompress}
-              onChange={function(e) {
-                props.onChange({decompress: e.target.checked});
+              onChange={(e) => {
+                this.props.onChange({decompress: e.target.checked});
               }}
               disabled={this.props.disabled}
             >
@@ -291,8 +289,8 @@ export default React.createClass({
             <Col xs={8} xsOffset={4}>
               <Checkbox
                 checked={this.props.value.addFilenameColumn}
-                onChange={function(e) {
-                  props.onChange({addFilenameColumn: e.target.checked});
+                onChange={(e) => {
+                  this.props.onChange({addFilenameColumn: e.target.checked});
                 }}
                 disabled={this.props.disabled}
               >
@@ -307,8 +305,8 @@ export default React.createClass({
             <Col xs={8} xsOffset={4}>
               <Checkbox
                 checked={this.props.value.addRowNumberColumn}
-                onChange={function(e) {
-                  props.onChange({addRowNumberColumn: e.target.checked});
+                onChange={(e) => {
+                  this.props.onChange({addRowNumberColumn: e.target.checked});
                 }}
                 disabled={this.props.disabled}
               >

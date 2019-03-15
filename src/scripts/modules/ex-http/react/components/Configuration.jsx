@@ -40,7 +40,6 @@ export default React.createClass({
   },
 
   render() {
-    const props = this.props;
     return (
       <div className="form-horizontal">
         <h3>Download Settings</h3>
@@ -50,8 +49,8 @@ export default React.createClass({
             <FormControl
               type="text"
               value={this.props.value.path}
-              onChange={function(e) {
-                props.onChange({path: e.target.value});
+              onChange={(e) => {
+                this.props.onChange({path: e.target.value});
               }}
               placeholder="/myfolder/myfile.csv"
               disabled={this.props.disabled}
@@ -62,8 +61,8 @@ export default React.createClass({
           <Col xs={8} xsOffset={4}>
             <Checkbox
               checked={this.props.value.decompress}
-              onChange={function(e) {
-                props.onChange({decompress: e.target.checked});
+              onChange={(e) => {
+                this.props.onChange({decompress: e.target.checked});
               }}
               disabled={this.props.disabled}
             >
@@ -82,8 +81,8 @@ export default React.createClass({
             <FormControl
               type="text"
               value={this.props.value.name}
-              onChange={function(e) {
-                props.onChange({name: e.target.value});
+              onChange={(e) => {
+                this.props.onChange({name: e.target.value});
               }}
               placeholder="mytable"
               disabled={this.props.disabled}
@@ -97,8 +96,8 @@ export default React.createClass({
           <Col xs={8} xsOffset={4}>
             <Checkbox
               checked={this.props.value.incremental}
-              onChange={function(e) {
-                props.onChange({incremental: e.target.checked});
+              onChange={(e) => {
+                this.props.onChange({incremental: e.target.checked});
               }}
               disabled={this.props.disabled}
             >
@@ -113,8 +112,8 @@ export default React.createClass({
         <CsvDelimiterInput
           type="text"
           value={this.props.value.delimiter}
-          onChange={function(value) {
-            props.onChange({delimiter: value});
+          onChange={(value) => {
+            this.props.onChange({delimiter: value});
           }}
           disabled={this.props.disabled}
         />
@@ -124,8 +123,8 @@ export default React.createClass({
             <FormControl
               type="text"
               value={this.props.value.enclosure}
-              onChange={function(e) {
-                props.onChange({enclosure: e.target.value});
+              onChange={(e) => {
+                this.props.onChange({enclosure: e.target.value});
               }}
               placeholder={'"'}
               disabled={this.props.disabled}
@@ -149,14 +148,14 @@ export default React.createClass({
               clearable={false}
               options={columnsFromOptions}
               disabled={this.props.disabled}
-              onChange={function(value) {
+              onChange={(value) => {
                 let diff = {
                   columnsFrom: value
                 };
                 if (value !== 'manual') {
                   diff.columns = [];
                 }
-                props.onChange(diff);
+                this.props.onChange(diff);
               }}
             />
           </div>
@@ -172,8 +171,8 @@ export default React.createClass({
               delimiter=","
               placeholder="Add a column"
               emptyStrings={false}
-              onChange={function(value) {
-                props.onChange({columns: value});
+              onChange={(value) => {
+                this.props.onChange({columns: value});
               }}
               disabled={this.props.value.columnsFrom !== 'manual' || this.props.disabled}
             />
@@ -190,8 +189,8 @@ export default React.createClass({
               delimiter=","
               placeholder="Add a column to the primary key"
               emptyStrings={false}
-              onChange={function(value) {
-                props.onChange({primaryKey: value});
+              onChange={(value) => {
+                this.props.onChange({primaryKey: value});
               }}
               disabled={this.props.disabled}
             />

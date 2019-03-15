@@ -74,9 +74,8 @@ export default React.createClass({
     if (!this.props.value.get('source')) {
       return [];
     }
-    const props = this.props;
     const table = this.props.allTables.find((t) => {
-      return t.get('id') === props.value.get('source');
+      return t.get('id') === this.props.value.get('source');
     }, null, Map());
     return table.get('columns', List()).toJS();
   },

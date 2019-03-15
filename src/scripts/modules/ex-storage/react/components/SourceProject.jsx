@@ -16,7 +16,6 @@ export default React.createClass({
   },
 
   render() {
-    const props = this.props;
     return (
       <Form horizontal>
         <FormGroup>
@@ -28,8 +27,8 @@ export default React.createClass({
               componentClass="select"
               placeholder="select"
               value={this.props.value.url}
-              onChange={function(e) {
-                props.onChange({url: e.target.value});
+              onChange={(e) => {
+                this.props.onChange({url: e.target.value});
               }}
               disabled={this.props.disabled}
             >
@@ -48,8 +47,8 @@ export default React.createClass({
             <FormControl
               type="password"
               value={this.props.value.token}
-              onChange={function(e) {
-                props.onChange({token: e.target.value});
+              onChange={(e) => {
+                this.props.onChange({token: e.target.value});
               }}
               disabled={this.props.disabled}
             />
