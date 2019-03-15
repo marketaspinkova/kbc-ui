@@ -218,11 +218,10 @@ export default createReactClass({
             <DestinationTableSelector
               currentSource={this.props.value.get('source')}
               updatePart={this._updateDestinationPart}
-              disabled={false}
               parts={this._parseDestination().parts}
               tables={this.props.tables}
               buckets={this.props.buckets}
-              placeholder={
+              helpText={
                 'Storage table where the source table data will be loaded to - you can create a new table or use an existing one.'
               }
             />
