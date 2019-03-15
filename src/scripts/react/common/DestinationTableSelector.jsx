@@ -84,7 +84,7 @@ export default createReactClass({
     const stage = this.props.parts.stage;
     const bucket = this.props.parts.bucket;
     const buckets = this.props.buckets
-      .filter((b) => b.get('stage') === stage)
+      .filter((b) => b.get('stage') === stage && !b.has('sourceBucket'))
       .map((b) => ({ label: b.get('name'), value: b.get('name') }))
       .toList();
 
