@@ -19,19 +19,20 @@ export default createReactClass({
       <Modal show={this.props.show} onHide={this.props.onHide}>
         <Form onSubmit={this.onSubmit}>
           <Modal.Header closeButton>
-            <Modal.Title>Delete bucket</Modal.Title>
+            <Modal.Title>{this.renderTitle()}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p>Do you really want to delete bucket {this.props.bucket.get('id')}?</p>
-            {this.props.tables.count() > 0 && (
-              <Alert bsStyle="warning">Bucket is not empty. All tables will be also deleted!</Alert>
-            )}
+            <p>
+              Do you really want to{' '}
+              {this.props.bucket.has('sourceBucket') ? 'unlink' : 'delete'}{' '}
+              bucket {this.props.bucket.get('id')}?</p>
+            {this.renderWarning()}
           </Modal.Body>
           <Modal.Footer>
             <ConfirmButtons
               isSaving={this.props.deleting}
               isDisabled={this.props.deleting}
-              saveLabel={this.props.deleting ? 'Deleting...' : 'Delete'}
+              saveLabel={this.saveLabel()}
               onCancel={this.props.onHide}
               onSave={this.onSubmit}
               saveStyle="danger"
@@ -41,6 +42,30 @@ export default createReactClass({
         </Form>
       </Modal>
     );
+  },
+
+  renderTitle() {
+    if (this.props.bucket.has('sourceBucket')) {
+      return <span>Unlink bucket</span>;
+    }
+
+    return <span>Delete bucket</span>;
+  },
+
+  renderWarning() {
+    if (this.props.bucket.has('sourceBucket') || this.props.tables.count() === 0) {
+      return null;
+    }
+
+    return <Alert bsStyle="warning">Bucket is not empty. All tables will be also deleted!</Alert>;
+  },
+
+  saveLabel() {
+    if (this.props.bucket.has('sourceBucket')) {
+      return this.props.deleting ? 'Unlinking...' : 'Unlink';
+    }
+    
+    return this.props.deleting ? 'Deleting...' : 'Delete';
   },
 
   onSubmit(event) {

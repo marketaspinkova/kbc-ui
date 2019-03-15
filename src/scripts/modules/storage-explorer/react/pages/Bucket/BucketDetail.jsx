@@ -76,13 +76,7 @@ export default createReactClass({
                   onSelect={this.openDeleteBucketModal}
                   disabled={!this.canManageBucket() || linkedBuckets.count() > 0}
                 >
-                  {linkedBuckets.count() > 0 ? (
-                    <Tooltip tooltip="Please unlink linked buckets first" placement="top">
-                      <span><i className="fa fa-trash-o"></i> Delete bucket</span>
-                    </Tooltip>
-                  ) : (
-                    <span><i className="fa fa-trash-o"></i> Delete bucket</span>
-                  )}
+                  {this.deleteBucketLabel()}
                 </MenuItem>
               </NavDropdown>
             </Nav>
@@ -167,6 +161,22 @@ export default createReactClass({
         activeTab: tab
       });
     }
+  },
+
+  deleteBucketLabel() {
+    if (this.state.bucket.get('linkedBy', Map()).count() > 0) {
+      return (
+        <Tooltip tooltip="Please unlink linked buckets first" placement="top">
+          <span><i className="fa fa-trash-o"></i> Delete bucket</span>
+        </Tooltip>
+      );
+    }
+
+    if (this.state.bucket.has('sourceBucket')) {
+      return <span><i className="fa fa-chain-broken"></i> Unlink bucket</span>;
+    }
+
+    return <span><i className="fa fa-trash-o"></i> Delete bucket</span>;
   },
 
   canManageBucket() {
