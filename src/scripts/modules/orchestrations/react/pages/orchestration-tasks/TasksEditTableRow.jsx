@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { fromJS } from 'immutable';
 import { HelpBlock } from 'react-bootstrap';
 import ComponentConfigurationLink from '../../../../components/react/components/ComponentConfigurationLink';
@@ -9,7 +10,7 @@ import ComponentName from '../../../../../react/common/ComponentName';
 import Tooltip from '../../../../../react/common/Tooltip';
 import descriptionExcerpt from '../../../../../utils/descriptionExcerpt';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     task: PropTypes.object.isRequired,
     component: PropTypes.object,

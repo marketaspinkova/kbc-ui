@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Tab, Tabs} from 'react-bootstrap';
 import {RadioGroup} from 'react-radio-group';
 import RadioGroupInput from '../../../../react/common/RadioGroupInput';
@@ -18,7 +19,7 @@ const inputTableHelpText = {
 };
 
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     localState: PropTypes.object.isRequired,

@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Immutable from 'immutable';
 
 // stores
@@ -30,7 +31,7 @@ import sections from '../../utils/sections';
 import dockerActions from '../../DockerActionsActionCreators';
 import { isEmptyComponentState } from '../../utils/componentState';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(Store, TablesStore, DockerActionsStore)],
 
   getStateFromStores() {

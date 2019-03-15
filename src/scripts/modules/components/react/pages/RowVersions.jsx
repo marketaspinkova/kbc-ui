@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import immutableMixin from 'react-immutable-render-mixin';
 import fuzzy from 'fuzzy';
 import { Map } from 'immutable';
@@ -16,7 +17,7 @@ import VersionRow from '../components/VersionRow';
 const ITEMS_PER_PAGE = 20;
 
 export default function(componentIdValue, readOnlyMode = false) {
-  return React.createClass({
+  return createReactClass({
     mixins: [createStoreMixin(VersionsStore), immutableMixin],
 
     getStateFromStores() {

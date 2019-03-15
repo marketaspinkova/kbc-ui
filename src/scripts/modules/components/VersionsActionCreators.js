@@ -6,6 +6,7 @@ import Constants from './VersionsConstants';
 import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ConfigurationCopiedNotification from './react/components/ConfigurationCopiedNotification';
 
 export default {
@@ -175,7 +176,7 @@ export default {
         self.pendingStop(componentId, configId);
         // send notification
         ApplicationActionCreators.sendNotification({
-          message: React.createClass({
+          message: createReactClass({
             propTypes: {
               onClick: PropTypes.func
             },

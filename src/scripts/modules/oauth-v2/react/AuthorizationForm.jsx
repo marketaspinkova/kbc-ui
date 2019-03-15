@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ApplicationStore from '../../../stores/ApplicationStore';
 import ServicesStore from '../../services/Store';
 
@@ -7,7 +8,7 @@ function getOauthUrl() {
   return ServicesStore.getService('oauth').get('url');
 }
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     componentId: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,

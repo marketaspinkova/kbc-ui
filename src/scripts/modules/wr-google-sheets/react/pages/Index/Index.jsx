@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Map} from 'immutable';
 
 // stores
@@ -27,7 +28,7 @@ import {Button} from 'react-bootstrap';
 import {SearchBar} from '@keboola/indigo-ui';
 
 export default function(COMPONENT_ID) {
-  return React.createClass({
+  return createReactClass({
     mixins: [createStoreMixin(...storeMixins, storageTablesStore)],
 
     getStateFromStores() {

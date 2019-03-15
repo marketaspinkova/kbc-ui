@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ApplicationStore from '../../../../../stores/ApplicationStore';
 import contactSupport from '../../../../../utils/contactSupport';
 import { Modal, ButtonToolbar, Button, FormGroup, FormControl, Col, Radio, ControlLabel, HelpBlock } from 'react-bootstrap';
@@ -8,7 +9,7 @@ import { GoodDataWriterModes, GoodDataWriterTokenTypes } from '../../../Constant
 import ComponentIcon from '../../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../../react/common/ComponentName';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     component: PropTypes.object.isRequired,
     configuration: PropTypes.object.isRequired,

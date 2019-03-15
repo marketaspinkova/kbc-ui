@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { List } from 'immutable';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import WhereOperator from '../../../../../react/common/WhereOperator';
@@ -7,7 +8,7 @@ import TableLinkEx from '../../../../components/react/components/StorageApiTable
 import { Check } from '@keboola/indigo-ui';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import immutableMixin from 'react-immutable-render-mixin';
 import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
 import DeleteConfigurationRowButton from './DeleteConfigurationRowButton';
@@ -8,7 +9,7 @@ import ChangeOrderHandle from './ChangeOrderHandle';
 import ConfigurationRowsTableCell from './ConfigurationRowsTableCell';
 import RoutesStore from '../../../../stores/RoutesStore';
 
-const TableRow = React.createClass({
+const TableRow = createReactClass({
   mixins: [immutableMixin],
 
   propTypes: {

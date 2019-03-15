@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
 import { Modal, Button, Alert } from 'react-bootstrap';
 import Tooltip from '../../../../react/common/Tooltip';
@@ -8,7 +9,7 @@ import TaskSelectTable from '../components/TaskSelectTable';
 import { Loader, PanelWithDetails } from '@keboola/indigo-ui';
 import OrchestrationActionCreators from '../../ActionCreators';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     orchestration: PropTypes.object.isRequired,
     onRequestRun: PropTypes.func.isRequired,

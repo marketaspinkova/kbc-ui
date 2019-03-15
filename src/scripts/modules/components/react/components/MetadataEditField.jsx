@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import _ from 'underscore';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import MetadataActionCreators from '../../MetadataActionCreators';
 import MetadataStore from '../../stores/MetadataStore';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [PureRenderMixin, createStoreMixin(MetadataStore)],
 
   propTypes: {

@@ -1,12 +1,14 @@
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import BucketsStore from '../../stores/TransformationBucketsStore';
 
 import { Link } from 'react-router';
 import NewTransformationBucketButton from './NewTransformationBucketButton';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(BucketsStore)],
 
   getStateFromStores() {

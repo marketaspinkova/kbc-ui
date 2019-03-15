@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Map} from 'immutable';
 import ComponentEmptyState from '../../../components/react/components/ComponentEmptyState';
 // stores
@@ -25,7 +26,7 @@ import CodeMirror from 'react-code-mirror';
 
 const COMPONENT_ID = 'apify.apify';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(...storeMixins)],
 
   getStateFromStores() {

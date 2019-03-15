@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import date from '../../../../utils/date';
 import moment from 'moment';
 import _ from 'underscore';
@@ -11,7 +13,7 @@ import FileSize from '../../../../react/common/FileSize';
 import TableUpdatedByComponentInfo from '../../../../react/common/TableUpdatedByComponentInfo';
 import formatCardinalNumber from '../../../../utils/formatCardinalNumber';
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     isLoading: PropTypes.bool,

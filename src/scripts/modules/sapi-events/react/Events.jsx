@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Alert, Button} from 'react-bootstrap';
 import Immutable from 'immutable';
 import PureRendererMixin from 'react-immutable-render-mixin';
@@ -11,7 +12,7 @@ import EventsTable from './EventsTable';
 import EventDetail from './EventDetail';
 import {Loader, SearchBar} from '@keboola/indigo-ui';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [PureRendererMixin],
   propTypes: {
     params: PropTypes.object,

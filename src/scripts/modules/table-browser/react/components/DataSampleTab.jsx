@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import immutableMixin from 'react-immutable-render-mixin';
 import EmptyState from '../../../components/react/components/ComponentEmptyState';
 import StorageTableDataPreviewItem from '../../../../react/common/StorageTableDataPreviewItem';
 import {Table} from 'react-bootstrap';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     dataPreview: PropTypes.object,
     dataPreviewError: PropTypes.string

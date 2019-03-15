@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import prettyCron from 'prettycron';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     crontabRecord: PropTypes.string
   },

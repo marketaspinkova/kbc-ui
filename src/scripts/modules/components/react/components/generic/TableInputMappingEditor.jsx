@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Map, List } from 'immutable';
 import { PanelWithDetails } from '@keboola/indigo-ui';
 import { Alert, Col, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
@@ -8,7 +9,7 @@ import ChangedSinceFilterInput from './ChangedSinceFilterInput';
 import DataFilterRow from './DataFilterRow';
 import ColumnsSelectRow from './ColumnsSelectRow';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     value: PropTypes.object.isRequired,
     tables: PropTypes.object.isRequired,

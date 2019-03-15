@@ -1,5 +1,7 @@
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 // stores
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
 import ComponentsStore from '../../../components/stores/ComponentsStore';
@@ -14,7 +16,7 @@ import actions from '../../MigrationsActionCreators';
 // components
 import {Loader, AlertBlock} from '@keboola/indigo-ui';
 
-export default React.createClass({
+export default createReactClass({
 
   mixins: [createStoreMixin(InstalledComponentsStore, ConfigurationsStore, MigrationsStore)],
 

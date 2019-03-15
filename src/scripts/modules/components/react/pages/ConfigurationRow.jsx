@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import ConfigurationLink from '../components/ComponentConfigurationLink';
 import RunConfigurationButton from '../components/RunComponentButton';
@@ -11,7 +12,7 @@ import {isObsoleteComponent} from '../../../../modules/trash/utils';
 import CreatedWithIcon from '../../../../react/common/CreatedWithIcon';
 import componentNameAsString from '../../../../react/common/componentNameAsString';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [PureRenderMixin],
   propTypes: {
     config: PropTypes.object.isRequired,

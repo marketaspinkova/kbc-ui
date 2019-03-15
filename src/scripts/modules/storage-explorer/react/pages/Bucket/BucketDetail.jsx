@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Map } from 'immutable';
 import { Tab, Nav, NavItem, NavDropdown, MenuItem, Row } from 'react-bootstrap';
 
@@ -18,7 +19,7 @@ import DeleteBucketModal from '../../modals/DeleteBucketModal';
 import BucketOverview from './BucketOverview';
 import BucketTables from './BucketTables';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(BucketsStore, ApplicationStore, TablesStore, FilesStore)],
 
   getStateFromStores() {

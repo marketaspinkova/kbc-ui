@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Modal} from 'react-bootstrap';
 import ChangedSinceInput from './ChangedSinceFilterInput';
 import DataFilterRow from './DataFilterRow';
 import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     show: PropTypes.bool,
     onOk: PropTypes.func,

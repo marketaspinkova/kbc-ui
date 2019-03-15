@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Table, Alert} from 'react-bootstrap';
 import {Loader} from '@keboola/indigo-ui';
 import EmptyState from '../../../../components/react/components/ComponentEmptyState';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     sampleDataInfo: PropTypes.object.isRequired,
     onRunQuery: PropTypes.func.isRequired,

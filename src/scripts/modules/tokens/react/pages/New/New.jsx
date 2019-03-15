@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
 import { Map } from 'immutable';
 import { FormGroup, Col, Alert, Button } from 'react-bootstrap';
@@ -13,7 +14,7 @@ import TokenString from '../../components/TokenString';
 import TokensStore from '../../../StorageTokensStore';
 import TokensActions from '../../../actionCreators';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(TokensStore, BucketsStore)],
 
   getStateFromStores() {

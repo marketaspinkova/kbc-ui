@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Map} from 'immutable';
 // stores
 import storeProvisioning, {storeMixins} from '../../storeProvisioning';
@@ -28,7 +29,7 @@ import QueriesTable from './QueriesTable';
 import ProfilesManagerModal from './ProfilesManagerModal';
 
 export default function(componentId) {
-  return React.createClass({
+  return createReactClass({
     mixins: [createStoreMixin(...storeMixins)],
 
     getStateFromStores() {

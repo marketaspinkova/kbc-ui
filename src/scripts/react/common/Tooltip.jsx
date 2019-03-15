@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {OverlayTrigger, Tooltip} from 'react-bootstrap';
 import _ from 'underscore';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     tooltip: PropTypes.any.isRequired,
     id: PropTypes.string,

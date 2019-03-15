@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import DocumentTitle from 'react-document-title';
 import createStoreMixin from '../mixins/createStoreMixin';
 import RoutesStore from '../../stores/RoutesStore';
@@ -6,7 +7,7 @@ import ApplicationStore from '../../stores/ApplicationStore';
 
 const flattenBreadcrumbs = breadcrumbs => breadcrumbs.map(page => page.get('title')).join(' / ');
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(RoutesStore)],
 
   getStateFromStores() {

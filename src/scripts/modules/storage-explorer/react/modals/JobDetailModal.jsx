@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Table, Button, Modal } from 'react-bootstrap';
 import { Tree } from '@keboola/indigo-ui';
 import DurationStatic from '../../../../react/common/DurationStatic';
@@ -7,7 +8,7 @@ import FileSize from '../../../../react/common/FileSize';
 import JobStatusLabel from '../../../../react/common/JobStatusLabel';
 import { format } from '../../../../utils/date';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     show: PropTypes.bool.isRequired,
     onHide: PropTypes.func.isRequired,

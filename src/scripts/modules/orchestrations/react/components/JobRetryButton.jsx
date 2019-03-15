@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { List, fromJS } from 'immutable';
 
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
@@ -10,7 +11,7 @@ import JobActionCreators from '../../ActionCreators';
 
 import TaskSelectModal from '../modals/TaskSelect';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(JobsStore)],
 
   propTypes: {

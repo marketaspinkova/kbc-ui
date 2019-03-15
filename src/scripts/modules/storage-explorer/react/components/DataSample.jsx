@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import _ from 'underscore';
 import { Alert, Form, FormGroup, FormControl, Col, ButtonGroup, Button, Table, Row } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
@@ -7,7 +8,7 @@ import Select from 'react-select';
 import StorageTableDataPreviewItem from '../../../../react/common/StorageTableDataPreviewItem';
 import { dataPreview } from '../../Actions';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     table: PropTypes.object.isRequired
   },

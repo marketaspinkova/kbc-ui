@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Modal} from 'react-bootstrap';
 import moment from 'moment';
 import ConfirmButtons from './ConfirmButtons';
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     version: PropTypes.object.isRequired,

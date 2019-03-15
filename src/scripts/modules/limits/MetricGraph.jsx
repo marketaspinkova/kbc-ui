@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Keen from 'keen-js';
 import { fromJS } from 'immutable';
 
@@ -104,7 +105,7 @@ function createChartOptions(options) {
   });
 }
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     query: PropTypes.object.isRequired,
     limitValue: PropTypes.number,

@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ReactDOM from 'react-dom';
 import Immutable from 'immutable';
 import CurrentUser from './react/layout/CurrentUser';
 import ProjectsList from './react/layout/project-select/List';
 import * as helpers from './helpers';
 
-const App = React.createClass({
+const App = createReactClass({
   propTypes: {
     user: PropTypes.object.isRequired,
     urlTemplates: PropTypes.object.isRequired,

@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import _ from 'underscore';
 import {List, Map} from 'immutable';
 import { InlineEditInput } from '@keboola/indigo-ui';
@@ -20,7 +21,7 @@ import InstalledComponentsActions from '../../components/InstalledComponentsActi
 const componentId = 'custom-science';
 
 
-export default React.createClass({
+export default createReactClass({
 
   mixins: [createStoreMixin(InstalledComponentsStore, LatestJobsStore, StorageTablesStore)],
 

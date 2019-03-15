@@ -1,7 +1,8 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Popover, OverlayTrigger } from 'react-bootstrap';
 
-export default React.createClass({
+export default createReactClass({
   render() {
     return (
       <OverlayTrigger overlay={this._renderPopover()}>

@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import classnames from 'classnames';
 import { Button } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 import Confirm from './Confirm';
 import Tooltip from './Tooltip';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     confirm: PropTypes.shape({
       title: PropTypes.string.isRequired,

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import {Map} from 'immutable';
 import {Panel} from 'react-bootstrap';
@@ -8,7 +9,7 @@ import Detail from './FileInputMappingDetail';
 import Header from './FileInputMappingHeader';
 import Add from './AddFileInputMapping';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {

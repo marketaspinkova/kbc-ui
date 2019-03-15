@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import Immutable from 'immutable';
 import Select from 'react-select';
 import TableLoader from './TableLoaderQuickStart';
 
-export default React.createClass({
+export default createReactClass({
   displayName: 'Quickstart',
   propTypes: {
     configId: PropTypes.string.isRequired,

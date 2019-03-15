@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import InstalledComponentsActionCreators from '../../../components/InstalledComponentsActionCreators';
 import TransformationBucketsStore from '../../stores/TransformationBucketsStore';
 import { RefreshIcon, Loader } from '@keboola/indigo-ui';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(TransformationBucketsStore)],
 
   propTypes: {

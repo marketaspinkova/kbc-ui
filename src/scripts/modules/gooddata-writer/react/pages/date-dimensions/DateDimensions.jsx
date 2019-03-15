@@ -1,5 +1,7 @@
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../../../stores/RoutesStore';
 
@@ -9,7 +11,7 @@ import actionCreators from '../../../actionCreators';
 import DateDimensionsTable from './DateDimensionsTable';
 import NewDimensionForm from './../../components/NewDimensionForm';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(dateDimensionsStore, goodDataWriterStore)],
 
   getStateFromStores() {

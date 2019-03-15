@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { ExternalLink } from '@keboola/indigo-ui';
 import { Col, FormGroup, Checkbox, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 import SaveButtons from '../../../../react/common/SaveButtons';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     data: PropTypes.object.isRequired,
     isSaving: PropTypes.bool.isRequired,

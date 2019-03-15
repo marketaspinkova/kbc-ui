@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import CodeMirror from 'react-code-mirror';
 import resolveHighlightMode from './resolveHighlightMode';
 import {ExternalLink} from '@keboola/indigo-ui';
 import normalizeNewlines from './normalizeNewlines';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     script: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,

@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Loader } from '@keboola/indigo-ui';
 
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
@@ -7,7 +8,7 @@ import Tooltip from '../../../../react/common/Tooltip';
 
 import goodDataWriterStore from '../../store';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(goodDataWriterStore)],
 
   componentWillReceiveProps() {

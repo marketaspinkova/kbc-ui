@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import EmptyState from '../../../components/react/components/ComponentEmptyState';
 import TableDescriptionEditor from './TableDescriptionEditor';
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     isLoading: PropTypes.bool,

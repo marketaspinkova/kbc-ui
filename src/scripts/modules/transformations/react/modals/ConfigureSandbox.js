@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ConfigureSandboxModal from './ConfigureSandboxModal';
 // import ConfigureDockerSandboxModal from './ConfigureDockerSandboxModal';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
@@ -11,7 +12,7 @@ import jobsApi from '../../../jobs/JobsApi';
 import actionCreators from '../../../components/InstalledComponentsActionCreators';
 import provisioningActions from '../../../provisioning/ActionCreators';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     show: PropTypes.bool.isRequired,
     onHide: PropTypes.func.isRequired,

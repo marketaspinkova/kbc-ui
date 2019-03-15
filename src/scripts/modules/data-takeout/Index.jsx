@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Map} from 'immutable';
 import {Link} from 'react-router';
 import Form from './Form';
@@ -12,7 +13,7 @@ import InstalledComponentsStore from '../components/stores/InstalledComponentsSt
 const COMPONENT_ID = 'kbc-project-takeout',
   CONFIG_ID = '.new-tmp-config';
 
-export default React.createClass({
+export default createReactClass({
 
   mixins: [createStoreMixin(InstalledComponentsStore)],
 

@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import actionCreators from '../../../InstalledComponentsActionCreators';
 import Modal from './TableInputMappingModal';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     tables: PropTypes.object.isRequired,
     mapping: PropTypes.object.isRequired,

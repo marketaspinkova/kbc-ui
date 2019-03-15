@@ -1,9 +1,10 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ReactDOM from 'react-dom';
 import {ExternalLink} from '@keboola/indigo-ui';
 import * as helpers from './helpers';
 
-const App = React.createClass({
+const App = createReactClass({
   render() {
     return (
       <div id="kbc-main-app">

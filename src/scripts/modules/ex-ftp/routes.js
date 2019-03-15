@@ -11,6 +11,7 @@ import {CollapsibleSection} from '../configurations/utils/renderHelpers';
 import Immutable from 'immutable';
 import React from 'react';
 
+
 const routeSettings = {
   componentId: 'keboola.ex-ftp',
   componentType: 'extractor',

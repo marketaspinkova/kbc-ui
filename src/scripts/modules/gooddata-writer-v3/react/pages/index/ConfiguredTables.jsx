@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Loader, SearchBar } from '@keboola/indigo-ui';
 import RoutesStore from '../../../../../stores/RoutesStore';
 import StorageApiTableLinkEx from '../../../../components/react/components/StorageApiTableLinkEx';
@@ -9,7 +10,7 @@ import Confirm from '../../../../../react/common/Confirm';
 import matchByWords from '../../../../../utils/matchByWords';
 import RunLoadButton from '../../components/RunLoadButton';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     loadOnly: PropTypes.bool.isRequired,
     configurationId: PropTypes.string.isRequired,

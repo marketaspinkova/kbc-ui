@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
 import { Finished, JobStatusCircle } from '@keboola/indigo-ui';
 import DurationWithIcon from '../../../../react/common/DurationWithIcon';
 import JobPartialRunLabel from '../../../../react/common/JobPartialRunLabel';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     job: PropTypes.object.isRequired
   },

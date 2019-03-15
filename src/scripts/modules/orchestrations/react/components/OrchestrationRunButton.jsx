@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import RunOrchestrationModal from '../modals/RunOrchestration';
 import ActionCreators from '../../ActionCreators';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     orchestration: PropTypes.object.isRequired,
     tasks: PropTypes.object,

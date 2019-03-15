@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Row from './DateDimensionsRow';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     dimensions: PropTypes.object.isRequired,
     configurationId: PropTypes.string.isRequired,

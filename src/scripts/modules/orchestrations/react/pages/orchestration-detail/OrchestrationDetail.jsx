@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { List } from 'immutable';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 
@@ -26,7 +27,7 @@ import OrchestrationActiveButton from '../../components/OrchestrationActiveButto
 import {ExternalLink} from '@keboola/indigo-ui';
 import {Row, Col} from 'react-bootstrap';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(OrchestrationStore, OrchestrationJobsStore, VersionsStore, LatestJobsStore)],
 
   getStateFromStores() {

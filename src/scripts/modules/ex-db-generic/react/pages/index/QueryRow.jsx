@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 
 import {Link} from 'react-router';
@@ -11,7 +12,7 @@ import ActivateDeactivateButton from '../../../../../react/common/ActivateDeacti
 
 import * as actionsProvisioning from '../../../actionsProvisioning';
 
-export default React.createClass({
+export default createReactClass({
   displayName: 'QueryRow',
   mixins: [ImmutableRenderMixin],
   propTypes: {

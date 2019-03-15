@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {RadioGroup} from 'react-radio-group';
 import { ControlLabel, HelpBlock, FormControl, FormGroup, Col } from 'react-bootstrap';
 import RadioGroupInput from '../../../../react/common/RadioGroupInput';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     onChangeSheetTitle: PropTypes.func.isRequired,
     onChangeAction: PropTypes.func.isRequired,

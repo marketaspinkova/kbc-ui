@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Loader} from '@keboola/indigo-ui';
 import Tooltip from '../../../../react/common/Tooltip';
 import Modal from './ClearStateButtonModal';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     onClick: PropTypes.func.isRequired,
     isPending: PropTypes.bool.isRequired,

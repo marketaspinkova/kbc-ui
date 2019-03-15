@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import actionCreators from '../../../InstalledComponentsActionCreators';
 import FileOutputMappingModal from './FileOutputMappingModal';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     mapping: PropTypes.object.isRequired,
     componentId: PropTypes.string.isRequired,

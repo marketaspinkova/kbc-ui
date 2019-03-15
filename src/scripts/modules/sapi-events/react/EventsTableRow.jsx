@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import ComponentsStore from '../../components/stores/ComponentsStore';
 import { Link } from 'react-router';
@@ -15,7 +16,7 @@ const classmap = {
   success: 'bg-success'
 };
 
-export default React.createClass({
+export default createReactClass({
   mixins: [PureRenderMixin],
 
   propTypes: {

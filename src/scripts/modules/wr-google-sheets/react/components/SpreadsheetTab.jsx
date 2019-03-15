@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {RadioGroup} from 'react-radio-group';
 import RadioGroupInput from '../../../../react/common/RadioGroupInput';
 import Picker from '../../../google-utils/react/GooglePicker';
 import ViewTemplates from '../../../google-utils/react/PickerViewTemplates';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     onSelectExisting: PropTypes.func.isRequired,
     onSelectFolder: PropTypes.func.isRequired,

@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import {Map} from 'immutable';
 
 import QueryRow from './QueryRow';
 
 
-export default React.createClass({
+export default createReactClass({
   displayName: 'QueryTable',
   mixins: [ImmutableRenderMixin],
   propTypes: {

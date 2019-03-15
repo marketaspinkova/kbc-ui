@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Map, List, fromJS } from 'immutable';
 import underscoreString from 'underscore.string';
 import TasksEditTableRow from './TasksEditTableRow';
@@ -13,7 +14,7 @@ import { Table, DropdownButton } from 'react-bootstrap';
 import AboutPhases from '../../components/AboutPhases';
 import ComponentsStore from '../../../../components/stores/ComponentsStore';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     tasks: PropTypes.object.isRequired,
     components: PropTypes.object.isRequired,

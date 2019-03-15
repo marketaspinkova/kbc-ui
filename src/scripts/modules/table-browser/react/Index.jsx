@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Immutable, {List, Map, fromJS} from 'immutable';
 
 import Promise from 'bluebird';
@@ -17,7 +18,7 @@ import tableBrowserActions from '../flux/actions';
 import createActionsProvisioning from '../actionsProvisioning';
 import createStoreProvisioning from '../storeProvisioning';
 
-export default React.createClass({
+export default createReactClass({
 
   mixins: [createStoreMixin(tablesStore, tableBrowserStore)],
 

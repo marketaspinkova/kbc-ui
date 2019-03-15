@@ -4,13 +4,14 @@
 import PropTypes from 'prop-types';
 
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Immutable from 'immutable';
 import TableLink from '../../modules/components/react/components/StorageApiTableLinkEx';
 import TableSelectorInput from './TableSelectorInput';
 import StorageTablesStore from '../../modules/components/stores/StorageTablesStore';
 import {Button} from 'react-bootstrap';
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     value: PropTypes.string,

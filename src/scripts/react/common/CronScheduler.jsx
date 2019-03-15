@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import later from 'later';
 import _ from 'underscore';
 import Scheduler from './Scheduler';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     crontabRecord: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired

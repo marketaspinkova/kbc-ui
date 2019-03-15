@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
 
 const ExDbGenericComponents = [
@@ -25,7 +26,7 @@ const ExAnalyticsComponents = [
   'ex-google-analytics-v5'
 ];
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     componentId: PropTypes.string.isRequired,
     configId: PropTypes.string.isRequired,

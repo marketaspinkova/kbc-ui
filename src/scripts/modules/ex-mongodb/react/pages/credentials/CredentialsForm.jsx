@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Map} from 'immutable';
 import {Col, Checkbox, Form, FormControl, FormGroup, ControlLabel} from 'react-bootstrap';
 import Clipboard from '../../../../../react/common/Clipboard';
@@ -7,7 +8,7 @@ import TestCredentialsButtonGroup from '../../../../../react/common/TestCredenti
 import Tooltip from '../../../../../react/common/Tooltip';
 import SshTunnelRow from '../../../../../react/common/SshTunnelRow';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     savedCredentials: PropTypes.object.isRequired,
     credentials: PropTypes.object.isRequired,

@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { ExternalLink } from '@keboola/indigo-ui';
 import Edit from './ConfigurationEdit';
 import Immutable from 'immutable';
 import Markdown from '../../../../react/common/Markdown';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     data: PropTypes.string.isRequired,
     isChanged: PropTypes.bool.isRequired,

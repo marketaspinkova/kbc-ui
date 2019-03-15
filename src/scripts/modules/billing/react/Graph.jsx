@@ -1,4 +1,5 @@
 import React  from 'react';
+import createReactClass from 'create-react-class';
 import GraphLegend from './GraphLegend';
 import GraphVisualization from './GraphVisualization';
 import moment from 'moment';
@@ -18,7 +19,7 @@ function getDatesForLastMonth() {
   };
 }
 
-export default React.createClass({
+export default createReactClass({
 
   getInitialState: function() {
     return {

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import classnames from 'classnames';
 import { replaceAll } from 'underscore.string';
@@ -13,7 +14,7 @@ import ComponentName from '../../../../react/common/ComponentName';
 import ComponentIcon from '../../../../react/common/ComponentIcon';
 import EventDetailModal from '../modals/EventDetailModal';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {

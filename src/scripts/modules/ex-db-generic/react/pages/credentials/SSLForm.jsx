@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Textarea from 'react-textarea-autosize';
 import { Checkbox, Col, FormGroup, HelpBlock } from 'react-bootstrap';
 import {ExternalLink} from '@keboola/indigo-ui';
 
 const helpUrl = 'https://help.keboola.com/extractors/database/sqldb/#mysql-encryption';
 
-export default React.createClass({
+export default createReactClass({
   displayName: 'SSLForm',
   propTypes: {
     onChange: PropTypes.func,

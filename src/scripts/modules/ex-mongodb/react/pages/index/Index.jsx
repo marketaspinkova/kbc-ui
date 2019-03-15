@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import classnames from 'classnames';
 import { Link } from 'react-router';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
@@ -18,7 +19,7 @@ import QueryTable from './QueryTable';
 export default function(componentId) {
   const actionCreators = createActions(componentId);
 
-  return React.createClass({
+  return createReactClass({
     mixins: [createStoreMixin(componentsStore)],
 
     componentWillReceiveProps() {

@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Select from 'react-select';
 import {fromJS} from 'immutable';
 import ComponentIcon from '../../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../../react/common/ComponentName';
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     disabled: PropTypes.bool.isRequired,

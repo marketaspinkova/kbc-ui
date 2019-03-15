@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {fromJS} from 'immutable';
 
 function format(unit) {
@@ -73,7 +74,7 @@ function createChartOptions(options) {
   });
 }
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     data: PropTypes.object.isRequired

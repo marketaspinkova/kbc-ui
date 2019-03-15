@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import _ from 'underscore';
 import { Map } from 'immutable';
 import { Col, Modal, Button, ButtonToolbar, HelpBlock, FormControl, FormGroup, ControlLabel } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     saveCredentialsFn: PropTypes.func.isRequired,
     credentials: PropTypes.object,

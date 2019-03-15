@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
 import classnames from 'classnames';
 import { Table, ButtonToolbar, Button, Row } from 'react-bootstrap';
@@ -10,7 +11,7 @@ import FileSize from '../../../../../react/common/FileSize';
 import CreateTableModal from '../../modals/CreateTableModal';
 import CreateAliasTableModal from '../../modals/CreateAliasTableModal';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     bucket: PropTypes.object.isRequired,
     tables: PropTypes.object.isRequired,

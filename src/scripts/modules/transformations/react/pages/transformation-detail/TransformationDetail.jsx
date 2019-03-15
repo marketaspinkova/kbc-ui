@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Router, { Link } from 'react-router';
 import classnames from 'classnames';
 import { ExternalLink } from '@keboola/indigo-ui';
@@ -25,7 +26,7 @@ import LatestRowVersions from '../../../../configurations/react/components/Sideb
 
 import { isKnownTransformationType } from '../../../utils/transformationTypes';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [
     createStoreMixin(
       TransformationsStore,

@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Alert} from 'react-bootstrap';
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     authorizedFor: PropTypes.string,

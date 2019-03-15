@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { ExternalLink } from '@keboola/indigo-ui';
 
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
@@ -21,7 +22,7 @@ import Immutable from 'immutable';
 import LatestVersions from '../components/SidebarVersionsWrapper';
 
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(InstalledComponentStore, ComponentStore, VersionsStore)],
 
   getStateFromStores() {

@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import classnames from 'classnames';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     valueCurrent: PropTypes.number.isRequired,
     valueMax: PropTypes.number.isRequired

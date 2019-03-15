@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import JobsTableRow from './JobsTableRow';
 import { RefreshIcon } from '@keboola/indigo-ui';
 import ImmutableRendererMixin from 'react-immutable-render-mixin';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [ImmutableRendererMixin],
 
   propTypes: {

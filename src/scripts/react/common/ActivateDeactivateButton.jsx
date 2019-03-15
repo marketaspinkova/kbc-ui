@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Check, Loader } from '@keboola/indigo-ui';
 import Tooltip from './Tooltip';
 
 const MODE_BUTTON = 'button',
   MODE_LINK = 'link';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     activateTooltip: PropTypes.string,
     deactivateTooltip: PropTypes.string,

@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Router from 'react-router';
 import Duration from '../../../../../react/common/Duration';
 import JobStatusLabel from '../../../../../react/common/JobStatusLabel';
 import date from '../../../../../utils/date';
 import ImmutableRendererMixin from 'react-immutable-render-mixin';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [Router.Navigation, Router.State, ImmutableRendererMixin],
 
   propTypes: {

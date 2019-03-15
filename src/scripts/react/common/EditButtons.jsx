@@ -6,10 +6,11 @@
 import PropTypes from 'prop-types';
 
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ConfirmButtons from './ConfirmButtons';
 import { Button } from 'react-bootstrap';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     isEditing: PropTypes.bool.isRequired,
     isSaving: PropTypes.bool.isRequired,

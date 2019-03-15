@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+
 import ComponentBadgeTable from '../../../../../react/common/ComponentBadgeTable';
 import { getComponentBadges } from '../../../../../react/common/componentHelpers';
 

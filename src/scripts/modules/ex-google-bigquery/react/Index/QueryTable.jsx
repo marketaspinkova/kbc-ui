@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import {Check} from '@keboola/indigo-ui';
 
 import StorageTableLink from '../../../components/react/components/StorageApiTableLinkEx';
@@ -12,7 +14,7 @@ import QueryDeleteButton from './../components/QueryDeleteButton';
 
 import {Link} from 'react-router';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     componentId: PropTypes.string.isRequired,
     queryDetailRoute: PropTypes.string.isRequired,

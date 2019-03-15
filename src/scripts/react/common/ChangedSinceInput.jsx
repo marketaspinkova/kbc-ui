@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Creatable } from 'react-select';
 import changedSinceOptionCreator from './changedSinceOptionCreator';
 
@@ -22,7 +23,7 @@ const selectOptions = [
   { label: '30 days', value: '-30 days' }
 ];
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     onChange: PropTypes.func.isRequired,
     value: PropTypes.string,

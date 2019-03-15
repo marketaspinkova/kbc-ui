@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Modal, ButtonToolbar, Button } from 'react-bootstrap';
 import Tooltip from '../../../../react/common/Tooltip';
 import CodeMirror from 'react-code-mirror';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     parameters: PropTypes.object.isRequired,
     onSet: PropTypes.func,

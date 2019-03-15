@@ -1,8 +1,9 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import classnames from 'classnames';
 import { Link, State } from 'react-router';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [State],
 
   render() {

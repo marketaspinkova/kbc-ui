@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import Credentials from './Credentials';
 import ProvisioningActions from '../../gooddataProvisioning/actions';
@@ -7,7 +8,7 @@ import ProvisioningStore from '../../gooddataProvisioning/store';
 
 import ApplicationStore from '../../../../stores/ApplicationStore';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(ApplicationStore, ProvisioningStore)],
 
   propTypes: {

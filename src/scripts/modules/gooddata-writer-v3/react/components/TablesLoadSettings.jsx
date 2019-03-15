@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Col, ControlLabel, Radio, Form, FormGroup} from 'react-bootstrap';
 import {Loader} from '@keboola/indigo-ui';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     disabled: PropTypes.bool,
     onSave: PropTypes.func,

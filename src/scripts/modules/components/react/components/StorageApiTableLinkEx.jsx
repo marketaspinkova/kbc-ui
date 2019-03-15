@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import moment from 'moment';
 import { Map } from 'immutable';
 import { Button } from 'react-bootstrap';
@@ -11,7 +12,7 @@ import StorageActions from '../../StorageActionCreators';
 import Tooltip from '../../../../react/common/Tooltip';
 import FileSize from '../../../../react/common/FileSize';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(TablesStore)],
 
   propTypes: {

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Modal } from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import NewDimensionForm from './NewDimensionForm';
@@ -9,7 +10,7 @@ import Confirm from '../../../../react/common/Confirm';
 import Tooltip from '../../../../react/common/Tooltip';
 
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     value: PropTypes.shape({
       dimensions: PropTypes.object.isRequired

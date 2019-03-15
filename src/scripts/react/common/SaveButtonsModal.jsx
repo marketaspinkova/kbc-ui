@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Modal, ButtonToolbar, Button} from 'react-bootstrap';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     onHide: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,

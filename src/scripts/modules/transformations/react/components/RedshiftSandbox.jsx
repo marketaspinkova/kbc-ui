@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Immutable from 'immutable';
 
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
@@ -14,7 +15,7 @@ import contactSupport from '../../../../utils/contactSupport';
 import Tooltip from './../../../../react/common/Tooltip';
 import RedshiftSSLInfoModal from './RedshiftSSLInfoModal';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(RedshiftSandboxCredentialsStore, StorageBucketsStore, StorageTablesStore)],
 
   getStateFromStores() {

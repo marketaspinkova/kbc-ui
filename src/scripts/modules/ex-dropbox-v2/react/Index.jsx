@@ -1,5 +1,6 @@
 import _ from 'underscore';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import moment from 'moment';
 import byteConverter from 'byte-converter';
 import FileSelectorModal from './DropboxFileSelectorModal';
@@ -34,7 +35,7 @@ import {
 
 const componentId = 'radektomasek.ex-dropbox-v2';
 
-export default React.createClass({
+export default createReactClass({
 
   mixins: [createStoreMixin(InstalledComponentsStore, ExDropboxStore)],
 

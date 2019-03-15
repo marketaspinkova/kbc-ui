@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Modal} from 'react-bootstrap';
 import Markdown from '../../../react/common/Markdown';
 
@@ -41,7 +42,7 @@ There are multiple rows per one document. All columns are part of the primary ke
   Note that the table also contains topic tags, marked as _tag_ in the type field.
 `;
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     show: PropTypes.bool,
     onClose: PropTypes.func

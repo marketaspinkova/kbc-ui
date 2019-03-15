@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 // import fuzzy from 'fuzzy';
 import Select from 'react-select';
 import Tooltip from '../../../../../react/common/Tooltip';
@@ -9,7 +10,7 @@ function simpleMatch(query, test) {
   return test.toLocaleLowerCase().indexOf(query.toLowerCase()) >= 0;
 }
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     selectedValues: PropTypes.array.isRequired,
     onSelectValue: PropTypes.func.isRequired,

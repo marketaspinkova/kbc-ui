@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import _ from 'underscore';
 import {OverlayTrigger, Popover} from 'react-bootstrap';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     title: PropTypes.string.isRequired,
     children: PropTypes.any.isRequired

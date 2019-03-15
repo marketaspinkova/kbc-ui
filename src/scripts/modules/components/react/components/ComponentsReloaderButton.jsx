@@ -1,10 +1,11 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
 import { RefreshIcon } from '@keboola/indigo-ui';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import InstalledComponentsStore from '../../stores/InstalledComponentsStore';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(InstalledComponentsStore)],
 
   getStateFromStores() {

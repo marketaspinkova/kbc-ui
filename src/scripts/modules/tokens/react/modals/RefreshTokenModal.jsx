@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Alert, Modal} from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import TokenString from '../components/TokenString';
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     show: PropTypes.bool.isRequired,

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { DragSource, DropTarget } from 'react-dnd';
 import Tooltip from '../../../../../react/common/Tooltip';
 
@@ -43,7 +44,7 @@ function collectForDropTarget(connect) {
   };
 }
 
-let PhaseEditRow = React.createClass({
+let PhaseEditRow = createReactClass({
   propTypes: {
     toggleHide: PropTypes.func.isRequired,
     phase: PropTypes.object.isRequired,

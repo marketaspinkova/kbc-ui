@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {List, Map} from 'immutable';
 import {Modal} from 'react-bootstrap';
 import ProfileInfo from '../ProfileInfo';
@@ -9,7 +10,7 @@ import ProfilesPicker from '../../../google-utils/react/ProfilesPicker';
 import ApplicationActionCreators from '../../../../actions/ApplicationActionCreators';
 import EmptyState from '../../../components/react/components/ComponentEmptyState';
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     profiles: PropTypes.object.isRequired,

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import moment from 'moment';
 import { Loader } from '@keboola/indigo-ui';
 import createStoreMixin from '../mixins/createStoreMixin';
@@ -11,7 +12,7 @@ import date from '../../utils/date';
 import ComponentIcon from './ComponentIcon';
 import ComponentName from './ComponentName';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(InstalledComponentsStore, ComponentsStore)],
 
   propTypes: {

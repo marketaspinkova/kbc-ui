@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { ExternalLink } from '@keboola/indigo-ui';
 import _ from 'underscore';
 
@@ -7,7 +8,7 @@ import contactSupport from '../../utils/contactSupport';
 import WishlistModalDialog from './wishlist/WishlistModalDialog';
 import { sendWishlistRequest } from './wishlist/WishlistApi';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     urlTemplates: PropTypes.object.isRequired,
     currentProject: PropTypes.object.isRequired,

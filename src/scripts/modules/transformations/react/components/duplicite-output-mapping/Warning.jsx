@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Alert } from 'react-bootstrap';
 import { getConflictsForTransformation } from '../duplicite-output-mapping/detect';
 import ConflictList from './ConflictList';
 import { ExternalLink } from '@keboola/indigo-ui';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     transformation: PropTypes.object.isRequired,
     transformations: PropTypes.object.isRequired,

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Detail from './TableOutputMappingDetail';
 import Header from './TableOutputMappingHeader';
 import {Panel} from 'react-bootstrap';
@@ -8,7 +9,7 @@ import InstalledComponentsActions from '../../../InstalledComponentsActionCreato
 import Add from './AddTableOutputMapping';
 import mappingDefinitions from '../../../utils/mappingDefinitions';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     componentId: PropTypes.string.isRequired,
     configId: PropTypes.string.isRequired,

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import InstantAuthorizationFields from './InstantAuthorizationFields';
 import Clipboard from '../../../react/common/Clipboard';
 import AuthorizationForm from './AuthorizationForm';
@@ -15,7 +16,7 @@ const CUSTOM_AUTHORIZATION_COMPONENTS = ['keboola.ex-google-analytics-v4'];
 
 const COMPONENT_LIMITS_INFO = {'keboola.ex-google-analytics-v4': 'Number of requests will be limited to 2000 API calls per day. Use Custom Authorization with your own credentials to obtain full access to the API.'};
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     componentId: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,

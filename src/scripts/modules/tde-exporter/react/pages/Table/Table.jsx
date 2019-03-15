@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import _ from 'underscore';
 import { fromJS, Map } from 'immutable';
 import { ControlLabel, FormGroup, FormControl, HelpBlock } from 'react-bootstrap';
@@ -20,7 +21,7 @@ const defaults = {
   datetime: '%Y-%m-%d %H:%M:%S'
 };
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(InstalledComponentsStore, StorageStore)],
 
   getInitialState() {

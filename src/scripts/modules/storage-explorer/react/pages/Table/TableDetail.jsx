@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Promise from 'bluebird';
 import { Map } from 'immutable';
 import { Tab, Nav, NavItem, NavDropdown, MenuItem, Row } from 'react-bootstrap';
@@ -28,7 +29,7 @@ import SnapshotRestore from './SnapshotRestore';
 import LatestImports from './LatestImports';
 import TableGraph from './TableGraph';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(TablesStore, BucketsStore, ApplicationStore, FilesStore)],
 
   getStateFromStores() {

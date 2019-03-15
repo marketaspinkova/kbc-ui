@@ -1,9 +1,10 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import NewTransformationBucketButton from './NewTransformationBucketButton';
 import TransformationsEmptyImage from '../../../../../images/transformations-empty.png';
 import ApplicationStore from '../../../../stores/ApplicationStore';
 
-export default React.createClass({
+export default createReactClass({
   imageUrl(image) {
     return ApplicationStore.getScriptsBasePath() + image;
   },

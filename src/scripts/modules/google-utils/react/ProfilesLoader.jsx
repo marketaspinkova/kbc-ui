@@ -3,6 +3,7 @@
 import PropTypes from 'prop-types';
 
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Button} from 'react-bootstrap';
 import _ from 'underscore';
 
@@ -46,7 +47,7 @@ function reparseProfiles(profiles) {
   return result;
 }
 
-export default React.createClass({
+export default createReactClass({
 
   mixins: [createStoreMixin(GapiStore)],
 

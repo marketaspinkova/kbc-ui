@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import numeral from 'numeral';
 import date from '../../../../utils/date';
 import dimple from '../../../../utils/dimple';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     data: PropTypes.object.isRequired
   },

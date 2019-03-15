@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Modal} from 'react-bootstrap';
 import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
 import Editor from './FileOutputMappingEditor';
@@ -7,7 +8,7 @@ import Tooltip from '../../../../../react/common/Tooltip';
 
 const MODE_CREATE = 'create', MODE_EDIT = 'edit';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     mode: PropTypes.oneOf([MODE_CREATE, MODE_EDIT]),
     mapping: PropTypes.object.isRequired,

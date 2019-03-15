@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import later from 'later';
 import _ from 'underscore';
 import Select from 'react-select';
@@ -56,7 +57,7 @@ const lpad = (value, padding) => {
   return (zeroes + value).slice(padding * -1);
 };
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     M: PropTypes.array.isRequired,
     D: PropTypes.array.isRequired,

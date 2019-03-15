@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import SaveButtons from '../../../react/common/SaveButtons';
 import { PanelGroup, Panel } from 'react-bootstrap';
 import classnames from 'classnames';
@@ -10,7 +11,7 @@ export default (TitleComponent, InnerComponent, options = {}) => {
     includeSaveButtons = false, // whether render save buttons
     stretchContentToBody = false // wheter strech content to full width of panel body
   } = options;
-  return React.createClass({
+  return createReactClass({
 
     displayName: 'CollapsibleSection',
 

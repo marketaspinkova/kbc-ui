@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Link} from 'react-router';
 import {List, Map} from 'immutable';
 import {Check, Loader, ExternalLink} from '@keboola/indigo-ui';
@@ -12,7 +13,7 @@ import CreatedDate from '../../components/CreatedDate';
 import SendTokenModal from '../../modals/SendTokenModal';
 import RefreshTokenModal from '../../modals/RefreshTokenModal';
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     tokens: PropTypes.object.isRequired,

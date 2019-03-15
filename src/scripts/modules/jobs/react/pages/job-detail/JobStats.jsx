@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {List} from 'immutable';
 import {Loader} from '@keboola/indigo-ui';
@@ -7,7 +8,7 @@ import {Loader} from '@keboola/indigo-ui';
 import TablesList from './TablesList';
 import JobMetrics from './JobMetrics';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     stats: PropTypes.object.isRequired,
     isLoading: PropTypes.bool.isRequired,

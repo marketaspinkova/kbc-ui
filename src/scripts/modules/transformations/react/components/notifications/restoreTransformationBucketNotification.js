@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import ConfigurationCopiedNotification
   from '../../../../components/react/components/ConfigurationCopiedNotification';
 
 export default (bucketId, bucketName) => {
-  return React.createClass({
+  return createReactClass({
     propTypes: {
       onClick: PropTypes.func.isRequired
     },

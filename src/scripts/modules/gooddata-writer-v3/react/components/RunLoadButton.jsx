@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import RunComponentButton from '../../../components/react/components/RunComponentButton';
 import {Checkbox} from 'react-bootstrap';
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     getRunParams: PropTypes.func.isRequired,

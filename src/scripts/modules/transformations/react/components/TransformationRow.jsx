@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import RunComponentButton from '../../../components/react/components/RunComponentButton';
@@ -13,7 +14,7 @@ import TransformationStore from '../../stores/TransformationsStore';
 import * as sandboxUtils from '../../utils/sandboxUtils';
 import { isKnownTransformationType } from '../../utils/transformationTypes';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {

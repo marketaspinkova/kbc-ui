@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import OrchestrationActionCreators from '../../ActionCreators';
 import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     orchestration: PropTypes.object.isRequired,
     isPending: PropTypes.bool.isRequired,

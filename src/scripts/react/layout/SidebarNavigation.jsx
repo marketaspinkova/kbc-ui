@@ -1,11 +1,12 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import State from 'react-router/lib/State';
 import Link from 'react-router/lib/components/Link';
 
 import ApplicationStore from '../../stores/ApplicationStore';
 import RoutesStore from '../../stores/RoutesStore';
 
-const SidebarNavigation = React.createClass({
+const SidebarNavigation = createReactClass({
   mixins: [State],
 
   render() {

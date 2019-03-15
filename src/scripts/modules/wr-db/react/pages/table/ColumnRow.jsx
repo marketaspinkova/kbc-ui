@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import _ from 'underscore';
 import { Check } from '@keboola/indigo-ui';
 import { FormGroup, FormControl } from 'react-bootstrap';
 import ColumnDataPreview from '../../../../components/react/components/ColumnDataPreview';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     column: PropTypes.object,
     editingColumn: PropTypes.object,

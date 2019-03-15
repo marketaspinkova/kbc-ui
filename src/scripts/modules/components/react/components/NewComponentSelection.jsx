@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ComponentsActionCreators from '../../ComponentsActionCreators';
 import {SearchBar} from '@keboola/indigo-ui';
 import ComponentBox from '../../../../react/common/ComponentBox';
@@ -7,7 +8,7 @@ import contactSupport from '../../../../utils/contactSupport';
 import {Button} from 'react-bootstrap';
 
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     components: PropTypes.object.isRequired,
     filter: PropTypes.string,

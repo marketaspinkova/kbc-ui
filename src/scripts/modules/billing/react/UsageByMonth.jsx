@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {fromJS, List} from 'immutable';
 import moment from 'moment';
 import MetricsApi from '../MetricsApi';
@@ -37,7 +38,7 @@ function sortComponentsByStorageIoDesc(first, second) {
   }
 }
 
-export default React.createClass({
+export default createReactClass({
 
   getInitialState: function() {
     return {

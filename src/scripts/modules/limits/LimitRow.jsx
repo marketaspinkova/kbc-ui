@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ReactDOM from 'react-dom';
 import MetricGraph from './MetricGraph';
 import { Button } from 'react-bootstrap';
@@ -10,7 +11,7 @@ import classnames from 'classnames';
 import contactSupport from '../../utils/contactSupport';
 import SwitchButton from './SwitchButton';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     limit: PropTypes.object.isRequired,
     isKeenReady: PropTypes.bool.isRequired,

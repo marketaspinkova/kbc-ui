@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Map} from 'immutable';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import TemplateSelector from './TemplateSelector';
@@ -16,7 +17,7 @@ const SINCE_HELP = 'Parameter of the Facebook Graph API nested request. Applies 
 const UNTIL_HELP = 'Parameter of the Facebook Graph API nested request. Applies only if the endpoint parameter is given and specifies the date until data of the given endpoint will be retrieved. Can by specified absolutely (yyyy-mm-dd) or relatively (e.g. 15 days ago)';
 const LIMIT_HELP = 'Parameter of the Facebook Graph API nested request. Specifies the size of data returned in one page of the request. Maximum is 100, the default 25.';
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     accounts: PropTypes.object.isRequired,

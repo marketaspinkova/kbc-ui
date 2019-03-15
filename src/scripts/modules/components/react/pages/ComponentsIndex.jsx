@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Map } from 'immutable';
 
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
@@ -25,7 +26,7 @@ const TEXTS = {
   }
 };
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(InstalledComponentsStore, ComponentsStore)],
   propTypes: {
     type: PropTypes.string.isRequired

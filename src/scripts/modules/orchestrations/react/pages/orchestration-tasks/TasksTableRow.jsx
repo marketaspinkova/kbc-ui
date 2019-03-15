@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { HelpBlock } from 'react-bootstrap';
 import ComponentIcon from '../../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../../react/common/ComponentName';
@@ -9,7 +10,7 @@ import OrchestrationTaskRunButton from '../../components/OrchestrationTaskRunBut
 import { Check } from '@keboola/indigo-ui';
 import descriptionExcerpt from '../../../../../utils/descriptionExcerpt';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     orchestration: PropTypes.object.isRequired,
     onRun: PropTypes.func.isRequired,

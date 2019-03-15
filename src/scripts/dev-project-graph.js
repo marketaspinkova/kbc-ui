@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ReactDOM from 'react-dom';
 import { fromJS } from 'immutable';
 
@@ -56,7 +57,7 @@ const Navigation = () => {
   );
 };
 
-const Container = React.createClass({
+const Container = createReactClass({
   propTypes: {
     data: PropTypes.object.isRequired
   },

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Immutable from 'immutable';
 import _ from 'underscore';
 import CodeMirror from 'react-code-mirror';
@@ -17,7 +18,7 @@ import {getQueryEditorPlaceholder, getQueryEditorHelpText} from '../../templates
 import editorMode from '../../templates/editorMode';
 import { getCustomFieldsForComponent } from '../../templates/customFields';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     query: PropTypes.object.isRequired,
     tables: PropTypes.object.isRequired,

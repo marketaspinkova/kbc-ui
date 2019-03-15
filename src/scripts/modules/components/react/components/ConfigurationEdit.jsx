@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 // import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import JSONSchemaEditor from './JSONSchemaEditor';
 import Immutable from 'immutable';
 import SaveButtons from '../../../../react/common/SaveButtons';
 import CodeMirror from 'react-code-mirror';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     data: PropTypes.string.isRequired,
     schema: PropTypes.object,

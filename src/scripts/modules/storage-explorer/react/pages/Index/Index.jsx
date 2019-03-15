@@ -1,10 +1,11 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Col, Row } from 'react-bootstrap';
 import Buckets from '../../components/Buckets';
 import Events from '../../components/Events';
 import NavButtons from '../../components/NavButtons';
 
-export default React.createClass({
+export default createReactClass({
   render() {
     return (
       <div className="container-fluid">

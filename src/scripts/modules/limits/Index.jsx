@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ApplicationStore from '../../stores/ApplicationStore';
 import createStoreMixin from '../../react/mixins/createStoreMixin';
 import LimitsSection from './LimitsSection';
@@ -6,7 +7,7 @@ import StorageApi from '../components/StorageApi';
 import Keen from 'keen-js';
 import SettingsTabs from '../../react/layout/SettingsTabs';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(ApplicationStore)],
 
   getInitialState() {

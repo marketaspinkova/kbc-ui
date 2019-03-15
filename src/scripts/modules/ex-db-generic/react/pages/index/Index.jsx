@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Map} from 'immutable';
 import classnames from 'classnames';
 import {Alert} from 'react-bootstrap';
@@ -33,7 +34,7 @@ import AsynchActionError from '../../components/AsynchActionError';
 
 export default function(componentId) {
   const actionsCreators = actionsProvisioning.createActions(componentId);
-  return React.createClass({
+  return createReactClass({
     displayName: 'ExDbIndex',
     mixins: [createStoreMixin(VersionsStore, storeProvisioning.componentsStore), Navigation],
 

@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Modal } from 'react-bootstrap';
 import SapiTableSelector from '../../../../components/react/components/SapiTableSelector';
 import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     show: PropTypes.bool.isRequired,
     onHideFn: PropTypes.func.isRequired,

@@ -16,6 +16,7 @@ import {CollapsibleSection} from '../configurations/utils/renderHelpers';
 import Immutable from 'immutable';
 import React from 'react';
 
+
 const routeSettings = {
   componentId: 'keboola.wr-aws-s3',
   componentType: 'writer',

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Modal } from 'react-bootstrap';
 import { ExternalLink } from '@keboola/indigo-ui';
 import Textarea from 'react-textarea-autosize';
@@ -29,7 +30,7 @@ const isJsonValid = (jsonString) => {
   }
 };
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     onHide: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,

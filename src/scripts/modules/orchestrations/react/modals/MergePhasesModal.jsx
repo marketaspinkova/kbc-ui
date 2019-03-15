@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Modal} from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import Select from 'react-select';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [PureRenderMixin],
   propTypes: {
     tasks: PropTypes.object.isRequired,

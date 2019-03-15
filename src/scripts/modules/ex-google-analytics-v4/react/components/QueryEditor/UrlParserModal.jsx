@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import classnames from 'classnames';
 import { fromJS, List } from 'immutable';
 import { Alert, Button, Col, Modal, Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
@@ -7,7 +8,7 @@ import { ExternalLink } from '@keboola/indigo-ui';
 
 const ANALYTICS_BASE_URL = 'https://ga-dev-tools.appspot.com/query-explorer/?';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     onCancel: PropTypes.func.isRequired,
     show: PropTypes.bool.isRequired,

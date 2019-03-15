@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Loader } from '@keboola/indigo-ui';
 import {
   Form,
@@ -12,7 +13,7 @@ import {
   MenuItem
 } from 'react-bootstrap';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     isSaving: PropTypes.bool.isRequired,
     isChanged: PropTypes.bool.isRequired,

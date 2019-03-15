@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { List } from 'immutable';
 import { Table } from 'react-bootstrap';
 import TasksTableRow from './TasksTableRow';
 import PhaseRow from './PhaseRow';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     tasks: PropTypes.object.isRequired,
     orchestration: PropTypes.object.isRequired,

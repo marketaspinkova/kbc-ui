@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import {Check, Loader} from '@keboola/indigo-ui';
@@ -9,7 +10,7 @@ import Confirm from '../../../../../react/common/Confirm';
 
 import actionCreators from '../../../actionCreators';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     dimension: PropTypes.object.isRequired,
     configurationId: PropTypes.string.isRequired,

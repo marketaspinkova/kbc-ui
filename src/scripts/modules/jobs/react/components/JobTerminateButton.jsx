@@ -1,11 +1,12 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import JobsStore from '../../stores/JobsStore';
 import ActionCreators from '../../ActionCreators';
 import RoutesStore from '../../../../stores/RoutesStore';
 import TerminateButton from '../../../../react/common/JobTerminateButton';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(JobsStore)],
 
   _getJobId() {

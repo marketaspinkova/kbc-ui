@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Map, fromJS} from 'immutable';
 import _ from 'underscore';
 
@@ -7,7 +8,7 @@ import {Loader} from '@keboola/indigo-ui';
 import SapiTableSelector from  '../../../components/react/components/SapiTableSelector';
 import {Modal, Button} from 'react-bootstrap';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     configuredTables: PropTypes.object.isRequired,
     localState: PropTypes.object.isRequired,

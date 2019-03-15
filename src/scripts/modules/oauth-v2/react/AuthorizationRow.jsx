@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import AuthorizationModal from './AuthorizationModal';
 import Confirm from '../../../react/common/Confirm';
 import {Loader} from '@keboola/indigo-ui';
 import EmptyState from '../../components/react/components/ComponentEmptyState';
 import Tooltip from '../../../react/common/Tooltip';
 import moment from 'moment';
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     componentId: PropTypes.string.isRequired,

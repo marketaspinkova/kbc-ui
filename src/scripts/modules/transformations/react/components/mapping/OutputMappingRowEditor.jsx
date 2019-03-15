@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import Immutable from 'immutable';
 import { Form, FormGroup, FormControl, ControlLabel, Col, HelpBlock, Checkbox } from 'react-bootstrap';
@@ -10,7 +11,7 @@ import tableIdParser from '../../../../../utils/tableIdParser';
 import stringUtils from '../../../../../utils/string';
 import whereOperatorConstants from '../../../../../react/common/whereOperatorConstants';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {

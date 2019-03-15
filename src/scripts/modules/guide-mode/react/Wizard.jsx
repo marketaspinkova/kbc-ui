@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import WizardModal from './WizardModal';
 import WizardStore from '../stores/WizardStore';
 import { setDirection, setStep, setAchievedLesson, hideWizardModalFn } from '../stores/ActionCreators';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 
-export default React.createClass({
+export default createReactClass({
   displayName: 'Wizard',
 
   propTypes: {

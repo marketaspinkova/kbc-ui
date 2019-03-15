@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import _ from 'underscore';
 import {createTwoFilesPatch} from 'diff';
 import CodeMirror from 'react-code-mirror';
@@ -54,7 +55,7 @@ function getMultiPartsDiff(firstValue, secondValue, firstDescription, secondDesc
     secondDescription, firstDescription, {context: 1000});
 }
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     firstPart: PropTypes.object.isRequired,
     secondPart: PropTypes.object.isRequired,

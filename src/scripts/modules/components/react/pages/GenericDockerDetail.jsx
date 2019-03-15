@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../../stores/RoutesStore';
 import InstalledComponentStore from '../../stores/InstalledComponentsStore';
@@ -33,7 +35,7 @@ import Immutable from 'immutable';
 import LatestVersions from '../components/SidebarVersionsWrapper';
 import Processors from '../components/Processors';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(InstalledComponentStore, StorageTablesStore, OauthStore, ComponentStore, VersionsStore)],
 
   propTypes: {

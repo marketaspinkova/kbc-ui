@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import TablesPaginator from './TablesPaginator';
 import EventsTab from './EventsTab';
 import GeneralInfoTab from './GeneralInfoTab';
@@ -14,7 +15,7 @@ import {Modal, Tabs, Tab} from 'react-bootstrap';
 import {RefreshIcon} from '@keboola/indigo-ui';
 
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     moreTables: PropTypes.array,

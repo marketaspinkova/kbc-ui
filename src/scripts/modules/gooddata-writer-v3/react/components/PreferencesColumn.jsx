@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {FormControl, Form, FormGroup, InputGroup, Col, ControlLabel} from 'react-bootstrap';
 import makeColumnDefinition from '../../helpers/makeColumnDefinition';
 import {DataTypes, Types} from '../../constants';
 import DataTypeSizeHint from './DataTypeSizeHint';
 import DateFormatHint from './DateFormatHint';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired,

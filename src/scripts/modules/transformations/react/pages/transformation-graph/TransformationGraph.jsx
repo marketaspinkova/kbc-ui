@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Router from 'react-router';
 
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
@@ -8,7 +9,7 @@ import StorageTablesStore from '../../../../components/stores/StorageTablesStore
 import RoutesStore from '../../../../../stores/RoutesStore';
 import GraphContainer from './GraphContainer';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(TransformationsStore, TransformationBucketsStore, StorageTablesStore), Router.Navigation],
 
   getStateFromStores() {

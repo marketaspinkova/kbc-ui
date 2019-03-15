@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Edit from './TemplatedConfigurationEdit';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../../stores/RoutesStore';
@@ -9,7 +10,7 @@ import TemplatesStore from '../../stores/TemplatesStore';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
 import Markdown from '../../../../react/common/Markdown';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(InstalledComponentsStore, ComponentsStore, TemplatesStore)],
 
   getStateFromStores() {

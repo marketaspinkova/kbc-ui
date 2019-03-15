@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import {Button, Modal} from 'react-bootstrap';
 import ComponentsStore from '../../../../components/stores/ComponentsStore';
@@ -7,7 +8,7 @@ import {Loader} from '@keboola/indigo-ui';
 import {OAUTH_V2_WRITERS} from '../../../tdeCommon';
 import componentNameAsString from '../../../../../react/common/componentNameAsString';
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     localState: PropTypes.object.isRequired,

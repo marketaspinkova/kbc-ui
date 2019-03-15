@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Confirm from './Confirm';
 import {Loader} from '@keboola/indigo-ui';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     job: PropTypes.object.isRequired,
     isTerminating: PropTypes.bool.isRequired,

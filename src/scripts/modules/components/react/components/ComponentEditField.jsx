@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import immutableMixin from 'react-immutable-render-mixin';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import InstalledComponentsStore from '../../stores/InstalledComponentsStore';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(InstalledComponentsStore), immutableMixin],
 
   propTypes: {

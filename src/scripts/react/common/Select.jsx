@@ -1,9 +1,10 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import { fromJS } from 'immutable';
 import Select from 'react-select';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     value: PropTypes.any,
     emptyStrings: PropTypes.bool,

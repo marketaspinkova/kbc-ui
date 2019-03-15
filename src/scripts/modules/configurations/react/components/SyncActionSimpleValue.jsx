@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import { Loader } from '@keboola/indigo-ui';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     action: PropTypes.object.isRequired,
     valueKey: PropTypes.string.isRequired

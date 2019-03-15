@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import {SearchBar} from '@keboola/indigo-ui';
 import NavRow from './QueryNavRow';
 import CreateQueryElement from '../../components/CreateQueryElement';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     queries: PropTypes.object.isRequired,
     navQuery: PropTypes.object.isRequired,

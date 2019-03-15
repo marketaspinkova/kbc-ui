@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {fromJS, List, Map} from 'immutable';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import {Modal} from 'react-bootstrap';
@@ -7,7 +8,7 @@ import {sanitizeTableName, sheetFullName} from '../../common';
 import ProcessorControls from '../components/ProcessorControls';
 import Tooltip from '../../../../react/common/Tooltip';
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     show: PropTypes.bool.isRequired,

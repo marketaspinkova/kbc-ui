@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { Link } from 'react-router';
 import JobStatusLabel from '../../../../../react/common/JobStatusLabel';
@@ -13,7 +14,7 @@ import TransformationsStore from '../../../../transformations/stores/Transformat
 import date from '../../../../../utils/date';
 import { getJobComponentId } from '../../../utils';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [PureRenderMixin],
 
   propTypes: {

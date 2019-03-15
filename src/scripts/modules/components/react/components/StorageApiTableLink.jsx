@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
 import { parse as parseTable } from '../../../../utils/tableIdParser';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     tableId: PropTypes.string.isRequired,
     children: PropTypes.any

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import fuzzy from 'fuzzy';
 import { fromJS, List } from 'immutable';
 import { Panel } from 'react-bootstrap';
@@ -8,7 +9,7 @@ import storageActionCreators from '../../StorageActionCreators';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import storageTablesStore from '../../stores/StorageTablesStore';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(storageTablesStore)],
 
   propTypes: {

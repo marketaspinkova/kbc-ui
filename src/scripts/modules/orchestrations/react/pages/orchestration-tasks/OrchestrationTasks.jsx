@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { List, Map } from 'immutable';
 
 // actions and stores
@@ -21,7 +22,7 @@ import { DragDropContext } from 'react-dnd';
 
 const componentId = 'orchestrations';
 
-const OrchestrationTasks = React.createClass({
+const OrchestrationTasks = createReactClass({
   mixins: [createStoreMixin(OrchestrationStore, ComponentsStore, InstalledComponentsStore)],
 
   getStateFromStores() {

@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Immutable from 'immutable';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import TransformationsStore from '../../../stores/TransformationsStore';
@@ -15,7 +16,7 @@ import SidebarVersions from '../../../../components/react/components/SidebarVers
 import VersionsStore from '../../../../components/stores/VersionsStore';
 import EmptyStateBucket from '../../components/EmptyStateBucket';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [
     createStoreMixin(TransformationsStore, TransformationBucketsStore, VersionsStore)
   ],

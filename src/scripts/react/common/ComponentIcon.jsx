@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import classNames from 'classnames';
 
 import ApplicationStore from '../../stores/ApplicationStore';
@@ -19,7 +20,7 @@ function getComponentIconURL(componentType) {
   return ApplicationStore.getScriptsBasePath() + fileName;
 }
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     component: PropTypes.object,
     size: PropTypes.string,

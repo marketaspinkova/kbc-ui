@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ActivateDeactivateButton from '../../../../../react/common/ActivateDeactivateButton';
 import Tooltip from '../../../../../react/common/Tooltip';
 import { Check, Loader } from '@keboola/indigo-ui';
@@ -10,7 +11,7 @@ import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import RunButtonModal from '../../../../components/react/components/RunComponentButton';
 import SapiTableLinkEx from '../../../../components/react/components/StorageApiTableLinkEx';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {

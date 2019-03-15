@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Map } from 'immutable';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import SettingsTabs from '../../../../../react/layout/SettingsTabs';
@@ -8,7 +9,7 @@ import TokensActions from '../../../actionCreators';
 import TokensStore from '../../../StorageTokensStore';
 import TokensTable from './TokensTable';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(TokensStore)],
 
   getStateFromStores() {

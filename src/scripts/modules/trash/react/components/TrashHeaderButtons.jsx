@@ -1,10 +1,11 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Confirm from '../../../../react/common/Confirm';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
 import InstaledComponentsActions from '../../../components/InstalledComponentsActionCreators';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(InstalledComponentsStore)],
 
   getStateFromStores() {

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Promise from 'bluebird';
 import _ from 'underscore';
 import {Modal, Alert, Table, Tabs, Tab, Row, Col, Button} from 'react-bootstrap';
@@ -65,7 +66,7 @@ const descriptionsMap = Map({
   'wr-db-redshift': WR_DB_DESCRIPTION
 });
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     componentId: PropTypes.string.isRequired,
     replacementAppId: PropTypes.string

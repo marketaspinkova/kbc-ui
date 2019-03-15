@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { Link } from 'react-router';
 import { Loader } from '@keboola/indigo-ui';
@@ -11,7 +12,7 @@ import SapiTableLinkEx from '../../../../components/react/components/StorageApiT
 import ActivateTableExportButton from '../../components/ActivateTableExportButton';
 import actionCreators from '../../../actionCreators';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [ImmutableRenderMixin],
   propTypes: {
     table: PropTypes.object.isRequired,

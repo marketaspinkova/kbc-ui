@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { ExternalLink } from '@keboola/indigo-ui';
 
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
@@ -8,7 +9,7 @@ import goodDataWriterStore from '../../../store';
 
 import Graph from './GraphContainer';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(goodDataWriterStore)],
 
   getStateFromStores() {

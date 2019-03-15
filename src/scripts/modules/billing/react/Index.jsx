@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Graph from './Graph';
 import UsageByMonth from './UsageByMonth';
 import ProjectPowerLimit from './ProjectPowerLimit';
@@ -13,7 +14,7 @@ export function componentIoSummary(data, metric) {
     }, 0);
 }
 
-export default React.createClass({
+export default createReactClass({
 
   render() {
     return (

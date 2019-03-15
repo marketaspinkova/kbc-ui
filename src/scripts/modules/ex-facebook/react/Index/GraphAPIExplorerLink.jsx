@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Tooltip from '../../../../react/common/Tooltip';
 import {ExternalLink} from '@keboola/indigo-ui';
 
 const API_URL = 'https://developers.facebook.com/tools/explorer';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     ids: PropTypes.object.isRequired,
     query: PropTypes.object.isRequired,

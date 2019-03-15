@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Link} from 'react-router';
 import ComponentStore from '../../../stores/ComponentsStore';
 
@@ -10,7 +11,7 @@ export default (row, changeDescription, componentId, configurationId) => {
     component: componentId,
     config: configurationId
   };
-  return React.createClass({
+  return createReactClass({
     render: function() {
       return (
         <span>

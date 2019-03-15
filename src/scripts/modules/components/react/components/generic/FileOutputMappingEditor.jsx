@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import _ from 'underscore';
 import { List, fromJS } from 'immutable';
 import Select from 'react-select';
 import { PanelWithDetails } from '@keboola/indigo-ui';
 import { Col, FormGroup, FormControl, ControlLabel, Checkbox, HelpBlock } from 'react-bootstrap';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     value: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,

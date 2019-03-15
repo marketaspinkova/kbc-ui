@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import DeleteButton from '../../../../react/common/DeleteButton';
 import ExtendJupyterCredentials from '../../../provisioning/react/components/ExtendJupyterCredentials';
@@ -10,7 +11,7 @@ import JupyterCredentials from '../../../provisioning/react/components/JupyterCr
 import RStudioCredentials from '../../../provisioning/react/components/RStudioCredentials';
 import CredentialsActionCreators from '../../../provisioning/ActionCreators';
 
-export default React.createClass({
+export default createReactClass({
 
   mixins: [createStoreMixin(JupyterSandboxCredentialsStore, RStudioSandboxCredentialsStore)],
 

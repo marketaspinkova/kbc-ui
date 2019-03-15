@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Immutable from 'immutable';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import SnowflakeSandboxCredentialsStore from '../../../provisioning/stores/SnowflakeSandboxCredentialsStore';
@@ -10,7 +11,7 @@ import DeleteButton from '../../../../react/common/DeleteButton';
 import StorageBucketsStore from '../../../components/stores/StorageBucketsStore';
 import StorageTablesStore from '../../../components/stores/StorageTablesStore';
 
-var SnowflakeSandbox = React.createClass({
+var SnowflakeSandbox = createReactClass({
   mixins: [createStoreMixin(SnowflakeSandboxCredentialsStore, StorageBucketsStore, StorageTablesStore)],
   displayName: 'SnowflakeSandbox',
   getStateFromStores: function() {

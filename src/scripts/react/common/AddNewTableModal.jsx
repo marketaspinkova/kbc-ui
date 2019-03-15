@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Modal} from 'react-bootstrap';
 import SapiTableSelector from '../../modules/components/react/components/SapiTableSelector';
 
 import ConfirmButtons from './ConfirmButtons';
 
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     show: PropTypes.bool,

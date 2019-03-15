@@ -1,10 +1,11 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import JupyterSandboxCredentialsStore from '../../stores/JupyterSandboxCredentialsStore';
 import ActionCreators from '../../ActionCreators';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import ExtendCredentialsButton from './ExtendCredentialsButton';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(JupyterSandboxCredentialsStore)],
 
   getStateFromStores: function() {

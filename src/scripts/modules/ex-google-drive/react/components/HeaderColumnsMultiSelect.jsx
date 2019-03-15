@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Select from 'react-select';
 import _ from 'underscore';
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     value: PropTypes.object.isRequired,

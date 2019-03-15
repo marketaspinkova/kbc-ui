@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Table, HelpBlock, Checkbox} from 'react-bootstrap';
 import DatatypeFormRow from './DatatypeFormRow';
 import {parseDataTypeFromString, isDataTypeAsString} from '../../../../utils/parseDataType';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     datatypes: PropTypes.object.isRequired,
     columns: PropTypes.object.isRequired,

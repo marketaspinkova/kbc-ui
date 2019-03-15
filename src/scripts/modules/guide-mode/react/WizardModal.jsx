@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Modal, ListGroupItem, ListGroup, Button} from 'react-bootstrap';
 import RoutesStore from '../../../stores/RoutesStore';
 import { hideWizardModalFn, showWizardModalFn } from '../stores/ActionCreators.js';
@@ -13,7 +14,7 @@ const redirectTo = (pathname) => {
 
 const ROUTE_PATH_STORAGE = 'storage';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     onHide: PropTypes.func.isRequired,
     setStep: PropTypes.func.isRequired,

@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {ButtonToolbar, Button, Modal} from 'react-bootstrap';
 import contactSupport from '../../../../../utils/contactSupport';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     show: PropTypes.bool,
     onHideFn: PropTypes.func

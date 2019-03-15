@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Modal, HelpBlock, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router';
 import { RadioGroup } from 'react-radio-group';
@@ -10,7 +11,7 @@ import DockerCredentialsContainer from '../components/DockerCredentialsContainer
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import { ExternalLink } from '@keboola/indigo-ui';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     show: PropTypes.bool.isRequired,
     onHide: PropTypes.func.isRequired,

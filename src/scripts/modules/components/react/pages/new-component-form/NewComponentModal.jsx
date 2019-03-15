@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import NewConfigurationsStore from '../../../stores/NewConfigurationsStore';
 import NewConfigurationsActionCreators from '../../../NewConfigurationsActionCreators';
@@ -7,7 +8,7 @@ import DefaultForm from './DefaultForm';
 import GoodDataWriterForm from './GoodDataWriterForm';
 import ManualConfigurationForm from './ManualConfigurationFrom';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(NewConfigurationsStore)],
 
   propTypes: {

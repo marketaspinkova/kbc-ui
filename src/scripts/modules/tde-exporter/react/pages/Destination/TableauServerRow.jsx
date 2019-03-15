@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import _ from 'underscore';
 import { Map } from 'immutable';
 import { Button, Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import Confirm from '../../../../../react/common/Confirm';
 import TableauServerCredentialsModal from './TableauServerCredentialsModal';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     renderComponent: PropTypes.func,
     renderEnableUpload: PropTypes.func,

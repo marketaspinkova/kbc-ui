@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import HeaderColumnsMultiSelect from './HeaderColumnsMultiSelect';
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     headerRowValue: PropTypes.number.isRequired,

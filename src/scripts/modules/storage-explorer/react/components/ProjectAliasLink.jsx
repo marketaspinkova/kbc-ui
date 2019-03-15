@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
 import ExternalProjectBucketLink from './ExternalProjectBucketLink';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     sapiToken: PropTypes.object.isRequired,
     urlTemplates: PropTypes.object.isRequired,

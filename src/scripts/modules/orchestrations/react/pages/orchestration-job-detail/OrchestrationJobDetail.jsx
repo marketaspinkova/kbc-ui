@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { fromJS, List } from 'immutable';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 
@@ -18,7 +19,7 @@ import JobOverview from './Overview';
 import Events from '../../../../sapi-events/react/Events';
 import { Tabs, Tab } from 'react-bootstrap';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(OrchestrationStore, OrchestrationJobsStore, InstalledComponentsStore)],
 
   getStateFromStores() {

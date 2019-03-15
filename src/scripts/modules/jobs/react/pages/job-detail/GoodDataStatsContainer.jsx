@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { List } from 'immutable';
 import { startsWith } from 'underscore.string';
 import { factory as EventsServiceFactory } from '../../../../sapi-events/EventsService';
 import GoodDataStats from './GoodDataStats';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     job: PropTypes.object.isRequired
   },

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Modal from './Modal';
 import jobsApi from '../../jobs/JobsApi';
 import storageApi from '../../components/StorageApi';
@@ -8,7 +9,7 @@ import {fromJS} from 'immutable';
 
 const SLICED_FILES_DOWNLOADER_COMPONENT = 'keboola.sliced-files-downloader';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     file: PropTypes.object.isRequired,
     children: PropTypes.element.isRequired

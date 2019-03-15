@@ -1,13 +1,14 @@
 import { first, isEmpty } from 'underscore';
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ConfirmButtons from '../../../react/common/ConfirmButtons';
 import {Modal, Tabs, Tab} from 'react-bootstrap';
 import DropboxChooser from 'react-dropbox-chooser';
 import { Button } from 'react-bootstrap';
 import {getDestinationName} from '../actions/ApplicationActions.js';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     onHide: PropTypes.func.isRequired,
     show: PropTypes.bool.isRequired,

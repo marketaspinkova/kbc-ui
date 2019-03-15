@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import _ from 'underscore';
 import { FormControl, InputGroup, FormGroup } from 'react-bootstrap';
 import ColumnDataPreview from '../../../../components/react/components/ColumnDataPreview';
@@ -24,7 +25,7 @@ const defaults = {
 </ul>
 */
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     isSaving: PropTypes.bool.isRequired,
     column: PropTypes.string,

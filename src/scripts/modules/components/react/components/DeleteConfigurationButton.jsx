@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Loader } from '@keboola/indigo-ui';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
 import Confirm from '../../../../react/common/Confirm';
@@ -7,7 +8,7 @@ import { isObsoleteComponent } from '../../../trash/utils.js';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import InstalledComponentsStore from '../../stores/InstalledComponentsStore';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(InstalledComponentsStore)],
 
   propTypes: {

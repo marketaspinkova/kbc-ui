@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import {FormGroup, FormControl, Form, ControlLabel, Col, Checkbox, HelpBlock, Accordion, Panel} from 'react-bootstrap';
 import CsvDelimiterInput from '../../../react/common/CsvDelimiterInput';
 import SaveButtons from '../../../react/common/SaveButtons';
 import Select from '../../../react/common/Select';
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     requestedEmail: PropTypes.string.isRequired,

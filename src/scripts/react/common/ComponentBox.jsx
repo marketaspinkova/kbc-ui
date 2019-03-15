@@ -1,13 +1,15 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import ComponentDetailLink from './ComponentDetailLink';
 import ComponentBadgeCell from './ComponentBadgeCell';
 import ComponentIcon from './ComponentIcon';
 import ComponentName from './ComponentName';
 import { getComponentBadgesIncluding } from './componentHelpers';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     component: PropTypes.object.isRequired
   },

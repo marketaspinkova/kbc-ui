@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import pureRendererMixin from 'react-immutable-render-mixin';
 import { Map } from 'immutable';
 import TransformationRow from '../../components/TransformationRow';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [pureRendererMixin],
 
   propTypes: {

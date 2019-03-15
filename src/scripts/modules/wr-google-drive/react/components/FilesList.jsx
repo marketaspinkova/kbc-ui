@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Loader} from '@keboola/indigo-ui';
 import {Map} from 'immutable';
 import Tooltip from '../../../../react/common/Tooltip';
@@ -10,7 +11,7 @@ import StorageTableLink from '../../../components/react/components/StorageApiTab
 import TablesByBucketsPanel from '../../../components/react/components/TablesByBucketsPanel';
 import {ExternalLink} from '@keboola/indigo-ui';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     componentId: PropTypes.string.isRequired,
     configId: PropTypes.string.isRequired,

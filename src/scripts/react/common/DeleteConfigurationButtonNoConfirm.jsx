@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Button } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 import Tooltip from './Tooltip';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     onDeleteFn: PropTypes.func.isRequired,
     tooltip: PropTypes.string.isRequired,

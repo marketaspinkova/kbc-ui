@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 export function convertToCredits(nanoCredits, precision) {
   return Number(nanoCredits / (1000 * 1000 * 1000)).toFixed(precision);
 }
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     nanoCredits: PropTypes.number
   },

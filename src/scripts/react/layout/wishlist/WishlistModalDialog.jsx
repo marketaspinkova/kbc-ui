@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Modal, Form, FormControl, Alert } from 'react-bootstrap';
 import ConfirmButtons from '../../common/ConfirmButtons';
 import AdminActionError from '../../../utils/errors/AdminActionError';
@@ -11,7 +12,7 @@ const INITIAL_STATE = {
   hasError: false
 };
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     show: PropTypes.bool.isRequired,
     onSubmit: PropTypes.func.isRequired,

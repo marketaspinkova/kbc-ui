@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import SnowflakeSandboxCredentialsStore from '../../../provisioning/stores/SnowflakeSandboxCredentialsStore';
 import SnowflakeCredentials from '../../../provisioning/react/components/SnowflakeCredentials';
 import CredentialsActionCreators from '../../../provisioning/ActionCreators';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     isAutoLoad: PropTypes.bool.isRequired
   },

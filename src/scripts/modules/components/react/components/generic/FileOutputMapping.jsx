@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Detail from './FileOutputMappingDetail';
 import Header from './FileOutputMappingHeader';
 import {Panel} from 'react-bootstrap';
@@ -7,7 +8,7 @@ import Immutable from 'immutable';
 import InstalledComponentsActions from '../../../InstalledComponentsActionCreators';
 import Add from './AddFileOutputMapping';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     componentId: PropTypes.string.isRequired,
     configId: PropTypes.string.isRequired,

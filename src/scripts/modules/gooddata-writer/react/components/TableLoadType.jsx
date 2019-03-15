@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { fromJS } from 'immutable';
 import { Modal, FormGroup, Radio, Col, HelpBlock } from 'react-bootstrap';
 import { ExternalLink } from '@keboola/indigo-ui';
@@ -11,7 +12,7 @@ import actionCreators from '../../actionCreators';
 const FIELD = 'incrementalLoad';
 const GRAIN = 'grain';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     columns: PropTypes.object.isRequired,
     table: PropTypes.object.isRequired,

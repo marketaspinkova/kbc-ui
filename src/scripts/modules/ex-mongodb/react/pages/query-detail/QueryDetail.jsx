@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Map, List } from 'immutable';
 
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
@@ -12,7 +13,7 @@ import * as constants from './../../../constants';
 export default (componentId, actionsProvisioning, storeProvisioning) => {
   const ExDbActionCreators = actionsProvisioning.createActions(componentId);
 
-  return React.createClass({
+  return createReactClass({
     mixins: [createStoreMixin(storeProvisioning.componentsStore, StorageTablesStore)],
     componentWillReceiveProps() {
       return this.setState(this.getStateFromStores());

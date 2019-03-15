@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Link} from 'react-router';
 import {Routes} from '../../Constants';
 import RoutesStore from '../../../../stores/RoutesStore';
 import ComponentsStore from '../../stores/ComponentsStore';
 const {GENERIC_DETAIL_PREFIX} = Routes;
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     componentId: PropTypes.string.isRequired,

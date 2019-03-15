@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Map, fromJS, List} from 'immutable';
 import {sanitizeTableName} from '../../../common';
 import ProfileSelector from './ProfileSelector';
@@ -16,7 +17,7 @@ const PREFERED_METRICS = ['ga:sessions', 'ga:users', 'ga:transactions', 'ga:page
 
 const PREFERED_DIMENSTIONS = ['ga:segment', 'ga:date', 'ga:medium', 'ga:sourceMedium', 'ga:source', 'ga:campaign', 'ga:yearMonth', 'ga:isoYearIsoWeek', 'ga:transactionId', 'ga:adwordsCampaignID', 'ga:deviceCategory', 'ga:keyword'];
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     allProfiles: PropTypes.object.isRequired,
     query: PropTypes.object.isRequired,

@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {List, Map} from 'immutable';
 import _ from 'underscore';
 import {Col, ControlLabel, FormControl, FormGroup} from 'react-bootstrap';
@@ -63,7 +64,7 @@ const domainOptions = [
   }
 ];
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(storageTablesStore, InstalledComponentStore)],
 
   getStateFromStores() {

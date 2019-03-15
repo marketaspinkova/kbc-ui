@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import OrchestrationActionCreators from '../../ActionCreators';
 import Router from 'react-router';
 import Tooltip from '../../../../react/common/Tooltip';
@@ -7,7 +8,7 @@ import Confirm from '../../../../react/common/Confirm';
 import { Loader } from '@keboola/indigo-ui';
 import classNames from 'classnames';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [Router.Navigation],
 
   propTypes: {

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Map, fromJS } from 'immutable';
 import { Well, Table, Button, Row } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
@@ -14,7 +15,7 @@ import CreateTableFromSnapshotModal from '../../modals/CreateTableFromSnapshotMo
 import TimeTravelModal from '../../modals/TimeTravelModal';
 import { createSnapshot, deleteSnapshot, createTableFromSnapshot, restoreUsingTimeTravel } from '../../../Actions';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     table: PropTypes.object.isRequired,
     buckets: PropTypes.object.isRequired,
