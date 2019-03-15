@@ -14,7 +14,9 @@ jest.mock('react-router', () => {
     DefaultRoute,
     NotFoundRoute,
     RouteHandler,
-    Route
+    Route,
+    Navigation: {},
+    State: {}
   };
 });
 
