@@ -22,14 +22,17 @@ export default createReactClass({
             <Modal.Title>{this.renderTitle()}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p>Do you really want to delete bucket {this.props.bucket.get('id')}?</p>
+            <p>
+              Do you really want to{' '}
+              {this.props.bucket.has('sourceBucket') ? 'unlink' : 'delete'}{' '}
+              bucket {this.props.bucket.get('id')}?</p>
             {this.renderWarning()}
           </Modal.Body>
           <Modal.Footer>
             <ConfirmButtons
               isSaving={this.props.deleting}
               isDisabled={this.props.deleting}
-              saveLabel={this.props.deleting ? 'Deleting...' : 'Delete'}
+              saveLabel={this.saveLabel()}
               onCancel={this.props.onHide}
               onSave={this.onSubmit}
               saveStyle="danger"
@@ -43,7 +46,7 @@ export default createReactClass({
 
   renderTitle() {
     if (this.props.bucket.has('sourceBucket')) {
-      return <span>Delete linked bucket</span>;
+      return <span>Unlink bucket</span>;
     }
 
     return <span>Delete bucket</span>;
@@ -55,6 +58,14 @@ export default createReactClass({
     }
 
     return <Alert bsStyle="warning">Bucket is not empty. All tables will be also deleted!</Alert>;
+  },
+
+  saveLabel() {
+    if (this.props.bucket.has('sourceBucket')) {
+      return this.props.deleting ? 'Unlinking...' : 'Unlink';
+    }
+    
+    return this.props.deleting ? 'Deleting...' : 'Delete';
   },
 
   onSubmit(event) {
