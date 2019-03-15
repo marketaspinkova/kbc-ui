@@ -19,13 +19,11 @@ export default createReactClass({
       <Modal show={this.props.show} onHide={this.props.onHide}>
         <Form onSubmit={this.onSubmit}>
           <Modal.Header closeButton>
-            <Modal.Title>Delete bucket</Modal.Title>
+            <Modal.Title>{this.renderTitle()}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <p>Do you really want to delete bucket {this.props.bucket.get('id')}?</p>
-            {this.props.tables.count() > 0 && (
-              <Alert bsStyle="warning">Bucket is not empty. All tables will be also deleted!</Alert>
-            )}
+            {this.renderWarning()}
           </Modal.Body>
           <Modal.Footer>
             <ConfirmButtons
@@ -41,6 +39,22 @@ export default createReactClass({
         </Form>
       </Modal>
     );
+  },
+
+  renderTitle() {
+    if (this.props.bucket.has('sourceBucket')) {
+      return <span>Delete linked bucket</span>;
+    }
+
+    return <span>Delete bucket</span>;
+  },
+
+  renderWarning() {
+    if (this.props.bucket.has('sourceBucket') || this.props.tables.count() === 0) {
+      return null;
+    }
+
+    return <Alert bsStyle="warning">Bucket is not empty. All tables will be also deleted!</Alert>;
   },
 
   onSubmit(event) {
