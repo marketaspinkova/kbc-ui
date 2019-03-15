@@ -3,7 +3,6 @@
 */
 import React from 'react';
 
-import createReactClass from 'create-react-class';
 
 // pages and components
 import OrchestrationsIndex from './react/pages/orchestrations-index/OrchestrationsIndex';

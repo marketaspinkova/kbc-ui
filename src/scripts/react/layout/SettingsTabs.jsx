@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import createReactClass from 'create-react-class';
 import ApplicationStore from '../../stores/ApplicationStore';
 import {Link} from 'react-router';
 

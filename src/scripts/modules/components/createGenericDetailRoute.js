@@ -1,5 +1,4 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import VersionsActionCreators from './VersionsActionCreators';
 import createVersionsPageRoute from './utils/createVersionsPageRoute';
 import IntalledComponentsStore from './stores/InstalledComponentsStore';

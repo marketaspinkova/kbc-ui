@@ -1,5 +1,4 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import IntalledComponentsStore from '../components/stores/InstalledComponentsStore';
 import VersionsActionCreators from '../components/VersionsActionCreators';
 import ExDbIndex from './react/pages/index/Index';

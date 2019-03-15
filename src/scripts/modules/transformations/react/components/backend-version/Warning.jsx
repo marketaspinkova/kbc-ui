@@ -1,5 +1,4 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import { Alert } from 'react-bootstrap';
 
 export default () => {

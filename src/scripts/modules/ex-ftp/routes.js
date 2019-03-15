@@ -11,7 +11,6 @@ import {CollapsibleSection} from '../configurations/utils/renderHelpers';
 import Immutable from 'immutable';
 import React from 'react';
 
-import createReactClass from 'create-react-class';
 
 const routeSettings = {
   componentId: 'keboola.ex-ftp',

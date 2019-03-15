@@ -6,7 +6,6 @@
 // Also supporting React Hot Reload!
 
 import React from 'react';
-import createReactClass from 'create-react-class';
 import { Map } from 'immutable';
 
 const statelessComponentsMap = new Map();

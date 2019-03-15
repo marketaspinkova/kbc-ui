@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import createReactClass from 'create-react-class';
 import Clipboard from '../../../../react/common/Clipboard';
 
 const TokenString = ({token, sendTokenComponent}) => {

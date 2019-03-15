@@ -1,5 +1,4 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import { ExternalLink } from '@keboola/indigo-ui';
 
 const queryEditorPlaceholder = {

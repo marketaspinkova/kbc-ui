@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import createReactClass from 'create-react-class';
 import createColumnsEditorSection from './createColumnsEditorSection';
 import { fromJS } from 'immutable';
 

@@ -1,6 +1,5 @@
 import React from 'react';
 
-import createReactClass from 'create-react-class';
 
 import InstalledComponentsStore from '../components/stores/InstalledComponentsStore';
 import * as actionsProvisioning from './actionsProvisioning';

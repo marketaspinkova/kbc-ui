@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import createReactClass from 'create-react-class';
 import { FormGroup, HelpBlock } from 'react-bootstrap';
 import {Radio} from 'react-radio-group';
 
