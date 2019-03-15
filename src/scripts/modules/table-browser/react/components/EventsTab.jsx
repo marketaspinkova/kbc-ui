@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import moment from 'moment';
 import date from '../../../../utils/date';
 import underscoreString from 'underscore.string';
@@ -9,7 +10,7 @@ import immutableMixin from 'react-immutable-render-mixin';
 import EventDetail from '../../../sapi-events/react/EventDetail';
 import {eventsTemplates} from '../../../storage-explorer/Constants';
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     tableExists: PropTypes.bool.isRequired,

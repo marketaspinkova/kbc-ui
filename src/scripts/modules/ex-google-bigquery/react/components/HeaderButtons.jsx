@@ -1,5 +1,7 @@
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import {Navigation} from 'react-router';
 
 // stores
@@ -18,7 +20,7 @@ import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivat
 // CONSTS
 const COMPONENT_ID = 'keboola.ex-google-bigquery';
 
-export default React.createClass({
+export default createReactClass({
 
   mixins: [createStoreMixin(...storeMixins), Navigation],
 

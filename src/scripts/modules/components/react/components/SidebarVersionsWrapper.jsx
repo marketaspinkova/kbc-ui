@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import SidebarVesions from './SidebarVersions';
 
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
@@ -9,7 +10,7 @@ import ComponentStore from '../../stores/ComponentsStore';
 import VersionsStore from '../../stores/VersionsStore';
 import VersionsActionCreators from '../../VersionsActionCreators';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(InstalledComponentStore, ComponentStore, VersionsStore)],
 
   getStateFromStores: function() {

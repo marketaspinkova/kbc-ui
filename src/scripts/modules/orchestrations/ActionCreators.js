@@ -3,6 +3,7 @@
 import PropTypes from 'prop-types';
 
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
 import RoutesStore from '../../stores/RoutesStore';
 import { List } from 'immutable';
@@ -162,7 +163,7 @@ export default {
         });
 
         return ApplicationActionCreators.sendNotification({
-          message: React.createClass({
+          message: createReactClass({
             propTypes: {
               onClick: PropTypes.func.isRequired
             },
@@ -542,7 +543,7 @@ export default {
       }
       if (notify) {
         return ApplicationActionCreators.sendNotification({
-          message: React.createClass({
+          message: createReactClass({
             propTypes: {
               onClick: PropTypes.func.isRequired
             },
@@ -613,7 +614,7 @@ export default {
         this.loadOrchestrationJobsForce(orchestrationId);
         if (notify) {
           return ApplicationActionCreators.sendNotification({
-            message: React.createClass({
+            message: createReactClass({
               propTypes: {
                 onClick: PropTypes.func.isRequired
               },

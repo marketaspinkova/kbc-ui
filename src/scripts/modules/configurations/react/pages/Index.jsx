@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Immutable from 'immutable';
 
 // stores
@@ -30,7 +31,7 @@ import IndexSections from '../components/IndexSections';
 import sections from '../../utils/sections';
 import MigrationRow from "../../../components/react/components/MigrationRow";
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(InstalledComponentsStore, ConfigurationsStore, ConfigurationRowsStore, VersionsStore, MigrationsStore)],
 
   getStateFromStores() {

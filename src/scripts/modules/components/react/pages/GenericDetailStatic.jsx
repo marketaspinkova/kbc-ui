@@ -1,5 +1,7 @@
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../../stores/RoutesStore';
 import InstalledComponentStore from '../../stores/InstalledComponentsStore';
@@ -17,7 +19,7 @@ import {Button} from 'react-bootstrap';
 import LatestVersions from '../components/SidebarVersionsWrapper';
 
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(InstalledComponentStore, ComponentStore, VersionsStore)],
 
   getStateFromStores() {

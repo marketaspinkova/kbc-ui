@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {FormControl, FormGroup, ControlLabel, Form, Col, HelpBlock} from 'react-bootstrap';
 import StorageApiLink from '../../../components/react/components/StorageApiTableLinkEx';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     value: PropTypes.shape({
       title: PropTypes.string,

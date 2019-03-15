@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Modal, FormControl, FormGroup, Col, ControlLabel, Radio, HelpBlock} from 'react-bootstrap';
 import ConfirmButtons from '../common/ConfirmButtons';
 import numeral from 'numeral';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     xsrf: PropTypes.string.isRequired,
     organizations: PropTypes.object.isRequired,

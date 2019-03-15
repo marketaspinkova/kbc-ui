@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 // import {List} from 'immutable';
 
 import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
@@ -11,7 +12,7 @@ import Confirm from '../../../../react/common/Confirm';
 import StorageTableLink from '../../../components/react/components/StorageApiTableLinkEx';
 import {Table} from 'react-bootstrap';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     componentId: PropTypes.string.isRequired,
     accounts: PropTypes.object.isRequired,

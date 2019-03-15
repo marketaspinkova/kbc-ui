@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Immutable from 'immutable';
 import {FormGroup, FormControl} from 'react-bootstrap';
 import Markdown from '../../../../react/common/Markdown';
 import templateFinder from '../../../components/utils/templateFinder';
 import deepEqual from 'deep-equal';
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     value: PropTypes.object.isRequired,

@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Map } from 'immutable';
 import DeleteButton from '../../../../../react/common/DeleteButton';
 import TableSizeLabel from '../../../../transformations/react/components/TableSizeLabel';
 import TableInputMappingModal from './TableInputMappingModal';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     value: PropTypes.object.isRequired,
     editingValue: PropTypes.object.isRequired,

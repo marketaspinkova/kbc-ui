@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import immutableMixin from 'react-immutable-render-mixin';
 import { Form, FormControl, FormGroup, ControlLabel, HelpBlock, Col } from 'react-bootstrap';
 import { RadioGroup } from 'react-radio-group';
@@ -8,7 +9,7 @@ import SyncActionSimpleValue from '../../../configurations/react/components/Sync
 import ExternalProjectLink from '../../../components/react/components/ExternalProjectLink';
 import ExternalBucketLink from '../../../components/react/components/ExternalBucketLink';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [immutableMixin],
 
   propTypes: {

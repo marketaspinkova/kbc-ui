@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Col, FormControl, ControlLabel, FormGroup, Radio, HelpBlock, Button, ButtonGroup} from 'react-bootstrap';
 import {ExternalLink} from '@keboola/indigo-ui';
 import {TokenTypes} from '../../gooddataProvisioning/utils';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     disabled: PropTypes.bool.isRequired,
     onChange: PropTypes.func.isRequired,

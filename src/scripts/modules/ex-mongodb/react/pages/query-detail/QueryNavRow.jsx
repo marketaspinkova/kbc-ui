@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Link} from 'react-router';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     query: PropTypes.object.isRequired,
     configurationId: PropTypes.string.isRequired,

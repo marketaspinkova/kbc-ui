@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Table, Button, Modal, Alert, Row } from 'react-bootstrap';
 import { ExternalLink, Tree } from '@keboola/indigo-ui';
 import { format } from '../../../../utils/date';
 import FileLink from '../../../sapi-events/react/FileLink';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     show: PropTypes.bool.isRequired,
     onHide: PropTypes.func.isRequired,

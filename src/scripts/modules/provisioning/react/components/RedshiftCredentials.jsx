@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Protected, Loader, ExternalLink } from '@keboola/indigo-ui';
 import { Col, FormGroup, Checkbox } from 'react-bootstrap';
 import Clipboard from '../../../../react/common/Clipboard';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     credentials: PropTypes.object,
     isCreating: PropTypes.bool

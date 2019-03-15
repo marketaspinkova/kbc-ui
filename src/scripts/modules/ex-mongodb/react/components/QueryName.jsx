@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import { COMPONENT_ID } from '../../constants';
 
 export default function(storeProvisioning) {
-  return React.createClass({
+  return createReactClass({
     mixins: [createStoreMixin(storeProvisioning.componentsStore)],
 
     propTypes: {

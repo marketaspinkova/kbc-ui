@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Form, Modal} from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import NewProjectForm from './NewProjectForm';
 import {isNewProjectValid, TokenTypes} from '../../gooddataProvisioning/utils';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     config: PropTypes.object.isRequired,
     onCreate: PropTypes.func.isRequired,

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 // stores
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import storeProvisioning, {storeMixins} from '../../storeProvisioning';
@@ -15,7 +17,7 @@ import QueryEditor from '../components/QueryEditor/QueryEditor';
 import QueryNav from './QueryNav';
 
 export default function(componentId) {
-  return React.createClass({
+  return createReactClass({
 
     mixins: [createStoreMixin(...storeMixins, GapiStore)],
 

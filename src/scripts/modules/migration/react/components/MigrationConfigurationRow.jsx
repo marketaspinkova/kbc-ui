@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import descriptionExcerpt from '../../../../utils/descriptionExcerpt';
 import ComponentConfigurationLink from '../../../components/react/components/ComponentConfigurationLink';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {

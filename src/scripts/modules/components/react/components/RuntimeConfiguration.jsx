@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Edit from './RuntimeConfigurationEdit';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     data: PropTypes.object.isRequired,
     isChanged: PropTypes.bool.isRequired,

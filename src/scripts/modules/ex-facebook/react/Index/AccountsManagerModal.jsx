@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {List, Map} from 'immutable';
 import {Modal, Alert} from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
@@ -8,7 +9,7 @@ import {SearchBar} from '@keboola/indigo-ui';
 
 import EmptyState from '../../../components/react/components/ComponentEmptyState';
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     accounts: PropTypes.object.isRequired,

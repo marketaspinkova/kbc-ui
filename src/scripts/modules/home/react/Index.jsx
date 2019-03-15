@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ApplicationStore from '../../../stores/ApplicationStore';
 import underscoreString from 'underscore.string';
 import LimitsOverQuota from './LimitsOverQuota';
@@ -20,7 +21,7 @@ import ProjectDescription from './ProjectDescription';
 import DeprecatedOAuth from './DeprecatedOAuth';
 import oAuthComponents from '../../components/utils/oAuthComponents';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [
     createStoreMixin(InstalledComponentStore, TransformationsStore, WizardStore, TransformationBucketsStore)
   ],

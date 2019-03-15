@@ -1,10 +1,11 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import createStoreMixin from '../mixins/createStoreMixin';
 import NotificationsStore from '../../stores/NotificationsStore';
 import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
 import Notification from './Notification';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(NotificationsStore)],
 
   getStateFromStores() {

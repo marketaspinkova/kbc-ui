@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import moment from 'moment';
 import { Map } from 'immutable';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
@@ -35,7 +36,7 @@ const typeFilterOptions = [
   }
 ];
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(InstalledComponentsStore, ComponentsStore)],
 
   getStateFromStores() {

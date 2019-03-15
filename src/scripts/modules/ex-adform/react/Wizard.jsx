@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Button, Tabs, Tab} from 'react-bootstrap';
 import {Steps} from '../constants';
 import Select from 'react-select';
@@ -7,7 +8,7 @@ import CredentialsForm from './CredentialsForm';
 import {Loader} from '@keboola/indigo-ui';
 import DeleteConfigurationButton from '../../components/react/components/DeleteConfigurationButton';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     credentials: PropTypes.object.isRequired,
     onCredentialsChange: PropTypes.func.isRequired,

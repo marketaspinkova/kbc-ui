@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { Link } from 'react-router';
 import { Table } from 'react-bootstrap';
@@ -10,7 +11,7 @@ import date from '../../../../utils/date';
 import tableIdParser from '../../../../utils/tableIdParser';
 import JobDetailModal from '../modals/JobDetailModal';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {

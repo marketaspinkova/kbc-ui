@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Button } from 'react-bootstrap';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 
 import GraphCanvas from '../../../../../react/common/GraphCanvas';
 import graphUtils from '../../../../../utils/graphUtils';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     model: PropTypes.object.isRequired
   },

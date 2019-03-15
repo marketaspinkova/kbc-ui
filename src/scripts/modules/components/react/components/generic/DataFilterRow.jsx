@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Select from '../../../../../react/common/Select';
 import whereOperatorConstants from '../../../../../react/common/whereOperatorConstants';
 import ReactSelect from 'react-select';
 import { List, Map } from 'immutable';
 import _ from 'underscore';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     value: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,

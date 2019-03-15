@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Modal, ControlLabel, FormControl, FormGroup, Col } from 'react-bootstrap';
 import moment from 'moment';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import ConfirmButtons from './ConfirmButtons';
 import defaultCopyVersionName from '../../utils/defaultCopyVersionName';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {

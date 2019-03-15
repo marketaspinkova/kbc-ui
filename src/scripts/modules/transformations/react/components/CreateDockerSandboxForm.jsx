@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { FormControl, Col, FormGroup, HelpBlock, ControlLabel } from 'react-bootstrap';
 import Immutable from 'immutable';
 import Select from 'react-select';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     tables: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,

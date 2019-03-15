@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Map, fromJS} from 'immutable';
 import Tooltip from '../../../../../react/common/Tooltip';
 import DateRangeModal from './DateRangeModal';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     ranges: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,

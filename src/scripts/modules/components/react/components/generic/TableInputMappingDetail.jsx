@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { List } from 'immutable';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import TableLinkEx from '../StorageApiTableLinkEx';
 import FiltersDescription from './FiltersDescription';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {

@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ComponentIcon from '../../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../../react/common/ComponentName';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     components: PropTypes.object.isRequired,
     orchestrations: PropTypes.object.isRequired,

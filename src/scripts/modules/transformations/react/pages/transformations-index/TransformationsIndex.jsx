@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Immutable from 'immutable';
 import matchByWords from '../../../../../utils/matchByWords';
 
@@ -12,7 +13,7 @@ import { SearchBar } from '@keboola/indigo-ui';
 import EmptyStateIndex from '../../components/EmptyStateIndex';
 import { Panel } from 'react-bootstrap';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(TransformationBucketsStore, TransformationsStore)],
 
   getStateFromStores() {

@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import GraphCanvas from '../../../../../react/common/GraphCanvas';
 import { Button } from 'react-bootstrap';
 import { Navigation } from 'react-router';
 
 import graphUtils from '../../../../../utils/graphUtils';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [Navigation],
 
   propTypes: {

@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ComponentConfigurationRowLink from '../../../../components/react/components/ComponentConfigurationRowLink';
 import TransformationsStore from '../../../stores/TransformationsStore';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 
-export default React.createClass({
+export default createReactClass({
 
   mixins: [createStoreMixin(TransformationsStore)],
 

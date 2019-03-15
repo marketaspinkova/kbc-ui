@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import Edit from './QueriesEdit';
 import Clipboard from '../../../../../react/common/Clipboard';
 import SaveButton from '../../components/SaveButton';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {

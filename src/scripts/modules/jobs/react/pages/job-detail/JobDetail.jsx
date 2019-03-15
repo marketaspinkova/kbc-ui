@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PureRendererMixin from 'react-immutable-render-mixin';
 import moment from 'moment';
 import { Link } from 'react-router';
@@ -29,7 +30,7 @@ import JobStatsContainer from './JobStatsContainer';
 
 const APPLICATION_ERROR = 'application';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [
     createStoreMixin(JobsStore, InstalledComponentsStore, ConfigurationRowsStore, TransformationsStore),
     PureRendererMixin

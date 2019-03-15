@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
 
 export default (bucket, restoreTransformationBucketFn) => {
-  return React.createClass({
+  return createReactClass({
     propTypes: {
       onClick: PropTypes.func.isRequired
     },

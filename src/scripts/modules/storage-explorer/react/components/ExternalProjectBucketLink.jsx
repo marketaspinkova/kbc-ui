@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { ExternalLink } from '@keboola/indigo-ui';
 import _ from 'underscore';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     bucket: PropTypes.object.isRequired,
     urlTemplates: PropTypes.object.isRequired

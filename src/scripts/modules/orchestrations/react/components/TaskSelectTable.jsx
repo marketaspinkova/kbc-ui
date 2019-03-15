@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { List } from 'immutable';
 import { Table } from 'react-bootstrap';
 import immutableMixin from 'react-immutable-render-mixin';
 import ComponentsStore from '../../../components/stores/ComponentsStore';
 import TaskSelectTableRow from './TaskSelectTableRow';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [immutableMixin],
 
   propTypes: {

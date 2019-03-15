@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import {fromJS} from 'immutable';
 import {Modal} from 'react-bootstrap';
 import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
@@ -9,7 +11,7 @@ import ChangedSinceInput from '../../../../components/react/components/generic/C
 import DataFilterRow from '../../../../components/react/components/generic/DataFilterRow';
 import ThoughtSpotTypeInput from './ThoughtSpotTypeInput';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     columns: PropTypes.object.isRequired,
     allTables: PropTypes.object.isRequired,

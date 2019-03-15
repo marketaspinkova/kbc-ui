@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {OverlayTrigger, Popover, Button} from 'react-bootstrap';
 import { Icon, ExternalLink, SearchBar } from '@keboola/indigo-ui';
 import ApplicationStore from '../../../../../stores/ApplicationStore';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [PureRenderMixin],
 
   propTypes: {

@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Tabs, Tab} from 'react-bootstrap';
 
 // stores
@@ -33,7 +34,7 @@ import {getDefaultTable, getDefaultBucket} from '../../../utils';
 // CONSTS
 const COMPONENT_ID = 'keboola.ex-s3';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(InstalledComponentsStore, StorageTablesStore, StorageBucketsStore)],
 
   getStateFromStores() {

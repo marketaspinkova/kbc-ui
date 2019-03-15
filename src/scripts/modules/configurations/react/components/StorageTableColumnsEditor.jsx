@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Table, Alert} from 'react-bootstrap';
 import {fromJS} from 'immutable';
 import classnames from 'classnames';
@@ -7,7 +8,7 @@ import storageApi from '../../../components/StorageApi';
 import ColumnDataPreview from '../../../components/react/components/ColumnDataPreview';
 import './StorageTableColumnsEditor.less';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     value: PropTypes.shape({
       tableExist: PropTypes.bool,

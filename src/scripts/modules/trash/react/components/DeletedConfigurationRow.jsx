@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import DeleteButton from '../../../../react/common/DeleteButton';
 import { Finished } from '@keboola/indigo-ui';
 import Tooltip from '../../../../react/common/Tooltip';
@@ -9,7 +10,7 @@ import descriptionExcerpt from '../../../../utils/descriptionExcerpt';
 import { isObsoleteComponent } from '../../utils';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [PureRenderMixin],
 
   propTypes: {

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Link} from 'react-router';
 import { Check } from '@keboola/indigo-ui';
 import {List, Map} from 'immutable';
@@ -22,7 +23,7 @@ const getAllComponents = () => {
     .setIn(['orchestrator', 'flags'], newOrchestratorFlags);
 };
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     disabled: PropTypes.bool.isRequired,

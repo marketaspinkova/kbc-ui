@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import moment from 'moment';
 import _ from 'underscore';
 import classnames from 'classnames';
@@ -27,7 +28,7 @@ import AddNewTableModal from './AddNewTableModal';
 
 const componentId = 'tde-exporter';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(InstalledComponentsStore, StorageFilesStore)],
 
   getStateFromStores() {

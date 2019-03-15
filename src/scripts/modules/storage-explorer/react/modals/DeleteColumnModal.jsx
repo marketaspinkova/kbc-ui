@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Form, Modal, Checkbox } from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import TableAliasesAndLinks from '../components/TableAliasesAndLinks';
@@ -8,7 +9,7 @@ const INITIAL_STATE = {
   forceDelete: false
 };
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     show: PropTypes.bool.isRequired,
     column: PropTypes.string.isRequired,

@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import _ from 'underscore';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import ApplicationStore from '../../../../../stores/ApplicationStore';
@@ -22,7 +23,7 @@ import provisioningUtils from '../../../provisioningUtils';
 // isProvisioning = true
 
 export default (componentId, driver, isProvisioning) => {
-  return React.createClass({
+  return createReactClass({
     mixins: [createStoreMixin(InstalledComponentsStore, WrDbStore)],
 
     getStateFromStores() {

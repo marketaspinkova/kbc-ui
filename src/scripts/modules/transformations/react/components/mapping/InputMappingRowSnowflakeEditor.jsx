@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import _ from 'underscore';
 import { fromJS, Map, List } from 'immutable';
 import { Form, FormGroup, FormControl, ControlLabel, Col, HelpBlock } from 'react-bootstrap';
@@ -14,7 +15,7 @@ import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import { SnowflakeDataTypesMapping } from '../../../Constants';
 import { getMetadataDataTypes } from './InputMappingRowSnowflakeEditorHelper';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     value: PropTypes.object.isRequired,
     tables: PropTypes.object.isRequired,

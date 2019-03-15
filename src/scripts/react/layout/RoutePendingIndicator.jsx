@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Loader } from '@keboola/indigo-ui';
 
 /*
   Loading indicator is shown after few milisecond. Loader is not required for fast transitions.
 */
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     timeout: PropTypes.number
   },

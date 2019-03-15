@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Modal } from 'react-bootstrap';
 import { ButtonToolbar, Button } from 'react-bootstrap';
 import SqlDepAnalyzerApi from '../../../sqldep-analyzer/Api';
 import { ExternalLink } from '@keboola/indigo-ui';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     transformationId: PropTypes.string.isRequired,
     bucketId: PropTypes.string.isRequired,

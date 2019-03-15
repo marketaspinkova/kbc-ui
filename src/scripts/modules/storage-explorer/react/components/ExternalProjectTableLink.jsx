@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { ExternalLink } from '@keboola/indigo-ui';
 import _ from 'underscore';
 import { parse as parseTable } from '../../../../utils/tableIdParser';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     table: PropTypes.object.isRequired,
     urlTemplates: PropTypes.object.isRequired

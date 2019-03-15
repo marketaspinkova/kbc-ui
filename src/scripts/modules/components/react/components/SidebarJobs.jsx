@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { Loader } from '@keboola/indigo-ui';
 import { Link } from 'react-router';
 import JobRow from './SidebarJobsRow';
 import { getQuery, getLegacyComponentQuery } from '../../../../utils/jobsQueryBuilder';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [PureRenderMixin],
 
   propTypes: {

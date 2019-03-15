@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Immutable from 'immutable';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import later from 'later';
@@ -8,7 +9,7 @@ import StorageApi from '../../../../components/StorageApi';
 import JobStats from './JobStats';
 
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     runId: PropTypes.string.isRequired,
     autoRefresh: PropTypes.bool.isRequired,

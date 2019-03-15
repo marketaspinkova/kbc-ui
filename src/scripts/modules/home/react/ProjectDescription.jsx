@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import InlineEditArea from '../../../react/common/InlineEditArea';
 import { editProjectDescription } from '../actions';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     description: PropTypes.string
   },

@@ -6,12 +6,13 @@
 import PropTypes from 'prop-types';
 
 import React from 'react';
+import createReactClass from 'create-react-class';
 import classnames from 'classnames';
 
 import { Loader } from '@keboola/indigo-ui';
 import { Button, ButtonToolbar } from 'react-bootstrap';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     isSaving: PropTypes.bool.isRequired,
     isDisabled: PropTypes.bool,

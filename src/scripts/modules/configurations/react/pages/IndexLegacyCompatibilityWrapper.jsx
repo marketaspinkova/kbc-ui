@@ -1,5 +1,7 @@
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 // stores
 import ComponentsStore from '../../../components/stores/ComponentsStore';
 import ConfigurationsStore from '../../ConfigurationsStore';
@@ -12,7 +14,7 @@ import ConfigurationRowsStore from '../../ConfigurationRowsStore';
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(InstalledComponentsStore, ConfigurationsStore, ConfigurationRowsStore)],
 
   getStateFromStores() {

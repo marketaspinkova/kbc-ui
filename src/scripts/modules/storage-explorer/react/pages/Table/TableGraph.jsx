@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { startsWith } from 'underscore.string';
 import { Alert, ButtonGroup, Button, FormControl, Label, Well } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
@@ -8,7 +9,7 @@ import GraphCanvas from '../../../../../react/common/GraphCanvas';
 import graphUtils from '../../../../../utils/graphUtils';
 import TableGraphApi from '../../../TableGraphApi';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     table: PropTypes.object.isRequired
   },

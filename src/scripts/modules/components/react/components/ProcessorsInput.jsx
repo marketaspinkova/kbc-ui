@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import CodeMirror from 'react-code-mirror';
 import { ExternalLink } from '@keboola/indigo-ui';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     value: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,

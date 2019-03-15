@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {OrderedMap} from 'immutable';
 import {Button, Col, Checkbox, FormGroup, FormControl, ControlLabel, HelpBlock} from 'react-bootstrap';
 import {Loader} from '@keboola/indigo-ui';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     parameters: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,

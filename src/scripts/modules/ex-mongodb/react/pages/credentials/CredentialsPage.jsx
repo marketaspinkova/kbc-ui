@@ -1,5 +1,7 @@
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import routesStore from '../../../../../stores/RoutesStore';
 
@@ -10,7 +12,7 @@ import CredentialsForm from './CredentialsForm';
 
 export default function(componentId, actionsProvisioning, storeProvisioning, credentialsTemplate, hasSshTunnel) {
   const actionCreators = actionsProvisioning.createActions(componentId);
-  return React.createClass({
+  return createReactClass({
     mixins: [createStoreMixin(storeProvisioning.componentsStore)],
 
     getStateFromStores() {

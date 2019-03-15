@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { fromJS } from 'immutable';
 import { Button } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
@@ -12,7 +13,7 @@ import TokensActions from '../../actionCreators';
 import RoutesStore from '../../../../stores/RoutesStore';
 import ApplicationActionCreators from '../../../../actions/ApplicationActionCreators';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(TokensStore)],
 
   getStateFromStores() {

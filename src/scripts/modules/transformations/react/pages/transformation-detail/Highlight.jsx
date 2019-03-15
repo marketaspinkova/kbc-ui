@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import CodeMirror from 'codemirror';
 import _ from 'underscore';
 import normalizeNewlines from './normalizeNewlines';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     script: PropTypes.string.isRequired,
     mode: PropTypes.string.isRequired

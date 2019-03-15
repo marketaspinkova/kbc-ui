@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { MenuItem } from 'react-bootstrap';
 import VersionsDiffModal from './VersionsDiffModal';
 import {Loader} from '@keboola/indigo-ui';
 import Tooltip from '../../react/common/Tooltip';
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     version: PropTypes.object.isRequired,

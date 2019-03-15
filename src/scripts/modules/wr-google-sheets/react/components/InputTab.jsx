@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import InputMapping from './InputMapping';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     onSelect: PropTypes.func.isRequired,
     tables: PropTypes.object.isRequired,

@@ -1,13 +1,15 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import immutableMixin from 'react-immutable-render-mixin';
 import {FormControl, FormGroup, ControlLabel, HelpBlock, Form, Col} from 'react-bootstrap';
 import SyncActionSimpleValue from '../../../configurations/react/components/SyncActionSimpleValue';
 import ExternalProjectLink from '../../../components/react/components/ExternalProjectLink';
 import ExternalBucketLink from '../../../components/react/components/ExternalBucketLink';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [immutableMixin],
 
   propTypes: {

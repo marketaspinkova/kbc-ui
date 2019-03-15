@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import LatestJobsStore from '../../../jobs/stores/LatestJobsStore';
 import SidebarJobs from './SidebarJobs';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(LatestJobsStore)],
 
   propTypes: {

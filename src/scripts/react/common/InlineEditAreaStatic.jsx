@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Markdown from './Markdown';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     text: PropTypes.string,
     placeholder: PropTypes.string,

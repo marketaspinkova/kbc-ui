@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Modal} from 'react-bootstrap';
 import ConfirmButtons from '../../../react/common/ConfirmButtons';
 import CredentialsForm from './CredentialsForm';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     credentials: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,

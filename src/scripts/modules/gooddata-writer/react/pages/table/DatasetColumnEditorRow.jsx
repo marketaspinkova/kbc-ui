@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Map, fromJS } from 'immutable';
 import keyMirror from 'fbjs/lib/keyMirror';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
@@ -19,7 +20,7 @@ const visibleParts = keyMirror({
   IDENTIFIER_TIME: null
 });
 
-export default React.createClass({
+export default createReactClass({
   mixins: [ImmutableRenderMixin],
   propTypes: {
     column: PropTypes.object.isRequired,

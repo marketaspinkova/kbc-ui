@@ -1,6 +1,8 @@
 import React from 'react';
 
-export default React.createClass({
+import createReactClass from 'create-react-class';
+
+export default createReactClass({
   render() {
     return (
       <a href="/admin/account/promo-codes" className="btn btn-lg btn-block btn-success text-left action-button">

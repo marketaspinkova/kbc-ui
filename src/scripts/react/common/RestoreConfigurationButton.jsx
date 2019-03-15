@@ -5,12 +5,13 @@
 import PropTypes from 'prop-types';
 
 import React from 'react';
+import createReactClass from 'create-react-class';
 import classnames from 'classnames';
 import Tooltip from './Tooltip';
 import { Loader } from '@keboola/indigo-ui';
 import Confirm from './Confirm';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     tooltip: PropTypes.string,
     confirm: PropTypes.object, // Confirm props

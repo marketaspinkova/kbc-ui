@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Map } from 'immutable';
 import _ from 'underscore';
 import classnames from 'classnames';
@@ -33,7 +34,7 @@ import MigrationRow from '../../../../components/react/components/MigrationRow';
 const allowedBuckets = ['out', 'in'];
 
 export default componentId => {
-  return React.createClass({
+  return createReactClass({
     displayName: 'wrdbIndex',
 
     mixins: [createStoreMixin(StorageTablesStore, InstalledComponentsStore, WrDbStore)],

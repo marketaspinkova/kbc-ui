@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import RunComponentButton from '../../../../components/react/components/RunComponentButton';
 import DeleteButton from '../../../../../react/common/DeleteButton';
@@ -8,7 +9,7 @@ import RoutesStore from '../../../../../stores/RoutesStore';
 import Tooltip from '../../../../../react/common/Tooltip';
 import descriptionExcerpt from '../../../../../utils/descriptionExcerpt';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {

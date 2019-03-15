@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Tabs } from 'react-bootstrap';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     activeStep: PropTypes.string.isRequired,
     goToStep: PropTypes.func.isRequired,

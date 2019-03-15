@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import _ from 'underscore';
 import Select from 'react-select';
 import {fromJS} from 'immutable';
@@ -9,7 +10,7 @@ import ApplicationStore from '../../../../../stores/ApplicationStore';
 const allowedMixedBackends = ['docker', 'snowflake'];
 const allowedMixedBackendTypes = ['simple', 'python', 'r'];
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     transformation: PropTypes.object.isRequired,
     transformations: PropTypes.object.isRequired,

@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Map} from 'immutable';
 
 import RoutesStore from '../../../../stores/RoutesStore';
@@ -15,7 +16,7 @@ export default function(
   entityName = 'Query'
 ) {
   const actionCreators = actionsProvisioning.createActions(componentId);
-  return React.createClass({
+  return createReactClass({
     mixins: [createStoreMixin(storeProvisioning.componentsStore)],
 
     getStateFromStores() {

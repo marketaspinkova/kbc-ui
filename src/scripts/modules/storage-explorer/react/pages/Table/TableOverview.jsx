@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { Link } from 'react-router';
 import { Table, Button, Row } from 'react-bootstrap';
@@ -18,7 +19,7 @@ import ExternalProjectTableLink from '../../components/ExternalProjectTableLink'
 import AliasFilter from '../../components/TableAliasFilter';
 import { createTablePrimaryKey, removeTablePrimaryKey } from '../../../Actions';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {

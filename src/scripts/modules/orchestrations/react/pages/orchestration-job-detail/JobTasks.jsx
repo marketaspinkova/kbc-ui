@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
 import ComponentsStore from '../../../../components/stores/ComponentsStore';
 import { Panel, PanelGroup, Alert } from 'react-bootstrap';
@@ -11,7 +12,7 @@ import { Tree } from '@keboola/indigo-ui';
 import JobStatusLabel from '../../../../../react/common/JobStatusLabel';
 import date from '../../../../../utils/date';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     tasks: PropTypes.object.isRequired
   },

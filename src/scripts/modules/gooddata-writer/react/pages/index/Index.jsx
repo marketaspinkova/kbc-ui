@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Map, List } from 'immutable';
 import { Alert, DropdownButton } from 'react-bootstrap';
 import { Loader, SearchBar, Protected } from '@keboola/indigo-ui';
@@ -27,7 +28,7 @@ import goodDataWriterStore from '../../../store';
 import actionCreators from '../../../actionCreators';
 import MigrationRow from '../../../../components/react/components/MigrationRow';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [
     createStoreMixin(
       goodDataWriterStore,

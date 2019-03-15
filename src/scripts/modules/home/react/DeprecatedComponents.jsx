@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Immutable from 'immutable';
 import moment from 'moment';
 import { AlertBlock } from '@keboola/indigo-ui';
@@ -8,7 +9,7 @@ import StringUtils from '../../../utils/string';
 import ComponentDetailLink from '../../../react/common/ComponentDetailLink';
 import ComponentName from '../../../react/common/ComponentName';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     components: PropTypes.object
   },

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 // import {List} from 'immutable';
 import StorageTableLink from '../../../components/react/components/StorageApiTableLinkEx';
 
@@ -12,7 +13,7 @@ import {Link} from 'react-router';
 
 import SelectedProfilesList from './SelectedProfilesList';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     queries: PropTypes.object.isRequired,
     allProfiles: PropTypes.object.isRequired,

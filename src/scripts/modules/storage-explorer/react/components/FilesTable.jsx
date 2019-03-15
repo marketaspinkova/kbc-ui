@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import moment from 'moment';
 import { Table, Button, Label } from 'react-bootstrap';
@@ -11,7 +12,7 @@ import Tooltip from '../../../../react/common/Tooltip';
 import FileLink from '../../../sapi-events/react/FileLink';
 import FileLinkButton from './FileLinkButton';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Map } from 'immutable';
 import { Table, Button, Row } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
@@ -17,7 +18,7 @@ import ChangeSharingTypeModal from '../../modals/ChangeSharingTypeModal';
 import ExternalProjectBucketLink from '../../components/ExternalProjectBucketLink';
 import { shareBucket, unshareBucket, changeBucketSharingType } from '../../../Actions';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     bucket: PropTypes.object.isRequired,
     sapiToken: PropTypes.object.isRequired,

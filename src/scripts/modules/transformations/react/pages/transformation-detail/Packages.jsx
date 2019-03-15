@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Select from '../../../../../react/common/Select';
 import {ExternalLink} from '@keboola/indigo-ui';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     transformation: PropTypes.object.isRequired,
     packages: PropTypes.object.isRequired,

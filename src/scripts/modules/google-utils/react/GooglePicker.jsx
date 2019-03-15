@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import _ from 'underscore';
 import {Button} from 'react-bootstrap';
 import * as InitGoogleApis from './InitGoogleApis';
@@ -50,7 +51,7 @@ const createGdrivePicker = (viewsParam, viewGroups) => {
   return picker;
 };
 
-export default React.createClass({
+export default createReactClass({
 
   displayName: 'googlePicker',
   mixins: [createStoreMixin(GapiStore)],

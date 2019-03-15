@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Immutable from 'immutable';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import JupyterSandboxCredentialsStore from '../../../provisioning/stores/JupyterSandboxCredentialsStore';
@@ -10,7 +11,7 @@ import StorageTablesStore from '../../../components/stores/StorageTablesStore';
 import CreateDockerSandboxModal from '../modals/CreateDockerSandboxModal';
 import ExtendJupyterCredentials from '../../../provisioning/react/components/ExtendJupyterCredentials';
 
-var JupyterSandbox = React.createClass({
+var JupyterSandbox = createReactClass({
   mixins: [createStoreMixin(JupyterSandboxCredentialsStore, StorageBucketsStore, StorageTablesStore)],
   displayName: 'JupyterSandbox',
   getStateFromStores: function() {

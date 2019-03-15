@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import Tooltip from '../../../../react/common/Tooltip';
 import {Loader} from '@keboola/indigo-ui';
 
 const MODE_BUTTON = 'button', MODE_LINK = 'link';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     onClick: PropTypes.func.isRequired,
     isPending: PropTypes.bool.isRequired,

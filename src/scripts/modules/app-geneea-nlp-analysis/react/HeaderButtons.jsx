@@ -1,5 +1,7 @@
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import * as actions from '../actions';
 
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
@@ -10,7 +12,7 @@ import EditButtons from '../../../react/common/EditButtons';
 
 const componentId = 'geneea-nlp-analysis';
 
-export default React.createClass({
+export default createReactClass({
 
   mixins: [createStoreMixin(InstalledComponentStore, storageTablesStore)],
   getStateFromStores() {

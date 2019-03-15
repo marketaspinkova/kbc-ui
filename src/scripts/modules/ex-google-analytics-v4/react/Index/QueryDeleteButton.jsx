@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Tooltip from '../../../../react/common/Tooltip';
 import {Loader} from '@keboola/indigo-ui';
 import Confirm from '../../../../react/common/Confirm';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     query: PropTypes.object.isRequired,
     onDeleteFn: PropTypes.func.isRequired,

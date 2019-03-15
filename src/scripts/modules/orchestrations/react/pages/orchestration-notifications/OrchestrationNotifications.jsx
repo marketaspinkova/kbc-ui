@@ -1,11 +1,12 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import RoutesStore from '../../../../../stores/RoutesStore';
 import OrchestrationStore from '../../../stores/OrchestrationsStore';
 import OrchestrationActionCreators from '../../../ActionCreators';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import Notifications from './Notifications';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(OrchestrationStore)],
 
   getStateFromStores() {

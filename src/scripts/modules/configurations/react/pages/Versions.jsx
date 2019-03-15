@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import VersionsStore from '../../RowVersionsStore';
 import VersionRow from '../../../components/react/components/VersionRow';
@@ -15,7 +16,7 @@ import simpleMatch from '../../../../utils/simpleMatch';
 
 const ITEMS_PER_PAGE = 20;
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(VersionsStore), immutableMixin],
 
   getStateFromStores() {

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import * as common from '../../common';
 // import {List} from 'immutable';
 import StorageTableLink from '../../../components/react/components/StorageApiTableLinkEx';
@@ -20,7 +21,7 @@ function getDocumentTitle(sheet) {
 }
 
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     sheets: PropTypes.object.isRequired,
     configId: PropTypes.string.isRequired,

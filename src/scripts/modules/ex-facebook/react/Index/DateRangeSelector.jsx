@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 // import {Map} from 'immutable';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
 
@@ -48,7 +49,7 @@ const TEMPLATES = [
 
 ];
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     query: PropTypes.object.isRequired,
     updateQueryFn: PropTypes.func.isRequired

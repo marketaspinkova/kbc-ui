@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
 import classnames from 'classnames';
 import { PanelGroup, Panel, Button } from 'react-bootstrap';
@@ -7,7 +8,7 @@ import Tooltip from '../../../../react/common/Tooltip';
 import { navigateToBucketDetail, setOpenedBuckets } from '../../Actions';
 import MarkedText from './MarkedText';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     openBuckets: PropTypes.object.isRequired,
     buckets: PropTypes.object.isRequired,

@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Modal, Button } from 'react-bootstrap';
 import SapiTableSelector from '../../../../components/react/components/SapiTableSelector';
 
 import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     onCreateTable: PropTypes.func.isRequired,

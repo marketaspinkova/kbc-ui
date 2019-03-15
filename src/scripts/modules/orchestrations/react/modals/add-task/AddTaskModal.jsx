@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import immutableMixin from 'react-immutable-render-mixin';
 import { Modal, ButtonToolbar, Button } from 'react-bootstrap';
 import { SearchBar } from '@keboola/indigo-ui';
@@ -18,7 +19,7 @@ const STEP_COMPONENT_SELECT = 'componentSelect';
 const STEP_CONFIGURATION_SELECT = 'configurationSelect';
 const STEP_ORCHESTRATOR_CONFIGURATION_SELECT = 'orchestratorConfigurationSelect';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     onConfigurationSelect: PropTypes.func.isRequired,
     onHide: PropTypes.func,

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Table, Button, Row } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 
@@ -8,7 +9,7 @@ import CreateColumnModal from '../../modals/CreateColumnModal';
 import DeleteColumnModal from '../../modals/DeleteColumnModal';
 import { deleteTableColumn, addTableColumn } from '../../../Actions';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     table: PropTypes.object.isRequired,
     tables: PropTypes.object.isRequired,

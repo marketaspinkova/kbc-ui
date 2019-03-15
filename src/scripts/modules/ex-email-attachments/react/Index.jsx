@@ -1,5 +1,7 @@
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import storeProvisioning, {storeMixins} from '../storeProvisioning';
 import InstalledComponentStore from '../../components/stores/InstalledComponentsStore';
 import RoutesStore from '../../../stores/RoutesStore';
@@ -28,7 +30,7 @@ import Processors from '../../components/react/components/Processors';
 
 const COMPONENT_ID = 'keboola.ex-email-attachments';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(...storeMixins, InstalledComponentStore, StorageTablesStore, StorageBucketsStore)],
 
   getStateFromStores() {

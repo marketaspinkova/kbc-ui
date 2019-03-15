@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Tooltip from '../../react/common/Tooltip';
 import RollbackVersionModal from './RollbackVersionModal';
 import {Loader} from '@keboola/indigo-ui';
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     version: PropTypes.object.isRequired,

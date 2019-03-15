@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Map } from 'immutable';
 
 import QueryRow from './QueryRow';
 import StorageApiBucketLink from '../../../../components/react/components/StorageApiBucketLink';
 import CreateQueryElement from '../../components/CreateQueryElement';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     queries: PropTypes.object,
     configurationId: PropTypes.string,

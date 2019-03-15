@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Col, Alert, Modal, Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
@@ -11,7 +12,7 @@ const INITIAL_STATE = {
   warning: null
 };
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     openModal: PropTypes.bool.isRequired,
     hasRedshift: PropTypes.bool.isRequired,

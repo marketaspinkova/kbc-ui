@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { ExternalLink, Icon } from '@keboola/indigo-ui';
 
 const getComponentType = (type) => {

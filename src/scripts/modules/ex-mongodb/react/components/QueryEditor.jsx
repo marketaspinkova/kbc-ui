@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import CodeMirror from 'react-code-mirror';
 import { FormGroup, FormControl, Col, ControlLabel, HelpBlock, Checkbox } from 'react-bootstrap';
 
 import LinkToDocs from './LinkToDocs';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     query: PropTypes.object.isRequired,
     exports: PropTypes.object.isRequired,

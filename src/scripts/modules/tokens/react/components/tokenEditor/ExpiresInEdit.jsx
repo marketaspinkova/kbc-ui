@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Select from 'react-select';
 
 const NEVER_EXPIRES = -2;
@@ -16,7 +17,7 @@ const selectOptions = [
   {label: 'Custom',   value: CUSTOM_VALUE}
 ];
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     value: PropTypes.number,
     disabled: PropTypes.bool.isRequired,

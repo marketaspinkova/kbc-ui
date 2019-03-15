@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Col, FormControl, FormGroup, HelpBlock, ControlLabel } from 'react-bootstrap';
 import ApplicationStore from '../../stores/ApplicationStore';
 import { Button, ButtonToolbar, Modal } from 'react-bootstrap';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     limit: PropTypes.object.isRequired,
     isOpen: PropTypes.bool.isRequired,

@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Loader } from '@keboola/indigo-ui';
 import { Alert } from 'react-bootstrap';
 
 import { loadSourceTables } from '../../actionsProvisioning';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     configId: PropTypes.string.isRequired,
     componentId: PropTypes.string.isRequired,

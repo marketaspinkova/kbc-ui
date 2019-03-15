@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { InlineEditInput } from '@keboola/indigo-ui';
 
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
@@ -9,7 +10,7 @@ import actionCreators from '../../ActionCreators';
 
 const FIELD = 'name';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(OrchestrationsStore), immutableMixin],
 
   propTypes: {

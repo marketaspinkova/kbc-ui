@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Form, FormControl, FormGroup, ControlLabel, Col} from 'react-bootstrap';
 import StorageApiLink from '../../../components/react/components/StorageApiTableLinkEx';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     value: PropTypes.shape({
       source: PropTypes.string.isRequired,

@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Finished, JobStatusCircle } from '@keboola/indigo-ui';
 import DurationWithIcon from '../../../../../react/common/DurationWithIcon';
 import ImmutableRendererMixin from 'react-immutable-render-mixin';
 import { Link } from 'react-router';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [ImmutableRendererMixin],
 
   propTypes: {

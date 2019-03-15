@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import FilesStore from '../../../components/stores/StorageFilesStore';
 import FilesLocalStore from '../../FilesLocalStore';
@@ -6,7 +7,7 @@ import { filesLimit } from '../../Constants';
 import { loadFiles } from '../../Actions';
 import { RefreshIcon } from '@keboola/indigo-ui';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(FilesStore, FilesLocalStore)],
 
   getStateFromStores() {

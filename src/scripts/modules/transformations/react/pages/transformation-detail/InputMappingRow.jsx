@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import DeleteButton from '../../../../../react/common/DeleteButton';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import TableSizeLabel from '../../components/TableSizeLabel';
@@ -8,7 +9,7 @@ import InputMappingModal from '../../modals/InputMapping';
 import actionCreators from '../../../ActionCreators';
 import { Map } from 'immutable';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {

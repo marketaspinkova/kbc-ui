@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import _ from 'underscore';
 
 import { fromJS, Map, List } from 'immutable';
@@ -35,7 +36,7 @@ const defaultDataTypes = [
 ];
 
 export default componentId => {
-  return React.createClass({
+  return createReactClass({
     mixins: [createStoreMixin(WrDbStore, InstalledComponentsStore, StorageTablesStore)],
 
     getStateFromStores() {

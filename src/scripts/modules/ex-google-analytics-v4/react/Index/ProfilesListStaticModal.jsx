@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Modal} from 'react-bootstrap';
 import ProfileInfo from '../ProfileInfo';
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     profiles: PropTypes.object.isRequired,

@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { AlertBlock, ExternalLink } from '@keboola/indigo-ui';
 import oAuthMigration from '../../components/utils/oAuthMigration';
 import {Button, Col, Row} from 'react-bootstrap';
 import {Link} from 'react-router';
 import ComponentName from '../../../react/common/ComponentName';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     components: PropTypes.object.isRequired
   },

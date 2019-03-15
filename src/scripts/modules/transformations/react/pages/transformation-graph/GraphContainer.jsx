@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Loader } from '@keboola/indigo-ui';
 import Graph from './Graph';
 import TransformationsStore from '../../../stores/TransformationsStore';
@@ -7,7 +8,7 @@ import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import TransformationsActionCreators from '../../../ActionCreators';
 import immutableMixin from 'react-immutable-render-mixin';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(TransformationsStore), immutableMixin],
 
   propTypes: {

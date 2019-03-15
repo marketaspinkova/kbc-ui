@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Button } from 'react-bootstrap';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import JobsStore from '../../../stores/JobsStore';
@@ -6,7 +7,7 @@ import ActionCreators from '../../../ActionCreators';
 import QueryRow from './QueryRow';
 import JobRow from './JobRow';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(JobsStore)],
 
   getStateFromStores() {

@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 // import {Map} from 'immutable';
 
 // stores
@@ -36,7 +37,7 @@ import { DatasetLocations } from '../../constants';
 const ROUTE_PREFIX = 'ex-db-generic-';
 const COMPONENT_ID = 'keboola.ex-google-bigquery';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(...storeMixins)],
 
   getStateFromStores() {

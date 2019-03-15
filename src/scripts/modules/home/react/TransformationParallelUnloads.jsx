@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Immutable from 'immutable';
 import ComponentConfigurationRowLink from '../../components/react/components/ComponentConfigurationRowLink';
 import { AlertBlock } from '@keboola/indigo-ui';
 import { getConflictsForBucket } from '../../transformations/react/components/duplicite-output-mapping/detect';
 import { ExternalLink } from '@keboola/indigo-ui';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     transformations: PropTypes.object,
     transformationBuckets: PropTypes.object

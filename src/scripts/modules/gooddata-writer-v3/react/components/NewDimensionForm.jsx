@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Radio, HelpBlock, Form, Col, Checkbox, FormControl, FormGroup, ControlLabel} from 'react-bootstrap';
 import {PanelWithDetails} from '@keboola/indigo-ui';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     disabled: PropTypes.bool.isRequired,
     onChange: PropTypes.func.isRequired,

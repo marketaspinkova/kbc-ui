@@ -1,5 +1,7 @@
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../../../stores/RoutesStore';
 
@@ -12,7 +14,7 @@ import EditButtons from '../../../../../react/common/EditButtons';
 import TableGdName from './TableGdNameEdit';
 import ActivateTableExportButton from '../../components/ActivateTableExportButton';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(goodDataWriterStore)],
 
   getStateFromStores() {

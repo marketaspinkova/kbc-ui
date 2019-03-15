@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-export default React.createClass({
+import createReactClass from 'create-react-class';
+
+export default createReactClass({
   propTypes: {
     showAdvanced: PropTypes.bool.isRequired,
     onChangeShowAdvanced: PropTypes.func.isRequired

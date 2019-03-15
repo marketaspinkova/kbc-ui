@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Modal, ButtonToolbar, Button} from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     buttonType: PropTypes.string,
     buttonLabel: PropTypes.string.isRequired,

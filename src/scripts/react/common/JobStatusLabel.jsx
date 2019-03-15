@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import classNames from 'classnames';
 
 const CLASS_MAP = {
@@ -15,7 +16,7 @@ const CLASS_MAP = {
   warning: 'label-danger'
 };
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     status: PropTypes.string.isRequired
   },

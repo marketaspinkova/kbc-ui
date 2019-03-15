@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { FormGroup, Checkbox, Col } from 'react-bootstrap';
 import Select from '../../../../react/common/Select';
 import {List} from 'immutable';
@@ -7,7 +8,7 @@ import ChangedSinceFilterInput from '../../../components/react/components/generi
 import DataFilterRow from '../../../components/react/components/generic/DataFilterRow';
 import ColumnsSelectRow from '../../../components/react/components/generic/ColumnsSelectRow';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     mapping: PropTypes.object.isRequired,
     tables: PropTypes.object.isRequired,

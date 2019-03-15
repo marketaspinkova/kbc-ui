@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import NewComponentButton from './NewComponentButton';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     type: PropTypes.string.isRequired,
     addRoute: PropTypes.string.isRequired

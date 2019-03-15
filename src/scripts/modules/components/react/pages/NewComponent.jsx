@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import ApplicationStore from '../../../../stores/ApplicationStore';
 import ComponentsStore from '../../stores/ComponentsStore';
 import NewComponentSelection from '../components/NewComponentSelection';
 import { lookerPreviewHideComponents } from '../../../../constants/KbcConstants';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(ComponentsStore)],
   propTypes: {
     type: PropTypes.string.isRequired

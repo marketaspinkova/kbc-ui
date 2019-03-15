@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Modal} from 'react-bootstrap';
 import Tooltip from '../../../../../react/common/Tooltip';
 import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
@@ -9,7 +10,7 @@ const MODE_CREATE = 'create', MODE_EDIT = 'edit';
 import validateStorageTableId from '../../../../../utils/validateStorageTableId';
 import Immutable from 'immutable';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     mode: PropTypes.oneOf([MODE_CREATE, MODE_EDIT]),
     mapping: PropTypes.object.isRequired,

@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Map} from 'immutable';
 
 // stores
@@ -30,7 +31,7 @@ import OutputTableModal from './OutputTableModal';
 // CONSTS
 const COMPONENT_ID = 'keboola.ex-google-drive';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(...storeMixins)],
 
   getStateFromStores() {

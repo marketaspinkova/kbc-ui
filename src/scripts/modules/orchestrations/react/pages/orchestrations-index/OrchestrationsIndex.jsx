@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Map } from 'immutable';
 
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
@@ -10,7 +11,7 @@ import { SearchBar } from '@keboola/indigo-ui';
 import ImmutableRendererMixin from 'react-immutable-render-mixin';
 import NewOrchestrationButton from '../../components/NewOrchestionButton';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(OrchestrationStore), ImmutableRendererMixin],
 
   _handleFilterChange(query) {

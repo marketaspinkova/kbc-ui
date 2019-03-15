@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Map} from 'immutable';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import SidebarVersionsRow from './SidebarVersionsRow';
@@ -7,7 +8,7 @@ import {Link} from 'react-router';
 import {getPreviousVersion} from '../../../../utils/VersionsDiffUtils';
 import DiffVersionButton from '../../../../react/common/DiffVersionButton';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [PureRenderMixin],
 
   propTypes: {

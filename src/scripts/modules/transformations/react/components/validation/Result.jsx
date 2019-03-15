@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Alert } from 'react-bootstrap';
 import InvalidQuery from './InvalidQuery';
 import InvalidInput from './InvalidInput';
 import InvalidOutput from './InvalidOutput';
 import contactSupport from '../../../../../utils/contactSupport';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     bucketId: PropTypes.string.isRequired,
     result: PropTypes.object.isRequired,

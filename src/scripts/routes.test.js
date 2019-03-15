@@ -1,6 +1,7 @@
 /* eslint-disable react/no-multi-comp */
 /* eslint-disable react/prop-types */
 import React from 'react';
+import createReactClass from 'create-react-class';
 import routes from './routes';
 import createReactRouterRoutes from './utils/createReactRouterRoutes';
 

@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import _ from 'underscore';
 import { List, Map } from 'immutable';
 import Select from '../../../../../react/common/Select';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     value: PropTypes.object.isRequired,
     disabled: PropTypes.bool,

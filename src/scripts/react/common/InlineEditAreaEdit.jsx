@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Button } from 'react-bootstrap';
 import { Loader, ExternalLink } from '@keboola/indigo-ui';
 import Textarea from 'react-textarea-autosize';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     text: PropTypes.string,
     isSaving: PropTypes.bool,

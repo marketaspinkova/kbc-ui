@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Select from 'react-select';
 import _ from 'underscore';
 import {ExternalLink} from '@keboola/indigo-ui';
 
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     backend: PropTypes.string.isRequired,
     tables: PropTypes.object.isRequired,

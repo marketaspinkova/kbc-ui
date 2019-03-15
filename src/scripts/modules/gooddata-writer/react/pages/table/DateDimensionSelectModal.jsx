@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Modal, ButtonToolbar, Button, Tabs, Tab } from 'react-bootstrap';
 import { Check } from '@keboola/indigo-ui';
 import NewDimensionForm from './../../components/NewDimensionForm';
@@ -8,7 +9,7 @@ import actionCreators from '../../../actionCreators';
 import dateDimensionStore from '../../../dateDimensionsStore';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(dateDimensionStore)],
   propTypes: {
     configurationId: PropTypes.string.isRequired,

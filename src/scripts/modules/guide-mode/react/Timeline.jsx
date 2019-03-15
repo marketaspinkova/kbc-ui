@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Image} from 'react-bootstrap';
 import ApplicationStore from '../../../stores/ApplicationStore';
 
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     currentBadge: PropTypes.number,
     badgeCount: PropTypes.number

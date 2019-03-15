@@ -8,6 +8,7 @@ import {
 import ConfigurationForm from './react/components/Configuration';
 import CredentialsForm from './react/components/Credentials';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {CollapsibleSection} from '../configurations/utils/renderHelpers';
 import { conform } from './adapters/conform';
 

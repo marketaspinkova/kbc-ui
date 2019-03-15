@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Map} from 'immutable';
 import classNames from 'classnames';
 
@@ -36,7 +37,7 @@ import accountDescriptionTemplate from '../../templates/accountDescription';
 
 export default function(COMPONENT_ID) {
   const getAccountDesc = accountDescriptionTemplate(COMPONENT_ID);
-  return React.createClass({
+  return createReactClass({
     mixins: [createStoreMixin(...storeMixins, storageTablesStore)],
 
     getStateFromStores() {

@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Modal, Checkbox} from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     pid: PropTypes.string,
     onConfirm: PropTypes.func.isRequired,

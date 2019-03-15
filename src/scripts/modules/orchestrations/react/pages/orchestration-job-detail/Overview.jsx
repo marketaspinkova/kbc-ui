@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { List } from 'immutable';
 import JobTasks from './JobTasks';
 import Duration from '../../../../../react/common/Duration';
@@ -7,7 +8,7 @@ import JobStatusLabel from '../../../../../react/common/JobStatusLabel';
 import JobRunId from '../../../../../react/common/JobRunId';
 import date from '../../../../../utils/date';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     job: PropTypes.object.isRequired
   },

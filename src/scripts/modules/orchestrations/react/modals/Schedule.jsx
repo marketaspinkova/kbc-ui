@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Modal, Button } from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import CronScheduler from '../../../../react/common/CronScheduler';
@@ -7,7 +8,7 @@ import OrchestrationsApi from '../../OrchestrationsApi';
 import actionCreators from '../../ActionCreators';
 import VersionsActionCreators from '../../../components/VersionsActionCreators';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     orchestrationId: PropTypes.number.isRequired,
     crontabRecord: PropTypes.string

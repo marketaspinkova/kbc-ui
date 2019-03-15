@@ -1,6 +1,8 @@
 import { Map } from 'immutable';
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import createRoute from '../configurations/utils/createRoute';
 import columnTypes from '../configurations/utils/columnTypeConstants';
 import { CollapsibleSection } from '../configurations/utils/renderHelpers';

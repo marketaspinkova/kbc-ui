@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Map, List} from 'immutable';
 
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
@@ -17,7 +18,7 @@ import {loadSourceTables, reloadSourceTables} from '../../../actionsProvisioning
 
 export default function(componentId, actionsProvisioning, storeProvisioning) {
   const ExDbActionCreators = actionsProvisioning.createActions(componentId);
-  return React.createClass({
+  return createReactClass({
     displayName: 'ExDbQueryDetail',
     mixins: [createStoreMixin(storeProvisioning.componentsStore, StorageTablesStore)],
 

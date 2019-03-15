@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Immutable from 'immutable';
 import { Table } from 'react-bootstrap';
 
@@ -7,7 +8,7 @@ import Row from './DatasetColumnEditorRow';
 import Hint from '../../../../../react/common/Hint';
 import pureRendererMixin from 'react-immutable-render-mixin';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [pureRendererMixin],
   propTypes: {
     columns: PropTypes.object.isRequired,

@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     currentStep: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,

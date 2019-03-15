@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Form, FormControl, FormGroup, ControlLabel, Col, Button} from 'react-bootstrap';
 import Modal from './ServiceAccountModal';
 import Immutable from 'immutable';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     value: PropTypes.shape({
       type: PropTypes.string.isRequired,

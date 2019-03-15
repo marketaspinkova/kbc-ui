@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 // import {Map} from 'immutable';
 import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
 import {Modal} from 'react-bootstrap';
 // import {sanitizeTableName, sheetFullName} from '../../common';
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     show: PropTypes.bool.isRequired,

@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Image} from 'react-bootstrap';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     scriptsBasePath: PropTypes.string.isRequired,
     imageName: PropTypes.string

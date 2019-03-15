@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Select from 'react-select';
 import {Alert, Col, ControlLabel, Modal, FormGroup, FormControl, HelpBlock} from 'react-bootstrap';
 import {Loader} from '@keboola/indigo-ui';
@@ -19,7 +20,7 @@ const locationOptions = [
   },
 ];
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     authorizedEmail: PropTypes.string,
     google: PropTypes.object.isRequired,

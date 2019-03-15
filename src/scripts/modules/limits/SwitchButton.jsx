@@ -1,10 +1,11 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import EditLimitModal from './EditLimitModal';
 import PropTypes from 'prop-types';
 import Switch from 'rc-switch';
 import contactSupport from '../../utils/contactSupport';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     limit: PropTypes.object.isRequired,
     canEdit: PropTypes.bool

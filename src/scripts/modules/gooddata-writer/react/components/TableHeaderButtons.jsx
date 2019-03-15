@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Map } from 'immutable';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { Button, ButtonGroup, DropdownButton, MenuItem } from 'react-bootstrap';
@@ -13,7 +14,7 @@ import actionCreators from '../../actionCreators';
 import { ColumnTypes } from '../../constants';
 import TableLoadType from './TableLoadType';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(goodDataWriterStore), PureRenderMixin],
 
   componentWillReceiveProps() {

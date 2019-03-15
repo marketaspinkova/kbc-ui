@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import moment from 'moment';
 import {Map, List} from 'immutable';
 import {Button, Modal} from 'react-bootstrap';
@@ -64,7 +65,7 @@ function preparseDiffParts(parts) {
   return result;
 }
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     show: PropTypes.bool.isRequired,

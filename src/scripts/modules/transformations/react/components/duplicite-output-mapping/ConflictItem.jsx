@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import StorageTableLinkEx from '../../../../components/react/components/StorageApiTableLinkEx';
 import ComponentConfigurationRowLink from '../../../../components/react/components/ComponentConfigurationRowLink';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     destination: PropTypes.string.isRequired,
     transformations: PropTypes.object.isRequired,

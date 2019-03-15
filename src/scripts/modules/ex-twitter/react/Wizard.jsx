@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import InputAutoFocused from './wizard/AutoFocus';
 import {Steps, COMPONENT_ID} from '../constants';
 import AuthorizationRow from '../../oauth-v2/react/AuthorizationRow';
@@ -10,7 +11,7 @@ import {Map} from 'immutable';
 import EditButtons from '../../../react/common/EditButtons';
 import {deleteCredentialsAndConfigAuth} from '../../oauth-v2/OauthUtils';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     step: PropTypes.string.isRequired,
     onStepChange: PropTypes.func.isRequired,

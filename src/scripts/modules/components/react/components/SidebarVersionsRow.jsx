@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import CreatedWithIcon from '../../../../react/common/CreatedWithIcon';
 import ImmutableRendererMixin from 'react-immutable-render-mixin';
 import VersionIcon from './VersionIcon';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [ImmutableRendererMixin],
 
   propTypes: {

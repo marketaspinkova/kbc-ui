@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Map } from 'immutable';
 import { SearchBar } from '@keboola/indigo-ui';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
@@ -18,7 +19,7 @@ import ConfigurationRow from '../ConfigurationRow';
 import ComponentDescription from './ComponentDescription';
 import VendorInfo from './VendorInfo';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(ComponentsStore, InstalledComponentsStore)],
 
   propTypes: {

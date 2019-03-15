@@ -1,5 +1,7 @@
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 // stores
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import storeProvisioning, {storeMixins} from '../../storeProvisioning';
@@ -18,7 +20,7 @@ import EditButtons from '../../../../react/common/EditButtons';
 // CONSTS
 const COMPONENT_ID = 'keboola.ex-google-bigquery';
 
-export default React.createClass({
+export default createReactClass({
 
   mixins: [createStoreMixin(...storeMixins)],
 

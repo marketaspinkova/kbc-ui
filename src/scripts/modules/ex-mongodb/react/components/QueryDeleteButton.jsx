@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import Tooltip from './../../../../react/common/Tooltip';
 import {Loader} from '@keboola/indigo-ui';
 import {Navigation} from 'react-router';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [Navigation],
   propTypes: {
     query: PropTypes.object.isRequired,

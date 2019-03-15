@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { fromJS } from 'immutable';
 import { Alert, Modal } from 'react-bootstrap';
 import { ExternalLink } from '@keboola/indigo-ui';
@@ -15,7 +16,7 @@ const INITIAL_STATE = {
   result: null
 };
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     backend: PropTypes.string.isRequired,
     bucketId: PropTypes.string.isRequired,

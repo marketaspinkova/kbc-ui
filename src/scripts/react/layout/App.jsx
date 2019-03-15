@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import classnames from 'classnames';
 import { RouteHandler } from 'react-router';
 import ApplicationStore from '../../stores/ApplicationStore';
@@ -17,7 +18,7 @@ import UserLinks from './UserLinks';
 
 import '../../../styles/app.less';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     isError: PropTypes.bool,
     isLoading: PropTypes.bool

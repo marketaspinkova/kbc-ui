@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import TableRow from './EventsTableRow';
 import { Loader } from '@keboola/indigo-ui';
 import PureRendererMixin from 'react-immutable-render-mixin';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [PureRendererMixin],
 
   propTypes: {

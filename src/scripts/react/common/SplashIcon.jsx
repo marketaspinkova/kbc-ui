@@ -5,7 +5,9 @@ import PropTypes from 'prop-types';
 
 import React from 'react';
 
-export default React.createClass({
+import createReactClass from 'create-react-class';
+
+export default createReactClass({
 
   propTypes: {
     label: PropTypes.string,

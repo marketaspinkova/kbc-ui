@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Tabs, Tab } from 'react-bootstrap';
 
 import Events from '../../../../sapi-events/react/Events';
@@ -11,7 +12,7 @@ import TokensStore from '../../../StorageTokensStore';
 import createTokenEventsApi from '../../../TokenEventsApi';
 import TokensActions from '../../../actionCreators';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(TokensStore, BucketsStore)],
 
   getStateFromStores() {

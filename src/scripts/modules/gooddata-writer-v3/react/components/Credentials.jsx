@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Loader, ExternalLink} from '@keboola/indigo-ui';
 import ResetProjectModal from './ResetProjectModal';
 import CreateProjectModal from './CreateProjectModal';
 import ComponentsStore from '../../../components/stores/ComponentsStore';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     provisioning: PropTypes.shape({
       isDeleting: PropTypes.bool.isRequired,

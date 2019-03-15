@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Remarkable from 'react-remarkable';
 import { PanelWithDetails } from '@keboola/indigo-ui';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     source: PropTypes.string,
     size: PropTypes.string,

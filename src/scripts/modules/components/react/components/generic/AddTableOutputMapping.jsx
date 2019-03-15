@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import actionCreators from '../../../InstalledComponentsActionCreators';
 import TableOutputMappingModal from './TableOutputMappingModal';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     tables: PropTypes.object.isRequired,
     buckets: PropTypes.object.isRequired,

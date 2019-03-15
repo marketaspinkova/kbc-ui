@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
 import SplashIcon from '../../../../react/common/SplashIcon';
@@ -17,7 +18,7 @@ import oAuthMigration from '../../../components/utils/oAuthMigration';
 
 const MIGRATION_COMPONENT_ID = 'keboola.config-migration-tool';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(InstalledComponentsStore, OAuthStore)],
 
   getStateFromStores() {

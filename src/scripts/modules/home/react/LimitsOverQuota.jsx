@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Link} from 'react-router';
 import {AlertBlock} from '@keboola/indigo-ui';
 import {bytesToGBFormatted, numericMetricFormatted} from '../../../utils/numbers';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     limits: PropTypes.object.isRequired
   },

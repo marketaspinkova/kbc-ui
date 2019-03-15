@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import FileSize from '../../../react/common/FileSize';
 import ModalHandler from '../sliced-files-downloader/ModalHandler';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     file: PropTypes.object,
     showFilesize: PropTypes.bool,

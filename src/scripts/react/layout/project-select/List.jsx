@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import _ from 'underscore';
 import fuzzy from 'fuzzy';
 import { List, Map } from 'immutable';
@@ -9,7 +10,7 @@ import NewProjectModal from '../NewProjectModal';
 import Emptylist from './EmptyList';
 import InvitationsButton from './InvitationsButton';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     organizations: PropTypes.object.isRequired,
     currentProjectId: PropTypes.number.isRequired,

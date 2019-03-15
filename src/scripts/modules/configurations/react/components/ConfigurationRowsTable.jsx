@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import immutableMixin from 'react-immutable-render-mixin';
 import Row from './ConfigurationRowsTableRow';
 import classnames from 'classnames';
 import Sortable from 'sortablejs';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [immutableMixin],
 
   propTypes: {

@@ -6,6 +6,7 @@ import './utils/ReactErrorHandler';
 import './utils/codemirror/setup';
 
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ReactDOM from 'react-dom';
 import Router from 'react-router';
 import Promise from 'bluebird';

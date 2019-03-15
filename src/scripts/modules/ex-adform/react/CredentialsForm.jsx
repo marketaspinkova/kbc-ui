@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Col, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     credentials: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired

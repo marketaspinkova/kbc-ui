@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Modal} from 'react-bootstrap';
 import TabbedWizard, {CRAWLER_KEY, AUTH_KEY, OPTIONS_KEY} from './TabbedWizard';
 import {fromJS, Map} from 'immutable';
 import WizardButtons from '../../../components/react/components/WizardButtons';
 import _ from 'underscore';
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     onHideFn: PropTypes.func,

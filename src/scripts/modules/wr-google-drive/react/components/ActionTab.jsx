@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {RadioGroup} from 'react-radio-group';
 import RadioGroupInput from '../../../../react/common/RadioGroupInput';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     onChangeAction: PropTypes.func.isRequired,
     valueAction: PropTypes.string.isRequired

@@ -16,9 +16,10 @@
 */
 
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Route, RouteHandler, DefaultRoute, NotFoundRoute } from 'react-router';
 
-const Dummy = React.createClass({
+const Dummy = createReactClass({
   displayName: 'DummyWrapper',
   render() {
     return <RouteHandler />;

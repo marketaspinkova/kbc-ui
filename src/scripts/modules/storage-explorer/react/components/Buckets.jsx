@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { ButtonGroup, Button } from 'react-bootstrap';
 import { RefreshIcon, SearchBar } from '@keboola/indigo-ui';
 
@@ -16,7 +17,7 @@ import SharedBucketsModal from '../modals/SharedBucketsModal';
 import BucketsList from './BucketsList';
 import { reload, createBucket, updateSearchQuery } from '../../Actions';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [
     createStoreMixin(ApplicationStore, RoutesStore, BucketsLocalStore, BucketsStore, TablesStore)
   ],

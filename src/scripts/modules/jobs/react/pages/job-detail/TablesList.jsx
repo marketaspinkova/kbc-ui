@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { PanelWithDetails } from '@keboola/indigo-ui';
 
 import { timeInWords } from '../../../../../utils/duration';
@@ -7,7 +8,7 @@ import TableLinkEx from '../../../../components/react/components/StorageApiTable
 
 const VISIBLE_TABLES_LIMIT = 10;
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     tables: PropTypes.object.isRequired,
     allTablesIds: PropTypes.object.isRequired

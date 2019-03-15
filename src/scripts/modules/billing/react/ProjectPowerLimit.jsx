@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ApplicationStore from '../../../stores/ApplicationStore';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import EditLimitButton from './../../limits/EditLimitButton';
@@ -27,7 +28,7 @@ function getDatesForThisMonth() {
   };
 }
 
-export default React.createClass({
+export default createReactClass({
 
   mixins: [createStoreMixin(ApplicationStore)],
 

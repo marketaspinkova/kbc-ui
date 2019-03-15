@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Constants } from './Constants';
 import { Col, ControlLabel, FormGroup, HelpBlock, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 import { ExternalLink } from '@keboola/indigo-ui';
@@ -15,7 +16,7 @@ const availableEndpoints = [
   },
 ];
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     selectedValue: PropTypes.string.isRequired,
     onSelectValue: PropTypes.func.isRequired,

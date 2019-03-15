@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Modal } from 'react-bootstrap';
 import { RadioGroup } from 'react-radio-group';
 import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
 import RadioGroupInput from '../../../../../react/common/RadioGroupInput';
 import contactSupport from '../../../../../utils/contactSupport';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     show: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,

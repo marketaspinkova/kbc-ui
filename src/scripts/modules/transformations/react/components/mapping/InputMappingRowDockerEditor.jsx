@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import _ from 'underscore';
 import Immutable from 'immutable';
 import { Form, FormGroup, FormControl, ControlLabel, Col, HelpBlock } from 'react-bootstrap';
@@ -9,7 +10,7 @@ import ChangedSinceInput from '../../../../../react/common/ChangedSinceInput';
 import { PanelWithDetails } from '@keboola/indigo-ui';
 import whereOperatorConstants from '../../../../../react/common/whereOperatorConstants';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     value: PropTypes.object.isRequired,
     tables: PropTypes.object.isRequired,

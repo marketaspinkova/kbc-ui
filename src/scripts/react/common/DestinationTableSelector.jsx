@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Select from 'react-select';
 import stringUtils from '../../utils/string';
 const { webalize } = stringUtils;
 
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     currentSource: PropTypes.string,
     disabled: PropTypes.bool.isRequired,

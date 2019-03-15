@@ -1,10 +1,11 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Alert } from 'react-bootstrap';
 
 import createStoreMixin from '../mixins/createStoreMixin';
 import RoutesStore from '../../stores/RoutesStore';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(RoutesStore)],
 
   getStateFromStores() {

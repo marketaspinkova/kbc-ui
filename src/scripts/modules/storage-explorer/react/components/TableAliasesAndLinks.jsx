@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { Link } from 'react-router';
 import { Table, Row } from 'react-bootstrap';
 import ProjectAliasLink from './ProjectAliasLink';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [PureRenderMixin],
 
   propTypes: {

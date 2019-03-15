@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { FormControl, Checkbox } from 'react-bootstrap';
 import Select from 'react-select';
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     columnName: PropTypes.string.isRequired,

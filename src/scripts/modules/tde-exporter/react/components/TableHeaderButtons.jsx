@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import _ from 'underscore';
 import { fromJS, List, Map } from 'immutable';
@@ -12,7 +13,7 @@ import InstalledComponentsStore from '../../../components/stores/InstalledCompon
 
 const componentId = 'tde-exporter';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(InstalledComponentsStore, StorageTablesStore), PureRenderMixin],
 
   getStateFromStores() {

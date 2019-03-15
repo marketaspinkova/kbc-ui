@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
 import numeral from 'numeral';
@@ -7,7 +8,7 @@ import { Map } from 'immutable';
 import date from '../../../../../utils/date';
 import dimple from '../../../../../utils/dimple';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     jobs: PropTypes.object.isRequired
   },

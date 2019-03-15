@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Edit from './ScriptsEdit';
 import Clipboard from '../../../../../react/common/Clipboard';
 import SaveButton from '../../components/SaveButton';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     bucketId: PropTypes.string.isRequired,
     transformation: PropTypes.object.isRequired,

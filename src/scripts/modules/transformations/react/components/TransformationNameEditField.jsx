@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { InlineEditInput } from '@keboola/indigo-ui';
 
 import TransformationsStore from '../../stores/TransformationsStore';
 import ConfigurationRowEditField from '../../../components/react/components/ConfigurationRowEditField';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     configId: PropTypes.string.isRequired,
     rowId: PropTypes.string.isRequired

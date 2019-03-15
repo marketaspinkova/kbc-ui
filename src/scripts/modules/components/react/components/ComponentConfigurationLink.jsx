@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
 import RoutesStore from '../../../../stores/RoutesStore';
 import ComponentsStore from '../../stores/ComponentsStore';
@@ -11,7 +12,7 @@ import { Routes } from '../../Constants';
   - Link to legacy UI page
   - Disabled link if UI is not prepared at all
 */
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     componentId: PropTypes.string.isRequired,
     configId: PropTypes.string.isRequired,

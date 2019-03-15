@@ -4,10 +4,11 @@
 import PropTypes from 'prop-types';
 
 import React from 'react';
+import createReactClass from 'create-react-class';
 import AutoSuggestWrapper from '../../modules/transformations/react/components/mapping/AutoSuggestWrapper';
 
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     onChange: PropTypes.func.isRequired,

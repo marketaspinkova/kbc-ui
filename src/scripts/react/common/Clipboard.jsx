@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ClipboardButton from 'react-clipboard.js';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     text: PropTypes.string,
     label: PropTypes.string,

@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {fromJS} from 'immutable';
 import ProfilesLoader from './ProfilesLoader';
 import EmptyState from '../../components/react/components/ComponentEmptyState';
 import { Panel, ListGroup, ListGroupItem } from 'react-bootstrap';
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     localStateProfiles: PropTypes.object.isRequired,

@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { InlineEditInput } from '@keboola/indigo-ui';
 
 import actionCreators from '../../../actionCreators';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     table: PropTypes.object.isRequired,
     configurationId: PropTypes.string.isRequired,

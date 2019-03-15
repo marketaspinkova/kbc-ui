@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 // stores
 import ConfigurationsStore from '../../ConfigurationsStore';
 
@@ -11,7 +12,7 @@ import AuthorizationRow from '../../../oauth-v2/react/AuthorizationRow';
 // utils
 import * as oauthUtils from '../../../oauth-v2/OauthUtils';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     value: PropTypes.shape({
       oauthId: PropTypes.string.isRequired,

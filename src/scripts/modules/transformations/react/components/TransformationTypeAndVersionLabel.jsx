@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import ApplicationStore from '../../../../stores/ApplicationStore';
 import { Image, Label } from 'react-bootstrap';
 
@@ -25,7 +27,7 @@ const paths = {
   redshift: backendLogoRedshift
 };
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     transformation: PropTypes.object.isRequired,
     bucketId: PropTypes.string.isRequired,

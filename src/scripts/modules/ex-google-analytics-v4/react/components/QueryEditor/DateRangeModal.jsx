@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import moment from 'moment';
 import { Button, Modal, Tabs, Tab, Form, FormGroup, FormControl, ControlLabel, Col } from 'react-bootstrap';
 import DateTime from 'react-datetime';
@@ -40,7 +41,7 @@ const SUGGESTIONS = {
   }
 };
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     startDate: PropTypes.string,
     endDate: PropTypes.string,

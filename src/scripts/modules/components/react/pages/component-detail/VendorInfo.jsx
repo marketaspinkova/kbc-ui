@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { List } from 'immutable';
 import is3rdParty from '../../../is3rdParty';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     component: PropTypes.object.isRequired
   },

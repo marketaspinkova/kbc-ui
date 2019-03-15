@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import CodeMirror from 'react-code-mirror';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     data: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,

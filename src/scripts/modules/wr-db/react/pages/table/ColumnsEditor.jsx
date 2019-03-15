@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ColumnRow from './ColumnRow';
 import Hint from '../../../../../react/common/Hint';
 import Tooltip from '../../../../../react/common/Tooltip';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     columns: PropTypes.object.isRequired,
     filterColumnFn: PropTypes.func.isRequired,

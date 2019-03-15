@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Navigation} from 'react-router';
 
 // stores
@@ -14,7 +15,7 @@ import EditButtons from '../../../../react/common/EditButtons';
 
 const COMPONENT_ID = 'keboola.ex-google-bigquery';
 
-export default React.createClass({
+export default createReactClass({
 
   mixins: [createStoreMixin(...storeMixins), Navigation],
 

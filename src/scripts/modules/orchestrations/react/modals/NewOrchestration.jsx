@@ -1,10 +1,12 @@
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import { Modal, Button } from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import OrchestrationActionCreators from '../../ActionCreators';
 
-export default React.createClass({
+export default createReactClass({
   getInitialState() {
     return {
       isLoading: false,

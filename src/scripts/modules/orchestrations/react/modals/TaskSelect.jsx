@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import TaskSelectTable from '../components/TaskSelectTable';
 import { Modal, Button } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     tasks: PropTypes.object.isRequired,
     onTaskUpdate: PropTypes.func.isRequired,

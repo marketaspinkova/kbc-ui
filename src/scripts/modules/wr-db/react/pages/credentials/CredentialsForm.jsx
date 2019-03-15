@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Map } from 'immutable';
 import _ from 'underscore';
 import { Col, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
@@ -13,7 +14,7 @@ import SshTunnelRow from '../../../../../react/common/SshTunnelRow';
 import TestCredentialsButton from '../../../../../react/common/TestCredentialsButtonGroup';
 import contactSupport from '../../../../../utils/contactSupport';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     isEditing: PropTypes.bool,
     credentials: PropTypes.object,

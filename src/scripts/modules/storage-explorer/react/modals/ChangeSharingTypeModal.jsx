@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Modal, Form, Col, FormGroup } from 'react-bootstrap';
 import { ExternalLink } from '@keboola/indigo-ui';
 import { RadioGroup } from 'react-radio-group';
@@ -7,7 +8,7 @@ import RadioGroupInput from '../../../../react/common/RadioGroupInput';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import { bucketSharingTypes } from '../../Constants';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     show: PropTypes.bool.isRequired,
     bucket: PropTypes.object.isRequired,

@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Protected, Loader } from '@keboola/indigo-ui';
 import Clipboard from '../../../../react/common/Clipboard';
 import ValidUntilWithIcon from '../../../../react/common/ValidUntilWithIcon';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     credentials: PropTypes.object,
     validUntil: PropTypes.number,

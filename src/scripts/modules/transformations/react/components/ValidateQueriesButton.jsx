@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Label } from 'react-bootstrap';
 import Modal from '../modals/ValidateQueriesModal';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     backend: PropTypes.string.isRequired,
     bucketId: PropTypes.string.isRequired,

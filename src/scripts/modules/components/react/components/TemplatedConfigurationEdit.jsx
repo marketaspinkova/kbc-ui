@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { ExternalLink } from '@keboola/indigo-ui';
 import JSONSchemaEditor from './JSONSchemaEditor';
 import TemplateSelector from './ConfigurationTemplateSelector';
 import SaveButtons from '../../../../react/common/SaveButtons';
 import CodeMirror from 'react-code-mirror';
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     isTemplate: PropTypes.bool.isRequired,

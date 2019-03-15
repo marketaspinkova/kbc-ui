@@ -171,7 +171,7 @@ const getInvalidColumns = (columns) =>
     })
     .map((column) => column.get('name'));
 const referenceableColumnFilter = (currentColumnName) =>
-  function(column) {
+  (function(column) {
     if (column.get('name') === currentColumnName) {
       return false;
     }
@@ -179,7 +179,7 @@ const referenceableColumnFilter = (currentColumnName) =>
       return true;
     }
     return false;
-  };
+  });
 const sortLabelColumnFilter = (currentColumnName) => (column) =>
   currentColumnName === column.get('reference');
 const referencesForColumns = (columns) =>

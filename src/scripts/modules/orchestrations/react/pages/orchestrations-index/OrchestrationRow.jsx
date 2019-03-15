@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import DurationWithIcon from '../../../../../react/common/DurationWithIcon';
 import { Finished, JobStatusCircle } from '@keboola/indigo-ui';
 import { Link } from 'react-router';
@@ -9,7 +10,7 @@ import OrchestrationRunButton from '../../components/OrchestrationRunButton';
 import CronRecord from './../../components/CronRecord';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {

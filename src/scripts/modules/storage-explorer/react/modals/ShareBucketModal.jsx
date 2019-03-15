@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Modal, Form, Col, FormGroup } from 'react-bootstrap';
 import { ExternalLink } from '@keboola/indigo-ui';
 import { RadioGroup } from 'react-radio-group';
@@ -11,7 +12,7 @@ const INITIAL_STATE = {
   sharing: bucketSharingTypes.ORGANIZATION
 };
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     show: PropTypes.bool.isRequired,
     bucket: PropTypes.object.isRequired,

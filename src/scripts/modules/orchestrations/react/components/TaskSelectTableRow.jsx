@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
 import ComponentIcon from '../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../react/common/ComponentName';
 import { Tree } from '@keboola/indigo-ui';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     task: PropTypes.object.isRequired,
     component: PropTypes.object,

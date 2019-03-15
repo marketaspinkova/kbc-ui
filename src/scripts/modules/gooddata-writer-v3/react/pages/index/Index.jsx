@@ -1,5 +1,7 @@
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 // stores
 import InstalledComponentsStore from '../../../../components/stores/InstalledComponentsStore';
 import RoutesStore from '../../../../../stores/RoutesStore';
@@ -47,7 +49,7 @@ const LoadSettingsCollapsibleComponent = CollapsibleSection({
   contentComponent: TablesLoadSettings
 });
 
-export default React.createClass({
+export default createReactClass({
 
   mixins: [createStoreMixin(InstalledComponentsStore, VersionsStore, GoodDataProvisioningStore)],
 

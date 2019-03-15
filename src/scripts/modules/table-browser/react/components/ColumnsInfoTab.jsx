@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import _ from 'underscore';
 
 import EmptyState from '../../../components/react/components/ComponentEmptyState';
@@ -9,7 +10,7 @@ import StorageTableDataPreviewItem from '../../../../react/common/StorageTableDa
 import {Table} from 'react-bootstrap';
 
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     tableExists: PropTypes.bool.isRequired,
     table: PropTypes.object,

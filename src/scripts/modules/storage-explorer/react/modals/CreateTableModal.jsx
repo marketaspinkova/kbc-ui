@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {
   Alert,
   Button,
@@ -30,7 +31,7 @@ const INITIAL_STATE = {
   warning: null
 };
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     bucket: PropTypes.object.isRequired,
     tables: PropTypes.object.isRequired,

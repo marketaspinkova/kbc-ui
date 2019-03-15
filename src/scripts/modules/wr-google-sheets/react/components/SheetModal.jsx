@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Map} from 'immutable';
 import {Alert, Modal, Tabs, Tab} from 'react-bootstrap';
 import WizardButtons from './WizardButtons';
@@ -9,7 +10,7 @@ import SheetTab from './SheetTab';
 import StorageTablesStore from '../../../components/stores/StorageTablesStore';
 import SyncActionError from '../../../../utils/errors/SyncActionError';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     show: PropTypes.bool.isRequired,
     isSavingFn: PropTypes.func.isRequired,

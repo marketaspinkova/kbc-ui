@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { Link } from 'react-router';
 import { Check } from '@keboola/indigo-ui';
@@ -9,7 +10,7 @@ import RunExtractionButton from '../../../../components/react/components/RunComp
 import ActivateDeactivateButton from '../../../../../react/common/ActivateDeactivateButton';
 import * as actionsProvisioning from '../../../actionsProvisioning';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [ImmutableRenderMixin],
   propTypes: {
     query: PropTypes.object.isRequired,

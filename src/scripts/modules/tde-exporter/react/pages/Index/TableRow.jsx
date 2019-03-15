@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import Confirm from '../../../../../react/common/Confirm';
@@ -8,7 +9,7 @@ import date from '../../../../../utils/date';
 import RunButtonModal from '../../../../components/react/components/RunComponentButton';
 import SapiTableLinkEx from '../../../../components/react/components/StorageApiTableLinkEx';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     table: PropTypes.object.isRequired,
     configId: PropTypes.string.isRequired,

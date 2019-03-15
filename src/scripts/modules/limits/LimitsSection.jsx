@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import LimitRow from './LimitRow';
 
 function limitsToRows(limits) {
   return limits.toIndexedSeq().groupBy((limit, i) => Math.floor(i / 3));
 }
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     section: PropTypes.object.isRequired,
     keenClient: PropTypes.object.isRequired,

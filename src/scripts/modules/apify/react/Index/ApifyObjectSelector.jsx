@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {RefreshIcon} from '@keboola/indigo-ui';
 import {List} from 'immutable';
 import {InputGroup, FormControl} from 'react-bootstrap';
 import Select from 'react-select';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     objectName: PropTypes.string.isRequired,
     objectLabelKey: PropTypes.string.isRequired,

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../../stores/RoutesStore';
 import ComponentStore from '../../stores/ComponentsStore';
@@ -8,7 +10,7 @@ import GenericDetailStatic from './GenericDetailStatic';
 import GenericDockerDetail from './GenericDockerDetail';
 import GenericDetailEditable from './GenericDetailEditable';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(ComponentStore)],
 
   getStateFromStores() {

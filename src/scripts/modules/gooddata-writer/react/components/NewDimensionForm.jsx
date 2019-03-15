@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Button, Col, Checkbox, Radio, FormGroup, FormControl, ControlLabel, HelpBlock} from 'react-bootstrap';
 import {Loader, ExternalLink} from '@keboola/indigo-ui';
 import {DateDimensionTemplates} from '../../constants';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     isPending: PropTypes.bool.isRequired,
     onSubmit: PropTypes.func.isRequired,

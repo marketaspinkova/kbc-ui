@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Modal, Button} from 'react-bootstrap';
 import {ExternalLink} from '@keboola/indigo-ui';
 import ConfirmButtons from '../../../react/common/ConfirmButtons';
 import FileSize from '../../../react/common/FileSize';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     isModalOpen: PropTypes.bool.isRequired,
     onModalHide: PropTypes.func.isRequired,

@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Form, Radio, HelpBlock, FormGroup, ControlLabel, Col, Alert} from 'react-bootstrap';
 import {ExternalLink} from '@keboola/indigo-ui';
 import Select from 'react-select';
 import ChangedSinceInput from '../../../../react/common/ChangedSinceInput';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     value: PropTypes.shape({
       changedSince: PropTypes.string.isRequired,

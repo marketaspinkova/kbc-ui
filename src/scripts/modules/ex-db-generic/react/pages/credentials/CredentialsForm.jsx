@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Map} from 'immutable';
 import { Checkbox, Col, ControlLabel, FormControl, FormGroup } from 'react-bootstrap';
 
@@ -8,7 +9,7 @@ import Tooltip from '../../../../../react/common/Tooltip';
 import NonStaticSshTunnelRow from '../../../../../react/common/NonStaticSshTunnelRow';
 import SSLForm from './SSLForm';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     savedCredentials: PropTypes.object.isRequired,
     credentials: PropTypes.object.isRequired,

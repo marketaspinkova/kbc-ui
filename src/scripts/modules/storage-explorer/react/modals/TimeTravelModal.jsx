@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import moment from 'moment';
 import { Modal, Col, Alert, Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import Select from 'react-select';
 import DateTime from 'react-datetime';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     show: PropTypes.bool.isRequired,
     table: PropTypes.object.isRequired,

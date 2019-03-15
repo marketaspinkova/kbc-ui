@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Alert } from 'react-bootstrap';
 
 // stores
@@ -39,7 +40,7 @@ notes
 
  */
 
-export default React.createClass({
+export default createReactClass({
   // TODO ještě store na joby ve storage
   mixins: [createStoreMixin(InstalledComponentsStore, StorageTablesStore, StorageBucketsStore)],
 

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Col, Modal, Form, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 import Select from 'react-select';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
@@ -8,7 +9,7 @@ const INITIAL_STATE = {
   name: ''
 };
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     show: PropTypes.bool.isRequired,
     table: PropTypes.object.isRequired,

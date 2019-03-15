@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Immutable from 'immutable';
 
 // stores
@@ -19,7 +20,7 @@ import JsonConfiguration from '../components/JsonConfiguration';
 import dockerActions from '../../DockerActionsActionCreators';
 import DockerActionsStore from '../../DockerActionsStore';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(InstalledComponentsStore, Store, DockerActionsStore)],
 
   getStateFromStores() {

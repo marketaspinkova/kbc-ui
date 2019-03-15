@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
 import {Button} from 'react-bootstrap';
 import Tooltip from './../../../../react/common/Tooltip';
@@ -8,7 +9,7 @@ import RoutesStore from '../../../../stores/RoutesStore';
 import classnames from 'classnames';
 import RunModal from './RunComponentButtonModal';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     title: PropTypes.string.isRequired,
     mode: PropTypes.oneOf(['button', 'link']),

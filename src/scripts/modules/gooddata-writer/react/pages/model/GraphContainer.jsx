@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Immutable from 'immutable';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { Loader } from '@keboola/indigo-ui';
@@ -7,7 +8,7 @@ import { Loader } from '@keboola/indigo-ui';
 import api from '../../../api';
 import Graph from './Graph';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [PureRenderMixin],
   propTypes: {
     configurationId: PropTypes.string.isRequired

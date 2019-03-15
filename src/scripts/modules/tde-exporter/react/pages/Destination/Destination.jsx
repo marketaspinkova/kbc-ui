@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { List, Map, fromJS } from 'immutable';
 import { Button } from 'react-bootstrap';
 
@@ -21,7 +22,7 @@ import OauthV2WriterRow from './OauthV2WriterRow';
 
 const componentId = 'tde-exporter';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(InstalledComponentsStore, OAuthStore)],
 
   getStateFromStores() {

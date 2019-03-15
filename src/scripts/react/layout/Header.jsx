@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { Map, List } from 'immutable';
 import { Link } from 'react-router';
@@ -13,7 +14,7 @@ import NotificationsAccess from '../common/NotificationsAccess';
 import ComponentIcon from '../common/ComponentIcon';
 import RoutePendingIndicator from './RoutePendingIndicator';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [ImmutableRenderMixin, createStoreMixin(RoutesStore, ApplicationStore, ComponentsStore)],
 
   propTypes: {

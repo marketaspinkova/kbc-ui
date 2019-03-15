@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
 import ProfileInfo from '../../ProfileInfo';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     allProfiles: PropTypes.object.isRequired,
     selectedProfile: PropTypes.string,

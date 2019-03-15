@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Map } from 'immutable';
 import { Table } from 'react-bootstrap';
 import ColumnRow from './ColumnRow';
 import ComponentEmptyState from '../../../../components/react/components/ComponentEmptyState';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     table: PropTypes.object.isRequired,
     columnsTypes: PropTypes.object.isRequired,

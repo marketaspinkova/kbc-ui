@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Map } from 'immutable';
 import { Button } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
@@ -9,7 +10,7 @@ import ConfirmModal from '../../../../react/common/ConfirmModal';
 import AliasFilterModal from '../modals/AliasFilterModal';
 import { setAliasTableFilter, removeAliasTableFilter } from '../../Actions';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     table: PropTypes.object.isRequired,
     canEdit: PropTypes.bool.isRequired,

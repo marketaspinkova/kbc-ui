@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { ButtonToolbar, Button } from 'react-bootstrap';
 import { Navigation } from 'react-router';
@@ -25,7 +26,7 @@ import { filesLimit } from '../../../Constants';
 
 const DIRECT_UPLOAD = 'direct-upload';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [ImmutableRenderMixin, Navigation, createStoreMixin(FilesStore, FilesLocalStore)],
 
   getStateFromStores() {

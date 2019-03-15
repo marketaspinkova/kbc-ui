@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {
   Form,
   FormGroup,
@@ -92,7 +93,7 @@ function prepareDataForCreate(data) {
   return newData;
 }
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     bucket: PropTypes.object.isRequired,
     type: PropTypes.string,

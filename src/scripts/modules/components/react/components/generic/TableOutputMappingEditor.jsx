@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { List, Map } from 'immutable';
 import { PanelWithDetails } from '@keboola/indigo-ui';
@@ -11,7 +12,7 @@ import tableIdParser from '../../../../../utils/tableIdParser';
 import whereOperatorConstants from '../../../../../react/common/whereOperatorConstants';
 import stringUtils from '../../../../../utils/string';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {

@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import getDatatypeLabel from './getDatatypeLabel';
 import {Map} from 'immutable';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     column: PropTypes.string.isRequired,
     datatype: PropTypes.oneOfType([

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import moment from 'moment';
 import contactSupport from '../../../utils/contactSupport';
 import IntlMessageFormat from 'intl-messageformat';
@@ -12,7 +13,7 @@ const MESSAGES = {
   'other {# days}}'
 };
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     expires: PropTypes.string
   },

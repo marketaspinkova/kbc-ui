@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Map} from 'immutable';
 
 // stores
@@ -33,7 +34,7 @@ import {
 
 const COMPONENT_ID = 'keboola.ex-twitter';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(InstalledComponentStore, ComponentStore, OauthStore)],
 
   getStateFromStores() {

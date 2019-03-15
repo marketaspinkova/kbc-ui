@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import JobsNavRow from './JobsNavRow';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     activeJobId: PropTypes.number.isRequired,
     jobs: PropTypes.object.isRequired

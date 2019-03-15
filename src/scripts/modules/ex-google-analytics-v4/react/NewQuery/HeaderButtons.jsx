@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Navigation} from 'react-router';
 
 // stores
@@ -13,7 +14,7 @@ import actionsProvisioning from '../../actionsProvisioning';
 import EditButtons from '../../../../react/common/EditButtons';
 
 export default function(componentId) {
-  return React.createClass({
+  return createReactClass({
 
     mixins: [createStoreMixin(...storeMixins), Navigation],
 

@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import ProjectsList from './List';
 
 import { Icon } from '@keboola/indigo-ui';
 import { Dropdown } from 'react-bootstrap';
 
-export default React.createClass({
+export default createReactClass({
 
   propTypes: {
     organizations: PropTypes.object.isRequired,

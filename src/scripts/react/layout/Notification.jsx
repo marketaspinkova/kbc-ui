@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Alert } from 'react-bootstrap';
 
 const classMap = {
@@ -11,7 +12,7 @@ function computeNotificationAge(notification) {
   return new Date().getTime() - notification.get('created').getTime();
 }
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     notification: PropTypes.object.isRequired,
     onCancel: PropTypes.func.isRequired,

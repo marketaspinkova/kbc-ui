@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import {Map, List} from 'immutable';
 
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
@@ -39,7 +40,7 @@ function parameterPasswordCompatibility(parameters) {
   return parameters.setIn(['config', '#password'], password);
 }
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(InstalledComponentStore, ComponentStore)],
 
   getStateFromStores() {

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { fromJS } from 'immutable';
 import { Alert, Col, Modal, Form, FormGroup, FormControl, ControlLabel, Checkbox } from 'react-bootstrap';
 import Select from 'react-select';
@@ -17,7 +18,7 @@ const initialNewTableAlias = {
   aliasColumnsAutosync: true
 };
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     buckets: PropTypes.object.isRequired,
     table: PropTypes.object.isRequired,

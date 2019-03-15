@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import Immutable from 'immutable';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import RStudioSandboxCredentialsStore from '../../../provisioning/stores/RStudioSandboxCredentialsStore';
@@ -10,7 +11,7 @@ import StorageTablesStore from '../../../components/stores/StorageTablesStore';
 import CreateDockerSandboxModal from '../modals/CreateDockerSandboxModal';
 import ExtendRStudioCredentials from '../../../provisioning/react/components/ExtendRStudioCredentials';
 
-var RStudioSandbox = React.createClass({
+var RStudioSandbox = createReactClass({
   mixins: [createStoreMixin(RStudioSandboxCredentialsStore, StorageBucketsStore, StorageTablesStore)],
   displayName: 'RStudioSandbox',
   getStateFromStores: function() {

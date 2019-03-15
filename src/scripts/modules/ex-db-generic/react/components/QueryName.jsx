@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import createReactClass from 'create-react-class';
+
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import immutableMixin from 'react-immutable-render-mixin';
 
 export default function(componentId, storeProvisioning) {
-  return React.createClass({
+  return createReactClass({
     displayName: 'ExDbQuerNameEdit',
     mixins: [createStoreMixin(storeProvisioning.componentsStore), immutableMixin],
 

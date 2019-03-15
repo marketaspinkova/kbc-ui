@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import date from '../../../utils/date';
 import PureRendererMixin from 'react-immutable-render-mixin';
 import {Link} from 'react-router';
@@ -15,7 +16,7 @@ const classMap = {
   info: 'info'
 };
 
-export default React.createClass({
+export default createReactClass({
   mixins: [PureRendererMixin],
   propTypes: {
     event: PropTypes.object.isRequired,

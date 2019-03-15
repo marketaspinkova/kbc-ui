@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { Form, FormControl, FormGroup, Modal, ControlLabel } from 'react-bootstrap';
 import { ExternalLink } from '@keboola/indigo-ui';
@@ -7,7 +8,7 @@ import Tooltip from './../../../../react/common/Tooltip';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import actionCreators from '../../ActionCreators';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [PureRenderMixin],
   propTypes: {
     transformation: PropTypes.object.isRequired,
