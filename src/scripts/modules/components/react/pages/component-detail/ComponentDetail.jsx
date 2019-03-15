@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Map } from 'immutable';
 import { SearchBar } from '@keboola/indigo-ui';
@@ -21,7 +22,7 @@ export default React.createClass({
   mixins: [createStoreMixin(ComponentsStore, InstalledComponentsStore)],
 
   propTypes: {
-    component: React.PropTypes.string
+    component: PropTypes.string
   },
 
   getStateFromStores() {

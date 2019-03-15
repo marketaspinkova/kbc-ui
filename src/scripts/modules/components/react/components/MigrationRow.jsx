@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Promise from 'bluebird';
 import _ from 'underscore';
@@ -66,8 +67,8 @@ const descriptionsMap = Map({
 
 export default React.createClass({
   propTypes: {
-    componentId: React.PropTypes.string.isRequired,
-    replacementAppId: React.PropTypes.string
+    componentId: PropTypes.string.isRequired,
+    replacementAppId: PropTypes.string
   },
 
   getInitialState() {

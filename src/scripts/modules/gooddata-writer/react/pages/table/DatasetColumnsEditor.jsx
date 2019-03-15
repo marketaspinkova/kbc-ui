@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Immutable from 'immutable';
 import { Table } from 'react-bootstrap';
@@ -9,17 +10,17 @@ import pureRendererMixin from 'react-immutable-render-mixin';
 export default React.createClass({
   mixins: [pureRendererMixin],
   propTypes: {
-    columns: React.PropTypes.object.isRequired,
-    invalidColumns: React.PropTypes.object.isRequired,
-    referenceableTables: React.PropTypes.object.isRequired,
-    columnsReferences: React.PropTypes.object.isRequired,
-    isEditing: React.PropTypes.bool.isRequired,
-    isSaving: React.PropTypes.bool.isRequired,
-    onColumnChange: React.PropTypes.func.isRequired,
-    configurationId: React.PropTypes.string.isRequired,
-    dataPreview: React.PropTypes.object,
-    showIdentifier: React.PropTypes.bool.isRequired,
-    isExported: React.PropTypes.bool.isRequired
+    columns: PropTypes.object.isRequired,
+    invalidColumns: PropTypes.object.isRequired,
+    referenceableTables: PropTypes.object.isRequired,
+    columnsReferences: PropTypes.object.isRequired,
+    isEditing: PropTypes.bool.isRequired,
+    isSaving: PropTypes.bool.isRequired,
+    onColumnChange: PropTypes.func.isRequired,
+    configurationId: PropTypes.string.isRequired,
+    dataPreview: PropTypes.object,
+    showIdentifier: PropTypes.bool.isRequired,
+    isExported: PropTypes.bool.isRequired
   },
 
   _handleColumnChange(column) {

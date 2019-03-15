@@ -1,12 +1,13 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { ExternalLink } from '@keboola/indigo-ui';
 import { Checkbox, Col, FormGroup } from 'react-bootstrap';
 
 export default React.createClass({
   propTypes: {
-    component: React.PropTypes.object.isRequired,
-    licenseAgreed: React.PropTypes.bool.isRequired,
-    handleAgreedLicense: React.PropTypes.func.isRequired
+    component: PropTypes.object.isRequired,
+    licenseAgreed: PropTypes.bool.isRequired,
+    handleAgreedLicense: PropTypes.func.isRequired
   },
 
   render() {

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {
   Form,
@@ -93,9 +94,9 @@ function prepareDataForCreate(data) {
 
 export default React.createClass({
   propTypes: {
-    bucket: React.PropTypes.object.isRequired,
-    type: React.PropTypes.string,
-    label: React.PropTypes.string
+    bucket: PropTypes.object.isRequired,
+    type: PropTypes.string,
+    label: PropTypes.string
   },
 
   getDefaultProps() {

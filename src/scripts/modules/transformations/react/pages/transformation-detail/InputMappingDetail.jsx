@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import WhereOperator from '../../../../../react/common/WhereOperator';
@@ -11,10 +12,10 @@ export default React.createClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {
-    transformationBackend: React.PropTypes.string.isRequired,
-    inputMapping: React.PropTypes.object.isRequired,
-    tables: React.PropTypes.object.isRequired,
-    definition: React.PropTypes.object
+    transformationBackend: PropTypes.string.isRequired,
+    inputMapping: PropTypes.object.isRequired,
+    tables: PropTypes.object.isRequired,
+    definition: PropTypes.object
   },
 
   getDefaultProps() {

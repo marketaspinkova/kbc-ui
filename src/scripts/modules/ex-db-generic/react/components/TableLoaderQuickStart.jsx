@@ -1,16 +1,17 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {Loader} from '@keboola/indigo-ui';
 import {Link} from 'react-router';
 
 export default React.createClass({
   propTypes: {
-    componentId: React.PropTypes.string,
-    configId: React.PropTypes.string.isRequired,
-    isLoadingSourceTables: React.PropTypes.bool.isRequired,
-    isTestingConnection: React.PropTypes.bool.isRequired,
-    validConnection: React.PropTypes.bool.isRequired,
-    tableSelectorElement: React.PropTypes.object.isRequired,
-    refreshMethod: React.PropTypes.func.isRequired
+    componentId: PropTypes.string,
+    configId: PropTypes.string.isRequired,
+    isLoadingSourceTables: PropTypes.bool.isRequired,
+    isTestingConnection: PropTypes.bool.isRequired,
+    validConnection: PropTypes.bool.isRequired,
+    tableSelectorElement: PropTypes.object.isRequired,
+    refreshMethod: PropTypes.func.isRequired
   },
 
   render() {

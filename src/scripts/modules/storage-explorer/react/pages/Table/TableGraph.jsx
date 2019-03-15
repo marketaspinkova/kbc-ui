@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { startsWith } from 'underscore.string';
 import { Alert, ButtonGroup, Button, FormControl, Label, Well } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';

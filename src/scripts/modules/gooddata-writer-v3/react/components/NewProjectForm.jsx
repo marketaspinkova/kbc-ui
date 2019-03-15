@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import {Col, FormControl, ControlLabel, FormGroup, Radio, HelpBlock, Button, ButtonGroup} from 'react-bootstrap';
 import {ExternalLink} from '@keboola/indigo-ui';
 import {TokenTypes} from '../../gooddataProvisioning/utils';

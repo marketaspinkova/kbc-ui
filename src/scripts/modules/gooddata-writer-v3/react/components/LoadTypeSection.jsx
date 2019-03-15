@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import {Form, Radio, HelpBlock, FormGroup, ControlLabel, Col, Alert} from 'react-bootstrap';
 import {ExternalLink} from '@keboola/indigo-ui';
 import Select from 'react-select';

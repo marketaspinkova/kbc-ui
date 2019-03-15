@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Modal, ButtonToolbar, Button, Tabs, Tab } from 'react-bootstrap';
 import { Check } from '@keboola/indigo-ui';
@@ -10,9 +11,9 @@ import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 export default React.createClass({
   mixins: [createStoreMixin(dateDimensionStore)],
   propTypes: {
-    configurationId: React.PropTypes.string.isRequired,
-    column: React.PropTypes.object.isRequired,
-    onSelect: React.PropTypes.func.isRequired
+    configurationId: PropTypes.string.isRequired,
+    column: PropTypes.object.isRequired,
+    onSelect: PropTypes.func.isRequired
   },
 
   componentDidMount() {

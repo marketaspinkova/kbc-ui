@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { Col, FormControl, FormGroup, HelpBlock, ControlLabel } from 'react-bootstrap';
 import ApplicationStore from '../../stores/ApplicationStore';
 import { Button, ButtonToolbar, Modal } from 'react-bootstrap';

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import contactSupport from '../../../utils/contactSupport';
 import InvitationsButton from './InvitationsButton';
@@ -5,7 +6,7 @@ import PromoCodeButton from './PromoCodeButton';
 
 export default React.createClass({
   propTypes: {
-    invitationsCount: React.PropTypes.number
+    invitationsCount: PropTypes.number
   },
 
   invitationsButton() {

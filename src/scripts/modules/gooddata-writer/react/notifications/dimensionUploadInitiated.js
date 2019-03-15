@@ -1,10 +1,11 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router';
 
 export default (job, dimensionName) => {
   return React.createClass({
     propTypes: {
-      onClick: React.PropTypes.func
+      onClick: PropTypes.func
     },
     render() {
       return (

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { PanelWithDetails } from '@keboola/indigo-ui';
 
@@ -8,8 +9,8 @@ const VISIBLE_TABLES_LIMIT = 10;
 
 export default React.createClass({
   propTypes: {
-    tables: React.PropTypes.object.isRequired,
-    allTablesIds: React.PropTypes.object.isRequired
+    tables: PropTypes.object.isRequired,
+    allTablesIds: PropTypes.object.isRequired
   },
 
   render() {

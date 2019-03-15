@@ -1,6 +1,8 @@
 /*
    TableSelector
  */
+import PropTypes from 'prop-types';
+
 import React from 'react';
 import AutoSuggestWrapper from '../../modules/transformations/react/components/mapping/AutoSuggestWrapper';
 
@@ -8,12 +10,12 @@ import AutoSuggestWrapper from '../../modules/transformations/react/components/m
 export default React.createClass({
 
   propTypes: {
-    onChange: React.PropTypes.func.isRequired,
-    options: React.PropTypes.object.isRequired,
-    value: React.PropTypes.string.isRequired,
-    bucket: React.PropTypes.string,
-    help: React.PropTypes.string,
-    disabled: React.PropTypes.bool.isRequired
+    onChange: PropTypes.func.isRequired,
+    options: PropTypes.object.isRequired,
+    value: PropTypes.string.isRequired,
+    bucket: PropTypes.string,
+    help: PropTypes.string,
+    disabled: PropTypes.bool.isRequired
   },
 
 

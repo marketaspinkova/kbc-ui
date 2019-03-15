@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import _ from 'underscore';
 import { Check } from '@keboola/indigo-ui';
@@ -6,14 +7,14 @@ import ColumnDataPreview from '../../../../components/react/components/ColumnDat
 
 export default React.createClass({
   propTypes: {
-    column: React.PropTypes.object,
-    editingColumn: React.PropTypes.object,
-    editColumnFn: React.PropTypes.func,
-    dataTypes: React.PropTypes.array,
-    isSaving: React.PropTypes.bool,
-    dataPreview: React.PropTypes.object,
-    isValid: React.PropTypes.bool,
-    disabledFields: React.PropTypes.array
+    column: PropTypes.object,
+    editingColumn: PropTypes.object,
+    editColumnFn: PropTypes.func,
+    dataTypes: PropTypes.array,
+    isSaving: PropTypes.bool,
+    dataPreview: PropTypes.object,
+    isValid: PropTypes.bool,
+    disabledFields: PropTypes.array
   },
 
   render() {

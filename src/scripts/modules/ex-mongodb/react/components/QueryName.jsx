@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
@@ -8,8 +9,8 @@ export default function(storeProvisioning) {
     mixins: [createStoreMixin(storeProvisioning.componentsStore)],
 
     propTypes: {
-      configId: React.PropTypes.string.isRequired,
-      queryId: React.PropTypes.number.isRequired
+      configId: PropTypes.string.isRequired,
+      queryId: PropTypes.number.isRequired
     },
 
     getStateFromStores() {

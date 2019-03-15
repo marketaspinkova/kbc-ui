@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Map } from 'immutable';
 import _ from 'underscore';
@@ -14,17 +15,17 @@ import contactSupport from '../../../../../utils/contactSupport';
 
 export default React.createClass({
   propTypes: {
-    isEditing: React.PropTypes.bool,
-    credentials: React.PropTypes.object,
-    savedCredentials: React.PropTypes.object,
-    onChangeFn: React.PropTypes.func,
-    changeCredentialsFn: React.PropTypes.func,
-    isSaving: React.PropTypes.bool,
-    isProvisioning: React.PropTypes.bool,
-    componentId: React.PropTypes.string,
-    configId: React.PropTypes.string,
-    driver: React.PropTypes.string,
-    testCredentialsFn: React.PropTypes.func
+    isEditing: PropTypes.bool,
+    credentials: PropTypes.object,
+    savedCredentials: PropTypes.object,
+    onChangeFn: PropTypes.func,
+    changeCredentialsFn: PropTypes.func,
+    isSaving: PropTypes.bool,
+    isProvisioning: PropTypes.bool,
+    componentId: PropTypes.string,
+    configId: PropTypes.string,
+    driver: PropTypes.string,
+    testCredentialsFn: PropTypes.func
   },
 
   render() {

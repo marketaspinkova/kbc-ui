@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import DurationWithIcon from '../../../../../react/common/DurationWithIcon';
 import { Finished, JobStatusCircle } from '@keboola/indigo-ui';
@@ -12,9 +13,9 @@ export default React.createClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {
-    orchestration: React.PropTypes.object,
-    pendingActions: React.PropTypes.object,
-    tasks: React.PropTypes.object
+    orchestration: PropTypes.object,
+    pendingActions: PropTypes.object,
+    tasks: PropTypes.object
   },
 
   render() {

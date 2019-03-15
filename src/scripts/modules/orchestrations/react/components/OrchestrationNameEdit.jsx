@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { InlineEditInput } from '@keboola/indigo-ui';
 
@@ -12,7 +13,7 @@ export default React.createClass({
   mixins: [createStoreMixin(OrchestrationsStore), immutableMixin],
 
   propTypes: {
-    orchestrationId: React.PropTypes.number.isRequired
+    orchestrationId: PropTypes.number.isRequired
   },
 
   getStateFromStores() {

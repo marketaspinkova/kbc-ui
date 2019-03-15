@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import ConfigureSandboxModal from './ConfigureSandboxModal';
 // import ConfigureDockerSandboxModal from './ConfigureDockerSandboxModal';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';

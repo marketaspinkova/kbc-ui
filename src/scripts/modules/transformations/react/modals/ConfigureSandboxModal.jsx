@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { Modal, HelpBlock, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router';
 import { RadioGroup } from 'react-radio-group';

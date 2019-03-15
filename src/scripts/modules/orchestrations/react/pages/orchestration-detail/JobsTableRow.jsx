@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Router from 'react-router';
 import Duration from '../../../../../react/common/Duration';
@@ -9,8 +10,8 @@ export default React.createClass({
   mixins: [Router.Navigation, Router.State, ImmutableRendererMixin],
 
   propTypes: {
-    job: React.PropTypes.object.isRequired,
-    onJobCancel: React.PropTypes.func
+    job: PropTypes.object.isRequired,
+    onJobCancel: PropTypes.func
   },
 
   jobDetail(event) {

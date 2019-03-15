@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import Tooltip from '../../../../react/common/Tooltip';
 import {Loader} from '@keboola/indigo-ui';
 import Confirm from '../../../../react/common/Confirm';
@@ -8,7 +9,7 @@ export default React.createClass({
     query: PropTypes.object.isRequired,
     onDeleteFn: PropTypes.func.isRequired,
     isPending: PropTypes.bool,
-    tooltipPlacement: React.PropTypes.string
+    tooltipPlacement: PropTypes.string
   },
 
   getDefaultProps() {

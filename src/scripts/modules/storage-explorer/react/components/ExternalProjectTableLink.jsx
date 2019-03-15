@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { ExternalLink } from '@keboola/indigo-ui';
 import _ from 'underscore';
 import { parse as parseTable } from '../../../../utils/tableIdParser';

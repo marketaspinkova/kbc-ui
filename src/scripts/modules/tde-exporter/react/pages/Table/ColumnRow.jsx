@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import _ from 'underscore';
 import { FormControl, InputGroup, FormGroup } from 'react-bootstrap';
@@ -25,12 +26,12 @@ const defaults = {
 
 export default React.createClass({
   propTypes: {
-    isSaving: React.PropTypes.bool.isRequired,
-    column: React.PropTypes.string,
-    tdeType: React.PropTypes.object,
-    editing: React.PropTypes.object,
-    dataPreview: React.PropTypes.object,
-    onChange: React.PropTypes.func
+    isSaving: PropTypes.bool.isRequired,
+    column: PropTypes.string,
+    tdeType: PropTypes.object,
+    editing: PropTypes.object,
+    dataPreview: PropTypes.object,
+    onChange: PropTypes.func
   },
 
   render() {

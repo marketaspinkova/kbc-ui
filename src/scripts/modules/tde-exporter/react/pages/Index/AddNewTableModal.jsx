@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Modal } from 'react-bootstrap';
 import SapiTableSelector from '../../../../components/react/components/SapiTableSelector';
@@ -5,12 +6,12 @@ import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
 
 export default React.createClass({
   propTypes: {
-    show: React.PropTypes.bool.isRequired,
-    onHideFn: React.PropTypes.func.isRequired,
-    selectedTableId: React.PropTypes.string,
-    onSetTableIdFn: React.PropTypes.func.isRequired,
-    configuredTables: React.PropTypes.object,
-    onSaveFn: React.PropTypes.func.isRequired
+    show: PropTypes.bool.isRequired,
+    onHideFn: PropTypes.func.isRequired,
+    selectedTableId: PropTypes.string,
+    onSetTableIdFn: PropTypes.func.isRequired,
+    configuredTables: PropTypes.object,
+    onSaveFn: PropTypes.func.isRequired
   },
 
   render() {

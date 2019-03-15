@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import WizardModal from './WizardModal';
 import WizardStore from '../stores/WizardStore';
@@ -8,8 +9,8 @@ export default React.createClass({
   displayName: 'Wizard',
 
   propTypes: {
-    projectBaseUrl: React.PropTypes.string.isRequired,
-    scriptsBasePath: React.PropTypes.string.isRequired
+    projectBaseUrl: PropTypes.string.isRequired,
+    scriptsBasePath: PropTypes.string.isRequired
   },
 
   mixins: [createStoreMixin(WizardStore)],

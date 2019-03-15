@@ -1,11 +1,12 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 export default React.createClass({
   propTypes: {
-    componentId: React.PropTypes.string.isRequired,
-    configId: React.PropTypes.string.isRequired,
-    pending: React.PropTypes.bool.isRequired,
-    actionsProvisioning: React.PropTypes.object.isRequired
+    componentId: PropTypes.string.isRequired,
+    configId: PropTypes.string.isRequired,
+    pending: PropTypes.bool.isRequired,
+    actionsProvisioning: PropTypes.object.isRequired
   },
 
   migrateConfig() {

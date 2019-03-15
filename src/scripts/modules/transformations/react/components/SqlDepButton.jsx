@@ -1,11 +1,12 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Modal from '../modals/SqlDepModal';
 
 export default React.createClass({
   propTypes: {
-    transformationId: React.PropTypes.string.isRequired,
-    bucketId: React.PropTypes.string.isRequired,
-    backend: React.PropTypes.string.isRequired
+    transformationId: PropTypes.string.isRequired,
+    bucketId: PropTypes.string.isRequired,
+    backend: PropTypes.string.isRequired
   },
 
   getInitialState() {

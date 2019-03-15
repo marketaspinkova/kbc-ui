@@ -1,9 +1,10 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Markdown from '../../../../../react/common/Markdown';
 
 export default React.createClass({
   propTypes: {
-    component: React.PropTypes.object.isRequired
+    component: PropTypes.object.isRequired
   },
 
   render() {

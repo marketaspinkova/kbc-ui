@@ -1,10 +1,11 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {Link} from 'react-router';
 
 export default (configuration) => {
   return React.createClass({
     propTypes: {
-      onClick: React.PropTypes.func.isRequired
+      onClick: PropTypes.func.isRequired
     },
 
     render: function() {

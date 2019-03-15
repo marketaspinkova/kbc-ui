@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { fromJS } from 'immutable';
@@ -8,9 +9,9 @@ export default React.createClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {
-    columnName: React.PropTypes.string.isRequired,
-    tableData: React.PropTypes.object,
-    error: React.PropTypes.string
+    columnName: PropTypes.string.isRequired,
+    tableData: PropTypes.object,
+    error: PropTypes.string
   },
 
   render() {

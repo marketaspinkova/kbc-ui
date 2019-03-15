@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import immutableMixin from 'react-immutable-render-mixin';
@@ -8,9 +9,9 @@ import date from '../../../../utils/date';
 export default React.createClass({
   mixins: [createStoreMixin(RowsStore, ConfigurationsStore), immutableMixin],
   propTypes: {
-    componentId: React.PropTypes.string.isRequired,
-    configurationId: React.PropTypes.string.isRequired,
-    rowId: React.PropTypes.string.isRequired
+    componentId: PropTypes.string.isRequired,
+    configurationId: PropTypes.string.isRequired,
+    rowId: PropTypes.string.isRequired
   },
   getStateFromStores: function() {
     return {

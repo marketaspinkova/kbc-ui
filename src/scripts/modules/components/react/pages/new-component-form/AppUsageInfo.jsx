@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import ComponentBadgeTable from '../../../../../react/common/ComponentBadgeTable';
@@ -12,7 +13,7 @@ const AppUsageInfo = ({ component }) => {
 };
 
 AppUsageInfo.propTypes = {
-  component: React.PropTypes.object.isRequired
+  component: PropTypes.object.isRequired
 };
 
 export default AppUsageInfo;

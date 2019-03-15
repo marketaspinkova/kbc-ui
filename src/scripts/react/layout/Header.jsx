@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { Map, List } from 'immutable';
@@ -16,8 +17,8 @@ export default React.createClass({
   mixins: [ImmutableRenderMixin, createStoreMixin(RoutesStore, ApplicationStore, ComponentsStore)],
 
   propTypes: {
-    homeUrl: React.PropTypes.string.isRequired,
-    notifications: React.PropTypes.object.isRequired
+    homeUrl: PropTypes.string.isRequired,
+    notifications: PropTypes.object.isRequired
   },
 
   getStateFromStores() {

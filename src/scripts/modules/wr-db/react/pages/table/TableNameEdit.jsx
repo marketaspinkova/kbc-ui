@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { InlineEditInput } from '@keboola/indigo-ui';
 
@@ -5,14 +6,14 @@ import actionCreators from '../../../actionCreators';
 
 export default React.createClass({
   propTypes: {
-    tableId: React.PropTypes.string,
-    configId: React.PropTypes.string,
-    componentId: React.PropTypes.string,
-    setEditValueFn: React.PropTypes.func,
-    editingValue: React.PropTypes.string,
-    currentValue: React.PropTypes.string,
-    isSaving: React.PropTypes.bool,
-    tableExportedValue: React.PropTypes.oneOfType([React.PropTypes.bool, React.PropTypes.string])
+    tableId: PropTypes.string,
+    configId: PropTypes.string,
+    componentId: PropTypes.string,
+    setEditValueFn: PropTypes.func,
+    editingValue: PropTypes.string,
+    currentValue: PropTypes.string,
+    isSaving: PropTypes.bool,
+    tableExportedValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string])
   },
 
   _handleEditStart() {

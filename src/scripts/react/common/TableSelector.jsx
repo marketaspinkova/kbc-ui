@@ -1,6 +1,8 @@
 /*
    TableSelector
  */
+import PropTypes from 'prop-types';
+
 import React from 'react';
 import Immutable from 'immutable';
 import TableLink from '../../modules/components/react/components/StorageApiTableLinkEx';
@@ -11,13 +13,13 @@ import {Button} from 'react-bootstrap';
 export default React.createClass({
 
   propTypes: {
-    value: React.PropTypes.string,
-    disabled: React.PropTypes.bool,
-    onChange: React.PropTypes.func.isRequired,
-    bucket: React.PropTypes.string,
-    help: React.PropTypes.string,
-    onEdit: React.PropTypes.func.isRequired,
-    editing: React.PropTypes.bool.isRequired
+    value: PropTypes.string,
+    disabled: PropTypes.bool,
+    onChange: PropTypes.func.isRequired,
+    bucket: PropTypes.string,
+    help: PropTypes.string,
+    onEdit: PropTypes.func.isRequired,
+    editing: PropTypes.bool.isRequired
   },
 
   getDefaultProps() {

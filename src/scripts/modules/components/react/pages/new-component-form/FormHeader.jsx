@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ComponentIcon from '../../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../../react/common/ComponentName';
@@ -6,12 +7,12 @@ import { Loader } from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
-    component: React.PropTypes.object.isRequired,
-    onSave: React.PropTypes.func,
-    onCancel: React.PropTypes.func,
-    isValid: React.PropTypes.bool,
-    isSaving: React.PropTypes.bool,
-    withButtons: React.PropTypes.bool
+    component: PropTypes.object.isRequired,
+    onSave: PropTypes.func,
+    onCancel: PropTypes.func,
+    isValid: PropTypes.bool,
+    isSaving: PropTypes.bool,
+    withButtons: PropTypes.bool
   },
 
   getDefaultProps() {

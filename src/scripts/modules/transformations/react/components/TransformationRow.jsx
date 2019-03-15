@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
@@ -16,11 +17,11 @@ export default React.createClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {
-    transformation: React.PropTypes.object,
-    latestVersionId: React.PropTypes.number,
-    bucket: React.PropTypes.object,
-    pendingActions: React.PropTypes.object,
-    hideButtons: React.PropTypes.bool
+    transformation: PropTypes.object,
+    latestVersionId: PropTypes.number,
+    bucket: PropTypes.object,
+    pendingActions: PropTypes.object,
+    hideButtons: PropTypes.bool
   },
 
   buttons() {

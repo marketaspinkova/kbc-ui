@@ -1,11 +1,12 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import moment from 'moment';
 import date from '../../utils/date';
 
 export default React.createClass({
   propTypes: {
-    createdTime: React.PropTypes.string.isRequired,
-    relative: React.PropTypes.bool
+    createdTime: PropTypes.string.isRequired,
+    relative: PropTypes.bool
   },
 
   getDefaultProps() {

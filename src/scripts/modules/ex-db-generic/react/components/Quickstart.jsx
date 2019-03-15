@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import Immutable from 'immutable';
@@ -7,17 +8,17 @@ import TableLoader from './TableLoaderQuickStart';
 export default React.createClass({
   displayName: 'Quickstart',
   propTypes: {
-    configId: React.PropTypes.string.isRequired,
-    componentId: React.PropTypes.string,
-    isLoadingSourceTables: React.PropTypes.bool.isRequired,
-    isTestingConnection: React.PropTypes.bool.isRequired,
-    validConnection: React.PropTypes.bool.isRequired,
-    sourceTables: React.PropTypes.object,
-    sourceTablesError: React.PropTypes.string,
-    quickstart: React.PropTypes.object,
-    onChange: React.PropTypes.func.isRequired,
-    onSubmit: React.PropTypes.func.isRequired,
-    refreshMethod: React.PropTypes.func.isRequired
+    configId: PropTypes.string.isRequired,
+    componentId: PropTypes.string,
+    isLoadingSourceTables: PropTypes.bool.isRequired,
+    isTestingConnection: PropTypes.bool.isRequired,
+    validConnection: PropTypes.bool.isRequired,
+    sourceTables: PropTypes.object,
+    sourceTablesError: PropTypes.string,
+    quickstart: PropTypes.object,
+    onChange: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func.isRequired,
+    refreshMethod: PropTypes.func.isRequired
   },
 
   shouldComponentUpdate(nextProps) {

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Loader } from '@keboola/indigo-ui';
 import { Alert } from 'react-bootstrap';
@@ -6,12 +7,12 @@ import { loadSourceTables } from '../../actionsProvisioning';
 
 export default React.createClass({
   propTypes: {
-    configId: React.PropTypes.string.isRequired,
-    componentId: React.PropTypes.string.isRequired,
-    connectionTesting: React.PropTypes.bool.isRequired,
-    connectionError: React.PropTypes.string,
-    sourceTablesLoading: React.PropTypes.bool.isRequired,
-    sourceTablesError: React.PropTypes.string
+    configId: PropTypes.string.isRequired,
+    componentId: PropTypes.string.isRequired,
+    connectionTesting: PropTypes.bool.isRequired,
+    connectionError: PropTypes.string,
+    sourceTablesLoading: PropTypes.bool.isRequired,
+    sourceTablesError: PropTypes.string
   },
 
   render() {

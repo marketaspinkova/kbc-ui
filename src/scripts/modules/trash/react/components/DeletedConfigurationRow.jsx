@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import DeleteButton from '../../../../react/common/DeleteButton';
 import { Finished } from '@keboola/indigo-ui';
 import Tooltip from '../../../../react/common/Tooltip';

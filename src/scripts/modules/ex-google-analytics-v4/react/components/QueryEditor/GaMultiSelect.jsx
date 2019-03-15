@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 // import fuzzy from 'fuzzy';
 import Select from 'react-select';
 import Tooltip from '../../../../../react/common/Tooltip';

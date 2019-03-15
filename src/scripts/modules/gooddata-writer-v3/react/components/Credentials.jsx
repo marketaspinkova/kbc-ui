@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import {Loader, ExternalLink} from '@keboola/indigo-ui';
 import ResetProjectModal from './ResetProjectModal';
 import CreateProjectModal from './CreateProjectModal';

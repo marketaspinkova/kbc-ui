@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import Select from 'react-select';
 import {Alert, Col, ControlLabel, Modal, FormGroup, FormControl, HelpBlock} from 'react-bootstrap';
 import {Loader} from '@keboola/indigo-ui';

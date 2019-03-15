@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {Modal} from 'react-bootstrap';
 import moment from 'moment';
@@ -6,10 +7,10 @@ import ConfirmButtons from './ConfirmButtons';
 export default React.createClass({
 
   propTypes: {
-    version: React.PropTypes.object.isRequired,
-    show: React.PropTypes.bool.isRequired,
-    onClose: React.PropTypes.func.isRequired,
-    onRollback: React.PropTypes.func.isRequired
+    version: PropTypes.object.isRequired,
+    show: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+    onRollback: PropTypes.func.isRequired
   },
 
   render() {

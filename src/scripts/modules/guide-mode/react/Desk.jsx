@@ -1,12 +1,13 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Button } from 'react-bootstrap';
 
 export default React.createClass({
 
   propTypes: {
-    lessons: React.PropTypes.object.isRequired,
-    achievedLessonId: React.PropTypes.number.isRequired,
-    openLessonModalFn: React.PropTypes.func.isRequired
+    lessons: PropTypes.object.isRequired,
+    achievedLessonId: PropTypes.number.isRequired,
+    openLessonModalFn: PropTypes.func.isRequired
   },
 
   render() {

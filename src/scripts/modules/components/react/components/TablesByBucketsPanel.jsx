@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import fuzzy from 'fuzzy';
 import { fromJS, List } from 'immutable';
@@ -11,17 +12,17 @@ export default React.createClass({
   mixins: [createStoreMixin(storageTablesStore)],
 
   propTypes: {
-    renderTableRowFn: React.PropTypes.func.isRequired,
-    renderHeaderRowFn: React.PropTypes.func,
-    filterFn: React.PropTypes.func,
-    searchQuery: React.PropTypes.string,
-    isTableExportedFn: React.PropTypes.func,
-    isTableShownFn: React.PropTypes.func,
-    onToggleBucketFn: React.PropTypes.func,
-    isBucketToggledFn: React.PropTypes.func,
-    showAllTables: React.PropTypes.bool,
-    configuredTables: React.PropTypes.array,
-    renderDeletedTableRowFn: React.PropTypes.func
+    renderTableRowFn: PropTypes.func.isRequired,
+    renderHeaderRowFn: PropTypes.func,
+    filterFn: PropTypes.func,
+    searchQuery: PropTypes.string,
+    isTableExportedFn: PropTypes.func,
+    isTableShownFn: PropTypes.func,
+    onToggleBucketFn: PropTypes.func,
+    isBucketToggledFn: PropTypes.func,
+    showAllTables: PropTypes.bool,
+    configuredTables: PropTypes.array,
+    renderDeletedTableRowFn: PropTypes.func
   },
 
   getStateFromStores() {

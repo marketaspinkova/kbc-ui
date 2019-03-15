@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { Loader, ExternalLink } from '@keboola/indigo-ui';
@@ -5,12 +6,12 @@ import Textarea from 'react-textarea-autosize';
 
 export default React.createClass({
   propTypes: {
-    text: React.PropTypes.string,
-    isSaving: React.PropTypes.bool,
-    placeholder: React.PropTypes.string,
-    onCancel: React.PropTypes.func,
-    onSave: React.PropTypes.func,
-    onChange: React.PropTypes.func
+    text: PropTypes.string,
+    isSaving: PropTypes.bool,
+    placeholder: PropTypes.string,
+    onCancel: PropTypes.func,
+    onSave: PropTypes.func,
+    onChange: PropTypes.func
   },
 
   _onChange(e) {

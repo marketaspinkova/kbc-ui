@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {Modal, ListGroupItem, ListGroup, Button} from 'react-bootstrap';
 import RoutesStore from '../../../stores/RoutesStore';
@@ -14,19 +15,19 @@ const ROUTE_PATH_STORAGE = 'storage';
 
 export default React.createClass({
   propTypes: {
-    onHide: React.PropTypes.func.isRequired,
-    setStep: React.PropTypes.func.isRequired,
-    setDirection: React.PropTypes.func.isRequired,
-    setAchievedLessonFn: React.PropTypes.func.isRequired,
-    show: React.PropTypes.bool.isRequired,
-    backdrop: React.PropTypes.bool.isRequired,
-    position: React.PropTypes.string.isRequired,
-    direction: React.PropTypes.string.isRequired,
-    step: React.PropTypes.number.isRequired,
-    achievedStep: React.PropTypes.number.isRequired,
-    lesson: React.PropTypes.object.isRequired,
-    projectBaseUrl: React.PropTypes.string.isRequired,
-    scriptsBasePath: React.PropTypes.string.isRequired
+    onHide: PropTypes.func.isRequired,
+    setStep: PropTypes.func.isRequired,
+    setDirection: PropTypes.func.isRequired,
+    setAchievedLessonFn: PropTypes.func.isRequired,
+    show: PropTypes.bool.isRequired,
+    backdrop: PropTypes.bool.isRequired,
+    position: PropTypes.string.isRequired,
+    direction: PropTypes.string.isRequired,
+    step: PropTypes.number.isRequired,
+    achievedStep: PropTypes.number.isRequired,
+    lesson: PropTypes.object.isRequired,
+    projectBaseUrl: PropTypes.string.isRequired,
+    scriptsBasePath: PropTypes.string.isRequired
   },
 
   getProjectPageUrlHref(path) {

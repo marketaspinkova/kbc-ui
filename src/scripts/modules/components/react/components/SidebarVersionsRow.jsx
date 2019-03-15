@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import CreatedWithIcon from '../../../../react/common/CreatedWithIcon';
 import ImmutableRendererMixin from 'react-immutable-render-mixin';
@@ -7,8 +8,8 @@ export default React.createClass({
   mixins: [ImmutableRendererMixin],
 
   propTypes: {
-    version: React.PropTypes.object.isRequired,
-    isLast: React.PropTypes.bool
+    version: PropTypes.object.isRequired,
+    isLast: PropTypes.bool
   },
 
   getDefaultProps: function() {

@@ -1,14 +1,15 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import OutputMappingModal from '../../modals/OutputMapping';
 import actionCreators from '../../../ActionCreators';
 
 export default React.createClass({
   propTypes: {
-    tables: React.PropTypes.object.isRequired,
-    buckets: React.PropTypes.object.isRequired,
-    transformation: React.PropTypes.object.isRequired,
-    bucket: React.PropTypes.object.isRequired,
-    mapping: React.PropTypes.object.isRequired
+    tables: PropTypes.object.isRequired,
+    buckets: PropTypes.object.isRequired,
+    transformation: PropTypes.object.isRequired,
+    bucket: PropTypes.object.isRequired,
+    mapping: PropTypes.object.isRequired
   },
 
   render() {

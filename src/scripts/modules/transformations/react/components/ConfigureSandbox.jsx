@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Select from 'react-select';
 import _ from 'underscore';
@@ -6,10 +7,10 @@ import {ExternalLink} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
-    backend: React.PropTypes.string.isRequired,
-    tables: React.PropTypes.object.isRequired,
-    buckets: React.PropTypes.object.isRequired,
-    onChange: React.PropTypes.func.isRequired
+    backend: PropTypes.string.isRequired,
+    tables: PropTypes.object.isRequired,
+    buckets: PropTypes.object.isRequired,
+    onChange: PropTypes.func.isRequired
   },
 
   getInitialState() {

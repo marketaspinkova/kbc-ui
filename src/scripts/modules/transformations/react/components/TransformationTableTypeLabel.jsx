@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 const TransformationTableTypeLabel = ({ backend }) => {
@@ -9,7 +10,7 @@ const TransformationTableTypeLabel = ({ backend }) => {
 };
 
 TransformationTableTypeLabel.propTypes = {
-  backend: React.PropTypes.string.isRequired
+  backend: PropTypes.string.isRequired
 };
 
 export default TransformationTableTypeLabel;

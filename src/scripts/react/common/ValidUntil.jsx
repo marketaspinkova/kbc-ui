@@ -1,9 +1,10 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import moment from 'moment';
 
 export default React.createClass({
   propTypes: {
-    validUntil: React.PropTypes.number
+    validUntil: PropTypes.number
   },
 
   render() {

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { MenuItem } from 'react-bootstrap';
 import RollbackVersionModal from './RollbackVersionModal';
@@ -7,10 +8,10 @@ import Tooltip from '../../react/common/Tooltip';
 export default React.createClass({
 
   propTypes: {
-    version: React.PropTypes.object.isRequired,
-    onRollback: React.PropTypes.func.isRequired,
-    isPending: React.PropTypes.bool,
-    isDisabled: React.PropTypes.bool
+    version: PropTypes.object.isRequired,
+    onRollback: PropTypes.func.isRequired,
+    isPending: PropTypes.bool,
+    isDisabled: PropTypes.bool
   },
 
   getInitialState() {

@@ -1,13 +1,15 @@
 /*
    Splash icon
  */
+import PropTypes from 'prop-types';
+
 import React from 'react';
 
 export default React.createClass({
 
   propTypes: {
-    label: React.PropTypes.string,
-    icon: React.PropTypes.string.isRequired
+    label: PropTypes.string,
+    icon: PropTypes.string.isRequired
   },
 
   getDefaultProps() {

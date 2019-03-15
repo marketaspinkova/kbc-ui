@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { FormGroup, HelpBlock } from 'react-bootstrap';
 import {Radio} from 'react-radio-group';
@@ -19,10 +20,10 @@ const RadioGroupInput = (props) => {
 };
 
 RadioGroupInput.propTypes = {
-  value: React.PropTypes.string.isRequired,
-  label: React.PropTypes.node.isRequired,
-  help: React.PropTypes.node,
-  wrapperClassName: React.PropTypes.string
+  value: PropTypes.string.isRequired,
+  label: PropTypes.node.isRequired,
+  help: PropTypes.node,
+  wrapperClassName: PropTypes.string
 };
 
 export default RadioGroupInput;

@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import {Form, Radio, HelpBlock, FormGroup, ControlLabel, Col} from 'react-bootstrap';
 
 import ChangedSinceInput from '../../../../react/common/ChangedSinceInput';

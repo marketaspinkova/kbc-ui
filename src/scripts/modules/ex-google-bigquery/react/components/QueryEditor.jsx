@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import CodeMirror from 'react-code-mirror';
 import Select from '../../../../react/common/Select';
@@ -6,11 +7,11 @@ import editorMode from '../../../ex-db-generic/templates/editorMode';
 
 export default React.createClass({
   propTypes: {
-    query: React.PropTypes.object.isRequired,
-    tables: React.PropTypes.object.isRequired,
-    onChange: React.PropTypes.func.isRequired,
-    defaultOutputTable: React.PropTypes.string.isRequired,
-    componentId: React.PropTypes.string.isRequired
+    query: PropTypes.object.isRequired,
+    tables: PropTypes.object.isRequired,
+    onChange: PropTypes.func.isRequired,
+    defaultOutputTable: PropTypes.string.isRequired,
+    componentId: PropTypes.string.isRequired
   },
 
   _handleOutputTableChange(newValue) {

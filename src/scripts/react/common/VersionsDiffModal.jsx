@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import moment from 'moment';
 import {Map, List} from 'immutable';
@@ -66,10 +67,10 @@ function preparseDiffParts(parts) {
 export default React.createClass({
 
   propTypes: {
-    show: React.PropTypes.bool.isRequired,
-    onClose: React.PropTypes.func.isRequired,
-    referentialVersion: React.PropTypes.object.isRequired,
-    compareVersion: React.PropTypes.object.isRequired
+    show: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+    referentialVersion: PropTypes.object.isRequired,
+    compareVersion: PropTypes.object.isRequired
   },
 
   getInitialState() {

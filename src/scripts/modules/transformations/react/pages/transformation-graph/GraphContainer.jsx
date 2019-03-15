@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Loader } from '@keboola/indigo-ui';
 import Graph from './Graph';
@@ -10,9 +11,9 @@ export default React.createClass({
   mixins: [createStoreMixin(TransformationsStore), immutableMixin],
 
   propTypes: {
-    bucketId: React.PropTypes.string.isRequired,
-    transformationId: React.PropTypes.string.isRequired,
-    disabled: React.PropTypes.bool.isRequired
+    bucketId: PropTypes.string.isRequired,
+    transformationId: PropTypes.string.isRequired,
+    disabled: PropTypes.bool.isRequired
   },
 
   getStateFromStores() {

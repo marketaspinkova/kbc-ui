@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { Constants } from './Constants';
 import { Col, ControlLabel, FormGroup, HelpBlock, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 import { ExternalLink } from '@keboola/indigo-ui';

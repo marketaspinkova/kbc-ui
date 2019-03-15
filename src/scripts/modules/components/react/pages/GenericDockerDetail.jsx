@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
@@ -36,7 +37,7 @@ export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentStore, StorageTablesStore, OauthStore, ComponentStore, VersionsStore)],
 
   propTypes: {
-    migrationComponent: React.PropTypes.any
+    migrationComponent: PropTypes.any
   },
 
   getStateFromStores() {

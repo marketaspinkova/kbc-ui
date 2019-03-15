@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { ExternalLink } from '@keboola/indigo-ui';
 import { Col, FormGroup, Checkbox, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 import SaveButtons from '../../../../react/common/SaveButtons';

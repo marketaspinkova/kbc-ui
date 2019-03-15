@@ -1,13 +1,14 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import OrchestrationActionCreators from '../../ActionCreators';
 import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
 
 export default React.createClass({
   propTypes: {
-    orchestration: React.PropTypes.object.isRequired,
-    isPending: React.PropTypes.bool.isRequired,
-    tooltipPlacement: React.PropTypes.string,
-    mode: React.PropTypes.string
+    orchestration: PropTypes.object.isRequired,
+    isPending: PropTypes.bool.isRequired,
+    tooltipPlacement: PropTypes.string,
+    mode: PropTypes.string
   },
 
   getDefaultProps() {

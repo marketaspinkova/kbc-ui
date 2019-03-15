@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import _ from 'underscore';
 import { List, fromJS } from 'immutable';
@@ -7,9 +8,9 @@ import { Col, FormGroup, FormControl, ControlLabel, Checkbox, HelpBlock } from '
 
 export default React.createClass({
   propTypes: {
-    value: React.PropTypes.object.isRequired,
-    onChange: React.PropTypes.func.isRequired,
-    disabled: React.PropTypes.bool.isRequired
+    value: PropTypes.object.isRequired,
+    onChange: PropTypes.func.isRequired,
+    disabled: PropTypes.bool.isRequired
   },
 
   getInitialState() {

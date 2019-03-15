@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import CreatedWithIcon from '../../../../react/common/CreatedWithIcon';
 import RollbackVersionButton from '../../../../react/common/RollbackVersionButton';
@@ -10,26 +11,26 @@ export default React.createClass({
   mixins: [immutableMixin],
 
   propTypes: {
-    componentId: React.PropTypes.string.isRequired,
-    configId: React.PropTypes.string.isRequired,
-    hideRollback: React.PropTypes.bool,
-    hideCopy: React.PropTypes.bool,
-    version: React.PropTypes.object.isRequired,
-    versionConfig: React.PropTypes.object.isRequired,
-    previousVersion: React.PropTypes.object.isRequired,
-    previousVersionConfig: React.PropTypes.object.isRequired,
-    newVersionName: React.PropTypes.string,
-    isRollbackPending: React.PropTypes.bool,
-    isRollbackDisabled: React.PropTypes.bool,
-    isCopyPending: React.PropTypes.bool,
-    isCopyDisabled: React.PropTypes.bool,
-    isDiffPending: React.PropTypes.bool,
-    isDiffDisabled: React.PropTypes.bool,
-    onPrepareVersionsDiffData: React.PropTypes.func,
-    isLast: React.PropTypes.bool.isRequired,
-    onChangeName: React.PropTypes.func,
-    onCopy: React.PropTypes.func,
-    onRollback: React.PropTypes.func
+    componentId: PropTypes.string.isRequired,
+    configId: PropTypes.string.isRequired,
+    hideRollback: PropTypes.bool,
+    hideCopy: PropTypes.bool,
+    version: PropTypes.object.isRequired,
+    versionConfig: PropTypes.object.isRequired,
+    previousVersion: PropTypes.object.isRequired,
+    previousVersionConfig: PropTypes.object.isRequired,
+    newVersionName: PropTypes.string,
+    isRollbackPending: PropTypes.bool,
+    isRollbackDisabled: PropTypes.bool,
+    isCopyPending: PropTypes.bool,
+    isCopyDisabled: PropTypes.bool,
+    isDiffPending: PropTypes.bool,
+    isDiffDisabled: PropTypes.bool,
+    onPrepareVersionsDiffData: PropTypes.func,
+    isLast: PropTypes.bool.isRequired,
+    onChangeName: PropTypes.func,
+    onCopy: PropTypes.func,
+    onRollback: PropTypes.func
   },
 
   renderRollbackButton() {

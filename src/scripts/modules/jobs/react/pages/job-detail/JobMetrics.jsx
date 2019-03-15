@@ -1,10 +1,11 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import CreditSize from '../../../../../react/common/CreditSize';
 
 export default React.createClass({
 
   propTypes: {
-    metrics: React.PropTypes.object.isRequired
+    metrics: PropTypes.object.isRequired
   },
 
   render() {

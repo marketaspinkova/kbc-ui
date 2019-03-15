@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { AlertBlock, ExternalLink } from '@keboola/indigo-ui';
 import oAuthMigration from '../../components/utils/oAuthMigration';
 import {Button, Col, Row} from 'react-bootstrap';

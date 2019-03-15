@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import {fromJS} from 'immutable';
 import {Modal} from 'react-bootstrap';
@@ -15,10 +16,10 @@ export default React.createClass({
     currentPK: PropTypes.string.isRequired,
     currentMapping: PropTypes.object,
     isIncremental: PropTypes.bool,
-    onSave: React.PropTypes.func.isRequired,
-    onHide: React.PropTypes.func.isRequired,
-    show: React.PropTypes.bool.isRequired,
-    isSaving: React.PropTypes.bool.isRequired,
+    onSave: PropTypes.func.isRequired,
+    onHide: PropTypes.func.isRequired,
+    show: PropTypes.bool.isRequired,
+    isSaving: PropTypes.bool.isRequired,
     componentId: PropTypes.string.isRequired,
     customFieldsValues: PropTypes.object
   },

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { Table, Button, Modal } from 'react-bootstrap';
 import { Tree } from '@keboola/indigo-ui';
 import DurationStatic from '../../../../react/common/DurationStatic';

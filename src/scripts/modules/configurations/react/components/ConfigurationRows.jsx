@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
 import {SearchBar} from '@keboola/indigo-ui';
@@ -8,23 +9,23 @@ export default React.createClass({
   mixins: [immutableMixin],
 
   propTypes: {
-    rows: React.PropTypes.object.isRequired,
-    configurationId: React.PropTypes.string.isRequired,
-    componentId: React.PropTypes.string.isRequired,
-    component: React.PropTypes.object.isRequired,
-    rowDelete: React.PropTypes.func.isRequired,
-    rowEnableDisable: React.PropTypes.func.isRequired,
-    rowDeletePending: React.PropTypes.func.isRequired,
-    rowEnableDisablePending: React.PropTypes.func.isRequired,
-    rowLinkTo: React.PropTypes.string.isRequired,
-    onOrder: React.PropTypes.func.isRequired,
-    orderPending: React.PropTypes.object.isRequired,
-    onRowCreated: React.PropTypes.func.isRequired,
-    rowCreateEmptyConfig: React.PropTypes.func.isRequired,
-    filter: React.PropTypes.func.isRequired,
-    header: React.PropTypes.array,
-    columns: React.PropTypes.object,
-    objectName: React.PropTypes.string
+    rows: PropTypes.object.isRequired,
+    configurationId: PropTypes.string.isRequired,
+    componentId: PropTypes.string.isRequired,
+    component: PropTypes.object.isRequired,
+    rowDelete: PropTypes.func.isRequired,
+    rowEnableDisable: PropTypes.func.isRequired,
+    rowDeletePending: PropTypes.func.isRequired,
+    rowEnableDisablePending: PropTypes.func.isRequired,
+    rowLinkTo: PropTypes.string.isRequired,
+    onOrder: PropTypes.func.isRequired,
+    orderPending: PropTypes.object.isRequired,
+    onRowCreated: PropTypes.func.isRequired,
+    rowCreateEmptyConfig: PropTypes.func.isRequired,
+    filter: PropTypes.func.isRequired,
+    header: PropTypes.array,
+    columns: PropTypes.object,
+    objectName: PropTypes.string
   },
 
   getDefaultProps() {

@@ -1,15 +1,16 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {ExternalLink} from '@keboola/indigo-ui';
 
 export default React.createClass({
 
   propTypes: {
-    authorizedFor: React.PropTypes.string,
-    appKey: React.PropTypes.string,
-    appSecret: React.PropTypes.string,
-    componentId: React.PropTypes.string.isRequired,
-    onChangeFn: React.PropTypes.func,
-    disabled: React.PropTypes.bool
+    authorizedFor: PropTypes.string,
+    appKey: PropTypes.string,
+    appSecret: PropTypes.string,
+    componentId: PropTypes.string.isRequired,
+    onChangeFn: PropTypes.func,
+    disabled: PropTypes.bool
   },
 
   render() {

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {Map} from 'immutable';
 import { Checkbox, Col, ControlLabel, FormControl, FormGroup } from 'react-bootstrap';
@@ -9,17 +10,17 @@ import SSLForm from './SSLForm';
 
 export default React.createClass({
   propTypes: {
-    savedCredentials: React.PropTypes.object.isRequired,
-    credentials: React.PropTypes.object.isRequired,
-    isEditing: React.PropTypes.bool.isRequired,
-    isValidEditingCredentials: React.PropTypes.bool.isRequired,
-    enabled: React.PropTypes.bool.isRequired,
-    onChange: React.PropTypes.func,
-    componentId: React.PropTypes.string.isRequired,
-    configId: React.PropTypes.string.isRequired,
-    credentialsTemplate: React.PropTypes.object.isRequired,
-    hasSshTunnel: React.PropTypes.func.isRequired,
-    actionCreators: React.PropTypes.object.isRequired
+    savedCredentials: PropTypes.object.isRequired,
+    credentials: PropTypes.object.isRequired,
+    isEditing: PropTypes.bool.isRequired,
+    isValidEditingCredentials: PropTypes.bool.isRequired,
+    enabled: PropTypes.bool.isRequired,
+    onChange: PropTypes.func,
+    componentId: PropTypes.string.isRequired,
+    configId: PropTypes.string.isRequired,
+    credentialsTemplate: PropTypes.object.isRequired,
+    hasSshTunnel: PropTypes.func.isRequired,
+    actionCreators: PropTypes.object.isRequired
   },
 
   getDefaultProps() {

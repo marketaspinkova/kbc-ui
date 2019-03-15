@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { List } from 'immutable';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
@@ -10,7 +11,7 @@ export default React.createClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {
-    outputMapping: React.PropTypes.object.isRequired
+    outputMapping: PropTypes.object.isRequired
   },
 
   render() {

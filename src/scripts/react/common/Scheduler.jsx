@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import later from 'later';
 import _ from 'underscore';
@@ -57,15 +58,15 @@ const lpad = (value, padding) => {
 
 export default React.createClass({
   propTypes: {
-    M: React.PropTypes.array.isRequired,
-    D: React.PropTypes.array.isRequired,
-    d: React.PropTypes.array.isRequired,
-    h: React.PropTypes.array.isRequired,
-    m: React.PropTypes.array.isRequired,
-    period: React.PropTypes.string.isRequired,
-    next: React.PropTypes.array.isRequired,
-    onChange: React.PropTypes.func.isRequired,
-    onPeriodChange: React.PropTypes.func.isRequired
+    M: PropTypes.array.isRequired,
+    D: PropTypes.array.isRequired,
+    d: PropTypes.array.isRequired,
+    h: PropTypes.array.isRequired,
+    m: PropTypes.array.isRequired,
+    period: PropTypes.string.isRequired,
+    next: PropTypes.array.isRequired,
+    onChange: PropTypes.func.isRequired,
+    onPeriodChange: PropTypes.func.isRequired
   },
 
   render() {

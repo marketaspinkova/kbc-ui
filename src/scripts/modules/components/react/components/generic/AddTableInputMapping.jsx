@@ -1,14 +1,15 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import actionCreators from '../../../InstalledComponentsActionCreators';
 import Modal from './TableInputMappingModal';
 
 export default React.createClass({
   propTypes: {
-    tables: React.PropTypes.object.isRequired,
-    mapping: React.PropTypes.object.isRequired,
-    componentId: React.PropTypes.string.isRequired,
-    configId: React.PropTypes.string.isRequired,
-    otherDestinations: React.PropTypes.object.isRequired
+    tables: PropTypes.object.isRequired,
+    mapping: PropTypes.object.isRequired,
+    componentId: PropTypes.string.isRequired,
+    configId: PropTypes.string.isRequired,
+    otherDestinations: PropTypes.object.isRequired
   },
 
   render() {

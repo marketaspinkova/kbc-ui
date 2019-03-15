@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import {Modal, FormControl, FormGroup, Col, ControlLabel, Radio, HelpBlock} from 'react-bootstrap';
 import ConfirmButtons from '../common/ConfirmButtons';
 import numeral from 'numeral';

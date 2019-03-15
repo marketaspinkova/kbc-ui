@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import classnames from 'classnames';
 import { Button } from 'react-bootstrap';
@@ -5,12 +6,12 @@ import { Loader } from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
-    componentId: React.PropTypes.string.isRequired,
-    configId: React.PropTypes.string.isRequired,
-    isEditing: React.PropTypes.bool.isRequired,
-    hasOffset: React.PropTypes.bool.isRequired,
-    testCredentialsFn: React.PropTypes.func.isRequired,
-    disabled: React.PropTypes.bool
+    componentId: PropTypes.string.isRequired,
+    configId: PropTypes.string.isRequired,
+    isEditing: PropTypes.bool.isRequired,
+    hasOffset: PropTypes.bool.isRequired,
+    testCredentialsFn: PropTypes.func.isRequired,
+    disabled: PropTypes.bool
   },
 
   getDefaultProps() {

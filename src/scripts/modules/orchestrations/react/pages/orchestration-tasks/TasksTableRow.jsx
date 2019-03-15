@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { HelpBlock } from 'react-bootstrap';
 import ComponentIcon from '../../../../../react/common/ComponentIcon';
@@ -10,11 +11,11 @@ import descriptionExcerpt from '../../../../../utils/descriptionExcerpt';
 
 export default React.createClass({
   propTypes: {
-    orchestration: React.PropTypes.object.isRequired,
-    onRun: React.PropTypes.func.isRequired,
-    task: React.PropTypes.object.isRequired,
-    component: React.PropTypes.object,
-    color: React.PropTypes.string
+    orchestration: PropTypes.object.isRequired,
+    onRun: PropTypes.func.isRequired,
+    task: PropTypes.object.isRequired,
+    component: PropTypes.object,
+    color: PropTypes.string
   },
 
   render() {

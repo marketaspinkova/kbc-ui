@@ -1,15 +1,16 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import RunOrchestrationModal from '../modals/RunOrchestration';
 import ActionCreators from '../../ActionCreators';
 
 export default React.createClass({
   propTypes: {
-    orchestration: React.PropTypes.object.isRequired,
-    tasks: React.PropTypes.object,
-    notify: React.PropTypes.bool,
-    tooltipPlacement: React.PropTypes.string,
-    buttonLabel: React.PropTypes.string,
-    buttonBlock: React.PropTypes.bool
+    orchestration: PropTypes.object.isRequired,
+    tasks: PropTypes.object,
+    notify: PropTypes.bool,
+    tooltipPlacement: PropTypes.string,
+    buttonLabel: PropTypes.string,
+    buttonBlock: PropTypes.bool
   },
 
   getDefaultProps() {

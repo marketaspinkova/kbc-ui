@@ -1,4 +1,5 @@
 import { first, isEmpty } from 'underscore';
+import PropTypes from 'prop-types';
 import React from 'react';
 import ConfirmButtons from '../../../react/common/ConfirmButtons';
 import {Modal, Tabs, Tab} from 'react-bootstrap';
@@ -8,14 +9,14 @@ import {getDestinationName} from '../actions/ApplicationActions.js';
 
 export default React.createClass({
   propTypes: {
-    onHide: React.PropTypes.func.isRequired,
-    show: React.PropTypes.bool.isRequired,
-    canSaveConfig: React.PropTypes.func,
-    saveConfig: React.PropTypes.func,
-    cancelConfig: React.PropTypes.func,
-    isSaving: React.PropTypes.bool,
-    handleCsvSelectChange: React.PropTypes.func,
-    selectedDropboxFiles: React.PropTypes.array
+    onHide: PropTypes.func.isRequired,
+    show: PropTypes.bool.isRequired,
+    canSaveConfig: PropTypes.func,
+    saveConfig: PropTypes.func,
+    cancelConfig: PropTypes.func,
+    isSaving: PropTypes.bool,
+    handleCsvSelectChange: PropTypes.func,
+    selectedDropboxFiles: PropTypes.array
   },
 
   getInitialState() {

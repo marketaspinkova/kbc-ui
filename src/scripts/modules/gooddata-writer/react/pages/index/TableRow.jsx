@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { Link } from 'react-router';
@@ -13,12 +14,12 @@ import actionCreators from '../../../actionCreators';
 export default React.createClass({
   mixins: [ImmutableRenderMixin],
   propTypes: {
-    table: React.PropTypes.object.isRequired,
-    configId: React.PropTypes.string.isRequired,
-    sapiTable: React.PropTypes.object.isRequired,
-    deleteTableFn: React.PropTypes.func,
-    isDeleting: React.PropTypes.bool,
-    isDeleted: React.PropTypes.bool
+    table: PropTypes.object.isRequired,
+    configId: PropTypes.string.isRequired,
+    sapiTable: PropTypes.object.isRequired,
+    deleteTableFn: PropTypes.func,
+    isDeleting: PropTypes.bool,
+    isDeleted: PropTypes.bool
   },
 
   render() {

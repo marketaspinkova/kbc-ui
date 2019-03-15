@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import {Map, fromJS, List} from 'immutable';
 import {sanitizeTableName} from '../../../common';
 import ProfileSelector from './ProfileSelector';

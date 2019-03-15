@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { Link } from 'react-router';
@@ -16,9 +17,9 @@ export default React.createClass({
   mixins: [PureRenderMixin],
 
   propTypes: {
-    job: React.PropTypes.object.isRequired,
-    userRunnedJob: React.PropTypes.object.isRequired,
-    query: React.PropTypes.string.isRequired
+    job: PropTypes.object.isRequired,
+    userRunnedJob: PropTypes.object.isRequired,
+    query: PropTypes.string.isRequired
   },
 
   render() {

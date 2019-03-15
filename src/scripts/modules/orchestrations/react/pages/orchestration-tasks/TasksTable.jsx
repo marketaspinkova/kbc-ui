@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { List } from 'immutable';
 import { Table } from 'react-bootstrap';
@@ -6,12 +7,12 @@ import PhaseRow from './PhaseRow';
 
 export default React.createClass({
   propTypes: {
-    tasks: React.PropTypes.object.isRequired,
-    orchestration: React.PropTypes.object.isRequired,
-    components: React.PropTypes.object.isRequired,
-    onRun: React.PropTypes.func.isRequired,
-    updateLocalState: React.PropTypes.func.isRequired,
-    localState: React.PropTypes.object.isRequired
+    tasks: PropTypes.object.isRequired,
+    orchestration: PropTypes.object.isRequired,
+    components: PropTypes.object.isRequired,
+    onRun: PropTypes.func.isRequired,
+    updateLocalState: PropTypes.func.isRequired,
+    localState: PropTypes.object.isRequired
   },
 
   _handleTaskRun(task) {

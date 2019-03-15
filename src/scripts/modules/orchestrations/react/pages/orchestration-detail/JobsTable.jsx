@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import JobsTableRow from './JobsTableRow';
 import { RefreshIcon } from '@keboola/indigo-ui';
@@ -7,9 +8,9 @@ export default React.createClass({
   mixins: [ImmutableRendererMixin],
 
   propTypes: {
-    jobs: React.PropTypes.object.isRequired,
-    jobsLoading: React.PropTypes.bool.isRequired,
-    onJobsReload: React.PropTypes.func.isRequired
+    jobs: PropTypes.object.isRequired,
+    jobsLoading: PropTypes.bool.isRequired,
+    onJobsReload: PropTypes.func.isRequired
   },
 
   render() {

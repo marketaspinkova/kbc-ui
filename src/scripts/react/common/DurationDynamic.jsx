@@ -1,9 +1,10 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { timeInWords, durationFrom } from '../../utils/duration';
 
 export default React.createClass({
   propTypes: {
-    startTime: React.PropTypes.string
+    startTime: PropTypes.string
   },
   getInitialState() {
     return {

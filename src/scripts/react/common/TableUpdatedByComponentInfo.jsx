@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import moment from 'moment';
 import { Loader } from '@keboola/indigo-ui';
 import createStoreMixin from '../mixins/createStoreMixin';

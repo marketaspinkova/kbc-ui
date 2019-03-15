@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 
@@ -5,7 +6,7 @@ export default React.createClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {
-    isLast: React.PropTypes.bool
+    isLast: PropTypes.bool
   },
 
   render() {

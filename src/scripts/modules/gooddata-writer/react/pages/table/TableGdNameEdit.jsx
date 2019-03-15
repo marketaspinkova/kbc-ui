@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { InlineEditInput } from '@keboola/indigo-ui';
 
@@ -5,12 +6,12 @@ import actionCreators from '../../../actionCreators';
 
 export default React.createClass({
   propTypes: {
-    table: React.PropTypes.object.isRequired,
-    configurationId: React.PropTypes.string.isRequired,
-    fieldName: React.PropTypes.string.isRequired,
-    canEdit: React.PropTypes.bool.isRequired,
-    editTooltip: React.PropTypes.string.isRequired,
-    placeholder: React.PropTypes.string
+    table: PropTypes.object.isRequired,
+    configurationId: PropTypes.string.isRequired,
+    fieldName: PropTypes.string.isRequired,
+    canEdit: PropTypes.bool.isRequired,
+    editTooltip: PropTypes.string.isRequired,
+    placeholder: PropTypes.string
   },
 
   getDefaultProps() {

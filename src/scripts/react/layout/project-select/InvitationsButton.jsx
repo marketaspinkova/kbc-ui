@@ -1,9 +1,10 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 export default React.createClass({
 
   propTypes: {
-    invitationsCount: React.PropTypes.number.isRequired
+    invitationsCount: PropTypes.number.isRequired
   },
 
   pluralText() {

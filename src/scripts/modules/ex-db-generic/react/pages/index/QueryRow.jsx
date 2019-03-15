@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 
@@ -14,11 +15,11 @@ export default React.createClass({
   displayName: 'QueryRow',
   mixins: [ImmutableRenderMixin],
   propTypes: {
-    query: React.PropTypes.object.isRequired,
-    pendingActions: React.PropTypes.object.isRequired,
-    configurationId: React.PropTypes.string.isRequired,
-    componentId: React.PropTypes.string.isRequired,
-    isRowConfiguration: React.PropTypes.bool.isRequired
+    query: PropTypes.object.isRequired,
+    pendingActions: PropTypes.object.isRequired,
+    configurationId: PropTypes.string.isRequired,
+    componentId: PropTypes.string.isRequired,
+    isRowConfiguration: PropTypes.bool.isRequired
   },
 
   handleActiveChange(newValue) {

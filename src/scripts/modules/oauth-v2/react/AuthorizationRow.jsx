@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import AuthorizationModal from './AuthorizationModal';
 import Confirm from '../../../react/common/Confirm';
 import {Loader} from '@keboola/indigo-ui';

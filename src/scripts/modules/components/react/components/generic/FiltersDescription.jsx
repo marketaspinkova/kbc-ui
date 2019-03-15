@@ -1,11 +1,12 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { List } from 'immutable';
 import WhereOperator from '../../../../../react/common/WhereOperator';
 
 export default React.createClass({
   propTypes: {
-    value: React.PropTypes.object.isRequired,
-    rootClassName: React.PropTypes.string
+    value: PropTypes.object.isRequired,
+    rootClassName: PropTypes.string
   },
 
   getDefaultProps() {

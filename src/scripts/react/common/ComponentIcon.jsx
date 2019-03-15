@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
 
@@ -20,10 +21,10 @@ function getComponentIconURL(componentType) {
 
 export default React.createClass({
   propTypes: {
-    component: React.PropTypes.object,
-    size: React.PropTypes.string,
-    className: React.PropTypes.string,
-    resizeToSize: React.PropTypes.string
+    component: PropTypes.object,
+    size: PropTypes.string,
+    className: PropTypes.string,
+    resizeToSize: PropTypes.string
   },
 
   getDefaultProps() {

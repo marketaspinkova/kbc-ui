@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import _ from 'underscore';
 import {OverlayTrigger, Popover} from 'react-bootstrap';

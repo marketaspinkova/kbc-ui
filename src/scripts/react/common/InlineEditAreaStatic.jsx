@@ -1,13 +1,14 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Markdown from './Markdown';
 
 export default React.createClass({
   propTypes: {
-    text: React.PropTypes.string,
-    placeholder: React.PropTypes.string,
-    editTooltip: React.PropTypes.string,
-    onEditStart: React.PropTypes.func,
-    collapsible: React.PropTypes.bool
+    text: PropTypes.string,
+    placeholder: PropTypes.string,
+    editTooltip: PropTypes.string,
+    onEditStart: PropTypes.func,
+    collapsible: PropTypes.bool
   },
 
   render() {

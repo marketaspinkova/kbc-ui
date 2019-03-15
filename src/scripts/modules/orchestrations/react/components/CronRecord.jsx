@@ -1,9 +1,10 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import prettyCron from 'prettycron';
 
 export default React.createClass({
   propTypes: {
-    crontabRecord: React.PropTypes.string
+    crontabRecord: PropTypes.string
   },
 
   shouldComponentUpdate(nextProps) {

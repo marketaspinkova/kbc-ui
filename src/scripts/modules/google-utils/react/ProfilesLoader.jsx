@@ -1,6 +1,8 @@
 // Google analytics komponenta ktora vynuti od uzivatela docasny oauth token a
 // vylistuje mu jeho google analytics profily z ktorych si vyberie
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+
+import React from 'react';
 import {Button} from 'react-bootstrap';
 import _ from 'underscore';
 

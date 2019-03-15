@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import _ from 'underscore';
@@ -8,26 +9,26 @@ export default React.createClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {
-    columnValue: React.PropTypes.string.isRequired,
-    datatypeValue: React.PropTypes.string.isRequired,
-    sizeValue: React.PropTypes.string.isRequired,
-    compressionValue: React.PropTypes.string.isRequired,
-    convertEmptyValuesToNullValue: React.PropTypes.bool.isRequired,
+    columnValue: PropTypes.string.isRequired,
+    datatypeValue: PropTypes.string.isRequired,
+    sizeValue: PropTypes.string.isRequired,
+    compressionValue: PropTypes.string.isRequired,
+    convertEmptyValuesToNullValue: PropTypes.bool.isRequired,
 
-    columnsOptions: React.PropTypes.array.isRequired,
-    datatypeOptions: React.PropTypes.array.isRequired,
-    compressionOptions: React.PropTypes.array.isRequired,
-    disabled: React.PropTypes.bool.isRequired,
-    showSize: React.PropTypes.bool.isRequired,
+    columnsOptions: PropTypes.array.isRequired,
+    datatypeOptions: PropTypes.array.isRequired,
+    compressionOptions: PropTypes.array.isRequired,
+    disabled: PropTypes.bool.isRequired,
+    showSize: PropTypes.bool.isRequired,
 
-    handleAddDataType: React.PropTypes.func.isRequired,
-    columnOnChange: React.PropTypes.func.isRequired,
-    datatypeOnChange: React.PropTypes.func.isRequired,
-    convertEmptyValuesToNullOnChange: React.PropTypes.func.isRequired,
-    sizeOnChange: React.PropTypes.func.isRequired,
-    compressionOnChange: React.PropTypes.func.isRequired,
+    handleAddDataType: PropTypes.func.isRequired,
+    columnOnChange: PropTypes.func.isRequired,
+    datatypeOnChange: PropTypes.func.isRequired,
+    convertEmptyValuesToNullOnChange: PropTypes.func.isRequired,
+    sizeOnChange: PropTypes.func.isRequired,
+    compressionOnChange: PropTypes.func.isRequired,
 
-    availableColumns: React.PropTypes.array.isRequired
+    availableColumns: PropTypes.array.isRequired
   },
 
   _handleSizeOnChange(e) {

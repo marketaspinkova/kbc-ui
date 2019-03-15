@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import NewConfigurationsStore from '../../../stores/NewConfigurationsStore';
@@ -10,8 +11,8 @@ export default React.createClass({
   mixins: [createStoreMixin(NewConfigurationsStore)],
 
   propTypes: {
-    component: React.PropTypes.object.isRequired,
-    onClose: React.PropTypes.func.isRequired
+    component: PropTypes.object.isRequired,
+    onClose: PropTypes.func.isRequired
   },
 
   getStateFromStores() {

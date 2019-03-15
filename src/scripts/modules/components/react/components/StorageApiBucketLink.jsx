@@ -1,10 +1,11 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router';
 
 export default React.createClass({
   propTypes: {
-    bucketId: React.PropTypes.string.isRequired,
-    children: React.PropTypes.any.isRequired
+    bucketId: PropTypes.string.isRequired,
+    children: PropTypes.any.isRequired
   },
 
   render() {

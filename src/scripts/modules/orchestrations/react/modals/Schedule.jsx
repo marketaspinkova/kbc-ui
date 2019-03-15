@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
@@ -8,8 +9,8 @@ import VersionsActionCreators from '../../../components/VersionsActionCreators';
 
 export default React.createClass({
   propTypes: {
-    orchestrationId: React.PropTypes.number.isRequired,
-    crontabRecord: React.PropTypes.string
+    orchestrationId: PropTypes.number.isRequired,
+    crontabRecord: PropTypes.string
   },
 
   getInitialState() {

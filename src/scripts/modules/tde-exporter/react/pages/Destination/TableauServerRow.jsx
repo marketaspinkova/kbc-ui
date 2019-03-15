@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import _ from 'underscore';
 import { Map } from 'immutable';
@@ -7,14 +8,14 @@ import TableauServerCredentialsModal from './TableauServerCredentialsModal';
 
 export default React.createClass({
   propTypes: {
-    renderComponent: React.PropTypes.func,
-    renderEnableUpload: React.PropTypes.func,
-    resetUploadTask: React.PropTypes.func,
-    updateLocalStateFn: React.PropTypes.func,
-    localState: React.PropTypes.object,
-    configId: React.PropTypes.string,
-    account: React.PropTypes.object,
-    setConfigDataFn: React.PropTypes.func
+    renderComponent: PropTypes.func,
+    renderEnableUpload: PropTypes.func,
+    resetUploadTask: PropTypes.func,
+    updateLocalStateFn: PropTypes.func,
+    localState: PropTypes.object,
+    configId: PropTypes.string,
+    account: PropTypes.object,
+    setConfigDataFn: PropTypes.func
   },
 
   render() {

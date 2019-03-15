@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import {Map, fromJS} from 'immutable';
 import Tooltip from '../../../../../react/common/Tooltip';
 import DateRangeModal from './DateRangeModal';

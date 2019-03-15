@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import classnames from 'classnames';
 import { RouteHandler } from 'react-router';
@@ -18,8 +19,8 @@ import '../../../styles/app.less';
 
 export default React.createClass({
   propTypes: {
-    isError: React.PropTypes.bool,
-    isLoading: React.PropTypes.bool
+    isError: PropTypes.bool,
+    isLoading: PropTypes.bool
   },
 
   getInitialState() {

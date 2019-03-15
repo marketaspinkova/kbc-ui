@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import CodeMirror from 'react-code-mirror';
 import SapiTableLinkEx from '../../../components/react/components/StorageApiTableLinkEx';
@@ -82,8 +83,8 @@ const QueryDetailStatic = ({ query, componentId }) => {
 };
 
 QueryDetailStatic.propTypes = {
-  query: React.PropTypes.object.isRequired,
-  componentId: React.PropTypes.string.isRequired
+  query: PropTypes.object.isRequired,
+  componentId: PropTypes.string.isRequired
 };
 
 export default QueryDetailStatic;

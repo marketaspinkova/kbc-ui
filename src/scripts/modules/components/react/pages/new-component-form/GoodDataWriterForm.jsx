@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ApplicationStore from '../../../../../stores/ApplicationStore';
 import contactSupport from '../../../../../utils/contactSupport';
@@ -9,14 +10,14 @@ import ComponentName from '../../../../../react/common/ComponentName';
 
 export default React.createClass({
   propTypes: {
-    component: React.PropTypes.object.isRequired,
-    configuration: React.PropTypes.object.isRequired,
-    onCancel: React.PropTypes.func.isRequired,
-    onSave: React.PropTypes.func.isRequired,
-    onChange: React.PropTypes.func.isRequired,
-    isValid: React.PropTypes.bool.isRequired,
-    isSaving: React.PropTypes.bool.isRequired,
-    onClose: React.PropTypes.func.isRequired
+    component: PropTypes.object.isRequired,
+    configuration: PropTypes.object.isRequired,
+    onCancel: PropTypes.func.isRequired,
+    onSave: PropTypes.func.isRequired,
+    onChange: PropTypes.func.isRequired,
+    isValid: PropTypes.bool.isRequired,
+    isSaving: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired
   },
 
   getInitialState() {

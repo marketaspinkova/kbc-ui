@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import {RadioGroup} from 'react-radio-group';
 import { ControlLabel, HelpBlock, FormControl, FormGroup, Col } from 'react-bootstrap';
 import RadioGroupInput from '../../../../react/common/RadioGroupInput';

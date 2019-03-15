@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Modal, ControlLabel, FormControl, FormGroup, Col } from 'react-bootstrap';
 import moment from 'moment';
@@ -9,12 +10,12 @@ export default React.createClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {
-    version: React.PropTypes.object.isRequired,
-    show: React.PropTypes.bool.isRequired,
-    onClose: React.PropTypes.func.isRequired,
-    onCopy: React.PropTypes.func.isRequired,
-    newVersionName: React.PropTypes.string,
-    onChangeName: React.PropTypes.func.isRequired
+    version: PropTypes.object.isRequired,
+    show: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+    onCopy: PropTypes.func.isRequired,
+    newVersionName: PropTypes.string,
+    onChangeName: PropTypes.func.isRequired
   },
 
   onChange(e) {

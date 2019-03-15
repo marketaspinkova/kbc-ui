@@ -1,12 +1,13 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Remarkable from 'react-remarkable';
 import { PanelWithDetails } from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
-    source: React.PropTypes.string,
-    size: React.PropTypes.string,
-    collapsible: React.PropTypes.bool
+    source: PropTypes.string,
+    size: PropTypes.string,
+    collapsible: PropTypes.bool
   },
 
   getDefaultProps() {

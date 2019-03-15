@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Modal, ButtonToolbar, Button } from 'react-bootstrap';
 import Tooltip from '../../../../react/common/Tooltip';
@@ -5,9 +6,9 @@ import CodeMirror from 'react-code-mirror';
 
 export default React.createClass({
   propTypes: {
-    parameters: React.PropTypes.object.isRequired,
-    onSet: React.PropTypes.func,
-    isEditable: React.PropTypes.bool
+    parameters: PropTypes.object.isRequired,
+    onSet: PropTypes.func,
+    isEditable: PropTypes.bool
   },
 
   getInitialState() {

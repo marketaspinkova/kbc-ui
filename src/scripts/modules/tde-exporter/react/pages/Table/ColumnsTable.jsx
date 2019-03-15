@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Map } from 'immutable';
 import { Table } from 'react-bootstrap';
@@ -6,13 +7,13 @@ import ComponentEmptyState from '../../../../components/react/components/Compone
 
 export default React.createClass({
   propTypes: {
-    table: React.PropTypes.object.isRequired,
-    columnsTypes: React.PropTypes.object.isRequired,
-    isSaving: React.PropTypes.bool.isRequired,
-    dataPreview: React.PropTypes.object,
-    editingData: React.PropTypes.object,
-    onChange: React.PropTypes.func,
-    hideIgnored: React.PropTypes.bool
+    table: PropTypes.object.isRequired,
+    columnsTypes: PropTypes.object.isRequired,
+    isSaving: PropTypes.bool.isRequired,
+    dataPreview: PropTypes.object,
+    editingData: PropTypes.object,
+    onChange: PropTypes.func,
+    hideIgnored: PropTypes.bool
   },
 
   render() {

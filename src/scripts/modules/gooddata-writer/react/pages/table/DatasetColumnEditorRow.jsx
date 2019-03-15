@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Map, fromJS } from 'immutable';
 import keyMirror from 'fbjs/lib/keyMirror';
@@ -21,18 +22,18 @@ const visibleParts = keyMirror({
 export default React.createClass({
   mixins: [ImmutableRenderMixin],
   propTypes: {
-    column: React.PropTypes.object.isRequired,
-    referenceableColumns: React.PropTypes.object.isRequired,
-    referenceableTables: React.PropTypes.object.isRequired,
-    sortLabelColumns: React.PropTypes.object.isRequired,
-    configurationId: React.PropTypes.string.isRequired,
-    isEditing: React.PropTypes.bool.isRequired,
-    isValid: React.PropTypes.bool.isRequired,
-    isSaving: React.PropTypes.bool.isRequired,
-    onChange: React.PropTypes.func.isRequired,
-    dataPreview: React.PropTypes.object,
-    showIdentifier: React.PropTypes.bool.isRequired,
-    isExported: React.PropTypes.bool.isRequired
+    column: PropTypes.object.isRequired,
+    referenceableColumns: PropTypes.object.isRequired,
+    referenceableTables: PropTypes.object.isRequired,
+    sortLabelColumns: PropTypes.object.isRequired,
+    configurationId: PropTypes.string.isRequired,
+    isEditing: PropTypes.bool.isRequired,
+    isValid: PropTypes.bool.isRequired,
+    isSaving: PropTypes.bool.isRequired,
+    onChange: PropTypes.func.isRequired,
+    dataPreview: PropTypes.object,
+    showIdentifier: PropTypes.bool.isRequired,
+    isExported: PropTypes.bool.isRequired
   },
 
   render() {

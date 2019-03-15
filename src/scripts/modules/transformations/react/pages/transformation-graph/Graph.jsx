@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import GraphCanvas from '../../../../../react/common/GraphCanvas';
 import { Button } from 'react-bootstrap';
@@ -9,11 +10,11 @@ export default React.createClass({
   mixins: [Navigation],
 
   propTypes: {
-    model: React.PropTypes.object.isRequired,
-    centerNodeId: React.PropTypes.string,
-    showDisabled: React.PropTypes.bool.isRequired,
-    disabledTransformation: React.PropTypes.bool.isRequired,
-    showDisabledHandler: React.PropTypes.func.isRequired
+    model: PropTypes.object.isRequired,
+    centerNodeId: PropTypes.string,
+    showDisabled: PropTypes.bool.isRequired,
+    disabledTransformation: PropTypes.bool.isRequired,
+    showDisabledHandler: PropTypes.func.isRequired
   },
 
   _modelData() {

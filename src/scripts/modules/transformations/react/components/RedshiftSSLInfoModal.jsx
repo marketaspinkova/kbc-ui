@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Modal, ButtonToolbar, Button } from 'react-bootstrap';
 import { ExternalLink } from '@keboola/indigo-ui';
@@ -27,8 +28,8 @@ const RedshiftSSLInfoModal = ({ show, onHide }) => {
 };
 
 RedshiftSSLInfoModal.propTypes = {
-  onHide: React.PropTypes.func.isRequired,
-  show: React.PropTypes.bool.isRequired
+  onHide: PropTypes.func.isRequired,
+  show: PropTypes.bool.isRequired
 };
 
 export default RedshiftSSLInfoModal;

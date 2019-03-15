@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Modal} from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
@@ -9,9 +10,9 @@ export default React.createClass({
   propTypes: {
     tasks: PropTypes.object.isRequired,
     phases: PropTypes.object.isRequired,
-    onMergePhases: React.PropTypes.func.isRequired,
-    onHide: React.PropTypes.func.isRequired,
-    show: React.PropTypes.bool.isRequired
+    onMergePhases: PropTypes.func.isRequired,
+    onHide: PropTypes.func.isRequired,
+    show: PropTypes.bool.isRequired
   },
 
   getInitialState() {

@@ -1,12 +1,13 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
 import actionCreators from '../../actionCreators';
 
 export default React.createClass({
   propTypes: {
-    configId: React.PropTypes.string.isRequired,
-    table: React.PropTypes.object.isRequired,
-    tooltipPlacement: React.PropTypes.string.isRequired
+    configId: PropTypes.string.isRequired,
+    table: PropTypes.object.isRequired,
+    tooltipPlacement: PropTypes.string.isRequired
   },
 
   getDefaultProps() {

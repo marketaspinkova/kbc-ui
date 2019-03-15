@@ -1,12 +1,13 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import NewComponentModal from '../pages/new-component-form/NewComponentModal';
 
 export default React.createClass({
   propTypes: {
-    component: React.PropTypes.object.isRequired,
-    label: React.PropTypes.string,
-    disabled: React.PropTypes.bool
+    component: PropTypes.object.isRequired,
+    label: PropTypes.string,
+    disabled: PropTypes.bool
   },
 
   getInitialState() {

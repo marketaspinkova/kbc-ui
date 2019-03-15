@@ -1,22 +1,24 @@
 /*
    TableSelector
  */
+import PropTypes from 'prop-types';
+
 import React from 'react';
 import TableSelector from './TableSelector';
 
 export default React.createClass({
 
   propTypes: {
-    value: React.PropTypes.string,
-    disabled: React.PropTypes.bool,
-    onChange: React.PropTypes.func.isRequired,
-    label: React.PropTypes.string.isRequired,
-    bucket: React.PropTypes.string,
-    help: React.PropTypes.string,
-    onEdit: React.PropTypes.func.isRequired,
-    editing: React.PropTypes.bool.isRequired,
-    wrapperClassName: React.PropTypes.string,
-    labelClassName: React.PropTypes.string
+    value: PropTypes.string,
+    disabled: PropTypes.bool,
+    onChange: PropTypes.func.isRequired,
+    label: PropTypes.string.isRequired,
+    bucket: PropTypes.string,
+    help: PropTypes.string,
+    onEdit: PropTypes.func.isRequired,
+    editing: PropTypes.bool.isRequired,
+    wrapperClassName: PropTypes.string,
+    labelClassName: PropTypes.string
   },
 
   getDefaultProps() {

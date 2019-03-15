@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import InlineEditArea from '../../../react/common/InlineEditArea';
@@ -5,7 +6,7 @@ import { editProjectDescription } from '../actions';
 
 export default React.createClass({
   propTypes: {
-    description: React.PropTypes.string
+    description: PropTypes.string
   },
 
   getInitialState() {

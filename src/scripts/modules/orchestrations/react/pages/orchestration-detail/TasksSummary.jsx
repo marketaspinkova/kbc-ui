@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 export default React.createClass({
   propTypes: {
-    tasks: React.PropTypes.object.isRequired
+    tasks: PropTypes.object.isRequired
   },
 
   render() {

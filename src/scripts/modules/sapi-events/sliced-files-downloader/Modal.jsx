@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {Modal, Button} from 'react-bootstrap';
 import {ExternalLink} from '@keboola/indigo-ui';
@@ -6,14 +7,14 @@ import FileSize from '../../../react/common/FileSize';
 
 export default React.createClass({
   propTypes: {
-    isModalOpen: React.PropTypes.bool.isRequired,
-    onModalHide: React.PropTypes.func.isRequired,
-    onPrepareStart: React.PropTypes.func.isRequired,
-    file: React.PropTypes.object.isRequired,
-    createdFile: React.PropTypes.object,
-    isRunning: React.PropTypes.bool.isRequired,
-    progress: React.PropTypes.string,
-    progressStatus: React.PropTypes.string
+    isModalOpen: PropTypes.bool.isRequired,
+    onModalHide: PropTypes.func.isRequired,
+    onPrepareStart: PropTypes.func.isRequired,
+    file: PropTypes.object.isRequired,
+    createdFile: PropTypes.object,
+    isRunning: PropTypes.bool.isRequired,
+    progress: PropTypes.string,
+    progressStatus: PropTypes.string
   },
 
   render() {

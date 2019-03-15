@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import StaticDuration from './DurationStatic';
@@ -5,8 +6,8 @@ import DynamicDuration from './DurationDynamic';
 
 export default React.createClass({
   propTypes: {
-    startTime: React.PropTypes.string,
-    endTime: React.PropTypes.string
+    startTime: PropTypes.string,
+    endTime: PropTypes.string
   },
   render() {
     if (!this.props.startTime) {

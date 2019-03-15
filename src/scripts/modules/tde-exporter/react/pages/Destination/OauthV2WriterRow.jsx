@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import {Map} from 'immutable';
 import {Loader} from '@keboola/indigo-ui';
 import AuthorizationRow from '../../../../oauth-v2/react/AuthorizationRow';

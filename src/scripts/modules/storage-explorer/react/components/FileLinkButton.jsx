@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { Button } from 'react-bootstrap';
 import ModalHandler from '../../../sapi-events/sliced-files-downloader/ModalHandler';
 import Tooltip from '../../../../react/common/Tooltip';

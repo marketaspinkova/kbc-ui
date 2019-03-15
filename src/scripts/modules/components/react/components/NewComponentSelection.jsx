@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ComponentsActionCreators from '../../ComponentsActionCreators';
 import {SearchBar} from '@keboola/indigo-ui';
@@ -8,11 +9,11 @@ import {Button} from 'react-bootstrap';
 
 export default React.createClass({
   propTypes: {
-    components: React.PropTypes.object.isRequired,
-    filter: React.PropTypes.string,
-    componentType: React.PropTypes.string.isRequired,
-    className: React.PropTypes.string,
-    children: React.PropTypes.any
+    components: PropTypes.object.isRequired,
+    filter: PropTypes.string,
+    componentType: PropTypes.string.isRequired,
+    className: PropTypes.string,
+    children: PropTypes.any
   },
 
   render() {

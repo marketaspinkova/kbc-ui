@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import CodeMirror from 'react-code-mirror';
 import { FormGroup, FormControl, Col, ControlLabel, HelpBlock, Checkbox } from 'react-bootstrap';
@@ -6,13 +7,13 @@ import LinkToDocs from './LinkToDocs';
 
 export default React.createClass({
   propTypes: {
-    query: React.PropTypes.object.isRequired,
-    exports: React.PropTypes.object.isRequired,
-    onChange: React.PropTypes.func.isRequired,
-    outTableExist: React.PropTypes.bool,
-    configId: React.PropTypes.string.isRequired,
-    componentId: React.PropTypes.string.isRequired,
-    component: React.PropTypes.object.isRequired
+    query: PropTypes.object.isRequired,
+    exports: PropTypes.object.isRequired,
+    onChange: PropTypes.func.isRequired,
+    outTableExist: PropTypes.bool,
+    configId: PropTypes.string.isRequired,
+    componentId: PropTypes.string.isRequired,
+    component: PropTypes.object.isRequired
   },
   handleNameChange(event) {
     return this.props.onChange(this.props.query.set('name', event.target.value));

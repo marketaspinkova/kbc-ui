@@ -1,16 +1,17 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {Button, Modal} from 'react-bootstrap';
 import CreateDockerSandboxForm from '../components/CreateDockerSandboxForm';
 
 export default React.createClass({
   propTypes: {
-    show: React.PropTypes.bool.isRequired,
-    close: React.PropTypes.func.isRequired,
-    create: React.PropTypes.func.isRequired,
-    tables: React.PropTypes.object.isRequired,
-    type: React.PropTypes.string.isRequired,
-    onConfigurationChange: React.PropTypes.func.isRequired,
-    disabled: React.PropTypes.bool
+    show: PropTypes.bool.isRequired,
+    close: PropTypes.func.isRequired,
+    create: PropTypes.func.isRequired,
+    tables: PropTypes.object.isRequired,
+    type: PropTypes.string.isRequired,
+    onConfigurationChange: PropTypes.func.isRequired,
+    disabled: PropTypes.bool
   },
 
   getDefaultProps: function() {

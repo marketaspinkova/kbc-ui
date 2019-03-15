@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router';
 import InstalledComponentsStore from '../../stores/InstalledComponentsStore';
@@ -7,9 +8,9 @@ export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore)],
 
   propTypes: {
-    type: React.PropTypes.string.isRequired,
-    to: React.PropTypes.string.isRequired,
-    text: React.PropTypes.string.isRequired
+    type: PropTypes.string.isRequired,
+    to: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired
   },
 
   getStateFromStores() {

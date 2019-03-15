@@ -1,9 +1,10 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import whereOperatorConstants from './whereOperatorConstants';
 
 export default React.createClass({
   propTypes: {
-    backendOperator: React.PropTypes.string
+    backendOperator: PropTypes.string
   },
 
   render() {

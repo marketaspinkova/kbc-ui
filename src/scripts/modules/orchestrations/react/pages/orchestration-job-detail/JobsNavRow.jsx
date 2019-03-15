@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Finished, JobStatusCircle } from '@keboola/indigo-ui';
 import DurationWithIcon from '../../../../../react/common/DurationWithIcon';
@@ -8,8 +9,8 @@ export default React.createClass({
   mixins: [ImmutableRendererMixin],
 
   propTypes: {
-    job: React.PropTypes.object.isRequired,
-    isActive: React.PropTypes.bool.isRequired
+    job: PropTypes.object.isRequired,
+    isActive: PropTypes.bool.isRequired
   },
 
   render() {

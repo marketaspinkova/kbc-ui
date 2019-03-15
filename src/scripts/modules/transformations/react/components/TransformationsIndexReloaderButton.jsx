@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import InstalledComponentsActionCreators from '../../../components/InstalledComponentsActionCreators';
@@ -8,7 +9,7 @@ export default React.createClass({
   mixins: [createStoreMixin(TransformationBucketsStore)],
 
   propTypes: {
-    allowRefresh: React.PropTypes.bool
+    allowRefresh: PropTypes.bool
   },
 
   getDefaultProps() {

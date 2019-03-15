@@ -1,10 +1,11 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { getLineageInOrganization } from './GraphApi';
 import { Map, fromJS } from 'immutable';
 
 export default React.createClass({
   propTypes: {
-    appData: React.PropTypes.object.isRequired
+    appData: PropTypes.object.isRequired
   },
 
   getInitialState() {

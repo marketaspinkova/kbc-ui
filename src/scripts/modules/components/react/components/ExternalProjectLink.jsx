@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ApplicationStore from '../../../../stores/ApplicationStore';
 import { ExternalLink } from '@keboola/indigo-ui';
@@ -5,9 +6,9 @@ import _ from 'underscore';
 
 export default React.createClass({
   propTypes: {
-    stackUrl: React.PropTypes.string,
-    projectId: React.PropTypes.number,
-    children: React.PropTypes.any
+    stackUrl: PropTypes.string,
+    projectId: PropTypes.number,
+    children: PropTypes.any
   },
 
   getProjectUrl() {

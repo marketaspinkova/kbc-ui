@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {Map} from 'immutable';
 import {Col, Checkbox, Form, FormControl, FormGroup, ControlLabel} from 'react-bootstrap';
@@ -8,16 +9,16 @@ import SshTunnelRow from '../../../../../react/common/SshTunnelRow';
 
 export default React.createClass({
   propTypes: {
-    savedCredentials: React.PropTypes.object.isRequired,
-    credentials: React.PropTypes.object.isRequired,
-    isEditing: React.PropTypes.bool.isRequired,
-    isValidEditingCredentials: React.PropTypes.bool.isRequired,
-    enabled: React.PropTypes.bool.isRequired,
-    onChange: React.PropTypes.func,
-    componentId: React.PropTypes.string.isRequired,
-    configId: React.PropTypes.string.isRequired,
-    credentialsTemplate: React.PropTypes.object.isRequired,
-    actionCreators: React.PropTypes.object.isRequired
+    savedCredentials: PropTypes.object.isRequired,
+    credentials: PropTypes.object.isRequired,
+    isEditing: PropTypes.bool.isRequired,
+    isValidEditingCredentials: PropTypes.bool.isRequired,
+    enabled: PropTypes.bool.isRequired,
+    onChange: PropTypes.func,
+    componentId: PropTypes.string.isRequired,
+    configId: PropTypes.string.isRequired,
+    credentialsTemplate: PropTypes.object.isRequired,
+    actionCreators: PropTypes.object.isRequired
   },
 
   getDefaultProps() {

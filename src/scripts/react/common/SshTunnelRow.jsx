@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import {fromJS} from 'immutable';
 import callDockerAction from '../../modules/components/DockerActionsApi';
 import {Check} from '@keboola/indigo-ui';

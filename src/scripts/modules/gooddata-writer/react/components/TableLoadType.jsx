@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { fromJS } from 'immutable';
 import { Modal, FormGroup, Radio, Col, HelpBlock } from 'react-bootstrap';
@@ -12,9 +13,9 @@ const GRAIN = 'grain';
 
 export default React.createClass({
   propTypes: {
-    columns: React.PropTypes.object.isRequired,
-    table: React.PropTypes.object.isRequired,
-    configurationId: React.PropTypes.string.isRequired
+    columns: PropTypes.object.isRequired,
+    table: PropTypes.object.isRequired,
+    configurationId: PropTypes.string.isRequired
   },
 
   getInitialState() {

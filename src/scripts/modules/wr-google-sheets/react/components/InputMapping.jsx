@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { FormGroup, Checkbox, Col } from 'react-bootstrap';
 import Select from '../../../../react/common/Select';
 import {List} from 'immutable';

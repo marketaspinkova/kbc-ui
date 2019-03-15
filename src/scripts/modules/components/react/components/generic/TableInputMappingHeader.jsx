@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Map } from 'immutable';
 import DeleteButton from '../../../../../react/common/DeleteButton';
@@ -6,18 +7,18 @@ import TableInputMappingModal from './TableInputMappingModal';
 
 export default React.createClass({
   propTypes: {
-    value: React.PropTypes.object.isRequired,
-    editingValue: React.PropTypes.object.isRequired,
-    tables: React.PropTypes.object.isRequired,
-    mappingIndex: React.PropTypes.number.isRequired,
-    onChange: React.PropTypes.func.isRequired,
-    onSave: React.PropTypes.func.isRequired,
-    onCancel: React.PropTypes.func.isRequired,
-    onDelete: React.PropTypes.func.isRequired,
-    pendingActions: React.PropTypes.object.isRequired,
-    onEditStart: React.PropTypes.func.isRequired,
-    otherDestinations: React.PropTypes.object.isRequired,
-    definition: React.PropTypes.object
+    value: PropTypes.object.isRequired,
+    editingValue: PropTypes.object.isRequired,
+    tables: PropTypes.object.isRequired,
+    mappingIndex: PropTypes.number.isRequired,
+    onChange: PropTypes.func.isRequired,
+    onSave: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
+    pendingActions: PropTypes.object.isRequired,
+    onEditStart: PropTypes.func.isRequired,
+    otherDestinations: PropTypes.object.isRequired,
+    definition: PropTypes.object
   },
 
   getDefaultProps() {

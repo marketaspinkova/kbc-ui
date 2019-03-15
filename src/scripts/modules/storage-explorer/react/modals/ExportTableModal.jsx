@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { Alert, Modal, ButtonToolbar, Button, Form } from 'react-bootstrap';
 import { Loader, ExternalLink } from '@keboola/indigo-ui';
 

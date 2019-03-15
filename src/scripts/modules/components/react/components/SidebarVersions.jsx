@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {Map} from 'immutable';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
@@ -10,17 +11,17 @@ export default React.createClass({
   mixins: [PureRenderMixin],
 
   propTypes: {
-    versions: React.PropTypes.object.isRequired,
-    versionsConfigs: React.PropTypes.object.isRequired,
-    isLoading: React.PropTypes.bool.isRequired,
-    configId: React.PropTypes.string.isRequired,
-    componentId: React.PropTypes.string.isRequired,
-    limit: React.PropTypes.number,
-    versionsLinkTo: React.PropTypes.string,
-    versionsLinkParams: React.PropTypes.object,
-    pendingMultiLoad: React.PropTypes.object,
-    isPending: React.PropTypes.bool,
-    prepareVersionsDiffData: React.PropTypes.func
+    versions: PropTypes.object.isRequired,
+    versionsConfigs: PropTypes.object.isRequired,
+    isLoading: PropTypes.bool.isRequired,
+    configId: PropTypes.string.isRequired,
+    componentId: PropTypes.string.isRequired,
+    limit: PropTypes.number,
+    versionsLinkTo: PropTypes.string,
+    versionsLinkParams: PropTypes.object,
+    pendingMultiLoad: PropTypes.object,
+    isPending: PropTypes.bool,
+    prepareVersionsDiffData: PropTypes.func
   },
 
   getDefaultProps: function() {

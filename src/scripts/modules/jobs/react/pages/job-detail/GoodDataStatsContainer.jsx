@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { List } from 'immutable';
 import { startsWith } from 'underscore.string';
@@ -6,7 +7,7 @@ import GoodDataStats from './GoodDataStats';
 
 export default React.createClass({
   propTypes: {
-    job: React.PropTypes.object.isRequired
+    job: PropTypes.object.isRequired
   },
 
   getInitialState() {

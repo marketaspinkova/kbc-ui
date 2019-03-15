@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { FormControl, Checkbox } from 'react-bootstrap';
 import Select from 'react-select';
@@ -5,11 +6,11 @@ import Select from 'react-select';
 export default React.createClass({
 
   propTypes: {
-    columnName: React.PropTypes.string.isRequired,
-    datatype: React.PropTypes.object.isRequired,
-    datatypesMap: React.PropTypes.object.isRequired,
-    disabled: React.PropTypes.bool.isRequired,
-    onChange: React.PropTypes.func.isRequired
+    columnName: PropTypes.string.isRequired,
+    datatype: PropTypes.object.isRequired,
+    datatypesMap: PropTypes.object.isRequired,
+    disabled: PropTypes.bool.isRequired,
+    onChange: PropTypes.func.isRequired
   },
 
   getInitialState() {

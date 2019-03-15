@@ -1,15 +1,16 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 
 export default React.createClass({
   propTypes: {
-    currentStep: React.PropTypes.string.isRequired,
-    label: React.PropTypes.string.isRequired,
-    value: React.PropTypes.string.isRequired,
-    onChange: React.PropTypes.func.isRequired,
-    autoFocus: React.PropTypes.bool,
-    disabled: React.PropTypes.bool,
-    help: React.PropTypes.any
+    currentStep: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
+    autoFocus: PropTypes.bool,
+    disabled: PropTypes.bool,
+    help: PropTypes.any
   },
 
   componentDidMount() {

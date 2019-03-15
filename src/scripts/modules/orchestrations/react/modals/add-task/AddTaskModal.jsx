@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
 import { Modal, ButtonToolbar, Button } from 'react-bootstrap';
@@ -19,12 +20,12 @@ const STEP_ORCHESTRATOR_CONFIGURATION_SELECT = 'orchestratorConfigurationSelect'
 
 export default React.createClass({
   propTypes: {
-    onConfigurationSelect: React.PropTypes.func.isRequired,
-    onHide: React.PropTypes.func,
-    show: React.PropTypes.bool,
-    phaseId: React.PropTypes.string,
-    searchQuery: React.PropTypes.string,
-    onChangeSearchQuery: React.PropTypes.func.isRequired
+    onConfigurationSelect: PropTypes.func.isRequired,
+    onHide: PropTypes.func,
+    show: PropTypes.bool,
+    phaseId: PropTypes.string,
+    searchQuery: PropTypes.string,
+    onChangeSearchQuery: PropTypes.func.isRequired
   },
 
   mixins: [createStoreMixin(InstalledComponentsStore, OrchestrationStore), immutableMixin],

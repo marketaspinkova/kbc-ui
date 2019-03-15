@@ -1,13 +1,14 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Modal } from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
 export default React.createClass({
   propTypes: {
-    onConfirm: React.PropTypes.func.isRequired,
-    onHide: React.PropTypes.func.isRequired,
-    tableId: React.PropTypes.string.isRequired,
-    show: React.PropTypes.bool.isRequired
+    onConfirm: PropTypes.func.isRequired,
+    onHide: PropTypes.func.isRequired,
+    tableId: PropTypes.string.isRequired,
+    show: PropTypes.bool.isRequired
   },
 
   getInitialState() {

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { List, fromJS } from 'immutable';
 
@@ -13,9 +14,9 @@ export default React.createClass({
   mixins: [createStoreMixin(JobsStore)],
 
   propTypes: {
-    job: React.PropTypes.object.isRequired,
-    isSaving: React.PropTypes.bool.isRequired,
-    notify: React.PropTypes.bool
+    job: PropTypes.object.isRequired,
+    isSaving: PropTypes.bool.isRequired,
+    notify: PropTypes.bool
   },
 
   getDefaultProps() {

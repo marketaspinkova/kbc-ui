@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Immutable from 'immutable';
 import _ from 'underscore';
@@ -18,29 +19,29 @@ import { getCustomFieldsForComponent } from '../../templates/customFields';
 
 export default React.createClass({
   propTypes: {
-    query: React.PropTypes.object.isRequired,
-    tables: React.PropTypes.object.isRequired,
-    onChange: React.PropTypes.func.isRequired,
-    showSimple: React.PropTypes.bool.isRequired,
-    disabled: React.PropTypes.bool,
-    configId: React.PropTypes.string.isRequired,
-    getDefaultOutputTable: React.PropTypes.func.isRequired,
-    componentId: React.PropTypes.string.isRequired,
-    isLoadingSourceTables: React.PropTypes.bool.isRequired,
-    isTestingConnection: React.PropTypes.bool.isRequired,
-    validConnection: React.PropTypes.bool.isRequired,
-    connectionError: React.PropTypes.string,
-    sourceTables: React.PropTypes.object.isRequired,
-    sourceTablesError: React.PropTypes.string,
-    destinationEditing: React.PropTypes.bool.isRequired,
-    onDestinationEdit: React.PropTypes.func.isRequired,
-    getPKColumns: React.PropTypes.func.isRequired,
-    queryNameExists: React.PropTypes.bool.isRequired,
-    credentialsHasDatabase: React.PropTypes.bool,
-    credentialsHasSchema: React.PropTypes.bool,
-    refreshMethod: React.PropTypes.func.isRequired,
-    isConfigRow: React.PropTypes.bool,
-    incrementalCandidates: React.PropTypes.object
+    query: PropTypes.object.isRequired,
+    tables: PropTypes.object.isRequired,
+    onChange: PropTypes.func.isRequired,
+    showSimple: PropTypes.bool.isRequired,
+    disabled: PropTypes.bool,
+    configId: PropTypes.string.isRequired,
+    getDefaultOutputTable: PropTypes.func.isRequired,
+    componentId: PropTypes.string.isRequired,
+    isLoadingSourceTables: PropTypes.bool.isRequired,
+    isTestingConnection: PropTypes.bool.isRequired,
+    validConnection: PropTypes.bool.isRequired,
+    connectionError: PropTypes.string,
+    sourceTables: PropTypes.object.isRequired,
+    sourceTablesError: PropTypes.string,
+    destinationEditing: PropTypes.bool.isRequired,
+    onDestinationEdit: PropTypes.func.isRequired,
+    getPKColumns: PropTypes.func.isRequired,
+    queryNameExists: PropTypes.bool.isRequired,
+    credentialsHasDatabase: PropTypes.bool,
+    credentialsHasSchema: PropTypes.bool,
+    refreshMethod: PropTypes.func.isRequired,
+    isConfigRow: PropTypes.bool,
+    incrementalCandidates: PropTypes.object
   },
 
   getDefaultProps() {

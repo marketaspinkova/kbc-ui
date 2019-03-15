@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import Tooltip from '../../../../react/common/Tooltip';
@@ -5,12 +6,12 @@ import { Loader } from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
-    isPending: React.PropTypes.bool.isRequired,
-    isPendingLabel: React.PropTypes.string,
-    label: React.PropTypes.string,
-    disabled: React.PropTypes.bool.isRequired,
-    disabledLabel: React.PropTypes.string,
-    tooltipPlacement: React.PropTypes.string
+    isPending: PropTypes.bool.isRequired,
+    isPendingLabel: PropTypes.string,
+    label: PropTypes.string,
+    disabled: PropTypes.bool.isRequired,
+    disabledLabel: PropTypes.string,
+    tooltipPlacement: PropTypes.string
   },
 
   getDefaultProps() {

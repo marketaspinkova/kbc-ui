@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
 import {Button} from 'react-bootstrap';
@@ -9,21 +10,21 @@ import RunModal from './RunComponentButtonModal';
 
 export default React.createClass({
   propTypes: {
-    title: React.PropTypes.string.isRequired,
-    mode: React.PropTypes.oneOf(['button', 'link']),
-    component: React.PropTypes.string.isRequired,
-    runParams: React.PropTypes.func.isRequired,
-    method: React.PropTypes.string.isRequired,
-    icon: React.PropTypes.string.isRequired,
-    label: React.PropTypes.string,
-    redirect: React.PropTypes.bool,
-    tooltip: React.PropTypes.string,
-    disabled: React.PropTypes.bool,
-    disabledReason: React.PropTypes.string,
-    tooltipPlacement: React.PropTypes.string,
-    children: React.PropTypes.node,
-    modalRunButtonDisabled: React.PropTypes.bool,
-    modalOnHide: React.PropTypes.func
+    title: PropTypes.string.isRequired,
+    mode: PropTypes.oneOf(['button', 'link']),
+    component: PropTypes.string.isRequired,
+    runParams: PropTypes.func.isRequired,
+    method: PropTypes.string.isRequired,
+    icon: PropTypes.string.isRequired,
+    label: PropTypes.string,
+    redirect: PropTypes.bool,
+    tooltip: PropTypes.string,
+    disabled: PropTypes.bool,
+    disabledReason: PropTypes.string,
+    tooltipPlacement: PropTypes.string,
+    children: PropTypes.node,
+    modalRunButtonDisabled: PropTypes.bool,
+    modalOnHide: PropTypes.func
   },
 
   getDefaultProps: function() {

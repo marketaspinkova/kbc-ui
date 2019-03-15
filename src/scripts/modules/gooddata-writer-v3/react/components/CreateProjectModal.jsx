@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {Form, Modal} from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
@@ -6,13 +7,13 @@ import {isNewProjectValid, TokenTypes} from '../../gooddataProvisioning/utils';
 
 export default React.createClass({
   propTypes: {
-    config: React.PropTypes.object.isRequired,
-    onCreate: React.PropTypes.func.isRequired,
-    onHide: React.PropTypes.func.isRequired,
-    show: React.PropTypes.bool.isRequired,
-    disabled: React.PropTypes.bool.isRequired,
-    isCreating: React.PropTypes.bool.isRequired,
-    canCreateProdProject: React.PropTypes.bool.isRequired
+    config: PropTypes.object.isRequired,
+    onCreate: PropTypes.func.isRequired,
+    onHide: PropTypes.func.isRequired,
+    show: PropTypes.bool.isRequired,
+    disabled: PropTypes.bool.isRequired,
+    isCreating: PropTypes.bool.isRequired,
+    canCreateProdProject: PropTypes.bool.isRequired
   },
 
   getInitialState() {

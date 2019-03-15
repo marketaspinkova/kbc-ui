@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { Form, FormControl, FormGroup, Modal, ControlLabel } from 'react-bootstrap';
 import { ExternalLink } from '@keboola/indigo-ui';

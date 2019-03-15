@@ -1,10 +1,11 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ValidUntil from './ValidUntil';
 import date from '../../utils/date';
 
 export default React.createClass({
   propTypes: {
-    validUntil: React.PropTypes.number
+    validUntil: PropTypes.number
   },
 
   render() {

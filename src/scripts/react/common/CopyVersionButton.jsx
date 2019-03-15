@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Tooltip from '../../react/common/Tooltip';
 import CopyVersionModal from './CopyVersionModal';
@@ -8,12 +9,12 @@ export default React.createClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {
-    version: React.PropTypes.object.isRequired,
-    onCopy: React.PropTypes.func.isRequired,
-    newVersionName: React.PropTypes.string,
-    onChangeName: React.PropTypes.func.isRequired,
-    isPending: React.PropTypes.bool,
-    isDisabled: React.PropTypes.bool
+    version: PropTypes.object.isRequired,
+    onCopy: PropTypes.func.isRequired,
+    newVersionName: PropTypes.string,
+    onChangeName: PropTypes.func.isRequired,
+    isPending: PropTypes.bool,
+    isDisabled: PropTypes.bool
   },
 
   getInitialState() {

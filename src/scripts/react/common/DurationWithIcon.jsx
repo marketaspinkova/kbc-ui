@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Duration from './Duration';
 
@@ -9,7 +10,7 @@ const DurationWithIcon = ({ startTime, endTime }) => (
   </span>
 );
 DurationWithIcon.propTypes = {
-  startTime: React.PropTypes.string,
-  endTime: React.PropTypes.string
+  startTime: PropTypes.string,
+  endTime: PropTypes.string
 };
 export default DurationWithIcon;

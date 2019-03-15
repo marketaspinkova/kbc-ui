@@ -1,17 +1,18 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {Modal, ButtonToolbar, Button} from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
-    buttonType: React.PropTypes.string,
-    buttonLabel: React.PropTypes.string.isRequired,
-    text: React.PropTypes.node.isRequired,
-    title: React.PropTypes.string.isRequired,
-    onConfirm: React.PropTypes.func.isRequired,
-    onHide: React.PropTypes.func.isRequired,
-    show: React.PropTypes.bool.isRequired,
-    isLoading: React.PropTypes.bool
+    buttonType: PropTypes.string,
+    buttonLabel: PropTypes.string.isRequired,
+    text: PropTypes.node.isRequired,
+    title: PropTypes.string.isRequired,
+    onConfirm: PropTypes.func.isRequired,
+    onHide: PropTypes.func.isRequired,
+    show: PropTypes.bool.isRequired,
+    isLoading: PropTypes.bool
   },
 
   getDefaultProps() {

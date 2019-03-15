@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import Tooltip from './../../../../react/common/Tooltip';
@@ -7,13 +8,13 @@ import {Navigation} from 'react-router';
 export default React.createClass({
   mixins: [Navigation],
   propTypes: {
-    query: React.PropTypes.object.isRequired,
-    configurationId: React.PropTypes.string.isRequired,
-    isPending: React.PropTypes.bool.isRequired,
-    tooltipPlacement: React.PropTypes.string,
-    componentId: React.PropTypes.string,
-    actionsProvisioning: React.PropTypes.object.isRequired,
-    entityName: React.PropTypes.string
+    query: PropTypes.object.isRequired,
+    configurationId: PropTypes.string.isRequired,
+    isPending: PropTypes.bool.isRequired,
+    tooltipPlacement: PropTypes.string,
+    componentId: PropTypes.string,
+    actionsProvisioning: PropTypes.object.isRequired,
+    entityName: PropTypes.string
   },
 
   getDefaultProps() {

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import date from '../../../utils/date';
 import PureRendererMixin from 'react-immutable-render-mixin';
@@ -17,9 +18,9 @@ const classMap = {
 export default React.createClass({
   mixins: [PureRendererMixin],
   propTypes: {
-    event: React.PropTypes.object.isRequired,
-    link: React.PropTypes.object,
-    backButton: React.PropTypes.object
+    event: PropTypes.object.isRequired,
+    link: PropTypes.object,
+    backButton: PropTypes.object
   },
 
   render() {

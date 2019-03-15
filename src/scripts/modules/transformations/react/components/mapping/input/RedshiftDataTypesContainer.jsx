@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import _ from 'underscore';
@@ -9,10 +10,10 @@ export default React.createClass({
   mixins: [ImmutableRenderMixin],
 
   propTypes: {
-    value: React.PropTypes.object.isRequired,
-    columnsOptions: React.PropTypes.array.isRequired,
-    onChange: React.PropTypes.func.isRequired,
-    disabled: React.PropTypes.bool.isRequired
+    value: PropTypes.object.isRequired,
+    columnsOptions: PropTypes.array.isRequired,
+    onChange: PropTypes.func.isRequired,
+    disabled: PropTypes.bool.isRequired
   },
 
   getInitialState() {

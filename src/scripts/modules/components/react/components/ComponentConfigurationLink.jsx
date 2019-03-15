@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router';
 import RoutesStore from '../../../../stores/RoutesStore';
@@ -12,10 +13,10 @@ import { Routes } from '../../Constants';
 */
 export default React.createClass({
   propTypes: {
-    componentId: React.PropTypes.string.isRequired,
-    configId: React.PropTypes.string.isRequired,
-    className: React.PropTypes.string,
-    children: React.PropTypes.any
+    componentId: PropTypes.string.isRequired,
+    configId: PropTypes.string.isRequired,
+    className: PropTypes.string,
+    children: PropTypes.any
   },
 
   render() {

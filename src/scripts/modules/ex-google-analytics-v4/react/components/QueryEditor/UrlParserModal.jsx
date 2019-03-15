@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import classnames from 'classnames';
 import { fromJS, List } from 'immutable';
 import { Alert, Button, Col, Modal, Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
