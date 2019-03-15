@@ -251,17 +251,17 @@ export default createReactClass({
     return this.props.onChange(this.props.column.set(propName, e.target.value));
   },
 
-  _createInput(props, body) {
+  _createInput(componentProps, body) {
     if (this.props.isEditing) {
-      if (!props.addonAfter) {
-        if (props.type === 'select') {
+      if (!componentProps.addonAfter) {
+        if (componentProps.type === 'select') {
           return (
             <FormGroup>
               <FormControl
                 componentClass="select"
-                value={props.value}
-                disabled={props.disabled}
-                onChange={props.onChange}
+                value={componentProps.value}
+                disabled={componentProps.disabled}
+                onChange={componentProps.onChange}
               >
                 {body}
               </FormControl>
@@ -273,9 +273,9 @@ export default createReactClass({
           <FormGroup>
             <FormControl
               type="text"
-              value={props.value}
-              disabled={props.disabled}
-              onChange={props.onChange}
+              value={componentProps.value}
+              disabled={componentProps.disabled}
+              onChange={componentProps.onChange}
             />
           </FormGroup>
         )
@@ -286,11 +286,11 @@ export default createReactClass({
           <InputGroup>
             <FormControl
               type="text"
-              value={props.value}
-              disabled={props.disabled}
-              onChange={props.onChange}
+              value={componentProps.value}
+              disabled={componentProps.disabled}
+              onChange={componentProps.onChange}
             />
-            <InputGroup.Addon>{props.addonAfter}</InputGroup.Addon>
+            <InputGroup.Addon>{componentProps.addonAfter}</InputGroup.Addon>
           </InputGroup>
         </FormGroup>
       );
@@ -299,7 +299,7 @@ export default createReactClass({
     return (
       <FormGroup>
         <FormControl.Static>
-          {props.value}
+          {componentProps.value}
         </FormControl.Static>
       </FormGroup>
     )
