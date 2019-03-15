@@ -17,7 +17,6 @@ export default React.createClass({
   },
 
   render() {
-    const props = this.props;
     return (
       <Form horizontal>
         <h3>Source</h3>
@@ -44,8 +43,8 @@ export default React.createClass({
             <FormControl
               type="text"
               value={this.props.value.destination}
-              onChange={function(e) {
-                props.onChange({destination: e.target.value.trim()});
+              onChange={(e) => {
+                this.props.onChange({destination: e.target.value.trim()});
               }}
               placeholder="myfolder/file.csv"
               disabled={this.props.disabled}

@@ -41,14 +41,15 @@ const TableRow = React.createClass({
   render() {
     const router = RoutesStore.getRouter();
 
-
-    const props = this.props;
     return (
       <div
         className="tr"
-        data-id={props.row.get('id')}
+        data-id={this.props.row.get('id')}
         onClick={() => {
-          router.transitionTo(this.props.linkTo, {config: this.props.configurationId, row: this.props.row.get('id')});
+          router.transitionTo(this.props.linkTo, {
+            config: this.props.configurationId,
+            row: this.props.row.get('id')
+          });
         }}
       >
         <div className="td" key="handle">
@@ -57,16 +58,16 @@ const TableRow = React.createClass({
         <div className="td" key="row-number">
           {this.props.rowNumber}
         </div>
-        {this.props.columns.map(function(columnDefinition, index) {
+        {this.props.columns.map((columnDefinition, index) => {
           return (
             <div className="td kbc-break-all" key={index}>
               <ConfigurationRowsTableCell
                 type={columnDefinition.get('type', 'value')}
                 valueFn={columnDefinition.get('value')}
-                row={props.row}
-                component={props.component}
-                componentId={props.componentId}
-                configurationId={props.configurationId}
+                row={this.props.row}
+                component={this.props.component}
+                componentId={this.props.componentId}
+                configurationId={this.props.configurationId}
               />
             </div>
           );
@@ -79,7 +80,6 @@ const TableRow = React.createClass({
   },
 
   renderRowActionButtons() {
-    const props = this.props;
     return [
       (<DeleteConfigurationRowButton
         key="delete"
@@ -98,10 +98,10 @@ const TableRow = React.createClass({
         key="run"
         title="Run"
         component={this.props.componentId}
-        runParams={function() {
+        runParams={() => {
           return {
-            config: props.configurationId,
-            row: props.row.get('id')
+            config: this.props.configurationId,
+            row: this.props.row.get('id')
           };
         }}
       >

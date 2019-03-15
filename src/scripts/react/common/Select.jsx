@@ -106,8 +106,8 @@ export default React.createClass({
       }
     }
 
-    var filterOption = function(op) {
-      if (this.props.multi && exclude && fromJS(exclude).toMap().find(function(item) {
+    var filterOption = (op) => {
+      if (this.props.multi && exclude && fromJS(exclude).toMap().find((item) => {
         return item.get('value') === op.value;
       }, op)) {
         return false;
@@ -192,7 +192,7 @@ export default React.createClass({
   onChange(selected) {
     const {trimMultiCreatedValues} = this.props;
     if (this.props.multi) {
-      this.props.onChange(fromJS(selected.map(function(value) {
+      this.props.onChange(fromJS(selected.map((value) => {
         if (value.value === '%_EMPTY_STRING_%') {
           return '';
         }
@@ -216,12 +216,11 @@ export default React.createClass({
   },
 
   mapValuesSingle(value) {
-    const props = this.props;
     if (value) {
       let selectedOption = null;
       if (this.props.options) {
-        selectedOption = this.props.options.find(function(option) {
-          return option[props.valueKey] === value;
+        selectedOption = this.props.options.find((option) => {
+          return option[this.props.valueKey] === value;
         });
       }
       if (selectedOption) {
@@ -237,9 +236,8 @@ export default React.createClass({
   },
 
   mapValuesMulti(values) {
-    const props = this.props;
     if (values) {
-      return values.map(function(value) {
+      return values.map((value) => {
         if (value === '') {
           return {
             label: '%_EMPTY_STRING_%',
@@ -252,9 +250,9 @@ export default React.createClass({
           };
         } else {
           let selectedOption = null;
-          if (props.options) {
-            selectedOption = props.options.find(function(option) {
-              return option[props.valueKey] === value;
+          if (this.props.options) {
+            selectedOption = this.props.options.find((option) => {
+              return option[this.props.valueKey] === value;
             });
           }
           if (selectedOption) {

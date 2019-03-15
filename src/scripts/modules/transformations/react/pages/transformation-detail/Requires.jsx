@@ -26,10 +26,9 @@ export default React.createClass({
     };
   },
 
-  onValueClick: function(value) {
-    const props = this.props;
+  onValueClick(value) {
     return RoutesStore.getRouter().transitionTo('transformationDetail', {
-      config: props.bucketId,
+      config: this.props.bucketId,
       row: value.value
     });
   },

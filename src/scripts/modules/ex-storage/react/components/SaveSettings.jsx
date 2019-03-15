@@ -18,7 +18,6 @@ export default React.createClass({
   },
 
   render() {
-    const props = this.props;
     return (
       <Form horizontal>
         <h3>Save Settings</h3>
@@ -26,8 +25,8 @@ export default React.createClass({
           <Col smOffset={4} sm={8}>
             <Checkbox
               checked={this.props.value.incremental}
-              onChange={function(e) {
-                props.onChange({incremental: e.target.checked});
+              onChange={(e) => {
+                this.props.onChange({incremental: e.target.checked});
               }}
             >Incremental</Checkbox>
             <HelpBlock>
@@ -48,8 +47,8 @@ export default React.createClass({
               delimiter=","
               placeholder="Add a column to the primary key"
               emptyStrings={false}
-              onChange={function(value) {
-                props.onChange({primaryKey: value});
+              onChange={(value) => {
+                this.props.onChange({primaryKey: value});
               }}
               disabled={this.props.disabled}
             />
