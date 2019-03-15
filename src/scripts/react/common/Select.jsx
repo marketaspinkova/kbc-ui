@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { fromJS } from 'immutable';
-import React from 'react';
 import Select from 'react-select';
 
 export default React.createClass({
