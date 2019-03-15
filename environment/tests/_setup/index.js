@@ -11,7 +11,10 @@ console.error = (message) => {
 };
 
 console.warn = (message) => {
-  if (message.includes('is deprecated')) {
+  if (
+    message.includes('Accessing PropTypes via the main React package is deprecated') || 
+    message.includes('Accessing createClass via the main React package is deprecated')  
+  ) {
     return;
   }
 
