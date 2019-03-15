@@ -3,7 +3,7 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import Select from 'react-select';
 import { HelpBlock } from 'react-bootstrap';
-import { webalize } from '../../utils/string';
+import stringUtils from '../../utils/string';
 
 export default createReactClass({
   propTypes: {
@@ -107,7 +107,7 @@ export default createReactClass({
       tables = tables.push({ label: table, value: table });
     }
     const { currentSource } = this.props;
-    const webalizedSource = webalize(currentSource || '', { caseSensitive: true });
+    const webalizedSource = stringUtils.webalize(currentSource || '', { caseSensitive: true });
 
     if (!!webalizedSource && !tables.find((t) => t.label === webalizedSource)) {
       tables = tables.insert(0, {
@@ -146,7 +146,7 @@ export default createReactClass({
   },
 
   selectBucketOptionCreator({ label }) {
-    const option = (label.startsWith('c-') ? '' : 'c-') + webalize(label, { caseSensitive: true });
+    const option = (label.startsWith('c-') ? '' : 'c-') + stringUtils.webalize(label, { caseSensitive: true });
 
     return {
       label: 'Create new bucket ' + option,
@@ -155,7 +155,7 @@ export default createReactClass({
   },
 
   selectTableOptionCreator({ label }) {
-    const option = webalize(label, { caseSensitive: true });
+    const option = stringUtils.webalize(label, { caseSensitive: true });
 
     return {
       label: 'Create new table ' + option,
