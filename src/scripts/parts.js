@@ -1,7 +1,6 @@
 /*
   Entry point for non app pages, provides some basic parts implemented in React
 */
-import './utils/react-shim';
 import * as helpers from './helpers';
 import ProjectSelect from './react/layout/project-select/ProjectSelect';
 import Wizard from './modules/guide-mode/react/Wizard';
