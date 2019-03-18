@@ -25,7 +25,9 @@ export default createReactClass({
 
     return (
       <span className="kbc-notification-icon-badge">
-        <span className="kbc-notification-icon-badge-inner"/>
+        <span className="kbc-notification-icon-badge-inner">
+          {this.props.notifications.get('unreadCount')}
+        </span>
       </span>
     );
   }

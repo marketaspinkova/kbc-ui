@@ -59,7 +59,7 @@ export default createReactClass({
             }}
             onChange={this._handleQueryChange}
             query={this.state.query}
-            placeholder="Search your projects"
+            placeholder="Search projects"
             onKeyDown={this._handleKeyDown}
             theme={this.props.theme}
           />

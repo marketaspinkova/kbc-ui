@@ -1,15 +1,10 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
-
+import { Dropdown } from 'react-bootstrap';
 import ProjectsList from './List';
 
-import { Icon } from '@keboola/indigo-ui';
-import { Dropdown } from 'react-bootstrap';
-
 export default createReactClass({
-
   propTypes: {
     organizations: PropTypes.object.isRequired,
     currentProject: PropTypes.object.isRequired,
@@ -20,7 +15,7 @@ export default createReactClass({
   },
 
   getInitialState() {
-    return {open: false};
+    return { open: false };
   },
 
   render() {
@@ -30,14 +25,9 @@ export default createReactClass({
         className="kbc-project-select"
         onToggle={this._handleToggle}
       >
-        <Dropdown.Toggle noCaret>
-          {this.state.open ?
-            <Icon.Times className="pull-right icon-size-16"/> :
-            <Icon.ArrowDown className="pull-right icon-size-16"/>
-          }
-          <span className="kbc-project-name">
-            {this.props.currentProject.get('name')}
-          </span>
+        <Dropdown.Toggle noCaret bsStyle="link">
+          <span className="kbc-icon-picker" />
+          <span className="kbc-project-name">{this.props.currentProject.get('name')}</span>
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <ProjectsList
@@ -48,7 +38,6 @@ export default createReactClass({
             xsrf={this.props.xsrf}
             canCreateProject={this.props.canCreateProject}
             focus={this.state.open}
-            theme="inverse"
           />
         </Dropdown.Menu>
       </Dropdown>
@@ -56,6 +45,6 @@ export default createReactClass({
   },
 
   _handleToggle(isOpen) {
-    this.setState({open: isOpen});
+    this.setState({ open: isOpen });
   }
 });

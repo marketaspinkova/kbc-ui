@@ -1,0 +1,178 @@
+@primary: #228dff;
+@black: #282d38;
+@grey: #e4e4e4;
+
+body,
+html {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+strong {
+  font-weight: 500 !important;
+}
+
+.kbc-main {
+  margin: 0;
+
+  & > .container-fluid {
+    margin: 0 0 30px 0;
+  }
+}
+
+.kbc-topbar {
+  background: #fff;
+  padding: 15px 0;
+  border-bottom: 1px solid @grey;
+
+  .kbc-topbar-left {
+    float: left;
+    display: flex;
+    align-items: center;
+  }
+
+  .kbc-topbar-right {
+    float: right;
+  }
+
+  .kbc-icon-keboola-link {
+    display: inline-block;
+    margin: 5px 15px;
+
+    &:hover,
+    &:focus {
+      text-decoration: none;
+    }
+  }
+
+  .kbc-icon-keboola-logo {
+    color: @primary;
+    font-size: 24px;
+  }
+
+  #select-project-dropdown-button {
+    border: none;
+
+    .kbc-icon-picker {
+      width: 30px;
+      float: right;
+    }
+
+    .kbc-project-name {
+      margin-right: 5px;
+    }
+
+    + .dropdown-menu {
+      padding: 15px 10px;
+    }
+  }
+
+  .kbc-user {
+    .kbc-user-avatar {
+      margin-right: 10px;
+    }
+
+    .kbc-user-name {
+      text-align: left;
+      color: @black;
+    }
+
+    .kbc-user-email {
+      text-align: left;
+      color: @black;
+    }
+  }
+}
+
+.kbc-navbar {
+  height: auto;
+  background: #fff;
+  box-shadow: 0px 2px 10px 0px @grey;
+  margin-bottom: 15px;
+
+  .navbar {
+    margin-bottom: 0;
+
+    .navbar-link {
+      color: #a2a2a2;
+      display: flex;
+      align-items: center;
+      padding: 20px 10px;
+      font-size: 16px;
+      font-weight: 500;
+
+      &.active {
+        color: @primary;
+      }
+
+      .kbc-icon {
+        font-size: 24px;
+        margin-right: 5px;
+      }
+    }
+  }
+}
+
+.kbc-breadcrumb {
+  padding: 15px 15px 25px 15px;
+
+  .kbc-title {
+    h1 {
+      font-family: 'Roboto', sans-serif;
+      display: inline;
+      font-size: 32px;
+      font-weight: 400;
+      margin-right: 15px;
+    }
+
+    .kbc-refresh,
+    .fa-spin {
+      font-size: 20px;
+    }
+  }
+
+  .breadcrumb {
+    min-height: 20px;
+    padding: 0;
+    margin: 0;
+  }
+
+  .kbc-icon-pencil {
+    font-size: 20px;
+  }
+
+  .inline-edit-input-link {
+    padding: 0;
+  }
+}
+
+.navbar-setting {
+  display: flex;
+  align-items: center;
+  min-height: 60px;
+  float: right;
+
+  .kbc-notification-access {
+    color: @primary;
+    font-size: 26px;
+
+    .kbc-notification-icon-badge {
+      top: -10px;
+      right: -5px;
+      width: 20px;
+      height: 20px;
+
+      .kbc-notification-icon-badge-inner {
+        color: #fff;
+        background-color: @primary;
+        border: 2px solid #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 12px;
+        font-weight: 500;
+      }
+    }
+  }
+}

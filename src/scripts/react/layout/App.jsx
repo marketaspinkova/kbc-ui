@@ -5,17 +5,11 @@ import classnames from 'classnames';
 import { RouteHandler } from 'react-router';
 import ApplicationStore from '../../stores/ApplicationStore';
 import Header from './Header';
-import SidebarNavigation from './SidebarNavigation';
 import FloatingNotifications from './FloatingNotifications';
 import ErrorPage from '../pages/ErrorPage';
 import LoadingPage from '../pages/LoadingPage';
-import ProjectSelect from './project-select/ProjectSelect';
 import PageTitle from './PageTitle';
 import Wizard from '../../modules/guide-mode/react/Wizard';
-
-import CurrentUser from './CurrentUser';
-import UserLinks from './UserLinks';
-
 import '../../../styles/app.less';
 
 export default createReactClass({
@@ -55,45 +49,30 @@ export default createReactClass({
           </div>
         )}
         <PageTitle />
-        <Header homeUrl={this.state.homeUrl} notifications={this.state.notifications} />
+        <Header 
+          homeUrl={this.state.homeUrl} 
+          notifications={this.state.notifications} 
+          currentAdmin={this.state.currentAdmin}
+          maintainers={this.state.maintainers}
+          urlTemplates={this.state.urlTemplates}
+          canManageApps={this.state.canManageApps}
+          organizations={this.state.organizations}
+          currentProject={this.state.currentProject}
+          xsrf={this.state.xsrf}
+          canCreateProject={this.state.canCreateProject}
+          projectTemplates={this.state.projectTemplates}
+        />
         <FloatingNotifications />
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-xs-3 kbc-sidebar">
-              <ProjectSelect
-                organizations={this.state.organizations}
-                currentProject={this.state.currentProject}
-                urlTemplates={this.state.urlTemplates}
-                xsrf={this.state.xsrf}
-                canCreateProject={this.state.canCreateProject}
-                projectTemplates={this.state.projectTemplates}
-              />
-              <SidebarNavigation />
-              <div className="kbc-sidebar-footer">
-                <CurrentUser
-                  user={this.state.currentAdmin}
-                  maintainers={this.state.maintainers}
-                  urlTemplates={this.state.urlTemplates}
-                  canManageApps={this.state.canManageApps}
-                  dropup={true}
-                />
-                <UserLinks
-                  urlTemplates={this.state.urlTemplates}
-                  currentProject={this.state.currentProject}
-                  xsrf={this.state.xsrf}
-                />
-              </div>
-            </div>
-            <div className="col-xs-9 col-xs-offset-3 kbc-main">
-              {this.renderMain()}
-              {this.state.projectHasGuideModeOn === true && (
-                <Wizard
-                  projectBaseUrl={this.state.projectBaseUrl}
-                  scriptsBasePath={this.state.scriptsBasePath}
-                />
-              )}
-            </div>
+        <div className="container">
+          <div className="kbc-main">
+            {this.renderMain()}
           </div>
+          {this.state.projectHasGuideModeOn === true && (
+            <Wizard
+              projectBaseUrl={this.state.projectBaseUrl}
+              scriptsBasePath={this.state.scriptsBasePath}
+            />
+          )}
         </div>
       </div>
     );
