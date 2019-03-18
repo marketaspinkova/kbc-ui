@@ -1,7 +1,6 @@
 /* eslint no-console: 0 */
 console.time('load');
 
-import './utils/react-shim';
 import './utils/ReactErrorHandler';
 import './utils/codemirror/setup';
 
