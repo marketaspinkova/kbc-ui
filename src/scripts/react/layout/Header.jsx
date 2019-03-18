@@ -86,7 +86,10 @@ export default createReactClass({
           </div>
         </div>
         <div className="container-fluid kbc-breadcrumb">
-          <div className="container">{this.renderTitle()}</div>
+          <div className="container">
+            {this.renderTitle()}
+            <div className="kbc-buttons">{this.renderButtons()}</div>
+          </div>
         </div>
       </div>
     );

@@ -21,6 +21,10 @@ strong {
   }
 }
 
+.kbc-main-content {   
+  min-height: 70vh;
+}
+
 .kbc-topbar {
   background: #fff;
   padding: 15px 0;
@@ -53,6 +57,7 @@ strong {
 
   #select-project-dropdown-button {
     border: none;
+    text-decoration: none;
 
     .kbc-icon-picker {
       width: 30px;
@@ -89,7 +94,6 @@ strong {
   height: auto;
   background: #fff;
   box-shadow: 0px 2px 10px 0px @grey;
-  margin-bottom: 15px;
 
   .navbar {
     margin-bottom: 0;
@@ -115,9 +119,12 @@ strong {
 }
 
 .kbc-breadcrumb {
-  padding: 15px 15px 25px 15px;
+  min-height: 105px;
+  padding: 25px 15px 15px 15px;
 
   .kbc-title {
+    float: left;
+
     h1 {
       font-family: 'Roboto', sans-serif;
       display: inline;
@@ -144,6 +151,11 @@ strong {
 
   .inline-edit-input-link {
     padding: 0;
+  }
+
+  .kbc-buttons {
+    float: right;    
+    margin-top: 22px;
   }
 }
 
