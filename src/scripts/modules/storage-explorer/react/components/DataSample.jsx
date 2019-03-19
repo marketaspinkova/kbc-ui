@@ -80,7 +80,7 @@ export default createReactClass({
     if (this.state.loading) {
       return (
         <p>
-          <Loader /> Loading data..
+          <Loader /> Loading data ...
         </p>
       );
     }
@@ -88,7 +88,7 @@ export default createReactClass({
     if (_.isEmpty(this.state.data)) {
       return (
         <p>
-          Could not load data sample.{' '}
+          Could not load a data sample.{' '}
           <Button bsStyle="link" className="btn-link-inline" onClick={() => this.fetchDataPreview()}>
             Try again
           </Button>

@@ -27,7 +27,7 @@ export default createReactClass({
     return (
       <Modal show={show} onHide={() => this.props.updateLocalState(Map())}>
         <Modal.Header closeButton={true}>
-          <Modal.Title>Setup Credentials to Tableau Server</Modal.Title>
+          <Modal.Title>Set Up Credentials to Tableau Server</Modal.Title>
         </Modal.Header>
         <div className="form form-horizontal">
           <Modal.Body>

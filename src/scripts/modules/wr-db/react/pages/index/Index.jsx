@@ -193,7 +193,7 @@ export default componentId => {
                       config: this.state.configId
                     }}
                   >
-                    <i className="fa fa-fw fa-user" /> Setup Credentials First
+                    <i className="fa fa-fw fa-user" /> Set Up Credentials First
                   </Link>
                 </div>
               ) : (

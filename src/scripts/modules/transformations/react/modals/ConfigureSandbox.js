@@ -93,7 +93,7 @@ export default createReactClass({
     return createSandboxPromise.then(() =>
       this.setState({
         isRunning: false,
-        progress: 'Sandbox is successfully created and all data are loaded. You can start using it now!',
+        progress: 'Sandbox has been successfully created and all data loaded. You can start using it now!',
         progressStatus: 'success',
         jobId: null,
         isCreated: true
@@ -142,7 +142,7 @@ export default createReactClass({
       if (job.status === 'success') {
         this.setState({
           isRunning: false,
-          progress: 'Sandbox is successfully loaded. You can start using it now.',
+          progress: 'Sandbox has been successfully loaded. You can start using it now.',
           progressStatus: 'success',
           jobId: null,
           isCreated: true

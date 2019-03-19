@@ -178,7 +178,7 @@ export default createReactClass({
   validateName() {
     if (!/^[a-zA-Z0-9_-]*$/.test(this.state.name)) {
       this.setState({
-        warning: 'Only alphanumeric characters, dash and underscores are allowed in bucket name.'
+        warning: 'Only alphanumeric characters, dash and underscore, are allowed in the bucket name.'
       });
     } else if (this.bucketExists()) {
       this.setState({

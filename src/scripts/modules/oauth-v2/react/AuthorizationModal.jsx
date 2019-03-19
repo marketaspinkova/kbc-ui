@@ -14,7 +14,7 @@ const DIRECT_TOKEN_COMPONENTS = ['keboola.ex-facebook', 'keboola.ex-facebook-ads
 
 const CUSTOM_AUTHORIZATION_COMPONENTS = ['keboola.ex-google-analytics-v4'];
 
-const COMPONENT_LIMITS_INFO = {'keboola.ex-google-analytics-v4': 'Number of requests will be limited to 2000 API calls per day. Use Custom Authorization with your own credentials to obtain full access to the API.'};
+const COMPONENT_LIMITS_INFO = {'keboola.ex-google-analytics-v4': 'The number of requests will be limited to 2,000 API calls per day. Use Custom Authorization with your own credentials to obtain full access to the API.'};
 
 export default createReactClass({
   propTypes: {

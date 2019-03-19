@@ -136,7 +136,7 @@ export default createReactClass({
     return (
       <Confirm
         title="Delete Token"
-        text={`Do you really want to delete token ${tokenDesc}?`}
+        text={`Do you really want to delete the token ${tokenDesc}?`}
         buttonLabel="Delete"
         onConfirm={() => this.props.onDeleteFn(token)}
       >

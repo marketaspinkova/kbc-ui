@@ -163,7 +163,7 @@ export default createReactClass({
     return (
       <Confirm
         title="Delete"
-        text={`Do you really want to remove ${item.get('title')} from configuration?`}
+        text={`Do you really want to remove ${item.get('title')} from the configuration?`}
         buttonLabel="Delete"
         onConfirm={() => this.props.onDeleteFn(item)}
       >

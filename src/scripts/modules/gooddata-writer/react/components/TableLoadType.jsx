@@ -163,7 +163,7 @@ export default createReactClass({
                     Full Load
                   </Radio>
                   <HelpBlock>
-                    All data in GoodData dataset will be replaced by current data in source Storage table.
+                    All data in the GoodData dataset will be replaced by the current data in the source Storage table.
                   </HelpBlock>
                 </Col>
               </FormGroup>
@@ -226,7 +226,7 @@ export default createReactClass({
               <div className="text text-warning">
                 <strong>{'Warning: '}</strong>
                 {'Violated conditions for fact grain: \
-    There must be at least one column of attribute, reference or date type and no connection point.'}
+    There must be at least one column of attribute, reference or date type, and no connection point.'}
               </div>
             );
           } else if ((grainArray.length < 2 || grainArray.length > 32) && enabled) {
@@ -235,7 +235,7 @@ export default createReactClass({
                 <strong>{'Warning: '}</strong>
                 {grainArray.length < 2
                   ? 'Insufficient number of attributes or references selected for the fact grain. There must be at least 2.'
-                  : 'Too many attributes or references selected for the fact grain. There must be maximum 32.'}
+                  : 'Too many attributes or references selected for the fact grain. There must be no more than 32.'}
               </div>
             );
           }

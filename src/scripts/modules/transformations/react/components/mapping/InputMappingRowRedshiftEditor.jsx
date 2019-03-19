@@ -328,7 +328,7 @@ export default createReactClass({
                 options={this._getFilteredColumnsOptions()}
               />
               <HelpBlock>
-                SORTKEY option for creating table in Redshift DB. You can create a compound sort key.
+                SORTKEY option for creating a table in Redshift DB. You can create a compound sort key.
               </HelpBlock>
             </Col>
           </FormGroup>

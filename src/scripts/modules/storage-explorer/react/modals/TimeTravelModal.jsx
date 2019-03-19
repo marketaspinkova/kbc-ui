@@ -45,8 +45,8 @@ export default createReactClass({
           </Modal.Header>
           <Modal.Body>
             <Alert>
-              This will create a new table which will be a replica of the data as it existed at the time you choose.
-              Note that this method can not replicate data from further in the past than your project limit of{' '}
+              This will create a new table which will be a replica of the data as it existed at the time of your choice.
+              Note that this method can not replicate data older than your project limit of{' '}
               <strong>{retentionLimit} days</strong>.
             </Alert>
 

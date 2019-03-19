@@ -48,13 +48,13 @@ export default createReactClass({
           >
             <RadioGroupInput
               label="No"
-              help="Create a new File, that will be updated on each run"
+              help="Create a new file that will be updated on each run"
               wrapperClassName="col-sm-8"
               value="new"
             />
             <RadioGroupInput
               label="Yes"
-              help="Use existing File"
+              help="Use an existing file"
               wrapperClassName="col-sm-8"
               value="existing"
             />
@@ -86,7 +86,7 @@ export default createReactClass({
             multiselectEnabled={false}
           />
           <span className="help-block">
-            Choose File you wish to update
+            Choose a file you wish to update
           </span>
         </div>
       </div>
@@ -117,7 +117,7 @@ export default createReactClass({
               />
             </div>
             <input
-              placeholder="New File"
+              placeholder="New file"
               type="text"
               value={this.props.valueTitle ? this.props.valueTitle : ''}
               onChange={this.props.onChangeTitle}
@@ -125,8 +125,8 @@ export default createReactClass({
             />
           </div>
           <span className="help-block">
-            Select Files parent <strong>folder</strong> and enter <strong>title</strong> of the File.<br/>
-            {this.props.valueAction === 'create' ? 'The File will be created on next run. Current date and time will be appended to Files name.' : 'The File will be created upon save.'}
+            Select the file parent <strong>folder</strong> and enter the <strong>title</strong> of the file.<br/>
+            {this.props.valueAction === 'create' ? 'The file will be created on the next run. The current date and time will be appended to the file name.' : 'The file will be created upon saving.'}
           </span>
         </div>
       </div>
@@ -144,7 +144,7 @@ export default createReactClass({
             Convert to Google Docs format
           </Checkbox>
           <HelpBlock>
-            After upload, file will be converted so it can be edited directly in Google Drive
+            After the upload, the file will be converted so it can be edited directly in Google Drive
           </HelpBlock>
         </Col>
       </FormGroup>

@@ -83,7 +83,7 @@ export default function(COMPONENT_ID, configId) {
       return createFileAction(table)
         .then((data) => {
           if (data.status === 'error') {
-            throw new SyncActionError(data.message || 'There was an error while creating file');
+            throw new SyncActionError(data.message || 'There was an error while creating the file');
           }
           return updateTable(
             table
@@ -103,7 +103,7 @@ export default function(COMPONENT_ID, configId) {
     return getFolderAction(table)
       .then((data) => {
         if (data.status === 'error') {
-          throw new SyncActionError(data.message || 'There was an error while updating file');
+          throw new SyncActionError(data.message || 'There was an error while updating the file');
         }
         return updateTable(
           table

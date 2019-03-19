@@ -35,7 +35,7 @@ export default createReactClass({
       return (
         <AlertBlock type="warning" title="Speed up output of your transformations">
           <p>
-            Your project is ready, if you are eager to parallelize output processing for your transformations,
+            Your project is ready. If you wish to parallelize output processing for your transformations,
             please use the support button to let us know.
           </p>
         </AlertBlock>

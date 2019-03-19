@@ -34,7 +34,7 @@ export default createReactClass({
           </Modal.Header>
           <Modal.Body>
             <p>
-              Do you really want to delete column <b>{this.props.column}</b>?
+              Do you really want to delete the column <b>{this.props.column}</b>?
             </p>
 
             {this.hasAliasesOrLinks() && (

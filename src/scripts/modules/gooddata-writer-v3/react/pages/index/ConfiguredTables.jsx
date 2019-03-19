@@ -92,7 +92,7 @@ export default createReactClass({
     return (
       <Confirm
         key={`confirm${tableId}`}
-        text={`Do you really want to delete table ${tableId} from the confuration?`}
+        text={`Do you really want to delete the table ${tableId} from the configuration?`}
         title={`Delete table ${tableId}`}
         buttonLabel="Delete"
         onConfirm={() => this.props.deleteTable(tableId)}

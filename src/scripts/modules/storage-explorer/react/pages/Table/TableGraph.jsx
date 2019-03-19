@@ -59,7 +59,7 @@ export default createReactClass({
     }
 
     if (!this.state.data || !this.state.data.transitions.length) {
-      return <p>There are no connections for table {this.props.table.get('id')}.</p>;
+      return <p>There are no connections for the table {this.props.table.get('id')}.</p>;
     }
 
     return (
@@ -114,7 +114,7 @@ export default createReactClass({
     return (
       <Alert bsStyle="info">
         <p>
-          Please note that the graph shows a maximum of 7 levels of nesting and the only supported writer is GoodData
+          Please note that the graph shows a maximum of 7 levels of nesting and the only supported writer is the GoodData
           writer.
         </p>
       </Alert>

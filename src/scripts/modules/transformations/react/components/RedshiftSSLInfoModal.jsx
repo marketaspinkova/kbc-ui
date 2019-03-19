@@ -11,7 +11,7 @@ const RedshiftSSLInfoModal = ({ show, onHide }) => {
       </Modal.Header>
       <Modal.Body>
         <p>
-          {'To establish a secure connection to Redshift follow AWS '}
+          {'To establish a secure connection to Redshift, follow AWS '}
           <ExternalLink href="http://docs.aws.amazon.com/redshift/latest/mgmt/connecting-ssl-support.html">
             Configure Security Options for Connections
           </ExternalLink>

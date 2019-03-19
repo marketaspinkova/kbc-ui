@@ -20,7 +20,7 @@ const createPresentationalError = exception => {
     error.id = 'connectTimeoutRequestAborted';
     return error;
   } else if (error.crossDomain) {
-    error = new Error('Not connected to internet', 'Please try again later.');
+    error = new Error('Not connected to the internet', 'Please try again later.');
     error.id = 'couldNotConnect';
     error.isUserError = true;
     return error;
@@ -31,7 +31,7 @@ const createPresentationalError = exception => {
     return new Error(error.title, error.message);
   }
 
-  return new Error('Application error', 'Please try reload the browser');
+  return new Error('Application error', 'Please try reload the browser.');
 };
 
 var createFromXhrError = httpError => {

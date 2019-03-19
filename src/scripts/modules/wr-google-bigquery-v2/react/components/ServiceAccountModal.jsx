@@ -95,7 +95,7 @@ export default createReactClass({
     if (!this.state.isJsonValid) {
       return (
         <Alert bsStyle="danger">
-          Provided Service Account Key is not valid JSON object.
+          Provided Service Account Key is not a valid JSON object.
         </Alert>
       );
     }
@@ -139,7 +139,7 @@ export default createReactClass({
                 placeholder="{}"
               />
               <HelpBlock>
-                Copy & paste the whole JSON of the Google service account key file. Please read the details how to create the service account in the
+                Copy & paste the whole JSON of the Google service account key file. For instructions on how to create the service account, see
                 {' '}
                 <ExternalLink href={this.props.documentationLink}>
                   documentation

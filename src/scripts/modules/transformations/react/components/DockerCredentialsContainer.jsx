@@ -55,7 +55,7 @@ export default createReactClass({
 
   renderLoadingInfo() {
     return (
-      <p> Looking for existing sandbox... </p>
+      <p> Looking for an existing sandbox... </p>
     );
   },
 
@@ -66,7 +66,7 @@ export default createReactClass({
     return (
       <div>
         <div className="help-block">
-          Note: To create a new sandbox or load new data you have to drop the current sandbox.
+          Note: To create a new sandbox or load new data, you have to drop the current sandbox.
         </div>
         <div className="row">
           <div className="col-md-8">

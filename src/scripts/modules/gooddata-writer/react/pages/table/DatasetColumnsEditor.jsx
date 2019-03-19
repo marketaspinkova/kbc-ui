@@ -45,8 +45,8 @@ export default createReactClass({
                 Identifier{' '}
                 <Hint title="Identifier">
                   {'Identifier of column in GoodData. '}
-                  {'This can be useful when you are migrating project from CloudConnect. '}
-                  If left empty the defaults will be used.
+                  {'This can be useful when you are migrating a project from CloudConnect. '}
+                  If left empty, the defaults will be used.
                   {
                     ' Allowed characters: lowercase and uppercase letters, numbers, underscore "_" and dot "."'
                   }

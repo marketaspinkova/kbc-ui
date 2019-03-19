@@ -54,7 +54,7 @@ export default createReactClass({
             onValueClick={this.onValueClick}
           />
           <span className="help-block">
-            These transformations are processed before this transformation starts.
+            The above transformations are processed before this transformation starts.
           </span>
         </div>
       </div>

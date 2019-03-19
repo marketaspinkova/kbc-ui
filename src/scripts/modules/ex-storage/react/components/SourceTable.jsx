@@ -37,7 +37,7 @@ export default createReactClass({
               disabled={this.props.disabled}
             />
             <HelpBlock>
-              Table name in the source project. If the table ID is <code>in.c-main.mytable</code> use only the table name, <code>mytable</code>.
+              Table name in the source project. If the table ID is <code>in.c-main.mytable</code>, use only the table name <code>mytable</code>.
             </HelpBlock>
           </Col>
         </FormGroup>

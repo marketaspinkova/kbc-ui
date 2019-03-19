@@ -54,7 +54,7 @@ export default createReactClass({
             ) : (
               <tr>
                 <td className="text-muted" colSpan="7">
-                  There are no tasks assigned yet. Please start by adding first task.
+                  There are no tasks assigned yet. Please start by adding the first task.
                 </td>
               </tr>
             )}

@@ -61,7 +61,7 @@ export default createReactClass({
           <Col sm={10}>
             {this._renderNotificationsEditor('warning', warningEmails)}
             <HelpBlock>
-              Get notified when the orchestration finishes with an warning.
+              Get notified when the orchestration finishes with a warning.
             </HelpBlock>
           </Col>
         </FormGroup>
