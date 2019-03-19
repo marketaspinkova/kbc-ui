@@ -27,10 +27,12 @@ export default createReactClass({
         <div className="table configuration-select-header">
           <div className="tr">
             <div className="td">
-              <h2>
-                <ComponentIcon component={this.props.component}/>
-                <ComponentName component={this.props.component} showType={true}/>
-              </h2>
+              <div>
+                <h2>
+                  <ComponentIcon component={this.props.component}/>
+                  <ComponentName component={this.props.component} showType={true}/>
+                </h2>
+              </div>
             </div>
             <div className="td text-right">
               <Button bsStyle="link" className="btn-link-inline" onClick={this._handleBack}>
@@ -79,15 +81,16 @@ export default createReactClass({
 
   _getFilteredConfigurations() {
     const filter = this.props.query;
-
-    const configs = this.props.component.get('configurations');
-
+    const configs = this.props.component
+      .get('configurations')
+      .sortBy((config) => config.get('name', '').toLowerCase());
+    
     if (!filter) {
       return configs;
     }
-    const filteredConfigs = configs.filter(
+    
+    return configs.filter(
       config => fuzzy.match(filter, config.get('name', '')) || fuzzy.match(filter, config.get('id', ''))
     );
-    return filteredConfigs;
   }
 });

@@ -29,10 +29,12 @@ export default createReactClass({
         <div className="table configuration-select-header">
           <div className="tr">
             <div className="td">
-              <h2>
-                <ComponentIcon component={this.props.component}/>
-                <ComponentName component={this.props.component} showType={true}/>
-              </h2>
+              <div>
+                <h2>
+                  <ComponentIcon component={this.props.component}/>
+                  <ComponentName component={this.props.component} showType={true}/>
+                </h2>
+              </div>
             </div>
             <div className="td text-right">
               <Button bsStyle="link" className="btn-link-inline" onClick={this._handleBack}>
@@ -85,15 +87,15 @@ export default createReactClass({
 
   _getFilteredOrchestrations() {
     const filter = this.props.query;
-    const orchestrations = this.props.orchestrations;
+    const orchestrations = this.props.orchestrations
+      .sortBy((orchestration) => orchestration.get('name', '').toLowerCase());
 
     if (!filter) {
       return orchestrations;
     }
 
-    const filteredOrchestrations = orchestrations.filter(
+    return orchestrations.filter(
       orchestration => fuzzy.match(filter, orchestration.get('name', ''))
     );
-    return filteredOrchestrations;
   }
 });
