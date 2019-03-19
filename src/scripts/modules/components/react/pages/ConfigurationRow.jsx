@@ -13,6 +13,10 @@ import {isObsoleteComponent} from '../../../../modules/trash/utils';
 import CreatedWithIcon from '../../../../react/common/CreatedWithIcon';
 import componentNameAsString from '../../../../react/common/componentNameAsString';
 
+import InstalledComponentsActions from '../../InstalledComponentsActionCreators';
+import InstalledComponentsStore from '../../stores/InstalledComponentsStore';
+
+
 export default createReactClass({
   mixins: [PureRenderMixin],
   propTypes: {
@@ -51,10 +55,17 @@ export default createReactClass({
   },
 
   renderDeleteButton() {
-    if (this.props.componentId === 'keboola.gooddata-writer') {
+    const {componentId} = this.props;
+    if (componentId === 'keboola.gooddata-writer') {
+      const configId = this.props.config.get('id');
       return (
         <DeleteGoodDataWriterButton
           config={this.props.config}
+          getConfigDataFn={() =>
+            InstalledComponentsActions
+              .loadComponentConfigData(componentId, configId)
+              .then(() => InstalledComponentsStore.getConfigData(componentId, configId))
+          }
           deleteConfigFn={this.handleDelete}
           isDeletingConfig={this.props.isDeleting}
         />

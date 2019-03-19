@@ -4,18 +4,15 @@ import { Button, Alert } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 import Tooltip from '../../../../react/common/Tooltip';
 import ConfirmModal from '../../../../react/common/ConfirmModal';
-import InstalledComponentsActions from '../../../components/InstalledComponentsActionCreators';
-import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
 import { loadProvisioningData } from '../../../gooddata-writer-v3/gooddataProvisioning/utils';
 
 import GoodDataProvisioningActions from '../../../gooddata-writer-v3/gooddataProvisioning/actions';
 
-const COMPONENT_ID = 'keboola.gooddata-writer';
-
 export default React.createClass({
   propTypes: {
-    config: PropTypes.object.isRequired,
+    config: PropTypes.func.isRequired,
     deleteConfigFn: PropTypes.func.isRequired,
+    getConfigDataFn: PropTypes.func.isRequired,
     isDeletingConfig: PropTypes.bool.isRequired,
     renderWithCaption: PropTypes.bool
   },
@@ -30,7 +27,7 @@ export default React.createClass({
   },
 
   render() {
-    const loader =  this.isPending() && <Loader className="fa fa-fw" />;
+    const loader = this.isPending() && <Loader className="fa fa-fw" />;
     return this.props.renderWithCaption ? (
       <a onClick={this.handleDelete}>
         {this.renderConfirmModal()}
@@ -51,12 +48,11 @@ export default React.createClass({
     e.preventDefault();
     e.stopPropagation();
     const { deleteConfigFn } = this.props;
-    const configId = this.props.config.get('id');
     const stopLoading = () => this.setState({ loadingData: false });
     this.setState({ loadingData: true });
-    InstalledComponentsActions.loadComponentConfigData(COMPONENT_ID, configId)
-      .then(() => {
-        const configData = InstalledComponentsStore.getConfigData(COMPONENT_ID, configId);
+    this.props
+      .getConfigDataFn()
+      .then((configData) => {
         const pid = configData.getIn(['parameters', 'project', 'pid']);
         if (pid) {
           return loadProvisioningData(pid).then((data) => {

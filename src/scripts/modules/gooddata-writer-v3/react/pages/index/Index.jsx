@@ -1,4 +1,5 @@
 import React from 'react';
+import Promise from 'bluebird';
 // actions
 import InstalledComponentsActionCreators from '../../../../components/InstalledComponentsActionCreators';
 
@@ -123,6 +124,7 @@ export default createReactClass({
               <DeleteGoodDataWriterButton
                 renderWithCaption={true}
                 config={this.state.configProvisioning.config}
+                getConfigDataFn={() => Promise.resolve(this.state.configProvisioning.configData)}
                 deleteConfigFn={() => InstalledComponentsActionCreators.deleteConfiguration(COMPONENT_ID, this.state.configurationId, true)}
                 isDeletingConfig={this.state.isDeletingConfig}
               />
