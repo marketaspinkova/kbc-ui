@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Button, Alert } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
@@ -13,10 +14,10 @@ const COMPONENT_ID = 'keboola.gooddata-writer';
 
 export default React.createClass({
   propTypes: {
-    config: React.PropTypes.object.isRequired,
-    deleteConfigFn: React.PropTypes.func.isRequired,
-    isDeletingConfig: React.PropTypes.bool.isRequired,
-    renderWithCaption: React.PropTypes.bool
+    config: PropTypes.object.isRequired,
+    deleteConfigFn: PropTypes.func.isRequired,
+    isDeletingConfig: PropTypes.bool.isRequired,
+    renderWithCaption: PropTypes.bool
   },
 
   getInitialState() {
