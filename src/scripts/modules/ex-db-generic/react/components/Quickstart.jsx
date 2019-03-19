@@ -98,6 +98,7 @@ export default createReactClass({
               value={this.getQuickstartValue(this.props.quickstart.get('tables'))}
               placeholder="Select tables to copy"
               onChange={this.handleSelectChange}
+              filterOptions={this.filterOptions}
               optionRenderer={this.optionRenderer}
               options={this.transformOptions(this.getTableOptions())}
             />
@@ -131,6 +132,17 @@ export default createReactClass({
         />
       </div>
     );
+  },
+
+  filterOptions(options, filterString, values) {
+    const filterStr = filterString.toLowerCase();
+
+    return options.filter((op) => {
+      if (values.find((item) => item.label === op.label)) {
+        return false;
+      }
+      return !filterStr || op.label.toLowerCase().indexOf(filterStr) >= 0;
+    });
   },
 
   transformOptions(options) {
