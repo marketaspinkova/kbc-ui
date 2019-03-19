@@ -74,14 +74,10 @@ export default createReactClass({
   },
 
   getFilteredTokens() {
-    const searchQuery = this.props.localState.get('searchQuery').toLowerCase();
-    let tokens = this.props.tokens;
+    const searchQuery = this.props.localState.get('searchQuery', '').toLowerCase();
 
-    if (searchQuery) {
-      tokens = tokens.filter((token) => token.get('description').toLowerCase().indexOf(searchQuery) >= 0);
-    }
-
-    return tokens
+    return this.props.tokens
+      .filter((token) => !searchQuery || token.get('description').toLowerCase().indexOf(searchQuery) >= 0)
       .sortBy((token) => token.get('description').toLowerCase())
       .sortBy((token) => token.getIn(['admin', 'id']) === this.props.currentAdmin.get('id') ? -1 : 0)
   },
