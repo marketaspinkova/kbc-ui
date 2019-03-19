@@ -30,7 +30,7 @@ export default React.createClass({
   },
 
   render() {
-    const loader = this.isPending() && <Loader />;
+    const loader =  this.isPending() && <Loader className="fa fa-fw" />;
     return this.props.renderWithCaption ? (
       <a onClick={this.handleDelete}>
         {this.renderConfirmModal()}
@@ -41,7 +41,7 @@ export default React.createClass({
       <Tooltip tooltip="Move To Trash" placement="top">
         <Button bsStyle="link" onClick={this.handleDelete} disabled={!!loader}>
           {this.renderConfirmModal()}
-          {loader || <i className="fa kbc-icon-cup" />}
+          {loader || <i className="fa fa-fw kbc-icon-cup" />}
         </Button>
       </Tooltip>
     );
