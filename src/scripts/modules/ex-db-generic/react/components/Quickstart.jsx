@@ -1,14 +1,14 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
-
-import Immutable from 'immutable';
+import { fromJS } from 'immutable';
+import { Button, Row, Col, HelpBlock } from 'react-bootstrap';
 import Select from 'react-select';
 import TableLoader from './TableLoaderQuickStart';
 
+const optgroupStyles = { color: '#000', display: 'block', cursor: 'pointer' };
+
 export default createReactClass({
-  displayName: 'Quickstart',
   propTypes: {
     configId: PropTypes.string.isRequired,
     componentId: PropTypes.string,
@@ -24,7 +24,14 @@ export default createReactClass({
   },
 
   shouldComponentUpdate(nextProps) {
-    const updateOnProps = ['isLoadingSourceTables', 'isTestingConnection', 'validConnection', 'sourceTables', 'sourceTablesError', 'quickstart'];
+    const updateOnProps = [
+      'isLoadingSourceTables',
+      'isTestingConnection',
+      'validConnection',
+      'sourceTables',
+      'sourceTablesError',
+      'quickstart'
+    ];
     return updateOnProps.reduce((acc, prop) => acc || nextProps[prop] !== this.props[prop], false);
   },
 
@@ -33,19 +40,22 @@ export default createReactClass({
   },
 
   handleSelectChange(selected) {
-    return this.props.onChange(this.props.configId, Immutable.fromJS(selected.map(function(table) {
-      return table.value;
-    })));
+    return this.props.onChange(this.props.configId, fromJS(selected.map((table) => table.value)));
   },
 
   getTableOptions() {
-    if (this.props.sourceTables && this.props.sourceTables.count() > 0) {
-      const groupedTables = this.props.sourceTables.groupBy(table => table.get('schema'));
-      return groupedTables.keySeq().map(function(group) {
-        return {
-          value: group,
-          label: group,
-          children: groupedTables.get(group).map(function(table) {
+    if (!this.props.sourceTables || !this.props.sourceTables.count()) {
+      return [];
+    }
+
+    const groupedTables = this.props.sourceTables.groupBy((table) => table.get('schema'));
+    return groupedTables.keySeq().map((group) => {
+      return {
+        value: group,
+        label: group,
+        children: groupedTables
+          .get(group)
+          .map((table) => {
             return {
               value: {
                 schema: table.get('schema'),
@@ -53,62 +63,58 @@ export default createReactClass({
               },
               label: table.get('schema') + '.' + table.get('name')
             };
-          }).toJS()
-        };
-      });
-    } else {
-      return [];
-    }
+          })
+          .toJS()
+      };
+    });
   },
 
   getQuickstartValue(tables) {
-    if (tables) {
-      let jsTables = tables;
-      if (tables.toJS) {
-        jsTables = tables.toJS();
-      }
-      return jsTables.map(function(table) {
-        return {
-          label: table.schema + '.' + table.tableName,
-          value: table
-        };
-      });
-    } else {
+    if (!tables) {
       return [];
     }
+
+    return tables.toJS().map((table) => ({
+      label: table.schema + '.' + table.tableName,
+      value: table
+    }));
   },
 
   render() {
     var tableSelector = (
       <div>
-        <div className="row text-left">
-          <div className="col-md-8 col-md-offset-2 help-block">
-          Select the tables you&apos;d like to import to autogenerate your configuration. <br/>
-          You can edit them later at any time.
-          </div>
-        </div>
-        <div className="row text-left">
-          <div className="col-md-8 col-md-offset-2">
+        <Row className="text-left">
+          <Col md={8} mdOffset={2}>
+            <HelpBlock>
+              Select the tables you&apos;d like to import to autogenerate your configuration. <br />
+              You can edit them later at any time.
+            </HelpBlock>
+          </Col>
+        </Row>
+        <Row className="text-left">
+          <Col md={8} mdOffset={2}>
             <Select
-              multi={true}
-              matchProp="label"
-              name="quickstart"
+              multi
               value={this.getQuickstartValue(this.props.quickstart.get('tables'))}
               placeholder="Select tables to copy"
               onChange={this.handleSelectChange}
-              filterOptions={this.filterOptions}
               optionRenderer={this.optionRenderer}
-              options={this.transformOptions(this.getTableOptions())}/>
-          </div>
-          <div className="col-md-2">
-            <button
-              className="btn btn-success"
+              options={this.transformOptions(this.getTableOptions())}
+            />
+          </Col>
+          <Col md={2}>
+            <Button
+              bsStyle="success"
               onClick={this.quickstart}
-              disabled={!this.props.quickstart.get('tables') || this.props.quickstart.get('tables').count() === 0}
-            > Create
-            </button>
-          </div>
-        </div>
+              disabled={
+                !this.props.quickstart.get('tables') ||
+                this.props.quickstart.get('tables').count() === 0
+              }
+            >
+              Create
+            </Button>
+          </Col>
+        </Row>
       </div>
     );
 
@@ -127,28 +133,26 @@ export default createReactClass({
     );
   },
 
-  filterOptions(options, filterString, values) {
-    var filterOption = function(op) {
-      if (values && Immutable.fromJS(values).toMap().find(
-        function(item) {
-          return item.get('label') === op.label;
-        }, op)
-      ) {
-        return false;
-      }
-      var labelTest = String(op.label).toLowerCase();
-      var filterStr = filterString.toLowerCase();
-      return !filterStr || labelTest.indexOf(filterStr) >= 0;
-    };
-    return (options || []).filter(filterOption, this);
-  },
-
   transformOptions(options) {
-    const option = (value, label, render, disabled = false) => ({value, label, render, disabled});
+    const option = (value, label, render, disabled = false) => ({ value, label, render, disabled });
 
     return options.reduce((acc, o) => {
-      const parent = option(o.value, o.label, (<strong style={{color: '#000'}}>Schema: {o.label}</strong>), true);
-      const children = o.children.map(c => option(c.value, c.label, <div>{c.label}</div>));
+      const parent = option(
+        o.value,
+        o.label,
+        <strong
+          style={optgroupStyles}
+          title={`Select all tables in ${o.label} schema.`}
+          onClick={(event) => {
+            event.preventDefault();
+            this.selectAllFromScheme(o.children);
+          }}
+        >
+          Schema: {o.label}
+        </strong>,
+        true
+      );
+      const children = o.children.map((c) => option(c.value, c.label, <div>{c.label}</div>));
 
       return acc.concat(parent).concat(children);
     }, []);
@@ -156,6 +160,15 @@ export default createReactClass({
 
   optionRenderer(option) {
     return option.render;
-  }
+  },
 
+  selectAllFromScheme(schemaTables) {
+    const selected = this.getQuickstartValue(this.props.quickstart.get('tables'));
+    schemaTables.forEach((option) => {
+      if (!selected.find((item) => item.label === option.label)) {
+        selected.push(option);
+      }
+    });
+    this.props.onChange(this.props.configId, fromJS(selected.map((table) => table.value)));
+  }
 });
