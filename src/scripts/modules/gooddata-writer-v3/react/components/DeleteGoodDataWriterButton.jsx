@@ -29,11 +29,11 @@ export default React.createClass({
   render() {
     const loader = this.isPending() && <Loader className="fa fa-fw" />;
     return this.props.renderWithCaption ? (
-      <a onClick={this.handleDelete}>
+      <button onClick={this.handleDelete} className="btn btn-link btn-block">
         {this.renderConfirmModal()}
         {loader || <span className="kbc-icon-cup fa fa-fw" />}
         {' Move to Trash'}
-      </a>
+      </button>
     ) : (
       <Tooltip tooltip="Move To Trash" placement="top">
         <Button bsStyle="link" onClick={this.handleDelete} disabled={!!loader}>
