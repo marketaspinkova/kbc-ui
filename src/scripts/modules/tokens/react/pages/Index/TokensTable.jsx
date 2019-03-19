@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
-import {Link} from 'react-router';
-import {List, Map} from 'immutable';
-import {Check, Loader, ExternalLink} from '@keboola/indigo-ui';
-
+import { Link } from 'react-router';
+import { List, Map } from 'immutable';
+import { HelpBlock } from 'react-bootstrap';
+import { Check, Loader, ExternalLink, SearchBar } from '@keboola/indigo-ui';
 import Tooltip from '../../../../../react/common/Tooltip';
 import Confirm from '../../../../../react/common/Confirm';
 import ExpiresInfo from '../../components/tokenEditor/ExpiresInfo';
@@ -14,7 +14,6 @@ import SendTokenModal from '../../modals/SendTokenModal';
 import RefreshTokenModal from '../../modals/RefreshTokenModal';
 
 export default createReactClass({
-
   propTypes: {
     tokens: PropTypes.object.isRequired,
     currentAdmin: PropTypes.object.isRequired,
@@ -34,53 +33,58 @@ export default createReactClass({
         {this.renderTokenRefreshModal()}
         {this.renderTokenSendModal()}
         <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
-          <p>
-            Create new <ExternalLink href="https://help.keboola.com/storage/tokens/">token</ExternalLink> and limit access to specific buckets or components in you project.
-            <Link to="tokens-new" className="btn btn-success pull-right">
-              + New Token
-            </Link>
-          </p>
+          <SearchBar
+            placeholder="Search token"
+            query={this.props.localState.get('searchQuery', '')}
+            onChange={(query) => this.updateLocalState('searchQuery', query)}
+            additionalActions={
+              <Link to="tokens-new" className="btn btn-success">
+                + New Token
+              </Link>
+            }
+          />
+          <HelpBlock>
+            Create new{' '}
+            <ExternalLink href="https://help.keboola.com/storage/tokens/">token</ExternalLink> and
+            limit access to specific buckets or components in you project.
+          </HelpBlock>
         </div>
         <div className="table table-striped table-hover">
           <div className="thead">
             <div className="tr">
-              <div className="th">
-                Description
-              </div>
-              <div className="th">
-                Created
-              </div>
-              <div className="th">
-                Refreshed
-              </div>
-              <div className="th">
-                Expires
-              </div>
-              <div className="th">
-                Files
-              </div>
-              <div className="th">
-                Components
-              </div>
-              <div className="th">
-                Buckets
-              </div>
-              <div className="th">
-                Tokens
-              </div>
+              <div className="th">Description</div>
+              <div className="th">Created</div>
+              <div className="th">Refreshed</div>
+              <div className="th">Expires</div>
+              <div className="th">Files</div>
+              <div className="th">Components</div>
+              <div className="th">Buckets</div>
+              <div className="th">Tokens</div>
               <div className="th" />
             </div>
           </div>
           <div className="tbody">
-            {this.getSortedTokens().map(this.renderTableRow).toArray()}
+            {this.getFilteredTokens()
+              .map(this.renderTableRow)
+              .toArray()}
           </div>
         </div>
       </div>
     );
   },
 
-  getSortedTokens() {
-    return this.props.tokens.sortBy(t => t.get('description').toLowerCase());
+  getFilteredTokens() {
+    const currentAdmin = this.props.currentAdmin.get('id');
+    const searchQuery = this.props.localState.get('searchQuery');
+    let tokens = this.props.tokens;
+
+    if (searchQuery) {
+      tokens = tokens.filter((token) => token.get('description').toLowerCase().indexOf(searchQuery) >= 0);
+    }
+
+    return tokens
+      .sortBy((token) => token.get('description').toLowerCase())
+      .sortBy((token) => token.getIn(['admin', 'id']) === currentAdmin ? -1 : 0)
   },
 
   renderComponentsAccess(token) {
@@ -115,11 +119,7 @@ export default createReactClass({
   renderMasterLabel(token) {
     const isMaster = token.get('isMasterToken', false);
     if (isMaster) {
-      return (
-        <div className="label kbc-label-rounded-small label-success">
-          Master
-        </div>
-      );
+      return <div className="label kbc-label-rounded-small label-success">Master</div>;
     } else {
       return null;
     }
@@ -127,11 +127,7 @@ export default createReactClass({
   renderYoursLabel(token) {
     const adminId = token.getIn(['admin', 'id']);
     if (adminId && adminId === this.props.currentAdmin.get('id')) {
-      return (
-        <div className="label kbc-label-rounded-small label-primary">
-          Yours
-        </div>
-      );
+      return <div className="label kbc-label-rounded-small label-primary">Yours</div>;
     }
     return null;
   },
@@ -141,7 +137,11 @@ export default createReactClass({
       return null;
     }
     if (this.props.isDeletingFn(token)) {
-      return <span className="btn btn-link"><Loader/></span>;
+      return (
+        <span className="btn btn-link">
+          <Loader />
+        </span>
+      );
     }
     const tokenDesc = `${token.get('description')}(${token.get('id')})`;
     return (
@@ -163,6 +163,7 @@ export default createReactClass({
   renderTokenSendModal() {
     const token = this.props.localState.get('sendToken', Map());
     const isSending = this.props.isSendingTokenFn(token.get('id'));
+
     return (
       <SendTokenModal
         token={token}
@@ -173,7 +174,6 @@ export default createReactClass({
       />
     );
   },
-
 
   renderTokenSendButton(token) {
     const isMaster = token.get('isMasterToken', false);
@@ -186,11 +186,9 @@ export default createReactClass({
         this.updateLocalState('sendToken', token);
       };
       return (
-        <button
-          onClick={onClickButton}
-          className="btn btn-link">
+        <button onClick={onClickButton} className="btn btn-link">
           <Tooltip placement="top" tooltip="Send token via email">
-            <i className="fa fa-share"/>
+            <i className="fa fa-share" />
           </Tooltip>
         </button>
       );
@@ -204,9 +202,7 @@ export default createReactClass({
       this.updateLocalState('refreshToken', token);
     };
     return (
-      <button
-        onClick={onClickButton}
-        className="btn btn-link">
+      <button onClick={onClickButton} className="btn btn-link">
         <Tooltip placement="top" tooltip="Refresh token">
           <i className="fa fa-refresh" />
         </Tooltip>
@@ -229,7 +225,6 @@ export default createReactClass({
     );
   },
 
-
   updateLocalState(path, newValue) {
     const newls = this.props.localState.setIn([].concat(path), newValue);
     this.props.updateLocalState(newls);
@@ -237,12 +232,14 @@ export default createReactClass({
 
   renderTableRow(token) {
     return (
-      <Link to="tokens-detail" params={{tokenId: token.get('id')}}
-        className="tr" key={token.get('id')}>
+      <Link
+        to="tokens-detail"
+        params={{ tokenId: token.get('id') }}
+        className="tr"
+        key={token.get('id')}
+      >
         <div className="td">
-          {token.get('description')}
-          {' '}
-          {this.renderYoursLabel(token)}
+          {token.get('description')} {this.renderYoursLabel(token)}
           {this.renderMasterLabel(token)}
         </div>
         <div className="td">
@@ -254,20 +251,9 @@ export default createReactClass({
         <div className="td">
           <ExpiresInfo token={token} />
         </div>
-        <div className="td">
-          {token.get('canReadAllFileUploads') ?
-            'All files'
-            :
-            'Own files'
-          }
-
-        </div>
-        <div className="td">
-          {this.renderComponentsAccess(token)}
-        </div>
-        <div className="td">
-          {this.renderBucketsAccess(token)}
-        </div>
+        <div className="td">{token.get('canReadAllFileUploads') ? 'All files' : 'Own files'}</div>
+        <div className="td">{this.renderComponentsAccess(token)}</div>
+        <div className="td">{this.renderBucketsAccess(token)}</div>
         <div className="td">
           <Check isChecked={token.get('canManageTokens', false)} />
         </div>
