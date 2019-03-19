@@ -54,7 +54,7 @@ export default createReactClass({
     if (this.props.componentId === 'keboola.gooddata-writer') {
       return (
         <DeleteGoodDataWriterButton
-          configId={this.props.config.get('id')}
+          config={this.props.config}
           deleteConfigFn={this.handleDelete}
           isDeletingConfig={this.props.isDeleting}
         />

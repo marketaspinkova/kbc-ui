@@ -83,7 +83,8 @@ export default createReactClass({
       tables,
       deleteTable,
       createNewTable,
-      toggleTableExport
+      toggleTableExport,
+      configProvisioning
     };
   },
 
@@ -121,7 +122,7 @@ export default createReactClass({
             <li>
               <DeleteGoodDataWriterButton
                 renderWithCaption={true}
-                configId={this.state.configurationId}
+                config={this.state.configProvisioning.config}
                 deleteConfigFn={() => InstalledComponentsActionCreators.deleteConfiguration(COMPONENT_ID, this.state.configurationId, true)}
                 isDeletingConfig={this.state.isDeletingConfig}
               />

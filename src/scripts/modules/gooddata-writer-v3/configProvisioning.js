@@ -7,6 +7,7 @@ const COMPONENT_ID = 'keboola.gooddata-writer';
 const INPUT_MAPPING_PATH = ['storage', 'input', 'tables'];
 
 export default function(configId) {
+  const config = InstalledComponentStore.getConfig(COMPONENT_ID, configId);
   const configData = InstalledComponentStore.getConfigData(COMPONENT_ID, configId) || Map();
   const { getLocalState, updateLocalState, deleteLocalStatePath } = localStateProvisioning(configId);
   const parameters = configData.get('parameters', Map());
@@ -47,6 +48,7 @@ export default function(configId) {
   }
 
   return {
+    config,
     configData,
     parameters,
     inputMapping,

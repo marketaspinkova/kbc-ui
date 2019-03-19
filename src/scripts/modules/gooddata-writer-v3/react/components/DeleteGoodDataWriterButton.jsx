@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Alert } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 import Tooltip from '../../../../react/common/Tooltip';
 import ConfirmModal from '../../../../react/common/ConfirmModal';
@@ -13,7 +13,7 @@ const COMPONENT_ID = 'keboola.gooddata-writer';
 
 export default React.createClass({
   propTypes: {
-    configId: React.PropTypes.string.isRequired,
+    config: React.PropTypes.object.isRequired,
     deleteConfigFn: React.PropTypes.func.isRequired,
     isDeletingConfig: React.PropTypes.bool.isRequired,
     renderWithCaption: React.PropTypes.bool
@@ -49,7 +49,8 @@ export default React.createClass({
   handleDelete(e) {
     e.preventDefault();
     e.stopPropagation();
-    const { configId, deleteConfigFn } = this.props;
+    const { deleteConfigFn } = this.props;
+    const configId = this.props.config.get('id');
     const stopLoading = () => this.setState({ loadingData: false });
     this.setState({ loadingData: true });
     InstalledComponentsActions.loadComponentConfigData(COMPONENT_ID, configId)
@@ -87,16 +88,25 @@ export default React.createClass({
   },
 
   renderConfirmModal() {
-    const { pid } = this.state;
     return (
       <ConfirmModal
         show={this.state.showModal}
         onHide={this.closeModal}
-        title="Delete GoodData project and move configuration to Trash"
-        text={`This will also delete the GoodData project(${pid}). Delete the GoodData project and move the configuration to Trash?`}
+        title="Move Configuration to Trash"
+        text={(
+          <div>
+            <p>
+              Are you sure you want to move the configuration
+              {' '}<strong>{this.props.config.get('name')}</strong> to Trash?
+            </p>
+            <Alert bsStyle="warning">
+              This will also delete the GoodData project (PID: <code>{this.state.pid}</code>).
+            </Alert>
+          </div>
+        )}
         isLoading={this.state.isDeletingProject}
         onConfirm={() => this.handleExtraConfirm()}
-        buttonLabel="Delete project and  move to Trash"
+        buttonLabel="Move to Trash"
         buttonType="danger"
       />
     );
