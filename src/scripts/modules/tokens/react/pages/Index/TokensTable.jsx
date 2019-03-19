@@ -74,8 +74,7 @@ export default createReactClass({
   },
 
   getFilteredTokens() {
-    const currentAdmin = this.props.currentAdmin.get('id');
-    const searchQuery = this.props.localState.get('searchQuery');
+    const searchQuery = this.props.localState.get('searchQuery').toLowerCase();
     let tokens = this.props.tokens;
 
     if (searchQuery) {
@@ -84,7 +83,7 @@ export default createReactClass({
 
     return tokens
       .sortBy((token) => token.get('description').toLowerCase())
-      .sortBy((token) => token.getIn(['admin', 'id']) === currentAdmin ? -1 : 0)
+      .sortBy((token) => token.getIn(['admin', 'id']) === this.props.currentAdmin.get('id') ? -1 : 0)
   },
 
   renderComponentsAccess(token) {
