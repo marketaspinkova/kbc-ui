@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Button, Alert } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 import Tooltip from '../../../../react/common/Tooltip';
@@ -8,7 +9,7 @@ import { loadProvisioningData } from '../../../gooddata-writer-v3/gooddataProvis
 
 import GoodDataProvisioningActions from '../../../gooddata-writer-v3/gooddataProvisioning/actions';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     config: PropTypes.object.isRequired,
     deleteConfigFn: PropTypes.func.isRequired,
