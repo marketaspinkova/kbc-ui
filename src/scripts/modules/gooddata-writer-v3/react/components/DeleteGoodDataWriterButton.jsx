@@ -10,7 +10,7 @@ import GoodDataProvisioningActions from '../../../gooddata-writer-v3/gooddataPro
 
 export default React.createClass({
   propTypes: {
-    config: PropTypes.func.isRequired,
+    config: PropTypes.object.isRequired,
     deleteConfigFn: PropTypes.func.isRequired,
     getConfigDataFn: PropTypes.func.isRequired,
     isDeletingConfig: PropTypes.bool.isRequired,
