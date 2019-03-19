@@ -72,8 +72,9 @@ export default createReactClass({
       exportingTable: TablesStore.getIsExportingTable(table.get('id')),
       tableLinks: this.getTableLinks(table, bucket),
       tableAliases: this.getTableAliases(table, tables, sapiToken),
-      columnMetadata: MetadataStore.getTableColumnsMetadata(table.get('id')),
-      openBuckets: ColumnsLocalStore.getOpenedColumns(),
+      machineColumnMetadata: MetadataStore.getLastUpdatedByColumnMetadata(table.get('id')) | Map(),
+      userColumnMetadata: MetadataStore.getUserProvidedColumnMetadata(table.get('id')) | Map(),
+      openColumns: ColumnsLocalStore.getOpenedColumns(),
     };
   },
 
@@ -195,6 +196,11 @@ export default createReactClass({
                   addingColumn={this.state.addingColumn}
                   deletingColumn={this.state.deletingColumn}
                   canWriteTable={this.state.canWriteTable}
+                  machineColumnMetadata={this.state.machineColumnMetadata}
+                  userColumnMetadata={this.state.userColumnMetadata}
+                  activeColumnId={this.state.activeColumnId}
+                  openColumns={this.state.openColumns}
+                  expandAllColumns={this.state.expandAllColumns}
                 />
               </Tab.Pane>
               <Tab.Pane eventKey="events">

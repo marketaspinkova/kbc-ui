@@ -35,6 +35,12 @@ var MetadataStore = StoreUtils.createStore({
     return _store.getIn(['metadata', 'tableColumns', tableId]);
   },
 
+  getAllTableColumnsMetadataByProvider: function(tableId, provider) {
+    return this.getTableColumnsMetadata(tableId).map(
+      (metadata) => metadata.filter(data => data.get('provider') === provider)
+    );
+  },
+
   getTableMetadataValue: function(tableId, provider, metadataKey) {
     return this.getTableMetadata(tableId, provider, metadataKey).get('value');
   },
@@ -122,6 +128,15 @@ var MetadataStore = StoreUtils.createStore({
       return columnHasDatatype.count() > 0;
     });
     return columnsWithBaseTypes.count() > 0;
+  },
+
+  getLastUpdatedByColumnMetadata: function(tableId) {
+    const lastUpdateInfo = this.getTableLastUpdatedInfo(tableId);
+    return this.getAllTableColumnsMetadataByProvider(tableId, lastUpdateInfo.component);
+  },
+
+  getUserProvidedColumnMetadata: function (tableId) {
+    return this.getAllTableColumnsMetadataByProvider(tableId, 'user');
   }
 });
 

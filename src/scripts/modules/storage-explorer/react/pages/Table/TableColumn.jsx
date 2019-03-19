@@ -1,7 +1,7 @@
-
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
+import { Map } from 'immutable';
 import classnames from 'classnames';
 import { PanelGroup, Panel, Button, Row, Col } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
@@ -9,7 +9,7 @@ import { Loader } from '@keboola/indigo-ui';
 import Tooltip from '../../../../../react/common/Tooltip';
 import CreateColumnModal from '../../modals/CreateColumnModal';
 import DeleteColumnModal from '../../modals/DeleteColumnModal';
-import ColumnMetadata from './ColumnMetadata';
+import ColumnDetails from './ColumnDetails';
 import { deleteTableColumn, addTableColumn, setOpenedColumns } from '../../../Actions';
 
 export default createReactClass({
@@ -20,12 +20,16 @@ export default createReactClass({
     tableLinks: PropTypes.array.isRequired,
     sapiToken: PropTypes.object.isRequired,
     urlTemplates: PropTypes.object.isRequired,
+    creatingPrimaryKey: PropTypes.bool.isRequired,
+    deletingPrimaryKey: PropTypes.bool.isRequired,
     addingColumn: PropTypes.object.isRequired,
     deletingColumn: PropTypes.object.isRequired,
     canWriteTable: PropTypes.bool.isRequired,
+    machineColumnMetadata: PropTypes.object.isRequired,
+    userColumnMetadata: PropTypes.object.isRequired,
     activeColumnId: PropTypes.string,
-    openColumns: PropTypes.object.isRequired,
-    expandAllColumns: PropTypes.bool.isRequired
+    openColumns: PropTypes.object,
+    expandAllColumns: PropTypes.bool
   },
 
   getInitialState() {
@@ -34,6 +38,18 @@ export default createReactClass({
       deleteColumnModal: false,
       createColumnModal: false
     };
+  },
+
+  getColumnId(columnName) {
+    return this.props.table.get('id') + '.' + columnName;
+  },
+
+  getMachineColumnMetadata(column) {
+    return this.props.machineColumnMetadata.filter((metadata, col) => col === column);
+  },
+
+  getUserColumnMetadata(column) {
+    return this.props.userColumnMetadata.filter((metadata, col) => col === column);
   },
 
   render() {
@@ -79,13 +95,18 @@ export default createReactClass({
         collapsible
         expanded={this.isPanelExpanded(column)}
         className={classnames('storage-panel', {
-          'is-active': this.props.activeColumnId === column.get('id')
+          'is-active': this.props.activeColumnId === this.getColumnId(column)
         })}
         header={this.renderColumnHeader(column)}
-        key={column.get('id')}
-        onSelect={() => this.onSelectColumn(column.get('id'))}
+        key={this.getColumnId(column)}
+        onSelect={() => this.onSelectColumn(this.getColumnId(column))}
       >
-        <ColumnMetadata column={column}/>
+        <ColumnDetails
+          columnId={this.getColumnId(column)}
+          columnName={column}
+          machineColumnMetadata={this.getMachineColumnMetadata(column)}
+          userColumnMetadata={this.getUserColumnMetadata(column)}
+        />
       </Panel>
     );
   },
@@ -274,23 +295,19 @@ export default createReactClass({
     });
   },
 
-  onSelectColum(columnId) {
-    const opened = this.props.openColumns;
+  onSelectColumn(columnId) {
+    const opened = this.props.openColumns | Map();
 
     setOpenedColumns(opened.has(columnId) ? opened.delete(columnId) : opened.add(columnId));
   },
 
   isPanelExpanded(column) {
-    if (this.props.activeColumnId === column.get('id')) {
+    if (this.props.activeColumnId === this.getColumnId(column)) {
       return true;
     }
 
-    if (this.props.openColumns.has(column.get('id'))) {
+    if (this.props.openColumns & this.props.openColumns.has(this.getColumnId(column))) {
       return true;
-    }
-
-    if (this.props.expandAllColumns && column.get('matchOnlyColumn')) {
-      return false;
     }
 
     return this.props.expandAllColumns;
