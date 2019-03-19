@@ -137,12 +137,19 @@ export default createReactClass({
   filterOptions(options, filterString, values) {
     const filterStr = filterString.toLowerCase();
 
-    return options.filter((op) => {
-      if (values.find((item) => item.label === op.label)) {
-        return false;
-      }
-      return !filterStr || op.label.toLowerCase().indexOf(filterStr) >= 0;
-    });
+    return options
+      .filter((option) => {
+        if (values.find((item) => item.label === option.label)) {
+          return false;
+        }
+        return !filterStr || option.label.toLowerCase().indexOf(filterStr) >= 0;
+      })
+      .filter((option, index, allOptions) => {
+        if (option.disabled && (!allOptions[index + 1] || allOptions[index + 1].disabled)) {
+          return false;
+        }
+        return true;
+      });
   },
 
   transformOptions(options) {
@@ -165,7 +172,6 @@ export default createReactClass({
         true
       );
       const children = o.children.map((c) => option(c.value, c.label, <div>{c.label}</div>));
-
       return acc.concat(parent).concat(children);
     }, []);
   },
