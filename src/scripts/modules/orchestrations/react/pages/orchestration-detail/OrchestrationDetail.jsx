@@ -58,10 +58,6 @@ export default createReactClass({
     return this.setState(this.getStateFromStores());
   },
 
-  _handleFilterChange(query) {
-    return OrchestrationsActionCreators.setOrchestrationsFilter(query);
-  },
-
   _handleJobsReload() {
     return OrchestrationsActionCreators.loadOrchestrationJobsForce(this.state.orchestration.get('id'));
   },
