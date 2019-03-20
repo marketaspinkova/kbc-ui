@@ -160,7 +160,7 @@ export default createReactClass({
           </Col>
           <Col sm={9}>
             <FormControl type="file" onChange={this.handleFile} />
-            <HelpBlock>Table structure will be setup from CSV file.</HelpBlock>
+            <HelpBlock>Table structure will be set up from the CSV file.</HelpBlock>
           </Col>
         </FormGroup>
         <FormGroup>
@@ -223,7 +223,7 @@ export default createReactClass({
               onChange={this.handlePrimaryKey}
             />
             <HelpBlock>
-              Primary key is useful for incremental imports - rows that already exists in table are
+              Primary key is useful for incremental imports - rows that already exist in the table are
               updated.
             </HelpBlock>
           </Col>
@@ -329,7 +329,7 @@ export default createReactClass({
   validateName() {
     if (!/^[a-zA-Z0-9_-]*$/.test(this.state.name)) {
       this.setState({
-        warning: 'Only alphanumeric characters, dash and underscores are allowed in table name.'
+        warning: 'Only alphanumeric characters, dash, and underscores are allowed in the table name.'
       });
     } else if (this.state.name.length > 64) {
       this.setState({
@@ -337,7 +337,7 @@ export default createReactClass({
       });
     } else if (this.state.name.indexOf('_') === 0) {
       this.setState({
-        warning: `Table name cannot start with underscore.`
+        warning: `Table name cannot start with an underscore.`
       });
     } else if (this.tableExists()) {
       this.setState({

@@ -81,7 +81,7 @@ export default createReactClass({
           this._renderDetail()
         ) : (
           <div className="kbc-row">
-            <div className="well">This transformation is not supported in UI.</div>
+            <div className="well">This transformation is not supported in the UI.</div>
           </div>
         )}
       </div>
@@ -236,7 +236,7 @@ export default createReactClass({
             <div key="block" className="help-block">
               <span>
                 {'OpenRefine transformations are now in public beta. '}
-                {'Please be aware, that things may change before it makes to production. '}
+                {'Please be aware that things may change before the transformations make it to production. '}
                 {'If you encounter any errors, please '}
                 <button className="btn btn-link btn-link-inline" onClick={contactSupport}>
                   contact us

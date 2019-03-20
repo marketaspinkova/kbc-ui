@@ -30,7 +30,7 @@ export default createReactClass({
   },
 
   render() {
-    let provDescription = 'These are readonly credentials to the database provided by Keboola.';
+    let provDescription = 'These are read-only credentials to the database provided by Keboola.';
 
     if (this.props.driver === 'redshift') {
       provDescription = 'These are write credentials to the database provided by Keboola.';
@@ -89,7 +89,7 @@ export default createReactClass({
   },
 
   _snowflakeDescription() {
-    return <span>These are write credentials to the snowflake database provided by Keboola.</span>;
+    return <span>These are write credentials to the Snowflake database provided by Keboola.</span>;
   },
 
   _renderTestCredentials() {

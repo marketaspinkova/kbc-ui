@@ -35,7 +35,7 @@ export default createReactClass({
         isPending={this.props.pendingActions.get('delete')}
         confirm={{
           title: 'Delete Transformation',
-          text: `Do you really want to delete transformation ${this.props.transformation.get('name', this.props.transformation.get('id'))}?`,
+          text: `Do you really want to delete the transformation ${this.props.transformation.get('name', this.props.transformation.get('id'))}?`,
           onConfirm: this._deleteTransformation
         }}
       />

@@ -84,8 +84,8 @@ export default createReactClass({
                 Filtering{' '}
                 <Hint title="Filtering">
                   <p>
-                    You can specify one column to be filtered and comma separated values you&apos;re looking for. The alias
-                    table will contain only these rows.
+                    You can specify one column to filter by, and comma separated values you&apos;re looking for. The alias
+                    table will contain only the matching rows.
                   </p>
                 </Hint>
               </Col>
@@ -121,9 +121,9 @@ export default createReactClass({
               <Col sm={3} componentClass={ControlLabel}>
                 Columns{' '}
                 <Hint title="Columns">
-                  <p>By default columns are synchronized with source table.</p>
+                  <p>By default, columns are synchronized with the source table.</p>
                   <p>
-                    You can disable this behaviour and select only particular columns to be included in alias table.
+                    You can disable this behaviour and select only particular columns to be included in the alias table.
                   </p>
                 </Hint>
               </Col>

@@ -108,7 +108,7 @@ export default createReactClass({
               name="authtokengroup">
               Production
             </Radio>
-            <HelpBlock>You are paying for it. Please contact support to enable production project.</HelpBlock>
+            <HelpBlock>You are paying for it. Please contact support to enable a production project.</HelpBlock>
           </div>
           <div>
             <Radio

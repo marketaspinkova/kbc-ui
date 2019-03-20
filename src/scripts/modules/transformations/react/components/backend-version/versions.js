@@ -3,7 +3,7 @@ import moment from 'moment';
 const versions = {
   r: [
     {
-      label: 'Latest (recommended and up to date environment)',
+      label: 'Latest (recommended and up-to-date environment)',
       version: ''
     },
     {
@@ -24,7 +24,7 @@ const versions = {
   ],
   python: [
     {
-      label: 'Latest (recommended and up to date environment)',
+      label: 'Latest (recommended and up-to-date environment)',
       version: ''
     },
     {

@@ -120,8 +120,8 @@ const getComponentBadges = (component) => {
           <i className="fa fa-clock-o badge-component-item-complexity-icon"/>
           <i className="fa fa-clock-o badge-component-item-complexity-icon"/>
         </span>),
-      description: `Medium setup. You need to use documentation to set this ${componentType} up.`,
-      descriptionPlain: `Medium setup. You need to use documentation to set this ${componentType} up.`,
+      description: `Medium setup. Use documentation to set this ${componentType} up.`,
+      descriptionPlain: `Medium setup. Use documentation to set this ${componentType} up.`,
       key: 'complexity'
     });
   }
@@ -131,8 +131,8 @@ const getComponentBadges = (component) => {
         <span>
           <i className="fa fa-clock-o badge-component-item-complexity-icon"/>
         </span>),
-      description: `Easy setup. You can setup this ${componentType} in few minutes with just basic knowledge.`,
-      descriptionPlain: `Easy setup. You can setup this ${componentType} in few minutes with just basic knowledge.`,
+      description: `Easy setup. You can set up this ${componentType} in few minutes with just basic knowledge.`,
+      descriptionPlain: `Easy setup. You can set up this ${componentType} in few minutes with just basic knowledge.`,
       key: 'complexity'
     });
   }

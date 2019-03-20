@@ -21,7 +21,7 @@ export default createReactClass({
         <span className="col-md-8">
           <h2>This transformation bucket is empty.</h2>
           <p className="add-button"><NewTransformation type="button" label="New Transformation" bucket={this.props.bucket}/></p>
-          <p className="help"><small><strong>What is a transformation?</strong><br />Transformations pick data from Storage, manipulate it and then store it back. They can be written in SQL (Snowflake), Python, R or OpenRefine.</small></p>
+          <p className="help"><small><strong>What is a transformation?</strong><br />Transformations pick data from Storage, manipulate it and then store it back. They can be written in SQL (Snowflake), Python, R, and OpenRefine.</small></p>
         </span>
       </div>
     );

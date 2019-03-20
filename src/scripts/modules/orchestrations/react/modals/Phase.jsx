@@ -51,7 +51,7 @@ export default createReactClass({
                 <HelpBlock>
                   {this.alreadyExist()
                     ? `Phase with name ${this.state.value} already exists.`
-                    : 'Phase name is a unique string and helps to describe the phase. Typical name could be extract, transform, load etc.'}
+                    : 'Phase name is a unique string and helps to describe the phase. A typical name could be extract, transform, load, etc.'}
                 </HelpBlock>
               </Col>
             </FormGroup>

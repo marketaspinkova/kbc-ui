@@ -40,11 +40,11 @@ export default createReactClass({
             />
             <HelpBlock>
               <span>
-                Make sure that this AWS Access Key ID has correct permissions. Required permissions are
+                Make sure that this AWS Access Key ID has correct permissions. The required permissions are
                 <ul>
                   <li><code>s3:GetObject</code> for the given key/wildcard</li>
                   <li><code>s3:ListBucket</code> to access all wildcard files</li>
-                  <li><code>s3:GetBucketLocation</code> to determine bucket region</li>
+                  <li><code>s3:GetBucketLocation</code> to determine the bucket region</li>
                 </ul>
                 More information is available in the <ExternalLink href="https://help.keboola.com/extractors/storage/simple-aws-s3/">documentation</ExternalLink>.
               </span>

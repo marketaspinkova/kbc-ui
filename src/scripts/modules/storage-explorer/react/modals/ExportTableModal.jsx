@@ -32,7 +32,7 @@ export default createReactClass({
             {this.renderError()}
 
             <p>
-              When the export is finished, you will be given link to download the file, it will also appear in Storage
+              When the export is finished, you will be given a link to download the file. It will also appear in Storage
               Files. You can track export progress in Storage Jobs.
             </p>
           </Modal.Body>

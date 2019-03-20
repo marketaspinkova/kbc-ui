@@ -26,7 +26,7 @@ export default createReactClass({
         </Modal.Header>
         <Modal.Body>
           <p>
-            Do you really want to truncate table <strong>{this.props.tableId}</strong>?
+            Do you really want to truncate the table <strong>{this.props.tableId}</strong>?
           </p>
         </Modal.Body>
         <Modal.Footer>

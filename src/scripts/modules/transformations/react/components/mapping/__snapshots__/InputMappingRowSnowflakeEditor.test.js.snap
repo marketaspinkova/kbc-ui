@@ -114,11 +114,11 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok 1`] = `
       <HelpBlock
         bsClass="help-block"
       >
-        Type of table load from Storage into a Workspace. 
+        Type of table load from Storage into a Workspace. The 
         <code>
           Clone
         </code>
-         load type can be applied only on Snowflake tables without any filtering parameters.
+         load type can be applied only to Snowflake tables without any filtering parameters.
       </HelpBlock>
     </Col>
   </FormGroup>
@@ -464,11 +464,11 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source and des
       <HelpBlock
         bsClass="help-block"
       >
-        Type of table load from Storage into a Workspace. 
+        Type of table load from Storage into a Workspace. The 
         <code>
           Clone
         </code>
-         load type can be applied only on Snowflake tables without any filtering parameters.
+         load type can be applied only to Snowflake tables without any filtering parameters.
       </HelpBlock>
     </Col>
   </FormGroup>
@@ -814,11 +814,11 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
       <HelpBlock
         bsClass="help-block"
       >
-        Type of table load from Storage into a Workspace. 
+        Type of table load from Storage into a Workspace. The 
         <code>
           Clone
         </code>
-         load type can be applied only on Snowflake tables without any filtering parameters.
+         load type can be applied only to Snowflake tables without any filtering parameters.
       </HelpBlock>
     </Col>
   </FormGroup>
@@ -1165,11 +1165,11 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
       <HelpBlock
         bsClass="help-block"
       >
-        Type of table load from Storage into a Workspace. 
+        Type of table load from Storage into a Workspace. The 
         <code>
           Clone
         </code>
-         load type can be applied only on Snowflake tables without any filtering parameters.
+         load type can be applied only to Snowflake tables without any filtering parameters.
       </HelpBlock>
     </Col>
   </FormGroup>

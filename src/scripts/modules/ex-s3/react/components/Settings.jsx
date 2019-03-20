@@ -58,7 +58,7 @@ export default createReactClass({
     if (this.isExistingTable()) {
       return (<div className="help-block">Primary key of an existing table cannot be changed.</div>);
     }
-    return (<div className="help-block">Primary key of the table. If primary key is set, updates can be done on table by selecting <strong>incremental loads</strong>. Primary key can consist of multiple columns.</div>);
+    return (<div className="help-block">Primary key of the table. If a primary key is set, updates can be done on the table by selecting <strong>incremental loads</strong>. The primary key can consist of multiple columns.</div>);
   },
 
   primaryKeyPlaceholder() {
@@ -114,7 +114,7 @@ export default createReactClass({
               disabled={this.props.disabled}
             />
             <HelpBlock>
-              Do not include bucket name or wildcard asterisk.
+              Do not include a bucket name or wildcard asterisk.
             </HelpBlock>
           </Col>
         </FormGroup>
@@ -129,7 +129,7 @@ export default createReactClass({
             </Checkbox>
             <HelpBlock>
               If wildcard is turned on, all files in S3 with the defined prefix will be downloaded.
-              {' '}Please note, that all files need to have the same header.
+              {' '}Please note that all files must have the same header.
             </HelpBlock>
           </Col>
         </FormGroup>
@@ -141,7 +141,7 @@ export default createReactClass({
           disabled={this.props.disabled}
           label="Destination"
           bucket={this.props.destinationDefaultBucket}
-          help="Table in Storage, where the CSV file will be imported. If the table or bucket does not exist, it will be created."
+          help="Table in Storage where the CSV file will be imported. If the table or bucket does not exist, it will be created."
           onEdit={this.props.onDestinationEdit}
           editing={this.props.destinationEditing}
         />
@@ -155,8 +155,8 @@ export default createReactClass({
               Incremental Load
             </Checkbox>
             <HelpBlock>
-              If incremental load is turned on, table will be updated instead of rewritten.
-              {' '}Tables with primary key will update rows, tables without primary key will append rows.
+              If incremental load is turned on, the table will be updated instead of rewritten.
+              {' '}Tables with a primary key will have rows updated, tables without a primary key will have rows appended.
             </HelpBlock>
           </Col>
         </FormGroup>

@@ -40,7 +40,7 @@ export default createReactClass({
           <EmptyState>
             <small>
               <p>Requires temporary authorization of a Google account after which a short-lived access token is obtained to load profiles from the selected account. </p>
-              <p>Google authorization uses a pop up window, hence disable windows pop up blocking for this site in the browser settings please.</p>
+              <p>Google authorization uses a pop-up window. Please disable pop-up blocking for this site in the browser settings.</p>
             </small>
           </EmptyState>
         }

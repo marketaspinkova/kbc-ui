@@ -68,7 +68,7 @@ export default createReactClass({
         promptTextCreator={label => label}
         clearable={true}
         disabled={this.props.disabled}
-        placeholder="Select bucket or create new"
+        placeholder="Select a bucket or create a new one"
         value={parts.bucket}
         onChange={this.selectBucket}
         options={this.prepareBucketsOptions().toJS()}
@@ -82,7 +82,7 @@ export default createReactClass({
         promptTextCreator={label => label}
         clearable={true}
         disabled={this.props.disabled}
-        placeholder="Select table or create new"
+        placeholder="Select a table or create a new one"
         value={parts.table}
         onChange={this.selectTable}
         options={this.prepareTablesOptions().toJS()}

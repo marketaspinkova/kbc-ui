@@ -30,7 +30,7 @@ export default createReactClass({
           label="Delimiter"
           value={this.props.delimiter}
           onChange={this.onChangeDelimiter}
-          help={(<span>Field delimiter used in CSV file. Default value is <code>,</code>. Use <code>\t</code> for tabulator.</span>)}
+          help={(<span>Field delimiter used in the CSV file. The default value is <code>,</code>. Use <code>\t</code> for tabulator.</span>)}
           disabled={this.props.disabled}
         />
         <FormGroup>
@@ -43,7 +43,7 @@ export default createReactClass({
               disabled={this.props.disabled}
             />
             <HelpBlock>
-              Field enclosure used in CSV file. Default value is <code>&quot;</code>.
+              Field enclosure used in the CSV file. The default value is <code>&quot;</code>.
             </HelpBlock>
           </Col>
         </FormGroup>

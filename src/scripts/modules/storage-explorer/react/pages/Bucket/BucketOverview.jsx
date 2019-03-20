@@ -135,7 +135,7 @@ export default createReactClass({
             </span>
           )}{' '}
           {this.props.sapiToken.getIn(['owner', 'id']) !== source.getIn(['project', 'id']) && (
-            <Hint title="Source bucket">Bucket is linked from other project.</Hint>
+            <Hint title="Source bucket">Bucket is linked from another project.</Hint>
           )}
         </td>
       </tr>
@@ -238,11 +238,11 @@ export default createReactClass({
 
   sharingInfo(bucket) {
     if (bucket.get('sharing') === 'organization') {
-      return 'Shared to organization. Only organization members are able to link the bucket to a project.';
+      return 'Shared to an organization. Only the organization members are able to link the bucket to a project.';
     }
 
     if (bucket.get('sharing') === 'organization-project') {
-      return "Shared to organization. Every organization's project member is able to link the bucket to a project.";
+      return "Shared to an organization. Every organization's project member is able to link the bucket to a project.";
     }
 
     return 'Disabled';

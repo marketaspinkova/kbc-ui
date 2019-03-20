@@ -74,8 +74,8 @@ export default createReactClass({
 
         <Well>
           <p>
-            Create a new table which will be a replica of the data as it existed at the time you choose. You can
-            replicate data from up to <strong>{retentionLimit} days</strong> in past.
+            Create a new table which will be a replica of the data as it existed at the time of your choice. You can
+            replicate data up to <strong>{retentionLimit} days</strong> old.
           </p>
 
           <Button bsStyle="primary" onClick={this.openTimeTravelModal} disabled={this.props.restoringTable}>
@@ -275,10 +275,10 @@ export default createReactClass({
         text={
           snapshot.get('description') ? (
             <p>
-              Do you really want to delete snapshot {snapshot.get('id')} ({snapshot.get('description')})?
+              Do you really want to delete the snapshot {snapshot.get('id')} ({snapshot.get('description')})?
             </p>
           ) : (
-            <p>Do you really want to delete snapshot {snapshot.get('id')}?</p>
+            <p>Do you really want to delete the snapshot {snapshot.get('id')}?</p>
           )
         }
         onConfirm={this.handleRemoveSnapshot}

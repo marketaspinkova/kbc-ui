@@ -85,7 +85,7 @@ export default function(COMPONENT_ID, configId) {
       return createSpreadsheet(table)
         .then((data) => {
           if (data.status === 'error') {
-            throw new SyncActionError(data.message || 'There was an error while creating spreadsheet');
+            throw new SyncActionError(data.message || 'There was an error while creating the spreadsheet');
           }
           return updateTable(
             table
@@ -103,7 +103,7 @@ export default function(COMPONENT_ID, configId) {
       return addSheet(table)
         .then((data) => {
           if (data.status === 'error') {
-            throw new SyncActionError(data.message || 'There was an error while updating spreadsheet');
+            throw new SyncActionError(data.message || 'There was an error while updating the spreadsheet');
           }
           return updateTable(
             table.set('sheetId', data.sheet.sheetId),

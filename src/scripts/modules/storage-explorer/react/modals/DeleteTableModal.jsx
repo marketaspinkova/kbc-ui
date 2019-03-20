@@ -32,7 +32,7 @@ export default createReactClass({
         </Modal.Header>
         <Modal.Body>
           <p>
-            Do you really want to delete table <strong>{this.props.table.get('id')}</strong>?
+            Do you really want to delete the table <strong>{this.props.table.get('id')}</strong>?
           </p>
 
           {this.hasAliasesOrLinks() && (

@@ -38,7 +38,7 @@ export default createReactClass({
     } else if (isLoadingSourceTables) {
       return (
         <div>
-          <Loader/> Fetching table list from source database
+          <Loader/> Fetching list of tables from source database
         </div>
       );
     }
@@ -58,7 +58,7 @@ export default createReactClass({
               Reload
             </a>
             {' '}
-            the tables list.
+            the list of tables.
           </div>
         </div>
       );

@@ -66,7 +66,7 @@ export default createReactClass({
         </WizardStep>
         <WizardStep step={Steps.STEP_MENTIONS} title="Mentions" buttons={mentionsButtons}>
           <div className="col-md-8">
-            <p>Mentions of authorized user will be fetched.</p>
+            <p>Mentions of an authorized user will be fetched.</p>
           </div>
         </WizardStep>
         <WizardStep step={Steps.STEP_FOLLOWERS} title="Followers List" buttons={followersButtons}>

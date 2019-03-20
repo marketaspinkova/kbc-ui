@@ -48,7 +48,7 @@ export default createReactClass({
               <label htmlFor="title" className="col-sm-1 control-label" />
               <div className="col-sm-11">
                 <Select.Creatable
-                  placeholder="Select phase or type new..."
+                  placeholder="Select a phase or type a new..."
                   clearable={false}
                   key="phases select"
                   name="phaseselector"
@@ -59,7 +59,7 @@ export default createReactClass({
                   options= {this.getPhasesOptions()}
                 />
                 <span className="help-block">
-                  Select a existing phase name or type new phase name.
+                  Select an existing phase name or type a new phase name.
                 </span>
               </div>
             </div>

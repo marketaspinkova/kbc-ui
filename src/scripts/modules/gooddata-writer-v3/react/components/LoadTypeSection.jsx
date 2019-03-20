@@ -38,7 +38,7 @@ export default createReactClass({
               Full Load
             </Radio>
             <HelpBlock>
-              All Data in GoodData dataset will be replaced by current Storage table data.
+              All data in the GoodData dataset will be replaced by the current Storage table data.
             </HelpBlock>
             <Radio
               type="radio"
@@ -84,13 +84,13 @@ export default createReactClass({
              <HelpBlock>
                {isGrainInvalid &&
                  <Alert bsStyle="danger">
-                   <i className="fa fa-warning" /> Please specify second attribute, reference or date type columns.
+                   <i className="fa fa-warning" /> Please specify a second attribute, reference, or date type columns.
                  </Alert>
                }
                <ExternalLink href="https://developer.gooddata.com/article/set-fact-table-grain">
                  Fact grain
                </ExternalLink>
-               {' '} columns help to avoid of duplicates records in GoodData dataset without a connection point. <strong> Specify at least 2 of</strong> attribute, reference or date type columns.
+               {' '} columns help to avoid duplicate records in the GoodData dataset without a connection point. <strong> Specify at least 2 </strong> attributes, reference or date type columns.
              </HelpBlock>
            </Col>
          </FormGroup>

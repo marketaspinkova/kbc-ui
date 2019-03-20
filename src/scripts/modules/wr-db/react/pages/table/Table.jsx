@@ -141,7 +141,7 @@ export default componentId => {
               </ul>
               {pkMismatchList.size > 0 &&
               <Alert bsStyle="warning">
-                Primary Key is set to non-existing column(s). Please update Primary Key settings.
+                The primary Key is set to non-existing column(s). Please update the Primary Key settings.
               </Alert>
               }
             </div>

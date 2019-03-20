@@ -59,7 +59,7 @@ export default createReactClass({
         />
         <div className="help-block">
           {'Please note that the graph shows a maximum of 7 levels of nesting and the only '}
-          supported writer is GoodData writer.
+          supported writer is the GoodData writer.
         </div>
       </div>
     );

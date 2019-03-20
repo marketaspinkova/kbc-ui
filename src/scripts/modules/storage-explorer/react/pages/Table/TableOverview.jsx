@@ -262,7 +262,7 @@ export default createReactClass({
         title="Remove primary key"
         buttonType="danger"
         buttonLabel="Remove"
-        text={<p>Do you really want to remove table primary key?</p>}
+        text={<p>Do you really want to remove the table primary key?</p>}
         onConfirm={this.handleRemovePrimaryKey}
         onHide={this.closeRemovePrimaryKeyModal}
       />

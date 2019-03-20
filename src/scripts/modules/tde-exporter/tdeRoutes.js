@@ -57,7 +57,7 @@ const registerOAuthV2Route = writerComponentId => ({
           .error(() => {
             ApplicationActionCreators.sendNotification({
               message:
-                'Failed to verify authorized account, please contact us using the Support button in the menu on the left.',
+                'Failed to verify the authorized account, please contact us using the Support button in the menu on the left.',
               type: 'error'
             });
 

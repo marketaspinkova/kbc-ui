@@ -214,7 +214,7 @@ export default createReactClass({
 
     return (
       <Alert bsStyle="warning">
-        <p><strong>Loading projects list failed</strong></p>
+        <p><strong>Loading list of projects failed</strong></p>
         <p>{this.state.errorMessage}</p>
       </Alert>
     );

@@ -61,11 +61,11 @@ export default createReactClass({
       return (
         <span>
           <p>
-            SQL validation will send the SQL queries (including comments) and table details to{' '}
+            SQL validation will send the SQL queries (including comments) and table details to the{' '}
             <ExternalLink href="https://sqldep.com/">SQLdep API</ExternalLink>. Results will be immediately removed from
-            their API after presenting to you.
+            their API after being presented to you.
           </p>
-          <p>Tables defined in output mapping that does not yet exist in Storage are not validated.</p>
+          <p>Tables defined in the output mapping that do not yet exist in Storage are not validated.</p>
           {this.renderNotSavedWarning()}
           {this.renderResult()}
         </span>

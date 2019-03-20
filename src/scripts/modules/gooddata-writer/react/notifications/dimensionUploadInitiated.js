@@ -12,7 +12,7 @@ export default (job, dimensionName) => {
       return (
         <span>
           GoodData upload of dimension <strong>{dimensionName}</strong>{' '}
-          has been initiated You can track the job progress{' '}
+          has been initiated. You can track the job progress{' '}
           <Link
             to="jobDetail"
             params={{

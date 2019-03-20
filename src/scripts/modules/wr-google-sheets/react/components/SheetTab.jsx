@@ -34,7 +34,7 @@ export default createReactClass({
             onChange={this.props.onChangeSheetTitle}
           />
           <HelpBlock>
-            Type a name of existing Sheet to import into it or type a unique name to add new Sheet into the Spreadsheet.
+            Type the name of an existing sheet to import into it, or type a unique name to add a new sheet into the spreadsheet.
           </HelpBlock>
         </Col>
       </FormGroup>
@@ -56,13 +56,13 @@ export default createReactClass({
             <div className="form-horizontal">
               <RadioGroupInput
                 label="Update rows"
-                help="Overwrites data in the Sheet"
+                help="Overwrites data in the sheet"
                 wrapperClassName="col-sm-8"
                 value="update"
               />
               <RadioGroupInput
                 label="Append rows"
-                help="Add new data to the end of the Sheet"
+                help="Add new data to the end of the sheet"
                 wrapperClassName="col-sm-8"
                 value="append"
               />

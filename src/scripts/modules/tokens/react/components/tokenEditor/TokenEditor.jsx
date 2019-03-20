@@ -253,7 +253,7 @@ export default createReactClass({
              <span>Full Access</span>
            </label>
            <span className="help-block">
-             Allow full access to all buckets and components including buckets created in future
+             Allow full access to all buckets and components including buckets created in the future
            </span>
          </div>
         }

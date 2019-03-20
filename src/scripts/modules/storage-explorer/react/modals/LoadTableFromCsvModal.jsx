@@ -86,7 +86,7 @@ export default createReactClass({
             <Checkbox checked={this.state.incremental} onChange={this.handleIncremental}>
               Incremental
             </Checkbox>
-            <HelpBlock>Data from CSV file will be appended to table.</HelpBlock>
+            <HelpBlock>Data from the CSV file will be appended to the table.</HelpBlock>
           </Col>
         </FormGroup>
         {this.renderAdvancedOptions()}

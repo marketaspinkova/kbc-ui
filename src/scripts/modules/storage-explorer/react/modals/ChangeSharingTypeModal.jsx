@@ -32,7 +32,7 @@ export default createReactClass({
           </Modal.Header>
           <Modal.Body>
             <p>
-              Please choose who will be able to link bucket to projects.
+              Please choose who will be able to link the bucket to projects.
               <ExternalLink href="https://help.keboola.com/storage/buckets/sharing/">Learn more</ExternalLink>.
             </p>
 

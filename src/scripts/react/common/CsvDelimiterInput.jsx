@@ -20,7 +20,7 @@ export default createReactClass({
   getDefaultProps() {
     return {
       label: 'Delimiter',
-      help: (<span>Field delimiter used in CSV file. Default value is <code>,</code>. Use <code>\t</code> for tabulator.</span>)
+      help: (<span>Field delimiter used in the CSV file. The default value is <code>,</code>. Use <code>\t</code> for tabulator.</span>)
     };
   },
 

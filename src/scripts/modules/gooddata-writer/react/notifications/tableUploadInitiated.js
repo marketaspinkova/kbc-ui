@@ -12,7 +12,7 @@ export default (job, table) => {
       return (
         <span>
           GoodData upload of table <strong>{table.getIn(['data', 'title'])}</strong>{' '}
-          has been initiated You can track the job progress{' '}
+          has been initiated. You can track the job progress{' '}
           <Link
             to="jobDetail"
             params={{

@@ -28,8 +28,8 @@ export default createReactClass({
           </Modal.Header>
           <Modal.Body>
             <Alert bsStyle="info">
-              You can specify one column to be filtered and comma separated values you&apos;re looking for. The alias table
-              will contain only these rows.
+              You can specify one column to filter by, and comma separated values you&apos;re looking for. The alias table
+              will contain only the matching rows.
             </Alert>
             <FormGroup>
               <Col sm={3} componentClass={ControlLabel}>

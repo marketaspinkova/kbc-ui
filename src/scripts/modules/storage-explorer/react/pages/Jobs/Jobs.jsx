@@ -28,7 +28,7 @@ export default createReactClass({
           <div className="storage-explorer">
             <NavButtons />
             {this.state.jobs.count() === 0 ? (
-              <p className="kbc-inner-padding">No jobs were uploaded yet.</p>
+              <p className="kbc-inner-padding">No jobs have been uploaded yet.</p>
             ) : (
               <div>
                 <JobsTable jobs={this.state.jobs} />

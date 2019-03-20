@@ -79,7 +79,7 @@ export default createReactClass({
             multiselectEnabled={false}
           />
           <span className="help-block">
-            Choose Spreadsheet, in which you want to upload the data
+            Choose the spreadsheet into which you want to upload the data
           </span>
         </div>
       </div>
@@ -118,7 +118,7 @@ export default createReactClass({
             />
           </div>
           <span className="help-block">
-            Select Spreadsheets parent <strong>folder</strong> and enter Spreadsheets <strong>title</strong>.<br/>The Spreadsheet will be created upon save.
+            Select the spreadsheet parent <strong>folder</strong> and enter the spreadsheet <strong>title</strong>.<br/>The spreadsheet will be created upon saving.
           </span>
         </div>
       </div>

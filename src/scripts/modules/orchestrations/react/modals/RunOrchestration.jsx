@@ -101,7 +101,7 @@ export default createReactClass({
           >
             add tasks
           </Link>
-          {' '}and run orchestration again.
+          {' '}and run the orchestration again.
         </Alert>
       );
     }

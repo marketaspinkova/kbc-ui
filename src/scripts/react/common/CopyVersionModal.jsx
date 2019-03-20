@@ -31,7 +31,7 @@ export default createReactClass({
         </Modal.Header>
         <Modal.Body>
           <p>
-            This will copy version #{this.props.version.get('version')} created {moment(this.props.version.get('created')).fromNow()} by {this.props.version.getIn(['creatorToken', 'description'], 'unknown')} to a new configuration.
+            This will copy the version #{this.props.version.get('version')} created {moment(this.props.version.get('created')).fromNow()} by {this.props.version.getIn(['creatorToken', 'description'], 'unknown')} to a new configuration.
           </p>
           <form className="form-horizontal" onSubmit={this.handleSubmit}>
             <FormGroup>

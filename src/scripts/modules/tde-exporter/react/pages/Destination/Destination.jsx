@@ -183,9 +183,9 @@ export default createReactClass({
       }
     }
 
-    let helpText = `All TDE files will be uploaded to ${accountName} immediately after export.`;
+    let helpText = `All TDE files will be uploaded to ${accountName} immediately after the export.`;
     if (!isActive) {
-      helpText = 'No instant upload of TDE files after export.';
+      helpText = 'No instant upload of TDE files after the export.';
     }
     return (
       <span>

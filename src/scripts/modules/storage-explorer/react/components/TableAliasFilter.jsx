@@ -110,7 +110,7 @@ export default createReactClass({
         show={this.state.showRemoveModal}
         onHide={this.closeRemoveModal}
         title="Remove alias filter"
-        text={<p>Do you really want to remove filter?</p>}
+        text={<p>Do you really want to remove the filter?</p>}
         buttonLabel="Delete"
         buttonType="danger"
         onConfirm={this.handleRemoveFilter}

@@ -146,7 +146,7 @@ export default createReactClass({
         </div>
       );
     } else {
-      return <p className="panel-body">There are no date dimensions yet. Please create new one.</p>;
+      return <p className="panel-body">There are no date dimensions yet. Please create a new dimension.</p>;
     }
   },
 

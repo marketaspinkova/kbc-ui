@@ -52,13 +52,13 @@ export default createReactClass({
             <Modal.Body>
               <p>
                 <ExternalLink href="https://help.keboola.com/manipulation/transformations/#phases">
-                  Phase
+                  A phase
                 </ExternalLink>
                 {' '}is a set of transformations.
               </p>
               <p>
                 Phases may be used to divide transformations into logical blocks, transfer data between
-                transformations, transformation engines and remote transformations.
+                transformations, transformation engines, and remote transformations.
               </p>
               <FormGroup controlId="phaseNumber">
                 <ControlLabel>Phase #</ControlLabel>{' '}
