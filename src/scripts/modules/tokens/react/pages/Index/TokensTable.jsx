@@ -3,8 +3,7 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
 import { List, Map } from 'immutable';
-import { HelpBlock } from 'react-bootstrap';
-import { Check, Loader, ExternalLink, SearchBar } from '@keboola/indigo-ui';
+import { Check, Loader, SearchBar } from '@keboola/indigo-ui';
 import Tooltip from '../../../../../react/common/Tooltip';
 import Confirm from '../../../../../react/common/Confirm';
 import ExpiresInfo from '../../components/tokenEditor/ExpiresInfo';
@@ -43,11 +42,6 @@ export default createReactClass({
               </Link>
             }
           />
-          <HelpBlock>
-            Create new{' '}
-            <ExternalLink href="https://help.keboola.com/storage/tokens/">token</ExternalLink> and
-            limit access to specific buckets or components in you project.
-          </HelpBlock>
         </div>
         <div className="table table-striped table-hover">
           <div className="thead">
