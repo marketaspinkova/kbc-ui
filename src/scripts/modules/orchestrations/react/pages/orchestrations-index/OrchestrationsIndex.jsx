@@ -104,7 +104,7 @@ export default createReactClass({
             <strong 
               className="kbc-cursor-pointer"
               title="Sort by name"
-              onClick={() => this.sortByName()}
+              onClick={this.sortByName}
             >
               Name {this.sortByNameLabel()}
             </strong>
