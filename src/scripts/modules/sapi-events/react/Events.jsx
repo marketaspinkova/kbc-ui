@@ -181,7 +181,7 @@ export default createReactClass({
           disabled={this.state.isLoadingOlder}
         >
           <MenuItem onClick={this._handleLoadAll}>
-            {this.state.isLoadingOlder ? 'Loading ...' : 'Load All Events'}
+            Load All Events
           </MenuItem>
         </SplitButton>
       </div>
