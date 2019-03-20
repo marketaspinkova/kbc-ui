@@ -6,11 +6,16 @@ import ConfigurationLink from '../components/ComponentConfigurationLink';
 import RunConfigurationButton from '../components/RunComponentButton';
 import DeleteButton from '../../../../react/common/DeleteButton';
 import DeleteConfigurationButtonNoConfirm from '../../../../react/common/DeleteConfigurationButtonNoConfirm';
+import DeleteGoodDataWriterButton from '../../../gooddata-writer-v3/react/components/DeleteGoodDataWriterButton';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
 import descriptionExcerpt from '../../../../utils/descriptionExcerpt';
 import {isObsoleteComponent} from '../../../../modules/trash/utils';
 import CreatedWithIcon from '../../../../react/common/CreatedWithIcon';
 import componentNameAsString from '../../../../react/common/componentNameAsString';
+
+import InstalledComponentsActions from '../../InstalledComponentsActionCreators';
+import InstalledComponentsStore from '../../stores/InstalledComponentsStore';
+
 
 export default createReactClass({
   mixins: [PureRenderMixin],
@@ -42,23 +47,49 @@ export default createReactClass({
               createdTime={this.props.config.get('created')}
             />
           </span>
-          {isObsoleteComponent(this.props.componentId) ? (
-            <DeleteButton
-              tooltip="Move to Trash"
-              isPending={this.props.isDeleting}
-              confirm={this.deleteConfirmProps()}
-            />
-          ) : (
-            <DeleteConfigurationButtonNoConfirm
-              tooltip="Move to Trash"
-              isPending={this.props.isDeleting}
-              onDeleteFn={this.handleDelete}
-            />
-          )}
+          {this.renderDeleteButton()}
           {this.renderRunButton()}
         </span>
       </ConfigurationLink>
     );
+  },
+
+  renderDeleteButton() {
+    const {componentId} = this.props;
+    if (componentId === 'keboola.gooddata-writer') {
+      const configId = this.props.config.get('id');
+      return (
+        <DeleteGoodDataWriterButton
+          config={this.props.config}
+          getConfigDataFn={() =>
+            InstalledComponentsActions
+              .loadComponentConfigData(componentId, configId)
+              .then(() => InstalledComponentsStore.getConfigData(componentId, configId))
+          }
+          deleteConfigFn={this.handleDelete}
+          isDeletingConfig={this.props.isDeleting}
+        />
+      );
+    }
+
+    if (isObsoleteComponent(this.props.componentId)) {
+      return (
+        <DeleteButton
+          tooltip="Move to Trash"
+          isPending={this.props.isDeleting}
+          confirm={this.deleteConfirmProps()}
+        />
+      );
+
+    } else {
+      return (
+        <DeleteConfigurationButtonNoConfirm
+          tooltip="Move to Trash"
+          isPending={this.props.isDeleting}
+          onDeleteFn={this.handleDelete}
+        />
+      );
+    }
   },
 
   renderRunButton() {
