@@ -24,13 +24,12 @@ function logError(Component, error) {
 
   console.error(errorMsg, 'Error details:', error); // eslint-disable-line
 
-  /* global Raven */
-  if (!process.env.__DEV__ && typeof Raven !== 'undefined' && typeof Raven.captureException === 'function') {
-    Raven.captureException(new Error(errorMsg), {
-      extra: {
-        errorStack: error.stack
-      }
-    });
+  /* global Sentry */
+  if (!process.env.__DEV__ && typeof Sentry !== 'undefined' && typeof Sentry.captureException === 'function') {
+    Sentry.configureScope((scope) => {
+      scope.setExtra('errorStack', error.stack);
+    })
+    Sentry.captureException(new Error(errorMsg));
   }
 }
 
