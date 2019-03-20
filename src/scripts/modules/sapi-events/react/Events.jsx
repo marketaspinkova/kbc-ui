@@ -1,19 +1,20 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
-import {Alert, Button} from 'react-bootstrap';
-import { Map } from 'immutable';
 import PureRendererMixin from 'react-immutable-render-mixin';
 import _ from 'underscore';
-import {Link} from 'react-router';
-import {factory as eventsFactory} from '../EventsService';
+import { Alert, SplitButton, MenuItem } from 'react-bootstrap';
+import { Map } from 'immutable';
+import { Link } from 'react-router';
+import { Loader, SearchBar } from '@keboola/indigo-ui';
+import { factory as eventsFactory } from '../EventsService';
 import RoutesStore from '../../../stores/RoutesStore';
 import EventsTable from './EventsTable';
 import EventDetail from './EventDetail';
-import {Loader, SearchBar} from '@keboola/indigo-ui';
 
 export default createReactClass({
   mixins: [PureRendererMixin],
+
   propTypes: {
     params: PropTypes.object,
     autoReload: PropTypes.bool,
@@ -171,20 +172,28 @@ export default createReactClass({
     }
 
     return (
-      <div className="kbc-block-with-padding">
-        <Button
+      <div className="kbc-block-with-padding" style={{ paddingBottom: '30px' }}>
+        <SplitButton
+          id="load-more-events-button"
           bsStyle="default"
+          title={this.state.isLoadingOlder ? 'Loading ...' : 'Load More'}
           onClick={this._handleLoadMore}
           disabled={this.state.isLoadingOlder}
         >
-          {this.state.isLoadingOlder ? 'Loading ...' : 'More ...'}
-        </Button>
+          <MenuItem onClick={this._handleLoadAll}>
+            {this.state.isLoadingOlder ? 'Loading ...' : 'Load All Events'}
+          </MenuItem>
+        </SplitButton>
       </div>
     );
   },
 
   _handleLoadMore() {
     return this._events.loadMore();
+  },
+
+  _handleLoadAll() {
+    return this._events.loadAll();
   },
 
   _handleQueryChange(query) {

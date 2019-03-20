@@ -5,6 +5,7 @@ import timer from '../../utils/Timer';
 import api from './EventsApi';
 
 const CHANGE_EVENT = 'change';
+const MAX_LIMIT = 10000;
 
 class EventsService {
   constructor(api1, defaultParams) {
@@ -127,15 +128,25 @@ class EventsService {
       .catch(this._onError.bind(this));
   }
 
-  loadMore() {
+  loadMore(params = {}) {
     this._loadingOlder = true;
     this._errorMessage = null;
     this._emitChange();
 
     return this._listEvents({
-      maxId: this.getEvents().last().get('id')
+      maxId: this.getEvents().last().get('id'),
+      ...params
     }).then(this._appendEvents.bind(this))
       .catch(this._onError.bind(this));
+  }
+
+  loadAll() {
+    this.loadMore({ limit: MAX_LIMIT }).then(() => {
+      if (this._events.count() < MAX_LIMIT) {
+        this._hasMore = false;
+        this._emitChange();
+      }
+    });
   }
 
   _onError(error) {
