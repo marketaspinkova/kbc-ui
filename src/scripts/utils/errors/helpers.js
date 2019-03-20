@@ -29,9 +29,6 @@ const createPresentationalError = exception => {
     return new Error('Connection error', error.message);
   } else if (error instanceof SimpleError) {
     return new Error(error.title, error.message);
-  } else if (error.name === 'NotAllowedError') {
-    error.isUserError = true;
-    return error;
   }
 
   return new Error('Application error', 'Please try reload the browser');

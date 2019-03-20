@@ -18,9 +18,13 @@ const getSoundElement = name => {
 
 export default {
   success() {
-    return getSoundElement('success').play();
+    return getSoundElement('success').play().catch((e) => {
+      console.log(e); // eslint-disable-line
+    });
   },
   crash() {
-    return getSoundElement('crash').play();
+    return getSoundElement('crash').play().catch((e) => {
+      console.log(e); // eslint-disable-line
+    });
   }
 };
