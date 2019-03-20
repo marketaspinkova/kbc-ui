@@ -29,7 +29,7 @@ const createPresentationalError = exception => {
     return new Error('Connection error', error.message);
   } else if (error instanceof SimpleError) {
     return new Error(error.title, error.message);
-  } else if (error.name === 'NotAllowedError' || error.name === 'NotSupportedError') {
+  } else if (error.name === 'NotAllowedError') {
     error.isUserError = true;
     return error;
   }
