@@ -158,7 +158,7 @@ Dispatcher.register(payload => {
 
   switch (action.type) {
     case ActionTypes.ORCHESTRATIONS_SET_FILTER:
-      _store = _store.set('filter', action.query.trim());
+      _store = _store.set('filter', action.query);
       return OrchestrationStore.emitChange();
 
     case ActionTypes.ORCHESTRATION_ACTIVE_CHANGE_START:
