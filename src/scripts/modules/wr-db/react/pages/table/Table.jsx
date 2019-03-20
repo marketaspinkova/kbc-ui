@@ -48,12 +48,13 @@ export default componentId => {
       const tablesExportInfo = WrDbStore.getTables(componentId, configId);
       const exportInfo = tablesExportInfo.find(tab => tab.get('id') === tableId);
       const isUpdatingTable = WrDbStore.isUpdatingTable(componentId, configId, tableId);
-      const editingData = WrDbStore.getEditing(componentId, configId);
-      const editingColumns = editingData.getIn(['columns', tableId]);
       const isSavingColumns = !!WrDbStore.getUpdatingColumns(componentId, configId, tableId);
       const hideIgnored = localState.getIn(['hideIgnored', tableId], false);
       const v2Actions = V2Actions(configId, componentId);
+      const editingData = WrDbStore.getEditing(componentId, configId);
       const columnsValidation = editingData.getIn(['validation', tableId], Map());
+      const columns = this._prepareColumns(tableConfig.get('columns'), storageTableColumns);
+      const editingColumns = this._prepareEditingColumns(columns, editingData.getIn(['columns', tableId]));
 
       // state
       return {
@@ -64,7 +65,7 @@ export default componentId => {
         editingData,
         isUpdatingTable,
         tableConfig,
-        columns: this._prepareColumns(tableConfig.get('columns'), storageTableColumns),
+        columns,
         tableId,
         configId,
         localState,
@@ -78,6 +79,16 @@ export default componentId => {
 
     getInitialState() {
       return { dataPreview: null };
+    },
+
+    _prepareEditingColumns(columns, editingColumns) {
+      if (!editingColumns) {
+        return;
+      }
+
+      return columns.toMap().mapKeys((key, column) => column.get('name')).map((column, key) => {
+        return editingColumns.get(key, column);
+      });
     },
 
     _prepareColumns(configColumns, storageColumns) {
@@ -102,15 +113,9 @@ export default componentId => {
     },
 
     componentDidMount() {
-      // if @state.columns.reduce(
-      //   (memo, value) ->
-      //     memo and value.get('type') == 'IGNORE'
-      // , true)
-      //   @_handleEditColumnsStart()
       const tableId = RoutesStore.getCurrentRouteParam('tableId');
-      const component = this;
       return storageApi.tableDataJsonPreview(tableId, { limit: 10 }).then(json =>
-        component.setState({
+        this.setState({
           dataPreview: json
         })
       );
