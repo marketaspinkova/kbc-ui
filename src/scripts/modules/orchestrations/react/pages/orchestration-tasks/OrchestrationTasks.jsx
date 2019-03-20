@@ -62,10 +62,6 @@ const OrchestrationTasks = createReactClass({
     return this.setState(this.getStateFromStores());
   },
 
-  _handleFilterChange(query) {
-    return OrchestrationsActionCreators.setOrchestrationsFilter(query);
-  },
-
   _handleTasksChange(newTasks) {
     return OrchestrationsActionCreators.updateOrchestrationsTasksEdit(this.state.orchestration.get('id'), newTasks);
   },
