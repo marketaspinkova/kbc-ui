@@ -34,7 +34,7 @@ export default createReactClass({
             Most of the time, there&apos;s no need to change versions of the transformation backend.
           </p>
           <p>
-            Change versions only if you have problems with the <code>latest</code> version. And{' '}
+            Change versions only if you have problems with the <code>Latest</code> version. And{' '}
             <button
               className="btn btn-link btn-link-inline"
               onClick={contactSupport}
