@@ -647,5 +647,12 @@ export default {
         });
         throw e;
       });
-  }
+  },
+
+  setOrchestrationsListSortByNameOption(option) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.ORCHESTRATIONS_LIST_SORT_BY_NAME,
+      option
+    });
+  },
 };

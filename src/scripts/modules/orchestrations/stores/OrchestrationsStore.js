@@ -12,6 +12,7 @@ let _store = Map({
   saving: Map(), // [orchestrationId][tasks] - bool value
   orchestrationTasksById: Map(),
   filter: '',
+  sortByNameOption: null,
   isLoading: false,
   isLoaded: false,
   loadingOrchestrations: List()
@@ -137,6 +138,10 @@ const OrchestrationStore = StoreUtils.createStore({
 
   getFilter() {
     return _store.get('filter');
+  },
+
+  getSortByNameOption() {
+    return _store.get('sortByNameOption');
   },
 
   getIsLoading() {
@@ -339,6 +344,10 @@ Dispatcher.register(payload => {
           .deleteIn(['saving', action.orchestrationId, 'tasks'])
           .deleteIn(['editing', action.orchestrationId, 'tasks'])
       );
+      return OrchestrationStore.emitChange();
+
+    case ActionTypes.ORCHESTRATIONS_LIST_SORT_BY_NAME:
+      _store = _store.set('sortByNameOption', action.option);
       return OrchestrationStore.emitChange();
 
     default:
