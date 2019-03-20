@@ -11,6 +11,11 @@ import { SearchBar } from '@keboola/indigo-ui';
 import ImmutableRendererMixin from 'react-immutable-render-mixin';
 import NewOrchestrationButton from '../../components/NewOrchestionButton';
 
+const SORT_OPTIONS = {
+  ASC: 'asc',
+  DESC: 'desc'
+};
+
 export default createReactClass({
   mixins: [createStoreMixin(OrchestrationStore), ImmutableRendererMixin],
 
@@ -31,6 +36,12 @@ export default createReactClass({
     };
   },
 
+  getInitialState() {
+    return {
+      sortByName: null
+    };
+  },
+
   render() {
     if (this.state.totalOrchestrationsCount) {
       return (
@@ -39,7 +50,7 @@ export default createReactClass({
             <div className="row-searchbar">
               <SearchBar onChange={this._handleFilterChange} query={this.state.filter} />
             </div>
-            {this.state.orchestrations.count() ? this._renderTable() : this._renderNotFound()}
+            {this.state.orchestrations.count() ? this.renderTable() : this.renderNotFound()}
           </div>
         </div>
       );
@@ -47,15 +58,17 @@ export default createReactClass({
 
     return (
       <div className="container-fluid">
-        <div className="kbc-main-content">{this._renderEmptyState()}</div>
+        <div className="kbc-main-content">{this.renderEmptyState()}</div>
       </div>
     );
   },
 
-  _renderEmptyState() {
+  renderEmptyState() {
     return (
       <div className="row">
-        <h2>Orchestrations allow you to group together related tasks and schedule their execution.</h2>
+        <h2>
+          Orchestrations allow you to group together related tasks and schedule their execution.
+        </h2>
         <div>
           <NewOrchestrationButton />
         </div>
@@ -63,7 +76,7 @@ export default createReactClass({
     );
   },
 
-  _renderNotFound() {
+  renderNotFound() {
     return (
       <div className="kbc-header">
         <div className="kbc-title">
@@ -73,38 +86,28 @@ export default createReactClass({
     );
   },
 
-  _renderTable() {
-    const childs = this.state.orchestrations
-      .map(orchestration => {
-        const orchestrationId = orchestration.get('id');
-        return (
-          <OrchestrationRow
-            orchestration={orchestration}
-            pendingActions={this.state.pendingActions.get(orchestration.get('id'), Map())}
-            key={orchestration.get('id')}
-            tasks={this.state.allTasksToRun.get(orchestrationId)
-              ? this.state.allTasksToRun.get(orchestrationId)
-              : this.state.allTasks.get(orchestrationId)}
-          />
-        );
-      })
-      .toArray();
-
+  renderTable() {
     return (
       <div className="table table-striped table-hover">
-        {this._renderTableHeader()}
-        <div className="tbody">{childs}</div>
+        {this.renderTableHeader()}
+        <div className="tbody">{this.renderTableBody()}</div>
       </div>
     );
   },
 
-  _renderTableHeader() {
+  renderTableHeader() {
     return (
       <div className="thead" key="table-header">
         <div className="tr">
-          <span className="th" style={{width: '50px'}}/>
+          <span className="th" style={{ width: '50px' }} />
           <span className="th">
-            <strong>Name</strong>
+            <strong 
+              className="kbc-cursor-pointer"
+              title="Sort by name"
+              onClick={() => this.sortByName()}
+            >
+              Name {this.sortByNameLabel()}
+            </strong>
           </span>
           <span className="th">
             <strong>Last Run</strong>
@@ -119,5 +122,58 @@ export default createReactClass({
         </div>
       </div>
     );
+  },
+
+  renderTableBody() {
+    let orchestrations = this.state.orchestrations;
+
+    if (this.state.sortByName) {
+      orchestrations = orchestrations.sortBy((orchestration) => orchestration.get('name').toLowerCase());
+
+      if (this.state.sortByName === SORT_OPTIONS.DESC) {
+        orchestrations = orchestrations.reverse();
+      }
+    }
+
+    return orchestrations
+      .map((orchestration) => {
+        const tasks = this.state.allTasksToRun.get(orchestration.get('id'))
+          ? this.state.allTasksToRun.get(orchestration.get('id'))
+          : this.state.allTasks.get(orchestration.get('id'));
+
+        return (
+          <OrchestrationRow
+            orchestration={orchestration}
+            pendingActions={this.state.pendingActions.get(orchestration.get('id'), Map())}
+            key={orchestration.get('id')}
+            tasks={tasks}
+          />
+        );
+      })
+      .toArray();
+  },
+
+  sortByName() {
+    let sortByName = null;
+
+    if (!this.state.sortByName) {
+      sortByName = SORT_OPTIONS.ASC;
+    } else if (this.state.sortByName === SORT_OPTIONS.ASC) {
+      sortByName = SORT_OPTIONS.DESC;
+    }
+
+    this.setState({ sortByName });
+  },
+
+  sortByNameLabel() {
+    if (this.state.sortByName === SORT_OPTIONS.DESC) {
+      return <i className="fa fa-sort-desc" />;
+    }
+
+    if (this.state.sortByName === SORT_OPTIONS.ASC) {
+      return <i className="fa fa-sort-asc" />;
+    }
+
+    return <i className="fa fa-sort" />;
   }
 });
