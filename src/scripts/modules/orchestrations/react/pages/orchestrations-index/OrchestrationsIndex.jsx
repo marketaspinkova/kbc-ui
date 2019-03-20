@@ -10,11 +10,7 @@ import OrchestrationRow from './OrchestrationRow';
 import { SearchBar } from '@keboola/indigo-ui';
 import ImmutableRendererMixin from 'react-immutable-render-mixin';
 import NewOrchestrationButton from '../../components/NewOrchestionButton';
-
-const SORT_OPTIONS = {
-  ASC: 'asc',
-  DESC: 'desc'
-};
+import { ORCHESTRATIONS_LIST_SORT_BY_NAME_OPTIONS } from '../../../Constants';
 
 export default createReactClass({
   mixins: [createStoreMixin(OrchestrationStore), ImmutableRendererMixin],
@@ -32,13 +28,8 @@ export default createReactClass({
       pendingActions: OrchestrationStore.getPendingActions(),
       isLoading: OrchestrationStore.getIsLoading(),
       isLoaded: OrchestrationStore.getIsLoaded(),
-      filter: OrchestrationStore.getFilter()
-    };
-  },
-
-  getInitialState() {
-    return {
-      sortByName: null
+      filter: OrchestrationStore.getFilter(),
+      sortByNameOption: OrchestrationStore.getSortByNameOption()
     };
   },
 
@@ -104,7 +95,7 @@ export default createReactClass({
             <strong 
               className="kbc-cursor-pointer"
               title="Sort by name"
-              onClick={this.sortByName}
+              onClick={this.sortByNameOption}
             >
               Name {this.sortByNameLabel()}
             </strong>
@@ -127,10 +118,10 @@ export default createReactClass({
   renderTableBody() {
     let orchestrations = this.state.orchestrations;
 
-    if (this.state.sortByName) {
+    if (this.state.sortByNameOption) {
       orchestrations = orchestrations.sortBy((orchestration) => orchestration.get('name').toLowerCase());
 
-      if (this.state.sortByName === SORT_OPTIONS.DESC) {
+      if (this.state.sortByNameOption === ORCHESTRATIONS_LIST_SORT_BY_NAME_OPTIONS.DESC) {
         orchestrations = orchestrations.reverse();
       }
     }
@@ -153,24 +144,24 @@ export default createReactClass({
       .toArray();
   },
 
-  sortByName() {
+  sortByNameOption() {
     let sortByName = null;
 
-    if (!this.state.sortByName) {
-      sortByName = SORT_OPTIONS.ASC;
-    } else if (this.state.sortByName === SORT_OPTIONS.ASC) {
-      sortByName = SORT_OPTIONS.DESC;
+    if (!this.state.sortByNameOption) {
+      sortByName = ORCHESTRATIONS_LIST_SORT_BY_NAME_OPTIONS.ASC;
+    } else if (this.state.sortByNameOption === ORCHESTRATIONS_LIST_SORT_BY_NAME_OPTIONS.ASC) {
+      sortByName = ORCHESTRATIONS_LIST_SORT_BY_NAME_OPTIONS.DESC;
     }
 
-    this.setState({ sortByName });
+    OrchestrationsActionCreators.setOrchestrationsListSortByNameOption(sortByName);
   },
 
   sortByNameLabel() {
-    if (this.state.sortByName === SORT_OPTIONS.DESC) {
+    if (this.state.sortByNameOption === ORCHESTRATIONS_LIST_SORT_BY_NAME_OPTIONS.DESC) {
       return <i className="fa fa-sort-desc" />;
     }
 
-    if (this.state.sortByName === SORT_OPTIONS.ASC) {
+    if (this.state.sortByNameOption === ORCHESTRATIONS_LIST_SORT_BY_NAME_OPTIONS.ASC) {
       return <i className="fa fa-sort-asc" />;
     }
 
