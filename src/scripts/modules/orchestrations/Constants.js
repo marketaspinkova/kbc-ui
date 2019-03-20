@@ -1,10 +1,12 @@
 import keyMirror from 'fbjs/lib/keyMirror';
 
-export const ActionTypes = keyMirror({
+const ActionTypes = keyMirror({
   ORCHESTRATIONS_LOAD: null,
   ORCHESTRATIONS_LOAD_SUCCESS: null,
   ORCHESTRATIONS_LOAD_ERROR: null,
   ORCHESTRATIONS_SET_FILTER: null,
+
+  ORCHESTRATIONS_LIST_SORT_BY_NAME: null,
 
   ORCHESTRATION_JOBS_LOAD: null,
   ORCHESTRATION_JOBS_LOAD_SUCCESS: null,
@@ -64,3 +66,13 @@ export const ActionTypes = keyMirror({
   ORCHESTRATION_RUN_TASK_EDIT_CANCEL: null,
   ORCHESTRATION_RUN_TASK_EDIT_ERROR: null
 });
+
+const ORCHESTRATIONS_LIST_SORT_BY_NAME_OPTIONS = {
+  ASC: 'asc',
+  DESC: 'desc'
+};
+
+export {
+  ActionTypes,
+  ORCHESTRATIONS_LIST_SORT_BY_NAME_OPTIONS
+}
