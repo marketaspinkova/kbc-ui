@@ -125,26 +125,25 @@ export default createReactClass({
   },
 
   sourceTableSelectOptions() {
-    if (this.props.sourceTables && this.props.sourceTables.count() > 0) {
-      const groupedTables = this.props.sourceTables.groupBy(table => table.get('schema'));
-      return groupedTables.keySeq().map(function(group) {
-        return {
-          value: group,
-          label: group,
-          children: groupedTables.get(group).map(function(table) {
-            return {
-              value: {
-                schema: table.get('schema'),
-                tableName: table.get('name')
-              },
-              label: table.get('schema') + '.' + table.get('name')
-            };
-          }).toJS()
-        };
-      });
-    } else {
+    if (!this.props.sourceTables || !this.props.sourceTables.count()) {
       return [];
     }
+
+    return this.props.sourceTables
+      .filter((table) => table.get('schema') && table.get('name'))
+      .groupBy((table) => table.get('schema'))
+      .map((tables, schema) => ({
+        value: schema,
+        label: schema,
+        children: tables.map((table) => ({
+          value: {
+            schema,
+            tableName: table.get('name')
+          },
+          label: `${schema}.${table.get('name')}`
+        })).toJS()
+      }))
+      .valueSeq();
   },
 
   getCandidateTable() {

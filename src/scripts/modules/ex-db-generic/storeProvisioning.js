@@ -76,12 +76,10 @@ function fetch(componentId, configId) {
 }
 
 function isValidQuery(query) {
+  const advancedMode = query.get('advancedMode', false);
   const nameValid = query.get('name', '').trim().length > 0;
   const queryValid = query.get('query', '').trim().length > 0;
-  const advancedMode = query.get('advancedMode', false);
-  const tableValid = (query.get('table'))
-    ? query.get('table').get('tableName', '').trim().length > 0
-    : false;
+  const tableValid = query.getIn(['table', 'tableName'], '').trim().length > 0;
   return nameValid && ((advancedMode && queryValid) || (!advancedMode && tableValid));
 }
 
