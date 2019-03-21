@@ -1,16 +1,15 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import SidebarVesions from './SidebarVersions';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../../stores/RoutesStore';
-import InstalledComponentStore from '../../stores/InstalledComponentsStore';
 import ComponentStore from '../../stores/ComponentsStore';
 import VersionsStore from '../../stores/VersionsStore';
 import VersionsActionCreators from '../../VersionsActionCreators';
 
 export default createReactClass({
-  mixins: [createStoreMixin(InstalledComponentStore, ComponentStore, VersionsStore)],
+  mixins: [createStoreMixin(RoutesStore, ComponentStore, VersionsStore)],
 
   getStateFromStores() {
     const configId =

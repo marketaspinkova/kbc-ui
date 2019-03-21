@@ -1,16 +1,14 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import SidebarVesions from '../../../components/react/components/SidebarVersions';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
-import InstalledComponentStore from '../../../components/stores/InstalledComponentsStore';
-import ComponentStore from '../../../components/stores/ComponentsStore';
 import VersionsStore from '../../../components/stores/VersionsStore';
 import RowVersionsActionCreators from '../../RowVersionsActionCreators';
 import RowVersionsStore from '../../RowVersionsStore';
 
 export default createReactClass({
-  mixins: [createStoreMixin(InstalledComponentStore, ComponentStore, VersionsStore, RowVersionsStore)],
+  mixins: [createStoreMixin(VersionsStore, RowVersionsStore)],
 
   getStateFromStores() {
     const { componentId, configId, rowId } = this.props;
