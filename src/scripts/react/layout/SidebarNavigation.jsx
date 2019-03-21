@@ -1,7 +1,6 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
-import State from 'react-router/lib/State';
-import Link from 'react-router/lib/components/Link';
+import {State, Link} from 'react-router';
 
 import ApplicationStore from '../../stores/ApplicationStore';
 import RoutesStore from '../../stores/RoutesStore';
