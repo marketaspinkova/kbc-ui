@@ -29,7 +29,7 @@ export default createReactClass({
         {this.state.requestSent ? (
           <div>
             <Modal.Header closeButton>
-              <Modal.Title>Submit new idea</Modal.Title>
+              <Modal.Title>Submit a new idea</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <div className="text-center">
@@ -54,7 +54,7 @@ export default createReactClass({
         ) : (
           <Form horizontal>
             <Modal.Header closeButton>
-              <Modal.Title>Submit new idea</Modal.Title>
+              <Modal.Title>Submit a new idea</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               {this.state.hasError && (
