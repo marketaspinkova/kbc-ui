@@ -10,7 +10,7 @@ import { Constants } from './react/components/Constants';
 const defaultNewQuery = Map({
   name: '',
   enabled: true,
-  outputTable: null,
+  outputTable: '',
   endpoint: Constants.ENDPOINT_REPORT,
   query: Map({
     dateRanges: List([Map({
