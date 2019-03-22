@@ -8,27 +8,16 @@
 import React from 'react';
 import { Map } from 'immutable';
 
-const statelessComponentsMap = new Map();
-let errorPlaceholder = <noscript/>;
-
-if (process.env.__DEV__) {
-  errorPlaceholder = (
-    <span style={{ background: 'red', color: 'white'}}>
-      Render error!
-    </span>
-  );
-}
-
 function logError(Component, error) {
   const errorMsg = `Check render() method of component '${Component.displayName || Component.name || '[unidentified]'}'.`;
 
   console.error(errorMsg, 'Error details:', error); // eslint-disable-line
 
   /* global Sentry */
-  if (!process.env.__DEV__ && typeof Sentry !== 'undefined' && typeof Sentry.captureException === 'function') {
+  if (typeof Sentry !== 'undefined' && typeof Sentry.captureException === 'function') {
     Sentry.configureScope((scope) => {
       scope.setExtra('errorStack', error.stack);
-    })
+    });
     Sentry.captureException(new Error(errorMsg));
   }
 }
@@ -43,7 +32,7 @@ function monkeypatchRender(prototype) {
       } catch (error) {
         logError(prototype.constructor, error);
 
-        return errorPlaceholder;
+        return <noscript />;
       }
     };
 
@@ -51,41 +40,42 @@ function monkeypatchRender(prototype) {
   }
 }
 
-const originalCreateElement = React.createElement;
-React.createElement = (Component, ...rest) => {
-  let NewComponent = Component;
-  if (typeof NewComponent === 'function') {
-    if (NewComponent.prototype && typeof NewComponent.prototype.render === 'function') {
-      monkeypatchRender(NewComponent.prototype);
-    }
-    // stateless functional component
-    if (!NewComponent.prototype || !NewComponent.prototype.render) {
-      const originalStatelessComponent = NewComponent;
-      if (statelessComponentsMap.has(originalStatelessComponent)) { // load from cache
-        NewComponent = statelessComponentsMap.get(originalStatelessComponent);
-      } else {
-        NewComponent = (...args) => {
-          try {
-            return originalStatelessComponent(...args);
-          } catch (error) {
-            logError(originalStatelessComponent, error);
+function installPatch() {
+  const statelessComponentsMap = new Map();
+  const originalCreateElement = React.createElement;
+  React.createElement = (Component, ...rest) => {
+    let NewComponent = Component;
+    if (typeof NewComponent === 'function') {
+      if (NewComponent.prototype && typeof NewComponent.prototype.render === 'function') {
+        monkeypatchRender(NewComponent.prototype);
+      }
+      // stateless functional component
+      if (!NewComponent.prototype || !NewComponent.prototype.render) {
+        const originalStatelessComponent = NewComponent;
+        if (statelessComponentsMap.has(originalStatelessComponent)) {
+          // load from cache
+          NewComponent = statelessComponentsMap.get(originalStatelessComponent);
+        } else {
+          NewComponent = (...args) => {
+            try {
+              return originalStatelessComponent(...args);
+            } catch (error) {
+              logError(originalStatelessComponent, error);
 
-            return errorPlaceholder;
-          }
-        };
+              return <noscript />;
+            }
+          };
 
-        Object.assign(NewComponent, originalStatelessComponent); // copy all properties like propTypes, defaultProps etc.
-        statelessComponentsMap.set(originalStatelessComponent, NewComponent); // save to cache, so we don't generate new monkeypatched functions every time.
+          Object.assign(NewComponent, originalStatelessComponent); // copy all properties like propTypes, defaultProps etc.
+          statelessComponentsMap.set(originalStatelessComponent, NewComponent); // save to cache, so we don't generate new monkeypatched functions every time.
+        }
       }
     }
-  }
 
-  return originalCreateElement.call(React, NewComponent, ...rest);
-};
+    return originalCreateElement.call(React, NewComponent, ...rest);
+  };
+}
 
-// allowing hot reload
-const originalForceUpdate = React.Component.prototype.forceUpdate;
-React.Component.prototype.forceUpdate = function monkeypatchedForceUpdate() {
-  monkeypatchRender(this);
-  originalForceUpdate.call(this);
-};
+if (!process.env.__DEV__) {
+  installPatch();
+}

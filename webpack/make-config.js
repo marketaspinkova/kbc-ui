@@ -2,6 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+var ErrorOverlayPlugin = require('error-overlay-webpack-plugin');
 
 module.exports = function(options) {
   var isDevelopment = options.isDevelopment;
@@ -22,7 +23,11 @@ module.exports = function(options) {
     })
   ];
 
-  if (!isDevelopment) {
+  if (isDevelopment) {
+    plugins.push(
+      new ErrorOverlayPlugin()
+    );
+  } else {
     plugins.push(
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       new OptimizeCssAssetsPlugin()
@@ -53,7 +58,7 @@ module.exports = function(options) {
 
   return {
     mode: isDevelopment ? 'development' : 'production',
-    devtool: isDevelopment ? 'eval' : 'source-map',
+    devtool: isDevelopment ? 'cheap-module-source-map' : 'source-map',
     entry: entry,
     output: Object.assign(
       {
