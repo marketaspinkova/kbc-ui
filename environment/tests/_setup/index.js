@@ -11,6 +11,7 @@ console.error = (message) => {
 };
 
 console.warn = (message) => {
+  // react-router is still using React.PropTypes and React.createClass
   if (
     message.includes('Accessing PropTypes via the main React package is deprecated') || 
     message.includes('Accessing createClass via the main React package is deprecated')  
