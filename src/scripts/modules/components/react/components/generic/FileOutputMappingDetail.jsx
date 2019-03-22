@@ -4,6 +4,7 @@ import createReactClass from 'create-react-class';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { Check } from '@keboola/indigo-ui';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
+import { List } from 'immutable';
 
 export default createReactClass({
   mixins: [ImmutableRenderMixin],
@@ -43,7 +44,7 @@ export default createReactClass({
   },
 
   renderTags() {
-    if (!this.props.value.get('tags').count()) {
+    if (!this.props.value.get('tags', List()).count()) {
       return 'N/A';
     }
 
