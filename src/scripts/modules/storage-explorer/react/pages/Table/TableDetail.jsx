@@ -134,7 +134,7 @@ export default createReactClass({
                   )}
                 </MenuItem>
                 {this.state.canWriteTable && <MenuItem divider />}
-                {!this.state.table.get('isAlias') && this.state.canWriteTable && (
+                {this.state.table.get('isAliasable') && this.state.canWriteTable && (
                   <MenuItem eventKey="alias" onSelect={this.handleDropdownAction}>
                     <i className="fa fa-plus" /> Create alias table
                   </MenuItem>
@@ -244,12 +244,8 @@ export default createReactClass({
         {this.renderDeletingTableModal()}
         {this.renderLoadTableModal()}
         {this.renderExportTableModal()}
-        {!this.state.table.get('isAlias') && this.state.canWriteTable && (
-          <span>
-            {this.renderAliasTableModal()}
-            {this.renderTruncateTableModal()}
-          </span>
-        )}
+        {this.renderAliasTableModal()}
+        {this.renderTruncateTableModal()}
       </div>
     );
   },
