@@ -22,7 +22,7 @@ import SidebarJobsContainer from '../../../components/react/components/SidebarJo
 import LatestVersions from '../../../components/react/components/SidebarVersionsWrapper';
 import SetupModal from './SetupModal';
 import { ExternalLink } from '@keboola/indigo-ui';
-import CodeMirror from 'react-code-mirror';
+import { Controlled as CodeMirror } from 'react-codemirror2'
 
 const COMPONENT_ID = 'apify.apify';
 
@@ -277,13 +277,15 @@ export default createReactClass({
     return (
       <div className="form-control-static">
         <CodeMirror
-          theme="solarized"
-          lineNumbers={false}
           value={value}
-          readOnly={true}
-          cursorHeight={0}
-          mode="application/json"
-          lineWrapping={true}
+          options={{
+            theme: 'solarized',
+            mode: 'application/json',
+            lineNumbers: false,
+            readOnly: true,
+            lineWrapping: true,
+            cursorHeight: 0,
+          }}
         />
       </div>
     );

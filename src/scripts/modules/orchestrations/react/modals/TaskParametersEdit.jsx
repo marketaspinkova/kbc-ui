@@ -3,7 +3,7 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import { Modal, ButtonToolbar, Button } from 'react-bootstrap';
 import Tooltip from '../../../../react/common/Tooltip';
-import CodeMirror from 'react-code-mirror';
+import { Controlled as CodeMirror } from 'react-codemirror2'
 
 export default createReactClass({
   propTypes: {
@@ -40,18 +40,20 @@ export default createReactClass({
   renderJsonArea() {
     return (
       <CodeMirror
-        theme="solarized"
-        lineNumbers={true}
         value={this.state.parametersString}
-        readOnly={!this.props.isEditable}
-        cursorHeight={!this.props.isEditable ? 0 : 1}
-        height="auto"
-        mode="application/json"
-        lineWrapping={true}
-        autoFocus={this.props.isEditable}
-        onChange={this._handleChange}
-        lint={true}
-        gutters={['CodeMirror-lint-markers']}
+        onBeforeChange={this._handleChange}
+        options={{
+          theme: 'solarized',
+          mode: 'application/json',
+          cursorHeight: !this.props.isEditable ? 0 : 1,
+          height: 'auto',
+          readOnly: !this.props.isEditable,
+          autoFocus: this.props.isEditable,
+          lineNumbers: true,
+          lineWrapping: true,
+          lint: true,
+          gutters: ['CodeMirror-lint-markers']
+        }}
       />
     );
   },
@@ -92,13 +94,13 @@ export default createReactClass({
     );
   },
 
-  _handleChange(e) {
+  _handleChange(editor, data, value) {
     this.setState({
-      parametersString: e.target.value
+      parametersString: value
     });
     try {
       return this.setState({
-        parameters: JSON.parse(e.target.value),
+        parameters: JSON.parse(value),
         isValid: true
       });
     } catch (error) {

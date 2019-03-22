@@ -5,7 +5,7 @@ import { Tab, Tabs, FormGroup, Radio, HelpBlock } from 'react-bootstrap';
 import SapiTableSelector from '../../../components/react/components/SapiTableSelector';
 import ApifyObjectSelector from './ApifyObjectSelector';
 import { ExternalLink } from '@keboola/indigo-ui';
-import CodeMirror from 'react-code-mirror';
+import { Controlled as CodeMirror } from 'react-codemirror2'
 
 export const CRAWLER_KEY = 1;
 export const AUTH_KEY = 2;
@@ -153,16 +153,19 @@ export default createReactClass({
           </div>
           <div className="col-xs-10">
             <CodeMirror
-              theme="solarized"
-              lineNumbers={false}
               value={this.props.settings}
-              readOnly={false}
-              mode="application/json"
-              lineWrapping={true}
-              autofocus={false}
-              onChange={this.handleCrawlerSettingsChange}
-              lint={true}
-              gutters={['CodeMirror-lint-markers']}/>
+              onBeforeChange={this.handleCrawlerSettingsChange}
+              options={{
+                theme: 'solarized',
+                mode: 'application/json',
+                lineNumbers: false,
+                readOnly: false,
+                lineWrapping: true,
+                autofocus: false,
+                lint: true,
+                gutters: ['CodeMirror-lint-markers']
+              }}
+            />
             <div className="help-text">
               (Optional) Contains input for the Actor in JSON format.
             </div>
@@ -183,16 +186,18 @@ export default createReactClass({
   renderCrawlerSettingsForm() {
     const editor = (
       <CodeMirror
-        theme="solarized"
-        lineNumbers={false}
         value={this.props.settings}
-        readOnly={false}
-        mode="application/json"
-        lineWrapping={true}
-        autofocus={false}
-        onChange={this.handleCrawlerSettingsChange}
-        lint={true}
-        gutters={['CodeMirror-lint-markers']}
+        onBeforeChange={this.handleCrawlerSettingsChange}
+        options={{
+          theme: 'solarized',
+          lineNumbers: false,
+          readOnly: false,
+          mode: 'application/json',
+          lineWrapping: true,
+          autofocus: false,
+          lint: true,
+          gutters: ['CodeMirror-lint-markers']
+        }}
       />
     );
     const eidHelp = 'Execution ID of the Crawler run to retrieve the results from.';
@@ -246,8 +251,7 @@ export default createReactClass({
     );
   },
 
-  handleCrawlerSettingsChange(e) {
-    const value = e.target.value;
+  handleCrawlerSettingsChange(editor, data, value) {
     this.props.updateSettings(value);
   },
 

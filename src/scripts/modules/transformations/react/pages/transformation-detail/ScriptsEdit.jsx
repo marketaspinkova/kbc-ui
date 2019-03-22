@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
-import CodeMirror from 'react-code-mirror';
+import { Controlled as CodeMirror } from 'react-codemirror2'
 import resolveHighlightMode from './resolveHighlightMode';
 import {ExternalLink} from '@keboola/indigo-ui';
 import normalizeNewlines from './normalizeNewlines';
@@ -34,15 +34,17 @@ export default createReactClass({
         <div>
           <div className="edit form-group kbc-queries-editor">
             <CodeMirror 
-              theme='solarized'
-              lineNumbers
-              autofocus
-              lineWrapping
               value={normalizeNewlines(this.props.script)}
-              mode={resolveHighlightMode('docker', this.props.backend)}
-              onChange={this.handleChange}
-              readOnly={this.props.disabled}
-              {...codeMirrorParams}
+              onBeforeChange={this.handleChange}
+              options={{
+                theme: 'solarized',
+                mode: resolveHighlightMode('docker', this.props.backend),
+                lineNumbers: true,
+                autofocus: true,
+                lineWrapping: true,
+                readOnly: this.props.disabled,
+                ...codeMirrorParams
+              }}
             />
           </div>
           <div className="small help-block">
@@ -65,7 +67,7 @@ export default createReactClass({
     }
   },
 
-  handleChange(e) {
-    this.props.onChange(normalizeNewlines(e.target.value));
+  handleChange(editor, data, value) {
+    this.props.onChange(normalizeNewlines(value));
   }
 });

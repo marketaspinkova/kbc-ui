@@ -3,7 +3,7 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import _ from 'underscore';
 import {createTwoFilesPatch} from 'diff';
-import CodeMirror from 'react-code-mirror';
+import { Controlled as CodeMirror } from 'react-codemirror2'
 
 function multiDiffValueToString(value) {
   if (_.isArray(value)) {
@@ -96,12 +96,14 @@ export default createReactClass({
 
     return (
       <CodeMirror
-        theme="solarized"
-        mode="diff"
         value={multiDiff}
-        lineNumbers={false}
-        lineWrapping={false}
-        readOnly
+        options={{
+          theme: 'solarized',
+          mode: 'diff',
+          lineNumbers: false,
+          lineWrapping: false,
+          readOnly: true
+        }}
         style={{width: '100%'}}
       />
     );

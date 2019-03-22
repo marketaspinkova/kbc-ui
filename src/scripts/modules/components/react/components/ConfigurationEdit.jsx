@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
-// import ConfirmButtons from '../../../../react/common/ConfirmButtons';
-import JSONSchemaEditor from './JSONSchemaEditor';
 import Immutable from 'immutable';
+import { Controlled as CodeMirror } from 'react-codemirror2'
+import JSONSchemaEditor from './JSONSchemaEditor';
 import SaveButtons from '../../../../react/common/SaveButtons';
-import CodeMirror from 'react-code-mirror';
 
 export default createReactClass({
   propTypes: {
@@ -71,22 +70,24 @@ export default createReactClass({
         <p className="help-block small">Properties prefixed with <code>#</code> sign will be encrypted on save. Already encrypted strings will persist.</p>
         <CodeMirror
           value={this.props.data}
-          theme="solarized"
-          lineNumbers={true}
-          mode="application/json"
-          autofocus={true}
-          lineWrapping={true}
-          onChange={this.handleChange}
-          readOnly={this.props.isSaving}
-          lint={true}
-          gutters={['CodeMirror-lint-markers']}
+          onBeforeChange={this.handleChange}
+          options={{
+            theme: 'solarized',
+            mode: 'application/json',
+            lineNumbers: true,
+            autofocus: true,
+            lineWrapping: true,
+            readOnly: this.props.isSaving,
+            lint: true,
+            gutters: ['CodeMirror-lint-markers']
+          }}
         />
       </span>
     );
   },
 
-  handleChange(e) {
-    this.props.onChange(e.target.value);
+  handleChange(editor, data, value) {
+    this.props.onChange(value);
   },
 
   handleParamsChange(value) {

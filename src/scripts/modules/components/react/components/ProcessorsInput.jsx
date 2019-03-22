@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
-import CodeMirror from 'react-code-mirror';
+import { Controlled as CodeMirror } from 'react-codemirror2'
 import { ExternalLink } from '@keboola/indigo-ui';
 
 export default createReactClass({
@@ -11,34 +11,25 @@ export default createReactClass({
     disabled: PropTypes.bool.isRequired
   },
 
-  componentWillUpdate(nextProps) {
-    if (this.refs.CodeMirror) {
-      if (nextProps.value === '') {
-        this.refs.CodeMirror.editor.setOption('lint', false);
-      } else {
-        this.refs.CodeMirror.editor.setOption('lint', true);
-      }
-    }
-  },
-
   render() {
     return (
       <div className="kbc-processor-edit">
         <div>
           <div className="edit form-group kbc-processor-editor">
             <CodeMirror
-              ref='CodeMirror'
-              theme='solarized'
-              mode='application/json'
-              autofocus
-              lineNumbers
-              lineWrapping
-              lint={false}
               value={this.props.value}
-              onChange={this.handleChange}
-              readOnly={this.props.disabled}
-              gutters={['CodeMirror-lint-markers']}
-              placeholder={JSON.stringify({before: [], after: []}, null, 2)}
+              onBeforeChange={this.handleChange}
+              options={{
+                theme: 'solarized',
+                mode: 'application/json',
+                autofocus: true,
+                lineNumbers: true,
+                lineWrapping: true,
+                lint: !!this.props.value,
+                readOnly: this.props.disabled,
+                gutters: ['CodeMirror-lint-markers'],
+                placeholder: JSON.stringify({before: [], after: []}, null, 2)
+              }}
             />
           </div>
           <div className="small help-block">
@@ -49,7 +40,7 @@ export default createReactClass({
     );
   },
 
-  handleChange(e) {
-    this.props.onChange(e.target.value);
+  handleChange(editor, data, value) {
+    this.props.onChange(value);
   }
 });

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
-import CodeMirror from 'react-code-mirror';
+import { Controlled as CodeMirror } from 'react-codemirror2'
 import Select from '../../../../react/common/Select';
 import AutosuggestWrapper from '../../../transformations/react/components/mapping/AutoSuggestWrapper';
 import editorMode from '../../../ex-db-generic/templates/editorMode';
@@ -31,7 +31,7 @@ export default createReactClass({
     return this.props.onChange(this.props.query.set('useLegacySql', event.target.checked));
   },
 
-  _handleQueryChange(value) {
+  _handleQueryChange(editor, data, value) {
     return this.props.onChange(this.props.query.set('query', value));
   },
 
@@ -123,13 +123,15 @@ export default createReactClass({
             <div className="col-md-10 ">
               <div className="form-control-static">
                 <CodeMirror
-                  theme="solarized"
-                  mode={editorMode(this.props.componentId)}
                   value={this.props.query.get('query')}
-                  onChange={(e) => this._handleQueryChange(e.target.value)}
-                  lineNumbers
-                  lineWrapping={false}
-                  placeholder="e.g. SELECT `id`, `name` FROM `myTable`"
+                  onBeforeChange={this._handleQueryChange}
+                  options={{
+                    theme: 'solarized',
+                    mode: editorMode(this.props.componentId),
+                    lineNumbers: true,
+                    lineWrapping: false,
+                    placeholder: 'e.g. SELECT `id`, `name` FROM `myTable`'
+                  }}
                   style={{width: '100%'}}
                 />
               </div>
