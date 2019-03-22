@@ -65,9 +65,9 @@ export default createReactClass({
               <span>
                 Exact path to a file or glob syntax. Use an absolute path for FTP(s) connections and a relative path for SFTP connections.
                 <ul>
-                  <li><code>**/*.csv</code> will download all CSV files in all subdirectories</li>
-                  <li><code>files/*.csv</code> will download all CSV files in files/ directory</li>
-                  <li><code>files/directory/file.txt</code> will download a particular text file</li>
+                  <li><code>{'**/*.csv'}</code> will download all CSV files in all subdirectories</li>
+                  <li><code>{'files/*.csv'}</code> will download all CSV files in files/ directory</li>
+                  <li><code>{'files/directory/file.txt'}</code> will download a particular text file</li>
                 </ul>
               </span>
             </HelpBlock>
