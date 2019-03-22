@@ -277,7 +277,7 @@ export default createReactClass({
           <Col sm={10}>
             <FormControl
               type="text"
-              value={this.props.value.get('destination')}
+              value={this.props.value.get('destination', '')}
               disabled={this.props.disabled}
               placeholder="Destination table name in transformation DB"
               onChange={this._handleChangeDestination}

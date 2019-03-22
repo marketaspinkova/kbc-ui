@@ -163,7 +163,7 @@ export default createReactClass({
                 type="text"
                 name="source"
                 autoFocus
-                value={this.props.value.get('source')}
+                value={this.props.value.get('source', '')}
                 disabled={this.props.disabled}
                 placeholder="File name"
                 onFocus={this._handleFocusSource}
@@ -196,7 +196,7 @@ export default createReactClass({
             <Col xs={10} xsOffset={2}>
               <Checkbox
                 name="incremental"
-                checked={this.props.value.get('incremental')}
+                checked={this.props.value.get('incremental', false)}
                 disabled={this.props.disabled}
                 onChange={this._handleChangeIncremental}
               >

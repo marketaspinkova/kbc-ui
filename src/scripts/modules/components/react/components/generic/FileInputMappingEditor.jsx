@@ -98,7 +98,7 @@ export default createReactClass({
             <Col xs={10}>
               <FormControl
                 type="text"
-                value={this.props.value.get('query')}
+                value={this.props.value.get('query', '')}
                 onChange={this._handleChangeQuery}
                 disabled={this.props.disabled}
                 placeholder="Search query"
