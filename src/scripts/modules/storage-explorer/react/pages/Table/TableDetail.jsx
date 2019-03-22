@@ -379,14 +379,14 @@ export default createReactClass({
     });
   },
 
-  getTableAliases(table, tables, sapiToken) {
+  getTableAliases(currentTable, tables, sapiToken) {
     const foundAliases = [];
 
     tables.forEach(table => {
       if (
         !table.getIn(['bucket', 'sourceBucket']) &&
         table.get('isAlias') &&
-        table.getIn(['sourceTable', 'id']) === table.get('id') &&
+        table.getIn(['sourceTable', 'id']) === currentTable.get('id') &&
         sapiToken.getIn(['owner', 'id']) === table.getIn(['sourceTable', 'project', 'id'])
       ) {
         foundAliases.push(table);
