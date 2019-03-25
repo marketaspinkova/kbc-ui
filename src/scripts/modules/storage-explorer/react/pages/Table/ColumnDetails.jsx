@@ -12,37 +12,43 @@ export default React.createClass({
     userColumnMetadata: PropTypes.object.isRequired
   },
 
+  getDescriptions: function() {
+    var stuff = this.props.machineColumnMetadata
+      .map(metadata => metadata
+        .filter(metadata => metadata.get('key') === 'KBC.description', Map())
+        .get('value', '')
+      );
+    return stuff;
+  },
+
   render: function() {
     return (
-      <Table>
-        <Row>
-          <Col>
-          </Col>
-          <Col>
-            {this.props.machineColumnMetadata.get('provider', '')}
-          </Col>
-          <Col>
-            User Defined
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            Description
-          </Col>
-          <Col>
-            {this.props.machineColumnMetadata.find(metadata => metadata.get('key') === 'KBC.description', Map()).get('value', '')}
-          </Col>
-          <Col>
-            <MetadataEditField
-              objectType="column"
-              metadataKey="KBC.description"
-              placeholder="Describe column"
-              objectId={this.props.columnId}
-              editElement={InlineEditArea}
-            />
-          </Col>
-        </Row>
-      </Table>
+      <div>
+        <MetadataEditField
+          objectType="column"
+          metadataKey="KBC.description"
+          placeholder="Describe column"
+          objectId={this.props.columnId}
+          editElement={InlineEditArea}
+        />
+        <Table>
+          <Row>
+            <Col>
+
+            </Col>
+            <Col>
+              {this.props.machineColumnMetadata.get('provider', '')}
+            </Col>
+            <Col>
+              User Defined
+            </Col>
+          </Row>
+        </Table>
+      </div>
     );
+  },
+
+  renderTypeForm: function() {
+
   }
 });

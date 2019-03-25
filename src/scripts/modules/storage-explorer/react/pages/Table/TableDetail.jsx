@@ -32,7 +32,7 @@ import LatestImports from './LatestImports';
 import TableGraph from './TableGraph';
 
 export default createReactClass({
-  mixins: [createStoreMixin(TablesStore, BucketsStore, ApplicationStore, FilesStore)],
+  mixins: [createStoreMixin(TablesStore, BucketsStore, ApplicationStore, FilesStore, ColumnsLocalStore)],
 
   getStateFromStores() {
     const bucketId = RoutesStore.getCurrentRouteParam('bucketId');
@@ -72,8 +72,8 @@ export default createReactClass({
       exportingTable: TablesStore.getIsExportingTable(table.get('id')),
       tableLinks: this.getTableLinks(table, bucket),
       tableAliases: this.getTableAliases(table, tables, sapiToken),
-      machineColumnMetadata: MetadataStore.getLastUpdatedByColumnMetadata(table.get('id')) | Map(),
-      userColumnMetadata: MetadataStore.getUserProvidedColumnMetadata(table.get('id')) | Map(),
+      machineColumnMetadata: MetadataStore.getLastUpdatedByColumnMetadata(table.get('id')) || Map(),
+      userColumnMetadata: MetadataStore.getUserProvidedColumnMetadata(table.get('id')) || Map(),
       openColumns: ColumnsLocalStore.getOpenedColumns(),
     };
   },

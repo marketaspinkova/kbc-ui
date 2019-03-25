@@ -74,14 +74,12 @@ export default createReactClass({
           Columns
         </h2>
 
-        <Row>
-          <PanelGroup className="kbc-accordion">
-            {this.props.table
-              .get('columns')
-              .map(this.renderColumnPanel)
-              .toArray()}
-          </PanelGroup>
-        </Row>
+        <PanelGroup className="kbc-accordion">
+          {this.props.table
+            .get('columns')
+            .map(this.renderColumnPanel)
+            .toArray()}
+        </PanelGroup>
 
         {this.renderCreateColumnModal()}
         {this.renderDeleteColumnModal()}
@@ -115,17 +113,17 @@ export default createReactClass({
     return (
       <div>
         <Row>
-          <Col>
-            {column.name}
+          <Col sm={10}>
+            {column}
           </Col>
-          <Col>
+          <Col sm={1}>
             {this.isColumnInPrimaryKey(column) && (
               <span className="label label-info" tooltip="Primary key">
               PK
             </span>
             )}
           </Col>
-          <Col className="actions text-right">
+          <Col sm={1}>
             {this.renderActions(column)}
           </Col>
         </Row>
@@ -296,8 +294,7 @@ export default createReactClass({
   },
 
   onSelectColumn(columnId) {
-    const opened = this.props.openColumns | Map();
-
+    const opened = this.props.openColumns;
     setOpenedColumns(opened.has(columnId) ? opened.delete(columnId) : opened.add(columnId));
   },
 
