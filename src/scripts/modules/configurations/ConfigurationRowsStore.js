@@ -95,9 +95,11 @@ Dispatcher.register(function(payload) {
     case InstalledComponentsConstants.ActionTypes.INSTALLED_COMPONENTS_CONFIGDATA_LOAD_SUCCESS:
       _store = _store.withMutations((store) => {
         store.deleteIn(['rows', action.componentId, action.configId]);
+        let orderedRows = Immutable.OrderedMap();
         action.data.rows.forEach((row) => {
-          store.setIn(['rows', action.componentId, action.configId, row.id], fromJSOrdered(row));
+          orderedRows = orderedRows.set(row.id, Immutable.fromJS(row));
         });
+        store.setIn(['rows', action.componentId, action.configId], orderedRows);
       });
       return ConfigurationRowsStore.emitChange();
 
@@ -105,9 +107,11 @@ Dispatcher.register(function(payload) {
       _store = _store.withMutations((store) => {
         action.configData.forEach((configuration) => {
           store.deleteIn(['rows', action.componentId, configuration.id]);
+          let orderedRows = Immutable.OrderedMap();
           configuration.rows.forEach((row) => {
-            store.setIn(['rows', action.componentId, configuration.id, row.id], fromJSOrdered(row));
+            orderedRows = orderedRows.set(row.id, Immutable.fromJS(row));
           });
+          store.setIn(['rows', action.componentId, configuration.id], orderedRows);
         });
       });
       return ConfigurationRowsStore.emitChange();
