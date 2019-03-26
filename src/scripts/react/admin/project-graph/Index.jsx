@@ -3,7 +3,17 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import { Map, fromJS } from 'immutable';
 import { Loader } from '@keboola/indigo-ui';
+import { Button, Row, Col, Nav, NavItem, Tab } from 'react-bootstrap';
+import FastFade from '../../common/FastFade';
 import { getLineageInOrganization } from './GraphApi';
+import Lineage from './Lineage';
+import Graph from './Graph';
+
+import '../../../../styles/theme-kbc-graph.less';
+
+const urlTemplates = fromJS({
+  project: '/admin/projects/<%= projectId %>/'
+});
 
 export default createReactClass({
   propTypes: {
@@ -12,7 +22,8 @@ export default createReactClass({
 
   getInitialState() {
     return {
-      lineageData: Map(),
+      data: Map(),
+      activeTab: '',
       isLoading: false
     };
   },
@@ -21,21 +32,96 @@ export default createReactClass({
     this.getLineageInOrganization();
   },
 
+  componentWillUnmount() {
+    this.loadingPromise && this.loadingPromise.cancel();
+  },
+
   render() {
+    return (
+      <div id="lineage">
+        <h2>Project Overview</h2>
+        {this.renderTabs()}
+      </div>
+    );
+  },
+
+  renderTabs() {
+    return (
+      <Tab.Container
+        activeKey={this.state.activeTab}
+        onSelect={this.handleSelectTab}
+        id="lineage-graph"
+      >
+        <Row>
+          <Col xs={12}>
+            <Nav className="col-xs-12" bsStyle="tabs">
+              {this.renderProjectHeader()}
+              <NavItem eventKey="Graph" disabled={!this.state.data.count()}>
+                Graph
+              </NavItem>
+              <NavItem eventKey="Lineage" disabled={!this.state.data.count()}>
+                Lineage
+              </NavItem>
+            </Nav>
+          </Col>
+          <Col xs={12}>{this.renderContent()}</Col>
+        </Row>
+      </Tab.Container>
+    );
+  },
+
+  renderContent() {
     if (this.state.isLoading) {
-      return (
-        <p>
-          <Loader /> Loading data...
-        </p>
-      );
+      return this.renderLoading();
     }
-    console.log(this.state.lineageData.toJS()); // eslint-disable-line
-    return <code>{JSON.stringify(this.state.lineageData)}</code>;
+
+    if (!this.state.data.count()) {
+      return this.renderErrorMessage();
+    }
+
+    return (
+      <Tab.Content mountOnEnter animation={FastFade}>
+        <Tab.Pane eventKey="Graph">
+          <Graph data={this.state.data} urlTemplates={urlTemplates} />
+        </Tab.Pane>
+        <Tab.Pane eventKey="Lineage">
+          <Lineage data={this.state.data} urlTemplates={urlTemplates} />
+        </Tab.Pane>
+      </Tab.Content>
+    );
+  },
+
+  renderLoading() {
+    return (
+      <p className="text-content">
+        <Loader /> Loading data...
+      </p>
+    );
+  },
+
+  renderErrorMessage() {
+    return (
+      <p className="text-content">
+        Loading data failed.{' '}
+        <Button bsStyle="link" className="btn-link-inline" onClick={this.getLineageInOrganization}>
+          Try again
+        </Button>
+        .
+      </p>
+    );
+  },
+
+  renderProjectHeader() {
+    return <h3>{this.props.appData.getIn(['sapi', 'token', 'owner', 'name'])}</h3>;
+  },
+
+  handleSelectTab(tab) {
+    this.setState({ activeTab: tab });
   },
 
   getLineageInOrganization() {
     this.setState({ isLoading: true });
-    getLineageInOrganization(
+    this.loadingPromise = getLineageInOrganization(
       this.props.appData.get('services').find((service) => {
         return service.get('id') === 'graph'
       }).get('url'),
@@ -43,7 +129,8 @@ export default createReactClass({
     )
       .then((data) => {
         this.setState({
-          lineageData: fromJS(data)
+          data: fromJS(data),
+          activeTab: 'Lineage'
         });
       })
       .finally(() => {

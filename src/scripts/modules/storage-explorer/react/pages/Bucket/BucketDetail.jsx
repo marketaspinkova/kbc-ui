@@ -13,7 +13,7 @@ import { factory as eventsFactory } from '../../../../sapi-events/BucketEventsSe
 import { createTable, deleteBucket, createAliasTable, createTableFromTextInput, uploadFile } from '../../../Actions';
 
 import Tooltip from '../../../../../react/common/Tooltip';
-import FastFade from '../../components/FastFade';
+import FastFade from '../../../../../react/common/FastFade';
 import BucketEvents from '../../components/Events';
 import DeleteBucketModal from '../../modals/DeleteBucketModal';
 import BucketOverview from './BucketOverview';
