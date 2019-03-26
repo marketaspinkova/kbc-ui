@@ -80,8 +80,8 @@ export default createReactClass({
     }
 
     return (
-      <Tab.Content mountOnEnter animation={FastFade}>
-        <Tab.Pane eventKey="Graph">
+      <Tab.Content animation={FastFade}>
+        <Tab.Pane eventKey="Graph" mountOnEnter unmountOnExit>
           <Graph data={this.state.data} urlTemplates={urlTemplates} />
         </Tab.Pane>
         <Tab.Pane eventKey="Lineage">
