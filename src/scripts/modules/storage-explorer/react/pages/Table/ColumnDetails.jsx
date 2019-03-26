@@ -10,7 +10,7 @@ export default React.createClass({
   propTypes: {
     columnId: PropTypes.string.isRequired,
     columnName: PropTypes.string.isRequired,
-    machineColumnMetadata: PropTypes.object.isRequired,
+    machineDataType: PropTypes.object.isRequired,
     userColumnMetadata: PropTypes.object.isRequired
   },
 
@@ -24,17 +24,6 @@ export default React.createClass({
     return this.props.userColumnMetadata.get(this.props.columnName)
       .find(row => row.get('key') === metadataKey, null, Map())
       .get('value', '');
-  },
-
-  getMachineValue(metadataKey) {
-    return Map({
-      value: this.props.machineColumnMetadata.get(this.props.columnName)
-        .find(row => row.get('key') === metadataKey, null, Map())
-        .get('value', ''),
-      provider: this.props.machineColumnMetadata.get(this.props.columnName)
-        .find(row => row.get('key') === metadataKey, null, Map())
-        .get('provider', ''),
-    });
   },
 
   baseTypeOptions() {
@@ -97,10 +86,9 @@ export default React.createClass({
   },
 
   renderSystemValue() {
-    const systemType = this.getMachineValue('KBC.datatype.basetype');
-    if (systemType) {
+    if (this.props.machineDataType) {
       return (
-        "via " + systemType.get('provider') + " we find " + systemType.get('value')
+        "via " + this.props.machineDataType.get('provider') + " we find " + this.props.machineDataType.get('baseType')
       )
     } else {
       return (
