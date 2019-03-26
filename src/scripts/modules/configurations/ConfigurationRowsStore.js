@@ -93,33 +93,24 @@ Dispatcher.register(function(payload) {
   const action = payload.action;
   switch (action.type) {
     case InstalledComponentsConstants.ActionTypes.INSTALLED_COMPONENTS_CONFIGDATA_LOAD_SUCCESS:
-      _store = _store.withMutations(function(store) {
-        let retVal = store;
-        retVal = retVal.deleteIn(['rows', action.componentId, action.configId]);
-        let orderedRows = Immutable.OrderedMap();
-        action.data.rows.forEach(function(row) {
-          orderedRows = orderedRows.set(row.id, Immutable.fromJS(row));
+      _store = _store.withMutations((store) => {
+        store.deleteIn(['rows', action.componentId, action.configId]);
+        action.data.rows.forEach((row) => {
+          store.setIn(['rows', action.componentId, action.configId, row.id], fromJSOrdered(row));
         });
-        retVal = retVal.setIn(['rows', action.componentId, action.configId], orderedRows);
-        return retVal;
       });
       return ConfigurationRowsStore.emitChange();
 
     case InstalledComponentsConstants.ActionTypes.INSTALLED_COMPONENTS_CONFIGSDATA_LOAD_SUCCESS:
-      _store = _store.withMutations(function(store) {
-        let retVal = store;
-        action.configData.forEach(function(config) {
-          retVal = retVal.deleteIn(['rows', action.componentId]);
-          let orderedRows = Immutable.OrderedMap();
-          config.rows.forEach(function(row) {
-            orderedRows = orderedRows.set(row.id, Immutable.fromJS(row));
+      _store = _store.withMutations((store) => {
+        action.configData.forEach((configuration) => {
+          store.deleteIn(['rows', action.componentId, configuration.id]);
+          configuration.rows.forEach((row) => {
+            store.setIn(['rows', action.componentId, configuration.id, row.id], fromJSOrdered(row));
           });
-          retVal = retVal.setIn(['rows', action.componentId, config.id], orderedRows);
         });
-        return retVal;
       });
       return ConfigurationRowsStore.emitChange();
-
 
     case constants.ActionTypes.CONFIGURATION_ROWS_CREATE_START:
       _store = _store.setIn(['creating', action.componentId, action.configurationId], true);
