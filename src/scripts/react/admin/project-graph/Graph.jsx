@@ -36,6 +36,7 @@ export default createReactClass({
 
   initGraph() {
     this.graph = new GraphCanvas(this.prepareData(), this.refs.graph);
+    this.graph.zoom = { scale: 0.70, max: 1.70, min: 0.20, step: 0.1 };
     this.graph.styles = graphUtils.styles();
     this.graph.render(this.props.data.get('origin'));
   },
