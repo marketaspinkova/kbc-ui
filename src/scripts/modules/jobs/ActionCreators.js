@@ -87,7 +87,7 @@ export default {
   },
 
   setQuery(query) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.JOBS_SET_QUERY,
       query
     });
@@ -113,7 +113,7 @@ export default {
   },
 
   recieveJobs(jobs, newOffset, resetJobs) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.JOBS_LOAD_SUCCESS,
       jobs,
       newOffset,
@@ -122,7 +122,7 @@ export default {
   },
 
   recieveJobDetail(jobDetail) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.JOB_LOAD_SUCCESS,
       job: jobDetail
     });
@@ -165,13 +165,13 @@ export default {
       .getJobsParametrized(query, 30, 0)
       .then(jobs => {
         this.reloadSapiTablesTrigger(jobs);
-
-        return dispatcher.handleViewAction({
+        dispatcher.handleViewAction({
           type: constants.ActionTypes.JOBS_LATEST_LOAD_SUCCESS,
           componentId,
           configurationId,
           jobs
         });
+        return null;
       })
       .catch(e => {
         dispatcher.handleViewAction({

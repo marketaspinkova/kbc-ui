@@ -37,7 +37,7 @@ export default {
         .getCredentials(isReadOnly, driver, componentId, configId)
         .then(result => {
           if (isReadOnly) {
-            return dispatcher.handleViewAction({
+            dispatcher.handleViewAction({
               type: constants.ActionTypes.WR_DB_LOAD_PROVISIONING_SUCCESS,
               componentId,
               configId,
@@ -98,7 +98,7 @@ export default {
   },
 
   resetCredentials(componentId, configId) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.WR_DB_SAVE_CREDENTIALS_SUCCESS,
       componentId,
       configId,
@@ -107,7 +107,7 @@ export default {
   },
 
   setEditingData(componentId, configId, path, data) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.WR_DB_SET_EDITING,
       componentId,
       configId,

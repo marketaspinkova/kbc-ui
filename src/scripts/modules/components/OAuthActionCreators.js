@@ -23,7 +23,7 @@ export default {
       });
       return result;
     }).catch(function() {
-      return dispatcher.handleViewAction({
+      dispatcher.handleViewAction({
         type: Constants.ActionTypes.OAUTH_LOAD_CREDENTIALS_ERROR,
         componentId: componentId,
         configId: configId
@@ -38,14 +38,14 @@ export default {
       configId: configId
     });
     return oauthApi.deleteCredentials(componentId, configId).then(function(result) {
-      return dispatcher.handleViewAction({
+      dispatcher.handleViewAction({
         type: Constants.ActionTypes.OAUTH_DELETE_CREDENTIALS_SUCCESS,
         componentId: componentId,
         configId: configId,
         credentials: result
       });
     }).catch(function() {
-      return dispatcher.handleViewAction({
+      dispatcher.handleViewAction({
         type: Constants.ActionTypes.OAUTH_API_ERROR,
         componentId: componentId,
         configId: configId

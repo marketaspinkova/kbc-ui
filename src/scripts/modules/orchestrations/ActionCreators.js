@@ -89,7 +89,7 @@ export default {
   },
 
   receiveAllOrchestrations(orchestrations) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.ORCHESTRATIONS_LOAD_SUCCESS,
       orchestrations
     });
@@ -133,7 +133,7 @@ export default {
 
   receiveOrchestration(orchestration) {
     orchestration.tasks = rephaseTasks(orchestration.tasks);
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.ORCHESTRATION_LOAD_SUCCESS,
       orchestration
     });
@@ -273,7 +273,7 @@ export default {
     Filter orchestrations
   */
   setOrchestrationsFilter(query) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.ORCHESTRATIONS_SET_FILTER,
       query
     });
@@ -319,7 +319,7 @@ export default {
     Editing orchestration field
   */
   startOrchestrationFieldEdit(orchestrationId, fieldName) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.ORCHESTRATION_FIELD_EDIT_START,
       orchestrationId,
       field: fieldName
@@ -327,7 +327,7 @@ export default {
   },
 
   cancelOrchestrationFieldEdit(orchestrationId, fieldName) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.ORCHESTRATION_FIELD_EDIT_CANCEL,
       orchestrationId,
       field: fieldName
@@ -335,7 +335,7 @@ export default {
   },
 
   updateOrchestrationFieldEdit(orchestrationId, fieldName, newValue) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.ORCHESTRATION_FIELD_EDIT_UPDATE,
       orchestrationId,
       field: fieldName,
@@ -381,21 +381,21 @@ export default {
     Editing orchestration tasks
   */
   startOrchestrationTasksEdit(orchestrationId) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.ORCHESTRATION_TASKS_EDIT_START,
       orchestrationId
     });
   },
 
   cancelOrchestrationTasksEdit(orchestrationId) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.ORCHESTRATION_TASKS_EDIT_CANCEL,
       orchestrationId
     });
   },
 
   updateOrchestrationsTasksEdit(orchestrationId, tasks) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.ORCHESTRATION_TASKS_EDIT_UPDATE,
       orchestrationId,
       tasks
@@ -414,7 +414,7 @@ export default {
       .saveOrchestrationTasks(orchestrationId, tasks.toJS())
       .then(data => {
         // update tasks from server
-        return dispatcher.handleViewAction({
+        dispatcher.handleViewAction({
           type: constants.ActionTypes.ORCHESTRATION_TASKS_SAVE_SUCCESS,
           orchestrationId,
           tasks: rephaseTasks(data)
@@ -434,14 +434,14 @@ export default {
     Editing tasks on job retry
   */
   startJobRetryTasksEdit(jobId) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.ORCHESTRATION_JOB_RETRY_EDIT_START,
       jobId
     });
   },
 
   updateJobRetryTasksEdit(jobId, tasks) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.ORCHESTRATION_JOB_RETRY_EDIT_UPDATE,
       jobId,
       tasks
@@ -452,21 +452,21 @@ export default {
     Editing tasks on manulal run
   */
   startOrchestrationRunTasksEdit(orchestrationId) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.ORCHESTRATION_RUN_TASK_EDIT_START,
       orchestrationId
     });
   },
 
   cancelOrchestrationRunTasksEdit(orchestrationId) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.ORCHESTRATION_RUN_TASK_EDIT_CANCEL,
       orchestrationId
     });
   },
 
   updateOrchestrationRunTasksEdit(orchestrationId, tasks) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.ORCHESTRATION_RUN_TASK_EDIT_UPDATE,
       orchestrationId,
       tasks

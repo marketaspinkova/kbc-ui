@@ -7,7 +7,7 @@ import ComponentsStore from './stores/ComponentsStore';
 
 export default {
   updateConfiguration(componentId, configuration) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: ActionTypes.COMPONENTS_NEW_CONFIGURATION_UPDATE,
       componentId,
       configuration
@@ -15,7 +15,7 @@ export default {
   },
 
   resetConfiguration(componentId) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: ActionTypes.COMPONENTS_NEW_CONFIGURATION_CANCEL,
       componentId
     });

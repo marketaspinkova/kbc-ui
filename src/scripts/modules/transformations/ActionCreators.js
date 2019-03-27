@@ -27,14 +27,14 @@ const updateTransformationEditingFieldQueriesStringDebouncer = _.debounce(functi
     transformationId: transformationId
   });
   return parseQueries(queriesString).then(function(splitQueries) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.TRANSFORMATION_UPDATE_PARSE_QUERIES_SUCCESS,
       bucketId: bucketId,
       transformationId: transformationId,
       splitQueries: splitQueries
     });
   }).catch(function() {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.TRANSFORMATION_UPDATE_PARSE_QUERIES_ERROR,
       bucketId: bucketId,
       transformationId: transformationId
@@ -202,7 +202,7 @@ export default {
           sys: [bucketId]
         }
       }).then(function(graphData) {
-        return dispatcher.handleViewAction({
+        dispatcher.handleViewAction({
           type: constants.ActionTypes.TRANSFORMATION_OVERVIEW_LOAD_SUCCESS,
           transformationId: transformationId,
           bucketId: bucketId,
@@ -228,7 +228,7 @@ export default {
     return this.loadTransformationOverview(bucketId, transformationId, showDisabled);
   },
   toggleOpenInputMapping: function(bucketId, transformationId, index) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.TRANSFORMATION_INPUT_MAPPING_OPEN_TOGGLE,
       transformationId: transformationId,
       bucketId: bucketId,
@@ -236,7 +236,7 @@ export default {
     });
   },
   toggleOpenOutputMapping: function(bucketId, transformationId, index) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.TRANSFORMATION_OUTPUT_MAPPING_OPEN_TOGGLE,
       transformationId: transformationId,
       bucketId: bucketId,
@@ -317,19 +317,19 @@ export default {
     });
   },
   setTransformationBucketsFilter: function(query) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.TRANSFORMATION_BUCKETS_FILTER_CHANGE,
       filter: query
     });
   },
   toggleBucket: function(bucketId) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.TRANSFORMATION_BUCKETS_TOGGLE,
       bucketId: bucketId
     });
   },
   startTransformationFieldEdit: function(bucketId, transformationId, fieldId) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.TRANSFORMATION_START_EDIT_FIELD,
       bucketId: bucketId,
       transformationId: transformationId,
@@ -337,7 +337,7 @@ export default {
     });
   },
   updateTransformationEditingField: function(bucketId, transformationId, fieldId, newValue) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.TRANSFORMATION_UPDATE_EDITING_FIELD,
       bucketId: bucketId,
       transformationId: transformationId,
@@ -355,7 +355,7 @@ export default {
     return updateTransformationEditingFieldQueriesStringDebouncer(bucketId, transformationId, queriesString);
   },
   cancelTransformationEditingField: function(bucketId, transformationId, fieldId) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.TRANSFORMATION_CANCEL_EDITING_FIELD,
       bucketId: bucketId,
       transformationId: transformationId,

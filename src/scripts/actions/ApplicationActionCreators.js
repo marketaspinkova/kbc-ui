@@ -4,7 +4,7 @@ import _ from 'underscore';
 
 export default {
   receiveApplicationData(data) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.APPLICATION_DATA_RECEIVED,
       applicationData: data
     });
@@ -42,7 +42,7 @@ export default {
   },
 
   deleteNotification(id, forceDelete) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.APPLICATION_DELETE_NOTIFICATION,
       notificationId: id,
       forceDelete
@@ -50,7 +50,7 @@ export default {
   },
 
   pauseNotificationAging(id) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.APPLICATION_SET_PAUSE_NOTIFICATION,
       notificationId: id,
       paused: true

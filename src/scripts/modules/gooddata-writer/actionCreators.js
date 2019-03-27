@@ -140,7 +140,7 @@ export default {
   },
 
   toggleBucket(configurationId, bucketId) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.GOOD_DATA_WRITER_SET_BUCKET_TOGGLE,
       configurationId,
       bucketId
@@ -310,7 +310,7 @@ export default {
   },
 
   startTableFieldEdit(configurationId, tableId, field) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.GOOD_DATA_WRITER_TABLE_FIELD_EDIT_START,
       tableId,
       configurationId,
@@ -319,7 +319,7 @@ export default {
   },
 
   updateTableFieldEdit(configurationId, tableId, field, newValue) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.GOOD_DATA_WRITER_TABLE_FIELD_EDIT_UPDATE,
       configurationId,
       tableId,
@@ -329,7 +329,7 @@ export default {
   },
 
   cancelTableFieldEdit(configurationId, tableId, field) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.GOOD_DATA_WRITER_TABLE_FIELD_EDIT_CANCEL,
       tableId,
       configurationId,
@@ -338,7 +338,7 @@ export default {
   },
 
   startTableColumnsEdit(configurationId, tableId) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.GOOD_DATA_WRITER_COLUMNS_EDIT_START,
       configurationId,
       tableId
@@ -346,7 +346,7 @@ export default {
   },
 
   cancelTableColumnsEdit(configurationId, tableId) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.GOOD_DATA_WRITER_COLUMNS_EDIT_CANCEL,
       configurationId,
       tableId
@@ -354,7 +354,7 @@ export default {
   },
 
   updateTableColumnsEdit(configurationId, tableId, column) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.GOOD_DATA_WRITER_COLUMNS_EDIT_UPDATE,
       configurationId,
       tableId,
@@ -377,12 +377,13 @@ export default {
       .updateTable(configurationId, tableId, { columns })
       .then(() => {
         this.loadReferencableTablesForce(configurationId);
-        return dispatcher.handleViewAction({
+        dispatcher.handleViewAction({
           type: constants.ActionTypes.GOOD_DATA_WRITER_COLUMNS_EDIT_SAVE_SUCCESS,
           configurationId,
           tableId,
           columns: columns.toJS()
         });
+        return null;
       })
       .catch(function(e) {
         dispatcher.handleViewAction({
@@ -588,7 +589,7 @@ export default {
   },
 
   updateNewDateDimension(configurationId, newDimension) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.GOOD_DATA_WRITER_NEW_DATE_DIMENSION_UPDATE,
       configurationId,
       dimension: newDimension
@@ -659,7 +660,7 @@ export default {
   },
 
   setWriterTablesFilter(configurationId, query) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.GOOD_DATA_WRITER_TABLES_FILTER_CHANGE,
       filter: query,
       configurationId
