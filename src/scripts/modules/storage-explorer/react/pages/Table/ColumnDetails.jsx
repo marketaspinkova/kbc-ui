@@ -1,29 +1,30 @@
 import React, { PropTypes } from 'react';
 import { Map, List } from 'immutable';
-import { Table, Row, Col } from 'react-bootstrap';
+import { Table, Row, Col, FormControl, Checkbox } from 'react-bootstrap';
 import Select from 'react-select';
-import { InlineEditInput } from '@keboola/indigo-ui';
 import MetadataEditField from '../../../../components/react/components/MetadataEditField';
 import InlineEditArea from '../../../../../react/common/InlineEditArea';
 import SaveButtons from '../../../../../react/common/SaveButtons';
+import { saveColumnMetadata } from '../../../Actions';
 
 export default React.createClass({
   propTypes: {
     columnId: PropTypes.string.isRequired,
     columnName: PropTypes.string.isRequired,
     machineDataType: PropTypes.object.isRequired,
-    userDataType: PropTypes.object.isRequired
+    userDataType: PropTypes.object.isRequired,
+    disabled: PropTypes.bool.isRequired,
+    onChange: PropTypes.func.isRequired
   },
 
-  getStateFromStores(props) {
+  getInitialState() {
     return {
-      showLength: false,
-      userType: props.userDataType
+      showLength: false
     }
   },
 
   baseTypeOptions() {
-    const baseTypes = List(['STRING', 'INTEGER', "DATE", 'TIMESTAMP', 'BOOLEAN', 'FLOAT', 'DECIMAL']);
+    const baseTypes = List(['STRING', 'INTEGER', "DATE", 'TIMESTAMP', 'BOOLEAN', 'FLOAT', 'NUMERIC']);
     return baseTypes.map(type => {
       return {label: type, value: type}
     }).toJS();
@@ -58,17 +59,21 @@ export default React.createClass({
           </Col>
           <Col sm={4}>
             <Select
-              value={this.state.userDataType.get('baseType')}
+              value={this.props.userDataType.get('baseType')}
               options={this.baseTypeOptions()}
               onChange={this.handleBaseTypeChange}
             />
             {this.renderLengthEdit()}
+            <Checkbox
+              name={this.props.columnName + '_nullable'}
+              checked={this.props.userDataType.get('nullable')}
+              onChange={this.handleNullableChange}
+            >
+              Nullable
+            </Checkbox>
             <SaveButtons
-              isSaving={this.state.localState.getIn(['isSaving', this.props.columnId], false)}
-              isChanged={this.state.localState.getIn(['isChanged', this.props.columnId], false)}
-              onReset={this.handleResetDataType}
               onSave={this.handleSaveDataType}
-              disabled={this.state.localState.getIn(['isSaving', this.props.columnId], false) || !this.state.isValid}
+              disabled={this.state.isDisabled || !this.state.isValid}
             />
           </Col>
         </Row>
@@ -78,12 +83,14 @@ export default React.createClass({
 
   renderLengthEdit() {
     if (this.state.showLength) {
-      return <MetadataEditField
-        objectType="column"
-        metadataKey="KBC.datatype.length"
-        objectId={this.props.columnId}
-        placeholder="Length"
-        editElement={InlineEditInput}
+      return <FormControl
+        name={this.props.columnName + '_length'}
+        type="text"
+        size={15}
+        value={this.props.userDataType.get('length')}
+        onChange={this.handleLengthChange}
+        disabled={this.props.disabled || !this.lengthEnabled()}
+        placeholder="Length, eg. 38,0"
       />
     }
   },
@@ -107,9 +114,18 @@ export default React.createClass({
   },
 
   baseTypeSupportsLength(type) {
-    if (type === 'STRING') {
+    const typesSupportingLength = List(['STRING', 'INTEGER', 'NUMERIC']);
+    if (typesSupportingLength.has(type)) {
       return true;
     }
     return false;
+  },
+
+  handleSaveDataType() {
+    saveColumnMetadata('column', this.props.columnId, Map({
+      'KBC.datatype.basetype': this.state.userDataType.get('baseType'),
+      'KBC.datatype.length': this.state.userDataType.get('length'),
+      'KBC.datatype.nullable': this.state.userDataType.get('nullable'),
+    }));
   }
 });

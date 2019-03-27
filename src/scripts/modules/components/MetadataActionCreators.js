@@ -69,5 +69,25 @@ export default {
       });
       throw error;
     });
+  },
+
+  saveMetadataSet: function(objectType, objectId, metadata) {
+    return storageApi.saveMetadata(objectType, objectId, metadata).then(function(result) {
+      dispatcher.handleViewAction({
+        type: Constants.ActionTypes.METADATA_SAVE_SUCCESS,
+        objectType: objectType,
+        objectId: objectId,
+        metadata: metadata
+      });
+      return result;
+    }).catch(function(error) {
+      dispatcher.handleViewAction({
+        type: Constants.ActionTypes.METADATA_SAVE_ERROR,
+        objectType: objectType,
+        objectId: objectId,
+        metadata: metadata
+      });
+      throw error;
+    });
   }
 };

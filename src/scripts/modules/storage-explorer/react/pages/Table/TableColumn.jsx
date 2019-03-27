@@ -49,7 +49,7 @@ export default createReactClass({
       return entry.get('key') === 'KBC.datatype.basetype';
     });
     if (!baseType) {
-      return null;
+      return Map();
     }
 
     const nativeType = metadata.find((entry) => {
@@ -71,10 +71,6 @@ export default createReactClass({
       nullable: !!parseInt(nullable.get('value', 0), 10),
       provider: baseType.get('provider')
     });
-  },
-
-  getUserColumnMetadata(column) {
-    return this.props.userColumnMetadata.filter((metadata, col) => col === column);
   },
 
   render() {

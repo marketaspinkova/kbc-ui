@@ -11,6 +11,7 @@ import jobPoller from '../../utils/jobPoller';
 import HttpError from '../../utils/errors/HttpError';
 import StorageApi from '../components/StorageApi';
 import exportTableApi from './ExportTableApi';
+import MetadataActionCreators from "../components/MetadataActionCreators";
 
 const errorNotification = (message) => {
   if (!_.isString(message)) {
@@ -131,6 +132,12 @@ const deleteTableColumn = (tableId, columnName, params) => {
 const addTableColumn = (tableId, params) => {
   return StorageActionCreators
     .addTableColumn(tableId, params)
+    .catch(errorNotification);
+};
+
+const saveColumnMetadata = (columnId, keyValues) => {
+  MetadataActionCreators
+    .saveMetadataSet('column', columnId, keyValues)
     .catch(errorNotification);
 };
 
@@ -325,6 +332,7 @@ export {
   removeTablePrimaryKey,
   deleteTableColumn,
   addTableColumn,
+  saveColumnMetadata,
   setAliasTableFilter,
   removeAliasTableFilter,
   dataPreview,
