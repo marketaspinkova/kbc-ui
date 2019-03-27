@@ -44,8 +44,7 @@ export default createReactClass({
     return this.props.table.get('id') + '.' + columnName;
   },
 
-  getMachineDataType(column) {
-    const metadata = this.props.machineColumnMetadata.get(column);
+  getDataType(metadata) {
     const baseType = metadata.find((entry) => {
       return entry.get('key') === 'KBC.datatype.basetype';
     });
@@ -70,7 +69,7 @@ export default createReactClass({
       baseType: baseType.get('value'),
       length: length.get('value'),
       nullable: !!parseInt(nullable.get('value', 0), 10),
-      provider: baseType.get('provicer'),
+      provider: baseType.get('provider')
     });
   },
 
@@ -128,8 +127,8 @@ export default createReactClass({
         <ColumnDetails
           columnId={this.getColumnId(column)}
           columnName={column}
-          machineDatatype={this.getMachineDataType(column)}
-          userColumnMetadata={this.getUserColumnMetadata(column)}
+          machineDataType={this.getDataType(this.props.machineColumnMetadata.get(column))}
+          userDataType={this.getDataType(this.props.userColumnMetadata.get(column))}
         />
       </Panel>
     );

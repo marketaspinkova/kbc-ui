@@ -5,25 +5,21 @@ import Select from 'react-select';
 import { InlineEditInput } from '@keboola/indigo-ui';
 import MetadataEditField from '../../../../components/react/components/MetadataEditField';
 import InlineEditArea from '../../../../../react/common/InlineEditArea';
+import SaveButtons from '../../../../../react/common/SaveButtons';
 
 export default React.createClass({
   propTypes: {
     columnId: PropTypes.string.isRequired,
     columnName: PropTypes.string.isRequired,
     machineDataType: PropTypes.object.isRequired,
-    userColumnMetadata: PropTypes.object.isRequired
+    userDataType: PropTypes.object.isRequired
   },
 
-  getInitialState: function() {
+  getStateFromStores(props) {
     return {
-      showLength: false
+      showLength: false,
+      userType: props.userDataType
     }
-  },
-
-  getUserValue(metadataKey) {
-    return this.props.userColumnMetadata.get(this.props.columnName)
-      .find(row => row.get('key') === metadataKey, null, Map())
-      .get('value', '');
   },
 
   baseTypeOptions() {
@@ -62,11 +58,18 @@ export default React.createClass({
           </Col>
           <Col sm={4}>
             <Select
-              value={this.getUserValue('KBC.datatype.basetype')}
+              value={this.state.userDataType.get('baseType')}
               options={this.baseTypeOptions()}
               onChange={this.handleBaseTypeChange}
             />
             {this.renderLengthEdit()}
+            <SaveButtons
+              isSaving={this.state.localState.getIn(['isSaving', this.props.columnId], false)}
+              isChanged={this.state.localState.getIn(['isChanged', this.props.columnId], false)}
+              onReset={this.handleResetDataType}
+              onSave={this.handleSaveDataType}
+              disabled={this.state.localState.getIn(['isSaving', this.props.columnId], false) || !this.state.isValid}
+            />
           </Col>
         </Row>
       </Table>
@@ -86,7 +89,7 @@ export default React.createClass({
   },
 
   renderSystemValue() {
-    if (this.props.machineDataType) {
+    if (this.props.machineDataType !== null) {
       return (
         "via " + this.props.machineDataType.get('provider') + " we find " + this.props.machineDataType.get('baseType')
       )
@@ -97,9 +100,10 @@ export default React.createClass({
     }
   },
 
-  handleBaseTypeChange(selectedValue) {
-    this.setState({showLength: this.baseTypeSupportsLength(selectedValue)});
-
+  handleBaseTypeChange(selectedItem) {
+    this.setState({
+      showLength: this.baseTypeSupportsLength(selectedItem.value)
+    });
   },
 
   baseTypeSupportsLength(type) {
