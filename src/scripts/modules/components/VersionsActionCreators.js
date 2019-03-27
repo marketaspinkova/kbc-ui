@@ -76,14 +76,6 @@ export default {
       });
   },
 
-  dismissMishmashWarning(componentId, configId) {
-    dispatcher.handleViewAction({
-      componentId: componentId,
-      configId: configId,
-      type: Constants.ActionTypes.VERSIONS_DISMISS_MISHMASH_WARNING
-    });
-  },
-
   loadComponentConfigByVersion(componentId, configId, version) {
     if (Store.hasConfigByVersion(componentId, configId, version)) {
       return Promise.resolve(Store.getConfigByVersion(componentId, configId, version));
