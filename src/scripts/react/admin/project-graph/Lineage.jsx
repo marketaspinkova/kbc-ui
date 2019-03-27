@@ -3,7 +3,7 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import _ from 'underscore';
 import { List } from 'immutable';
-import { Table } from 'react-bootstrap';
+import { Table, Label } from 'react-bootstrap';
 import { ExternalLink } from '@keboola/indigo-ui';
 import Tooltip from '../../common/Tooltip';
 
@@ -15,15 +15,21 @@ export default createReactClass({
 
   render() {
     return (
-      <Table className="lineage-table" responsive>
+      <Table className="lineage-table kbc-break-all kbc-break-word" responsive>
         {this.renderLineageHeader()}
         <tbody>
           {this.lineageData()
             .map((group, level) => (
               <tr key={level}>
                 <td>Level {level}</td>
-                <td>{this.renderParentLinks(group)}</td>
-                <td>{this.renderChildLinks(group)}</td>
+                <td>
+                  {this.renderGroupCountLabel(group, 'parent')}
+                  {this.renderParentLinks(group)}
+                </td>
+                <td>
+                  {this.renderGroupCountLabel(group, 'child')}
+                  {this.renderChildLinks(group)}
+                </td>
               </tr>
             ))
             .toArray()}
@@ -52,6 +58,10 @@ export default createReactClass({
         </tr>
       </thead>
     );
+  },
+
+  renderGroupCountLabel(group, section) {
+    return <Label className="group-label">{group.get(section, List()).count()}</Label>
   },
 
   renderParentLinks(group) {
