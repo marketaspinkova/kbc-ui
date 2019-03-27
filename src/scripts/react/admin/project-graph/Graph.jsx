@@ -3,6 +3,7 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import _ from 'underscore';
 import { List } from 'immutable';
+import { Label } from 'react-bootstrap';
 import graphUtils from '../../../utils/graphUtils';
 import GraphCanvas from '../../common/GraphCanvas';
 
@@ -26,12 +27,23 @@ export default createReactClass({
       <div className="graph">
         <div ref="graph" onWheel={this.handleMouseWheel} />
         {this.renderNone()}
+        {this.renderLegend()}
       </div>
     );
   },
 
   renderNone() {
-    return <p>A note about why some project are highlighted.</p>;
+    return <p className="pull-left">A note about why some project are highlighted.</p>;
+  },
+
+  renderLegend() {
+    return (
+      <div className="pull-right">
+        <Label className="project-label">Project</Label>
+        <Label className="highlighted-label">Highlighted project</Label>
+        <Label className="origin-label">Current project</Label>
+      </div>
+    );
   },
 
   initGraph() {
