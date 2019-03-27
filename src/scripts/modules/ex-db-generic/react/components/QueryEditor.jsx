@@ -104,7 +104,7 @@ export default createReactClass({
   },
 
   handleStateReset() {
-    return this.props.onChange(this.props.query.set('state', Immutable.fromJS({})));
+    return this.props.onChange(this.props.query.setIn(['state', 'component'], Immutable.fromJS({})));
   },
 
   handleQueryChange(value) {
@@ -719,11 +719,6 @@ export default createReactClass({
   },
 
   getLastFetchedRowValue() {
-    let queryState = this.props.query.get('state');
-    if (queryState && queryState.has('lastFetchedRow')) {
-      return queryState.get('lastFetchedRow');
-    } else {
-      return false;
-    }
+    return this.props.query.getIn(['state', 'component', 'lastFetchedRow'], false);
   }
 });
