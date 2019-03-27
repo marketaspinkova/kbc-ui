@@ -81,7 +81,7 @@ export default createReactClass({
     this.props.data.forEach((item) => {
       converted.push([
         new Date(item.get('date')),
-        Number((item.get('value') / (10)).toFixed(3)),
+        Number((item.get('value') / (1000 * 1000 * 1000)).toFixed(3)),
         null
       ]);
     });
