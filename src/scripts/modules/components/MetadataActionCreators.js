@@ -77,7 +77,7 @@ export default {
         type: Constants.ActionTypes.METADATA_SAVE_SUCCESS,
         objectType: objectType,
         objectId: objectId,
-        metadata: metadata
+        metadata: result
       });
       return result;
     }).catch(function(error) {
