@@ -47,36 +47,34 @@ export default React.createClass({
 
   renderTypeForm() {
     return (
-      <Table>
-        <Row>
-          <Col sm={4}>
-            Datatype
-          </Col>
-          <Col sm={4}>
-            {
-              this.renderSystemValue()
-            }
-          </Col>
-          <Col sm={4}>
-            <Select
-              value={this.state.userDataType.get('baseType')}
-              options={this.baseTypeOptions()}
-              onChange={this.handleBaseTypeChange}
-            />
-            {this.renderLengthEdit()}
-            <Checkbox
-              name={this.props.columnName + '_nullable'}
-              checked={this.state.userDataType.get('nullable')}
-              onChange={this.handleNullableChange}
-            >
-              Nullable
-            </Checkbox>
-            <Button
-              onClick={this.handleSaveDataType}
-            >Save</Button>
-          </Col>
-        </Row>
-      </Table>
+      <Row>
+        <Col sm={4}>
+          Datatype
+        </Col>
+        <Col sm={4}>
+          {
+            this.renderSystemValue()
+          }
+        </Col>
+        <Col sm={4}>
+          <Select
+            value={this.state.userDataType.get('baseType')}
+            options={this.baseTypeOptions()}
+            onChange={this.handleBaseTypeChange}
+          />
+          {this.renderLengthEdit()}
+          <Checkbox
+            name={this.props.columnName + '_nullable'}
+            checked={this.state.userDataType.get('nullable')}
+            onChange={this.handleNullableChange}
+          >
+            Nullable
+          </Checkbox>
+          <Button
+            onClick={this.handleSaveDataType}
+          >Save</Button>
+        </Col>
+      </Row>
     );
   },
 

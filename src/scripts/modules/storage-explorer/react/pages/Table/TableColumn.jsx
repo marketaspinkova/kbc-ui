@@ -123,8 +123,8 @@ export default createReactClass({
         <ColumnDetails
           columnId={this.getColumnId(column)}
           columnName={column}
-          machineDataType={this.getDataType(this.props.machineColumnMetadata.get(column))}
-          userDataType={this.getDataType(this.props.userColumnMetadata.get(column))}
+          machineDataType={this.getDataType(this.props.machineColumnMetadata.get(column, Map()))}
+          userDataType={this.getDataType(this.props.userColumnMetadata.get(column, Map()))}
         />
       </Panel>
     );
