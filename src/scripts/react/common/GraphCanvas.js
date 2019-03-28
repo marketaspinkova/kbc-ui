@@ -1,6 +1,14 @@
-import d3 from 'd3';
+import { event, select, selectAll } from 'd3-selection';
+import { drag } from 'd3-drag';
 import dagreD3 from 'dagre-d3';
 import _ from 'underscore';
+
+function parseTransform(transform) {
+  const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  g.setAttributeNS(null, 'transform', transform);
+  const matrix = g.transform.baseVal.consolidate().matrix;
+  return { x: matrix.e, y: matrix.f };
+}
 
 class Graph {
   constructor(data, wrapperElement) {
@@ -59,7 +67,7 @@ class Graph {
 
     // apply styles
     _.each(this.styles, (styles, selector) =>
-      _.each(styles, (value, property) => d3.selectAll(selector).style(property, value))
+      _.each(styles, (value, property) => selectAll(selector).style(property, value))
     );
 
     // center node
@@ -82,11 +90,11 @@ class Graph {
   }
 
   adjustCanvasWidth() {
-    d3.select(this.element).attr('width', this.getWidth());
+    select(this.element).attr('width', this.getWidth());
   }
 
   adjustCanvasHeight() {
-    d3.select(this.element).attr('height', this.getHeight());
+    select(this.element).attr('height', this.getHeight());
   }
 
   adjustPositions(factor) {
@@ -115,7 +123,7 @@ class Graph {
   }
 
   setTransform() {
-    d3.select(this.element)
+    select(this.element)
       .select('g')
       .attr(
         'transform',
@@ -129,29 +137,29 @@ class Graph {
     this.adjustCanvasHeight();
 
     if (data) {
-      const svg = d3.select(this.element);
+      const svg = select(this.element);
       this.createSvg(svg, data, centerNodeId);
       this.reset();
 
       // init position + dragging
       svg.call(
-        d3.behavior
-          .drag()
-          .origin(() => {
-            const t = svg.select('g');
+        drag()
+          .subject(() => {
+            const g = svg.select('g');
+            const parsetData = parseTransform(g.attr('transform'));
             return {
-              x: t.attr('x') + d3.transform(t.attr('transform')).translate[0],
-              y: t.attr('y') + d3.transform(t.attr('transform')).translate[1]
+              x: g.attr('x') + parsetData.x,
+              y: g.attr('y') + parsetData.y
             };
           })
           .on('drag', () => {
-            this.position.x = d3.event.x;
-            this.position.y = d3.event.y;
-            return svg
+            this.position.x = event.x;
+            this.position.y = event.y;
+            svg
               .select('g')
               .attr(
                 'transform',
-                () => `translate(${[d3.event.x, d3.event.y]}), scale(${this.zoom.scale})`
+                () => `translate(${[event.x, event.y]}), scale(${this.zoom.scale})`
               );
           })
       );
