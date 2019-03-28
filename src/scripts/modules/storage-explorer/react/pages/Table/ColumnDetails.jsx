@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Map, List } from 'immutable';
-import { Table, Row, Col, FormControl, Checkbox, Button } from 'react-bootstrap';
+import { Row, Col, FormControl, Checkbox, Button } from 'react-bootstrap';
 import Select from 'react-select';
 import MetadataEditField from '../../../../components/react/components/MetadataEditField';
 import InlineEditArea from '../../../../../react/common/InlineEditArea';
@@ -95,11 +95,14 @@ export default React.createClass({
   renderSystemValue() {
     if (this.props.machineDataType !== null) {
       return (
-        "via " + this.props.machineDataType.get('provider') + " we find " + this.props.machineDataType.get('baseType')
+        <span>
+          From {this.props.machineDataType.get('provider')}
+          we find {this.props.machineDataType.get('baseType')}
+        </span>
       )
     } else {
       return (
-        "Unknown"
+        <span>Unknown</span>
       )
     }
   },
