@@ -35,6 +35,9 @@ describe('changedSinceOptionCreator', function() {
     it('-1m', function() {
       expect('1 minute').toEqual(changedSinceOptionCreator('-1m'));
     });
+    it('1M', function() {
+      expect('1 minute').toEqual(changedSinceOptionCreator('1M'));
+    });
   });
 
   describe('invalid options', function() {

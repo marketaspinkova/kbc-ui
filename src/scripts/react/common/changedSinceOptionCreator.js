@@ -17,7 +17,7 @@ export default function(value) {
   }
 
   // remove all spaces
-  const trimmedLabel = value.replace(' ', '');
+  const trimmedLabel = value.replace(' ', '').toLowerCase();
 
   // try to find a number at the beginning
   const numberPart = parseInt(value, 10);
