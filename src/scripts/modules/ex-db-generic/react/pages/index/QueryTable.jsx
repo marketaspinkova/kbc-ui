@@ -40,6 +40,9 @@ export default createReactClass({
               <strong>Name</strong>
             </span>
             <span className="th">
+              <strong>Source Schema &&nbsp;Table</strong>
+            </span>
+            <span className="th">
               <strong>Output Table</strong>
             </span>
             <span className="th">

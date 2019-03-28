@@ -51,6 +51,13 @@ export default createReactClass({
         }}
       >
         <span className="td kbc-break-all">{this.renderQueryName()}</span>
+        <span className="td kbc-break-all">
+          {this.props.query.get('table') && (
+            <small>
+              {`${this.props.query.getIn(['table', 'schema'])}.${this.props.query.getIn(['table', 'tableName'])}`}
+            </small>
+          )}
+        </span>
         <span className="td kbc-break-all"><SapiTableLinkEx tableId={this.props.query.get('outputTable')}/></span>
         <span className="td">
           {this.props.query.get('primaryKey', []).length > 0 && (
