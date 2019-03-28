@@ -137,7 +137,7 @@ export default React.createClass({
     saveColumnMetadata(this.props.columnId, Map({
       'KBC.datatype.basetype': this.state.userDataType.get('baseType'),
       'KBC.datatype.length': this.state.userDataType.get('length'),
-      'KBC.datatype.nullable': this.state.userDataType.get('nullable'),
+      'KBC.datatype.nullable': this.state.userDataType.get('nullable', false),
     }));
   }
 });
