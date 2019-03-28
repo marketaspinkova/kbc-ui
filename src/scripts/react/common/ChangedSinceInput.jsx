@@ -3,8 +3,10 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import { Creatable } from 'react-select';
 import changedSinceOptionCreator from './changedSinceOptionCreator';
+import changedSinceConstants from './changedSinceConstants';
 
 const selectOptions = [
+  { label: changedSinceConstants.ADAPTIVE_LABEL, value: changedSinceConstants.ADAPTIVE_VALUE },
   { label: '10 minutes', value: '-10 minutes' },
   { label: '15 minutes', value: '-15 minutes' },
   { label: '30 minutes', value: '-30 minutes' },
