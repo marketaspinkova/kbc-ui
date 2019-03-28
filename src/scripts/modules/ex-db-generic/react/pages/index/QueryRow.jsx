@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Label } from 'react-bootstrap';
 import createReactClass from 'create-react-class';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 
@@ -57,7 +58,7 @@ export default createReactClass({
               {`${this.props.query.getIn(['table', 'schema'])}.${this.props.query.getIn(['table', 'tableName'])}`}
             </span>
           ) : (
-            <span className="label label-default">SQL</span>
+            <Label>SQL</Label>
           )}
         </span>
         <span className="td kbc-break-all"><SapiTableLinkEx tableId={this.props.query.get('outputTable')}/></span>
@@ -68,7 +69,7 @@ export default createReactClass({
             </span>
           )}
           {this.props.query.get('incremental') && (
-            <span className="label label-default">Incremental</span>
+            <Label>Incremental</Label>
           )}
         </span>
         <span className="td text-right kbc-no-wrap">
