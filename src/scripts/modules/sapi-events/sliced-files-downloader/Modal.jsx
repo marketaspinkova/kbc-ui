@@ -27,8 +27,17 @@ export default createReactClass({
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>File <strong>{this.props.file.get('name')} (<FileSize size={this.props.file.get('sizeBytes')} />)</strong> is sliced into multiple chunks.</p>
-          <p>All chunks will be packed into a <code>ZIP</code> file, you will be given link to download the file.</p>
+          <p>
+            File{' '}
+            <strong className="kbc-break-all kbc-break-word">
+              {this.props.file.get('name')} (<FileSize size={this.props.file.get('sizeBytes')} />)
+            </strong>{' '}
+            is sliced into multiple chunks.
+          </p>
+          <p>
+            All chunks will be packed into a <code>ZIP</code> file, you will be given link to
+            download the file.
+          </p>
         </Modal.Body>
         <Modal.Footer>
           {this.renderStatusBar()}
