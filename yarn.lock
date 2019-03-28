@@ -2193,10 +2193,6 @@ cosmiconfig@^5.0.0:
     js-yaml "^3.9.0"
     parse-json "^4.0.0"
 
-cp-data@1.1.3:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/cp-data/-/cp-data-1.1.3.tgz#b705f637992db68f37e2d48de525b1d66dd5b372"
-
 create-ecdh@^4.0.0:
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/create-ecdh/-/create-ecdh-4.0.3.tgz#c9111b6f33045c4697f144787f9254cdc77c45ff"
@@ -2435,25 +2431,28 @@ cyclist@~0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/cyclist/-/cyclist-0.2.2.tgz#1b33792e11e914a2fd6d6ed6447464444e5fa640"
 
-d3@~3.5.6:
+d3@^3.3.8:
   version "3.5.17"
   resolved "https://registry.yarnpkg.com/d3/-/d3-3.5.17.tgz#bc46748004378b21a360c9fc7cf5231790762fb8"
+  integrity sha1-vEZ0gAQ3iyGjYMn8fPUjF5B2L7g=
 
-"dagre-d3@git+https://git@github.com/keboola/dagre-d3.git#6b444d10ddb5276789b4b2bc1eafcd22a767968a":
-  version "0.2.9"
-  resolved "git+https://git@github.com/keboola/dagre-d3.git#6b444d10ddb5276789b4b2bc1eafcd22a767968a"
+"dagre-d3@ ^0.4.18":
+  version "0.4.18"
+  resolved "https://registry.yarnpkg.com/dagre-d3/-/dagre-d3-0.4.18.tgz#e50638c1b461559c8236d6c3b5cb18705bcd2aa8"
+  integrity sha512-7tRltaOfNTIkNEZYMCL8N3Q8bCre99x/mAJL2RbuUfPu5d+4f0KOHglZm+AzOG2Z/+S2HBDYciE6iDcDtki6Tg==
   dependencies:
-    cp-data "1.1.3"
-    d3 "~3.5.6"
-    dagre "0.4.6"
-    graphlib "0.7.4"
+    d3 "^3.3.8"
+    dagre "^0.7.3"
+    graphlib "^1.0.5"
+    lodash "^3.10.0"
 
-dagre@0.4.6:
-  version "0.4.6"
-  resolved "https://registry.yarnpkg.com/dagre/-/dagre-0.4.6.tgz#622aba8144b08580b3b90b09816a0809791f30b0"
+dagre@^0.7.3:
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/dagre/-/dagre-0.7.4.tgz#de72f0e74a550ce11ce638f0a136fed712398022"
+  integrity sha1-3nLw50pVDOEc5jjwoTb+1xI5gCI=
   dependencies:
-    cp-data "1.1.3"
-    graphlib "0.7.4"
+    graphlib "^1.0.5"
+    lodash "^3.10.0"
 
 dashdash@^1.12.0:
   version "1.14.1"
@@ -3777,11 +3776,12 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2:
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.15.tgz#ffb703e1066e8a0eeaa4c8b80ba9253eeefbfb00"
   integrity sha512-6uHUhOPEBgQ24HM+r6b/QwWfZq+yiFcipKFrOFiBEnWdy5sdzYoi+pJeQaPI5qOLRFqWmAXUPQNsielzdLoecA==
 
-graphlib@0.7.4:
-  version "0.7.4"
-  resolved "https://registry.yarnpkg.com/graphlib/-/graphlib-0.7.4.tgz#41027ea381c3db06bb0c1b0be936d732859edda7"
+graphlib@^1.0.5:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/graphlib/-/graphlib-1.0.7.tgz#0cab2df0ffe6abe070b2625bfa1edb6ec967b8b1"
+  integrity sha1-DKst8P/mq+BwsmJb+h7bbslnuLE=
   dependencies:
-    cp-data "1.1.3"
+    lodash "^3.10.0"
 
 growly@^1.3.0:
   version "1.3.0"
@@ -5273,6 +5273,11 @@ lodash.sortby@^4.7.0:
 lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
+
+lodash@^3.10.0:
+  version "3.10.1"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
+  integrity sha1-W/Rejkm6QYnhfUgnid/RW9FAt7Y=
 
 lodash@^4.15.0, lodash@^4.17.4, lodash@^4.17.5:
   version "4.17.10"
