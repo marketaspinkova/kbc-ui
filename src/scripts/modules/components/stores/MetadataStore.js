@@ -32,7 +32,7 @@ var MetadataStore = StoreUtils.createStore({
   },
 
   getTableColumnsMetadata: function(tableId) {
-    return _store.getIn(['metadata', 'tableColumns', tableId]);
+    return _store.getIn(['metadata', 'tableColumns', tableId], Map());
   },
 
   getAllTableColumnsMetadataByProvider: function(tableId, provider) {
