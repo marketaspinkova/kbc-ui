@@ -53,9 +53,9 @@ export default createReactClass({
         <span className="td kbc-break-all">{this.renderQueryName()}</span>
         <span className="td kbc-break-all">
           {this.props.query.get('table') ? (
-            <small>
+            <span>
               {`${this.props.query.getIn(['table', 'schema'])}.${this.props.query.getIn(['table', 'tableName'])}`}
-            </small>
+            </span>
           ) : (
             <span className="label label-default">SQL</span>
           )}
@@ -64,7 +64,7 @@ export default createReactClass({
         <span className="td">
           {this.props.query.get('primaryKey', []).length > 0 && (
             <span>
-              <small>Primary Key: {this.props.query.get('primaryKey', []).join(', ')}</small><br />
+              <small>Primary Key:</small> {this.props.query.get('primaryKey', []).join(', ')}<br />
             </span>
           )}
           {this.props.query.get('incremental') && (
