@@ -31,18 +31,20 @@ class Graph {
       ranksep: 20 * this.spacing
     });
 
-    for (var i in this.data.nodes) {
-      data.setNode(this.data.nodes[i].node, {
+    this.data.nodes.forEach((node) => {
+      data.setNode(node.node, {
+        class: node.type,
         labelType: 'html',
-        label: `<a href="${this.data.nodes[i].link}">${this.data.nodes[i].label}</a>`,
+        label: `<a href="${node.link}">${node.label}</a>`,
         padding: 2,
         rx: 5,
         ry: 5
       });
-    }
+    });
 
     this.data.transitions.forEach((transition) => {
       data.setEdge(transition.source, transition.target, {
+        class: transition.type,
         type: transition.type,
         label: transition.label || ''
       });
@@ -54,21 +56,6 @@ class Graph {
   createSvg(svg, data, centerNodeId) {
     svg.selectAll('*').remove();
     new dagreD3.render()(svg.append('g'), data);
-
-    // assign edge classes according to node types
-    const transitionClassMap = [];
-    _.each(_.uniq(_.pluck(this.data.transitions, 'type')), (type) => {
-      transitionClassMap[type] = (edge) => data.edge(edge.v, edge.w).type === type;
-    });
-    d3.selectAll('g.edgePath').classed(transitionClassMap);
-
-    // assign node classes according to node types
-    const nodeClassMap = [];
-    _.each(_.uniq(_.pluck(this.data.nodes, 'type')), (type) => {
-      nodeClassMap[type] = (id) =>
-        !!this.data.nodes.find((dataNode) => dataNode.node === id && dataNode.type === type);
-    });
-    d3.selectAll('g.node').classed(nodeClassMap);
 
     // apply styles
     _.each(this.styles, (styles, selector) =>
