@@ -26,10 +26,10 @@ export default createReactClass({
   renderName() {
     if (this.props.query.get('name') === '') {
       return (
-        <span className="text-muted">
+        <strong>
           [Untitled]
           {this.props.isEditing && ' *'}
-        </span>
+        </strong>
       );
     }
     return (
