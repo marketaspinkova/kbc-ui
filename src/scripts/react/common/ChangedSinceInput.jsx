@@ -6,7 +6,6 @@ import changedSinceOptionCreator from './changedSinceOptionCreator';
 import changedSinceConstants from './changedSinceConstants';
 
 const selectOptions = [
-  { label: changedSinceConstants.ADAPTIVE_LABEL, value: changedSinceConstants.ADAPTIVE_VALUE },
   { label: '10 minutes', value: '-10 minutes' },
   { label: '15 minutes', value: '-15 minutes' },
   { label: '30 minutes', value: '-30 minutes' },
@@ -30,15 +29,29 @@ export default createReactClass({
     onChange: PropTypes.func.isRequired,
     value: PropTypes.string,
     disabled: PropTypes.bool.isRequired,
-    helpBlock: PropTypes.string
+    helpBlock: PropTypes.string,
+    allowAdaptive: PropTypes.bool
+  },
+
+  getDefaultProps() {
+    return {
+      allowAdaptive: false
+    }
   },
 
   getSelectOptions() {
-    if (!this.props.value) {
-      return selectOptions;
+    const options = [...selectOptions];
+    if (this.props.allowAdaptive || this.props.value === changedSinceConstants.ADAPTIVE_VALUE) {
+      options.unshift({
+        label: changedSinceConstants.ADAPTIVE_LABEL,
+        value: changedSinceConstants.ADAPTIVE_VALUE
+      })
     }
 
-    const options = [...selectOptions];
+    if (!this.props.value) {
+      return options;
+    }
+
     if (options.filter((item) => item.value === this.props.value).length === 0) {
       options.push({
         label: this.props.value.replace('-', ''),
