@@ -12,7 +12,7 @@ const DEFAULT_VERSIONS_MAP = {
   'keboola.ex-facebook': 'v3.2'
 };
 
-const DEFAULT_BACKEND_VERSION = 'v2.12';
+const DEFAULT_BACKEND_VERSION = 'v3.2';
 
 export default function(COMPONENT_ID, configId) {
   const DEFAULT_API_VERSION = DEFAULT_VERSIONS_MAP[COMPONENT_ID];
