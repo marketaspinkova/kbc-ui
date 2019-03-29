@@ -61,7 +61,7 @@ export default createReactClass({
   },
 
   renderGroupCountLabel(group, section) {
-    return <Label className="group-label">{group.get(section, List()).count()}</Label>
+    return <Label className="group-label">{group.get(section, List()).count()}</Label>;
   },
 
   renderParentLinks(group) {
@@ -73,21 +73,27 @@ export default createReactClass({
   },
 
   renderProjectLink(project) {
-    const projectLink = _.template(this.props.urlTemplates.get('project'))({
-      projectId: project.get('id')
-    });
-
     return (
       <div className="lineage-link" key={project.get('id')}>
         <Tooltip tooltip="Open project" placement="top">
           <span>
-            <ExternalLink href={projectLink}>{project.get('title')}</ExternalLink>
+            <ExternalLink
+              href={_.template(this.props.urlTemplates.get('project'))({
+                projectId: project.get('id')
+              })}
+            >
+              {project.get('title')}
+            </ExternalLink>
           </span>
         </Tooltip>
 
         <Tooltip tooltip="Open project overview" placement="top">
           <span>
-            <ExternalLink href={projectLink}>
+            <ExternalLink
+              href={_.template(this.props.urlTemplates.get('organization'))({
+                projectId: project.get('id')
+              })}
+            >
               <i className="fa fa-sitemap" />
             </ExternalLink>
           </span>

@@ -12,7 +12,8 @@ import Graph from './Graph';
 import '../../../../styles/theme-kbc-graph.less';
 
 const urlTemplates = fromJS({
-  project: '/admin/projects/<%= projectId %>/'
+  project: '/admin/projects/<%= projectId %>/',
+  organization: '/admin/organizations/<%= projectId %>/'
 });
 
 export default createReactClass({
