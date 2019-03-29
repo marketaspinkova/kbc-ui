@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Map, List } from 'immutable';
-import { Row, Col, FormControl, Checkbox, Button } from 'react-bootstrap';
+import { FormControl, Checkbox, Button } from 'react-bootstrap';
 import Select from 'react-select';
 import MetadataEditField from '../../../../components/react/components/MetadataEditField';
 import InlineEditArea from '../../../../../react/common/InlineEditArea';
@@ -19,7 +19,6 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      showLength: false,
       userDataType: this.props.userDataType
     }
   },
@@ -47,16 +46,12 @@ export default React.createClass({
 
   renderTypeForm() {
     return (
-      <Row>
-        <Col sm={4}>
-          Datatype
-        </Col>
-        <Col sm={4}>
-          {
-            this.renderSystemValue()
-          }
-        </Col>
-        <Col sm={4}>
+      <div>
+        <h3>Datatype</h3>
+        {
+          this.renderSystemValue()
+        }
+        <div>
           <Select
             value={this.state.userDataType.get('baseType')}
             options={this.baseTypeOptions()}
@@ -73,20 +68,20 @@ export default React.createClass({
           <Button
             onClick={this.handleSaveDataType}
           >Save</Button>
-        </Col>
-      </Row>
+        </div>
+      </div>
     );
   },
 
   renderLengthEdit() {
-    if (this.state.showLength) {
+    if (this.lengthSupported()) {
       return <FormControl
         name={this.props.columnName + '_length'}
         type="text"
         size={15}
         value={this.state.userDataType.get('length')}
         onChange={this.handleLengthChange}
-        disabled={!this.state.showLength}
+        disabled={!this.lengthSupported()}
         placeholder="Length, eg. 38,0"
       />
     }
@@ -121,13 +116,12 @@ export default React.createClass({
 
   handleBaseTypeChange(selectedItem) {
     return this.setState({
-      showLength: this.baseTypeSupportsLength(selectedItem.value),
       userDataType: this.state.userDataType.set('baseType', selectedItem.value)
     });
   },
 
-  baseTypeSupportsLength(type) {
-    if (typesSupportingLength.contains(type)) {
+  lengthSupported() {
+    if (typesSupportingLength.contains(this.state.userDataType.get('baseType'))) {
       return true;
     }
     return false;
