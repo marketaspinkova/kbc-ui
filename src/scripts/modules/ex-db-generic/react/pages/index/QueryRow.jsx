@@ -3,6 +3,7 @@ import React from 'react';
 import { Label } from 'react-bootstrap';
 import createReactClass from 'create-react-class';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import { List } from 'immutable';
 
 import {Link} from 'react-router';
 import QueryDeleteButton from '../../components/QueryDeleteButton';
@@ -63,7 +64,7 @@ export default createReactClass({
         </span>
         <span className="td kbc-break-all"><SapiTableLinkEx tableId={this.props.query.get('outputTable')}/></span>
         <span className="td">
-          {this.props.query.get('primaryKey', []).length > 0 && (
+          {this.props.query.get('primaryKey', List()).count() > 0 && (
             <span>
               <small>Primary Key:</small> {this.props.query.get('primaryKey', []).join(', ')}<br />
             </span>
