@@ -3,6 +3,7 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import { List } from 'immutable';
 import WhereOperator from '../../../../../react/common/WhereOperator';
+import changedSinceConstants from '../../../../../react/common/changedSinceConstants';
 
 export default createReactClass({
   propTypes: {
@@ -42,7 +43,14 @@ export default createReactClass({
           this.props.value.get('where_column') &&
           this.props.value.get('where_column') &&
           ' and '}
-        {this.props.value.get('changed_since') && (
+        {this.props.value.get('changed_since') === changedSinceConstants.ADAPTIVE_VALUE && (
+          <span>
+            {this.props.value.get('where_column') && this.props.value.get('where_values')
+              ? changedSinceConstants.ADAPTIVE_LABEL_DESCRIPTION.toLowerCase()
+              : changedSinceConstants.ADAPTIVE_LABEL_DESCRIPTION}
+          </span>
+        )}
+        {this.props.value.get('changed_since') && this.props.value.get('changed_since') !== changedSinceConstants.ADAPTIVE_VALUE && (
           <span>
             {this.props.value.get('where_column') && this.props.value.get('where_values')
               ? 'changed in last '
