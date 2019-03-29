@@ -40,13 +40,13 @@ export default createReactClass({
               <strong>Name</strong>
             </span>
             <span className="th">
-              <strong>Output Table</strong>
+              <strong>Source</strong>
             </span>
             <span className="th">
-              <strong>Incremental</strong>
+              <strong>Destination</strong>
             </span>
             <span className="th">
-              <strong>Primary Key</strong>
+              <strong>Load Options</strong>
             </span>
           </div>
         </div>

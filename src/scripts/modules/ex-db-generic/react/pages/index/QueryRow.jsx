@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Label } from 'react-bootstrap';
 import createReactClass from 'create-react-class';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import { List } from 'immutable';
 
 import {Link} from 'react-router';
-import {Check} from '@keboola/indigo-ui';
 import QueryDeleteButton from '../../components/QueryDeleteButton';
 import RunExtractionButton from '../../../../components/react/components/RunComponentButton';
 import SapiTableLinkEx from '../../../../components/react/components/StorageApiTableLinkEx';
@@ -52,9 +53,26 @@ export default createReactClass({
         }}
       >
         <span className="td kbc-break-all">{this.renderQueryName()}</span>
+        <span className="td kbc-break-all">
+          {this.props.query.get('table') ? (
+            <span>
+              {`${this.props.query.getIn(['table', 'schema'])}.${this.props.query.getIn(['table', 'tableName'])}`}
+            </span>
+          ) : (
+            <Label>SQL</Label>
+          )}
+        </span>
         <span className="td kbc-break-all"><SapiTableLinkEx tableId={this.props.query.get('outputTable')}/></span>
-        <span className="td"><Check isChecked={this.props.query.get('incremental')}/></span>
-        <span className="td">{this.props.query.get('primaryKey', []).join(', ')}</span>
+        <span className="td">
+          {this.props.query.get('primaryKey', List()).count() > 0 && (
+            <span>
+              <small>Primary Key:</small> {this.props.query.get('primaryKey', []).join(', ')}<br />
+            </span>
+          )}
+          {this.props.query.get('incremental') && (
+            <Label>Incremental</Label>
+          )}
+        </span>
         <span className="td text-right kbc-no-wrap">
           <QueryDeleteButton
             query={this.props.query}
