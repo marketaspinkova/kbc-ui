@@ -3,6 +3,7 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import immutableMixin from 'react-immutable-render-mixin';
 import {FormControl, FormGroup, ControlLabel, HelpBlock, Form, Col} from 'react-bootstrap';
+import PasswordControl from '../../../../react/common/PasswordControl';
 
 export default createReactClass({
   mixins: [immutableMixin],
@@ -45,12 +46,9 @@ export default createReactClass({
             Storage API Token
           </Col>
           <Col sm={8}>
-            <FormControl
-              type="password"
+            <PasswordControl
               value={this.props.value.token}
-              onChange={(e) => {
-                this.props.onChange({token: e.target.value});
-              }}
+              onChange={(e) => this.props.onChange({token: e.target.value})}
               disabled={this.props.disabled}
             />
             <HelpBlock>Use a token with permissions limited only to read from a single bucket in the source project.</HelpBlock>

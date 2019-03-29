@@ -12,6 +12,7 @@ import Clipboard from '../../../../../react/common/Clipboard';
 import Tooltip from '../../../../../react/common/Tooltip';
 import SshTunnelRow from '../../../../../react/common/SshTunnelRow';
 import TestCredentialsButton from '../../../../../react/common/TestCredentialsButtonGroup';
+import PasswordControl from '../../../../../react/common/PasswordControl';
 import contactSupport from '../../../../../utils/contactSupport';
 
 export default createReactClass({
@@ -262,13 +263,10 @@ export default createReactClass({
           {this._renderProtectedLabel(labelValue, !!savedValue)}
         </Col>
         <Col xs={8}>
-          <FormControl
-            type="password"
+          <PasswordControl
             placeholder={savedValue ? 'type new password to change it' : ''}
             value={this.props.credentials.get(propName)}
-            onChange={(event) => {
-              return this.props.onChangeFn(propName, event);
-            }}
+            onChange={(event) => this.props.onChangeFn(propName, event)}
           />
           {helpText && <HelpBlock>{helpText}</HelpBlock>}
         </Col>

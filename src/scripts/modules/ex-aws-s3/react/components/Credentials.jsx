@@ -4,6 +4,7 @@ import createReactClass from 'create-react-class';
 import immutableMixin from 'react-immutable-render-mixin';
 import { ExternalLink } from '@keboola/indigo-ui';
 import { ControlLabel, FormControl, Col, HelpBlock, FormGroup} from 'react-bootstrap';
+import PasswordControl from '../../../../react/common/PasswordControl';
 
 export default createReactClass({
   mixins: [immutableMixin],
@@ -47,12 +48,9 @@ export default createReactClass({
         <FormGroup>
           <Col componentClass={ControlLabel} xs={4}>Secret Access Key</Col>
           <Col xs={8}>
-            <FormControl
-              type="password"
+            <PasswordControl
               value={this.props.value.awsSecretAccessKey}
-              onChange={(e) => {
-                this.props.onChange({awsSecretAccessKey: e.target.value});
-              }}
+              onChange={(e) => this.props.onChange({awsSecretAccessKey: e.target.value})}
               disabled={this.props.disabled}
             />
             <HelpBlock>

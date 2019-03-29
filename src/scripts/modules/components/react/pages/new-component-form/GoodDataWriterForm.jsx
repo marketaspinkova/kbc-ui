@@ -6,6 +6,7 @@ import contactSupport from '../../../../../utils/contactSupport';
 import { Modal, ButtonToolbar, Button, FormGroup, FormControl, Col, Radio, ControlLabel, HelpBlock } from 'react-bootstrap';
 import { Loader, ExternalLink } from '@keboola/indigo-ui';
 import { GoodDataWriterModes, GoodDataWriterTokenTypes } from '../../../Constants';
+import PasswordControl from '../../../../../react/common/PasswordControl';
 import ComponentIcon from '../../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../../react/common/ComponentName';
 
@@ -300,8 +301,7 @@ export default createReactClass({
         <FormGroup>
           <Col componentClass={ControlLabel} xs={3}>Password</Col>
           <Col xs={9}>
-            <FormControl
-              type="password"
+            <PasswordControl
               value={this.props.configuration.get('password')}
               onChange={this._handleChange.bind(this, 'password')}
               disabled={this.props.isSaving || this.props.configuration.get('customDomain')}

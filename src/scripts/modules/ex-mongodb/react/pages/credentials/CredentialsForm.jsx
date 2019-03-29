@@ -6,6 +6,7 @@ import {Col, Checkbox, Form, FormControl, FormGroup, ControlLabel} from 'react-b
 import Clipboard from '../../../../../react/common/Clipboard';
 import TestCredentialsButtonGroup from '../../../../../react/common/TestCredentialsButtonGroup';
 import Tooltip from '../../../../../react/common/Tooltip';
+import PasswordControl from '../../../../../react/common/PasswordControl';
 import SshTunnelRow from '../../../../../react/common/SshTunnelRow';
 
 export default createReactClass({
@@ -70,8 +71,7 @@ export default createReactClass({
           {this.renderProtectedLabel(labelValue, !!savedValue)}
         </Col>
         <Col xs={8}>
-          <FormControl
-            type="password"
+          <PasswordControl
             placeholder={(savedValue) ? 'type a new password to change it' : ''}
             value={this.props.credentials.get(propName)}
             onChange={this.handleChange.bind(this, propName)}

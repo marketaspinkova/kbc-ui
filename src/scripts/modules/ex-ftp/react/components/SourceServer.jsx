@@ -3,6 +3,7 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import immutableMixin from 'react-immutable-render-mixin';
 import {FormControl, FormGroup, ControlLabel, Form, Col, HelpBlock} from 'react-bootstrap';
+import PasswordControl from '../../../../react/common/PasswordControl';
 
 export default createReactClass({
   mixins: [immutableMixin],
@@ -94,12 +95,9 @@ export default createReactClass({
             Password
           </Col>
           <Col sm={8}>
-            <FormControl
-              type="password"
+            <PasswordControl
               value={this.props.value.password}
-              onChange={(e) => {
-                this.props.onChange({password: e.target.value});
-              }}
+              onChange={(e) => this.props.onChange({password: e.target.value})}
             />
           </Col>
         </FormGroup>
@@ -110,12 +108,9 @@ export default createReactClass({
             Private Key
           </Col>
           <Col sm={8}>
-            <FormControl
-              type="password"
+            <PasswordControl
               value={this.props.value.privateKey}
-              onChange={(e) => {
-                this.props.onChange({privateKey: e.target.value});
-              }}
+              onChange={(e) => this.props.onChange({privateKey: e.target.value})}
             />
             <HelpBlock>
               Only to use with an SFTP connection type. You can paste a private key with or without

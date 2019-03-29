@@ -3,6 +3,7 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import { ExternalLink } from '@keboola/indigo-ui';
 import { Col, FormGroup, Checkbox, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
+import PasswordControl from '../../../../react/common/PasswordControl';
 import SaveButtons from '../../../../react/common/SaveButtons';
 
 export default createReactClass({
@@ -126,8 +127,7 @@ export default createReactClass({
               Password
             </Col>
             <Col xs={9}>
-              <FormControl
-                type="password"
+              <PasswordControl
                 value={this.props.data.get('#password', '')}
                 onChange={this.onChangePassword}
               />

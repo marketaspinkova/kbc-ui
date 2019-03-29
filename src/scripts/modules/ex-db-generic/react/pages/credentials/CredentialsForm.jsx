@@ -5,8 +5,9 @@ import {Map} from 'immutable';
 import { Checkbox, Col, ControlLabel, FormControl, FormGroup } from 'react-bootstrap';
 
 import TestCredentialsButtonGroup from '../../../../../react/common/TestCredentialsButtonGroup';
-import Tooltip from '../../../../../react/common/Tooltip';
 import NonStaticSshTunnelRow from '../../../../../react/common/NonStaticSshTunnelRow';
+import PasswordControl from '../../../../../react/common/PasswordControl';
+import Tooltip from '../../../../../react/common/Tooltip';
 import SSLForm from './SSLForm';
 
 export default createReactClass({
@@ -72,8 +73,7 @@ export default createReactClass({
           {this.renderProtectedLabel(labelValue, !!savedValue)}
         </Col>
         <Col xs={8}>
-          <FormControl
-            type="password"
+          <PasswordControl
             disabled={!this.props.enabled}
             placeholder={(savedValue) ? 'type a new password to change it' : ''}
             value={this.props.credentials.get(propName)}

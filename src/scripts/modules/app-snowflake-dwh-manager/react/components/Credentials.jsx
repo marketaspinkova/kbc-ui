@@ -3,6 +3,7 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import immutableMixin from 'react-immutable-render-mixin';
 import { FormGroup, FormControl, ControlLabel, Col, HelpBlock } from 'react-bootstrap';
+import PasswordControl from '../../../../react/common/PasswordControl';
 
 export default createReactClass({
   mixins: [immutableMixin],
@@ -50,8 +51,7 @@ export default createReactClass({
         <FormGroup>
           <Col componentClass={ControlLabel} xs={4}>Password</Col>
           <Col xs={8}>
-            <FormControl
-              type="password"
+            <PasswordControl
               value={value.password}
               onChange={e => onChange({password: e.target.value})}
               disabled={this.props.disabled}

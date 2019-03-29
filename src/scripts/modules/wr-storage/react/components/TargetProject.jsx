@@ -1,13 +1,12 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
-
 import immutableMixin from 'react-immutable-render-mixin';
 import {FormControl, FormGroup, ControlLabel, HelpBlock, Form, Col} from 'react-bootstrap';
 import SyncActionSimpleValue from '../../../configurations/react/components/SyncActionSimpleValue';
 import ExternalProjectLink from '../../../components/react/components/ExternalProjectLink';
 import ExternalBucketLink from '../../../components/react/components/ExternalBucketLink';
+import PasswordControl from '../../../../react/common/PasswordControl';
 
 export default createReactClass({
   mixins: [immutableMixin],
@@ -50,8 +49,7 @@ export default createReactClass({
             Storage API Token
           </Col>
           <Col sm={8}>
-            <FormControl
-              type="password"
+            <PasswordControl
               value={this.props.value.token}
               onChange={event => this.props.onChange({token: event.target.value})}
               disabled={this.props.disabled}

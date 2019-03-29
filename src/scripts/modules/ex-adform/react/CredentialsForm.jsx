@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
 import { Col, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
+import PasswordControl from '../../../react/common/PasswordControl';
 
 export default createReactClass({
   propTypes: {
@@ -30,8 +31,7 @@ export default createReactClass({
             Password
           </Col>
           <Col sm={8}>
-            <FormControl
-              type="password"
+            <PasswordControl
               value={this.props.credentials.get('#password')}
               onChange={this.handleChange.bind(this, '#password')}
             />

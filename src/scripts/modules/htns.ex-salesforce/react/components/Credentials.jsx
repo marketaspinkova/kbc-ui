@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
 import {Form, FormControl, FormGroup, ControlLabel, HelpBlock, Col, Checkbox} from 'react-bootstrap';
-
+import PasswordControl from '../../../../react/common/PasswordControl';
 
 export default createReactClass({
   propTypes: {
@@ -40,12 +40,9 @@ export default createReactClass({
             Password
           </Col>
           <Col sm={8}>
-            <FormControl
-              type="password"
+            <PasswordControl
               value={this.props.value.password}
-              onChange={(event) => {
-                this.props.onChange({password: event.target.value.trim()});
-              }}
+              onChange={(event) => this.props.onChange({password: event.target.value.trim()})}
               disabled={this.props.disabled}
             />
           </Col>
@@ -55,12 +52,9 @@ export default createReactClass({
             Security Token
           </Col>
           <Col sm={8}>
-            <FormControl
-              type="password"
+            <PasswordControl
               value={this.props.value.securityToken}
-              onChange={(event) =>  {
-                this.props.onChange({securityToken: event.target.value.trim()});
-              }}
+              onChange={(event) =>  this.props.onChange({securityToken: event.target.value.trim()})}
               disabled={this.props.disabled}
             />
           </Col>
