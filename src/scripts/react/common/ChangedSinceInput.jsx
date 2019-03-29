@@ -4,6 +4,7 @@ import createReactClass from 'create-react-class';
 import { Creatable } from 'react-select';
 import changedSinceOptionCreator from './changedSinceOptionCreator';
 import changedSinceConstants from './changedSinceConstants';
+import ApplicationStore from '../../stores/ApplicationStore';
 
 const selectOptions = [
   { label: '10 minutes', value: '-10 minutes' },
@@ -41,7 +42,8 @@ export default createReactClass({
 
   getSelectOptions() {
     const options = [...selectOptions];
-    if (this.props.allowAdaptive || this.props.value === changedSinceConstants.ADAPTIVE_VALUE) {
+
+    if (ApplicationStore.hasCurrentProjectFeature(changedSinceConstants.ADAPTIVE_FEATURE) && this.props.allowAdaptive || this.props.value === changedSinceConstants.ADAPTIVE_VALUE) {
       options.unshift({
         label: changedSinceConstants.ADAPTIVE_LABEL,
         value: changedSinceConstants.ADAPTIVE_VALUE
