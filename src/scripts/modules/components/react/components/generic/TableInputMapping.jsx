@@ -15,6 +15,7 @@ export default createReactClass({
 
   propTypes: {
     componentId: PropTypes.string.isRequired,
+    componentType: PropTypes.string.isRequired,
     configId: PropTypes.string.isRequired,
     editingValue: PropTypes.object.isRequired,
     value: PropTypes.object.isRequired,
@@ -49,6 +50,7 @@ export default createReactClass({
         <Add
           tables={this.props.tables}
           componentId={this.props.componentId}
+          componentType={this.props.componentType}
           configId={this.props.configId}
           mapping={this.props.editingValue.get('new-mapping', Map())}
           otherDestinations={this.inputMappingDestinations()}
@@ -72,6 +74,7 @@ export default createReactClass({
         <Add
           tables={this.props.tables}
           componentId={this.props.componentId}
+          componentType={this.props.componentType}
           configId={this.props.configId}
           mapping={this.props.editingValue.get('new-mapping', Map())}
           otherDestinations={this.inputMappingDestinations()}
@@ -119,6 +122,7 @@ export default createReactClass({
           onSave={() => this.onSaveMapping(key)}
           onCancel={() => this.onCancelEditMapping(key)}
           onDelete={() => this.onDeleteMapping(key)}
+          componentType={this.props.componentType}
         />
       </div>
     );

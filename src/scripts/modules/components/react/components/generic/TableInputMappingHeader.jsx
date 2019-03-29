@@ -19,6 +19,7 @@ export default createReactClass({
     pendingActions: PropTypes.object.isRequired,
     onEditStart: PropTypes.func.isRequired,
     otherDestinations: PropTypes.object.isRequired,
+    componentType: PropTypes.string.isRequired,
     definition: PropTypes.object
   },
 
@@ -88,6 +89,7 @@ export default createReactClass({
                 onEditStart={this.props.onEditStart}
                 otherDestinations={this.props.otherDestinations}
                 definition={this.props.definition}
+                componentType={this.props.componentType}
               />
             </span>
           </span>

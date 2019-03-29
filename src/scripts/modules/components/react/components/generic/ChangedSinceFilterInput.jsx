@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
 import ChangedSinceInput from '../../../../../react/common/ChangedSinceInput';
+
 export default createReactClass({
   propTypes: {
     mapping: PropTypes.object.isRequired,
