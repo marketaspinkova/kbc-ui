@@ -1,4 +1,6 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
+import createReactClass from 'create-react-class';
 import { Map, List } from 'immutable';
 import { HelpBlock, Label, Col, FormGroup, FormControl, ControlLabel, Checkbox, Button } from 'react-bootstrap';
 import Select from 'react-select';
@@ -9,7 +11,7 @@ import { saveColumnMetadata } from '../../../Actions';
 const baseTypes = List(['STRING', 'INTEGER', "DATE", 'TIMESTAMP', 'BOOLEAN', 'FLOAT', 'NUMERIC']);
 const typesSupportingLength = List(['STRING', 'INTEGER', 'NUMERIC']);
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     columnId: PropTypes.string.isRequired,
     columnName: PropTypes.string.isRequired,
