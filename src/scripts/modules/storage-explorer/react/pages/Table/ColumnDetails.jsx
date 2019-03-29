@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Map, List } from 'immutable';
-import { FormControl, Checkbox, Button } from 'react-bootstrap';
+import { HelpBlock, Label, Col, FormGroup, FormControl, ControlLabel, Checkbox, Button } from 'react-bootstrap';
 import Select from 'react-select';
 import MetadataEditField from '../../../../components/react/components/MetadataEditField';
 import InlineEditArea from '../../../../../react/common/InlineEditArea';
@@ -48,23 +48,45 @@ export default React.createClass({
     return (
       <div>
         <h3>Datatype</h3>
-        {
-          this.renderSystemValue()
-        }
-        <div>
-          <Select
-            value={this.state.userDataType.get('baseType')}
-            options={this.baseTypeOptions()}
-            onChange={this.handleBaseTypeChange}
-          />
+        <div className="form-horizontal">
+          <FormGroup>
+            <Col componentClass={ControlLabel} xs={4}>
+              System
+            </Col>
+            <Col xs={8}>
+              {
+                this.renderSystemValue()
+              }
+            </Col>
+          </FormGroup>
+        </div>
+        <div className="form-horizontal">
+          <HelpBlock>
+            To override the system type:
+          </HelpBlock>
+          <FormGroup>
+            <Col componentClass={ControlLabel} xs={4}>Type</Col>
+            <Col xs={8}>
+              <Select
+                value={this.state.userDataType.get('baseType')}
+                options={this.baseTypeOptions()}
+                onChange={this.handleBaseTypeChange}
+              />
+            </Col>
+          </FormGroup>
           {this.renderLengthEdit()}
-          <Checkbox
-            name={this.props.columnName + '_nullable'}
-            checked={this.state.userDataType.get('nullable')}
-            onChange={this.handleNullableChange}
-          >
-            Nullable
-          </Checkbox>
+          <FormGroup>
+            <Col componentClass={ControlLabel} xs={4}>&nbsp;</Col>
+            <Col xs={8}>
+              <Checkbox
+                name={this.props.columnName + '_nullable'}
+                checked={this.state.userDataType.get('nullable')}
+                onChange={this.handleNullableChange}
+              >
+                Nullable
+              </Checkbox>
+            </Col>
+          </FormGroup>
           <Button
             onClick={this.handleSaveDataType}
           >Save</Button>
@@ -75,25 +97,34 @@ export default React.createClass({
 
   renderLengthEdit() {
     if (this.lengthSupported()) {
-      return <FormControl
-        name={this.props.columnName + '_length'}
-        type="text"
-        size={15}
-        value={this.state.userDataType.get('length')}
-        onChange={this.handleLengthChange}
-        disabled={!this.lengthSupported()}
-        placeholder="Length, eg. 38,0"
-      />
+      return (
+        <FormGroup>
+          <Col componentClass={ControlLabel} xs={4}>Length</Col>
+          <Col xs={8}>
+            <FormControl
+              name={this.props.columnName + '_length'}
+              type="text"
+              size={15}
+              value={this.state.userDataType.get('length')}
+              onChange={this.handleLengthChange}
+              disabled={!this.lengthSupported()}
+              placeholder="Length, eg. 38,0"
+            />
+          </Col>
+        </FormGroup>
+      )
     }
   },
 
   renderSystemValue() {
     if (this.props.machineDataType !== null) {
       return (
-        <span>
-          From {this.props.machineDataType.get('provider')}
-          we find {this.props.machineDataType.get('baseType')}
-        </span>
+        <div>
+          {this.props.machineDataType.get('baseType')}
+          {this.props.machineDataType.get('length') ? '(' + this.props.machineDataType.get('length') + ')': ''}
+          <br/>
+          <Label bsStyle="info">{this.props.machineDataType.get('provider')}</Label>
+        </div>
       )
     } else {
       return (
