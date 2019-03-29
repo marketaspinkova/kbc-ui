@@ -64,7 +64,7 @@ export default createReactClass({
             Project
           </Col>
           <Col sm={8}>
-            <FormControl.Static>
+            <FormControl.Static className="kbc-break-all kbc-break-word">
               <ExternalProjectLink
                 stackUrl={infoAction.getIn(['request', 'configData', 'parameters', 'url'])}
                 projectId={infoAction.getIn(['data', 'projectId'])}
@@ -82,7 +82,7 @@ export default createReactClass({
             Bucket
           </Col>
           <Col sm={8}>
-            <FormControl.Static>
+            <FormControl.Static className="kbc-break-all kbc-break-word">
               <ExternalBucketLink
                 stackUrl={infoAction.getIn(['request', 'configData', 'parameters', 'url'])}
                 projectId={infoAction.getIn(['data', 'projectId'])}

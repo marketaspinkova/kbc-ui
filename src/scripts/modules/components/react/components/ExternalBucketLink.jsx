@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
+import { trim, rtrim } from 'underscore.string';
 import ApplicationStore from '../../../../stores/ApplicationStore';
 import { ExternalLink } from '@keboola/indigo-ui';
 import _ from 'underscore';
@@ -14,10 +15,10 @@ export default createReactClass({
   },
 
   getBucketUrl() {
-    const projectPath = _.template(ApplicationStore.getProjectUrlTemplate())({
-      projectId: this.props.projectId
-    });
-    return this.props.stackUrl + projectPath.substring(1, projectPath.length - 1) + '/storage#/buckets/' + this.props.bucketId;
+    const projectUrlTemplate = ApplicationStore.getProjectUrlTemplate();
+    const projectPath = _.template(projectUrlTemplate)({ projectId: this.props.projectId });
+
+    return `${rtrim(this.props.stackUrl, '/')}/${trim(projectPath, '/')}/storage-explorer/${this.props.bucketId}`;
   },
 
   render() {
@@ -27,9 +28,9 @@ export default createReactClass({
           {this.props.children}
         </ExternalLink>
       );
-    } else {
-      return this.props.children;
     }
+
+    return this.props.children;
   }
 
 });
