@@ -11,7 +11,7 @@ export default createReactClass({
     disabled: PropTypes.bool,
     placeholder: PropTypes.string,
     tooltip: PropTypes.string,
-    tooltipPosition: PropTypes.oneOf(['top', 'left', 'bottom', 'right'])
+    tooltipPlacement: PropTypes.oneOf(['top', 'left', 'bottom', 'right'])
   },
 
   target: null,
@@ -19,7 +19,8 @@ export default createReactClass({
   getDefaultProps() {
     return {
       disabled: false,
-      tooltip: 'Caps Lock is ON'
+      tooltip: 'Caps Lock is ON',
+      tooltipPlacement: 'top'
     };
   },
 
@@ -31,8 +32,12 @@ export default createReactClass({
 
   render() {
     return (
-      <span onKeyPress={this.onKeyPress} onBlur={this.onBlur}>
-        <Overlay show={this.state.capsLock} target={this.target} container={this} placement="top">
+      <span>
+        <Overlay
+          show={this.state.capsLock}
+          target={this.target}
+          placement={this.props.tooltipPlacement}
+        >
           <Tooltip id={_.uniqueId('capslock_')}>{this.props.tooltip}</Tooltip>
         </Overlay>
         <FormControl
@@ -40,6 +45,8 @@ export default createReactClass({
           ref={(control) => (this.target = control)}
           value={this.props.value}
           onChange={this.props.onChange}
+          onKeyPress={this.onKeyPress}
+          onBlur={this.onBlur}
           disabled={this.props.disabled}
           placeholder={this.props.placeholder}
         />
@@ -48,10 +55,14 @@ export default createReactClass({
   },
 
   onBlur() {
-    this.setState({ capsLock: false });
+    if (this.state.capsLock) {
+      this.setState({ capsLock: false });
+    }
   },
 
   onKeyPress(event) {
-    this.setState({ capsLock: event.getModifierState('CapsLock') });
+    if (event.getModifierState('CapsLock') !== this.state.capsLock) {
+      this.setState({ capsLock: event.getModifierState('CapsLock') });
+    }
   }
 });
