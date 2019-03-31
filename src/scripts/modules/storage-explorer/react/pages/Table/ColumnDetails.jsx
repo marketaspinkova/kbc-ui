@@ -106,10 +106,8 @@ export default createReactClass({
             <FormControl
               name={this.props.columnName + '_length'}
               type="text"
-              size={15}
               value={this.state.userDataType.get('length')}
               onChange={this.handleLengthChange}
-              disabled={!this.lengthSupported()}
               placeholder="Length, eg. 38,0"
             />
           </Col>
