@@ -45,6 +45,12 @@ export default createReactClass({
     return this.props.table.get('id') + '.' + columnName;
   },
 
+  getUserDefinedType(column) {
+    return this.getDataType(this.props.userColumnMetadata.get(column, Map())).filter(
+      (v, k) => [DataTypeKeys.BASE_TYPE, DataTypeKeys.LENGTH, DataTypeKeys.NULLABLE].includes(k)
+    );
+  },
+
   getDataType(metadata) {
     const baseType = metadata.find((entry) => {
       return entry.get('key') === DataTypeKeys.BASE_TYPE;
@@ -125,7 +131,7 @@ export default createReactClass({
           columnId={this.getColumnId(column)}
           columnName={column}
           machineDataType={this.getDataType(this.props.machineColumnMetadata.get(column, Map()))}
-          userDataType={this.getDataType(this.props.userColumnMetadata.get(column, Map()))}
+          userDataType={this.getUserDefinedType(column)}
         />
       </Panel>
     );
