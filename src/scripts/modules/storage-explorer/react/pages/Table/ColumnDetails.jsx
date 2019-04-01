@@ -105,7 +105,7 @@ export default createReactClass({
   },
 
   renderLengthEdit() {
-    if (this.lengthSupported()) {
+    if (this.lengthSupported(this.state.userDataType.get(DataTypeKeys.BASE_TYPE))) {
       return (
         <FormGroup>
           <Col componentClass={ControlLabel} xs={4}>Length</Col>
@@ -160,13 +160,28 @@ export default createReactClass({
   },
 
   handleBaseTypeChange(selectedItem) {
+    if (!selectedItem) {
+      return this.setState({
+        userDataType: this.state.userDataType
+          .delete(DataTypeKeys.BASE_TYPE)
+          .delete(DataTypeKeys.LENGTH)
+          .delete(DataTypeKeys.NULLABLE)
+      });
+    }
+    if (!this.lengthSupported(selectedItem.value)) {
+      return this.setState({
+        userDataType: this.state.userDataType
+          .delete(DataTypeKeys.LENGTH)
+          .set(DataTypeKeys.BASE_TYPE, selectedItem.value)
+      })
+    }
     return this.setState({
-      userDataType: this.state.userDataType.set(DataTypeKeys.BASE_TYPE, selectedItem ? selectedItem.value : null)
+      userDataType: this.state.userDataType.set(DataTypeKeys.BASE_TYPE, selectedItem.value)
     });
   },
 
-  lengthSupported() {
-    if (typesSupportingLength.contains(this.state.userDataType.get(DataTypeKeys.BASE_TYPE))) {
+  lengthSupported(type) {
+    if (typesSupportingLength.contains(type)) {
       return true;
     }
     return false;
