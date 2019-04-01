@@ -5,7 +5,6 @@ import { FormControl, Checkbox } from 'react-bootstrap';
 import Select from 'react-select';
 
 export default createReactClass({
-
   propTypes: {
     columnName: PropTypes.string.isRequired,
     datatype: PropTypes.object.isRequired,
@@ -110,7 +109,7 @@ export default createReactClass({
               name={this.props.columnName + '_length'}
               type="text"
               size={15}
-              value={this.props.datatype.get('length')}
+              value={this.props.datatype.get('length') || ''}
               onChange={this.handleLengthChange}
               disabled={this.props.disabled || !this.lengthEnabled()}
               placeholder="Length, eg. 38,0"

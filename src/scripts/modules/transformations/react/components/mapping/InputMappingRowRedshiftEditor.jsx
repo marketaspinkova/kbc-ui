@@ -224,7 +224,6 @@ export default createReactClass({
               <div className="checkbox">
                 <label>
                   <input
-                    standalone={true}
                     type="checkbox"
                     checked={this.props.value.get('optional')}
                     disabled={this.props.disabled}

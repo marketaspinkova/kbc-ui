@@ -69,7 +69,7 @@ export default createReactClass({
             <FormControl
               type="text"
               autoFocus
-              value={this.props.value.get('source')}
+              value={this.props.value.get('source', '')}
               onChange={this._handleChangeSource}
               disabled={this.props.disabled}
             />
@@ -99,7 +99,7 @@ export default createReactClass({
           <FormGroup>
             <Col xs={10} xsOffset={2}>
               <Checkbox
-                checked={this.props.value.get('is_public')}
+                checked={this.props.value.get('is_public', false)}
                 onChange={this._handleChangeIsPublic}
                 disabled={this.props.disabled}
               >
@@ -113,7 +113,7 @@ export default createReactClass({
           <FormGroup>
             <Col xs={10} xsOffset={2}>
               <Checkbox
-                checked={this.props.value.get('is_permanent')}
+                checked={this.props.value.get('is_permanent', false)}
                 onChange={this._handleChangeIsPermanent}
                 disabled={this.props.disabled}
               >

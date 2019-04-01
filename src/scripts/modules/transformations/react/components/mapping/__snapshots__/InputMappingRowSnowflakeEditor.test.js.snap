@@ -62,6 +62,7 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok 1`] = `
         onChange={[Function]}
         placeholder="Destination table name in transformation DB"
         type="text"
+        value=""
       />
     </Col>
   </FormGroup>

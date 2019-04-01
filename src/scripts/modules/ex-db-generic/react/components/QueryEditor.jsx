@@ -430,12 +430,12 @@ export default createReactClass({
           <div className="col-md-9 col-md-offset-3 checkbox">
             <label>
               <input
-                standalone={true}
                 type="checkbox"
                 label="Use query editor"
                 checked={!!this.props.query.get('advancedMode')}
                 disabled={this.props.disabled}
-                onChange={this.handleToggleUseQueryEditor}/>
+                onChange={this.handleToggleUseQueryEditor}
+              />
               Create your own query using an SQL editor
             </label>
           </div>

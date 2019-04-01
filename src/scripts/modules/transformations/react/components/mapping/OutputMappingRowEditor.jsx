@@ -172,7 +172,7 @@ export default createReactClass({
                     autoFocus
                     type="text"
                     name="source"
-                    value={this.props.value.get('source')}
+                    value={this.props.value.get('source', '')}
                     disabled={this.props.disabled}
                     placeholder="File name"
                     onFocus={this._handleFocusSource}
