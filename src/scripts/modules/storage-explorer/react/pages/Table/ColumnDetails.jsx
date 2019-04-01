@@ -30,6 +30,12 @@ export default createReactClass({
     }
   },
 
+  getStateFromStores(props) {
+    return {
+      userDataType: props.userDataType,
+    }
+  },
+
   baseTypeOptions() {
     return baseTypes.map(type => {
       return {label: type, value: type}
