@@ -27,7 +27,7 @@
   "settings": {
     "react": {
       "createClass": "createClass",
-      "version": "0.14.9"
+      "version": "15.6.2"
     },
     "linkComponents": ["Hyperlink", { "name": "Link", "linkAttribute": "to" }]
   }

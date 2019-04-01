@@ -1,14 +1,18 @@
+/* eslint-disable no-console */
 import './renderers';
 
-/* eslint-disable no-console */
-
-// Skip createElement warnings but fail tests on any other warnings and errors
-console.error = message => {
-  if (!/(React.createElement: type should not be null)/.test(message)) {
-    throw new Error(message);
-  }
+console.error = (message) => {
+  throw new Error(message);
 };
 
-console.warn = message => {
+console.warn = (message) => {
+  // react-router is still using React.PropTypes and React.createClass
+  if (
+    message.includes('Accessing PropTypes via the main React package is deprecated') || 
+    message.includes('Accessing createClass via the main React package is deprecated')  
+  ) {
+    return;
+  }
+
   throw new Error(message);
 };

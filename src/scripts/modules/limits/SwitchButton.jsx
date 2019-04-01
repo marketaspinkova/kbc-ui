@@ -24,7 +24,7 @@ export default createReactClass({
           className="kbc-switch"
           checkedChildren={'✓'}
           unCheckedChildren={'x'}
-          checked={this.props.limit.get('limitValue')}
+          checked={!!this.props.limit.get('limitValue')}
           onChange={this.handleChange}
         />
         <EditLimitModal limit={this.props.limit} onHide={this.closeModal} isOpen={this.state.isOpen} />
