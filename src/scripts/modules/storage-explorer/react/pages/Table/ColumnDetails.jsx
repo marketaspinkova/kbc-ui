@@ -6,6 +6,8 @@ import { HelpBlock, Label, Col, FormGroup, FormControl, ControlLabel, Checkbox, 
 import Select from 'react-select';
 import MetadataEditField from '../../../../components/react/components/MetadataEditField';
 import InlineEditArea from '../../../../../react/common/InlineEditArea';
+import { Loader } from '@keboola/indigo-ui';
+
 import { saveColumnMetadata } from '../../../Actions';
 import { DataTypeKeys } from '../../../../components/MetadataConstants';
 
@@ -90,9 +92,15 @@ export default createReactClass({
               </Checkbox>
             </Col>
           </FormGroup>
-          <Button
-            onClick={this.handleSaveDataType}
-          >Save</Button>
+          <Button bsStyle="success" onClick={this.handleSaveDataType}>
+            {this.state.isSaving ? (
+              <span>
+                    <Loader /> Creating column...
+                  </span>
+            ) : (
+              <span>Save</span>
+            )}
+          </Button>
         </div>
       </div>
     );
@@ -164,6 +172,12 @@ export default createReactClass({
   },
 
   handleSaveDataType() {
-    saveColumnMetadata(this.props.columnId, Map(this.state.userDataType));
+    this.setState({ isSaving: true });
+    saveColumnMetadata(
+      this.props.columnId,
+      Map(this.state.userDataType)
+    ).finally(() => {
+      this.setState({ isSaving: false })
+    });
   }
 });

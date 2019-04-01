@@ -136,7 +136,7 @@ const addTableColumn = (tableId, params) => {
 };
 
 const saveColumnMetadata = (columnId, keyValues) => {
-  MetadataActionCreators
+  return MetadataActionCreators
     .saveMetadataSet('column', columnId, keyValues)
     .catch(errorNotification);
 };
