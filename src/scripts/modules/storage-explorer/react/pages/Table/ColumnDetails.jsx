@@ -25,7 +25,8 @@ export default createReactClass({
 
   getInitialState() {
     return {
-      userDataType: this.props.userDataType
+      userDataType: this.props.userDataType,
+      isSaving: false,
     }
   },
 
@@ -87,7 +88,7 @@ export default createReactClass({
           <FormGroup>
             <Col componentClass={ControlLabel} xs={4}>&nbsp;</Col>
             <Col xs={8}>
-              <Button bsStyle="success" onClick={this.handleSaveDataType}>
+              <Button bsStyle="success" onClick={this.handleSaveDataType} disabled={this.state.isSaving}>
                 {this.state.isSaving ? (
                   <span>
                     <Loader /> Saving...
