@@ -132,6 +132,9 @@ var MetadataStore = StoreUtils.createStore({
 
   getLastUpdatedByColumnMetadata: function(tableId) {
     const lastUpdateInfo = this.getTableLastUpdatedInfo(tableId);
+    if (!lastUpdateInfo) {
+      return Map();
+    }
     return this.getAllTableColumnsMetadataByProvider(tableId, lastUpdateInfo.component);
   },
 
