@@ -7,6 +7,7 @@ import Select from 'react-select';
 import MetadataEditField from '../../../../components/react/components/MetadataEditField';
 import InlineEditArea from '../../../../../react/common/InlineEditArea';
 import { saveColumnMetadata } from '../../../Actions';
+import { DataTypeKeys } from '../../../../components/MetadataConstants';
 
 const baseTypes = List(['STRING', 'INTEGER', "DATE", 'TIMESTAMP', 'BOOLEAN', 'FLOAT', 'NUMERIC']);
 const typesSupportingLength = List(['STRING', 'INTEGER', 'NUMERIC']);
@@ -70,7 +71,7 @@ export default createReactClass({
             <Col componentClass={ControlLabel} xs={4}>Type</Col>
             <Col xs={8}>
               <Select
-                value={this.state.userDataType.get('baseType')}
+                value={this.state.userDataType.get(DataTypeKeys.BASE_TYPE)}
                 options={this.baseTypeOptions()}
                 onChange={this.handleBaseTypeChange}
               />
@@ -82,7 +83,7 @@ export default createReactClass({
             <Col xs={8}>
               <Checkbox
                 name={this.props.columnName + '_nullable'}
-                checked={this.state.userDataType.get('nullable')}
+                checked={this.state.userDataType.get(DataTypeKeys.NULLABLE)}
                 onChange={this.handleNullableChange}
               >
                 Nullable
@@ -106,7 +107,7 @@ export default createReactClass({
             <FormControl
               name={this.props.columnName + '_length'}
               type="text"
-              value={this.state.userDataType.get('length')}
+              value={this.state.userDataType.get(DataTypeKeys.LENGTH)}
               onChange={this.handleLengthChange}
               placeholder="Length, eg. 38,0"
             />
@@ -120,8 +121,12 @@ export default createReactClass({
     if (this.props.machineDataType !== null) {
       return (
         <div>
-          {this.props.machineDataType.get('baseType')}
-          {this.props.machineDataType.get('length') ? '(' + this.props.machineDataType.get('length') + ')': ''}
+          {this.props.machineDataType.get(DataTypeKeys.BASE_TYPE)}
+          {
+            this.props.machineDataType.get(DataTypeKeys.LENGTH)
+              ? '(' + this.props.machineDataType.get(DataTypeKeys.LENGTH) + ')'
+              : ''
+          }
           <br/>
           <Label bsStyle="info">{this.props.machineDataType.get('provider')}</Label>
         </div>
@@ -135,34 +140,30 @@ export default createReactClass({
 
   handleLengthChange(e) {
     return this.setState({
-      userDataType: this.state.userDataType.set('length', e.target.value)
+      userDataType: this.state.userDataType.set(DataTypeKeys.LENGTH, e.target.value)
     })
   },
 
   handleNullableChange(e) {
     return this.setState({
-      userDataType: this.state.userDataType.set('nullable', e.target.checked)
+      userDataType: this.state.userDataType.set(DataTypeKeys.NULLABLE, e.target.checked)
     })
   },
 
   handleBaseTypeChange(selectedItem) {
     return this.setState({
-      userDataType: this.state.userDataType.set('baseType', selectedItem.value)
+      userDataType: this.state.userDataType.set(DataTypeKeys.BASE_TYPE, selectedItem.value)
     });
   },
 
   lengthSupported() {
-    if (typesSupportingLength.contains(this.state.userDataType.get('baseType'))) {
+    if (typesSupportingLength.contains(this.state.userDataType.get(DataTypeKeys.BASE_TYPE))) {
       return true;
     }
     return false;
   },
 
   handleSaveDataType() {
-    saveColumnMetadata(this.props.columnId, Map({
-      'KBC.datatype.basetype': this.state.userDataType.get('baseType'),
-      'KBC.datatype.length': this.state.userDataType.get('length'),
-      'KBC.datatype.nullable': this.state.userDataType.get('nullable', false),
-    }));
+    saveColumnMetadata(this.props.columnId, Map(this.state.userDataType));
   }
 });

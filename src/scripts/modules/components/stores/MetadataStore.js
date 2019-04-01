@@ -1,7 +1,7 @@
 import StoreUtils from '../../../utils/StoreUtils';
 import { Map, List, fromJS } from 'immutable';
 import dispatcher from '../../../Dispatcher';
-import MetadataConstants from '../MetadataConstants';
+import { ActionTypes } from '../MetadataConstants';
 import * as Constants from '../Constants';
 import _ from 'underscore';
 
@@ -148,35 +148,35 @@ dispatcher.register(function(payload) {
   action = payload.action;
 
   switch (action.type) {
-    case MetadataConstants.ActionTypes.METADATA_EDIT_START:
+    case ActionTypes.METADATA_EDIT_START:
       _store = _store.setIn(
         ['editingMetadata', action.objectType, action.objectId, action.metadataKey],
         MetadataStore.getMetadataValue(action.objectType, action.objectId, 'user', action.metadataKey)
       );
       return MetadataStore.emitChange();
 
-    case MetadataConstants.ActionTypes.METADATA_EDIT_UPDATE:
+    case ActionTypes.METADATA_EDIT_UPDATE:
       _store = _store.setIn(
         ['editingMetadata', action.objectType, action.objectId, action.metadataKey],
         action.value
       );
       return MetadataStore.emitChange();
-    case MetadataConstants.ActionTypes.METADATA_EDIT_STOP:
+    case ActionTypes.METADATA_EDIT_STOP:
       _store = _store.deleteIn(['editingMetadata', action.objectType, action.objectId, action.metadataKey]);
       return MetadataStore.emitChange();
 
-    case MetadataConstants.ActionTypes.METADATA_EDIT_CANCEL:
+    case ActionTypes.METADATA_EDIT_CANCEL:
       _store = _store.deleteIn(['editingMetadata', action.objectType, action.objectId, action.metadataKey]);
       return MetadataStore.emitChange();
 
-    case MetadataConstants.ActionTypes.METADATA_SAVE_START:
+    case ActionTypes.METADATA_SAVE_START:
       _store = _store.setIn(['savingMetadata', action.objectType, action.objectId, action.metadataKey], action.value);
       return MetadataStore.emitChange();
 
-    case MetadataConstants.ActionTypes.METADATA_SAVE_ERROR:
+    case ActionTypes.METADATA_SAVE_ERROR:
       return MetadataStore.emitChange();
 
-    case MetadataConstants.ActionTypes.METADATA_SAVE_SUCCESS:
+    case ActionTypes.METADATA_SAVE_SUCCESS:
       _store = _store.setIn(['metadata', action.objectType, action.objectId], fromJS(action.metadata));
       _store = _store.deleteIn(['savingMetadata', action.objectType, action.objectId, action.metadataKey]);
       return MetadataStore.emitChange();

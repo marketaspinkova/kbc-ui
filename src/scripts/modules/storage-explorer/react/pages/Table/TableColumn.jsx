@@ -10,6 +10,7 @@ import Tooltip from '../../../../../react/common/Tooltip';
 import CreateColumnModal from '../../modals/CreateColumnModal';
 import DeleteColumnModal from '../../modals/DeleteColumnModal';
 import ColumnDetails from './ColumnDetails';
+import { DataTypeKeys } from '../../../../components/MetadataConstants';
 import { deleteTableColumn, addTableColumn, setOpenedColumns } from '../../../Actions';
 
 export default createReactClass({
@@ -46,31 +47,31 @@ export default createReactClass({
 
   getDataType(metadata) {
     const baseType = metadata.find((entry) => {
-      return entry.get('key') === 'KBC.datatype.basetype';
+      return entry.get('key') === DataTypeKeys.BASE_TYPE;
     });
     if (!baseType) {
       return Map();
     }
 
     const nativeType = metadata.find((entry) => {
-      return entry.get('key') === 'KBC.datatype.type';
+      return entry.get('key') === DataTypeKeys.TYPE;
     }, null, Map());
 
     const length = metadata.find((entry) => {
-      return entry.get('key') === 'KBC.datatype.length';
+      return entry.get('key') === DataTypeKeys.LENGTH;
     }, null, Map());
 
     const nullable = metadata.find((entry) => {
-      return entry.get('key') === 'KBC.datatype.nullable';
+      return entry.get('key') === DataTypeKeys.NULLABLE;
     }, null, Map());
 
-    return Map({
-      originalType: nativeType.get('value'),
-      baseType: baseType.get('value'),
-      length: length.get('value'),
-      nullable: !!parseInt(nullable.get('value', 0), 10),
-      provider: baseType.get('provider')
-    });
+    return Map()
+      .set(DataTypeKeys.TYPE, nativeType.get('value'))
+      .set(DataTypeKeys.BASE_TYPE, baseType.get('value'))
+      .set(DataTypeKeys.LENGTH, length.get('value'))
+      .set(DataTypeKeys.NULLABLE, !!parseInt(nullable.get('value', 0), 10))
+      .set('provider', baseType.get('provider'))
+    ;
   },
 
   render() {
