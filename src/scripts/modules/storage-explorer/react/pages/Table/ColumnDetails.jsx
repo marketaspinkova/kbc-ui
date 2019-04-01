@@ -19,7 +19,8 @@ export default createReactClass({
     columnId: PropTypes.string.isRequired,
     columnName: PropTypes.string.isRequired,
     machineDataType: PropTypes.object.isRequired,
-    userDataType: PropTypes.object.isRequired
+    userDataType: PropTypes.object.isRequired,
+    deleteUserType: PropTypes.func.isRequired,
   },
 
   getInitialState() {
@@ -76,6 +77,7 @@ export default createReactClass({
                 value={this.state.userDataType.get(DataTypeKeys.BASE_TYPE)}
                 options={this.baseTypeOptions()}
                 onChange={this.handleBaseTypeChange}
+                onClear={this.handleBaseTypeClear}
               />
             </Col>
           </FormGroup>
@@ -169,6 +171,12 @@ export default createReactClass({
     });
   },
 
+  handleBaseTypeClear() {
+    return this.setState({
+      userDataType: this.state.userDataType.set(DataTypeKeys.BASE_TYPE, null)
+    });
+  },
+
   lengthSupported() {
     if (typesSupportingLength.contains(this.state.userDataType.get(DataTypeKeys.BASE_TYPE))) {
       return true;
@@ -178,11 +186,19 @@ export default createReactClass({
 
   handleSaveDataType() {
     this.setState({ isSaving: true });
-    saveColumnMetadata(
-      this.props.columnId,
-      Map(this.state.userDataType)
-    ).finally(() => {
-      this.setState({ isSaving: false })
-    });
+    if (this.state.userDataType.get(DataTypeKeys.BASE_TYPE)) {
+      saveColumnMetadata(
+        this.props.columnId,
+        Map(this.state.userDataType)
+      ).finally(() => {
+        this.setState({ isSaving: false })
+      });
+    } else {
+      this.props.deleteUserType(
+        this.props.columnId
+      ).finally(() => {
+        this.setState({ isSaving: false })
+      });
+    }
   }
 });

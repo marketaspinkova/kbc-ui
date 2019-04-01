@@ -141,6 +141,12 @@ const saveColumnMetadata = (columnId, keyValues) => {
     .catch(errorNotification);
 };
 
+const deleteColumnMetadata = (columnId, metadataId) => {
+  return MetadataActionCreators
+    .deleteMetadata('column', columnId, metadataId)
+    .catch(errorNotification);
+};
+
 const setAliasTableFilter = (tableId, params) => {
   return StorageActionCreators
     .setAliasTableFilter(tableId, params)
@@ -333,6 +339,7 @@ export {
   deleteTableColumn,
   addTableColumn,
   saveColumnMetadata,
+  deleteColumnMetadata,
   setAliasTableFilter,
   removeAliasTableFilter,
   dataPreview,

@@ -8,7 +8,10 @@ const ActionTypes = keyMirror({
 
   METADATA_SAVE_START: null,
   METADATA_SAVE_SUCCESS: null,
-  METADATA_SAVE_ERROR: null
+  METADATA_SAVE_ERROR: null,
+
+  METADATA_DELETE_SUCCESS: null,
+  METADATA_DELETE_ERROR: null,
 });
 
 const DataTypeKeys = {
@@ -20,5 +23,5 @@ const DataTypeKeys = {
 
 export {
   ActionTypes,
-  DataTypeKeys
+  DataTypeKeys,
 };

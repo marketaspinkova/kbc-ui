@@ -89,5 +89,25 @@ export default {
       });
       throw error;
     });
+  },
+
+  deleteMetadata: function(objectType, objectId, metadataId) {
+    return storageApi.deleteMetadata(objectType, objectId, metadataId).then(function(result) {
+      dispatcher.handleViewAction({
+        type: ActionTypes.METADATA_DELETE_SUCCESS,
+        objectType: objectType,
+        objectId: objectId,
+        metadataId: metadataId
+      });
+      return result;
+    }).catch(function(error) {
+      dispatcher.handleViewAction({
+        type: ActionTypes.METADATA_DELETE_ERROR,
+        objectType: objectType,
+        objectId: objectId,
+        metadataId: metadataId
+      });
+      throw error;
+    });
   }
 };

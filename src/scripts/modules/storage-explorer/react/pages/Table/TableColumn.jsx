@@ -11,7 +11,7 @@ import CreateColumnModal from '../../modals/CreateColumnModal';
 import DeleteColumnModal from '../../modals/DeleteColumnModal';
 import ColumnDetails from './ColumnDetails';
 import { DataTypeKeys } from '../../../../components/MetadataConstants';
-import { deleteTableColumn, addTableColumn, setOpenedColumns } from '../../../Actions';
+import { deleteTableColumn, addTableColumn, setOpenedColumns, deleteColumnMetadata } from '../../../Actions';
 
 export default createReactClass({
   propTypes: {
@@ -43,6 +43,14 @@ export default createReactClass({
 
   getColumnId(columnName) {
     return this.props.table.get('id') + '.' + columnName;
+  },
+
+  deleteUserType(columnName) {
+    return this.props.userColumnMetadata.get(columnName).map((metadata) => {
+      if ([DataTypeKeys.BASE_TYPE, DataTypeKeys.LENGTH, DataTypeKeys.NULLABLE].includes(metadata.get('key'))) {
+        return deleteColumnMetadata(this.getColumnId(columnName), metadata.get('id'));
+      }
+    });
   },
 
   getUserDefinedType(column) {
@@ -132,6 +140,7 @@ export default createReactClass({
           columnName={column}
           machineDataType={this.getDataType(this.props.machineColumnMetadata.get(column, Map()))}
           userDataType={this.getUserDefinedType(column)}
+          deleteUserType={this.deleteUserType}
         />
       </Panel>
     );

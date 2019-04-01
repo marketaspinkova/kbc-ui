@@ -327,6 +327,13 @@ export default {
       });
   },
 
+  deleteMetadata: function(objectType, objectId, metadataId) {
+    const delUrl = this.getMetadataSaveUrl(objectType, objectId) + '/' + metadataId;
+    return createRequest('DELETE', delUrl).type('form').promise().then(function(response) {
+      return response.body;
+    });
+  },
+
   getJobs: function(params) {
     return createRequest('GET', 'jobs').query(params).promise().then(function(response) {
       return response.body;
