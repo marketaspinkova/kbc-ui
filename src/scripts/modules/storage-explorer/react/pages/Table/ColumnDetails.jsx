@@ -56,20 +56,10 @@ export default createReactClass({
         <h3>Datatype</h3>
         <div className="form-horizontal">
           <FormGroup>
-            <Col componentClass={ControlLabel} xs={4}>
-              System
-            </Col>
-            <Col xs={8}>
-              {
-                this.renderSystemValue()
-              }
-            </Col>
+            {
+              this.renderSystemValue()
+            }
           </FormGroup>
-        </div>
-        <div className="form-horizontal">
-          <HelpBlock>
-            To override the system type:
-          </HelpBlock>
           <FormGroup>
             <Col componentClass={ControlLabel} xs={4}>Type</Col>
             <Col xs={8}>
@@ -100,8 +90,8 @@ export default createReactClass({
               <Button bsStyle="success" onClick={this.handleSaveDataType}>
                 {this.state.isSaving ? (
                   <span>
-                        <Loader /> Saving...
-                      </span>
+                    <Loader /> Saving...
+                  </span>
                 ) : (
                   <span>Save</span>
                 )}
@@ -133,23 +123,26 @@ export default createReactClass({
   },
 
   renderSystemValue() {
-    if (this.props.machineDataType !== null) {
+    if (this.props.machineDataType.count() > 0) {
       return (
-        <div>
-          {this.props.machineDataType.get(DataTypeKeys.BASE_TYPE)}
-          {
-            this.props.machineDataType.get(DataTypeKeys.LENGTH)
-              ? '(' + this.props.machineDataType.get(DataTypeKeys.LENGTH) + ')'
-              : ''
-          }
-          <br/>
-          <Label bsStyle="info">{this.props.machineDataType.get('provider')}</Label>
-        </div>
-      )
-    } else {
-      return (
-        <span>Unknown</span>
-      )
+        <FormGroup>
+          <Col componentClass={ControlLabel} xs={4}>
+            System
+          </Col>
+          <Col xs={8}>
+            <div>
+              {this.props.machineDataType.get(DataTypeKeys.BASE_TYPE)}
+              {
+                this.props.machineDataType.get(DataTypeKeys.LENGTH)
+                  ? '(' + this.props.machineDataType.get(DataTypeKeys.LENGTH) + ')'
+                  : ''
+              }
+              <br/>
+              <Label bsStyle="info">{this.props.machineDataType.get('provider')}</Label>
+            </div>
+          </Col>
+        </FormGroup>
+      );
     }
   },
 
