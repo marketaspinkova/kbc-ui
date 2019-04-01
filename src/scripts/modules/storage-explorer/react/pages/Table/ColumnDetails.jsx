@@ -92,15 +92,20 @@ export default createReactClass({
               </Checkbox>
             </Col>
           </FormGroup>
-          <Button bsStyle="success" onClick={this.handleSaveDataType}>
-            {this.state.isSaving ? (
-              <span>
-                    <Loader /> Creating column...
-                  </span>
-            ) : (
-              <span>Save</span>
-            )}
-          </Button>
+          <FormGroup>
+            <Col componentClass={ControlLabel} xs={4}>&nbsp;</Col>
+            <Col xs={8}>
+              <Button bsStyle="success" onClick={this.handleSaveDataType}>
+                {this.state.isSaving ? (
+                  <span>
+                        <Loader /> Saving...
+                      </span>
+                ) : (
+                  <span>Save</span>
+                )}
+              </Button>
+            </Col>
+          </FormGroup>
         </div>
       </div>
     );
