@@ -77,8 +77,8 @@ export default createReactClass({
                 value={this.state.userDataType.get(DataTypeKeys.BASE_TYPE)}
                 options={this.baseTypeOptions()}
                 onChange={this.handleBaseTypeChange}
-                onClear={this.handleBaseTypeClear}
               />
+              <HelpBlock>Saving a blank type will remove the previously set type</HelpBlock>
             </Col>
           </FormGroup>
           {this.renderLengthEdit()}
@@ -167,13 +167,7 @@ export default createReactClass({
 
   handleBaseTypeChange(selectedItem) {
     return this.setState({
-      userDataType: this.state.userDataType.set(DataTypeKeys.BASE_TYPE, selectedItem.value)
-    });
-  },
-
-  handleBaseTypeClear() {
-    return this.setState({
-      userDataType: this.state.userDataType.set(DataTypeKeys.BASE_TYPE, null)
+      userDataType: this.state.userDataType.set(DataTypeKeys.BASE_TYPE, selectedItem ? selectedItem.value : null)
     });
   },
 
@@ -195,7 +189,7 @@ export default createReactClass({
       });
     } else {
       this.props.deleteUserType(
-        this.props.columnId
+        this.props.columnName
       ).finally(() => {
         this.setState({ isSaving: false })
       });

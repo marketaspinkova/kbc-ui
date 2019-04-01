@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import Promise from 'bluebird';
 import createReactClass from 'create-react-class';
 import { Map } from 'immutable';
 import classnames from 'classnames';
@@ -46,11 +47,12 @@ export default createReactClass({
   },
 
   deleteUserType(columnName) {
-    return this.props.userColumnMetadata.get(columnName).map((metadata) => {
+    var promises = this.props.userColumnMetadata.get(columnName).map((metadata) => {
       if ([DataTypeKeys.BASE_TYPE, DataTypeKeys.LENGTH, DataTypeKeys.NULLABLE].includes(metadata.get('key'))) {
         return deleteColumnMetadata(this.getColumnId(columnName), metadata.get('id'));
       }
     });
+    return Promise.all(promises);
   },
 
   getUserDefinedType(column) {
