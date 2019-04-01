@@ -100,18 +100,6 @@ const ApplicationStore = StoreUtils.createStore({
     return this.getProjectBaseUrl() + '/' + path;
   },
 
-  getSapiTableUrl(tableId) {
-    return this.getProjectBaseUrl() + `/storage#/tables/${tableId}`;
-  },
-
-  getSapiBucketUrl(bucketId) {
-    return this.getProjectBaseUrl() + `/storage#/buckets/${bucketId}`;
-  },
-
-  getSapiFileUploadsUrl() {
-    return this.getProjectBaseUrl() + '/storage#/file-uploads';
-  },
-
   getUrlTemplates() {
     return _store.getIn(['kbc', 'urlTemplates']);
   },
