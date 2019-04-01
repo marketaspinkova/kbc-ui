@@ -53,13 +53,11 @@ export default {
         if (!previousVersions.equals(newVersions)) {
           const notification = () => {
             ApplicationActionCreators.sendNotification({
-              message: versionsMishmashDetected(newVersions.first()),
-              id: 'versions-mishmash',
-              timeout: 20000,
-              type: 'error',
+              message: versionsMishmashDetected(componentId, configId, newVersions.first()),
+              id: 'versions-mishmash'
             })
           };
-          
+
           if (!document.hasFocus()) {
             window.addEventListener('focus', notification, { passive: true, once: true });
           } else {
