@@ -35,9 +35,9 @@ var MetadataStore = StoreUtils.createStore({
     return _store.getIn(['metadata', 'tableColumns', tableId], Map());
   },
 
-  getAllColumnMetadataByProvider: function(tableId, column, provider) {
-    return this.getAllColumnMetadata(tableId, column).filter(
-      metadata => metadata.get('provider') === provider
+  getAllTableColumnsMetadataByProvider: function(tableId, provider) {
+    return this.getTableColumnsMetadata(tableId).map(
+      (metadata) => metadata.filter(data => data.get('provider') === provider)
     );
   },
 
@@ -130,20 +130,16 @@ var MetadataStore = StoreUtils.createStore({
     return columnsWithBaseTypes.count() > 0;
   },
 
-  getLastUpdatedByColumnMetadata: function(tableId, columns) {
+  getLastUpdatedByColumnMetadata: function(tableId) {
     const lastUpdateInfo = this.getTableLastUpdatedInfo(tableId);
     if (!lastUpdateInfo) {
       return Map();
     }
-    return columns.reduce((memo, column) => {
-      return memo.set(column, this.getAllColumnMetadataByProvider(tableId, column, lastUpdateInfo.component));
-    }, Map());
+    return this.getAllTableColumnsMetadataByProvider(tableId, lastUpdateInfo.component);
   },
 
-  getUserProvidedColumnMetadata: function (tableId, columns) {
-    return columns.reduce((memo, column) => {
-      return memo.set(column, this.getAllColumnMetadataByProvider(tableId, column, 'user'));
-    }, Map());
+  getUserProvidedColumnMetadata: function (tableId) {
+    return this.getAllTableColumnsMetadataByProvider(tableId, 'user');
   }
 });
 
@@ -183,6 +179,10 @@ dispatcher.register(function(payload) {
     case ActionTypes.METADATA_SAVE_SUCCESS:
       _store = _store.setIn(['metadata', action.objectType, action.objectId], fromJS(action.metadata));
       _store = _store.deleteIn(['savingMetadata', action.objectType, action.objectId, action.metadataKey]);
+      if (action.objectType === 'column') {
+        const [ tableId, columnName ] = action.objectId.split(/\.(?=[^\.]+$)/);
+        _store = _store.setIn(['metadata', 'tableColumns', tableId, columnName], fromJS(action.metadata));
+      }
       return MetadataStore.emitChange();
 
     case Constants.ActionTypes.STORAGE_BUCKETS_LOAD_SUCCESS:
@@ -199,12 +199,8 @@ dispatcher.register(function(payload) {
         );
         _.each(table.columnMetadata, function(metadata, columnName) {
           _store = _store
-            .setIn(
-              ['metadata', 'column', table.id + '.' + columnName], fromJS(metadata)
-            )
-            .setIn(
-              ['metadata', 'tableColumns', table.id, columnName], fromJS(metadata)
-            );
+            .setIn(['metadata', 'column', table.id + '.' + columnName], fromJS(metadata))
+            .setIn(['metadata', 'tableColumns', table.id, columnName], fromJS(metadata));
         });
       });
       return MetadataStore.emitChange();
