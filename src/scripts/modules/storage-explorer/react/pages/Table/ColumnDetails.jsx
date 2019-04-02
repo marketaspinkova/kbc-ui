@@ -79,7 +79,7 @@ export default createReactClass({
             <Col xs={8} xsOffset={4}>
               <Checkbox
                 name={this.props.columnName + '_nullable'}
-                checked={this.state.userDataType.get(DataTypeKeys.NULLABLE)}
+                checked={this.state.userDataType.get(DataTypeKeys.NULLABLE, false)}
                 onChange={this.handleNullableChange}
               >
                 Nullable
