@@ -1,12 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
-import { fromJS } from 'immutable';
+import { Map } from 'immutable';
 import { Button, Row, Col, HelpBlock } from 'react-bootstrap';
 import Select from 'react-select';
 import TableLoader from './TableLoaderQuickStart';
-
-const optgroupStyles = { color: '#000', display: 'block', cursor: 'pointer' };
 
 export default createReactClass({
   propTypes: {
@@ -40,7 +38,23 @@ export default createReactClass({
   },
 
   handleSelectChange(selected) {
-    return this.props.onChange(this.props.configId, fromJS(selected.map((table) => table.value)));
+    const selectedTables = selected.reduce((options, item) => {
+      // if type of value is string, all tables from schema will be added
+      if (typeof item.value === 'string') {
+        this.props.sourceTables.groupBy((table) => table.get('schema'))
+          .get(item.value)
+          .forEach((table) => {
+            options = options.set(`${table.get('schema')}.${table.get('name')}`, Map({
+              schema: table.get('schema'),
+              tableName: table.get('name')
+            }))
+          });
+        return options;
+      }
+      return options.set(`${item.value.schema}.${item.value.tableName}`, item.value);
+    }, Map());
+
+    this.props.onChange(this.props.configId, selectedTables.toList());
   },
 
   getTableOptions() {
@@ -153,23 +167,13 @@ export default createReactClass({
   },
 
   transformOptions(options) {
-    const option = (value, label, render, disabled = false) => ({ value, label, render, disabled });
+    const option = (value, label, render) => ({ value, label, render });
 
     return options.reduce((acc, o) => {
       const parent = option(
         o.value,
         o.label,
-        <strong
-          style={optgroupStyles}
-          title={`Select all tables in ${o.label} schema.`}
-          onClick={(event) => {
-            event.preventDefault();
-            this.selectAllFromScheme(o.children);
-          }}
-        >
-          Schema: {o.label}
-        </strong>,
-        true
+        <strong>Schema: {o.label}</strong>
       );
       const children = o.children.map((c) => option(c.value, c.label, <div>{c.label}</div>));
       return acc.concat(parent).concat(children);
@@ -178,15 +182,5 @@ export default createReactClass({
 
   optionRenderer(option) {
     return option.render;
-  },
-
-  selectAllFromScheme(schemaTables) {
-    const selected = this.getQuickstartValue(this.props.quickstart.get('tables'));
-    schemaTables.forEach((option) => {
-      if (!selected.find((item) => item.label === option.label)) {
-        selected.push(option);
-      }
-    });
-    this.props.onChange(this.props.configId, fromJS(selected.map((table) => table.value)));
   }
 });
