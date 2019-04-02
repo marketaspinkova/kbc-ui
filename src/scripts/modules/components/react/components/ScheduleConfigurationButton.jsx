@@ -39,10 +39,9 @@ export default createReactClass({
   getInitialState() {
     return {
       name: '',
-      ownCrontabRecord: '0 0 * * *',
+      customCrontabRecord: '0 0 * * *',
       predefinedCrontabRecord: '1 * * * *',
-      isLoading: false,
-      redirect: false
+      isLoading: false
     };
   },
 
@@ -95,8 +94,8 @@ export default createReactClass({
         </FormGroup>
         {this.state.predefinedCrontabRecord === CUSTOM_SCHEDULE_PLAN && (
           <CronScheduler
-            crontabRecord={this.state.ownCrontabRecord}
-            onChange={this.handleOwnCrobtabRecord}
+            crontabRecord={this.state.customCrontabRecord}
+            onChange={this.handleCustomCrobtabRecord}
           />
         )}
       </div>
@@ -111,18 +110,18 @@ export default createReactClass({
     this.setState({ predefinedCrontabRecord: event.target.value });
   },
 
-  handleOwnCrobtabRecord(crontabRecord) {
-    this.setState({ ownCrontabRecord: crontabRecord });
+  handleCustomCrobtabRecord(crontabRecord) {
+    this.setState({ customCrontabRecord: crontabRecord });
   },
 
   handleSubmit() {
     this.setState({ isLoading: true });
-    OrchestrationActionCreators.createOrchestration(
+    return OrchestrationActionCreators.createOrchestration(
       {
         name: this.state.name || `Scheduled ${this.state.config.get('name')} configuration`,
         crontabRecord:
           this.state.predefinedCrontabRecord === CUSTOM_SCHEDULE_PLAN
-            ? this.state.ownCrontabRecord
+            ? this.state.customCrontabRecord
             : this.state.predefinedCrontabRecord,
         tasks: [
           {
@@ -136,7 +135,7 @@ export default createReactClass({
           }
         ]
       },
-      this.state.redirect
+      false
     )
       .then((orchestration) => {
         ApplicationActionCreators.sendNotification({
