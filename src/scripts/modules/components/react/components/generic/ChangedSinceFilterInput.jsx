@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
 import ChangedSinceInput from '../../../../../react/common/ChangedSinceInput';
+
 export default createReactClass({
   propTypes: {
     mapping: PropTypes.object.isRequired,
@@ -11,7 +12,8 @@ export default createReactClass({
     wrapperClassName: PropTypes.string,
     helpBlock: PropTypes.string,
     label: PropTypes.string,
-    groupClassName: PropTypes.string
+    groupClassName: PropTypes.string,
+    allowAdaptive: PropTypes.bool
   },
 
   getDefaultProps() {
@@ -35,6 +37,7 @@ export default createReactClass({
             disabled={this.props.disabled}
             onChange={this.handleChangeChangedSince}
             helpBlock={this.props.helpBlock}
+            allowAdaptive={this.props.allowAdaptive}
           />
         </div>
       </div>

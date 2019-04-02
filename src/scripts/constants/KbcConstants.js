@@ -31,6 +31,7 @@ const ActionTypes = keyMirror({
 const FEATURE_UI_DEVEL_PREVIEW = 'ui-devel-preview';
 const FEATURE_EARLY_ADOPTER_PREVIEW = 'early-adopter-preview';
 const FEATURE_UI_LOOKER_PREVIEW = 'ui-looker-preview';
+const FEATURE_ADAPTIVE_INPUT_MAPPING = 'ui-adaptive-input-mapping';
 
 const lookerPreviewHideComponents = [
   'cleveranalytics.wr-clever-analytics',
@@ -51,5 +52,6 @@ export {
   FEATURE_UI_DEVEL_PREVIEW,
   FEATURE_EARLY_ADOPTER_PREVIEW,
   FEATURE_UI_LOOKER_PREVIEW,
+  FEATURE_ADAPTIVE_INPUT_MAPPING,
   lookerPreviewHideComponents
 };

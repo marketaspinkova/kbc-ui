@@ -19,6 +19,7 @@ export default createReactClass({
     onCancel: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
     otherDestinations: PropTypes.object.isRequired,
+    componentType: PropTypes.string.isRequired,
     onEditStart: PropTypes.func,
     definition: PropTypes.object,
     showFileHint: PropTypes.bool,
@@ -136,6 +137,7 @@ export default createReactClass({
         showFileHint={this.props.showFileHint}
         definition={this.props.definition}
         editingNonExistentTable={this.editingNonExistentTable()}
+        componentType={this.props.componentType}
       />
     );
   },

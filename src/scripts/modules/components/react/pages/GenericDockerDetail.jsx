@@ -98,6 +98,7 @@ export default createReactClass({
       return (
         <TableInputMapping
           componentId={this.state.componentId}
+          componentType={this.state.component.get('type')}
           configId={this.state.config.get('id')}
           value={this.state.configData.getIn(['storage', 'input', 'tables'], List())}
           editingValue={this.state.editingConfigData.getIn(['storage', 'input', 'tables'], Map())}

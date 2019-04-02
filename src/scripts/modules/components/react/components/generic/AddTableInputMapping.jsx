@@ -9,6 +9,7 @@ export default createReactClass({
     tables: PropTypes.object.isRequired,
     mapping: PropTypes.object.isRequired,
     componentId: PropTypes.string.isRequired,
+    componentType: PropTypes.string.isRequired,
     configId: PropTypes.string.isRequired,
     otherDestinations: PropTypes.object.isRequired
   },
@@ -23,6 +24,7 @@ export default createReactClass({
         onCancel={this.handleCancel}
         onSave={this.handleSave}
         otherDestinations={this.props.otherDestinations}
+        componentType={this.props.componentType}
       />
     );
   },

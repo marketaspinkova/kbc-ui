@@ -68,6 +68,7 @@ export default createReactClass({
           <div className="col-md-12">
             <TableInputMapping
               componentId={componentId}
+              componentType="application"
               tables={this.state.tables}
               pendingActions={this.state.pendingActions}
               openMappings={this.state.openMappings}

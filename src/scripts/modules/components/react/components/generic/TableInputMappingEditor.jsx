@@ -19,6 +19,7 @@ export default createReactClass({
     initialShowDetails: PropTypes.bool.isRequired,
     showFileHint: PropTypes.bool,
     isDestinationDuplicate: PropTypes.bool.isRequired,
+    componentType: PropTypes.string.isRequired,
     definition: PropTypes.object
   },
 
@@ -86,6 +87,7 @@ export default createReactClass({
             mapping={this.props.value}
             disabled={this.props.disabled}
             onChange={this.props.onChange}
+            allowAdaptive={(this.props.componentType === 'writer' ? true : false)}
           />
           <DataFilterRow
             value={this.props.value}

@@ -112,6 +112,7 @@ export default createReactClass({
               onChange={(value) => this.setState({mapping: value})}
               mapping={this.state.mapping}
               helpBlock="When specified, only rows changed or created within the selected time period will be loaded."
+              allowAdaptive
             />
             <DataFilterRow
               value={this.state.mapping}
