@@ -84,7 +84,7 @@ export default createReactClass({
       .set(DataTypeKeys.TYPE, nativeType.get('value'))
       .set(DataTypeKeys.BASE_TYPE, baseType.get('value'))
       .set(DataTypeKeys.LENGTH, length.get('value'))
-      .set(DataTypeKeys.NULLABLE, !!parseInt(nullable.get('value', 0), 10))
+      .set(DataTypeKeys.NULLABLE, [true, "true", 1, "1"].includes(nullable.get('value')))
       .set('provider', baseType.get('provider'))
     ;
   },
