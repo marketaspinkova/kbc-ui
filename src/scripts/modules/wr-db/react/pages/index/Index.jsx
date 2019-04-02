@@ -43,7 +43,6 @@ export default componentId => {
       const configId = RoutesStore.getCurrentRouteParam('config');
       const localState = InstalledComponentsStore.getLocalState(componentId, configId);
       const toggles = localState.get('bucketToggles', Map());
-      const v2Actions = V2Actions(configId, componentId);
       const tables = WrDbStore.getTables(componentId, configId);
       const credentials = WrDbStore.getCredentials(componentId, configId);
 
@@ -58,7 +57,7 @@ export default componentId => {
         localState,
         bucketToggles: toggles,
         deletingTables: WrDbStore.getDeletingTables(componentId, configId),
-        v2ConfigTables: v2Actions.configTables
+        v2Actions: V2Actions(configId, componentId)
       };
     },
 
@@ -267,15 +266,15 @@ export default componentId => {
     },
 
     _renderTableRow(table, index, tableExists = true) {
-      const v2ConfigTable = this.state.v2ConfigTables.find(t => t.get('tableId') === table.get('id'));
+      const tableMapping = this.state.v2Actions.getTableMapping(table.get('id'));
 
       return (
         <TableRow
           key={index}
-          tableExists={tableExists}
+          tableExists={!!(tableExists && tableMapping)}
           configId={this.state.configId}
           isV2={this.isV2()}
-          v2ConfigTable={v2ConfigTable}
+          v2ConfigTable={this.state.v2Actions.configTables.find(t => t.get('tableId') === table.get('id'))}
           tableDbName={this._getConfigTable(table.get('id')).get('name')}
           isTableExported={this._isTableExported(table.get('id'))}
           isPending={this._isPendingTable(table.get('id'))}
