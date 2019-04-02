@@ -198,7 +198,7 @@ export default createReactClass({
     if (this.state.userDataType.get(DataTypeKeys.BASE_TYPE)) {
       saveColumnMetadata(
         this.props.columnId,
-        Map(this.state.userDataType)
+        this.state.userDataType
       ).finally(() => {
         this.setState({ isSaving: false })
       });
