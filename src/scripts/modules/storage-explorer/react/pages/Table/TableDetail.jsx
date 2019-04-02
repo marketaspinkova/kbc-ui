@@ -72,8 +72,8 @@ export default createReactClass({
       exportingTable: TablesStore.getIsExportingTable(table.get('id')),
       tableLinks: this.getTableLinks(table, bucket),
       tableAliases: this.getTableAliases(table, tables, sapiToken),
-      machineColumnMetadata: MetadataStore.getLastUpdatedByColumnMetadata(table.get('id')),
-      userColumnMetadata: MetadataStore.getUserProvidedColumnMetadata(table.get('id')),
+      machineColumnMetadata: MetadataStore.getLastUpdatedByColumnMetadata(table.get('id'), table.get('columns')),
+      userColumnMetadata: MetadataStore.getUserProvidedColumnMetadata(table.get('id'), table.get('columns')),
       openColumns: ColumnsLocalStore.getOpenedColumns(),
     };
   },

@@ -35,9 +35,9 @@ var MetadataStore = StoreUtils.createStore({
     return _store.getIn(['metadata', 'tableColumns', tableId], Map());
   },
 
-  getAllTableColumnsMetadataByProvider: function(tableId, provider) {
-    return this.getTableColumnsMetadata(tableId).map(
-      (metadata) => metadata.filter(data => data.get('provider') === provider)
+  getAllColumnMetadataByProvider: function(tableId, column, provider) {
+    return this.getAllColumnMetadata(tableId, column).filter(
+      metadata => metadata.get('provider') === provider
     );
   },
 
@@ -130,16 +130,20 @@ var MetadataStore = StoreUtils.createStore({
     return columnsWithBaseTypes.count() > 0;
   },
 
-  getLastUpdatedByColumnMetadata: function(tableId) {
+  getLastUpdatedByColumnMetadata: function(tableId, columns) {
     const lastUpdateInfo = this.getTableLastUpdatedInfo(tableId);
     if (!lastUpdateInfo) {
       return Map();
     }
-    return this.getAllTableColumnsMetadataByProvider(tableId, lastUpdateInfo.component);
+    return columns.reduce((memo, column) => {
+      return memo.set(column, this.getAllColumnMetadataByProvider(tableId, column, lastUpdateInfo.component));
+    }, Map());
   },
 
-  getUserProvidedColumnMetadata: function (tableId) {
-    return this.getAllTableColumnsMetadataByProvider(tableId, 'user');
+  getUserProvidedColumnMetadata: function (tableId, columns) {
+    return columns.reduce((memo, column) => {
+      return memo.set(column, this.getAllColumnMetadataByProvider(tableId, column, 'user'));
+    }, Map());
   }
 });
 
