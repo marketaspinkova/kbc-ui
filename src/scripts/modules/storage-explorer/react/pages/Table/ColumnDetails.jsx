@@ -62,11 +62,9 @@ export default createReactClass({
       <div>
         <h3>Datatype</h3>
         <div className="form-horizontal">
-          <FormGroup>
-            {
-              this.renderSystemValue()
-            }
-          </FormGroup>
+          {
+            this.renderSystemValue()
+          }
           <FormGroup>
             <Col componentClass={ControlLabel} xs={4}>Type</Col>
             <Col xs={8}>
