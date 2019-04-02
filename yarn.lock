@@ -934,10 +934,10 @@
     "@types/istanbul-lib-coverage" "^2.0.0"
     "@types/yargs" "^12.0.9"
 
-"@json-editor/json-editor@^1.3.4":
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/@json-editor/json-editor/-/json-editor-1.3.4.tgz#730ce407e9816370a513f48fe9b74eb191149200"
-  integrity sha512-w4SGutLq8wnQzQoidw7QlQmOq3bknf8xbLrK4TX48eVcAXuDxwnY/ikdjAiJkCSiB+ecK/7qo/Vxzv50AV3p/A==
+"@json-editor/json-editor@^1.3.5":
+  version "1.3.5"
+  resolved "https://registry.yarnpkg.com/@json-editor/json-editor/-/json-editor-1.3.5.tgz#b8ec91b2ad53d65a031c90941e3c3bbd084bc321"
+  integrity sha512-maU/05CzSvW5waIqWXhhiekLhDKwu8cOkGESIVyV2UrONedRzO/qk+WBFKkBbLmm5TeyRnkwVL6CkKNyaa2d4w==
 
 "@keboola/indigo-ui@^8.0.0":
   version "8.0.0"

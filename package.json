@@ -4,7 +4,7 @@
   "description": "Keboola Connection UI",
   "author": "Martin Halamicek",
   "dependencies": {
-    "@json-editor/json-editor": "^1.3.4",
+    "@json-editor/json-editor": "^1.3.5",
     "@keboola/indigo-ui": "^8.0.0",
     "aws-sdk": "^2.437.0",
     "bluebird": "^3.5.3",
