@@ -4,7 +4,7 @@ import Promise from 'bluebird';
 import createReactClass from 'create-react-class';
 import { Map } from 'immutable';
 import classnames from 'classnames';
-import { PanelGroup, Panel, Button, Row, Col } from 'react-bootstrap';
+import { Label, PanelGroup, Panel, Button, Row, Col } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 
 import Tooltip from '../../../../../react/common/Tooltip';
@@ -156,9 +156,9 @@ export default createReactClass({
           </Col>
           <Col sm={1}>
             {this.isColumnInPrimaryKey(column) && (
-              <span className="label label-info" tooltip="Primary key">
-              PK
-            </span>
+              <Label bsStyle="info">
+                PK
+              </Label>
             )}
           </Col>
           <Col sm={1}>
