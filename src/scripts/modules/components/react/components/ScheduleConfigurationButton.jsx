@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
 import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
+import Select from 'react-select';
 import ApplicationActionCreators from '../../../../actions/ApplicationActionCreators';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import CronScheduler from '../../../../react/common/CronScheduler';
@@ -80,18 +81,15 @@ export default createReactClass({
         </FormGroup>
         <FormGroup>
           <ControlLabel>How ofter do you want to run the configuration</ControlLabel>
-          <FormControl
+          <Select
             autoFocus
-            componentClass="select"
             onChange={this.handlePredefinedCrobtabRecord}
             value={this.state.predefinedCrontabRecord}
-          >
-            {scheduleOptions.map((option, index) => (
-              <option key={index} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </FormControl>
+            options={scheduleOptions}
+            deleteRemoves={false}
+            clearable={false}
+            backspaceRemoves={false}
+          />
         </FormGroup>
         {this.state.predefinedCrontabRecord === CUSTOM_SCHEDULE_PLAN && (
           <CronScheduler
@@ -107,8 +105,8 @@ export default createReactClass({
     this.setState({ name: event.target.value });
   },
 
-  handlePredefinedCrobtabRecord(event) {
-    this.setState({ predefinedCrontabRecord: event.target.value });
+  handlePredefinedCrobtabRecord(selected) {
+    this.setState({ predefinedCrontabRecord: selected.value });
   },
 
   handleCustomCrobtabRecord(crontabRecord) {
