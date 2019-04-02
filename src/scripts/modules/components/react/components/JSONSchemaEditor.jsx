@@ -57,12 +57,12 @@ export default createReactClass({
       iconlib: 'fontawesome4',
       disable_array_delete_last_row: true,
       disable_array_reorder: true,
-      disable_array_add: true,
-      disable_array_delete: true,
-      disable_collapse: true,
+      disable_collapse: false,
       disable_edit_json: true,
-      disable_properties: true,
-      show_errors: 'always'
+      disable_properties: false,
+      object_layout: 'normal',
+      show_errors: 'always',
+      prompt_before_delete: false
     };
 
     this.jsoneditor = new JSONEditor(this.refs.jsoneditor, options);
