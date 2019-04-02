@@ -33,7 +33,14 @@ export default createReactClass({
   editorRef: null,
   jsoneditor: null,
 
+  componentDidMount() {
+    this.initJsonEditor(this.props.value, this.props.readOnly);
+    this.patchEditorInputs();
+  },
+
   componentWillReceiveProps(nextProps) {
+    this.patchEditorInputs();
+
     // workaround to update editor internal value after reset of this.props.value
     const resetValue = this.props.isChanged && !nextProps.isChanged;
     const resetReadOnly = this.props.readOnly !== nextProps.readOnly;
@@ -46,13 +53,21 @@ export default createReactClass({
     }
   },
 
+  render() {
+    return (
+      <form autoComplete="off">
+        <div ref={(editor) => (this.editorRef = editor)} />
+      </form>
+    );
+  },
+
   initJsonEditor(nextValue, nextReadOnly) {
     if (this.jsoneditor) {
       this.jsoneditor.destroy();
     }
 
     const options = {
-      schema: this.props.schema.toJS(),
+      schema: this.prepareSchema(),
       startval: nextValue.toJS(),
       theme: 'bootstrap3',
       iconlib: 'fontawesome4',
@@ -84,6 +99,16 @@ export default createReactClass({
       }
     });
 
+    if (nextReadOnly) {
+      this.jsoneditor.disable();
+    }
+  },
+
+  prepareSchema() {
+    return this.props.schema.toJS();
+  },
+
+  patchEditorInputs() {
     for (let key in this.jsoneditor.editors) {
       if (this.jsoneditor.editors.hasOwnProperty(key) && key !== 'root') {
         const el = this.jsoneditor.getEditor(key);
@@ -92,25 +117,9 @@ export default createReactClass({
           el.input.addEventListener('input', () => {
             el.refreshValue();
             el.onChange(true);
-          });
+          }, { once: true });
         }
       }
     }
-
-    if (nextReadOnly) {
-      this.jsoneditor.disable();
-    }
-  },
-
-  componentDidMount() {
-    this.initJsonEditor(this.props.value, this.props.readOnly);
-  },
-
-  render() {
-    return (
-      <form autoComplete="off">
-        <div ref={editor => this.editorRef = editor} />
-      </form>
-    );
   }
 });
