@@ -1,6 +1,11 @@
 import { fromJS } from 'immutable';
 
 export default fromJS({
+  BIT: {
+    name: 'BIT',
+    basetype: 'BOOLEAN',
+    size: false
+  },
   BIGINT: {
     name: 'BIGINT',
     basetype: 'INTEGER',
@@ -43,6 +48,7 @@ export default fromJS({
   },
   DATETIME2: {
     name: 'DATETIME2',
+    basetype: 'TIMESTAMP',
     size: true
   },
   TIME: {
@@ -51,7 +57,6 @@ export default fromJS({
   },
   TIMESTAMP: {
     name: 'TIMESTAMP',
-    basetype: 'TIMESTAMP',
     size: false
   },
   CHAR: {
@@ -60,11 +65,11 @@ export default fromJS({
   },
   TEXT: {
     name: 'TEXT',
+    basetype: 'STRING',
     size: false
   },
   VARCHAR: {
     name: 'VARCHAR',
-    basetype: 'VARCHAR',
     size: true,
     maxLength: 16777216
   },

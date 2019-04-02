@@ -87,11 +87,11 @@ export default fromJS({
   },
   VARCHAR: {
     name: 'VARCHAR',
-    basetype: 'VARCHAR',
+    basetype: 'STRING',
     size: true,
     maxLength: 16777216
   },
-  "CHARACTER VARYING": {
+  'CHARACTER VARYING': {
     name: 'CHARACTER VARYING',
     size: false
   },
