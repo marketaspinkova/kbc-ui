@@ -157,12 +157,6 @@ export default createReactClass({
           return false;
         }
         return !filterStr || option.label.toLowerCase().indexOf(filterStr) >= 0;
-      })
-      .filter((option, index, allOptions) => {
-        if (option.disabled && (!allOptions[index + 1] || allOptions[index + 1].disabled)) {
-          return false;
-        }
-        return true;
       });
   },
 
