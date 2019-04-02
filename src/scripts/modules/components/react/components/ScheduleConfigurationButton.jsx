@@ -115,6 +115,7 @@ export default createReactClass({
   },
 
   handleSubmit() {
+    const redirectToCreatedOrchestration = false;
     this.setState({ isLoading: true });
     return OrchestrationActionCreators.createOrchestration(
       {
@@ -135,7 +136,7 @@ export default createReactClass({
           }
         ]
       },
-      false
+      redirectToCreatedOrchestration
     )
       .then((orchestration) => {
         ApplicationActionCreators.sendNotification({
