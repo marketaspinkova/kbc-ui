@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
-import { Map, List } from 'immutable';
+import { List } from 'immutable';
 import { HelpBlock, Label, Col, FormGroup, FormControl, ControlLabel, Checkbox, Button } from 'react-bootstrap';
 import Select from 'react-select';
 import MetadataEditField from '../../../../components/react/components/MetadataEditField';
@@ -30,9 +30,9 @@ export default createReactClass({
     }
   },
 
-  getStateFromStores(props) {
-    return {
-      userDataType: props.userDataType,
+  componentDidUpdate(prevProps) {
+    if (!prevProps.userDataType.equals(this.props.userDataType)) {
+      this.setState({ userDataType: this.props.userDataType });
     }
   },
 
