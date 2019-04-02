@@ -18,7 +18,7 @@ const scheduleOptions = [
   { label: 'Every 10 minutes', value: '*/10 * * * *' },
   { label: 'Twice per hour', value: '*/30 * * * *' },
   { label: 'Once per hour', value: '1 * * * *' },
-  { label: 'Once per 5 hours', value: '0 */5 * * *' },
+  { label: 'Once per 6 hours', value: '0 */6 * * *' },
   { label: 'Twice a day (5 am, 5 pm)', value: '0 5,17 * * *' },
   { label: 'Once a day (12 pm)', value: '0 12 * * *' }
 ];
