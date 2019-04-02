@@ -80,7 +80,7 @@ export default createReactClass({
             onChange={this.handleName}
             value={this.state.name}
           />
-          <HelpBlock>Leave blank to use default name</HelpBlock>
+          <HelpBlock>Leave blank to use the default name</HelpBlock>
         </FormGroup>
         <FormGroup>
           <ControlLabel>Schedule</ControlLabel>
