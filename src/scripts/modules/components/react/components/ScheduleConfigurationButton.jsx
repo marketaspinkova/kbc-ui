@@ -52,12 +52,13 @@ export default createReactClass({
 
     return (
       <Confirm
+        closeAfterResolve
         title={`Automate ${this.state.config.get('name')} config`}
+        onConfirm={this.handleSubmit}
+        isLoading={this.state.isLoading}
         text={this.renderBody()}
         buttonType="primary"
         buttonLabel="Automate"
-        onConfirm={this.handleSubmit}
-        isLoading={this.state.isLoading}
         childrenRootElement="a"
       >
         <i className="fa fa-clock-o fa-fw" /> Automate this config

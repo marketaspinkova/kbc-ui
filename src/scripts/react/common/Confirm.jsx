@@ -11,6 +11,7 @@ export default createReactClass({
     buttonLabel: PropTypes.string.isRequired,
     buttonType: PropTypes.string,
     isLoading: PropTypes.bool,
+    closeAfterResolve: PropTypes.bool,
     children: PropTypes.any,
     childrenRootElement: PropTypes.any
   },
@@ -50,6 +51,7 @@ export default createReactClass({
           title={this.props.title}
           text={this.props.text}
           isLoading={this.props.isLoading}
+          closeAfterResolve={this.props.closeAfterResolve}
           onConfirm={this.props.onConfirm}
           buttonLabel={this.props.buttonLabel}
           buttonType={this.props.buttonType}
