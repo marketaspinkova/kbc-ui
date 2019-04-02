@@ -27,7 +27,7 @@ export default createReactClass({
               value={this.props.value.changedSince}
               onChange={(newValue) => this.props.onChange({changedSince: newValue})}
               disabled={this.props.disabled || this.props.value.incremental === false}
-              allowAdaptive={true}
+              allowAdaptive
             />
           </Col>
         </FormGroup>
