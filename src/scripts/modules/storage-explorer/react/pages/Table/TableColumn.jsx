@@ -31,7 +31,6 @@ export default createReactClass({
     userColumnMetadata: PropTypes.object.isRequired,
     activeColumnId: PropTypes.string,
     openColumns: PropTypes.object,
-    expandAllColumns: PropTypes.bool
   },
 
   getInitialState() {
