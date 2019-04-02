@@ -12,12 +12,18 @@ const getDataTypeProvider = (metadata) => {
   const baseType = metadata.find((entry) => {
     return entry.get('key') === DataTypeKeys.BASE_TYPE;
   });
+  if (!baseType) {
+    return null;
+  }
   return baseType.get('provider');
 };
 
 const getMetadataDataTypes = (columnMetadata) => {
   return columnMetadata.map((metadata, colname) => {
     const provider = getDataTypeProvider(metadata);
+    if (!provider) {
+      return null;
+    }
     const baseType = metadata.find((entry) => {
       return entry.get('key') === DataTypeKeys.BASE_TYPE && entry.get('provider') === provider;
     });
