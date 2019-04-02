@@ -14,7 +14,7 @@ export default (configuration, orchestrationId) => {
         <span>
           Configuration {configuration.get('name')} has been{' '}
           <Link to="orchestration" params={{ orchestrationId }} onClick={this.props.onClick}>
-            scheduled
+            automated
           </Link>
           .
         </span>
