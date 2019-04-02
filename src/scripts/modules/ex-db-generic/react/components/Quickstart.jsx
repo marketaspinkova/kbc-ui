@@ -101,7 +101,7 @@ export default createReactClass({
           <Col md={8} mdOffset={2}>
             <HelpBlock>
               Select the tables you&apos;d like to import to autogenerate your configuration. <br />
-              You can edit them later at any time.
+              Selecting a schema will add all tables from the schema.
             </HelpBlock>
           </Col>
         </Row>
