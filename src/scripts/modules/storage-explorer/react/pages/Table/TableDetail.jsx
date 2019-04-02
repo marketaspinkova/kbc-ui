@@ -32,7 +32,7 @@ import LatestImports from './LatestImports';
 import TableGraph from './TableGraph';
 
 export default createReactClass({
-  mixins: [createStoreMixin(TablesStore, BucketsStore, ApplicationStore, FilesStore, ColumnsLocalStore)],
+  mixins: [createStoreMixin(TablesStore, BucketsStore, ApplicationStore, FilesStore, ColumnsLocalStore, MetadataStore)],
 
   getStateFromStores() {
     const bucketId = RoutesStore.getCurrentRouteParam('bucketId');
