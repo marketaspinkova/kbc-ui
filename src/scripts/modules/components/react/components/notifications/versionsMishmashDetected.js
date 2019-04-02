@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
 import ApplicationStore from '../../../../../stores/ApplicationStore';
 import ComponentsStore from '../../../stores/ComponentsStore';
@@ -9,7 +10,7 @@ export default (componentId, configId, latestVersion) => {
   const currentAdminId = ApplicationStore.getCurrentAdmin().get('id');
   const createdByCurrentAdmin = parseInt(creatorId, 10) === parseInt(currentAdminId, 10);
 
-  return React.createClass({
+  return createReactClass({
     propTypes: {
       onClick: PropTypes.func.isRequired
     },
