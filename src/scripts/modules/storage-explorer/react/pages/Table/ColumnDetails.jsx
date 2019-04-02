@@ -62,9 +62,7 @@ export default createReactClass({
       <div>
         <h3>Datatype</h3>
         <div className="form-horizontal">
-          {
-            this.renderSystemValue()
-          }
+          {this.renderSystemValue()}
           <FormGroup>
             <Col componentClass={ControlLabel} xs={4}>Type</Col>
             <Col xs={8}>
@@ -78,8 +76,7 @@ export default createReactClass({
           </FormGroup>
           {this.renderLengthEdit()}
           <FormGroup>
-            <Col componentClass={ControlLabel} xs={4}>&nbsp;</Col>
-            <Col xs={8}>
+            <Col xs={8} xsOffset={4}>
               <Checkbox
                 name={this.props.columnName + '_nullable'}
                 checked={this.state.userDataType.get(DataTypeKeys.NULLABLE)}
@@ -90,9 +87,8 @@ export default createReactClass({
             </Col>
           </FormGroup>
           <FormGroup>
-            <Col componentClass={ControlLabel} xs={4}>&nbsp;</Col>
-            <Col xs={8}>
-              <Button bsStyle="success" onClick={this.handleSaveDataType} disabled={this.state.isSaving}>
+            <Col xs={8} xsOffset={4}>
+              <Button bsStyle="success" onClick={this.handleSaveDataType} disabled={this.isDisabled()}>
                 {this.state.isSaving ? (
                   <span>
                     <Loader /> Saving...
@@ -189,6 +185,10 @@ export default createReactClass({
       return true;
     }
     return false;
+  },
+
+  isDisabled() {
+    return this.state.isSaving || this.props.userDataType.equals(this.state.userDataType);
   },
 
   handleSaveDataType() {
