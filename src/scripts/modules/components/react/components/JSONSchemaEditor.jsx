@@ -30,6 +30,7 @@ export default createReactClass({
     };
   },
 
+  editorRef: null,
   jsoneditor: null,
 
   componentWillReceiveProps(nextProps) {
@@ -65,7 +66,7 @@ export default createReactClass({
       prompt_before_delete: false
     };
 
-    this.jsoneditor = new JSONEditor(this.refs.jsoneditor, options);
+    this.jsoneditor = new JSONEditor(this.editorRef, options);
 
     // When the value of the editor changes, update the JSON output and validation message
     this.jsoneditor.on('change', () => {
@@ -108,7 +109,7 @@ export default createReactClass({
   render() {
     return (
       <form autoComplete="off">
-        <div ref="jsoneditor" />
+        <div ref={editor => this.editorRef = editor} />
       </form>
     );
   }
