@@ -1,21 +1,22 @@
 import { fromJS, Map, List } from 'immutable';
 import { SnowflakeDataTypesMapping } from '../../../Constants';
+import { DataTypeKeys } from "../../../../components/MetadataConstants";
 
 const getMetadataDataTypes = (columnMetadata) => {
   return columnMetadata.map((metadata, colname) => {
     const baseType = metadata.find((entry) => {
-      return entry.get('key') === 'KBC.datatype.basetype';
+      return entry.get('key') === DataTypeKeys.BASE_TYPE;
     });
     if (!baseType) {
       return null;
     }
 
     const dataTypeLength = metadata.find((entry) => {
-      return entry.get('key') === 'KBC.datatype.length';
+      return entry.get('key') === DataTypeKeys.LENGTH;
     }, null, Map());
 
     const dataTypeNullable = metadata.find((entry) => {
-      return entry.get('key') === 'KBC.datatype.nullable';
+      return entry.get('key') === DataTypeKeys.NULLABLE;
     }, null, Map());
 
     const matchedDataType = SnowflakeDataTypesMapping.find((mappedDatatype) => {
