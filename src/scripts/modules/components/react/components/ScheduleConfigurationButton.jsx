@@ -20,7 +20,7 @@ const scheduleOptions = [
   { label: 'Once per 5 hours', value: '0 */5 * * *' },
   { label: 'Twice a day', value: '0 5,17 * * *' },
   { label: 'Once per day', value: '0 12 * * *' },
-  { label: 'Own schedule plan', value: CUSTOM_SCHEDULE_PLAN }
+  { label: 'Custom schedule plan', value: CUSTOM_SCHEDULE_PLAN }
 ];
 
 export default createReactClass({
