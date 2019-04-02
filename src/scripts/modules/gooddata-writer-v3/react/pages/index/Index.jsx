@@ -33,6 +33,7 @@ import DimensionsSection from '../../components/DimensionsSection';
 import CredentialsContainer from '../../components/CredentialsContainer';
 import TablesLoadSettings from '../../components/TablesLoadSettings';
 import DeleteGoodDataWriterButton from '../../components/DeleteGoodDataWriterButton';
+import ScheduleConfigurationButton from '../../../../components/react/components/ScheduleConfigurationButton';
 
 const COMPONENT_ID = 'keboola.gooddata-writer';
 
@@ -127,6 +128,12 @@ export default createReactClass({
                 getConfigDataFn={() => Promise.resolve(this.state.configProvisioning.configData)}
                 deleteConfigFn={() => InstalledComponentsActionCreators.deleteConfiguration(COMPONENT_ID, this.state.configurationId, true)}
                 isDeletingConfig={this.state.isDeletingConfig}
+              />
+            </li>
+            <li>
+              <ScheduleConfigurationButton
+                componentId={COMPONENT_ID}
+                configId={this.state.configurationId}
               />
             </li>
           </ul>

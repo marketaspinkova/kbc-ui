@@ -8,6 +8,7 @@ import RoutesStore from '../../../../../stores/RoutesStore';
 import ComponentDescription from '../../../../components/react/components/ComponentDescription';
 import ComponentMetadata from '../../../../components/react/components/ComponentMetadata';
 import DeleteConfigurationButton from '../../../../components/react/components/DeleteConfigurationButton';
+import ScheduleConfigurationButton from '../../../../components/react/components/ScheduleConfigurationButton';
 import SidebarJobsContainer from '../../../../components/react/components/SidebarJobsContainer';
 import RunExtractionButton from '../../../../components/react/components/RunComponentButton';
 import { SearchBar } from '@keboola/indigo-ui';
@@ -150,6 +151,9 @@ export default function(componentId) {
             </li>
             <li>
               <DeleteConfigurationButton componentId={componentId} configId={configurationId} />
+            </li>
+            <li>
+              <ScheduleConfigurationButton componentId={componentId} configId={configurationId} />
             </li>
           </ul>
           <SidebarJobsContainer

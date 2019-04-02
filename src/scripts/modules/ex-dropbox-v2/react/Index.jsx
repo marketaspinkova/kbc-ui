@@ -9,6 +9,7 @@ import string from '../../../utils/string';
 import classnames from 'classnames';
 import ComponentDescription from '../../components/react/components/ComponentDescription';
 import DeleteConfigurationButton from '../../components/react/components/DeleteConfigurationButton';
+import ScheduleConfigurationButton from '../../components/react/components/ScheduleConfigurationButton';
 import LatestVersions from '../../components/react/components/SidebarVersionsWrapper';
 import getDefaultBucket from '../../../utils/getDefaultBucket';
 import SapiTableLinkEx from '../../components/react/components/StorageApiTableLinkEx';
@@ -232,6 +233,12 @@ export default createReactClass({
               componentId={componentId}
               configId={this.state.configId}
               customDeleteFn={() => {}}
+            />
+          </li>
+          <li>
+            <ScheduleConfigurationButton
+              componentId={componentId}
+              configId={this.state.configId}
             />
           </li>
         </ul>

@@ -20,6 +20,7 @@ import ComponentDescription from '../../../components/react/components/Component
 import ComponentMetadata from '../../../components/react/components/ComponentMetadata';
 import RunComponentButton from '../../../components/react/components/RunComponentButton';
 import DeleteConfigurationButton from '../../../components/react/components/DeleteConfigurationButton';
+import ScheduleConfigurationButton from '../../../components/react/components/ScheduleConfigurationButton';
 import QueriesTable from './QueriesTable';
 import EmptyState from '../../../components/react/components/ComponentEmptyState';
 import {ExternalLink} from '@keboola/indigo-ui';
@@ -134,6 +135,12 @@ export default function(COMPONENT_ID) {
               </li>
               <li>
                 <DeleteConfigurationButton
+                  componentId={COMPONENT_ID}
+                  configId={this.state.configId}
+                />
+              </li>
+              <li>
+                <ScheduleConfigurationButton
                   componentId={COMPONENT_ID}
                   configId={this.state.configId}
                 />

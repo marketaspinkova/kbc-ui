@@ -36,6 +36,7 @@ import ComponentDescription from '../../components/react/components/ComponentDes
 import ComponentMetadata from '../../components/react/components/ComponentMetadata';
 import RunComponentButton from '../../components/react/components/RunComponentButton';
 import DeleteConfigurationButton from '../../components/react/components/DeleteConfigurationButton';
+import ScheduleConfigurationButton from '../../components/react/components/ScheduleConfigurationButton';
 import SidebarJobsContainer from '../../components/react/components/SidebarJobsContainer';
 import LatestVersions from '../../components/react/components/SidebarVersionsWrapper';
 
@@ -140,6 +141,12 @@ export default createReactClass({
             </li>
             <li>
               <DeleteConfigurationButton
+                componentId={componentId}
+                configId={this.state.configId}
+              />
+            </li>
+            <li>
+              <ScheduleConfigurationButton
                 componentId={componentId}
                 configId={this.state.configId}
               />
