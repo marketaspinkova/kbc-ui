@@ -19,10 +19,11 @@ const AWS = window.AWS;
 export default {
   tokenVerify: function() {
     return storageApi.verifyToken().then((sapiToken) => {
-      return dispatcher.handleViewAction({
+      dispatcher.handleViewAction({
         type: applicationConstants.ActionTypes.SAPI_TOKEN_RECEIVED,
         sapiToken
       });
+      return null;
     });
   },
 
@@ -31,7 +32,7 @@ export default {
       type: constants.ActionTypes.STORAGE_BUCKETS_LOAD
     });
     return storageApi.getBuckets().then(function(buckets) {
-      return dispatcher.handleViewAction({
+      dispatcher.handleViewAction({
         type: constants.ActionTypes.STORAGE_BUCKETS_LOAD_SUCCESS,
         buckets: buckets
       });
@@ -52,7 +53,7 @@ export default {
       bucketId: bucketId
     });
     return storageApi.getBucketCredentials(bucketId).then(function(credentials) {
-      return dispatcher.handleViewAction({
+      dispatcher.handleViewAction({
         type: constants.ActionTypes.STORAGE_BUCKET_CREDENTIALS_LOAD_SUCCESS,
         credentials: credentials,
         bucketId: bucketId
@@ -89,7 +90,7 @@ export default {
       credentialsId: credentialsId
     });
     return storageApi.deleteBucketCredentials(credentialsId).then(function() {
-      return dispatcher.handleViewAction({
+      dispatcher.handleViewAction({
         type: constants.ActionTypes.STORAGE_BUCKET_CREDENTIALS_DELETE_SUCCESS,
         bucketId: bucketId,
         credentialsId: credentialsId
@@ -116,7 +117,7 @@ export default {
       type: constants.ActionTypes.STORAGE_TABLES_LOAD
     });
     return storageApi.getTables().then(function(tables) {
-      return dispatcher.handleViewAction({
+      dispatcher.handleViewAction({
         type: constants.ActionTypes.STORAGE_TABLES_LOAD_SUCCESS,
         tables: tables
       });
@@ -147,7 +148,7 @@ export default {
       type: constants.ActionTypes.STORAGE_FILES_LOAD
     });
     return storageApi.getFiles(params).then(function(files) {
-      return dispatcher.handleViewAction({
+      dispatcher.handleViewAction({
         type: constants.ActionTypes.STORAGE_FILES_LOAD_SUCCESS,
         files: files
       });
@@ -1010,7 +1011,7 @@ export default {
       type: constants.ActionTypes.STORAGE_JOBS_LOAD
     });
     return storageApi.getJobs(params).then(function(jobs) {
-      return dispatcher.handleViewAction({
+      dispatcher.handleViewAction({
         type: constants.ActionTypes.STORAGE_JOBS_LOAD_SUCCESS,
         jobs: jobs
       });

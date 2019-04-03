@@ -23,7 +23,7 @@ export default {
       tokenId: tokenId
     });
     return storageApi.deleteToken(tokenId).then(() => {
-      return dispatcher.handleViewAction({
+      dispatcher.handleViewAction({
         type: ActionTypes.STORAGE_TOKEN_DELETE_SUCCESS,
         tokenId: tokenId
       });
@@ -88,7 +88,7 @@ export default {
       type: ActionTypes.STORAGE_TOKENS_LOAD
     });
     return storageApi.getTokens().then((tokens) => {
-      return dispatcher.handleViewAction({
+      dispatcher.handleViewAction({
         type: ActionTypes.STORAGE_TOKENS_LOAD_SUCCESS,
         tokens: tokens
       });

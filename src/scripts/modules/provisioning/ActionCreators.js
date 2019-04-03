@@ -30,7 +30,7 @@ export default {
       });
     }).catch(HttpError, function(error) {
       if (error.response.status === 404) {
-        return dispatcher.handleViewAction({
+        dispatcher.handleViewAction({
           type: constants.ActionTypes.CREDENTIALS_REDSHIFT_SANDBOX_LOAD_SUCCESS,
           credentials: {
             id: null
@@ -131,7 +131,7 @@ export default {
       });
     }).catch(HttpError, function(error) {
       if (error.response.status === 404) {
-        return dispatcher.handleViewAction({
+        dispatcher.handleViewAction({
           type: constants.ActionTypes.CREDENTIALS_WRDB_LOAD_SUCCESS,
           credentials: null,
           permission: permissionType,
@@ -228,7 +228,7 @@ export default {
       });
     }).catch(HttpError, function(error) {
       if (error.response.status === 404) {
-        return dispatcher.handleViewAction({
+        dispatcher.handleViewAction({
           type: constants.ActionTypes.CREDENTIALS_SNOWFLAKE_SANDBOX_LOAD_SUCCESS,
           credentials: {
             id: null
@@ -314,7 +314,7 @@ export default {
       });
     }).catch(HttpError, function(error) {
       if (error.response.status === 404) {
-        return dispatcher.handleViewAction({
+        dispatcher.handleViewAction({
           type: constants.ActionTypes.CREDENTIALS_RSTUDIO_SANDBOX_LOAD_SUCCESS,
           credentials: {
             id: null
@@ -409,7 +409,7 @@ export default {
       });
     }).catch(HttpError, function(error) {
       if (error.response.status === 404) {
-        return dispatcher.handleViewAction({
+        dispatcher.handleViewAction({
           type: constants.ActionTypes.CREDENTIALS_JUPYTER_SANDBOX_LOAD_SUCCESS,
           credentials: {
             id: null

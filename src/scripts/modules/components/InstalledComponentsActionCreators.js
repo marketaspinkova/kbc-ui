@@ -57,7 +57,7 @@ export default {
       type: constants.ActionTypes.INSTALLED_COMPONENTS_LOAD
     });
     return installedComponentsApi.getComponents().then(function(components) {
-      return dispatcher.handleViewAction({
+      dispatcher.handleViewAction({
         type: constants.ActionTypes.INSTALLED_COMPONENTS_LOAD_SUCCESS,
         components: components
       });
@@ -75,7 +75,7 @@ export default {
       type: constants.ActionTypes.DELETED_COMPONENTS_LOAD
     });
     return installedComponentsApi.getDeletedComponents().then(function(components) {
-      return dispatcher.handleViewAction({
+      dispatcher.handleViewAction({
         type: constants.ActionTypes.DELETED_COMPONENTS_LOAD_SUCCESS,
         components: components
       });
@@ -160,12 +160,13 @@ export default {
     }
     return storeEncodedConfig(componentId, configId, dataToSave, 'Update configuration').then(function(response) {
       VersionActionCreators.loadVersionsForce(componentId, configId);
-      return dispatcher.handleViewAction({
+      dispatcher.handleViewAction({
         type: constants.ActionTypes.INSTALLED_COMPONENTS_RAWCONFIGDATA_SAVE_SUCCESS,
         componentId: componentId,
         configId: configId,
         configData: response.configuration
       });
+      return null;
     }).catch(function(error) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.INSTALLED_COMPONENTS_RAWCONFIGDATA_SAVE_ERROR,
@@ -193,12 +194,13 @@ export default {
     }
     return storeEncodedConfig(componentId, configId, dataToSave, 'Update parameters').then(function(response) {
       VersionActionCreators.loadVersionsForce(componentId, configId);
-      return dispatcher.handleViewAction({
+      dispatcher.handleViewAction({
         type: constants.ActionTypes.INSTALLED_COMPONENTS_RAWCONFIGDATAPARAMETERS_SAVE_SUCCESS,
         componentId: componentId,
         configId: configId,
         configData: response.configuration
       });
+      return null;
     }).catch(function(error) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.INSTALLED_COMPONENTS_RAWCONFIGDATAPARAMETERS_SAVE_ERROR,
@@ -222,12 +224,13 @@ export default {
     }
     return storeEncodedConfig(componentId, configId, dataToSave, changeDescription).then(function(response) {
       VersionActionCreators.loadVersionsForce(componentId, configId);
-      return dispatcher.handleViewAction({
+      dispatcher.handleViewAction({
         type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGDATA_SAVE_SUCCESS,
         componentId: componentId,
         configId: configId,
         configData: response.configuration
       });
+      return null;
     }).catch(function(error) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGDATA_SAVE_ERROR,
@@ -238,7 +241,7 @@ export default {
     });
   },
   updateLocalState: function(componentId, configId, data, path) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.INSTALLED_COMPONENTS_LOCAL_STATE_UPDATE,
       componentId: componentId,
       configId: configId,
@@ -247,7 +250,7 @@ export default {
     });
   },
   updateEditComponentConfigData: function(componentId, configId, newData) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGDATA_EDIT_UPDATE,
       componentId: componentId,
       configId: configId,
@@ -255,14 +258,14 @@ export default {
     });
   },
   cancelEditComponentConfigData: function(componentId, configId) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGDATA_EDIT_CANCEL,
       componentId: componentId,
       configId: configId
     });
   },
   updateEditComponentRawConfigData: function(componentId, configId, newData) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.INSTALLED_COMPONENTS_RAWCONFIGDATA_EDIT_UPDATE,
       componentId: componentId,
       configId: configId,
@@ -270,14 +273,14 @@ export default {
     });
   },
   cancelEditComponentRawConfigData: function(componentId, configId) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.INSTALLED_COMPONENTS_RAWCONFIGDATA_EDIT_CANCEL,
       componentId: componentId,
       configId: configId
     });
   },
   updateEditComponentRawConfigDataParameters: function(componentId, configId, newData) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.INSTALLED_COMPONENTS_RAWCONFIGDATAPARAMETERS_EDIT_UPDATE,
       componentId: componentId,
       configId: configId,
@@ -285,7 +288,7 @@ export default {
     });
   },
   cancelEditComponentRawConfigDataParameters: function(componentId, configId) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.INSTALLED_COMPONENTS_RAWCONFIGDATAPARAMETERS_EDIT_CANCEL,
       componentId: componentId,
       configId: configId
@@ -304,13 +307,13 @@ export default {
     return this.loadDeletedComponentsForce();
   },
   receiveAllComponents: function(componentsRaw) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.INSTALLED_COMPONENTS_LOAD_SUCCESS,
       components: componentsRaw
     });
   },
   startConfigurationEdit: function(componentId, configurationId, field) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_EDIT_START,
       componentId: componentId,
       configurationId: configurationId,
@@ -318,7 +321,7 @@ export default {
     });
   },
   updateEditingConfiguration: function(componentId, configurationId, field, newValue) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_EDIT_UPDATE,
       configurationId: configurationId,
       componentId: componentId,
@@ -327,7 +330,7 @@ export default {
     });
   },
   cancelConfigurationEdit: function(componentId, configurationId, field) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_EDIT_CANCEL,
       componentId: componentId,
       configurationId: configurationId,
@@ -355,13 +358,14 @@ export default {
     }
     return calledFunction(componentId, configurationId, data).then(function(response) {
       VersionActionCreators.loadVersionsForce(componentId, configurationId);
-      return dispatcher.handleViewAction({
+      dispatcher.handleViewAction({
         type: constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_SUCCESS,
         componentId: componentId,
         configurationId: configurationId,
         field: field,
         data: response
       });
+      return null;
     }).catch(function(e) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_ERROR,
@@ -418,7 +422,7 @@ export default {
     });
   },
   deletedConfigurationsFilterChange: function(query, filterType) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.DELETED_COMPONENTS_FILTER_CHANGE,
       filter: query,
       filterType: filterType
@@ -564,7 +568,7 @@ export default {
     });
   },
   toggleMapping: function(componentId, configId, index) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_TOGGLE_MAPPING,
       componentId: componentId,
       configId: configId,
@@ -572,7 +576,7 @@ export default {
     });
   },
   startEditingMapping: function(componentId, configId, type, storage, index) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_MAPPING_EDITING_START,
       componentId: componentId,
       configId: configId,
@@ -582,7 +586,7 @@ export default {
     });
   },
   cancelEditingMapping: function(componentId, configId, type, storage, index) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_MAPPING_EDITING_CANCEL,
       componentId: componentId,
       configId: configId,
@@ -592,7 +596,7 @@ export default {
     });
   },
   changeEditingMapping: function(componentId, configId, type, storage, index, value) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_MAPPING_EDITING_CHANGE,
       componentId: componentId,
       configId: configId,
@@ -627,7 +631,7 @@ export default {
     data = dataToSave.setIn(pathDestination, mappingData.getIn(pathSource)).toJSON();
     return storeEncodedConfig(componentId, configId, data, changeDescription).then(function(response) {
       VersionActionCreators.loadVersionsForce(componentId, configId);
-      return dispatcher.handleViewAction({
+      dispatcher.handleViewAction({
         type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_MAPPING_SAVE_SUCCESS,
         componentId: componentId,
         configId: configId,
@@ -636,6 +640,7 @@ export default {
         index: index,
         data: response
       });
+      return null;
     }).catch(function(e) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_MAPPING_SAVE_ERROR,
@@ -661,7 +666,7 @@ export default {
     data = dataToSave.deleteIn(path).toJSON();
     return storeEncodedConfig(componentId, configId, data, changeDescription).then(function(response) {
       VersionActionCreators.loadVersionsForce(componentId, configId);
-      return dispatcher.handleViewAction({
+      dispatcher.handleViewAction({
         type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_MAPPING_DELETE_SUCCESS,
         componentId: componentId,
         configId: configId,
@@ -670,6 +675,7 @@ export default {
         index: index,
         data: response
       });
+      return null;
     }).catch(function(e) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_MAPPING_DELETE_ERROR,
@@ -681,14 +687,14 @@ export default {
     });
   },
   cancelEditTemplatedComponentConfigData: function(componentId, configId) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.INSTALLED_COMPONENTS_TEMPLATED_CONFIGURATION_EDIT_CANCEL,
       componentId: componentId,
       configId: configId
     });
   },
   updateEditTemplatedComponentConfigDataTemplate: function(componentId, configId, template) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.INSTALLED_COMPONENTS_TEMPLATED_CONFIGURATION_EDIT_UPDATE_TEMPLATE,
       componentId: componentId,
       configId: configId,
@@ -696,7 +702,7 @@ export default {
     });
   },
   updateEditTemplatedComponentConfigDataString: function(componentId, configId, value) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.INSTALLED_COMPONENTS_TEMPLATED_CONFIGURATION_EDIT_UPDATE_STRING,
       componentId: componentId,
       configId: configId,
@@ -704,7 +710,7 @@ export default {
     });
   },
   updateEditTemplatedComponentConfigDataParams: function(componentId, configId, value) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.INSTALLED_COMPONENTS_TEMPLATED_CONFIGURATION_EDIT_UPDATE_PARAMS,
       componentId: componentId,
       configId: configId,
@@ -724,12 +730,13 @@ export default {
     }
     return storeEncodedConfig(componentId, configId, dataToSave, 'Update parameters').then(function(response) {
       VersionActionCreators.loadVersionsForce(componentId, configId);
-      return dispatcher.handleViewAction({
+      dispatcher.handleViewAction({
         type: constants.ActionTypes.INSTALLED_COMPONENTS_TEMPLATED_CONFIGURATION_EDIT_SAVE_SUCCESS,
         componentId: componentId,
         configId: configId,
         configData: response.configuration
       });
+      return null;
     }).catch(function(error) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.INSTALLED_COMPONENTS_TEMPLATED_CONFIGURATION_EDIT_SAVE_ERROR,
@@ -740,7 +747,7 @@ export default {
     });
   },
   toggleEditTemplatedComponentConfigDataString: function(componentId, configId, isStringEditingMode) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.INSTALLED_COMPONENTS_TEMPLATED_CONFIGURATION_EDIT_STRING_TOGGLE,
       componentId: componentId,
       configId: configId,
@@ -748,21 +755,21 @@ export default {
     });
   },
   setInstalledComponentsConfigurationFilter: function(componentType, query) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.INSTALLED_COMPONENTS_SEARCH_CONFIGURATION_FILTER_CHANGE,
       componentType: componentType,
       filter: query
     });
   },
   setInstalledComponentsComponentDetailFilter: function(componentId, query) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.INSTALLED_COMPONENTS_SEARCH_COMPONENT_DETAIL_FILTER_CHANGE,
       componentId: componentId,
       filter: query
     });
   },
   startConfigurationRowEdit: function(componentId, configurationId, rowId, field, fallbackValue) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_ROW_EDIT_START,
       componentId: componentId,
       configurationId: configurationId,
@@ -772,7 +779,7 @@ export default {
     });
   },
   updateEditingConfigurationRow: function(componentId, configurationId, rowId, field, newValue) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_ROW_EDIT_UPDATE,
       configurationId: configurationId,
       componentId: componentId,
@@ -782,7 +789,7 @@ export default {
     });
   },
   cancelConfigurationRowEdit: function(componentId, configurationId, rowId, field) {
-    return dispatcher.handleViewAction({
+    dispatcher.handleViewAction({
       type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_ROW_EDIT_CANCEL,
       componentId: componentId,
       configurationId: configurationId,
@@ -813,7 +820,7 @@ export default {
     }
     return calledFunction(componentId, configurationId, rowId, data, changeDescription).then(function(response) {
       VersionActionCreators.loadVersionsForce(componentId, configurationId);
-      return dispatcher.handleViewAction({
+      dispatcher.handleViewAction({
         type: constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_ROW_SUCCESS,
         componentId: componentId,
         configurationId: configurationId,
@@ -821,6 +828,7 @@ export default {
         field: field,
         data: response
       });
+      return null;
     }).catch(function(e) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_ROW_ERROR,
@@ -843,12 +851,13 @@ export default {
     return installedComponentsApi.createConfigurationRow(componentId, configurationId, data, changeDescription)
       .then(function(response) {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
-        return dispatcher.handleViewAction({
+        dispatcher.handleViewAction({
           type: constants.ActionTypes.INSTALLED_COMPONENTS_CREATE_CONFIGURATION_ROW_SUCCESS,
           componentId: componentId,
           configurationId: configurationId,
           data: response
         });
+        return null;
       }).catch(function(e) {
         dispatcher.handleViewAction({
           type: constants.ActionTypes.INSTALLED_COMPONENTS_CREATE_CONFIGURATION_ROW_ERROR,
@@ -875,6 +884,7 @@ export default {
           configurationId: configurationId,
           rowId: rowId
         });
+        return null;
       }).catch(function(e) {
         dispatcher.handleViewAction({
           type: constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ROW_ERROR,
@@ -897,13 +907,14 @@ export default {
     return installedComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, data, changeDescription)
       .then(function(response) {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
-        return dispatcher.handleViewAction({
+        dispatcher.handleViewAction({
           type: constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_ROW_SUCCESS,
           componentId: componentId,
           configurationId: configurationId,
           rowId: rowId,
           data: response
         });
+        return null;
       }).catch(function(e) {
         dispatcher.handleViewAction({
           type: constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_ROW_ERROR,

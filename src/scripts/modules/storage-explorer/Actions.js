@@ -275,21 +275,21 @@ const filterFiles = query => {
 };
 
 const updateSearchQuery = query => {
-  return dispatcher.handleViewAction({
+  dispatcher.handleViewAction({
     type: localConstants.ActionTypes.UPDATE_SEARCH_QUERY,
     query
   });
 };
 
 const updateFilesSearchQuery = query => {
-  return dispatcher.handleViewAction({
+  dispatcher.handleViewAction({
     type: localConstants.ActionTypes.UPDATE_FILES_SEARCH_QUERY,
     query
   });
 };
 
 const setOpenedBuckets = buckets => {
-  return dispatcher.handleViewAction({
+  dispatcher.handleViewAction({
     type: localConstants.ActionTypes.SET_OPENED_BUCKETS,
     buckets
   });

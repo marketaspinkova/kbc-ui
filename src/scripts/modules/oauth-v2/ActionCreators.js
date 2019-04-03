@@ -26,7 +26,7 @@ export default {
         return result;
       })
       .catch(() => {
-        return dispatcher.handleViewAction({
+        dispatcher.handleViewAction({
           type: Constants.ActionTypes.OAUTHV2_LOAD_CREDENTIALS_ERROR,
           componentId,
           id
@@ -52,7 +52,7 @@ export default {
         })
       )
       .catch(() => {
-        return dispatcher.handleViewAction({
+        dispatcher.handleViewAction({
           type: Constants.ActionTypes.OAUTHV2_API_ERROR,
           componentId,
           id
@@ -78,7 +78,7 @@ export default {
         })
       )
       .catch(() => {
-        return dispatcher.handleViewAction({
+        dispatcher.handleViewAction({
           type: Constants.ActionTypes.OAUTHV2_API_ERROR,
           componentId,
           id

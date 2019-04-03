@@ -9,7 +9,7 @@ class KbcDispatcher extends Dispatcher {
       console.log('dispatch', action.type); // eslint-disable-line
     }
 
-    return this.dispatch({
+    this.dispatch({
       source: PayloadSources.VIEW_ACTION,
       action
     });
