@@ -12,7 +12,7 @@
     "classnames": "^2.2.6",
     "codemirror": "^5.44.0",
     "create-react-class": "^15.6.3",
-    "crypto-js": "^3.1.5",
+    "crypto-js": "^3.1.9-1",
     "d3": "~3.5.6",
     "dagre-d3": "git+https://git@github.com/keboola/dagre-d3.git#6b444d10ddb5276789b4b2bc1eafcd22a767968a",
     "deep-equal": "^1.0.1",
