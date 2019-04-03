@@ -3239,9 +3239,9 @@ diffie-hellman@^5.0.0:
     miller-rabin "^4.0.0"
     randombytes "^2.0.0"
 
-"dimple@https://github.com/taguchimail/dimple.git":
+"dimple@https://github.com/keboola/dimple.git":
   version "2.3.1-pre"
-  resolved "https://github.com/taguchimail/dimple.git#dc1249dec3856b54b511decb51f3dbee1b039907"
+  resolved "https://github.com/keboola/dimple.git#dc1249dec3856b54b511decb51f3dbee1b039907"
 
 discontinuous-range@1.0.0:
   version "1.0.0"
