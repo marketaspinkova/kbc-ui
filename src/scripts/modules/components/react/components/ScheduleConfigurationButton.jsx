@@ -76,7 +76,7 @@ export default createReactClass({
           <ControlLabel>Orchestration name</ControlLabel>
           <FormControl
             type="text"
-            placeholder={`Automated ${this.state.config.get('name')}`}
+            placeholder={`Scheduled ${this.state.config.get('name')}`}
             onChange={this.handleName}
             value={this.state.name}
           />
@@ -121,7 +121,7 @@ export default createReactClass({
     this.setState({ isLoading: true });
     return OrchestrationActionCreators.createOrchestration(
       {
-        name: this.state.name || `Automated ${this.state.config.get('name')}`,
+        name: this.state.name || `Scheduled ${this.state.config.get('name')}`,
         crontabRecord:
           this.state.predefinedCrontabRecord === CUSTOM_SCHEDULE_PLAN
             ? this.state.customCrontabRecord
