@@ -13,7 +13,8 @@ export default createReactClass({
     helpBlock: PropTypes.string,
     label: PropTypes.string,
     groupClassName: PropTypes.string,
-    allowAdaptive: PropTypes.bool
+    allowAdaptive: PropTypes.bool,
+    tableId: PropTypes.string
   },
 
   getDefaultProps() {
@@ -38,6 +39,7 @@ export default createReactClass({
             onChange={this.handleChangeChangedSince}
             helpBlock={this.props.helpBlock}
             allowAdaptive={this.props.allowAdaptive}
+            tableId={this.props.tableId}
           />
         </div>
       </div>

@@ -88,6 +88,7 @@ export default createReactClass({
             disabled={this.props.disabled}
             onChange={this.props.onChange}
             allowAdaptive={(this.props.componentType === 'writer' ? true : false)}
+            tableId={this.props.value.get('source', '')}
           />
           <DataFilterRow
             value={this.props.value}

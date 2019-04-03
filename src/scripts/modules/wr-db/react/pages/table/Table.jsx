@@ -24,6 +24,7 @@ import FiltersDescription from '../../../../components/react/components/generic/
 import IsDockerBasedFn from '../../../templates/dockerProxyApi';
 import IncrementalSetupModal from './IncrementalSetupModal';
 import {Alert} from 'react-bootstrap';
+import AdaptiveInputMappingLastLoaded from '../../../../../react/common/AdaptiveInputMappingLastLoaded';
 
 const defaultDataTypes = [
   'INT',
@@ -496,6 +497,9 @@ export default componentId => {
               <FiltersDescription value={tableMapping} rootClassName="" />
               <span className="kbc-icon-pencil" />
             </button>
+            <AdaptiveInputMappingLastLoaded
+              tableId={this.state.tableId}
+            />
           </div>
         </div>
       );

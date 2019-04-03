@@ -6,6 +6,7 @@ import changedSinceOptionCreator from './changedSinceOptionCreator';
 import changedSinceConstants from './changedSinceConstants';
 import ApplicationStore from '../../stores/ApplicationStore';
 import { FEATURE_ADAPTIVE_INPUT_MAPPING } from '../../constants/KbcConstants';
+import AdaptiveInputMappingLastLoaded from './AdaptiveInputMappingLastLoaded';
 
 const selectOptions = [
   { label: '10 minutes', value: '-10 minutes' },
@@ -32,12 +33,15 @@ export default createReactClass({
     value: PropTypes.string,
     disabled: PropTypes.bool.isRequired,
     helpBlock: PropTypes.string,
-    allowAdaptive: PropTypes.bool
+    allowAdaptive: PropTypes.bool,
+    configurationState: PropTypes.object,
+    tableId: PropTypes.string
   },
 
   getDefaultProps() {
     return {
-      allowAdaptive: false
+      allowAdaptive: false,
+      tableId: ''
     }
   },
 
@@ -107,6 +111,12 @@ export default createReactClass({
           trimFilter={true}
           promptTextCreator={this.promptTextCreator}
         />
+
+        <AdaptiveInputMappingLastLoaded
+          tableId={this.props.tableId}
+        />
+
+
         <span className="help-block">
           Type in any range, e.g. <code>13 hours</code>.
           Supported time dimensions are <code>minutes</code>, <code>hours</code> and <code>days</code>.
