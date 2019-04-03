@@ -19,7 +19,7 @@
     "dagre-d3": " ^0.6.3",
     "deep-equal": "^1.0.1",
     "diff": "^4.0.1",
-    "dimple": "https://github.com/PMSI-AlignAlytics/dimple.git",
+    "dimple": "https://github.com/keboola/dimple.git",
     "filesize": "^3.6.1",
     "flux": "^2.0.0",
     "fuzzaldrin": "^2.1.0",
