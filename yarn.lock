@@ -3239,9 +3239,9 @@ diffie-hellman@^5.0.0:
     miller-rabin "^4.0.0"
     randombytes "^2.0.0"
 
-"dimple@https://github.com/PMSI-AlignAlytics/dimple.git":
-  version "2.3.0"
-  resolved "https://github.com/PMSI-AlignAlytics/dimple.git#65f69857f5e64f3a49f0898fa00799a530607a41"
+"dimple@https://github.com/taguchimail/dimple.git":
+  version "2.3.1-pre"
+  resolved "https://github.com/taguchimail/dimple.git#dc1249dec3856b54b511decb51f3dbee1b039907"
 
 discontinuous-range@1.0.0:
   version "1.0.0"
