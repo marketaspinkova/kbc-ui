@@ -1,38 +1,29 @@
-import d3 from 'd3';
+import { event, select, selectAll } from 'd3-selection';
+import { drag } from 'd3-drag';
 import dagreD3 from 'dagre-d3';
 import _ from 'underscore';
+
+function parseTransform(transform) {
+  const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  g.setAttributeNS(null, 'transform', transform);
+  const matrix = g.transform.baseVal.consolidate().matrix;
+  return { x: matrix.e, y: matrix.f };
+}
 
 class Graph {
   constructor(data, wrapperElement) {
     this.getData = this.getData.bind(this);
     this.createSvg = this.createSvg.bind(this);
+    this.adjustPositions = this.adjustPositions.bind(this);
     this.data = data;
-    this.zoom =
-      {scale: 1};
 
-    this.position = {
-      x: 0,
-      y: 0
-    };
-
+    this.height = 300;
+    this.zoom = { scale: 1, max: 1.75, min: 0.5, step: 0.25 };
+    this.defaultZoom = { ...this.zoom };
+    this.position = { x: 0, y: 0 };
+    this.defaultPosition = { ...this.position };
     this.spacing = 2;
-
     this.styles = {};
-
-    this.dimensions = {
-      height: 0,
-      width: 0
-    };
-
-    this.position = {
-      x: 0,
-      y: 0
-    };
-
-    this.defaultPosition = {
-      x: 0,
-      y: 0
-    };
 
     this.svgTemplate = '<svg width="0" height="0" id="svgGraph" class="kb-graph"></svg>';
 
@@ -40,177 +31,137 @@ class Graph {
     this.element = wrapperElement.childNodes[0];
   }
 
-  getData(config) {
-    const localConfig = {noLinks: false, ...config};
-    const data = new dagreD3.Digraph();
-    for (var i in this.data.nodes) {
-      if (localConfig.noLinks) {
-        data.addNode(this.data.nodes[i].node,
-          {label: this.data.nodes[i].label});
-      } else {
-        data.addNode(this.data.nodes[i].node,
-          {label: `<a href="${this.data.nodes[i].link}">${this.data.nodes[i].label}</a>`});
-      }
-    }
+  getData() {
+    const data = new dagreD3.graphlib.Graph().setGraph({
+      rankdir: 'LR',
+      nodesep: 10 * this.spacing,
+      edgesep: 10 * this.spacing,
+      ranksep: 20 * this.spacing
+    });
+
+    this.data.nodes.forEach((node) => {
+      data.setNode(node.node, {
+        class: node.type,
+        labelType: 'html',
+        label: `<a href="${node.link}">${node.label}</a>`,
+        padding: 2,
+        rx: 5,
+        ry: 5
+      });
+    });
 
     this.data.transitions.forEach((transition) => {
-      data.addEdge(null, transition.source, transition.target,
-        {type: transition.type});
+      data.setEdge(transition.source, transition.target, {
+        class: transition.type,
+        type: transition.type,
+        label: transition.label || ''
+      });
     });
+
     return data;
   }
 
-  createSvg(svg, data, config, centerNodeId) {
+  createSvg(svg, data, centerNodeId) {
     svg.selectAll('*').remove();
-    const localConfig = {noLinks: false, ...config};
-    const renderer = new dagreD3.Renderer();
-    const graph = this;
-    let gEdges = {};
+    new dagreD3.render()(svg.append('g'), data);
 
-    const oldDrawEdgePaths = renderer.drawEdgePaths();
-    renderer.drawEdgePaths(function(g, u) {
-      g.graph().arrowheadFix = false;
-      const edgePaths = oldDrawEdgePaths(g, u);
-      gEdges = g._edges;
-      return edgePaths;
-    });
-
-    if (localConfig.noLinks) {
-      const oldDrawNodes = renderer.drawNodes();
-      renderer.drawNodes(function(g, u) {
-        const nodes = oldDrawNodes(g, u);
-        // adjust boxes
-        nodes[0].forEach( function(node) {
-          const rect = d3.select(node).select('rect');
-          rect
-            .attr('width', rect.attr('width') - 12)
-            .attr('height', rect.attr('height') - 18)
-            .attr('x', -(rect.attr('width') / 2) + 1)
-            .attr('y', -(rect.attr('height') / 2));
-          const textWrapper = d3.select(node).select('g');
-          textWrapper
-            .attr('transform', `translate(-${(rect.attr('width') / 2) - 4}, -${(rect.attr('height') / 2) - 2})`);
-          const text = d3.select(node).select('text');
-          return text.attr('text-anchor', null);
-        });
-        return nodes;
-      });
-    }
-
-    const layoutConfig = dagreD3.layout().rankDir('LR').nodeSep(10 * this.spacing).edgeSep(10 * this.spacing).rankSep(20 * this.spacing);
-    const layout = renderer.zoom(false).layout(layoutConfig).run(data, svg.append('g'));
-
-    // assign edge classes according to node types
-    const transitionClassMap = [];
-    _.each(_.uniq(_.pluck(graph.data.transitions, 'type')), transitionType => {
-      transitionClassMap[transitionType] = id => gEdges[id].value.type === transitionType;
-    });
-    d3.selectAll('g.edgePath').classed(transitionClassMap);
-
-    // assign node classes according to node types
-    const nodeClassMap = [];
-    _.each(_.uniq(_.pluck(graph.data.nodes, 'type')), nodeType => {
-      nodeClassMap[nodeType] = function(id) {
-        let result = false;
-        graph.data.nodes.forEach(function(dataNode) {
-          if ((dataNode.node === id) && (dataNode.type === nodeType)) {
-            result = true;
-          }
-        });
-        return result;
-      };
-    });
-    d3.selectAll('g.node').classed(nodeClassMap);
-
-    // apply styeles
+    // apply styles
     _.each(this.styles, (styles, selector) =>
-      _.each(styles, (value, property) => d3.selectAll(selector).style(property, value))
+      _.each(styles, (value, property) => selectAll(selector).style(property, value))
     );
 
-    this.dimensions = {
-      width: layout.graph().width,
-      height: layout.graph().height
-    };
-
-    if (centerNodeId && layout._nodes[centerNodeId]) {
-      this.defaultPosition.x = -layout._nodes[centerNodeId].value.x + (this.getCanvasWidth() / 2);
-      this.defaultPosition.y = -layout._nodes[centerNodeId].value.y + (this.getCanvasHeight() / 2);
+    // center node
+    if (centerNodeId && data._nodes[centerNodeId]) {
+      this.defaultPosition.x = -data._nodes[centerNodeId].x + this.getWidth() / 2;
+      this.defaultPosition.y = -data._nodes[centerNodeId].y + this.getHeight() / 2;
     }
   }
 
-
   zoomIn() {
     const prevZoomScale = this.zoom.scale;
-    this.zoom.scale = Math.min(1.75, this.zoom.scale + 0.25);
-    const factor = this.zoom.scale / prevZoomScale;
-    if (factor !== 1) {
-      this.position.x = ((this.position.x - (this.getCanvasWidth() / 2)) * factor) + (this.getCanvasWidth() / 2);
-      this.position.y = ((this.position.y - (this.getCanvasHeight() / 2)) * factor) + (this.getCanvasHeight() / 2);
-    }
-    return this.setTransform();
+    this.zoom.scale = Math.min(this.zoom.max, this.zoom.scale + this.zoom.step);
+    this.adjustPositions(this.zoom.scale / prevZoomScale);
   }
 
   zoomOut() {
     const prevZoomScale = this.zoom.scale;
-    this.zoom.scale = Math.max(0.5, this.zoom.scale - 0.25);
-    const factor = this.zoom.scale / prevZoomScale;
-    if (factor !== 1) {
-      this.position.x = ((this.position.x - (this.getCanvasWidth() / 2)) * factor) + (this.getCanvasWidth() / 2);
-      this.position.y = ((this.position.y - (this.getCanvasHeight() / 2)) * factor) + (this.getCanvasHeight() / 2);
+    this.zoom.scale = Math.max(this.zoom.min, this.zoom.scale - this.zoom.step);
+    this.adjustPositions(this.zoom.scale / prevZoomScale);
+  }
+
+  adjustCanvasWidth() {
+    select(this.element).attr('width', this.getWidth());
+  }
+
+  adjustCanvasHeight() {
+    select(this.element).attr('height', this.getHeight());
+  }
+
+  adjustPositions(factor) {
+    if (factor === 1) {
+      return;
     }
-    return this.setTransform();
+
+    this.position.x = (this.position.x - this.getWidth() / 2) * factor + this.getWidth() / 2;
+    this.position.y = (this.position.y - this.getHeight() / 2) * factor + this.getHeight() / 2;
+    this.setTransform();
   }
 
   reset() {
     this.position.x = this.defaultPosition.x;
     this.position.y = this.defaultPosition.y;
-    this.zoom.scale = 1;
-    return this.setTransform();
+    this.zoom.scale = this.defaultZoom.scale;
+    this.setTransform();
   }
 
-  getCanvasHeight() {
-    return Math.min(500, Math.max(200, this.dimensions.height * this.zoom.scale));
+  getHeight() {
+    return this.height;
   }
 
-  getCanvasWidth() {
+  getWidth() {
     return this.element.parentNode.offsetWidth;
   }
 
   setTransform() {
-    const translateExpression = `translate(${[this.position.x, this.position.y]}), scale(${this.zoom.scale})`;
-    d3.select(this.element).select('g').attr('transform', translateExpression);
-    // adjust canvas height
-    return d3.select(this.element).attr('height', this.getCanvasHeight());
-  }
-
-  adjustCanvasWidth() {
-    return d3.select(this.element).attr('width', this.getCanvasWidth());
+    select(this.element)
+      .select('g')
+      .attr(
+        'transform',
+        `translate(${[this.position.x, this.position.y]}), scale(${this.zoom.scale})`
+      );
   }
 
   render(centerNodeId) {
     const data = this.getData();
-
     this.adjustCanvasWidth();
+    this.adjustCanvasHeight();
 
     if (data) {
-      const svg = d3.select(this.element);
-      const graph = this;
-
-      this.createSvg(svg, data, {}, centerNodeId);
+      const svg = select(this.element);
+      this.createSvg(svg, data, centerNodeId);
       this.reset();
 
       // init position + dragging
-      svg.call(d3.behavior.drag().origin(function() {
-        const t = svg.select('g');
-        return {
-          x: t.attr('x') + d3.transform(t.attr('transform')).translate[0],
-          y: t.attr('y') + d3.transform(t.attr('transform')).translate[1]
-        };
-      }).on('drag', function() {
-        graph.position.x = d3.event.x;
-        graph.position.y = d3.event.y;
-        return svg.select('g').attr('transform', () => `translate(${[d3.event.x, d3.event.y]}), scale(${graph.zoom.scale})`);
-      })
+      svg.call(
+        drag()
+          .subject(() => {
+            const g = svg.select('g');
+            const parsetData = parseTransform(g.attr('transform'));
+            return {
+              x: g.attr('x') + parsetData.x,
+              y: g.attr('y') + parsetData.y
+            };
+          })
+          .on('drag', () => {
+            this.position.x = event.x;
+            this.position.y = event.y;
+            svg
+              .select('g')
+              .attr(
+                'transform',
+                () => `translate(${[event.x, event.y]}), scale(${this.zoom.scale})`
+              );
+          })
       );
     }
 

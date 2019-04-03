@@ -1,3 +1,4 @@
-import dimple from 'dimple/dist/dimple.v2.1.1.js';
+import 'd3-selection';
+import dimple from 'dimple/dist/dimple.v2.3.0.js';
 
 export default dimple;
