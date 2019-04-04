@@ -1,6 +1,7 @@
 export const cases = {
   emptyWithDefaults: {
     localState: {
+      source: '',
       incremental: false,
       changedSince: ''
     },
@@ -25,6 +26,7 @@ export const cases = {
   },
   simple: {
     localState: {
+      source: '',
       incremental: true,
       changedSince: '-1 day'
     },

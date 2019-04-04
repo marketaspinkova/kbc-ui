@@ -2,6 +2,8 @@ import Immutable from 'immutable';
 import adapter from './loadType';
 import { cases } from './loadType.spec.def';
 
+const emptyContext = Immutable.Map();
+
 describe('loadType', function() {
   describe('createConfiguration()', function() {
     it('should return an empty config with defaults from an empty local state', function() {
@@ -16,11 +18,19 @@ describe('loadType', function() {
 
   describe('parseConfiguration()', function() {
     it('should return empty localState with defaults from empty configuration', function() {
-      expect(cases.emptyWithDefaults.localState).toEqual(adapter.parseConfiguration(Immutable.fromJS({})).toJS());
+      expect(cases.emptyWithDefaults.localState).toEqual(adapter.parseConfiguration(Immutable.fromJS({}), emptyContext).toJS());
+    });
+    it('should populate source from context', function() {
+      const context = Immutable.fromJS({
+        tableId: 'in.c-mybucket.table'
+      });
+      const localState = Object.assign({}, cases.emptyWithDefaults.localState);
+      localState.source = 'in.c-mybucket.table';
+      expect(localState).toEqual(adapter.parseConfiguration(Immutable.fromJS({}), context).toJS());
     });
     Object.keys(cases).forEach(function(key) {
       it('should return a correct localState with ' + key + ' configuration', function() {
-        expect(cases[key].localState).toEqual(adapter.parseConfiguration(Immutable.fromJS(cases[key].configuration)).toJS());
+        expect(cases[key].localState).toEqual(adapter.parseConfiguration(Immutable.fromJS(cases[key].configuration), emptyContext).toJS());
       });
     });
   });

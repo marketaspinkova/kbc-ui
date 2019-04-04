@@ -29,7 +29,7 @@ import SidebarJobsContainer from '../../../components/react/components/SidebarJo
 import isParsableConfiguration from '../../utils/isParsableConfiguration';
 import sections from '../../utils/sections';
 import dockerActions from '../../DockerActionsActionCreators';
-import { isEmptyComponentState } from '../../utils/componentState';
+import { isEmptyComponentState } from '../../utils/configurationState';
 
 export default createReactClass({
   mixins: [createStoreMixin(Store, TablesStore, DockerActionsStore)],
@@ -288,6 +288,7 @@ export default createReactClass({
             onChange={diff => this.onUpdateSection(key, diff)}
             value={this.state.configurationBySections.get(key).toJS()}
             actions={actionsData}
+            context={this.state.context}
           />
         </div>
       );

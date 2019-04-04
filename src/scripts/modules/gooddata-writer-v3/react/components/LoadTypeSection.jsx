@@ -12,6 +12,7 @@ export default createReactClass({
       changedSince: PropTypes.string.isRequired,
       grainColumns: PropTypes.array.isRequired,
       hasConnectionPoint: PropTypes.bool.isRequired,
+      tableId: PropTypes.string.isRequired,
       grain: PropTypes.array
     }),
     onChange: PropTypes.func.isRequired,
@@ -63,6 +64,7 @@ export default createReactClass({
                value={value.changedSince}
                onChange={(newValue) => this.props.onChange({changedSince: newValue})}
                disabled={disabled}
+               tableId={value.tableId}
                allowAdaptive
              />
            </Col>

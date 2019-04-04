@@ -22,8 +22,9 @@ const createConfiguration = function(localState) {
   return config;
 };
 
-const parseConfiguration = function(configuration) {
+const parseConfiguration = function(configuration, context) {
   return Immutable.fromJS({
+    source: context.get('tableId', ''),
     incremental: configuration.getIn(['parameters', 'tables', 0, 'incremental'], false),
     changedSince: configuration.getIn(['storage', 'input', 'tables', 0, 'changed_since'], '')
   });

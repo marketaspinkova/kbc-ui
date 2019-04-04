@@ -34,7 +34,6 @@ export default createReactClass({
     disabled: PropTypes.bool.isRequired,
     helpBlock: PropTypes.string,
     allowAdaptive: PropTypes.bool,
-    configurationState: PropTypes.object,
     tableId: PropTypes.string
   },
 
@@ -112,10 +111,11 @@ export default createReactClass({
           promptTextCreator={this.promptTextCreator}
         />
 
-        <AdaptiveInputMappingLastLoaded
-          tableId={this.props.tableId}
-        />
-
+        {this.props.tableId !== '' && this.props.value === changedSinceConstants.ADAPTIVE_VALUE && (
+          <AdaptiveInputMappingLastLoaded
+            tableId={this.props.tableId}
+          />
+        )}
 
         <span className="help-block">
           Type in any range, e.g. <code>13 hours</code>.

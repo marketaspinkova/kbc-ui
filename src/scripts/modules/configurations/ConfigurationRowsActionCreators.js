@@ -14,7 +14,7 @@ import preferEncryptedAttributes from '../components/utils/preferEncryptedAttrib
 import stringUtils from '../../utils/string';
 import DockerActionsActionCreators from './DockerActionsActionCreators';
 const { webalize } = stringUtils;
-import { emptyComponentState } from './utils/componentState';
+import { emptyComponentState } from './utils/configurationState';
 
 const storeEncodedConfigurationRow = function(componentId, configurationId, rowId, configuration, changeDescription) {
   const dataToSavePrepared = JSON.stringify(preferEncryptedAttributes(configuration));

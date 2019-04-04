@@ -1,5 +1,5 @@
 import Immutable from 'immutable';
-import {emptyComponentState, isEmptyComponentState} from './componentState';
+import {emptyComponentState, isEmptyComponentState} from './configurationState';
 
 
 describe('isEmptyComponentState', function() {

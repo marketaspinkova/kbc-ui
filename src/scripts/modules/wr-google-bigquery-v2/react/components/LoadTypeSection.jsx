@@ -9,7 +9,8 @@ export default createReactClass({
   propTypes: {
     value: PropTypes.shape({
       incremental: PropTypes.bool.isRequired,
-      changedSince: PropTypes.string.isRequired
+      changedSince: PropTypes.string.isRequired,
+      source: PropTypes.string.isRequired
     }),
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired
@@ -27,6 +28,7 @@ export default createReactClass({
               value={this.props.value.changedSince}
               onChange={(newValue) => this.props.onChange({changedSince: newValue})}
               disabled={this.props.disabled || this.props.value.incremental === false}
+              tableId={this.props.value.source}
               allowAdaptive
             />
           </Col>
