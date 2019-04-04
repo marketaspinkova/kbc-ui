@@ -5,6 +5,8 @@ import ActivateDeactivateButton from '../../../../../react/common/ActivateDeacti
 import Tooltip from '../../../../../react/common/Tooltip';
 import { Check, Loader } from '@keboola/indigo-ui';
 import { Link } from 'react-router';
+import { Alert } from 'react-bootstrap';
+
 import dockerProxyApi from '../../../templates/dockerProxyApi';
 
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
@@ -27,7 +29,8 @@ export default createReactClass({
     configId: PropTypes.string.isRequired,
     componentId: PropTypes.string.isRequired,
     deleteTableFn: PropTypes.func.isRequired,
-    isDeleting: PropTypes.bool.isRequired
+    isDeleting: PropTypes.bool.isRequired,
+    isAdaptive: PropTypes.bool.isRequired
   },
 
   render() {
@@ -81,7 +84,11 @@ export default createReactClass({
                   return (api ? api.getTableRunParams(configId, tableId) : null) || params;
                 }}
               >
-                {`You are about to run an upload of ${this.props.table.get('id')} to the database.`}
+                {this.props.isAdaptive && (<Alert bsStyle="danger">
+                  <p>Your data filter is set to <code>Since last successful run</code>.</p>
+                  <p>Adaptive incremental processing is only available while running the whole configuration. Running a single table will perform a full load.</p>
+                </Alert>)}
+                <p>You are about to run an upload of {this.props.table.get('id')} to the database.</p>
               </RunButtonModal>
             </Tooltip>
           )}
