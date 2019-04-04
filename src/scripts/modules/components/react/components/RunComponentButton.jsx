@@ -151,7 +151,7 @@ export default createReactClass({
         onClick={this.onOpenButtonClick}
       >
         {this.renderModal()}
-        {this._renderIcon()}{this.props.label && ` ${this.props.label}`}
+        {this._renderTypeIcon()}{this.props.label && ` ${this.props.label}`}
       </Button>
     );
   },
@@ -159,7 +159,7 @@ export default createReactClass({
   _renderLink: function() {
     const body = (
       <span>
-        {this._renderIcon()} {this.props.title}
+        {this._renderTypeIcon()} {this.props.title}
       </span>
     );
     return (
@@ -175,7 +175,7 @@ export default createReactClass({
     );
   },
 
-  _renderIcon: function() {
+  _renderTypeIcon: function() {
     if (this.state.isLoading) {
       return (<Loader className="fa-fw" />);
     } else {

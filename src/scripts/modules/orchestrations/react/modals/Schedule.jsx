@@ -1,12 +1,15 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
-import { Modal, Button } from 'react-bootstrap';
+import {Modal, Button, Col} from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import CronScheduler from '../../../../react/common/CronScheduler';
 import OrchestrationsApi from '../../OrchestrationsApi';
 import actionCreators from '../../ActionCreators';
 import VersionsActionCreators from '../../../components/VersionsActionCreators';
+import { ORCHESTRATION_TRIGGER_TYPE } from '../../Constants';
+import TriggerSelect from '../components/TriggerSelect';
+import EventTrigger from '../components/EventTrigger';
 
 export default createReactClass({
   propTypes: {
@@ -18,7 +21,8 @@ export default createReactClass({
     return {
       crontabRecord: this.props.crontabRecord || '0 0 * * *',
       isSaving: false,
-      showModal: false
+      showModal: false,
+      triggerType: ORCHESTRATION_TRIGGER_TYPE.TIME
     };
   },
 
@@ -45,33 +49,75 @@ export default createReactClass({
             <Modal.Title>Orchestration Schedule</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <CronScheduler crontabRecord={this.state.crontabRecord} onChange={this._handleCrontabChange} />
+            <TriggerSelect
+              selectedValue={this.state.triggerType}
+              onSelectValue={this._handleTriggerTypeChange}
+              disabled={this.state.isSaving}
+            />
+            <hr />
+            {(this.state.triggerType === ORCHESTRATION_TRIGGER_TYPE.TIME) ?
+              this.renderScheduler() :
+              this.renderEventTrigger()
+            }
+
           </Modal.Body>
           <Modal.Footer>
-            <div>
-              <div className="col-sm-6">
-                <Button
-                  className="pull-left"
-                  bsStyle="danger"
-                  onClick={this._handleRemoveSchedule}
-                  disabled={this.state.isSaving}
-                >
-                  Remove Schedule
-                </Button>
-              </div>
-              <div className="col-sm-6">
-                <ConfirmButtons
-                  isSaving={this.state.isSaving}
-                  isDisabled={false}
-                  saveLabel="Save"
-                  onCancel={this.close}
-                  onSave={this._handleSave}
-                />
-              </div>
-            </div>
+            {(this.state.triggerType === ORCHESTRATION_TRIGGER_TYPE.TIME) ?
+              this.renderSchedulerButtons() :
+              this.renderEventTriggerButtons()
+            }
           </Modal.Footer>
         </Modal>
       </div>
+    );
+  },
+
+  renderScheduler() {
+    return (<CronScheduler crontabRecord={this.state.crontabRecord} onChange={this._handleCrontabChange} />);
+  },
+
+  renderSchedulerButtons() {
+    return (
+      <div>
+        <div className="col-sm-6">
+          <Button
+            className="pull-left"
+            bsStyle="danger"
+            onClick={this._handleRemoveSchedule}
+            disabled={this.state.isSaving}
+          >
+            Remove Schedule
+          </Button>
+        </div>
+        <div className="col-sm-6">
+          <ConfirmButtons
+            isSaving={this.state.isSaving}
+            isDisabled={false}
+            saveLabel="Save"
+            onCancel={this.close}
+            onSave={this._handleSave}
+          />
+        </div>
+      </div>
+    );
+  },
+
+  renderEventTrigger() {
+    return (<EventTrigger />);
+  },
+
+  renderEventTriggerButtons() {
+    return (
+      <Col sm={12}>
+        <ConfirmButtons
+          className="pull-right"
+          isSaving={this.state.isSaving}
+          isDisabled={false}
+          saveLabel="Save"
+          onCancel={this.close}
+          onSave={this._handleSave}
+        />
+      </Col>
     );
   },
 
@@ -113,6 +159,12 @@ export default createReactClass({
   _handleCrontabChange(newValue) {
     return this.setState({
       crontabRecord: newValue
+    });
+  },
+
+  _handleTriggerTypeChange(value) {
+    return this.setState({
+      triggerType: value
     });
   }
 });
