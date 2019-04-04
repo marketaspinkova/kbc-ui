@@ -9,25 +9,35 @@ const getDataType = function(metadata) {
     return Map();
   }
 
+  let outputType = Map()
+    .set(DataTypeKeys.BASE_TYPE, baseType.get('value'))
+    .set('provider', baseType.get('provider'));
+
   const nativeType = metadata.find((entry) => {
     return entry.get('key') === DataTypeKeys.TYPE;
-  }, null, Map());
+  });
+  if (nativeType) {
+    outputType = outputType.set(DataTypeKeys.TYPE, nativeType.get('value'));
+  }
 
   const length = metadata.find((entry) => {
     return entry.get('key') === DataTypeKeys.LENGTH;
-  }, null, Map());
+  });
+  if (length) {
+    outputType = outputType.set(DataTypeKeys.LENGTH, length.get('value'));
+  }
 
   const nullable = metadata.find((entry) => {
     return entry.get('key') === DataTypeKeys.NULLABLE;
-  }, null, Map());
+  });
+  if (nullable) {
+    outputType = outputType.set(
+      DataTypeKeys.NULLABLE,
+      [true, "true", 1, "1"].includes(nullable.get('value'))
+    );
+  }
 
-  return Map()
-    .set(DataTypeKeys.TYPE, nativeType.get('value'))
-    .set(DataTypeKeys.BASE_TYPE, baseType.get('value'))
-    .set(DataTypeKeys.LENGTH, length.get('value'))
-    .set(DataTypeKeys.NULLABLE, [true, "true", 1, "1"].includes(nullable.get('value')))
-    .set('provider', baseType.get('provider'))
-    ;
+  return outputType;
 };
 
 export {
