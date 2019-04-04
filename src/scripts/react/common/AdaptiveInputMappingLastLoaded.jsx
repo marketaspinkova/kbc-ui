@@ -36,7 +36,7 @@ export default createReactClass({
       configId,
       rowId,
       configurationState: configuration.get('state', Immutable.Map()),
-      resetStatePending: ConfigurationRowStore.getPendingActions(componentId, configId, rowId).includes('reset-state')
+      resetStatePending: ConfigurationRowStore.getPendingActions(componentId, configId, rowId).includes('clear-state')
     }
   },
 
