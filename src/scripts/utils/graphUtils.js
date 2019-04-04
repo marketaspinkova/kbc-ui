@@ -79,7 +79,8 @@ export default {
         fill: '#3a87ad'
       },
       '.node.project rect': {
-        'stroke-width': '3px',
+        'stroke-width': '2px',
+        'stroke': '#a1a1a1',
         fill: '#fff'
       },
       '.node.origin-project rect': {

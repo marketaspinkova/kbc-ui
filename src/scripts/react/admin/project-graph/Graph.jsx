@@ -25,7 +25,7 @@ export default createReactClass({
   render() {
     return (
       <div className="graph">
-        <div ref="graph" onWheel={this.handleMouseWheel} />
+        <div ref="graph" />
         {this.renderNone()}
         {this.renderLegend()}
       </div>
@@ -48,10 +48,8 @@ export default createReactClass({
 
   initGraph() {
     this.graph = new GraphCanvas(this.prepareData(), this.refs.graph);
-    this.graph.height = 500;
-    this.graph.zoom = { scale: 0.7, max: 1.7, min: 0.2, step: 0.1 };
     this.graph.styles = graphUtils.styles();
-    this.graph.render(this.props.data.get('origin'));
+    this.graph.render();
   },
 
   prepareData() {
@@ -101,16 +99,6 @@ export default createReactClass({
     return _.template(this.props.urlTemplates.get('project'))({
       projectId: node.get('id')
     });
-  },
-
-  handleMouseWheel(e) {
-    e.preventDefault();
-
-    if (e.deltaY < 0) {
-      this.graph.zoomIn();
-    } else {
-      this.graph.zoomOut();
-    }
   },
 
   handleResize() {

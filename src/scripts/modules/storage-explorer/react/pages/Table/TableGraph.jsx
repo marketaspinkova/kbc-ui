@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
 import { startsWith } from 'underscore.string';
-import { Alert, ButtonGroup, Button, FormControl, Label, Well } from 'react-bootstrap';
+import { Alert, FormControl, Label, Well } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 
 import GraphCanvas from '../../../../../react/common/GraphCanvas';
@@ -24,7 +24,6 @@ export default createReactClass({
 
   componentDidMount() {
     this.loadData();
-    window.addEventListener('resize', this.handleResize);
   },
 
   componentDidUpdate(prevProps, prevState) {
@@ -37,7 +36,6 @@ export default createReactClass({
 
   componentWillUnmount() {
     this.cancellablePromise && this.cancellablePromise.cancel();
-    window.removeEventListener('resize', this.handleResize);
   },
 
   render() {
@@ -86,25 +84,12 @@ export default createReactClass({
   renderControls() {
     return (
       <div>
-        <ButtonGroup>
-          <Button onClick={this.handleZoomIn}>
-            <span className="fa fa-search-plus" /> Zoom in
-          </Button>
-          <Button onClick={this.handleZoomOut}>
-            <span className="fa fa-search-minus" /> Zoom out
-          </Button>
-          <Button onClick={this.handleReset}>
-            <span className="fa fa-times" /> Reset
-          </Button>
-        </ButtonGroup>
-
         <div className="pull-right">
           <FormControl componentClass="select" value={this.state.direction} onChange={this.handleChangeDirection}>
             <option value="forward">Forward</option>
             <option value="backward">Backward</option>
           </FormControl>
         </div>
-
         <hr />
       </div>
     );
@@ -156,30 +141,6 @@ export default createReactClass({
       this.graph.spacing = 1;
       this.graph.styles = graphUtils.styles();
       this.graph.render();
-    }
-  },
-
-  handleZoomIn() {
-    if (this.graph) {
-      this.graph.zoomIn();
-    }
-  },
-
-  handleZoomOut() {
-    if (this.graph) {
-      this.graph.zoomOut();
-    }
-  },
-
-  handleReset() {
-    if (this.graph) {
-      this.graph.reset();
-    }
-  },
-
-  handleResize() {
-    if (this.graph) {
-      this.graph.adjustCanvasWidth();
     }
   }
 });
