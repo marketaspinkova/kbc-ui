@@ -7,7 +7,6 @@ export default createReactClass({
   propTypes: {
     toggleHide: PropTypes.func.isRequired,
     phase: PropTypes.object.isRequired,
-    onPhaseMove: PropTypes.func.isRequired,
     onMarkPhase: PropTypes.func.isRequired,
     togglePhaseIdChange: PropTypes.func.isRequired,
     isMarked: PropTypes.bool.isRequired,
@@ -48,7 +47,8 @@ export default createReactClass({
               tooltip="rename phase">
               <span
                 onClick={this.toggleTitleChange}
-                className="kbc-icon-pencil"/>
+                className="kbc-icon-pencil"
+              />
             </Tooltip>
           </div>
         </td>

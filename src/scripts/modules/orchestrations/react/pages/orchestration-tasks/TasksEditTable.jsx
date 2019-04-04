@@ -44,7 +44,7 @@ export default createReactClass({
 
   renderTable() {
     const head = (
-      <thead>
+      <thead data-id="static-head">
         <tr>
           <th style={{ width: '10%' }}>{this.renderHeaderActionButtons()}</th>
           <th style={{ width: '26%' }}>Component</th>
@@ -73,23 +73,25 @@ export default createReactClass({
     }
 
     return (
-      <Sortable
-        tag="table"
-        className="table table-striped table-responsive"
-        options={{
-          filter: 'thead',
-          handle: '.fa-bars',
-          animation: 100
-        }}
-        onChange={(order, sortable, event) => {
-          console.log(order); // eslint-disable-line
-          console.log(sortable); // eslint-disable-line
-          console.log(event); // eslint-disable-line
-        }}
-      >
-        {head}
-        {this.renderPhasedTasksRows()}
-      </Sortable>
+      <div className="table-responsive">
+        <Sortable
+          tag="table"
+          className="table table-striped"
+          options={{
+            filter: 'thead',
+            handle: '.fa-bars',
+            animation: 100
+          }}
+          onChange={(order, sortable, event) => {
+            console.log(order); // eslint-disable-line
+            console.log(sortable); // eslint-disable-line
+            console.log(event); // eslint-disable-line
+          }}
+        >
+          {head}
+          {this.renderPhasedTasksRows()}
+        </Sortable>
+      </div>
     );
 
   },
@@ -163,27 +165,25 @@ export default createReactClass({
     let phases = this.props.localState.get('phases', Map());
     let allHidden = phases.reduce((item, p) => item && p.get('isHidden', false), true);
     phases = this.props.tasks
-      .map(p => {
-        const phaseId = p.get('id');
-        return Map({ phaseId, isHidden: !allHidden });
+      .map(phase => {
+        return Map({ phaseId: phase.get('id'), isHidden: !allHidden });
       })
       .toMap()
       .mapKeys((key, phase) => phase.get('phaseId'));
+
     return this.props.updateLocalState('phases', phases);
   },
 
   renderPhasedTasksRows() {
-    let idx = 0;
     return this.props.tasks
-      .map(phase => {
-        idx++;
-        const color = idx % 2 > 0 ? '#fff' : '#f9f9f9';
+      .map((phase, index) => {
+        const color = (index + 1) % 2 > 0 ? '#fff' : '#f9f9f9';
         return this.renderPhaseRow(phase, color);
       })
       .toArray();
   },
 
-  _renderEmptyTasksRow(phaseId, color) {
+  renderEmptyTasksRow(phaseId, color) {
     return (
       <tr style={{ backgroundColor: color }} key={`empty-phase-row-${phaseId}`}>
         <td className="text-muted" colSpan={7}>
@@ -193,9 +193,7 @@ export default createReactClass({
             <div>
               <button
                 className="btn btn-success btn-sm"
-                onClick={() => {
-                  return this.props.updateLocalState(['newTask', 'phaseId'], phaseId);
-                }}
+                onClick={() => this.props.updateLocalState(['newTask', 'phaseId'], phaseId)}
               >
                 <i className="kbc-icon-plus" />
                 New task
@@ -213,12 +211,8 @@ export default createReactClass({
         onConfigurationSelect={this.props.handleAddTask}
         phaseId={this.props.localState.getIn(['newTask', 'phaseId'])}
         show={!!this.props.localState.getIn(['newTask', 'phaseId'])}
-        onHide={() => {
-          return this.props.updateLocalState(['newTask'], Map());
-        }}
-        onChangeSearchQuery={query => {
-          return this.props.updateLocalState(['newTask', 'searchQuery'], query);
-        }}
+        onHide={() => this.props.updateLocalState(['newTask'], Map())}
+        onChangeSearchQuery={query => this.props.updateLocalState(['newTask', 'searchQuery'], query)}
         searchQuery={this.props.localState.getIn(['newTask', 'searchQuery'], '')}
       />
     );
@@ -229,9 +223,7 @@ export default createReactClass({
       <MoveTasksModal
         show={this.props.localState.getIn(['moveTasks', 'show'], false)}
         phases={this.props.tasks.map(phase => phase.get('id'))}
-        onHide={() => {
-          return this.props.updateLocalState(['moveTasks', 'show'], false);
-        }}
+        onHide={() => this.props.updateLocalState(['moveTasks', 'show'], false)}
         onMoveTasks={phaseId => {
           const markedTasks = this.props.localState.getIn(['moveTasks', 'marked']);
           this._moveTasks(phaseId, markedTasks);
@@ -288,25 +280,20 @@ export default createReactClass({
       <tbody key={phaseId} data-id={phaseId}>
         <PhaseEditRow
           isPhaseHidden={isHidden}
-          onPhaseMove={this.onPhaseMove}
           phase={phase}
           color={color}
-          toggleHide={() => {
-            return this.props.updateLocalState(['phases', phaseId, 'isHidden'], !isHidden);
-          }}
-          togglePhaseIdChange={this.togglePhaseIdEdit}
-          isMarked={this.props.localState.hasIn(['markedPhases', phaseId])}
           onMarkPhase={this.toggleMarkPhase}
-          toggleAddNewTask={() => {
-            return this.props.updateLocalState(['newTask', 'phaseId'], phase.get('id'));
-          }}
+          isMarked={this.props.localState.hasIn(['markedPhases', phaseId])}
+          toggleHide={() => this.props.updateLocalState(['phases', phaseId, 'isHidden'], !isHidden)}
+          togglePhaseIdChange={this.togglePhaseIdEdit}
+          toggleAddNewTask={() => this.props.updateLocalState(['newTask', 'phaseId'], phase.get('id'))}
         />
-        {this._renderTasksRows(phase, color)}
+        {this.renderTasksRows(phase, color)}
       </tbody>
     );
   },
 
-  _renderTasksRows(phase, color) {
+  renderTasksRows(phase, color) {
     if (this.isPhaseHidden(phase)) {
       return null;
     }
@@ -316,26 +303,22 @@ export default createReactClass({
 
       return (
         <TasksEditTableRow
+          key={`${index}-${taskId}`}
           task={task}
           color={color}
           component={this.props.components.get(task.get('component'))}
           disabled={this.props.disabled}
-          key={`${index}-${taskId}`}
           onTaskDelete={this.props.onTaskDelete}
           onTaskUpdate={this.props.onTaskUpdate}
           isMarked={this.props.localState.hasIn(['moveTasks', 'marked', taskId])}
-          toggleMarkTask={() => {
-            return this._toggleMarkTask(task);
-          }}
-          onMoveSingleTask={() => {
-            return this._toggleMoveSingleTask(task, phase.get('id'));
-          }}
+          toggleMarkTask={() => this._toggleMarkTask(task)}
+          onMoveSingleTask={() => this._toggleMoveSingleTask(task, phase.get('id'))}
         />
       );
     });
 
     if (!tasksRows.count()) {
-      return this._renderEmptyTasksRow(phase.get('id'), color);
+      return this.renderEmptyTasksRow(phase.get('id'), color);
     }
 
     return tasksRows;
@@ -360,14 +343,6 @@ export default createReactClass({
     );
   },
 
-  canMergePhases() {
-    return this.props.localState.get('markedPhases', Map()).find(isMarked => isMarked === true);
-  },
-
-  toggleMergePhases() {
-    return this.props.updateLocalState('mergePhases', true);
-  },
-
   renderMergePhaseModal() {
     return (
       <MergePhasesModal
@@ -380,6 +355,14 @@ export default createReactClass({
         onMergePhases={this._mergePhases}
       />
     );
+  },
+
+  canMergePhases() {
+    return this.props.localState.get('markedPhases', Map()).find(isMarked => isMarked === true);
+  },
+
+  toggleMergePhases() {
+    return this.props.updateLocalState('mergePhases', true);
   },
 
   _mergePhases(destinationPhaseId) {
@@ -468,9 +451,5 @@ export default createReactClass({
 
   isPhaseHidden(phase) {
     return this.props.localState.getIn(['phases', phase.get('id'), 'isHidden'], false);
-  },
-
-  onPhaseMove(afterPhaseId, phaseId) {
-    return this.props.handlePhaseMove(phaseId, afterPhaseId);
   }
 });
