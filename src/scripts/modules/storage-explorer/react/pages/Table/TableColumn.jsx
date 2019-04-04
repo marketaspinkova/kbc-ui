@@ -12,6 +12,7 @@ import CreateColumnModal from '../../modals/CreateColumnModal';
 import DeleteColumnModal from '../../modals/DeleteColumnModal';
 import ColumnDetails from './ColumnDetails';
 import { DataTypeKeys } from '../../../../components/MetadataConstants';
+import { getDataType } from "../../../../components/utils/datatypeHelpers";
 import { deleteTableColumn, addTableColumn, setOpenedColumns, deleteColumnMetadata } from '../../../Actions';
 
 export default createReactClass({
@@ -55,38 +56,9 @@ export default createReactClass({
   },
 
   getUserDefinedType(column) {
-    return this.getDataType(this.props.userColumnMetadata.get(column, Map())).filter(
+    return getDataType(this.props.userColumnMetadata.get(column, Map())).filter(
       (value, key) => [DataTypeKeys.BASE_TYPE, DataTypeKeys.LENGTH, DataTypeKeys.NULLABLE].includes(key)
     );
-  },
-
-  getDataType(metadata) {
-    const baseType = metadata.find((entry) => {
-      return entry.get('key') === DataTypeKeys.BASE_TYPE;
-    });
-    if (!baseType) {
-      return Map();
-    }
-
-    const nativeType = metadata.find((entry) => {
-      return entry.get('key') === DataTypeKeys.TYPE;
-    }, null, Map());
-
-    const length = metadata.find((entry) => {
-      return entry.get('key') === DataTypeKeys.LENGTH;
-    }, null, Map());
-
-    const nullable = metadata.find((entry) => {
-      return entry.get('key') === DataTypeKeys.NULLABLE;
-    }, null, Map());
-
-    return Map()
-      .set(DataTypeKeys.TYPE, nativeType.get('value'))
-      .set(DataTypeKeys.BASE_TYPE, baseType.get('value'))
-      .set(DataTypeKeys.LENGTH, length.get('value'))
-      .set(DataTypeKeys.NULLABLE, [true, "true", 1, "1"].includes(nullable.get('value')))
-      .set('provider', baseType.get('provider'))
-    ;
   },
 
   render() {
@@ -139,7 +111,7 @@ export default createReactClass({
         <ColumnDetails
           columnId={this.getColumnId(column)}
           columnName={column}
-          machineDataType={this.getDataType(this.props.machineColumnMetadata.get(column, Map()))}
+          machineDataType={getDataType(this.props.machineColumnMetadata.get(column, Map()))}
           userDataType={this.getUserDefinedType(column)}
           deleteUserType={this.deleteUserType}
         />
