@@ -64,7 +64,7 @@ export default createReactClass({
     if (this.props.disabled) {
       return (
         <Tooltip
-          tooltip={this.props.disabledTooltip}
+          tooltip="Clears information about previous runs."
           placement={this.props.tooltipPlacement}
         >
           {body}
