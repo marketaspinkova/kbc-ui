@@ -223,8 +223,12 @@ export default createReactClass({
         onConfigurationSelect={this.props.handleAddTask}
         phaseId={this.props.localState.getIn(['newTask', 'phaseId'])}
         show={!!this.props.localState.getIn(['newTask', 'phaseId'])}
-        onHide={() => this.props.updateLocalState(['newTask'], Map())}
-        onChangeSearchQuery={query => this.props.updateLocalState(['newTask', 'searchQuery'], query)}
+        onHide={() => {
+          return this.props.updateLocalState(['newTask'], Map());
+        }}
+        onChangeSearchQuery={query => {
+          return this.props.updateLocalState(['newTask', 'searchQuery'], query);
+        }}
         searchQuery={this.props.localState.getIn(['newTask', 'searchQuery'], '')}
       />
     );
@@ -235,7 +239,9 @@ export default createReactClass({
       <MoveTasksModal
         show={this.props.localState.getIn(['moveTasks', 'show'], false)}
         phases={this.props.tasks.map(phase => phase.get('id'))}
-        onHide={() => this.props.updateLocalState(['moveTasks', 'show'], false)}
+        onHide={() => {
+          return this.props.updateLocalState(['moveTasks', 'show'], false);
+        }}
         onMoveTasks={phaseId => {
           const markedTasks = this.props.localState.getIn(['moveTasks', 'marked']);
           this._moveTasks(phaseId, markedTasks);
