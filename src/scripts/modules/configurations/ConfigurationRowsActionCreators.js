@@ -287,9 +287,9 @@ export default {
     });
   },
 
-  clearState: function(componentId, configurationId, rowId) {
+  clearComponentState: function(componentId, configurationId, rowId) {
     Dispatcher.handleViewAction({
-      type: Constants.ActionTypes.CONFIGURATION_ROWS_CLEAR_STATE_START,
+      type: Constants.ActionTypes.CONFIGURATION_ROWS_CLEAR_COMPONENT_STATE_START,
       componentId: componentId,
       configurationId: configurationId,
       rowId: rowId
@@ -304,7 +304,7 @@ export default {
         .then(function(response) {
           VersionActionCreators.loadVersionsForce(componentId, configurationId);
           Dispatcher.handleViewAction({
-            type: Constants.ActionTypes.CONFIGURATION_ROWS_CLEAR_STATE_SUCCESS,
+            type: Constants.ActionTypes.CONFIGURATION_ROWS_CLEAR_COMPONENT_STATE_SUCCESS,
             componentId: componentId,
             configurationId: configurationId,
             rowId: rowId,
@@ -312,7 +312,7 @@ export default {
           });
         }).catch(function(e) {
           Dispatcher.handleViewAction({
-            type: Constants.ActionTypes.CONFIGURATION_ROWS_CLEAR_STATE_ERROR,
+            type: Constants.ActionTypes.CONFIGURATION_ROWS_CLEAR_COMPONENT_STATE_ERROR,
             componentId: componentId,
             configurationId: configurationId,
             rowId: rowId,

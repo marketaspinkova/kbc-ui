@@ -156,7 +156,7 @@ export default createReactClass({
       actions.push(
         <li className={this.state.isClearStatePending || !this.state.hasState ? 'disabled' : ''} key="clear-state">
           <ClearStateButton
-            onClick={() => Actions.clearState(state.componentId, state.configurationId, state.rowId)}
+            onClick={() => Actions.clearComponentState(state.componentId, state.configurationId, state.rowId)}
             isPending={this.state.isClearStatePending}
             disabled={!this.state.hasState}
           >
