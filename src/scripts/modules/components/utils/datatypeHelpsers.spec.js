@@ -1,5 +1,5 @@
 import { getDataType } from './datatypeHelpers';
-import { Map, fromJS } from 'immutable';
+import { fromJS } from 'immutable';
 import { DataTypeKeys } from '../MetadataConstants';
 
 describe('getDataType', function() {
@@ -10,8 +10,8 @@ describe('getDataType', function() {
   it('should return null with KBC.datatype.length only (no base type)', function() {
     expect(
       fromJS({})
-    ).toEqual(getDataType(fromJS({
-      Price: [
+    ).toEqual(getDataType(fromJS(
+      [
         {
           id: '85349672',
           key: DataTypeKeys.LENGTH,
@@ -20,14 +20,14 @@ describe('getDataType', function() {
           timestamp: '2018-11-19T13:04:43+0100'
         }
       ]
-    })));
+    )));
   });
 
   it('should return null with KBC.datatype.nullable only (no base type)', function() {
     expect(
       fromJS({})
-    ).toEqual(getDataType(fromJS({
-      Price: [
+    ).toEqual(getDataType(fromJS(
+      [
         {
           id: '85349670',
           key: DataTypeKeys.NULLABLE,
@@ -36,15 +36,15 @@ describe('getDataType', function() {
           timestamp: '2018-11-19T13:04:43+0100'
         }
       ]
-    })));
+    )));
   });
 
   it('should work with KBC.datatype.basetype only', function() {
-    expect(Map()
-      .set('provider', 'keboola.ex-db-mssql')
-      .set(DataTypeKeys.BASE_TYPE, 'NUMERIC')
-    ).toEqual(getDataType(fromJS({
-      Price: [
+    expect(fromJS({
+      provider: 'keboola.ex-db-mssql',
+      "KBC.datatype.basetype": 'NUMERIC'
+    })).toEqual(getDataType(fromJS(
+      [
         {
           id: '85349671',
           key: DataTypeKeys.BASE_TYPE,
@@ -53,14 +53,14 @@ describe('getDataType', function() {
           timestamp: '2018-11-19T13:04:43+0100'
         }
       ]
-    })));
+    )));
   });
 
   it('should return null for nonexistent KBC.datatype.basetype', function() {
     expect(
       fromJS({})
-    ).toEqual(getDataType(fromJS({
-      Price: [
+    ).toEqual(getDataType(fromJS(
+      [
         {
           id: '85349671',
           key: DataTypeKeys.BASE_TYPE,
@@ -69,16 +69,16 @@ describe('getDataType', function() {
           timestamp: '2018-11-19T13:04:43+0100'
         }
       ]
-    })));
+    )));
   });
 
   it('should work with KBC.datatype.basetype and KBC.datatype.nullable', function() {
-    expect(Map()
-      .set('provider', 'keboola.ex-db-mssql')
-      .set(DataTypeKeys.BASE_TYPE, 'NUMERIC')
-      .set(DataTypeKeys.NULLABLE, true)
-    ).toEqual(getDataType(fromJS({
-      Price: [
+    expect(fromJS({
+      provider: 'keboola.ex-db-mssql',
+      "KBC.datatype.basetype": 'NUMERIC',
+      "KBC.datatype.nullable": true
+    })).toEqual(getDataType(fromJS(
+      [
         {
           id: '85349671',
           key: 'KBC.datatype.basetype',
@@ -94,16 +94,16 @@ describe('getDataType', function() {
           timestamp: '2018-11-19T13:04:43+0100'
         }
       ]
-    })));
+    )));
   });
 
   it('should work with KBC.datatype.basetype and KBC.datatype.nullable (nullable set to 0)', function() {
-    expect(Map()
-      .set('provider', 'keboola.ex-db-mssql')
-      .set(DataTypeKeys.BASE_TYPE, 'NUMERIC')
-      .set(DataTypeKeys.NULLABLE, false)
-    ).toEqual(getDataType(fromJS({
-      Price: [
+    expect(fromJS({
+      provider: 'keboola.ex-db-mssql',
+      "KBC.datatype.basetype": 'NUMERIC',
+      "KBC.datatype.nullable": false
+    })).toEqual(getDataType(fromJS(
+      [
         {
           id: '85349671',
           key: 'KBC.datatype.basetype',
@@ -119,16 +119,16 @@ describe('getDataType', function() {
           timestamp: '2018-11-19T13:04:43+0100'
         }
       ]
-    })));
+    )));
   });
 
   it('should work with KBC.datatype.basetype and KBC.datatype.length', function() {
-    expect(Map()
-      .set('provider', 'keboola.ex-db-mssql')
-      .set(DataTypeKeys.BASE_TYPE, 'NUMERIC')
-      .set(DataTypeKeys.LENGTH, '19,4')
-    ).toEqual(getDataType(fromJS({
-      Price: [
+    expect(fromJS({
+      provider: 'keboola.ex-db-mssql',
+      "KBC.datatype.basetype": 'NUMERIC',
+      "KBC.datatype.length": '19,4'
+    })).toEqual(getDataType(fromJS(
+      [
         {
           id: '85349671',
           key: 'KBC.datatype.basetype',
@@ -144,17 +144,17 @@ describe('getDataType', function() {
           timestamp: '2018-11-19T13:04:43+0100'
         }
       ]
-    })));
+    )));
   });
 
   it('should work with KBC.datatype.basetype and KBC.datatype.type', function() {
-    expect(Map()
-      .set('provider', 'keboola.ex-db-mssql')
-      .set(DataTypeKeys.TYPE, 'NUMERIC')
-      .set(DataTypeKeys.BASE_TYPE, 'NUMERIC')
-      .set(DataTypeKeys.LENGTH, '19,4')
-    ).toEqual(getDataType(fromJS({
-      Price: [
+    expect(fromJS({
+      provider: 'keboola.ex-db-mssql',
+      "KBC.datatype.type": 'DECIMAL',
+      "KBC.datatype.basetype": 'NUMERIC',
+      "KBC.datatype.length": '19,4'
+    })).toEqual(getDataType(fromJS(
+      [
         {
           id: '85349670',
           key: 'KBC.datatype.type',
@@ -177,6 +177,6 @@ describe('getDataType', function() {
           timestamp: '2018-11-19T13:04:43+0100'
         }
       ]
-    })));
+    )));
   });
 });
