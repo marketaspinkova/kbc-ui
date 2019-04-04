@@ -169,6 +169,13 @@ const RoutesStore = StoreUtils.createStore({
     return defaultValue;
   },
 
+  getRowId(defaultValue) {
+    if (this.getRouterState().hasIn(['params', 'row'])) {
+      return this.getRouterState().getIn(['params', 'row']);
+    }
+    return defaultValue;
+  },
+
   getOrchestrationId(defaultValue) {
     if (this.getRouterState().hasIn(['params', 'orchestrationId'])) {
       return this.getRouterState().getIn(['params', 'orchestrationId']);

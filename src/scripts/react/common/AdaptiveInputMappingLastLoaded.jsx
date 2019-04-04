@@ -2,8 +2,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
 import Immutable from 'immutable';
+import { Button } from 'react-bootstrap';
 
 import CreatedDate from './CreatedDate';
+import ClearAdaptiveInputMappingModal from './ClearaAdaptiveInputMappingModal';
 
 import { constants } from '../../modules/configurations/utils/configurationState';
 import createStoreMixin from '../mixins/createStoreMixin';
@@ -18,10 +20,27 @@ export default createReactClass({
   },
 
   getStateFromStores() {
-    const configuration = InstalledComponentsStore.getConfig(RoutesStore.getCurrentRouteComponentId(), RoutesStore.getConfigId());
+    const componentId = RoutesStore.getCurrentRouteComponentId();
+    const configId = RoutesStore.getConfigId();
+    const rowId = RoutesStore.getRowId();
+
+    let configuration = Immutable.Map();
+    if (rowId) {
+      configuration = InstalledComponentsStore.getConfigRow(componentId, configId, rowId);
+    } else {
+      configuration = InstalledComponentsStore.getConfig(componentId, configId);
+    }
     return {
+      componentId,
+      configId,
+      rowId,
+      // resetPending:
       configurationState: configuration.get('state', Immutable.Map())
     }
+  },
+
+  resetState() {
+
   },
 
   render() {
@@ -30,13 +49,19 @@ export default createReactClass({
       .find((item) => item.get('source') === this.props.tableId);
     if (tableState) {
       return (
-        <small>
-          Last loaded
+        <span>
+          Last updated
           {' '}
           <CreatedDate
             createdTime={tableState.get(constants.LAST_IMPORT_DATE_PROPERTY)}
           />.
-        </small>
+          {' '}
+          <Button
+            bsStyle="link"
+          >
+            Reset
+          </Button>
+        </span>
       );
     }
     return (
