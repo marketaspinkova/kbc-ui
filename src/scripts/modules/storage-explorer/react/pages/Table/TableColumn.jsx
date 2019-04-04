@@ -56,7 +56,7 @@ export default createReactClass({
 
   getUserDefinedType(column) {
     return this.getDataType(this.props.userColumnMetadata.get(column, Map())).filter(
-      (v, k) => [DataTypeKeys.BASE_TYPE, DataTypeKeys.LENGTH, DataTypeKeys.NULLABLE].includes(k)
+      (value, key) => [DataTypeKeys.BASE_TYPE, DataTypeKeys.LENGTH, DataTypeKeys.NULLABLE].includes(key)
     );
   },
 

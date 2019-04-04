@@ -354,10 +354,10 @@ export default {
 
   prepareMetadataPayload: function(data, provider = 'user') {
     let metadata = [];
-    
-    data.map((v, k) => {
-      if (typeof v !== "undefined") {
-        metadata = metadata.concat({ key: k, value: v });
+
+    data.map((value, key) => {
+      if (typeof value !== "undefined") {
+        metadata = metadata.concat({ key: key, value: value });
       }
     });
 
