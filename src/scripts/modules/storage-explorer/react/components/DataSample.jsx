@@ -3,9 +3,9 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import _ from 'underscore';
 import { Alert, Form, FormGroup, FormControl, Col, ButtonGroup, Button, Table, Row } from 'react-bootstrap';
-import { Loader } from '@keboola/indigo-ui';
 import Select from 'react-select';
 import StorageTableDataPreviewItem from '../../../../react/common/StorageTableDataPreviewItem';
+import Loader from '../../../../react/common/CustomLoader';
 import { dataPreview } from '../../Actions';
 
 export default createReactClass({
@@ -79,9 +79,11 @@ export default createReactClass({
   renderTable() {
     if (this.state.loading) {
       return (
-        <p>
-          <Loader /> Loading data ...
-        </p>
+        <Loader 
+          show={this.state.loading} 
+          text="Loading sample data..." 
+          loaderSize="2x" 
+        />
       );
     }
 
