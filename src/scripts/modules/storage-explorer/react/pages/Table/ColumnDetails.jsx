@@ -14,6 +14,10 @@ import { DataTypeKeys } from '../../../../components/MetadataConstants';
 const baseTypes = List(['STRING', 'INTEGER', "DATE", 'TIMESTAMP', 'BOOLEAN', 'FLOAT', 'NUMERIC']);
 const typesSupportingLength = List(['STRING', 'INTEGER', 'NUMERIC']);
 
+const isLengthSupported = (type) => {
+  return typesSupportingLength.contains(type);
+};
+
 export default createReactClass({
   propTypes: {
     columnId: PropTypes.string.isRequired,
@@ -105,7 +109,7 @@ export default createReactClass({
   },
 
   renderLengthEdit() {
-    if (this.lengthSupported(this.state.userDataType.get(DataTypeKeys.BASE_TYPE))) {
+    if (isLengthSupported(this.state.userDataType.get(DataTypeKeys.BASE_TYPE))) {
       return (
         <FormGroup>
           <Col componentClass={ControlLabel} xs={4}>Length</Col>
@@ -168,7 +172,7 @@ export default createReactClass({
           .delete(DataTypeKeys.NULLABLE)
       });
     }
-    if (!this.lengthSupported(selectedItem.value)) {
+    if (!isLengthSupported(selectedItem.value)) {
       return this.setState({
         userDataType: this.state.userDataType
           .delete(DataTypeKeys.LENGTH)
@@ -178,13 +182,6 @@ export default createReactClass({
     return this.setState({
       userDataType: this.state.userDataType.set(DataTypeKeys.BASE_TYPE, selectedItem.value)
     });
-  },
-
-  lengthSupported(type) {
-    if (typesSupportingLength.contains(type)) {
-      return true;
-    }
-    return false;
   },
 
   isDisabled() {
