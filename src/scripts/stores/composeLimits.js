@@ -25,6 +25,12 @@ const LIMITS_METADATA = fromJS({
   },
   'orchestrations.count': {
     name: 'Orchestrations count'
+  },
+  'sandbox.dockerMemoryReservationMBytes': {
+    name: 'Docker memory reservation'
+  },
+  'sandbox.dockerMemoryLimitMBytes': {
+    name: 'Docker memory limit'
   }
 });
 
@@ -70,6 +76,18 @@ function prepareConnectionData(limits, metrics, limitsMetadata) {
       limitValue: limits.getIn(['orchestrations.count', 'value']),
       metricValue: metrics.getIn(['orchestrations.count', 'value']),
       name: limitsMetadata.getIn(['orchestrations.count', 'name'])
+    },
+    {
+      id: 'sandbox.dockerMemoryReservationMBytes',
+      limitValue: limits.getIn(['sandbox.dockerMemoryReservationMBytes', 'value']),
+      name: limitsMetadata.getIn(['sandbox.dockerMemoryReservationMBytes', 'name']),
+      unit: 'MB'
+    },
+    {
+      id: 'sandbox.dockerMemoryLimitMBytes',
+      limitValue: limits.getIn(['sandbox.dockerMemoryLimitMBytes', 'value']),
+      name: limitsMetadata.getIn(['sandbox.dockerMemoryLimitMBytes', 'name']),
+      unit: 'MB'
     }
   ];
 

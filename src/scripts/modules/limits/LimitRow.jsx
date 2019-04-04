@@ -74,6 +74,15 @@ export default createReactClass({
       return <strong>{numericMetricFormatted(limit.get('metricValue'), limit.get('unit'))}</strong>;
     }
 
+    if (!limit.has('metricValue')) {
+      return (
+        <strong>
+          {limit.get('limitValue')} 
+          {limit.has('unit') && <span> {limit.get('unit')}</span>}
+        </strong>
+      );
+    }
+
     return (
       <span>
         <strong>{numericMetricFormatted(limit.get('metricValue'), limit.get('unit'))}</strong>
