@@ -11,10 +11,10 @@ import createStoreMixin from '../mixins/createStoreMixin';
 import RoutesStore from '../../stores/RoutesStore';
 import InstalledComponentsStore from '../../modules/components/stores/InstalledComponentsStore';
 import ConfigurationRowActionCreators from '../../modules/configurations/ConfigurationRowsActionCreators';
-import ConfigurationRowStore from '../../modules/configurations/ConfigurationRowsStore';
+import ConfigurationRowsStore from '../../modules/configurations/ConfigurationRowsStore';
 
 export default createReactClass({
-  mixins: [createStoreMixin(RoutesStore, InstalledComponentsStore, ConfigurationRowStore)],
+  mixins: [createStoreMixin(RoutesStore, InstalledComponentsStore, ConfigurationRowsStore)],
 
   propTypes: {
     tableId: PropTypes.string.isRequired
@@ -27,16 +27,17 @@ export default createReactClass({
 
     let configuration = Immutable.Map();
     if (rowId) {
-      configuration = InstalledComponentsStore.getConfigRow(componentId, configId, rowId);
+      configuration = ConfigurationRowsStore.get(componentId, configId, rowId);
     } else {
       configuration = InstalledComponentsStore.getConfig(componentId, configId);
     }
+
     return {
       componentId,
       configId,
       rowId,
       configurationState: configuration.get('state', Immutable.Map()),
-      resetStatePending: ConfigurationRowStore.getPendingActions(componentId, configId, rowId).includes('clear-state')
+      resetStatePending: ConfigurationRowsStore.getPendingActions(componentId, configId, rowId).has('clear-state')
     }
   },
 
