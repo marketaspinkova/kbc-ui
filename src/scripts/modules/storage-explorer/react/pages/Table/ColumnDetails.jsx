@@ -165,23 +165,23 @@ export default createReactClass({
 
   handleBaseTypeChange(selectedItem) {
     if (!selectedItem) {
-      return this.setState({
+      this.setState({
         userDataType: this.state.userDataType
           .delete(DataTypeKeys.BASE_TYPE)
           .delete(DataTypeKeys.LENGTH)
           .delete(DataTypeKeys.NULLABLE)
       });
-    }
-    if (!isLengthSupported(selectedItem.value)) {
-      return this.setState({
+    } else if (!isLengthSupported(selectedItem.value)) {
+      this.setState({
         userDataType: this.state.userDataType
           .delete(DataTypeKeys.LENGTH)
           .set(DataTypeKeys.BASE_TYPE, selectedItem.value)
       })
+    } else {
+      this.setState({
+        userDataType: this.state.userDataType.set(DataTypeKeys.BASE_TYPE, selectedItem.value)
+      });
     }
-    return this.setState({
-      userDataType: this.state.userDataType.set(DataTypeKeys.BASE_TYPE, selectedItem.value)
-    });
   },
 
   isDisabled() {
