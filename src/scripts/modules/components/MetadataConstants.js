@@ -21,7 +21,10 @@ const DataTypeKeys = {
   NULLABLE: 'KBC.datatype.nullable',
 };
 
+const BaseTypes = ['STRING', 'INTEGER', "DATE", 'TIMESTAMP', 'BOOLEAN', 'FLOAT', 'NUMERIC'];
+
 export {
   ActionTypes,
   DataTypeKeys,
+  BaseTypes
 };

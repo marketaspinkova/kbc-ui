@@ -1,11 +1,11 @@
-import { Map } from 'immutable';
-import { DataTypeKeys } from '../../components/MetadataConstants';
+import { Map, fromJS } from 'immutable';
+import { DataTypeKeys, BaseTypes } from '../../components/MetadataConstants';
 
 const getDataType = function(metadata) {
   const baseType = metadata.find((entry) => {
     return entry.get('key') === DataTypeKeys.BASE_TYPE;
   });
-  if (!baseType) {
+  if (!baseType || !fromJS(BaseTypes).contains(baseType.get('value'))) {
     return Map();
   }
 

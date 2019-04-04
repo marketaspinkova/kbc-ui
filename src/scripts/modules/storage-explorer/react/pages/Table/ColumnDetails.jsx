@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
-import { List } from 'immutable';
+import { fromJS, List } from 'immutable';
 import { HelpBlock, Label, Col, FormGroup, FormControl, ControlLabel, Checkbox, Button } from 'react-bootstrap';
 import Select from 'react-select';
 import MetadataEditField from '../../../../components/react/components/MetadataEditField';
@@ -9,9 +9,8 @@ import InlineEditArea from '../../../../../react/common/InlineEditArea';
 import { Loader } from '@keboola/indigo-ui';
 
 import { saveColumnMetadata } from '../../../Actions';
-import { DataTypeKeys } from '../../../../components/MetadataConstants';
+import { DataTypeKeys, BaseTypes } from '../../../../components/MetadataConstants';
 
-const baseTypes = List(['STRING', 'INTEGER', "DATE", 'TIMESTAMP', 'BOOLEAN', 'FLOAT', 'NUMERIC']);
 const typesSupportingLength = List(['STRING', 'INTEGER', 'NUMERIC']);
 
 const isLengthSupported = (type) => {
@@ -41,7 +40,7 @@ export default createReactClass({
   },
 
   baseTypeOptions() {
-    return baseTypes.map(type => {
+    return fromJS(BaseTypes).map(type => {
       return {label: type, value: type}
     }).toJS();
   },
