@@ -16,7 +16,12 @@ export default createReactClass({
   },
 
   componentDidMount() {
-    getLineageInOrganization(this.props.appData.getIn(['sapi', 'token', 'token']))
+    getLineageInOrganization(
+      this.props.appData.get('services').find((service) => {
+        return service.get('id') === 'graph'
+      }).get('url'),
+      this.props.appData.getIn(['sapi', 'token', 'token']),
+    )
       .then((data) => {
         this.setState({
           lineageData: fromJS(data)
