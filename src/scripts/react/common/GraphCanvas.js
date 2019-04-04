@@ -104,7 +104,6 @@ class Graph {
     if (graph) {
       const svg = select(this.element);
       svg.selectAll('*').remove();
-
       new dagreD3.render()(svg.append('g'), graph);
 
       _.each(this.styles, (styles, selector) => {
