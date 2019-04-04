@@ -30,6 +30,12 @@ export default createReactClass({
     handleAddTask: PropTypes.func.isRequired
   },
 
+  getInitialState() {
+    return {
+      draggingPhaseId: null
+    }
+  },
+
   render() {
     return (
       <span>
@@ -80,12 +86,18 @@ export default createReactClass({
           options={{
             filter: 'thead',
             handle: '.fa-bars',
-            animation: 100
+            animation: 100,
+            onStart: (event) => {
+              this.setState({ draggingPhaseId: this.props.tasks.getIn([event.oldIndex - 1, 'id']) })
+            },
+            onEnd: () => {
+              this.setState({ draggingPhaseId: null })
+            }
           }}
           onChange={(order, sortable, event) => {
-            console.log(order); // eslint-disable-line
-            console.log(sortable); // eslint-disable-line
-            console.log(event); // eslint-disable-line
+            const oldIndex = Math.max(1, event.oldIndex) - 1;
+            const newIndex = Math.max(1, event.newIndex) - 1;
+            this.props.handlePhaseMove(oldIndex, newIndex);
           }}
         >
           {head}
@@ -284,6 +296,7 @@ export default createReactClass({
           color={color}
           onMarkPhase={this.toggleMarkPhase}
           isMarked={this.props.localState.hasIn(['markedPhases', phaseId])}
+          isDragging={this.state.draggingPhaseId === phaseId}
           toggleHide={() => this.props.updateLocalState(['phases', phaseId, 'isHidden'], !isHidden)}
           togglePhaseIdChange={this.togglePhaseIdEdit}
           toggleAddNewTask={() => this.props.updateLocalState(['newTask', 'phaseId'], phase.get('id'))}
