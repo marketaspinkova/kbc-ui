@@ -6,6 +6,7 @@ import ComponentsStore from './ComponentsStore';
 import StoreUtils from '../../../utils/StoreUtils';
 import fromJSOrdered from '../../../utils/fromJSOrdered';
 import matchByWords from '../../../utils/matchByWords';
+import Immutable from 'immutable';
 
 let _store = Map({
   configData: Map(), // componentId #configId
@@ -1120,6 +1121,20 @@ Dispatcher.register(function(payload) {
         .deleteIn(['configRows', action.componentId, action.configurationId, action.rowId])
         .deleteIn(['configRowsData', action.componentId, action.configurationId, action.rowId]);
 
+      return InstalledComponentsStore.emitChange();
+
+    case constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_CLEAR_INPUT_TABLE_STATE_START:
+      _store = _store.setIn(['pendingActions', action.componentId, action.configurationId, 'clear-state'], true);
+      return InstalledComponentsStore.emitChange();
+
+    case constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_CLEAR_INPUT_TABLE_STATE_ERROR:
+      _store = _store.deleteIn(['pendingActions', action.componentId, action.configurationId, 'clear-state']);
+      return InstalledComponentsStore.emitChange();
+
+    case constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_CLEAR_INPUT_TABLE_STATE_SUCCESS:
+      _store = _store
+        .deleteIn(['pendingActions', action.componentId, action.configurationId, 'clear-state'])
+        .setIn(['components', action.componentId, 'configurations', action.configId], Immutable.fromJS(action.configuration));
       return InstalledComponentsStore.emitChange();
     default:
   }

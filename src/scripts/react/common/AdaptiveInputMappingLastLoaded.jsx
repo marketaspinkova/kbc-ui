@@ -12,6 +12,7 @@ import RoutesStore from '../../stores/RoutesStore';
 import InstalledComponentsStore from '../../modules/components/stores/InstalledComponentsStore';
 import ConfigurationRowActionCreators from '../../modules/configurations/ConfigurationRowsActionCreators';
 import ConfigurationRowsStore from '../../modules/configurations/ConfigurationRowsStore';
+import InstalledComponentsActionCreators from "../../modules/components/InstalledComponentsActionCreators";
 
 export default createReactClass({
   mixins: [createStoreMixin(RoutesStore, InstalledComponentsStore, ConfigurationRowsStore)],
@@ -37,13 +38,15 @@ export default createReactClass({
       configId,
       rowId,
       configurationState: configuration.get('state', Immutable.Map()),
-      resetStatePending: ConfigurationRowsStore.getPendingActions(componentId, configId, rowId).has('clear-state')
+      resetStatePending: ConfigurationRowsStore.getPendingActions(componentId, configId, rowId).has('clear-state') || InstalledComponentsStore.getPendingActions(componentId, configId).has('clear-state')
     }
   },
 
   resetState() {
     if (this.state.rowId) {
       ConfigurationRowActionCreators.clearInputMappingState(this.state.componentId, this.state.configId, this.state.rowId, this.props.tableId);
+    } else {
+      InstalledComponentsActionCreators.clearInputMappingState(this.state.componentId, this.state.configId, this.props.tableId);
     }
   },
 
