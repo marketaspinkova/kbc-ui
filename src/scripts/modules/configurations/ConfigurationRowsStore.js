@@ -268,14 +268,17 @@ Dispatcher.register(function(payload) {
       return ConfigurationRowsStore.emitChange();
 
     case constants.ActionTypes.CONFIGURATION_ROWS_CLEAR_COMPONENT_STATE_START:
+    case constants.ActionTypes.CONFIGURATION_ROWS_CLEAR_INPUT_TABLE_STATE_START:
       _store = _store.setIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'clear-state'], true);
       return ConfigurationRowsStore.emitChange();
 
     case constants.ActionTypes.CONFIGURATION_ROWS_CLEAR_COMPONENT_STATE_ERROR:
+    case constants.ActionTypes.CONFIGURATION_ROWS_CLEAR_INPUT_TABLE_STATE_ERROR:
       _store = _store.deleteIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'clear-state']);
       return ConfigurationRowsStore.emitChange();
 
     case constants.ActionTypes.CONFIGURATION_ROWS_CLEAR_COMPONENT_STATE_SUCCESS:
+    case constants.ActionTypes.CONFIGURATION_ROWS_CLEAR_INPUT_TABLE_STATE_SUCCESS:
       _store = _store
         .deleteIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'clear-state'])
         .setIn(['rows', action.componentId, action.configurationId, action.rowId], Immutable.fromJS(action.row));

@@ -2,18 +2,19 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
 import Immutable from 'immutable';
-import { Button } from 'react-bootstrap';
 
 import CreatedDate from './CreatedDate';
-import ClearAdaptiveInputMappingModal from './ClearaAdaptiveInputMappingModal';
+import ClearAdaptiveInputMappingButton from './ClearAdaptiveInputMappingButton';
 
 import { constants } from '../../modules/configurations/utils/configurationState';
 import createStoreMixin from '../mixins/createStoreMixin';
 import RoutesStore from '../../stores/RoutesStore';
 import InstalledComponentsStore from '../../modules/components/stores/InstalledComponentsStore';
+import ConfigurationRowActionCreators from '../../modules/configurations/ConfigurationRowsActionCreators';
+import ConfigurationRowStore from '../../modules/configurations/ConfigurationRowsStore';
 
 export default createReactClass({
-  mixins: [createStoreMixin(RoutesStore, InstalledComponentsStore)],
+  mixins: [createStoreMixin(RoutesStore, InstalledComponentsStore, ConfigurationRowStore)],
 
   propTypes: {
     tableId: PropTypes.string.isRequired
@@ -34,13 +35,15 @@ export default createReactClass({
       componentId,
       configId,
       rowId,
-      // resetPending:
-      configurationState: configuration.get('state', Immutable.Map())
+      configurationState: configuration.get('state', Immutable.Map()),
+      resetStatePending: ConfigurationRowStore.getPendingActions(componentId, configId, rowId).includes('reset-state')
     }
   },
 
   resetState() {
-
+    if (this.state.rowId) {
+      ConfigurationRowActionCreators.clearInputMappingState(this.state.componentId, this.state.configId, this.state.rowId, this.props.tableId);
+    }
   },
 
   render() {
@@ -56,16 +59,16 @@ export default createReactClass({
             createdTime={tableState.get(constants.LAST_IMPORT_DATE_PROPERTY)}
           />.
           {' '}
-          <Button
-            bsStyle="link"
-          >
-            Reset
-          </Button>
+          <ClearAdaptiveInputMappingButton
+            onClick={this.resetState}
+            isPending={this.state.resetStatePending}
+            disabled={this.state.resetStatePending}
+          />
         </span>
       );
     }
     return (
-      <small>Table not yet loaded.</small>
+      <span>No information about previous runs.</span>
     );
   }
 });

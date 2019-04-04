@@ -14,7 +14,7 @@ import preferEncryptedAttributes from '../components/utils/preferEncryptedAttrib
 import stringUtils from '../../utils/string';
 import DockerActionsActionCreators from './DockerActionsActionCreators';
 const { webalize } = stringUtils;
-import { emptyComponentState } from './utils/configurationState';
+import { emptyComponentState, removeTableFromInputTableState } from './utils/configurationState';
 
 const storeEncodedConfigurationRow = function(componentId, configurationId, rowId, configuration, changeDescription) {
   const dataToSavePrepared = JSON.stringify(preferEncryptedAttributes(configuration));
@@ -316,6 +316,45 @@ export default {
             componentId: componentId,
             configurationId: configurationId,
             rowId: rowId,
+            error: e
+          });
+          throw e;
+        });
+    });
+  },
+
+  clearInputMappingState: function(componentId, configurationId, rowId, tableId) {
+    Dispatcher.handleViewAction({
+      type: Constants.ActionTypes.CONFIGURATION_ROWS_CLEAR_INPUT_TABLE_STATE_START,
+      componentId: componentId,
+      configurationId: configurationId,
+      rowId: rowId,
+      tableId: tableId
+    });
+    return InstalledComponentsApi.getConfigurationRow(componentId, configurationId, rowId).then(function(response) {
+      const data = {
+        state: JSON.stringify(
+          removeTableFromInputTableState(Immutable.fromJS(response.state), tableId).toJS()
+        )
+      };
+      return InstalledComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, data)
+        .then(function(response) {
+          VersionActionCreators.loadVersionsForce(componentId, configurationId);
+          Dispatcher.handleViewAction({
+            type: Constants.ActionTypes.CONFIGURATION_ROWS_CLEAR_INPUT_TABLE_STATE_SUCCESS,
+            componentId: componentId,
+            configurationId: configurationId,
+            rowId: rowId,
+            tableId: tableId,
+            row: response
+          });
+        }).catch(function(e) {
+          Dispatcher.handleViewAction({
+            type: Constants.ActionTypes.CONFIGURATION_ROWS_CLEAR_INPUT_TABLE_STATE_ERROR,
+            componentId: componentId,
+            configurationId: configurationId,
+            rowId: rowId,
+            tableId: tableId,
             error: e
           });
           throw e;
