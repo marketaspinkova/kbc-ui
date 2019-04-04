@@ -19,15 +19,30 @@ const isEmptyComponentState = function(state) {
 };
 
 const emptyComponentState = function(currentState) {
-  if (currentState.has('component')) {
+  if (currentState.has(constants.COMPONENT_NAMESPACE)) {
     return currentState.set(constants.COMPONENT_NAMESPACE, Immutable.Map());
   } else {
     return Immutable.fromJS({});
   }
 };
 
+const removeTableFromInputTableState = function(currentState, tableId) {
+  const path = [constants.STORAGE_NAMESPACE, constants.INPUT_NAMESPACE, constants.TABLES_NAMESPACE];
+  if (currentState.hasIn(path)) {
+    return currentState
+      .setIn(
+        path,
+        currentState
+          .getIn(path)
+          .filter((input) => input.get('source') !== tableId)
+      );
+  }
+  return currentState;
+};
+
 export {
   constants,
   isEmptyComponentState,
-  emptyComponentState
+  emptyComponentState,
+  removeTableFromInputTableState
 }
