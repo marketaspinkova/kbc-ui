@@ -27,7 +27,7 @@ export default createReactClass({
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          ABCD
+          This will clear the information from the last successful run. Next execution will load all data in the table.
         </Modal.Body>
         <Modal.Footer>
           <ButtonToolbar>
