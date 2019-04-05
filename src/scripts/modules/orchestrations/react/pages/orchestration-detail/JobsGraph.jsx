@@ -15,7 +15,7 @@ export default createReactClass({
 
   componentDidMount() {
     const width = ReactDOM.findDOMNode(this).offsetWidth;
-    const svg = dimple.newSvg(ReactDOM.findDOMNode(this), width, 0.35 * width);
+    const svg = dimple.newSvg(ReactDOM.findDOMNode(this), '100%', 0.35 * width);
 
     const data = this._prepareData();
 
@@ -32,7 +32,9 @@ export default createReactClass({
     chart.assignColor('success', '#96d130');
     chart.assignColor('warn', 'red');
     chart.assignColor('terminated', 'black');
-    chart.draw();
+    chart.setMargins(50, 10, 20, 40);
+    chart.draw(200);
+
     this.chart = chart;
 
     window.addEventListener('resize', this._refreshGraph);
@@ -47,12 +49,9 @@ export default createReactClass({
   },
 
   _refreshGraph() {
-    const width = ReactDOM.findDOMNode(this).offsetWidth;
     const data = this._prepareData();
     this.chart.axes[1].title = `Duration (${data.get('unit')})`;
     this.chart.data = data.get('jobs').toJS();
-    this.chart.svg.style('width', width);
-    this.chart.setMargins('50px', '10px', '10px', '40px');
     this.chart.draw(200);
   },
 
