@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import _ from 'underscore';
-import { List, Map } from 'immutable';
+import { Map } from 'immutable';
 import { Label } from 'react-bootstrap';
 import Select from 'react-select';
 import graphUtils from '../../../utils/graphUtils';
@@ -10,7 +10,8 @@ import GraphCanvas from '../../common/GraphCanvas';
 
 export default createReactClass({
   propTypes: {
-    data: PropTypes.object.isRequired,
+    nodes: PropTypes.object.isRequired,
+    links: PropTypes.object.isRequired,
     urlTemplates: PropTypes.object.isRequired
   },
 
@@ -41,8 +42,7 @@ export default createReactClass({
   },
 
   renderSearch() {
-    const options = this.props.data
-      .get('nodes')
+    const options = this.props.nodes
       .map((node) => ({
         value: node.get('id'),
         label: node.get('title')
@@ -90,8 +90,7 @@ export default createReactClass({
   },
 
   prepareData() {
-    const highlightedMap = this.props.data
-      .get('nodes', List())
+    const highlightedMap = this.props.nodes
       .toMap()
       .mapKeys((index, node) => node.get('id').toString())
       .map((node) => Map({
@@ -100,8 +99,7 @@ export default createReactClass({
       }));
 
     return {
-      nodes: this.props.data
-        .get('nodes', List())
+      nodes: this.props.nodes
         .map((node) => ({
           node: node.get('id'),
           type: this.getNodeType(node),
@@ -109,8 +107,7 @@ export default createReactClass({
           label: node.get('title')
         }))
         .toArray(),
-      transitions: this.props.data
-        .get('links', List())
+      transitions: this.props.links
         .map((link) => ({
           source: link.get('source'),
           target: link.get('target'),

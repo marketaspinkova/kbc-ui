@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
+import Promise from 'bluebird';
 import { Map, fromJS } from 'immutable';
 import { Loader } from '@keboola/indigo-ui';
 import { Button, Row, Col, Nav, NavItem, Tab } from 'react-bootstrap';
 import FastFade from '../../common/FastFade';
-import { getLineageInOrganization } from './GraphApi';
+import { getLineageInOrganization, getOrganizationReliability, getProjectReliability } from './GraphApi';
 import Lineage from './Lineage';
 import Graph from './Graph';
 
@@ -77,10 +78,18 @@ export default createReactClass({
     return (
       <Tab.Content animation={FastFade}>
         <Tab.Pane eventKey="Graph" mountOnEnter unmountOnExit>
-          <Graph data={this.state.data} urlTemplates={this.props.urlTemplates} />
+          <Graph 
+            nodes={this.state.data.getIn(['lineage', 'nodes'])}
+            links={this.state.data.getIn(['lineage', 'links'])}
+            urlTemplates={this.props.urlTemplates} 
+          />
         </Tab.Pane>
         <Tab.Pane eventKey="Lineage">
-          <Lineage data={this.state.data} urlTemplates={this.props.urlTemplates} />
+          <Lineage 
+            lineage={this.state.data.getIn(['lineage', 'lineage'])} 
+            reability={this.state.data.get('organizationReliability')}
+            urlTemplates={this.props.urlTemplates} 
+          />
         </Tab.Pane>
       </Tab.Content>
     );
@@ -115,21 +124,29 @@ export default createReactClass({
   },
 
   getLineageInOrganization() {
+    const token = this.props.appData.getIn(['sapi', 'token', 'token']);
+    const graphServiceUrl = this.props.appData.get('services').find((service) => {
+      return service.get('id') === 'graph'
+    }).get('url');
+
     this.setState({ isLoading: true });
-    this.loadingPromise = getLineageInOrganization(
-      this.props.services.find((service) => {
-        return service.get('id') === 'graph'
-      }).get('url'),
-      this.props.token.getIn(['token'])
-    )
-      .then((data) => {
-        this.setState({
-          data: fromJS(data),
-          activeTab: 'Lineage'
-        });
-      })
-      .finally(() => {
-        this.setState({ isLoading: false });
+    this.loadingPromise = Promise.all([
+      getLineageInOrganization(graphServiceUrl, token),
+      getOrganizationReliability(graphServiceUrl, token),
+      getProjectReliability(graphServiceUrl, token)
+    ]).spread((lineage, organizationReliability, projectReliability) => {
+      this.setState({
+        data: fromJS({
+          lineage,
+          organizationReliability,
+          projectReliability
+        }).update('organizationReliability', (reliability) => {
+          return reliability.toMap().mapKeys((key, row) => row.get('project'))
+        }),
+        activeTab: 'Lineage'
       });
+    }).finally(() => {
+      this.setState({ isLoading: false });
+    })
   }
 });
