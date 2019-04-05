@@ -153,17 +153,15 @@ export default createReactClass({
               (columnDataType.has('provider')) ?
                   <div>
                     <Label>{columnDataType.get('provider')}</Label>
-                    <code>
-                      {columnDataType.get('KBC.datatype.basetype') && (
-                        columnDataType.get('KBC.datatype.basetype')
-                      )}
-                      {columnDataType.get('KBC.datatype.length') && (
-                        `(${columnDataType.get('KBC.datatype.length')})`
-                      )}
-                      {columnDataType.get('KBC.datatype.nullable') && (
-                        `, Nullable`
-                      )}
-                    </code>
+                    {columnDataType.get('KBC.datatype.basetype') && (
+                      columnDataType.get('KBC.datatype.basetype')
+                    )}
+                    {columnDataType.get('KBC.datatype.length') && (
+                      `(${columnDataType.get('KBC.datatype.length')})`
+                    )}
+                    {columnDataType.get('KBC.datatype.nullable') && (
+                      `, Nullable`
+                    )}
                   </div>
               : null
             }
