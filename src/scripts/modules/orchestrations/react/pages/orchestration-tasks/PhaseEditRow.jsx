@@ -12,16 +12,12 @@ export default createReactClass({
     isMarked: PropTypes.bool.isRequired,
     toggleAddNewTask: PropTypes.func.isRequired,
     color: PropTypes.string,
-    isPhaseHidden: PropTypes.bool,
-    isDragging: PropTypes.bool
+    isPhaseHidden: PropTypes.bool
   },
 
   render() {
-    let style = {
-      opacity: this.props.isDragging ? 0.5 : 1,
-      'backgroundColor': this.props.isDragging ? '#ffc' : this.props.color,
-      cursor: 'move'
-    };
+    let style = {};
+
     if (this.props.isPhaseHidden) {
       style.borderBottom = '2px groove';
     }
@@ -30,8 +26,8 @@ export default createReactClass({
       <tr style={style} onClick={this.onRowClick}>
         <td>
           <div className="row">
-            <div className="col-xs-3">
-              <i  className="fa fa-bars"/>
+            <div className="col-xs-3 drag-handle">
+              <i className="fa fa-bars" />
             </div>
             <div className="col-xs-5">
               {this.renderSelectPhaseCheckbox()}
