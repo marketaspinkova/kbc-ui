@@ -136,11 +136,24 @@ export default createReactClass({
   },
 
   renderColumnHeader(column) {
+    const columnDataType = this.getUserDefinedType(column);
     return (
       <div>
         <Row>
-          <Col sm={10}>
+          <Col sm={3}>
             {column}
+          </Col>
+          <Col sm={7}>
+            <Label>User</Label>
+            {columnDataType.get('KBC.datatype.basetype') && (
+              columnDataType.get('KBC.datatype.basetype')
+            )}
+            {columnDataType.get('KBC.datatype.length') && (
+              `(${columnDataType.get('KBC.datatype.length')})`
+            )}
+            {columnDataType.get('KBC.datatype.nullable') && (
+              `, Nullable`
+            )}
           </Col>
           <Col sm={1}>
             {this.isColumnInPrimaryKey(column) && (
