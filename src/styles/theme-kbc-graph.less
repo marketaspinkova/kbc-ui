@@ -106,8 +106,15 @@
       .node {
         a {
           font-size: 14px;
+          font-weight: 400;
           color: #333;
           text-decoration: none;
+          text-shadow: none;
+        }
+
+        &.highlighted-project a,
+        &.origin-project a {
+          font-weight: 700;
         }
 
         &.origin-project a {
@@ -122,7 +129,7 @@
       color: #333;
 
       &.project-label {
-        border: 2px solid #333;
+        border: 2px solid #a1a1a1;
       }
 
       &.highlighted-label {
