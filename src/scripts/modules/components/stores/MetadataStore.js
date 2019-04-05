@@ -185,6 +185,29 @@ dispatcher.register(function(payload) {
       }
       return MetadataStore.emitChange();
 
+    case ActionTypes.METADATA_DELETE_ERROR:
+      return MetadataStore.emitChange();
+
+    case ActionTypes.METADATA_DELETE_SUCCESS:
+      _store = _store.deleteIn(
+        ['metadata', action.objectType, action.objectId,
+          _store.getIn(['metadata', action.objectType, action.objectId]).findIndex(
+            entry => entry.get('id') === action.metadataId
+          )
+        ]
+      );
+      if (action.objectType === 'column') {
+        const [ tableId, columnName ] = action.objectId.split(/\.(?=[^\.]+$)/);
+        _store = _store.deleteIn(
+          ['metadata', 'tableColumns', tableId, columnName,
+            _store.getIn(['metadata', 'tableColumns', tableId, columnName]).findIndex(
+              entry => entry.get('id') === action.metadataId
+            )
+          ]
+        );
+      }
+      return MetadataStore.emitChange();
+
     case Constants.ActionTypes.STORAGE_BUCKETS_LOAD_SUCCESS:
       _.each(action.buckets, function(bucket) {
         _store = _store.setIn(['metadata', 'bucket', bucket.id], fromJS(bucket.metadata));
