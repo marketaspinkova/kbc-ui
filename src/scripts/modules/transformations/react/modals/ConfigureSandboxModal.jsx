@@ -1,10 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
-import { Modal, HelpBlock, Row, Col } from 'react-bootstrap';
+import { Modal, HelpBlock, Row, Col, FormGroup, Radio } from 'react-bootstrap';
 import { Link } from 'react-router';
-import { RadioGroup } from 'react-radio-group';
-import RadioGroupInput from '../../../../react/common/RadioGroupInput';
 import RedshiftCredentialsContainer from '../components/RedshiftCredentialsContainer';
 import SnowflakeCredentialsContainer from '../components/SnowflakeCredentialsContainer';
 import DockerCredentialsContainer from '../components/DockerCredentialsContainer';
@@ -48,35 +46,44 @@ export default createReactClass({
         </Modal.Header>
         <Modal.Body>
           {this.props.backend !== 'docker' && (
-            <div>
-              <h2>Mode</h2>
-              <HelpBlock>Disabled transformations will not be executed.</HelpBlock>
-
-              <div className="row">
-                <div className="col-sm-9">
-                  <div className="form-horizontal">
-                    <RadioGroup name="mode" selectedValue={this.props.mode} onChange={this.props.onModeChange}>
-                      <RadioGroupInput
-                        wrapperClassName="col-sm-offset-3 col-sm-9"
-                        label="Load input tables only"
-                        value="input"
-                      />
-                      <RadioGroupInput
-                        wrapperClassName="col-sm-offset-3 col-sm-9"
-                        label="Prepare transformation"
-                        help="Load input tables AND execute required transformations"
-                        value="prepare"
-                      />
-                      <RadioGroupInput
-                        wrapperClassName="col-sm-offset-3 col-sm-9"
-                        label="Execute transformation without writing to Storage"
-                        value="dry-run"
-                      />
-                    </RadioGroup>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <Row>
+              <Col sm={12}>
+                <h2>Mode</h2>
+                <p>Disabled transformations will not be executed.</p>
+              </Col>
+              <Col sm={10} smOffset={2}>
+                <FormGroup>
+                  <Radio
+                    value="input"
+                    checked={this.props.mode === 'input'}
+                    onChange={(event) => this.props.onModeChange(event.target.value)}
+                  >
+                    Load input tables only
+                  </Radio>
+                </FormGroup>
+                <FormGroup>
+                  <Radio
+                    value="prepare"
+                    checked={this.props.mode === 'prepare'}
+                    onChange={(event) => this.props.onModeChange(event.target.value)}
+                  >
+                    Prepare transformation
+                  </Radio>
+                  <HelpBlock>
+                    Load input tables AND execute required transformations
+                  </HelpBlock>
+                </FormGroup>
+                <FormGroup>
+                  <Radio
+                    value="dry-run"
+                    checked={this.props.mode === 'dry-run'}
+                    onChange={(event) => this.props.onModeChange(event.target.value)}
+                  >
+                    Execute transformation without writing to Storage
+                  </Radio>
+                </FormGroup>
+              </Col>
+            </Row>
           )}
           {this.renderCredentials()}
         </Modal.Body>

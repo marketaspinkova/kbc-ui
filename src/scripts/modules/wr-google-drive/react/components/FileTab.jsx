@@ -1,9 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
-import { Checkbox, Col, FormGroup, HelpBlock } from 'react-bootstrap';
-import {RadioGroup} from 'react-radio-group';
-import RadioGroupInput from '../../../../react/common/RadioGroupInput';
+import { Checkbox, Col, FormGroup, FormControl, HelpBlock, Radio, ControlLabel } from 'react-bootstrap';
 import Picker from '../../../google-utils/react/GooglePicker';
 import ViewTemplates from '../../../google-utils/react/PickerViewTemplates';
 
@@ -36,41 +34,47 @@ export default createReactClass({
 
   renderTypeRadio() {
     return (
-      <div className="form-group">
-        <label className="col-md-2 control-label">
+      <FormGroup>
+        <Col componentClass={ControlLabel} md={2}>
           File exists?
-        </label>
-        <div className="col-md-10">
-          <RadioGroup
-            name="type"
-            selectedValue={this.props.type}
-            onChange={this.props.onSwitchType}
-          >
-            <RadioGroupInput
-              label="No"
-              help="Create a new file that will be updated on each run"
-              wrapperClassName="col-sm-8"
+        </Col>
+        <Col md={10}>
+          <FormGroup>
+            <Radio
               value="new"
-            />
-            <RadioGroupInput
-              label="Yes"
-              help="Use an existing file"
-              wrapperClassName="col-sm-8"
+              checked={this.props.type === 'new'}
+              onChange={(event) => this.props.onSwitchType(event.target.value)}
+            >
+              No
+            </Radio>
+            <HelpBlock>
+              Create a new file that will be updated on each run
+            </HelpBlock>
+          </FormGroup>
+          <FormGroup>
+            <Radio
               value="existing"
-            />
-          </RadioGroup>
-        </div>
-      </div>
+              checked={this.props.type === 'existing'}
+              onChange={(event) => this.props.onSwitchType(event.target.value)}
+            >
+              Yes
+            </Radio>
+            <HelpBlock>
+              Use an existing file
+            </HelpBlock>
+          </FormGroup>
+        </Col>
+      </FormGroup>
     );
   },
 
   renderFilePicker() {
     return (
-      <div className="form-group">
-        <label className="col-md-2 control-label">
+      <FormGroup>
+        <Col componentClass={ControlLabel} md={2}>
           File location
-        </label>
-        <div className="col-md-10">
+        </Col>
+        <Col md={10}>
           <Picker
             dialogTitle="Select File"
             buttonLabel={this.props.valueTitle ? this.props.valueTitle : 'Select File'}
@@ -85,21 +89,21 @@ export default createReactClass({
             ]}
             multiselectEnabled={false}
           />
-          <span className="help-block">
+          <HelpBlock>
             Choose a file you wish to update
-          </span>
-        </div>
-      </div>
+          </HelpBlock>
+        </Col>
+      </FormGroup>
     );
   },
 
   renderFolderPicker() {
     return (
-      <div className="form-group">
-        <label className="col-md-2 control-label">
+      <FormGroup>
+        <Col componentClass={ControlLabel} md={2}>
           File location
-        </label>
-        <div className="col-md-10">
+        </Col>
+        <Col md={10}>
           <div className="input-group">
             <div className="input-group-btn">
               <Picker
@@ -116,20 +120,19 @@ export default createReactClass({
                 multiselectEnabled={false}
               />
             </div>
-            <input
+            <FormControl
               placeholder="New file"
               type="text"
               value={this.props.valueTitle ? this.props.valueTitle : ''}
               onChange={this.props.onChangeTitle}
-              className="form-control"
             />
           </div>
-          <span className="help-block">
+          <HelpBlock>
             Select the file parent <strong>folder</strong> and enter the <strong>title</strong> of the file.<br/>
             {this.props.valueAction === 'create' ? 'The file will be created on the next run. The current date and time will be appended to the file name.' : 'The file will be created upon saving.'}
-          </span>
-        </div>
-      </div>
+          </HelpBlock>
+        </Col>
+      </FormGroup>
     );
   },
 

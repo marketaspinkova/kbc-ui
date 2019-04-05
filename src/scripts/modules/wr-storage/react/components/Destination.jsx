@@ -2,9 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
 import immutableMixin from 'react-immutable-render-mixin';
-import { Form, FormControl, FormGroup, ControlLabel, HelpBlock, Col } from 'react-bootstrap';
-import { RadioGroup } from 'react-radio-group';
-import RadioGroupInput from '../../../../react/common/RadioGroupInput';
+import { Form, FormControl, FormGroup, ControlLabel, HelpBlock, Radio, Col } from 'react-bootstrap';
 import SyncActionSimpleValue from '../../../configurations/react/components/SyncActionSimpleValue';
 import ExternalProjectLink from '../../../components/react/components/ExternalProjectLink';
 import ExternalBucketLink from '../../../components/react/components/ExternalBucketLink';
@@ -87,29 +85,42 @@ export default createReactClass({
             Mode
           </Col>
           <Col sm={8}>
-            <RadioGroup
-              selectedValue={this.props.value.mode}
-              onChange={value => this.props.onChange({ mode: value })}
-            >
-              <RadioGroupInput
-                wrapperClassName="col-xs-12"
-                label="Update"
-                help="Use incremental loading on the target table."
+            <FormGroup>
+              <Radio
                 value="update"
-              />
-              <RadioGroupInput
-                wrapperClassName="col-xs-12"
-                label="Replace"
-                help="Replace data in the target table. If the structures of the source and destination tables do not match, an error will be reported."
+                checked={this.props.value.mode === 'update'}
+                onChange={(event) => this.props.onChange({ mode: event.target.value })}
+              >
+                Update
+              </Radio>
+              <HelpBlock>
+                Always rewrite the same file
+              </HelpBlock>
+            </FormGroup>
+            <FormGroup>
+              <Radio
                 value="replace"
-              />
-              <RadioGroupInput
-                wrapperClassName="col-xs-12"
-                label="Recreate"
-                help="Drop and create the target table. This will make sure that the structure of the destination table matches that of the source table."
+                checked={this.props.value.mode === 'replace'}
+                onChange={(event) => this.props.onChange({ mode: event.target.value })}
+              >
+                Replace
+              </Radio>
+              <HelpBlock>
+                Replace data in the target table. If the structures of the source and destination tables do not match, an error will be reported.
+              </HelpBlock>
+            </FormGroup>
+            <FormGroup>
+              <Radio
                 value="recreate"
-              />
-            </RadioGroup>
+                checked={this.props.value.mode === 'recreate'}
+                onChange={(event) => this.props.onChange({ mode: event.target.value })}
+              >
+                Recreate
+              </Radio>
+              <HelpBlock>
+                Drop and create the target table. This will make sure that the structure of the destination table matches that of the source table.
+              </HelpBlock>
+            </FormGroup>
           </Col>
         </FormGroup>
       </Form>

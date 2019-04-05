@@ -1,10 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
-import { Modal } from 'react-bootstrap';
-import { RadioGroup } from 'react-radio-group';
+import { Modal, FormGroup, Button, Radio } from 'react-bootstrap';
 import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
-import RadioGroupInput from '../../../../../react/common/RadioGroupInput';
 import contactSupport from '../../../../../utils/contactSupport';
 
 export default createReactClass({
@@ -35,32 +33,28 @@ export default createReactClass({
           </p>
           <p>
             Change versions only if you have problems with the <code>Latest</code> version. And{' '}
-            <button
-              className="btn btn-link btn-link-inline"
+            <Button
+              bsStyle="link"
+              className="btn-link-inline"
               onClick={contactSupport}
             >
               let us know
-            </button> please.
+            </Button> please.
           </p>
-          <RadioGroup
-            name="imageTag"
-            selectedValue={this.state.imageTag}
-            onChange={(value) => {
-              this.setState({
-                imageTag: value
-              });
-            }}
-          >
+          <FormGroup>
             {this.props.availableVersions.map((version, index) => {
               return (
-                <RadioGroupInput
+                <Radio
                   key={`${version.version}-${index}`}
-                  label={version.label}
                   value={version.version}
-                />
-              );
+                  checked={this.state.imageTag === version.version}
+                  onChange={(event) => this.props.onChange({ imageTag: event.target.value })}
+                >
+                  {version.label}
+                </Radio>
+              )
             })}
-          </RadioGroup>
+          </FormGroup>
         </Modal.Body>
         <Modal.Footer>
           <ConfirmButtons
