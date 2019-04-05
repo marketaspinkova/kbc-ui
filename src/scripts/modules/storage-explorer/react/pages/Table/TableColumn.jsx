@@ -13,7 +13,7 @@ import DeleteColumnModal from '../../modals/DeleteColumnModal';
 import ColumnDetails from './ColumnDetails';
 import { DataTypeKeys } from '../../../../components/MetadataConstants';
 import { getDataType } from "../../../../components/utils/datatypeHelpers";
-import { deleteTableColumn, addTableColumn, setOpenedColumns, deleteColumnMetadata } from '../../../Actions';
+import { deleteTableColumn, addTableColumn, setOpenedColumns, deleteColumnMetadata, saveColumnMetadata } from '../../../Actions';
 
 export default createReactClass({
   propTypes: {
@@ -46,12 +46,19 @@ export default createReactClass({
     return this.props.table.get('id') + '.' + columnName;
   },
 
-  deleteLength(columnName) {
-    return this.props.userColumnMetadata.get(columnName).find((metadata) => {
-      if (metadata.get('key') === DataTypeKeys.LENGTH) {
-        return deleteColumnMetadata(this.getColumnId(columnName), metadata.get('id'));
-      }
-    });
+  saveUserType(columnName, userDataType) {
+    var saveType = userDataType;
+    var promises = [];
+    if (userDataType.get(DataTypeKeys.LENGTH === "")) {
+      promises.push(this.props.userColumnMetadata.get(columnName).find((metadata) => {
+        if (metadata.get('key') === DataTypeKeys.LENGTH) {
+          return deleteColumnMetadata(this.getColumnId(columnName), metadata.get('id'));
+        }
+      }));
+      saveType = userDataType.delete(DataTypeKeys.LENGTH);
+    }
+    promises.push(saveColumnMetadata(this.getColumnId(columnName), saveType));
+    return Promise.all(promises);
   },
 
   deleteUserType(columnName) {
@@ -122,7 +129,7 @@ export default createReactClass({
           machineDataType={getDataType(this.props.machineColumnMetadata.get(column, Map()))}
           userDataType={this.getUserDefinedType(column)}
           deleteUserType={this.deleteUserType}
-          deleteLength={this.deleteLength}
+          saveUserType={this.saveUserType}
         />
       </Panel>
     );

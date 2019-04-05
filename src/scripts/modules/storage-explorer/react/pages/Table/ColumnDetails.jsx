@@ -8,7 +8,6 @@ import MetadataEditField from '../../../../components/react/components/MetadataE
 import InlineEditArea from '../../../../../react/common/InlineEditArea';
 import { Loader } from '@keboola/indigo-ui';
 
-import { saveColumnMetadata} from '../../../Actions';
 import { DataTypeKeys, BaseTypes } from '../../../../components/MetadataConstants';
 
 const typesSupportingLength = List(['STRING', 'INTEGER', 'NUMERIC']);
@@ -24,7 +23,7 @@ export default createReactClass({
     machineDataType: PropTypes.object.isRequired,
     userDataType: PropTypes.object.isRequired,
     deleteUserType: PropTypes.func.isRequired,
-    deleteLength: PropTypes.func.isRequired,
+    saveUserType: PropTypes.func.isRequired,
   },
 
   getInitialState() {
@@ -195,10 +194,9 @@ export default createReactClass({
         this.setState({
           userDataType: this.state.userDataType.delete(DataTypeKeys.LENGTH)
         });
-        this.props.deleteLength(this.props.columnName);
       }
-      saveColumnMetadata(
-        this.props.columnId,
+      this.props.saveUserType(
+        this.props.columnName,
         this.state.userDataType
       ).finally(() => {
         this.setState({ isSaving: false })
