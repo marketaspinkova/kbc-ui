@@ -86,7 +86,7 @@ export default createReactClass({
               >
                 {this.props.isAdaptive && (<Alert bsStyle="danger">
                   <p>Your data filter is set to <code>Since last successful run</code>.</p>
-                  <p>Adaptive incremental processing is only available while running the whole configuration. Running a single table will perform a full load.</p>
+                  <p>Adaptive incremental processing is only available when running the whole configuration. Running the writer on a single table will perform a full load.</p>
                 </Alert>)}
                 <p>You are about to run an upload of {this.props.table.get('id')} to the database.</p>
               </RunButtonModal>
