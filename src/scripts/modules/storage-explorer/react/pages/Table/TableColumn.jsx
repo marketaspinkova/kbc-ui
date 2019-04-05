@@ -46,6 +46,14 @@ export default createReactClass({
     return this.props.table.get('id') + '.' + columnName;
   },
 
+  deleteLength(columnName) {
+    return this.props.userColumnMetadata.get(columnName).find((metadata) => {
+      if (metadata.get('key') === DataTypeKeys.LENGTH) {
+        return deleteColumnMetadata(this.getColumnId(columnName), metadata.get('id'));
+      }
+    });
+  },
+
   deleteUserType(columnName) {
     var promises = this.props.userColumnMetadata.get(columnName).map((metadata) => {
       if ([DataTypeKeys.BASE_TYPE, DataTypeKeys.LENGTH, DataTypeKeys.NULLABLE].includes(metadata.get('key'))) {
@@ -114,6 +122,7 @@ export default createReactClass({
           machineDataType={getDataType(this.props.machineColumnMetadata.get(column, Map()))}
           userDataType={this.getUserDefinedType(column)}
           deleteUserType={this.deleteUserType}
+          deleteLength={this.deleteLength}
         />
       </Panel>
     );
