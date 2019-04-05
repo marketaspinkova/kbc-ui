@@ -136,7 +136,12 @@ export default createReactClass({
   },
 
   renderColumnHeader(column) {
-    const columnDataType = this.getUserDefinedType(column);
+    const userDataType = this.getUserDefinedType(column);
+    const systemDataType = getDataType(this.props.machineColumnMetadata.get(column, Map()));
+    const columnDataType = userDataType.has(DataTypeKeys.BASE_TYPE)
+      ? userDataType.set('provider', 'user')
+      : systemDataType;
+
     return (
       <div>
         <Row>
@@ -144,16 +149,24 @@ export default createReactClass({
             {column}
           </Col>
           <Col sm={7}>
-            <Label>User</Label>
-            {columnDataType.get('KBC.datatype.basetype') && (
-              columnDataType.get('KBC.datatype.basetype')
-            )}
-            {columnDataType.get('KBC.datatype.length') && (
-              `(${columnDataType.get('KBC.datatype.length')})`
-            )}
-            {columnDataType.get('KBC.datatype.nullable') && (
-              `, Nullable`
-            )}
+            {
+              (columnDataType.has('provider')) ?
+                  <div>
+                    <Label>{columnDataType.get('provider')}</Label>
+                    <code>
+                      {columnDataType.get('KBC.datatype.basetype') && (
+                        columnDataType.get('KBC.datatype.basetype')
+                      )}
+                      {columnDataType.get('KBC.datatype.length') && (
+                        `(${columnDataType.get('KBC.datatype.length')})`
+                      )}
+                      {columnDataType.get('KBC.datatype.nullable') && (
+                        `, Nullable`
+                      )}
+                    </code>
+                  </div>
+              : null
+            }
           </Col>
           <Col sm={1}>
             {this.isColumnInPrimaryKey(column) && (
