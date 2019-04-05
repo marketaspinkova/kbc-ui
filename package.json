@@ -43,8 +43,6 @@
     "react-clipboard.js": "^2.0.3",
     "react-code-mirror": "^3.1.0",
     "react-datetime": "^2.16.3",
-    "react-dnd": "^3.0.2",
-    "react-dnd-html5-backend": "^3.0.2",
     "react-document-title": "^2.0.3",
     "react-dom": "^15.6.2",
     "react-dropbox-chooser": "^0.0.5",

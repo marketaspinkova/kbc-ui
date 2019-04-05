@@ -64,11 +64,9 @@ export default createReactClass({
     return this.props.onChange(newTasks);
   },
 
-  _handlePhaseMove(id, afterId) {
-    const phase = this.props.tasks.find(item => item.get('id') === id);
-    const currentIndex = this.props.tasks.findIndex(item => item.get('id') === id);
-    const afterIndex = this.props.tasks.findIndex(item => item.get('id') === afterId);
-    return this.props.onChange(this.props.tasks.splice(currentIndex, 1).splice(afterIndex, 0, phase));
+  _handlePhaseMove(oldIndex, newIndex) {
+    const phase = this.props.tasks.get(oldIndex);
+    return this.props.onChange(this.props.tasks.splice(oldIndex, 1).splice(newIndex, 0, phase));
   },
 
   _handleTaskAdd(component, configuration, phaseId) {

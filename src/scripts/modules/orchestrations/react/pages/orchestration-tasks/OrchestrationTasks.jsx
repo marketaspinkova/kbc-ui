@@ -17,9 +17,6 @@ import mergeTasksWithConfigurations from '../../../mergeTasksWithConfigruations'
 import TasksTable from './TasksTable';
 import TasksEditor from './TasksEditor';
 
-import HTML5Backend from 'react-dnd-html5-backend';
-import { DragDropContext } from 'react-dnd';
-
 const componentId = 'orchestrations';
 
 const OrchestrationTasks = createReactClass({
@@ -136,4 +133,4 @@ const OrchestrationTasks = createReactClass({
   }
 });
 
-export default DragDropContext(HTML5Backend)(OrchestrationTasks);
+export default OrchestrationTasks;
