@@ -4,6 +4,7 @@ import createReactClass from 'create-react-class';
 import _ from 'underscore';
 import { List } from 'immutable';
 import { Label } from 'react-bootstrap';
+import Select from 'react-select';
 import graphUtils from '../../../utils/graphUtils';
 import GraphCanvas from '../../common/GraphCanvas';
 
@@ -22,12 +23,46 @@ export default createReactClass({
     window.removeEventListener('resize', this.handleResize);
   },
 
+  getInitialState() {
+    return {
+      searched: ''
+    }
+  },
+
   render() {
     return (
       <div className="graph">
+        {this.renderSearch()}
         <div ref="graph" />
         {this.renderNone()}
         {this.renderLegend()}
+      </div>
+    );
+  },
+
+  renderSearch() {
+    const options = this.props.data
+      .get('nodes')
+      .map((node) => ({
+        value: node.get('id'),
+        label: node.get('title')
+      }))
+      .sort((node) => node.label.toLowerCase())
+      .toArray();
+
+    return (
+      <div className="graph-search">
+        <Select
+          value={this.state.searched}
+          onChange={(selected) => {
+            const value = selected ? selected.value : '';
+            this.setState({ searched: value })
+            this.graph.search(value)
+          }}
+          options={options}
+          placeholder="Search project..."
+          noResultsText="No project found"
+        />
       </div>
     );
   },
@@ -48,6 +83,7 @@ export default createReactClass({
 
   initGraph() {
     this.graph = new GraphCanvas(this.prepareData(), this.refs.graph);
+    this.graph.highlight = true;
     this.graph.styles = graphUtils.styles();
     this.graph.render();
   },
