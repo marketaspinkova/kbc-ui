@@ -22,11 +22,9 @@ export default createReactClass({
         return limit.get('showOnLimitsPage', true);
       })
       .filter(limit => {
-        if (this.props.canEdit) {
-          return true;
-        } else {
-          return limit.get('limitValue') !== null && limit.get('hideIfNull', false) !== true
-        }
+        return this.props.canEdit
+          || limit.get('limitValue') !== null
+          || limit.get('hideIfNull', false) !== true;
       })
     ;
 
