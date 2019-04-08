@@ -30,6 +30,7 @@ import StorageTablesStore from '../../../../components/stores/StorageTablesStore
 import fieldsTemplate from '../../../templates/credentialsFields';
 import AddNewTableModal from '../../../../../react/common/AddNewTableModal';
 import MigrationRow from '../../../../components/react/components/MigrationRow';
+import changedSinceConstants from '../../../../../react/common/changedSinceConstants';
 
 const allowedBuckets = ['out', 'in'];
 
@@ -289,6 +290,7 @@ export default componentId => {
             return WrDbActions.deleteTable(componentId, this.state.configId, tableId);
           }}
           isDeleting={!!this.state.deletingTables.get(table.get('id'))}
+          isAdaptive={tableMapping.get('changed_since') === changedSinceConstants.ADAPTIVE_VALUE}
         />
       );
     },
