@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
-import CodeMirror from 'react-code-mirror';
+import { Controlled as CodeMirror } from 'react-codemirror2'
 
 export default createReactClass({
   propTypes: {
@@ -24,34 +24,37 @@ export default createReactClass({
       return (
         <CodeMirror
           value={this.props.data}
-          theme="solarized"
-          lineNumbers={true}
-          mode="application/json"
-          autofocus={true}
-          lineWrapping={true}
-          onChange={this.handleChange}
-          readOnly={this.props.isSaving}
-          lint={true}
-          gutters={['CodeMirror-lint-markers']}
-        />
-      );
-    } else {
-      return (
-        <CodeMirror
-          theme="solarized"
-          lineNumbers={true}
-          defaultValue={this.props.data}
-          readOnly={true}
-          cursorHeight={0}
-          mode="application/json"
-          lineWrapping={true}
+          onBeforeChange={this.handleChange}
+          options={{
+            theme: 'solarized',
+            mode: 'application/json',
+            lineNumbers: true,
+            autofocus: true,
+            lineWrapping: true,
+            readOnly: this.props.isSaving,
+            lint: true,
+            gutters: ['CodeMirror-lint-markers']
+          }}
         />
       );
     }
+
+    return (
+      <CodeMirror
+        value={this.props.data}
+        options={{
+          theme: 'solarized',
+          mode: 'application/json',
+          lineNumbers: true,
+          readOnly: true,
+          lineWrapping: true,
+          cursorHeight: 0
+        }}
+      />
+    );
   },
 
-  handleChange(e) {
-    const value = e.target.value;
+  handleChange(editor, data, value) {
     this.props.onChange(value);
   }
 });

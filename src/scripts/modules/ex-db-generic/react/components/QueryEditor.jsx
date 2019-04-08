@@ -3,7 +3,7 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import Immutable from 'immutable';
 import _ from 'underscore';
-import CodeMirror from 'react-code-mirror';
+import { Controlled as CodeMirror } from 'react-codemirror2'
 import { Button, Alert, FormGroup, ControlLabel, HelpBlock, Checkbox, Col } from 'react-bootstrap';
 
 import Select from '../../../../react/common/Select';
@@ -107,7 +107,7 @@ export default createReactClass({
     return this.props.onChange(this.props.query.setIn(['state', 'component'], Immutable.fromJS({})));
   },
 
-  handleQueryChange(value) {
+  handleQueryChange(editor, data, value) {
     return this.props.onChange(this.props.query.set('query', value));
   },
 
@@ -451,13 +451,15 @@ export default createReactClass({
           <label className="control-label">SQL Query</label>
           {this.renderQueryHelpBlock()}
           <CodeMirror
-            theme="solarized"
-            mode={editorMode(this.props.componentId)}
             value={this.getQuery()}
-            onChange={(e) => this.handleQueryChange(e.target.value)}
-            lineNumbers
-            lineWrapping={false}
-            placeholder={getQueryEditorPlaceholder(this.props.componentId)}
+            onBeforeChange={this.handleQueryChange}
+            options={{
+              theme: 'solarized',
+              mode: editorMode(this.props.componentId),
+              lineNumbers: true,
+              lineWrapping: false,
+              placeholder: getQueryEditorPlaceholder(this.props.componentId),
+            }}
             style={{ width: '100%' }}
           />
         </div>

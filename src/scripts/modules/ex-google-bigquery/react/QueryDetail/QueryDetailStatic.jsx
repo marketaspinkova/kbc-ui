@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import CodeMirror from 'react-code-mirror';
+import { Controlled as CodeMirror } from 'react-codemirror2'
 import SapiTableLinkEx from '../../../components/react/components/StorageApiTableLinkEx';
 import editorMode from '../../../ex-db-generic/templates/editorMode';
 
@@ -61,12 +61,14 @@ const QueryDetailStatic = ({ query, componentId }) => {
             <div className="form-control-static">
               {query.get('query').length ? (
                 <CodeMirror
-                  theme="solarized"
-                  mode={editorMode(componentId)}
                   value={query.get('query')}
-                  lineNumbers={false}
-                  lineWrapping={false}
-                  readOnly
+                  options={{
+                    theme: 'solarized',
+                    mode: editorMode(componentId),
+                    lineNumbers: false,
+                    lineWrapping: false,
+                    readOnly: true
+                  }}
                   style={{width: '100%'}}
                 />
               ) : (

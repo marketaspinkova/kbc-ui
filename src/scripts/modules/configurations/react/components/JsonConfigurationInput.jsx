@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
-import CodeMirror from 'react-code-mirror';
+import { Controlled as CodeMirror } from 'react-codemirror2'
 
 export default createReactClass({
   propTypes: {
@@ -16,17 +16,19 @@ export default createReactClass({
         <div>
           <div className="edit form-group kbc-json-editor">
             <CodeMirror
-              theme='solarized'
-              mode='application/json'
-              placeholder='Your JSON config goes here...'
-              lineNumbers
-              lint
-              autofocus
-              lineWrapping
               value={this.props.value}
-              onChange={this.handleChange}
-              readOnly={this.props.disabled}
-              gutters={['CodeMirror-lint-markers']}
+              onBeforeChange={this.handleChange}
+              options={{
+                theme: 'solarized',
+                mode: 'application/json',
+                placeholder: 'Your JSON config goes here...',
+                lineNumbers: true,
+                lint: true,
+                autofocus: true,
+                lineWrapping: true,
+                readOnly: this.props.disabled,
+                gutters: ['CodeMirror-lint-markers']
+              }}
             />
           </div>
           <div className="small help-block">
@@ -41,7 +43,7 @@ export default createReactClass({
     return null;
   },
 
-  handleChange(e) {
-    this.props.onChange(e.target.value);
+  handleChange(editor, data, value) {
+    this.props.onChange(value);
   }
 });

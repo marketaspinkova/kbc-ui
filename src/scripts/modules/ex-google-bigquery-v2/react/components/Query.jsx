@@ -3,7 +3,7 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import immutableMixin from 'react-immutable-render-mixin';
 import {Form, FormGroup, ControlLabel, Col, HelpBlock, Checkbox} from 'react-bootstrap';
-import CodeMirror from 'react-code-mirror';
+import { Controlled as CodeMirror } from 'react-codemirror2'
 
 import editorMode from "../../../ex-db-generic/templates/editorMode";
 
@@ -46,15 +46,17 @@ export default createReactClass({
           </Col>
           <Col sm={8}>
             <CodeMirror
-              theme="solarized"
-              mode={editorMode(ExGoogleBigQueryV2ComponentId)}
               value={this.props.value.query}
-              onChange={(e) => this.props.onChange({query: e.target.value})}
-              lineNumbers
-              lineWrapping={false}
-              placeholder="e.g. SELECT `id`, `name` FROM `myTable`"
+              onBeforeChange={(editor, data, value) => this.props.onChange({query: value})}
+              options={{
+                theme: 'solarized',
+                mode: editorMode(ExGoogleBigQueryV2ComponentId),
+                lineNumbers: true,
+                lineWrapping: false,
+                readOnly: this.props.disabled,
+                placeholder: 'e.g. SELECT `id`, `name` FROM `myTable`'
+              }}
               style={{ width: '100%' }}
-              readOnly={this.props.disabled}
             />
           </Col>
         </FormGroup>

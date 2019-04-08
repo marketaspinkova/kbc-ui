@@ -3,9 +3,9 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import { ExternalLink } from '@keboola/indigo-ui';
 import JSONSchemaEditor from './JSONSchemaEditor';
+import { Controlled as CodeMirror } from 'react-codemirror2'
 import TemplateSelector from './ConfigurationTemplateSelector';
 import SaveButtons from '../../../../react/common/SaveButtons';
-import CodeMirror from 'react-code-mirror';
 
 export default createReactClass({
 
@@ -88,18 +88,19 @@ export default createReactClass({
         <p className="kbc-template-editor-toggle"><a onClick={this.switchToTemplateEditor}><small>Switch to templates</small></a></p>
         <p>JSON configuration uses <ExternalLink href="https://developers.keboola.com/extend/generic-extractor/">Generic extractor</ExternalLink> format.</p>
         <CodeMirror
-          ref="string"
           value={this.props.editingString}
-          theme="solarized"
-          lineNumbers={true}
-          mode="application/json"
-          lineWrapping={true}
-          autofocus={true}
-          onChange={this.handleStringChange}
-          readOnly={this.props.isSaving ? 'nocursor' : false}
-          lint={true}
-          gutters={['CodeMirror-lint-markers']}
-          placeholder="{}"
+          onBeforeChange={this.handleStringChange}
+          options={{
+            theme: 'solarized',
+            mode: 'application/json',
+            lineNumbers: true,
+            lineWrapping: true,
+            autofocus: true,
+            readOnly: this.props.isSaving,
+            lint: true,
+            gutters: ['CodeMirror-lint-markers'],
+            placeholder: '{}'
+          }}
         />
       </span>
     );
@@ -125,8 +126,8 @@ export default createReactClass({
     this.props.onChangeTemplate(value);
   },
 
-  handleStringChange(e) {
-    this.props.onChangeString(e.target.value);
+  handleStringChange(editor, data, value) {
+    this.props.onChangeString(value);
   },
 
   handleParamsChange(value) {

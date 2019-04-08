@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
-import CodeMirror from 'react-code-mirror';
+import { Controlled as CodeMirror } from 'react-codemirror2'
 import { FormGroup, FormControl, Col, ControlLabel, HelpBlock, Checkbox } from 'react-bootstrap';
 
 import LinkToDocs from './LinkToDocs';
@@ -22,17 +22,17 @@ export default createReactClass({
   handleIncrementalChange(event) {
     return this.props.onChange(this.props.query.set('incremental', event.target.checked));
   },
-  handleQueryChange(event) {
-    return this.props.onChange(this.props.query.set('query', event.target.value));
+  handleQueryChange(editor, data, value) {
+    return this.props.onChange(this.props.query.set('query', value));
   },
-  handleSortChange(event) {
-    return this.props.onChange(this.props.query.set('sort', event.target.value));
+  handleSortChange(editor, data, value) {
+    return this.props.onChange(this.props.query.set('sort', value));
   },
   handleLimitChange(event) {
     return this.props.onChange(this.props.query.set('limit', event.target.value));
   },
-  handleMappingChange(event) {
-    return this.props.onChange(this.props.query.set('mapping', event.target.value));
+  handleMappingChange(editor, data, value) {
+    return this.props.onChange(this.props.query.set('mapping', value));
   },
   handleCollectionChange(event) {
     return this.props.onChange(this.props.query.set('collection', event.target.value));
@@ -78,14 +78,16 @@ export default createReactClass({
             <Col componentClass={ControlLabel} md={3}>Query</Col>
             <Col md={9}>
               <CodeMirror
-                lineNumbers
-                lineWrapping
-                lint
-                mode="application/json"
-                onChange={this.handleQueryChange}
-                placeholder={'optional, e.g. {"isActive": 1, "isDeleted": 0}'}
-                theme="solarized"
                 value={this.props.query.has('query') ? this.props.query.get('query') : ''}
+                onBeforeChange={this.handleQueryChange}
+                options={{
+                  theme: 'solarized',
+                  mode: 'application/json',
+                  lineNumbers: true,
+                  lineWrapping: true,
+                  lint: true,
+                  placeholder: 'optional, e.g. {"isActive": 1, "isDeleted": 0}'
+                }}
               />
               <HelpBlock>Query to filter documents. Has to be valid JSON.</HelpBlock>
             </Col>
@@ -95,14 +97,16 @@ export default createReactClass({
             <Col componentClass={ControlLabel} md={3}>Sort</Col>
             <Col md={9}>
               <CodeMirror
-                lineNumbers
-                lineWrapping
-                lint
-                mode="application/json"
-                onChange={this.handleSortChange}
-                placeholder={'optional, e.g. {"creationDate": -1}'}
-                theme="solarized"
                 value={this.props.query.has('sort') ? this.props.query.get('sort').toString() : ''}
+                onBeforeChange={this.handleSortChange}
+                options={{
+                  theme: 'solarized',
+                  mode: 'application/json',
+                  lineNumbers: true,
+                  lineWrapping: true,
+                  lint: true,
+                  placeholder: 'optional, e.g. {"creationDate": -1}'
+                }}
               />
               <HelpBlock>Sort results by specified keys. Has to be valid JSON.</HelpBlock>
             </Col>
@@ -167,14 +171,16 @@ export default createReactClass({
           <Col componentClass={ControlLabel} md={3}>Mapping</Col>
           <Col md={9}>
             <CodeMirror
-              lineNumbers
-              lineWrapping
-              lint
-              mode="application/json"
-              onChange={this.handleMappingChange}
-              placeholder={'e.g. {"_id.$oid": "id", "name": "name"}'}
-              theme="solarized"
               value={mappingValue}
+              onBeforeChange={this.handleMappingChange}
+              options={{
+                theme: 'solarized',
+                mode: 'application/json',
+                lineNumbers: true,
+                lineWrapping: true,
+                lint: true,
+                placeholder: 'e.g. {"_id.$oid": "id", "name": "name"}'
+              }}
             />
             <HelpBlock>Mapping to define the structure of exported tables. Has to be valid JSON.</HelpBlock>
           </Col>

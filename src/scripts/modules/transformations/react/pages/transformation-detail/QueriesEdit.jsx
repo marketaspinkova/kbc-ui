@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
-import CodeMirror from 'react-code-mirror';
+import { Controlled as CodeMirror } from 'react-codemirror2'
 import resolveHighlightMode from './resolveHighlightMode';
 import {ExternalLink} from '@keboola/indigo-ui';
 import normalizeNewlines from './normalizeNewlines';
@@ -17,6 +17,8 @@ export default createReactClass({
     highlightingQueryDisabled: PropTypes.bool
   },
 
+  editor: null,
+
   highlightQuery() {
     const splitQueries = this.props.splitQueries;
     const query = splitQueries.get(this.props.highlightQueryNumber - 1);
@@ -27,14 +29,14 @@ export default createReactClass({
     const lineStart = (this.props.queries.substring(0, positionStart).match(/\n/g) || []).length;
     const positionEnd = positionStart + query.length;
     const lineEnd = (this.props.queries.substring(0, positionEnd).match(/\n/g) || []).length + 1;
-    this.refs.CodeMirror.editor.setSelection({line: lineStart, ch: 0}, {line: lineEnd, ch: 0});
-    const scrollTop = this.refs.CodeMirror.editor.cursorCoords({line: lineStart, ch: 0}).top - 100;
-    const component = this;
+    this.editor.setSelection({line: lineStart, ch: 0}, {line: lineEnd, ch: 0});
+    const scrollTop = this.editor.cursorCoords({line: lineStart, ch: 0}).top - 100;
+
     /* global window */
-    setTimeout(function() {
+    setTimeout(() => {
       window.scrollTo(0, scrollTop);
-      if (component.props.onHighlightingFinished) {
-        component.props.onHighlightingFinished();
+      if (this.props.onHighlightingFinished) {
+        this.props.onHighlightingFinished();
       }
     });
   },
@@ -58,16 +60,18 @@ export default createReactClass({
         <div>
           <div className="edit form-group kbc-queries-editor">
             <CodeMirror
-              ref="CodeMirror"
+              editorDidMount={editor => { this.editor = editor }}
               value={normalizeNewlines(this.props.queries)}
-              theme="solarized"
-              lineNumbers={true}
-              mode={resolveHighlightMode(this.props.backend, null)}
-              lineWrapping={true}
-              autofocus={true}
-              onChange={this.handleChange}
-              readOnly={this.props.disabled ? 'nocursor' : false}
-              placeholder="-- Your SQL goes here..."
+              onBeforeChange={this.handleChange}
+              options={{
+                theme: 'solarized',
+                mode: resolveHighlightMode(this.props.backend, null),
+                lineNumbers: true,
+                lineWrapping: true,
+                autofocus: true,
+                readOnly: this.props.disabled,
+                placeholder: '-- Your SQL goes here...'
+              }}
             />
           </div>
           <div className="small help-block">
@@ -87,8 +91,7 @@ export default createReactClass({
     }
   },
 
-  handleChange(e) {
-    this.props.onChange(normalizeNewlines(e.target.value));
+  handleChange(editor, data, value) {
+    this.props.onChange(normalizeNewlines(value));
   }
-
 });
