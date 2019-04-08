@@ -5659,7 +5659,12 @@ last-call-webpack-plugin@^3.0.0:
     lodash "^4.17.5"
     webpack-sources "^1.1.0"
 
-later@^1.1.6, later@~1.1.6:
+later@^1.1.6:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/later/-/later-1.2.0.tgz#f2cf6c4dd7956dd2f520adf0329836e9876bad0f"
+  integrity sha1-8s9sTdeVbdL1IK3wMpg26YdrrQ8=
+
+later@~1.1.6:
   version "1.1.10"
   resolved "https://registry.yarnpkg.com/later/-/later-1.1.10.tgz#d2da00c2d7804a2958492737fb450a1e5479d49b"
 
@@ -6095,21 +6100,14 @@ mkdirp@0.5.1, mkdirp@0.5.x, mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0, mkdirp@
 moment-timezone@^0.5.23:
   version "0.5.23"
   resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.23.tgz#7cbb00db2c14c71b19303cb47b0fb0a6d8651463"
+  integrity sha512-WHFH85DkCfiNMDX5D3X7hpNH3/PUhjTGcD0U1SgfBGZxJ3qUmJh5FdvaFjcClxOvB3rzdfj4oRffbI38jEnC1w==
   dependencies:
     moment ">= 2.9.0"
 
-"moment@>= 2.9.0":
-  version "2.22.2"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"
-
-moment@^2.24.0:
+"moment@>= 2.9.0", moment@^2.24.0, moment@^2.8.4:
   version "2.24.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
   integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
-
-moment@^2.8.4:
-  version "2.18.0"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.0.tgz#6cfec6a495eca915d02600a67020ed994937252c"
 
 move-concurrently@^1.0.1:
   version "1.0.1"
@@ -7172,9 +7170,10 @@ pretty-format@^24.7.0:
     ansi-styles "^3.2.0"
     react-is "^16.8.4"
 
-prettycron@~0.10.0:
+prettycron@^0.10.0:
   version "0.10.0"
   resolved "https://registry.yarnpkg.com/prettycron/-/prettycron-0.10.0.tgz#10af0dfa20bbd9f6596d7fb5bb8b8546cac527bb"
+  integrity sha1-EK8N+iC72fZZbX+1u4uFRsrFJ7s=
   dependencies:
     later "^1.1.6"
     moment "^2.8.4"
