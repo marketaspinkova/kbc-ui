@@ -1,4 +1,6 @@
 import Promise from 'bluebird';
+import AWS from 'aws-sdk/global';
+import S3 from 'aws-sdk/clients/s3';
 import _ from 'underscore';
 import ApplicationStore from '../../stores/ApplicationStore';
 import dispatcher from '../../Dispatcher';
@@ -11,10 +13,6 @@ import StorageFilesStore from './stores/StorageFilesStore';
 import storageApi from './StorageApi';
 import jobPoller from '../../utils/jobPoller';
 import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
-
-// via https://github.com/aws/aws-sdk-js/issues/603#issuecomment-228233113
-import 'aws-sdk/dist/aws-sdk';
-const AWS = window.AWS;
 
 export default {
   tokenVerify: function() {
@@ -922,8 +920,12 @@ export default {
 
     return storageApi.prepareFileUpload(uploadParams).then(response => {
       const fileId = response.id;
-
       const awsParams = {
+        credentials: {
+          accessKeyId: response.uploadParams.credentials.AccessKeyId,
+          secretAccessKey: response.uploadParams.credentials.SecretAccessKey,
+          sessionToken: response.uploadParams.credentials.SessionToken
+        },
         signatureVersion: 'v4',
         maxRetries: 0,
         region: response.region,
@@ -931,7 +933,6 @@ export default {
           timeout: 0
         }
       };
-
       const s3params = {
         Key: response.uploadParams.key,
         Bucket: response.uploadParams.bucket,
@@ -942,11 +943,6 @@ export default {
       };
 
       AWS.config.setPromisesDependency(Promise);
-      AWS.config.credentials = new AWS.Credentials({
-        accessKeyId: response.uploadParams.credentials.AccessKeyId,
-        secretAccessKey: response.uploadParams.credentials.SecretAccessKey,
-        sessionToken: response.uploadParams.credentials.SessionToken
-      });
 
       const reportProgress = _.throttle((progress) => {
         const percent = Math.max(1, Math.round(100 * (progress.loaded / progress.total)));
@@ -960,7 +956,7 @@ export default {
         }
       }, 800);
 
-      return new AWS.S3(awsParams)
+      return new S3(awsParams)
         .putObject(s3params)
         .on('httpUploadProgress', reportProgress)
         .promise().then(() => {

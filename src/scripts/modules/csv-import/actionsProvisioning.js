@@ -1,5 +1,5 @@
 import { Map, fromJS } from 'immutable';
-
+import S3 from 'aws-sdk/clients/s3';
 import storeProvisioning from './storeProvisioning';
 import componentsActions from '../components/InstalledComponentsActionCreators';
 import storageApi from '../components/StorageApi';
@@ -7,10 +7,6 @@ import storageApiActions from '../components/StorageActionCreators';
 import bucketsStore from '../components/stores/StorageBucketsStore';
 import tablesStore from '../components/stores/StorageTablesStore';
 import installedComponentsStore from '../components/stores/InstalledComponentsStore';
-
-// via https://github.com/aws/aws-sdk-js/issues/603#issuecomment-228233113
-import 'aws-sdk/dist/aws-sdk';
-const AWS = window.AWS;
 
 // utils
 import {createConfiguration} from './utils';
@@ -121,9 +117,13 @@ export default function(configId) {
     updateLocalState(['uploadingProgress'], 5);
 
     storageApi.prepareFileUpload(params).then(function(response) {
-      var fileId = response.id;
-      // no retries, no time limit
+      const fileId = response.id;
       const awsParams = {
+        credentials: {
+          accessKeyId: response.uploadParams.credentials.AccessKeyId,
+          secretAccessKey: response.uploadParams.credentials.SecretAccessKey,
+          sessionToken: response.uploadParams.credentials.SessionToken
+        },
         signatureVersion: 'v4',
         maxRetries: 0,
         region: response.region,
@@ -138,17 +138,11 @@ export default function(configId) {
         ServerSideEncryption: response.uploadParams['x-amz-server-side-encryption'],
         Body: getLocalState().get('file')
       };
-      const credentials = response.uploadParams.credentials;
-      AWS.config.credentials = new AWS.Credentials({
-        accessKeyId: credentials.AccessKeyId,
-        secretAccessKey: credentials.SecretAccessKey,
-        sessionToken: credentials.SessionToken
-      });
 
       updateLocalState(['uploadingMessage'], 'Uploading to S3');
       updateLocalState(['uploadingProgress'], 30);
 
-      new AWS.S3(awsParams)
+      new S3(awsParams)
         .putObject(s3params)
         .on('httpUploadProgress', function(progress) {
           var addition = 0;
