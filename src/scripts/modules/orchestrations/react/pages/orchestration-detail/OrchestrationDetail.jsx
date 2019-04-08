@@ -26,9 +26,10 @@ import OrchestrationDeleteButton from '../../components/OrchestrationDeleteButto
 import OrchestrationActiveButton from '../../components/OrchestrationActiveButton';
 import {ExternalLink} from '@keboola/indigo-ui';
 import {Row, Col} from 'react-bootstrap';
+import StorageTablesStore from '../../../../components/stores/StorageTablesStore';
 
 export default createReactClass({
-  mixins: [createStoreMixin(OrchestrationStore, OrchestrationJobsStore, VersionsStore, LatestJobsStore)],
+  mixins: [createStoreMixin(OrchestrationStore, OrchestrationJobsStore, VersionsStore, LatestJobsStore, StorageTablesStore)],
 
   getStateFromStores() {
     const orchestrationId = RoutesStore.getCurrentRouteIntParam('orchestrationId');
@@ -50,7 +51,8 @@ export default createReactClass({
       graphJobs: jobs.filter(job => job.get('startTime') && job.get('endTime')),
       jobsLoading: OrchestrationJobsStore.isLoading(orchestrationId),
       pendingActions: OrchestrationStore.getPendingActionsForOrchestration(orchestrationId),
-      latestJobs: LatestJobsStore.getJobs('orchestration', orchestrationId)
+      latestJobs: LatestJobsStore.getJobs('orchestration', orchestrationId),
+      tables: StorageTablesStore.getAll()
     };
   },
 
@@ -100,6 +102,7 @@ export default createReactClass({
                 <ScheduleModal
                   crontabRecord={this.state.orchestration.get('crontabRecord')}
                   orchestrationId={this.state.orchestration.get('id')}
+                  tables={this.state.tables}
                 />
               </Col>
             </Row>

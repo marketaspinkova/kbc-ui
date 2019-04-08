@@ -14,6 +14,7 @@ import EventTrigger from '../components/EventTrigger';
 export default createReactClass({
   propTypes: {
     orchestrationId: PropTypes.number.isRequired,
+    tables: PropTypes.object.isRequired,
     crontabRecord: PropTypes.string
   },
 
@@ -22,7 +23,8 @@ export default createReactClass({
       crontabRecord: this.props.crontabRecord || '0 0 * * *',
       isSaving: false,
       showModal: false,
-      triggerType: ORCHESTRATION_TRIGGER_TYPE.TIME
+      triggerType: ORCHESTRATION_TRIGGER_TYPE.TIME,
+      selectedTables: []
     };
   },
 
@@ -56,8 +58,8 @@ export default createReactClass({
             />
             <hr />
             {(this.state.triggerType === ORCHESTRATION_TRIGGER_TYPE.TIME) ?
-              this.renderScheduler() :
-              this.renderEventTrigger()
+              <CronScheduler crontabRecord={this.state.crontabRecord} onChange={this._handleCrontabChange} /> :
+              <EventTrigger tables={this.props.tables} onChange={this._handleTableSelect} />
             }
 
           </Modal.Body>
@@ -70,10 +72,6 @@ export default createReactClass({
         </Modal>
       </div>
     );
-  },
-
-  renderScheduler() {
-    return (<CronScheduler crontabRecord={this.state.crontabRecord} onChange={this._handleCrontabChange} />);
   },
 
   renderSchedulerButtons() {
@@ -100,10 +98,6 @@ export default createReactClass({
         </div>
       </div>
     );
-  },
-
-  renderEventTrigger() {
-    return (<EventTrigger />);
   },
 
   renderEventTriggerButtons() {
@@ -165,6 +159,12 @@ export default createReactClass({
   _handleTriggerTypeChange(value) {
     return this.setState({
       triggerType: value
+    });
+  },
+
+  _handleTableSelect(state) {
+    return this.setState({
+      selected: state.selected
     });
   }
 });
