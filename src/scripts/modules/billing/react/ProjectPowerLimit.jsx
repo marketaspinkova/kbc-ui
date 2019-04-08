@@ -7,7 +7,6 @@ import LimitProgress from './../../limits/LimitProgress';
 import {Button} from 'react-bootstrap';
 import contactSupport from '../../../utils/contactSupport';
 import classnames from 'classnames';
-import {numericMetricFormatted} from '../../../utils/numbers';
 import MetricsApi from '../MetricsApi';
 import {fromJS} from 'immutable';
 import Loader from './Loader';
@@ -130,11 +129,11 @@ export default createReactClass({
         <span>
           {'Project consumed '}
           <strong style={{fontSize: '24px'}}>
-            {numericMetricFormatted(limit.get('metricValue'), limit.get('unit'))}
+            {limit.get('metricValue')}
           </strong>
           {' of '}
           <strong style={{fontSize: '24px'}}>
-            {numericMetricFormatted(limit.get('limitValue'), limit.get('unit'))}
+            {limit.get('limitValue')}
           </strong>
           {' credits this month'}
         </span>
@@ -144,7 +143,7 @@ export default createReactClass({
         <span>
           {'Project consumed '}
           <strong style={{fontSize: '24px'}}>
-            {numericMetricFormatted(limit.get('metricValue'), limit.get('unit'))}
+            {limit.get('metricValue')}
           </strong>
           {' credits this month'}
         </span>
