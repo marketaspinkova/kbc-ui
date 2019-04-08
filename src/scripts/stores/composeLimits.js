@@ -81,13 +81,15 @@ function prepareConnectionData(limits, metrics, limitsMetadata) {
       id: 'sandbox.dockerMemoryReservationMBytes',
       limitValue: limits.getIn(['sandbox.dockerMemoryReservationMBytes', 'value']),
       name: limitsMetadata.getIn(['sandbox.dockerMemoryReservationMBytes', 'name']),
-      unit: 'MB'
+      unit: 'MB',
+      hideIfNull: true,
     },
     {
       id: 'sandbox.dockerMemoryLimitMBytes',
       limitValue: limits.getIn(['sandbox.dockerMemoryLimitMBytes', 'value']),
       name: limitsMetadata.getIn(['sandbox.dockerMemoryLimitMBytes', 'name']),
-      unit: 'MB'
+      unit: 'MB',
+      hideIfNull: true,
     }
   ];
 

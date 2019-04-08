@@ -16,9 +16,19 @@ export default createReactClass({
   },
 
   render() {
-    const showOnLimitsPage = this.props.section.get('limits').filter(limit => {
-      return limit.get('showOnLimitsPage', true);
-    });
+    const showOnLimitsPage = this.props.section
+      .get('limits')
+      .filter(limit => {
+        return limit.get('showOnLimitsPage', true);
+      })
+      .filter(limit => {
+        if (this.props.canEdit) {
+          return true;
+        } else {
+          return limit.get('limitValue') !== null && limit.get('hideIfNull', false) !== true
+        }
+      })
+    ;
 
     const rows = limitsToRows(showOnLimitsPage)
       .map(this.limitsRow)
