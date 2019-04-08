@@ -136,7 +136,7 @@ export default createReactClass({
   renderActionButton() {
     const { limit } = this.props;
 
-    if (!limit.get('limitValue') && limit.get('limitValue') !== 0) {
+    if (!this.props.canEdit && !limit.get('limitValue') && limit.get('limitValue') !== 0) {
       return <span />;
     }
 
