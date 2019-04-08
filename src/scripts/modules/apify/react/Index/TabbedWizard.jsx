@@ -1,9 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
-import {Tab, Tabs} from 'react-bootstrap';
-import {RadioGroup} from 'react-radio-group';
-import RadioGroupInput from '../../../../react/common/RadioGroupInput';
+import { Tab, Tabs, FormGroup, Radio, HelpBlock } from 'react-bootstrap';
 import SapiTableSelector from '../../../components/react/components/SapiTableSelector';
 import ApifyObjectSelector from './ApifyObjectSelector';
 import { ExternalLink } from '@keboola/indigo-ui';
@@ -43,23 +41,76 @@ export default createReactClass({
     return (
       <span>
         <Tabs className="tabs-inside-modal" activeKey={this.props.step} animation={false} onSelect={this.props.selectTab} id="controlled-tab-wizard">
-          <Tab title="Action"
-            eventKey={CRAWLER_KEY} disabled={this.isTabDisabled(CRAWLER_KEY)}>
-            {this.renderActionForm()}
+          <Tab 
+            title="Action"
+            eventKey={CRAWLER_KEY} 
+            disabled={this.isTabDisabled(CRAWLER_KEY)}
+          >
+            <div className="clearfix">
+              <FormGroup>
+                <Radio
+                  value="crawler"
+                  checked={this.props.action === 'crawler'}
+                  onChange={(event) => this.updateParameter('action', event.target.value)}
+                >
+                  Run Crawler
+                </Radio>
+                <HelpBlock>
+                  Runs a specific Crawler and retrieves its results if it finishes successfully.
+                </HelpBlock>
+              </FormGroup>
+              <FormGroup>
+                <Radio
+                  value="actor"
+                  checked={this.props.action === 'actor'}
+                  onChange={(event) => this.updateParameter('action', event.target.value)}
+                >
+                  Run Actor
+                </Radio>
+                <HelpBlock>
+                  Runs a specific Actor and retrieves its results if it finishes successfully.
+                </HelpBlock>
+              </FormGroup>
+              <FormGroup>
+                <Radio
+                  value="executionId"
+                  checked={this.props.action === 'executionId'}
+                  onChange={(event) => this.updateParameter('action', event.target.value)}
+                >
+                  Retrieve results from Crawler run
+                </Radio>
+                <HelpBlock>
+                  Retrieves the results from a Crawler run specified by its Execution ID.
+                </HelpBlock>
+              </FormGroup>
+              <FormGroup>
+                <Radio
+                  value="dataset"
+                  checked={this.props.action === 'dataset'}
+                  onChange={(event) => this.updateParameter('action', event.target.value)}
+                >
+                  Retrieve items from Dataset
+                </Radio>
+                <HelpBlock>
+                  Retrieves items from a Dataset specified by its ID or name.
+                </HelpBlock>
+              </FormGroup>
+            </div>
           </Tab>
-          {['crawler', 'dataset', 'actor'].includes(this.props.action) ?
+          {['crawler', 'dataset', 'actor'].includes(this.props.action) && (
             <Tab title="Authentication" eventKey={AUTH_KEY}
               disabled={this.isTabDisabled(AUTH_KEY)}>
               {this.renderTokenForm()}
             </Tab>
-            : null
-          }
-          <Tab title="Specification"
-            eventKey={OPTIONS_KEY} disabled={this.isTabDisabled(OPTIONS_KEY)} >
-            {this.props.step === OPTIONS_KEY ? this.renderOptionsContent() : null}
+          )}
+          <Tab 
+            title="Specification"
+            eventKey={OPTIONS_KEY} 
+            disabled={this.isTabDisabled(OPTIONS_KEY)}
+          >
+            {this.props.step === OPTIONS_KEY && this.renderOptionsContent()}
           </Tab>
         </Tabs>
-
       </span>
     );
   },
@@ -118,37 +169,6 @@ export default createReactClass({
           </div>
         </div>
       </div>
-    );
-  },
-
-  renderActionForm() {
-    return (
-      <RadioGroup
-        name="Action"
-        selectedValue={this.props.action}
-        onChange={(value) => this.updateParameter('action', value)}
-      >
-        <RadioGroupInput
-          label="Run Crawler"
-          help="Runs a specific Crawler and retrieves its results if it finishes successfully."
-          value="crawler"
-        />
-        <RadioGroupInput
-          label="Run Actor"
-          help="Runs a specific Actor and retrieves its results if it finishes successfully."
-          value="actor"
-        />
-        <RadioGroupInput
-          label="Retrieve results from Crawler run"
-          help="Retrieves the results from a Crawler run specified by its Execution ID."
-          value="executionId"
-        />
-        <RadioGroupInput
-          label="Retrieve items from Dataset"
-          help="Retrieves items from a Dataset specified by its ID or name."
-          value="dataset"
-        />
-      </RadioGroup>
     );
   },
 

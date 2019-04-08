@@ -1,10 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
-import { Modal, Form, Col, FormGroup } from 'react-bootstrap';
+import { Modal, Form, Col, FormGroup, Radio, HelpBlock } from 'react-bootstrap';
 import { ExternalLink } from '@keboola/indigo-ui';
-import { RadioGroup } from 'react-radio-group';
-import RadioGroupInput from '../../../../react/common/RadioGroupInput';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import { bucketSharingTypes } from '../../Constants';
 
@@ -38,18 +36,30 @@ export default createReactClass({
 
             <FormGroup>
               <Col sm={11} smOffset={1}>
-                <RadioGroup selectedValue={this.state.sharing} onChange={this.handleSharing}>
-                  <RadioGroupInput
-                    label="Organization Members"
-                    help="Only organization members are able to link the shared bucket to a project."
+                <FormGroup>
+                  <Radio
                     value={bucketSharingTypes.ORGANIZATION}
-                  />
-                  <RadioGroupInput
-                    label="Project Members"
-                    help="Every project member is able to link the shared bucket to a project."
+                    checked={this.state.sharing === bucketSharingTypes.ORGANIZATION}
+                    onChange={this.handleSharing}
+                  >
+                    Organization Members
+                  </Radio>
+                  <HelpBlock>
+                    Only organization members are able to link the shared bucket to a project.
+                  </HelpBlock>
+                </FormGroup>
+                <FormGroup>
+                  <Radio
                     value={bucketSharingTypes.ORGANIZATION_PROJECT}
-                  />
-                </RadioGroup>
+                    checked={this.state.sharing === bucketSharingTypes.ORGANIZATION_PROJECT}
+                    onChange={this.handleSharing}
+                  >
+                    Project Members
+                  </Radio>
+                  <HelpBlock>
+                    Every project member is able to link the shared bucket to a project.
+                  </HelpBlock>
+                </FormGroup>
               </Col>
             </FormGroup>
           </Modal.Body>
@@ -68,9 +78,9 @@ export default createReactClass({
     );
   },
 
-  handleSharing(type) {
+  handleSharing(event) {
     this.setState({
-      sharing: type
+      sharing: event.target.value
     });
   },
 

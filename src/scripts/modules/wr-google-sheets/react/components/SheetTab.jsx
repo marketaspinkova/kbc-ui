@@ -1,9 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
-import {RadioGroup} from 'react-radio-group';
-import { ControlLabel, HelpBlock, FormControl, FormGroup, Col } from 'react-bootstrap';
-import RadioGroupInput from '../../../../react/common/RadioGroupInput';
+import { ControlLabel, HelpBlock, FormControl, FormGroup, Col, Radio } from 'react-bootstrap';
 
 export default createReactClass({
   propTypes: {
@@ -43,33 +41,37 @@ export default createReactClass({
 
   renderActionRadio() {
     return (
-      <div className="form-group">
-        <label className="col-md-2 control-label">
+      <FormGroup>
+        <Col md={2} componentClass={ControlLabel}>
           Action
-        </label>
-        <div className="col-md-10">
-          <RadioGroup
-            name="Action"
-            selectedValue={this.props.valueAction}
-            onChange={this.props.onChangeAction}
-          >
-            <div className="form-horizontal">
-              <RadioGroupInput
-                label="Update rows"
-                help="Overwrites data in the sheet"
-                wrapperClassName="col-sm-8"
-                value="update"
-              />
-              <RadioGroupInput
-                label="Append rows"
-                help="Add new data to the end of the sheet"
-                wrapperClassName="col-sm-8"
-                value="append"
-              />
-            </div>
-          </RadioGroup>
-        </div>
-      </div>
+        </Col>
+        <Col md={10}>
+          <FormGroup>
+            <Radio
+              value="update"
+              checked={this.props.valueAction === 'update'}
+              onChange={(event) => this.props.onChangeAction(event.target.value)}
+            >
+              Update rows
+            </Radio>
+            <HelpBlock>
+              Overwrites data in the sheet
+            </HelpBlock>
+          </FormGroup>
+          <FormGroup>
+            <Radio
+              value="append"
+              checked={this.props.valueAction === 'append'}
+              onChange={(event) => this.props.onChangeAction(event.target.value)}
+            >
+              Append rows
+            </Radio>
+            <HelpBlock>
+              Add new data to the end of the sheet
+            </HelpBlock>
+          </FormGroup>
+        </Col>
+      </FormGroup>
     );
   }
 });

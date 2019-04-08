@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
-import {RadioGroup} from 'react-radio-group';
-import RadioGroupInput from '../../../../react/common/RadioGroupInput';
+import { Col, ControlLabel, HelpBlock, FormGroup, Radio } from 'react-bootstrap';
 import Picker from '../../../google-utils/react/GooglePicker';
 import ViewTemplates from '../../../google-utils/react/PickerViewTemplates';
 
@@ -29,41 +28,47 @@ export default createReactClass({
 
   renderTypeRadio() {
     return (
-      <div className="form-group">
-        <label className="col-md-2 control-label">
+      <FormGroup>
+        <Col md={2} componentClass={ControlLabel}>
           Upload data to
-        </label>
-        <div className="col-md-10">
-          <RadioGroup
-            name="type"
-            selectedValue={this.props.type}
-            onChange={this.props.onSwitchType}
-          >
-            <RadioGroupInput
-              label="New spreadsheet"
-              help="Create new Spreadsheet"
-              wrapperClassName="col-sm-8"
+        </Col>
+        <Col md={10}>
+          <FormGroup>
+            <Radio
               value="new"
-            />
-            <RadioGroupInput
-              label="Existing spreadsheet"
-              help="Use existing Spreadsheet"
-              wrapperClassName="col-sm-8"
+              checked={this.props.type === 'new'}
+              onChange={(event) => this.props.onSwitchType(event.target.value)}
+            >
+              New spreadsheet
+            </Radio>
+            <HelpBlock>
+              Create new Spreadsheet
+            </HelpBlock>
+          </FormGroup>
+          <FormGroup>
+            <Radio
               value="existing"
-            />
-          </RadioGroup>
-        </div>
-      </div>
+              checked={this.props.type === 'existing'}
+              onChange={(event) => this.props.onSwitchType(event.target.value)}
+            >
+              Existing spreadsheet
+            </Radio>
+            <HelpBlock>
+              Use existing Spreadsheet
+            </HelpBlock>
+          </FormGroup>
+        </Col>
+      </FormGroup>
     );
   },
 
   renderSpreadsheetPicker() {
     return (
-      <div className="form-group">
-        <label className="col-md-2 control-label">
+      <FormGroup>
+        <Col md={2} componentClass={ControlLabel}>
           Spreadsheet
-        </label>
-        <div className="col-md-10">
+        </Col>
+        <Col md={10}>
           <Picker
             dialogTitle="Select Spreadsheet"
             buttonLabel={this.props.valueTitle ? this.props.valueTitle : 'Select Spreadsheet'}
@@ -78,21 +83,21 @@ export default createReactClass({
             ]}
             multiselectEnabled={false}
           />
-          <span className="help-block">
+          <HelpBlock>
             Choose the spreadsheet into which you want to upload the data
-          </span>
-        </div>
-      </div>
+          </HelpBlock>
+        </Col>
+      </FormGroup>
     );
   },
 
   renderFolderPicker() {
     return (
-      <div className="form-group">
-        <label className="col-md-2 control-label">
+      <FormGroup>
+        <Col md={2} componentClass={ControlLabel}>
           Spreadsheet
-        </label>
-        <div className="col-md-10">
+        </Col>
+        <Col md={10}>
           <div className="input-group">
             <div className="input-group-btn">
               <Picker
@@ -117,11 +122,11 @@ export default createReactClass({
               className="form-control"
             />
           </div>
-          <span className="help-block">
+          <HelpBlock>
             Select the spreadsheet parent <strong>folder</strong> and enter the spreadsheet <strong>title</strong>.<br/>The spreadsheet will be created upon saving.
-          </span>
-        </div>
-      </div>
+          </HelpBlock>
+        </Col>
+      </FormGroup>
     );
   }
 });
