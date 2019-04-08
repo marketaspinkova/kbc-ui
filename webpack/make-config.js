@@ -79,8 +79,6 @@ module.exports = function(options) {
       }
     },
     module: {
-      // via http://andrewhfarmer.com/aws-sdk-with-webpack/
-      noParse: /aws\-sdk/,
       rules: [
         {
           test: /\.jsx?$/,
