@@ -48,7 +48,7 @@ export default createReactClass({
                   key={`${version.version}-${index}`}
                   value={version.version}
                   checked={this.state.imageTag === version.version}
-                  onChange={(event) => this.props.onChange({ imageTag: event.target.value })}
+                  onChange={(event) => this.setState({ imageTag: event.target.value })}
                 >
                   {version.label}
                 </Radio>
