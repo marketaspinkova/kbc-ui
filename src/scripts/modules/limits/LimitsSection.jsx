@@ -45,7 +45,6 @@ export default createReactClass({
 
   limitsRow(limitsPart, index) {
     const tds = limitsPart
-      .filter((limit) => !!limit.get('name'))
       .map((limit) => {
         return (
           <LimitRow
