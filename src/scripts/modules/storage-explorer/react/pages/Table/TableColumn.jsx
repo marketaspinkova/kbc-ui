@@ -4,7 +4,7 @@ import Promise from 'bluebird';
 import createReactClass from 'create-react-class';
 import { Map } from 'immutable';
 import classnames from 'classnames';
-import { Label, PanelGroup, Panel, Button, Row, Col } from 'react-bootstrap';
+import { Table, Button, Row, Label, PanelGroup, Panel, Col } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 
 import Tooltip from '../../../../../react/common/Tooltip';
@@ -98,16 +98,45 @@ export default createReactClass({
           Columns
         </h2>
 
-        <PanelGroup className="kbc-accordion">
-          {this.props.table
-            .get('columns')
-            .map(this.renderColumnPanel)
-            .toArray()}
-        </PanelGroup>
+        {this.canAddColumn() ? (
+          <PanelGroup className="kbc-accordion">
+            {this.props.table
+              .get('columns')
+              .map(this.renderColumnPanel)
+              .toArray()}
+          </PanelGroup>
+        ) : (
+          <Row>
+            <Table responsive striped>
+              <tbody>
+              {this.props.table
+                .get('columns')
+                .map(this.renderColumn)
+                .toArray()}
+              </tbody>
+            </Table>
+          </Row>
+        )}
 
         {this.renderCreateColumnModal()}
         {this.renderDeleteColumnModal()}
       </div>
+    );
+  },
+
+  renderColumn(column) {
+    return (
+      <tr key={column}>
+        <td>{column}</td>
+        <td>
+          {this.isColumnInPrimaryKey(column) && (
+            <span className="label label-info" title="Primary key">
+              PK
+            </span>
+          )}
+        </td>
+        <td className="actions text-right">{this.renderActions(column)}</td>
+      </tr>
     );
   },
 
