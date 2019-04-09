@@ -78,6 +78,11 @@ export default createReactClass({
     return (
       <div>
         <h3>Data types</h3>
+        <p>
+          Define the User type to override a data type set by a system
+          (e.g. extractor). Saving a blank type will remove the previously set
+          User type.
+        </p>
         <table className="table table-striped table-hover">
           <thead>
             <tr>
