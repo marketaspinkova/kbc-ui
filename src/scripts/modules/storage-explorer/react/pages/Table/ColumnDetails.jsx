@@ -79,9 +79,9 @@ export default createReactClass({
       <div>
         <h3>Data types</h3>
         <p>
-          Define the User type to override a data type set by a system
-          (e.g. extractor). Saving a blank type will remove the previously set
-          User type.
+          To set a custom data type or to override the data type set by the
+          system fill the form below. Saving a blank type will remove the
+          previously set user-defined type.
         </p>
         <table className="table table-striped table-hover">
           <thead>
