@@ -51,7 +51,7 @@ export default createReactClass({
           });
         return options;
       }
-      return options.set(`${item.value.schema}.${item.value.tableName}`, item.value);
+      return options.set(`${item.value.schema}.${item.value.tableName}`, Map(item.value));
     }, Map());
 
     this.props.onChange(this.props.configId, selectedTables.toList());
