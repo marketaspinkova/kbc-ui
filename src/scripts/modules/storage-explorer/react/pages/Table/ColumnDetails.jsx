@@ -1,14 +1,18 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
-import { fromJS, List } from 'immutable';
-import { HelpBlock, Label, Col, FormGroup, FormControl, ControlLabel, Checkbox, Button } from 'react-bootstrap';
+import { Map, fromJS, List } from 'immutable';
+import { FormControl, Checkbox, Button } from 'react-bootstrap';
 import Select from 'react-select';
 import MetadataEditField from '../../../../components/react/components/MetadataEditField';
 import InlineEditArea from '../../../../../react/common/InlineEditArea';
 import { Loader } from '@keboola/indigo-ui';
 
 import { DataTypeKeys, BaseTypes } from '../../../../components/MetadataConstants';
+import ComponentName from '../../../../../react/common/ComponentName';
+import ComponentIcon from '../../../../../react/common/ComponentIcon';
+import ComponentsStore from '../../../../components/stores/ComponentsStore';
+import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 
 const typesSupportingLength = List(['STRING', 'INTEGER', 'NUMERIC']);
 
@@ -17,6 +21,8 @@ const isLengthSupported = (type) => {
 };
 
 export default createReactClass({
+  mixins: [createStoreMixin(ComponentsStore)],
+
   propTypes: {
     columnId: PropTypes.string.isRequired,
     columnName: PropTypes.string.isRequired,
@@ -24,6 +30,14 @@ export default createReactClass({
     userDataType: PropTypes.object.isRequired,
     deleteUserType: PropTypes.func.isRequired,
     saveUserType: PropTypes.func.isRequired,
+  },
+
+  getStateFromStores() {
+    return {
+      machineDataTypeComponent: this.props.machineDataType.count() > 0
+        ? ComponentsStore.getComponent(this.props.machineDataType.get('provider'))
+        : Map()
+    };
   },
 
   getInitialState() {
@@ -63,46 +77,55 @@ export default createReactClass({
   renderTypeForm() {
     return (
       <div>
-        <h3>Datatype</h3>
-        <div className="form-horizontal">
-          {this.renderSystemValue()}
-          <FormGroup>
-            <Col componentClass={ControlLabel} xs={4}>Type</Col>
-            <Col xs={8}>
-              <Select
-                value={this.state.userDataType.get(DataTypeKeys.BASE_TYPE)}
-                options={this.baseTypeOptions()}
-                onChange={this.handleBaseTypeChange}
-              />
-              <HelpBlock>Saving a blank type will remove the previously set type</HelpBlock>
-            </Col>
-          </FormGroup>
-          {this.renderLengthEdit()}
-          <FormGroup>
-            <Col xs={8} xsOffset={4}>
-              <Checkbox
-                name={this.props.columnName + '_nullable'}
-                checked={this.state.userDataType.get(DataTypeKeys.NULLABLE, false)}
-                onChange={this.handleNullableChange}
-              >
-                Nullable
-              </Checkbox>
-            </Col>
-          </FormGroup>
-          <FormGroup>
-            <Col xs={8} xsOffset={4}>
-              <Button bsStyle="success" onClick={this.handleSaveDataType} disabled={this.isDisabled()}>
-                {this.state.isSaving ? (
-                  <span>
-                    <Loader /> Saving...
-                  </span>
-                ) : (
-                  <span>Save</span>
-                )}
-              </Button>
-            </Col>
-          </FormGroup>
-        </div>
+        <h3>Data types</h3>
+        <table className="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th><strong>Provider</strong></th>
+              <th style={{minWidth: '160px'}}><strong>Type</strong></th>
+              <th><strong>Length</strong></th>
+              <th><strong>Nullable</strong></th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.renderSystemValue()}
+            <tr>
+              <td>User</td>
+              <td>
+                <Select
+                  value={this.state.userDataType.get(DataTypeKeys.BASE_TYPE)}
+                  options={this.baseTypeOptions()}
+                  onChange={this.handleBaseTypeChange}
+                />
+              </td>
+              <td>
+                {this.renderLengthEdit()}
+              </td>
+              <td>
+                <Checkbox
+                  name={this.props.columnName + '_nullable'}
+                  checked={this.state.userDataType.get(DataTypeKeys.NULLABLE, false)}
+                  onChange={this.handleNullableChange}
+                >
+                  Nullable
+                </Checkbox>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colSpan={4} className="text-right">
+                <Button bsStyle="success" onClick={this.handleSaveDataType} disabled={this.isDisabled()}>
+                  {this.state.isSaving ? (
+                    <span><Loader /> Saving...</span>
+                  ) : (
+                    <span>Save</span>
+                  )}
+                </Button>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
       </div>
     );
   },
@@ -110,18 +133,13 @@ export default createReactClass({
   renderLengthEdit() {
     if (isLengthSupported(this.state.userDataType.get(DataTypeKeys.BASE_TYPE))) {
       return (
-        <FormGroup>
-          <Col componentClass={ControlLabel} xs={4}>Length</Col>
-          <Col xs={8}>
-            <FormControl
-              name={this.props.columnName + '_length'}
-              type="text"
-              value={this.state.userDataType.get(DataTypeKeys.LENGTH, '')}
-              onChange={this.handleLengthChange}
-              placeholder="Length, eg. 38,0"
-            />
-          </Col>
-        </FormGroup>
+        <FormControl
+          name={this.props.columnName + '_length'}
+          type="text"
+          value={this.state.userDataType.get(DataTypeKeys.LENGTH, '')}
+          onChange={this.handleLengthChange}
+          placeholder="Length, eg. 38,0"
+        />
       )
     }
   },
@@ -129,23 +147,21 @@ export default createReactClass({
   renderSystemValue() {
     if (this.props.machineDataType.count() > 0) {
       return (
-        <FormGroup>
-          <Col componentClass={ControlLabel} xs={4}>
-            System
-          </Col>
-          <Col xs={8}>
-            <div>
-              {this.props.machineDataType.get(DataTypeKeys.BASE_TYPE)}
-              {
-                this.props.machineDataType.get(DataTypeKeys.LENGTH)
-                  ? '(' + this.props.machineDataType.get(DataTypeKeys.LENGTH) + ')'
-                  : ''
-              }
-              <br/>
-              <Label bsStyle="info">{this.props.machineDataType.get('provider')}</Label>
-            </div>
-          </Col>
-        </FormGroup>
+        <tr>
+          <td>
+            <ComponentIcon component={this.state.machineDataTypeComponent} size="32" resizeToSize="16" />
+            <ComponentName component={this.state.machineDataTypeComponent} showType />
+          </td>
+          <td>{this.props.machineDataType.get(DataTypeKeys.BASE_TYPE)}</td>
+          <td>{this.props.machineDataType.get(DataTypeKeys.LENGTH) && (
+            this.props.machineDataType.get(DataTypeKeys.LENGTH)
+          )}</td>
+          <td>{this.props.machineDataType.get(DataTypeKeys.NULLABLE) ? (
+            <i className="fa fa-check" />
+          ): (
+            <i className="fa fa-times" />
+          )}</td>
+        </tr>
       );
     }
   },
