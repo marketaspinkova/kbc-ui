@@ -152,7 +152,6 @@ export default createReactClass({
             {
               (columnDataType.has('provider')) ?
                   <div>
-                    <Label>{columnDataType.get('provider')}</Label>
                     {columnDataType.get('KBC.datatype.basetype') && (
                       columnDataType.get('KBC.datatype.basetype')
                     )}
