@@ -219,7 +219,14 @@ export default createReactClass({
 
       return (
         <Tooltip tooltip="Delete column" placement="top">
-          <Button bsStyle="link" onClick={() => this.openDeleteColumnModal(column)} disabled={deleting}>
+          <Button
+            bsStyle="link"
+            onClick={(event) => {
+              event.stopPropagation();
+              this.openDeleteColumnModal(column);
+            }}
+            disabled={deleting}
+          >
             {deleting ? <Loader /> : <i className="fa fa-trash-o" />}
           </Button>
         </Tooltip>
