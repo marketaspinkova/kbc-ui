@@ -102,13 +102,15 @@ export default createReactClass({
                 {this.renderLengthEdit()}
               </td>
               <td>
-                <Checkbox
-                  name={this.props.columnName + '_nullable'}
-                  checked={this.state.userDataType.get(DataTypeKeys.NULLABLE, false)}
-                  onChange={this.handleNullableChange}
-                >
-                  Nullable
-                </Checkbox>
+                {this.state.userDataType.get(DataTypeKeys.BASE_TYPE) && (
+                  <Checkbox
+                    name={this.props.columnName + '_nullable'}
+                    checked={this.state.userDataType.get(DataTypeKeys.NULLABLE, false)}
+                    onChange={this.handleNullableChange}
+                  >
+                    Nullable
+                  </Checkbox>
+                )}
               </td>
             </tr>
           </tbody>
