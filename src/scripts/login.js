@@ -4,7 +4,6 @@ import * as helpers from './helpers';
 import Login from './react/login';
 
 import '../styles/app.less';
-import '../styles/login.less';
 
 export default {
   loginPage: true,
