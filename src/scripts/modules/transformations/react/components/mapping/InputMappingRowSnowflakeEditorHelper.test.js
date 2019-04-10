@@ -75,7 +75,7 @@ describe('getMetadataDataType', function() {
     })));
   });
 
-  it('should work with KBC.datatype.basetype and KBC.datatype.nullable', function() {
+  it('should work with KBC.datatype.basetype and KBC.datatype.nullable (nullable set to 1)', function() {
     expect(fromJS({
       Price: {
         column: 'Price',
@@ -95,7 +95,7 @@ describe('getMetadataDataType', function() {
         {
           id: '85349670',
           key: 'KBC.datatype.nullable',
-          value: '1',
+          value: 1,
           provider: 'keboola.ex-db-mssql',
           timestamp: '2018-11-19T13:04:43+0100'
         }
@@ -123,7 +123,175 @@ describe('getMetadataDataType', function() {
         {
           id: '85349670',
           key: 'KBC.datatype.nullable',
+          value: 0,
+          provider: 'keboola.ex-db-mssql',
+          timestamp: '2018-11-19T13:04:43+0100'
+        }
+      ]
+    })));
+  });
+
+  it('should work with KBC.datatype.basetype and KBC.datatype.nullable (nullable set to "1")', function() {
+    expect(fromJS({
+      Price: {
+        column: 'Price',
+        type: 'NUMBER',
+        length: null,
+        convertEmptyValuesToNull: true
+      }
+    })).toEqual(getMetadataDataTypes(fromJS({
+      Price: [
+        {
+          id: '85349671',
+          key: 'KBC.datatype.basetype',
+          value: 'NUMERIC',
+          provider: 'keboola.ex-db-mssql',
+          timestamp: '2018-11-19T13:04:43+0100'
+        },
+        {
+          id: '85349670',
+          key: 'KBC.datatype.nullable',
+          value: '1',
+          provider: 'keboola.ex-db-mssql',
+          timestamp: '2018-11-19T13:04:43+0100'
+        }
+      ]
+    })));
+  });
+
+  it('should work with KBC.datatype.basetype and KBC.datatype.nullable (nullable set to "0")', function() {
+    expect(fromJS({
+      Price: {
+        column: 'Price',
+        type: 'NUMBER',
+        length: null,
+        convertEmptyValuesToNull: false
+      }
+    })).toEqual(getMetadataDataTypes(fromJS({
+      Price: [
+        {
+          id: '85349671',
+          key: 'KBC.datatype.basetype',
+          value: 'NUMERIC',
+          provider: 'keboola.ex-db-mssql',
+          timestamp: '2018-11-19T13:04:43+0100'
+        },
+        {
+          id: '85349670',
+          key: 'KBC.datatype.nullable',
           value: '0',
+          provider: 'keboola.ex-db-mssql',
+          timestamp: '2018-11-19T13:04:43+0100'
+        }
+      ]
+    })));
+  });
+
+  it('should work with KBC.datatype.basetype and KBC.datatype.nullable (nullable set to "true")', function() {
+    expect(fromJS({
+      Price: {
+        column: 'Price',
+        type: 'NUMBER',
+        length: null,
+        convertEmptyValuesToNull: true
+      }
+    })).toEqual(getMetadataDataTypes(fromJS({
+      Price: [
+        {
+          id: '85349671',
+          key: 'KBC.datatype.basetype',
+          value: 'NUMERIC',
+          provider: 'keboola.ex-db-mssql',
+          timestamp: '2018-11-19T13:04:43+0100'
+        },
+        {
+          id: '85349670',
+          key: 'KBC.datatype.nullable',
+          value: "true",
+          provider: 'keboola.ex-db-mssql',
+          timestamp: '2018-11-19T13:04:43+0100'
+        }
+      ]
+    })));
+  });
+
+  it('should work with KBC.datatype.basetype and KBC.datatype.nullable (nullable set to "false")', function() {
+    expect(fromJS({
+      Price: {
+        column: 'Price',
+        type: 'NUMBER',
+        length: null,
+        convertEmptyValuesToNull: false
+      }
+    })).toEqual(getMetadataDataTypes(fromJS({
+      Price: [
+        {
+          id: '85349671',
+          key: 'KBC.datatype.basetype',
+          value: 'NUMERIC',
+          provider: 'keboola.ex-db-mssql',
+          timestamp: '2018-11-19T13:04:43+0100'
+        },
+        {
+          id: '85349670',
+          key: 'KBC.datatype.nullable',
+          value: "false",
+          provider: 'keboola.ex-db-mssql',
+          timestamp: '2018-11-19T13:04:43+0100'
+        }
+      ]
+    })));
+  });
+
+  it('should work with KBC.datatype.basetype and KBC.datatype.nullable (nullable set to true)', function() {
+    expect(fromJS({
+      Price: {
+        column: 'Price',
+        type: 'NUMBER',
+        length: null,
+        convertEmptyValuesToNull: true
+      }
+    })).toEqual(getMetadataDataTypes(fromJS({
+      Price: [
+        {
+          id: '85349671',
+          key: 'KBC.datatype.basetype',
+          value: 'NUMERIC',
+          provider: 'keboola.ex-db-mssql',
+          timestamp: '2018-11-19T13:04:43+0100'
+        },
+        {
+          id: '85349670',
+          key: 'KBC.datatype.nullable',
+          value: true,
+          provider: 'keboola.ex-db-mssql',
+          timestamp: '2018-11-19T13:04:43+0100'
+        }
+      ]
+    })));
+  });
+
+  it('should work with KBC.datatype.basetype and KBC.datatype.nullable (nullable set to false)', function() {
+    expect(fromJS({
+      Price: {
+        column: 'Price',
+        type: 'NUMBER',
+        length: null,
+        convertEmptyValuesToNull: false
+      }
+    })).toEqual(getMetadataDataTypes(fromJS({
+      Price: [
+        {
+          id: '85349671',
+          key: 'KBC.datatype.basetype',
+          value: 'NUMERIC',
+          provider: 'keboola.ex-db-mssql',
+          timestamp: '2018-11-19T13:04:43+0100'
+        },
+        {
+          id: '85349670',
+          key: 'KBC.datatype.nullable',
+          value: false,
           provider: 'keboola.ex-db-mssql',
           timestamp: '2018-11-19T13:04:43+0100'
         }
