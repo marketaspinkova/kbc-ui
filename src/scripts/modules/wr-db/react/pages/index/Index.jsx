@@ -290,7 +290,7 @@ export default componentId => {
             return WrDbActions.deleteTable(componentId, this.state.configId, tableId);
           }}
           isDeleting={!!this.state.deletingTables.get(table.get('id'))}
-          isAdaptive={tableMapping.get('changed_since') === changedSinceConstants.ADAPTIVE_VALUE}
+          isAdaptive={!!tableMapping && tableMapping.get('changed_since') === changedSinceConstants.ADAPTIVE_VALUE}
         />
       );
     },

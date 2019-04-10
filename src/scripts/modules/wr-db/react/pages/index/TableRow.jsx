@@ -24,77 +24,89 @@ export default createReactClass({
     isV2: PropTypes.bool.isRequired,
     onExportChangeFn: PropTypes.func.isRequired,
     table: PropTypes.object.isRequired,
-    v2ConfigTable: PropTypes.object.isRequired,
     tableDbName: PropTypes.string.isRequired,
     configId: PropTypes.string.isRequired,
     componentId: PropTypes.string.isRequired,
     deleteTableFn: PropTypes.func.isRequired,
     isDeleting: PropTypes.bool.isRequired,
-    isAdaptive: PropTypes.bool.isRequired
+    isAdaptive: PropTypes.bool.isRequired,
+    v2ConfigTable: PropTypes.object
   },
 
   render() {
-    const Wrapper = this.props.tableExists ? Link : 'div';
+    if (!this.props.tableExists) {
+      return (
+        <div className="tr text-muted">
+          {this._renderBody()}
+        </div>
+      );
+    }
 
     return (
-      <Wrapper
-        className={this.props.tableExists ? 'tr' : 'tr text-muted'}
+      <Link
+        className="tr"
         to={`${this.props.componentId}-table`}
         params={{
           config: this.props.configId,
           tableId: this.props.table.get('id')
         }}
       >
-        <span className="td">
-          <SapiTableLinkEx tableId={this.props.table.get('id')}>{this.props.table.get('name')}</SapiTableLinkEx>
-        </span>
-        <span className="td">{this.props.tableDbName}</span>
-        {this.props.isV2 && (
-          <span className="td">
-            <Check isChecked={!!(this.props.v2ConfigTable && this.props.v2ConfigTable.get('incremental'))} />
-          </span>
-        )}
-        <span className="td text-right">
-          {this._renderDeleteButton()}
-          <ActivateDeactivateButton
-            activateTooltip="Select table to upload"
-            deactivateTooltip="Deselect table from upload"
-            isActive={this.props.isTableExported}
-            isPending={this.props.isPending}
-            onChange={this.props.onExportChangeFn}
-            buttonDisabled={this.props.isUpdating}
-          />
-          {this.props.tableExists && (
-            <Tooltip tooltip="Upload table to Dropbox">
-              <RunButtonModal
-                title="Run"
-                tooltip={`Upload ${this.props.table.get('id')}`}
-                mode="button"
-                icon="fa fa-play fa-fw"
-                component={this.props.componentId}
-                disabled={this.props.isUpdating}
-                runParams={() => {
-                  const tableId = this.props.table.get('id');
-                  const { configId } = this.props;
-                  const params = {
-                    table: tableId,
-                    writer: configId
-                  };
-                  const api = dockerProxyApi(this.props.componentId);
-                  return (api ? api.getTableRunParams(configId, tableId) : null) || params;
-                }}
-              >
-                {this.props.isAdaptive && (<Alert bsStyle="danger">
-                  <p>Your data filter is set to <code>Since last successful run</code>.</p>
-                  <p>Adaptive incremental processing is only available when running the whole configuration. Running the writer on a single table will perform a full load.</p>
-                </Alert>)}
-                <p>You are about to run an upload of {this.props.table.get('id')} to the database.</p>
-              </RunButtonModal>
-            </Tooltip>
-          )}
-        </span>
-      </Wrapper>
+        {this._renderBody()}
+      </Link>
     );
+  },
+
+  _renderBody() {
+    return [
+      <span className="td" key="link">
+        <SapiTableLinkEx tableId={this.props.table.get('id')}>{this.props.table.get('name')}</SapiTableLinkEx>
+      </span>,
+      <span className="td" key="name">{this.props.tableDbName}</span>,
+      this.props.isV2 && (
+        <span className="td" key="incremental">
+          <Check isChecked={!!(this.props.v2ConfigTable && this.props.v2ConfigTable.get('incremental'))} />
+        </span>
+      ),
+      <span className="td text-right" key="action">
+        {this._renderDeleteButton()}
+        <ActivateDeactivateButton
+          activateTooltip="Select table to upload"
+          deactivateTooltip="Deselect table from upload"
+          isActive={this.props.isTableExported}
+          isPending={this.props.isPending}
+          onChange={this.props.onExportChangeFn}
+          buttonDisabled={this.props.isUpdating}
+        />
+        {this.props.tableExists && (
+          <Tooltip tooltip="Upload table to Dropbox">
+            <RunButtonModal
+              title="Run"
+              tooltip={`Upload ${this.props.table.get('id')}`}
+              mode="button"
+              icon="fa fa-play fa-fw"
+              component={this.props.componentId}
+              disabled={this.props.isUpdating}
+              runParams={() => {
+                const tableId = this.props.table.get('id');
+                const { configId } = this.props;
+                const params = {
+                  table: tableId,
+                  writer: configId
+                };
+                const api = dockerProxyApi(this.props.componentId);
+                return (api ? api.getTableRunParams(configId, tableId) : null) || params;
+              }}
+            >
+              {this.props.isAdaptive && (<Alert bsStyle="danger">
+                <p>Your data filter is set to <code>Since last successful run</code>.</p>
+                <p>Adaptive incremental processing is only available when running the whole configuration. Running the writer on a single table will perform a full load.</p>
+              </Alert>)}
+              <p>You are about to run an upload of {this.props.table.get('id')} to the database.</p>
+            </RunButtonModal>
+          </Tooltip>
+        )}
+      </span>
+    ];
   },
 
   _renderDeleteButton() {
