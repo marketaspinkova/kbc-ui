@@ -28,13 +28,7 @@ import TransformationEmptyInputImage from '../../components/TransformationEmptyI
 import TransformationEmptyOutputImage from '../../components/TransformationEmptyOutputImage';
 import ConfigurationRowEditField from '../../../../components/react/components/ConfigurationRowEditField';
 import contactSupport from '../../../../../utils/contactSupport';
-
-import {
-  getInputMappingValue,
-  getOutputMappingValue,
-  findInputMappingDefinition,
-  findOutputMappingDefinition
-} from '../../../../components/utils/mappingDefinitions';
+import mappingDefinitions from '../../../../components/utils/mappingDefinitions';
 
 export default createReactClass({
   mixins: [ImmutableRenderMixin],
@@ -97,7 +91,7 @@ export default createReactClass({
   _getInputMappingValue() {
     const value = this.props.transformation.get('input', List());
     if (this._isOpenRefineTransformation()) {
-      return getInputMappingValue(this.openRefine.inputMappingDefinitions, value);
+      return mappingDefinitions.getInputMappingValue(this.openRefine.inputMappingDefinitions, value);
     }
     return value;
   },
@@ -105,7 +99,7 @@ export default createReactClass({
   _getOutputMappingValue() {
     const value = this.props.transformation.get('output', List());
     if (this._isOpenRefineTransformation()) {
-      return getOutputMappingValue(this.openRefine.outputMappingDefinitions, value);
+      return mappingDefinitions.getOutputMappingValue(this.openRefine.outputMappingDefinitions, value);
     }
     return value;
   },
@@ -285,7 +279,7 @@ export default createReactClass({
                   .map((input, key) => {
                     let definition;
                     if (this._isOpenRefineTransformation()) {
-                      definition = findInputMappingDefinition(this.openRefine.inputMappingDefinitions, input);
+                      definition = mappingDefinitions.findInputMappingDefinition(this.openRefine.inputMappingDefinitions, input);
                     }
                     return (
                       <Panel
@@ -355,7 +349,7 @@ export default createReactClass({
                     (output, key) => {
                       let definition;
                       if (this._isOpenRefineTransformation()) {
-                        definition = findOutputMappingDefinition(this.openRefine.outputMappingDefinitions, output);
+                        definition = mappingDefinitions.findOutputMappingDefinition(this.openRefine.outputMappingDefinitions, output);
                       }
                       return (
                         <Panel
