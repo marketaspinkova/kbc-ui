@@ -189,22 +189,13 @@ dispatcher.register(function(payload) {
       return MetadataStore.emitChange();
 
     case ActionTypes.METADATA_DELETE_SUCCESS:
-      _store = _store.deleteIn(
-        ['metadata', action.objectType, action.objectId,
-          _store.getIn(['metadata', action.objectType, action.objectId]).findIndex(
-            entry => entry.get('id') === action.metadataId
-          )
-        ]
-      );
+      const index = _store.getIn(['metadata', action.objectType, action.objectId]).findIndex((metadata) => {
+        return metadata.get('id') === action.metadataId;
+      });
+      _store = _store.deleteIn(['metadata', action.objectType, action.objectId, index]);
       if (action.objectType === 'column') {
         const [ tableId, columnName ] = action.objectId.split(/\.(?=[^\.]+$)/);
-        _store = _store.deleteIn(
-          ['metadata', 'tableColumns', tableId, columnName,
-            _store.getIn(['metadata', 'tableColumns', tableId, columnName]).findIndex(
-              entry => entry.get('id') === action.metadataId
-            )
-          ]
-        );
+        _store = _store.deleteIn(['metadata', 'tableColumns', tableId, columnName, index]);
       }
       return MetadataStore.emitChange();
 
