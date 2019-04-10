@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
-import { Map, fromJS, List } from 'immutable';
+import { Map, List } from 'immutable';
 import { FormControl, Checkbox, Button } from 'react-bootstrap';
 import Select from 'react-select';
 import MetadataEditField from '../../../../components/react/components/MetadataEditField';
@@ -53,12 +53,6 @@ export default createReactClass({
     }
   },
 
-  baseTypeOptions() {
-    return fromJS(BaseTypes).map(type => {
-      return {label: type, value: type}
-    }).toJS();
-  },
-
   render() {
     return (
       <div>
@@ -99,7 +93,7 @@ export default createReactClass({
               <td>
                 <Select
                   value={this.state.userDataType.get(DataTypeKeys.BASE_TYPE)}
-                  options={this.baseTypeOptions()}
+                  options={BaseTypes.map(type => ({ label: type, value: type }))}
                   onChange={this.handleBaseTypeChange}
                 />
               </td>
@@ -138,66 +132,71 @@ export default createReactClass({
   },
 
   renderLengthEdit() {
-    if (isLengthSupported(this.state.userDataType.get(DataTypeKeys.BASE_TYPE))) {
-      return (
-        <FormControl
-          name={this.props.columnName + '_length'}
-          type="text"
-          value={this.state.userDataType.get(DataTypeKeys.LENGTH, '')}
-          onChange={this.handleLengthChange}
-          placeholder="Length, eg. 38,0"
-        />
-      )
+    if (!isLengthSupported(this.state.userDataType.get(DataTypeKeys.BASE_TYPE))) {
+      return null;
     }
+
+    return (
+      <FormControl
+        name={this.props.columnName + '_length'}
+        type="text"
+        value={this.state.userDataType.get(DataTypeKeys.LENGTH, '')}
+        onChange={this.handleLengthChange}
+        placeholder="Length, eg. 38,0"
+      />
+    );
   },
 
   renderSystemValue() {
-    if (this.props.machineDataType.count() > 0) {
-      return (
-        <tr>
-          <td>
-            <ComponentIcon component={this.state.machineDataTypeComponent} size="32" resizeToSize="16" />
-            <ComponentName component={this.state.machineDataTypeComponent} showType />
-          </td>
-          <td>{this.props.machineDataType.get(DataTypeKeys.BASE_TYPE)}</td>
-          <td>{this.props.machineDataType.get(DataTypeKeys.LENGTH) && (
-            this.props.machineDataType.get(DataTypeKeys.LENGTH)
-          )}</td>
-          <td>{this.props.machineDataType.get(DataTypeKeys.NULLABLE) ? (
-            <i className="fa fa-check" />
-          ): (
-            <i className="fa fa-times" />
-          )}</td>
-        </tr>
-      );
+    if (!this.props.machineDataType.count()) {
+      return null;
     }
+
+    return (
+      <tr>
+        <td>
+          <ComponentIcon component={this.state.machineDataTypeComponent} size="32" resizeToSize="16" />
+          <ComponentName component={this.state.machineDataTypeComponent} showType />
+        </td>
+        <td>{this.props.machineDataType.get(DataTypeKeys.BASE_TYPE)}</td>
+        <td>
+          {this.props.machineDataType.has(DataTypeKeys.LENGTH) && (
+            this.props.machineDataType.get(DataTypeKeys.LENGTH)
+          )}
+        </td>
+        <td>
+          {this.props.machineDataType.get(DataTypeKeys.NULLABLE) ? (
+            <i className="fa fa-check" />
+          ) : (
+            <i className="fa fa-times" />
+          )}
+        </td>
+      </tr>
+    );
   },
 
   handleLengthChange(e) {
-    return this.setState({
-      userDataType: this.state.userDataType.set(DataTypeKeys.LENGTH, e.target.value)
-    })
+    if (e.target.value) {
+      this.setState({ userDataType: this.state.userDataType.set(DataTypeKeys.LENGTH, e.target.value) })
+    } else {
+      this.setState({ userDataType: this.state.userDataType.delete(DataTypeKeys.LENGTH) })
+    }
   },
 
   handleNullableChange(e) {
-    return this.setState({
+    this.setState({
       userDataType: this.state.userDataType.set(DataTypeKeys.NULLABLE, e.target.checked)
     })
   },
 
   handleBaseTypeChange(selectedItem) {
     if (!selectedItem) {
-      this.setState({
-        userDataType: this.state.userDataType
-          .delete(DataTypeKeys.BASE_TYPE)
-          .delete(DataTypeKeys.LENGTH)
-          .delete(DataTypeKeys.NULLABLE)
-      });
+      this.setState({ userDataType: Map() });
     } else if (!isLengthSupported(selectedItem.value)) {
       this.setState({
         userDataType: this.state.userDataType
-          .set(DataTypeKeys.LENGTH, "")
           .set(DataTypeKeys.BASE_TYPE, selectedItem.value)
+          .delete(DataTypeKeys.LENGTH)
       })
     } else {
       this.setState({
@@ -213,21 +212,11 @@ export default createReactClass({
   handleSaveDataType() {
     this.setState({ isSaving: true });
     if (this.state.userDataType.get(DataTypeKeys.BASE_TYPE)) {
-      if (this.state.userDataType.get(DataTypeKeys.LENGTH) === "") {
-        this.setState({
-          userDataType: this.state.userDataType.delete(DataTypeKeys.LENGTH)
-        });
-      }
-      this.props.saveUserType(
-        this.props.columnName,
-        this.state.userDataType
-      ).finally(() => {
+      this.props.saveUserType(this.props.columnName, this.state.userDataType).finally(() => {
         this.setState({ isSaving: false })
       });
     } else {
-      this.props.deleteUserType(
-        this.props.columnName
-      ).finally(() => {
+      this.props.deleteUserType(this.props.columnName).finally(() => {
         this.setState({ isSaving: false })
       });
     }
