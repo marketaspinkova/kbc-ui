@@ -47,24 +47,23 @@ export default createReactClass({
   },
 
   saveUserType(columnName, userDataType) {
-    var saveType = userDataType;
-    var promises = [];
-    if (userDataType.get(DataTypeKeys.LENGTH === "")) {
-      promises.push(this.props.userColumnMetadata.get(columnName).find((metadata) => {
+    const promises = [];
+    if (!userDataType.has(DataTypeKeys.LENGTH)) {
+      this.props.userColumnMetadata.get(columnName).forEach((metadata) => {
         if (metadata.get('key') === DataTypeKeys.LENGTH) {
-          return deleteColumnMetadata(this.getColumnId(columnName), metadata.get('id'));
+          promises.push(deleteColumnMetadata(this.getColumnId(columnName), metadata.get('id')));
         }
-      }));
-      saveType = userDataType.delete(DataTypeKeys.LENGTH);
+      });
     }
-    promises.push(saveColumnMetadata(this.getColumnId(columnName), saveType));
+    promises.push(saveColumnMetadata(this.getColumnId(columnName), userDataType));
     return Promise.all(promises);
   },
 
   deleteUserType(columnName) {
-    var promises = this.props.userColumnMetadata.get(columnName).map((metadata) => {
+    const promises = [];
+    this.props.userColumnMetadata.get(columnName).forEach((metadata) => {
       if ([DataTypeKeys.BASE_TYPE, DataTypeKeys.LENGTH, DataTypeKeys.NULLABLE].includes(metadata.get('key'))) {
-        return deleteColumnMetadata(this.getColumnId(columnName), metadata.get('id'));
+        promises.push(deleteColumnMetadata(this.getColumnId(columnName), metadata.get('id')));
       }
     });
     return Promise.all(promises);
