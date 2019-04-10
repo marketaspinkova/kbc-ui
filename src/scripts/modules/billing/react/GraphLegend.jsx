@@ -4,13 +4,11 @@ import createReactClass from 'create-react-class';
 import CreditSize from '../../../react/common/CreditSize';
 
 export default createReactClass({
-
   propTypes: {
-    title: PropTypes.string.isRequired,
     value: PropTypes.number.isRequired
   },
 
-  render: function() {
+  render() {
     return (
       <div className="text-center">
         <h4>
@@ -19,5 +17,4 @@ export default createReactClass({
       </div>
     );
   }
-
 });

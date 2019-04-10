@@ -69,7 +69,6 @@ export default createReactClass({
           </h3>
           <GraphVisualization data={this.state.metricsData}/>
           <GraphLegend
-            title="Project Power"
             value={this.state.metricsData.reduce(function(monthSummary, day) {
               return monthSummary + day.get('value');
             }, 0)}
