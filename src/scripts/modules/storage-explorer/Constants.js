@@ -7,6 +7,7 @@ export const ActionTypes = keyMirror({
   UPDATE_SEARCH_QUERY: null,
   UPDATE_FILES_SEARCH_QUERY: null,
   SET_OPENED_BUCKETS: null,
+  SET_OPENED_COLUMNS: null,
   RELOAD: null,
   RELOAD_SUCCESS: null,
   RELOAD_ERROR: null

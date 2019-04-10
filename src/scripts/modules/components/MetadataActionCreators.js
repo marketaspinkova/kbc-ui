@@ -2,7 +2,7 @@
 import dispatcher from '../../Dispatcher';
 import storageApi from './StorageApi';
 import MetadataStore from './stores/MetadataStore';
-import Constants from './MetadataConstants';
+import { ActionTypes } from './MetadataConstants';
 import Immutable from 'immutable';
 
 var Map = Immutable.Map;
@@ -10,7 +10,7 @@ var Map = Immutable.Map;
 export default {
   startMetadataEdit: function(objectType, objectId, metadataKey) {
     dispatcher.handleViewAction({
-      type: Constants.ActionTypes.METADATA_EDIT_START,
+      type: ActionTypes.METADATA_EDIT_START,
       objectType: objectType,
       objectId: objectId,
       metadataKey: metadataKey
@@ -19,7 +19,7 @@ export default {
 
   cancelMetadataEdit: function(objectType, objectId, metadataKey) {
     dispatcher.handleViewAction({
-      type: Constants.ActionTypes.METADATA_EDIT_CANCEL,
+      type: ActionTypes.METADATA_EDIT_CANCEL,
       objectType: objectType,
       objectId: objectId,
       metadataKey: metadataKey
@@ -28,7 +28,7 @@ export default {
 
   updateEditingMetadata: function(objectType, objectId, metadataKey, value) {
     dispatcher.handleViewAction({
-      type: Constants.ActionTypes.METADATA_EDIT_UPDATE,
+      type: ActionTypes.METADATA_EDIT_UPDATE,
       objectType: objectType,
       objectId: objectId,
       metadataKey: metadataKey,
@@ -41,19 +41,19 @@ export default {
       objectType: objectType,
       objectId: objectId,
       metadataKey: metadataKey,
-      type: Constants.ActionTypes.METADATA_SAVE_START
+      type: ActionTypes.METADATA_SAVE_START
     });
     var newValue = MetadataStore.getEditingMetadataValue(objectType, objectId, metadataKey);
     return storageApi.saveMetadata(objectType, objectId, Map([[metadataKey, newValue]])).then(function(result) {
       dispatcher.handleViewAction({
-        type: Constants.ActionTypes.METADATA_SAVE_SUCCESS,
+        type: ActionTypes.METADATA_SAVE_SUCCESS,
         objectType: objectType,
         objectId: objectId,
         metadataKey: metadataKey,
         metadata: result
       });
       dispatcher.handleViewAction({
-        type: Constants.ActionTypes.METADATA_EDIT_STOP,
+        type: ActionTypes.METADATA_EDIT_STOP,
         objectType: objectType,
         objectId: objectId,
         metadataKey: metadataKey
@@ -61,11 +61,51 @@ export default {
       return result;
     }).catch(function(error) {
       dispatcher.handleViewAction({
-        type: Constants.ActionTypes.METADATA_SAVE_ERROR,
+        type: ActionTypes.METADATA_SAVE_ERROR,
         objectType: objectType,
         objectId: objectId,
         metadataKey: metadataKey,
         value: newValue
+      });
+      throw error;
+    });
+  },
+
+  saveMetadataSet: function(objectType, objectId, metadata) {
+    return storageApi.saveMetadata(objectType, objectId, metadata).then(function(result) {
+      dispatcher.handleViewAction({
+        type: ActionTypes.METADATA_SAVE_SUCCESS,
+        objectType: objectType,
+        objectId: objectId,
+        metadata: result
+      });
+      return result;
+    }).catch(function(error) {
+      dispatcher.handleViewAction({
+        type: ActionTypes.METADATA_SAVE_ERROR,
+        objectType: objectType,
+        objectId: objectId,
+        metadata: metadata
+      });
+      throw error;
+    });
+  },
+
+  deleteMetadata: function(objectType, objectId, metadataId) {
+    return storageApi.deleteMetadata(objectType, objectId, metadataId).then(function(result) {
+      dispatcher.handleViewAction({
+        type: ActionTypes.METADATA_DELETE_SUCCESS,
+        objectType: objectType,
+        objectId: objectId,
+        metadataId: metadataId
+      });
+      return result;
+    }).catch(function(error) {
+      dispatcher.handleViewAction({
+        type: ActionTypes.METADATA_DELETE_ERROR,
+        objectType: objectType,
+        objectId: objectId,
+        metadataId: metadataId
       });
       throw error;
     });

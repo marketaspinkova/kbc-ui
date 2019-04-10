@@ -327,6 +327,13 @@ export default {
       });
   },
 
+  deleteMetadata: function(objectType, objectId, metadataId) {
+    const delUrl = this.getMetadataSaveUrl(objectType, objectId) + '/' + metadataId;
+    return createRequest('DELETE', delUrl).type('form').promise().then(function(response) {
+      return response.body;
+    });
+  },
+
   getJobs: function(params) {
     return createRequest('GET', 'jobs').query(params).promise().then(function(response) {
       return response.body;
@@ -346,13 +353,14 @@ export default {
   },
 
   prepareMetadataPayload: function(data, provider = 'user') {
-    var metadata = [];
-    data.map(function(v, k) {
-      metadata = metadata.concat({
-        key: k,
-        value: v
-      });
+    let metadata = [];
+
+    data.map((value, key) => {
+      if (typeof value !== "undefined") {
+        metadata = metadata.concat({ key: key, value: value });
+      }
     });
+
     return {
       provider: provider,
       metadata: metadata

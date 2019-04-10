@@ -11,6 +11,7 @@ import jobPoller from '../../utils/jobPoller';
 import HttpError from '../../utils/errors/HttpError';
 import StorageApi from '../components/StorageApi';
 import exportTableApi from './ExportTableApi';
+import MetadataActionCreators from "../components/MetadataActionCreators";
 
 const errorNotification = (message) => {
   if (!_.isString(message)) {
@@ -131,6 +132,18 @@ const deleteTableColumn = (tableId, columnName, params) => {
 const addTableColumn = (tableId, params) => {
   return StorageActionCreators
     .addTableColumn(tableId, params)
+    .catch(errorNotification);
+};
+
+const saveColumnMetadata = (columnId, keyValues) => {
+  return MetadataActionCreators
+    .saveMetadataSet('column', columnId, keyValues)
+    .catch(errorNotification);
+};
+
+const deleteColumnMetadata = (columnId, metadataId) => {
+  return MetadataActionCreators
+    .deleteMetadata('column', columnId, metadataId)
     .catch(errorNotification);
 };
 
@@ -295,6 +308,13 @@ const setOpenedBuckets = buckets => {
   });
 };
 
+const setOpenedColumns = columns => {
+  return dispatcher.handleViewAction({
+    type: localConstants.ActionTypes.SET_OPENED_COLUMNS,
+    columns
+  });
+};
+
 const resetFilesSearchQuery = () => {
   updateFilesSearchQuery('');
 };
@@ -318,6 +338,8 @@ export {
   removeTablePrimaryKey,
   deleteTableColumn,
   addTableColumn,
+  saveColumnMetadata,
+  deleteColumnMetadata,
   setAliasTableFilter,
   removeAliasTableFilter,
   dataPreview,
@@ -339,5 +361,6 @@ export {
   updateFilesSearchQuery,
   resetFilesSearchQuery,
   setOpenedBuckets,
+  setOpenedColumns,
   filterFiles
 };

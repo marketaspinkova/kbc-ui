@@ -1,13 +1,19 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import Promise from 'bluebird';
 import createReactClass from 'create-react-class';
-import { Table, Button, Row } from 'react-bootstrap';
+import { Map } from 'immutable';
+import classnames from 'classnames';
+import { Table, Button, Row, Label, PanelGroup, Panel, Col } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 
 import Tooltip from '../../../../../react/common/Tooltip';
 import CreateColumnModal from '../../modals/CreateColumnModal';
 import DeleteColumnModal from '../../modals/DeleteColumnModal';
-import { deleteTableColumn, addTableColumn } from '../../../Actions';
+import ColumnDetails from './ColumnDetails';
+import { DataTypeKeys } from '../../../../components/MetadataConstants';
+import { getDataType } from "../../../../components/utils/datatypeHelpers";
+import { deleteTableColumn, addTableColumn, setOpenedColumns, deleteColumnMetadata, saveColumnMetadata } from '../../../Actions';
 
 export default createReactClass({
   propTypes: {
@@ -17,9 +23,15 @@ export default createReactClass({
     tableLinks: PropTypes.array.isRequired,
     sapiToken: PropTypes.object.isRequired,
     urlTemplates: PropTypes.object.isRequired,
+    creatingPrimaryKey: PropTypes.bool.isRequired,
+    deletingPrimaryKey: PropTypes.bool.isRequired,
     addingColumn: PropTypes.object.isRequired,
     deletingColumn: PropTypes.object.isRequired,
-    canWriteTable: PropTypes.bool.isRequired
+    canWriteTable: PropTypes.bool.isRequired,
+    machineColumnMetadata: PropTypes.object.isRequired,
+    userColumnMetadata: PropTypes.object.isRequired,
+    openColumns: PropTypes.object.isRequired,
+    activeColumnId: PropTypes.string,
   },
 
   getInitialState() {
@@ -28,6 +40,39 @@ export default createReactClass({
       deleteColumnModal: false,
       createColumnModal: false
     };
+  },
+
+  getColumnId(columnName) {
+    return this.props.table.get('id') + '.' + columnName;
+  },
+
+  saveUserType(columnName, userDataType) {
+    const promises = [];
+    if (this.props.userColumnMetadata.has(columnName) && !userDataType.has(DataTypeKeys.LENGTH)) {
+      this.props.userColumnMetadata.get(columnName).forEach((metadata) => {
+        if (metadata.get('key') === DataTypeKeys.LENGTH) {
+          promises.push(deleteColumnMetadata(this.getColumnId(columnName), metadata.get('id')));
+        }
+      });
+    }
+    promises.push(saveColumnMetadata(this.getColumnId(columnName), userDataType));
+    return Promise.all(promises);
+  },
+
+  deleteUserType(columnName) {
+    const promises = [];
+    this.props.userColumnMetadata.get(columnName).forEach((metadata) => {
+      if ([DataTypeKeys.BASE_TYPE, DataTypeKeys.LENGTH, DataTypeKeys.NULLABLE].includes(metadata.get('key'))) {
+        promises.push(deleteColumnMetadata(this.getColumnId(columnName), metadata.get('id')));
+      }
+    });
+    return Promise.all(promises);
+  },
+
+  getUserDefinedType(column) {
+    return getDataType(this.props.userColumnMetadata.get(column, Map())).filter(
+      (value, key) => [DataTypeKeys.BASE_TYPE, DataTypeKeys.LENGTH, DataTypeKeys.NULLABLE].includes(key)
+    );
   },
 
   render() {
@@ -52,16 +97,25 @@ export default createReactClass({
           Columns
         </h2>
 
-        <Row>
-          <Table responsive striped>
-            <tbody>
+        {this.canAddColumn() ? (
+          <PanelGroup className="kbc-accordion">
+            {this.props.table
+              .get('columns')
+              .map(this.renderColumnPanel)
+              .toArray()}
+          </PanelGroup>
+        ) : (
+          <Row>
+            <Table responsive striped>
+              <tbody>
               {this.props.table
                 .get('columns')
                 .map(this.renderColumn)
                 .toArray()}
-            </tbody>
-          </Table>
-        </Row>
+              </tbody>
+            </Table>
+          </Row>
+        )}
 
         {this.renderCreateColumnModal()}
         {this.renderDeleteColumnModal()}
@@ -85,6 +139,75 @@ export default createReactClass({
     );
   },
 
+  renderColumnPanel(column) {
+    return (
+      <Panel
+        collapsible
+        expanded={this.isPanelExpanded(column)}
+        className={classnames('storage-panel', {
+          'is-active': this.props.activeColumnId === this.getColumnId(column)
+        })}
+        header={this.renderColumnHeader(column)}
+        key={this.getColumnId(column)}
+        onSelect={() => this.onSelectColumn(this.getColumnId(column))}
+      >
+        <ColumnDetails
+          columnId={this.getColumnId(column)}
+          columnName={column}
+          machineDataType={getDataType(this.props.machineColumnMetadata.get(column, Map()))}
+          userDataType={this.getUserDefinedType(column)}
+          deleteUserType={this.deleteUserType}
+          saveUserType={this.saveUserType}
+        />
+      </Panel>
+    );
+  },
+
+  renderColumnHeader(column) {
+    const userDataType = this.getUserDefinedType(column);
+    const systemDataType = getDataType(this.props.machineColumnMetadata.get(column, Map()));
+    const columnDataType = userDataType.has(DataTypeKeys.BASE_TYPE)
+      ? userDataType.set('provider', 'user')
+      : systemDataType;
+
+    return (
+      <div>
+        <Row>
+          <Col sm={3}>
+            {column}
+          </Col>
+          <Col sm={7}>
+            {
+              (columnDataType.has('provider')) ?
+                  <div>
+                    {columnDataType.get('KBC.datatype.basetype') && (
+                      columnDataType.get('KBC.datatype.basetype')
+                    )}
+                    {columnDataType.get('KBC.datatype.length') && (
+                      `(${columnDataType.get('KBC.datatype.length')})`
+                    )}
+                    {columnDataType.get('KBC.datatype.nullable') && (
+                      `, Nullable`
+                    )}
+                  </div>
+              : null
+            }
+          </Col>
+          <Col sm={1}>
+            {this.isColumnInPrimaryKey(column) && (
+              <Label bsStyle="info">
+                PK
+              </Label>
+            )}
+          </Col>
+          <Col sm={1}>
+            {this.renderActions(column)}
+          </Col>
+        </Row>
+      </div>
+    );
+  },
+
   renderActions(column) {
     if (!this.canDeleteColumn(column)) {
       return null;
@@ -95,7 +218,14 @@ export default createReactClass({
 
       return (
         <Tooltip tooltip="Delete column" placement="top">
-          <Button bsStyle="link" onClick={() => this.openDeleteColumnModal(column)} disabled={deleting}>
+          <Button
+            bsStyle="link"
+            onClick={(event) => {
+              event.stopPropagation();
+              this.openDeleteColumnModal(column);
+            }}
+            disabled={deleting}
+          >
             {deleting ? <Loader /> : <i className="fa fa-trash-o" />}
           </Button>
         </Tooltip>
@@ -245,5 +375,22 @@ export default createReactClass({
       deleteColumnName: '',
       deleteColumnModal: false
     });
+  },
+
+  onSelectColumn(columnId) {
+    const opened = this.props.openColumns;
+    setOpenedColumns(opened.has(columnId) ? opened.delete(columnId) : opened.add(columnId));
+  },
+
+  isPanelExpanded(column) {
+    if (this.props.activeColumnId === this.getColumnId(column)) {
+      return true;
+    }
+
+    if (this.props.openColumns.has(this.getColumnId(column))) {
+      return true;
+    }
+
+    return false;
   }
 });

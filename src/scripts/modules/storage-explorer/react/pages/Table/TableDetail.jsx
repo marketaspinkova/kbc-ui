@@ -11,6 +11,8 @@ import RoutesStore from '../../../../../stores/RoutesStore';
 import BucketsStore from '../../../../components/stores/StorageBucketsStore';
 import TablesStore from '../../../../components/stores/StorageTablesStore';
 import FilesStore from '../../../../components/stores/StorageFilesStore';
+import MetadataStore from '../../../../components/stores/MetadataStore';
+import ColumnsLocalStore from '../../../ColumnsLocalStore';
 import StorageApi from '../../../../components/StorageApi';
 import { factory as eventsFactory } from '../../../../sapi-events/TableEventsService';
 import { createAliasTable, deleteTable, truncateTable, exportTable, uploadFile, loadTable } from '../../../Actions';
@@ -30,7 +32,7 @@ import LatestImports from './LatestImports';
 import TableGraph from './TableGraph';
 
 export default createReactClass({
-  mixins: [createStoreMixin(TablesStore, BucketsStore, ApplicationStore, FilesStore)],
+  mixins: [createStoreMixin(TablesStore, BucketsStore, ApplicationStore, FilesStore, ColumnsLocalStore, MetadataStore)],
 
   getStateFromStores() {
     const bucketId = RoutesStore.getCurrentRouteParam('bucketId');
@@ -69,7 +71,10 @@ export default createReactClass({
       uploadingProgress: FilesStore.getUploadingProgress(bucketId) || 0,
       exportingTable: TablesStore.getIsExportingTable(table.get('id')),
       tableLinks: this.getTableLinks(table, bucket),
-      tableAliases: this.getTableAliases(table, tables, sapiToken)
+      tableAliases: this.getTableAliases(table, tables, sapiToken),
+      machineColumnMetadata: MetadataStore.getLastUpdatedByColumnMetadata(table.get('id')),
+      userColumnMetadata: MetadataStore.getUserProvidedColumnMetadata(table.get('id')),
+      openColumns: ColumnsLocalStore.getOpenedColumns(),
     };
   },
 
@@ -191,6 +196,10 @@ export default createReactClass({
                   addingColumn={this.state.addingColumn}
                   deletingColumn={this.state.deletingColumn}
                   canWriteTable={this.state.canWriteTable}
+                  machineColumnMetadata={this.state.machineColumnMetadata}
+                  userColumnMetadata={this.state.userColumnMetadata}
+                  activeColumnId={this.state.activeColumnId}
+                  openColumns={this.state.openColumns}
                 />
               </Tab.Pane>
               <Tab.Pane eventKey="events">

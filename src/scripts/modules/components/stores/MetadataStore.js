@@ -1,7 +1,7 @@
 import StoreUtils from '../../../utils/StoreUtils';
 import { Map, List, fromJS } from 'immutable';
 import dispatcher from '../../../Dispatcher';
-import MetadataConstants from '../MetadataConstants';
+import { ActionTypes } from '../MetadataConstants';
 import * as Constants from '../Constants';
 import _ from 'underscore';
 
@@ -32,7 +32,13 @@ var MetadataStore = StoreUtils.createStore({
   },
 
   getTableColumnsMetadata: function(tableId) {
-    return _store.getIn(['metadata', 'tableColumns', tableId]);
+    return _store.getIn(['metadata', 'tableColumns', tableId], Map());
+  },
+
+  getAllTableColumnsMetadataByProvider: function(tableId, provider) {
+    return this.getTableColumnsMetadata(tableId).map(
+      (metadata) => metadata.filter(data => data.get('provider') === provider)
+    );
   },
 
   getTableMetadataValue: function(tableId, provider, metadataKey) {
@@ -122,6 +128,18 @@ var MetadataStore = StoreUtils.createStore({
       return columnHasDatatype.count() > 0;
     });
     return columnsWithBaseTypes.count() > 0;
+  },
+
+  getLastUpdatedByColumnMetadata: function(tableId) {
+    const lastUpdateInfo = this.getTableLastUpdatedInfo(tableId);
+    if (!lastUpdateInfo) {
+      return Map();
+    }
+    return this.getAllTableColumnsMetadataByProvider(tableId, lastUpdateInfo.component);
+  },
+
+  getUserProvidedColumnMetadata: function (tableId) {
+    return this.getAllTableColumnsMetadataByProvider(tableId, 'user');
   }
 });
 
@@ -130,37 +148,53 @@ dispatcher.register(function(payload) {
   action = payload.action;
 
   switch (action.type) {
-    case MetadataConstants.ActionTypes.METADATA_EDIT_START:
+    case ActionTypes.METADATA_EDIT_START:
       _store = _store.setIn(
         ['editingMetadata', action.objectType, action.objectId, action.metadataKey],
         MetadataStore.getMetadataValue(action.objectType, action.objectId, 'user', action.metadataKey)
       );
       return MetadataStore.emitChange();
 
-    case MetadataConstants.ActionTypes.METADATA_EDIT_UPDATE:
+    case ActionTypes.METADATA_EDIT_UPDATE:
       _store = _store.setIn(
         ['editingMetadata', action.objectType, action.objectId, action.metadataKey],
         action.value
       );
       return MetadataStore.emitChange();
-    case MetadataConstants.ActionTypes.METADATA_EDIT_STOP:
+    case ActionTypes.METADATA_EDIT_STOP:
       _store = _store.deleteIn(['editingMetadata', action.objectType, action.objectId, action.metadataKey]);
       return MetadataStore.emitChange();
 
-    case MetadataConstants.ActionTypes.METADATA_EDIT_CANCEL:
+    case ActionTypes.METADATA_EDIT_CANCEL:
       _store = _store.deleteIn(['editingMetadata', action.objectType, action.objectId, action.metadataKey]);
       return MetadataStore.emitChange();
 
-    case MetadataConstants.ActionTypes.METADATA_SAVE_START:
+    case ActionTypes.METADATA_SAVE_START:
       _store = _store.setIn(['savingMetadata', action.objectType, action.objectId, action.metadataKey], action.value);
       return MetadataStore.emitChange();
 
-    case MetadataConstants.ActionTypes.METADATA_SAVE_ERROR:
+    case ActionTypes.METADATA_SAVE_ERROR:
+    case ActionTypes.METADATA_DELETE_ERROR:
       return MetadataStore.emitChange();
 
-    case MetadataConstants.ActionTypes.METADATA_SAVE_SUCCESS:
+    case ActionTypes.METADATA_SAVE_SUCCESS:
       _store = _store.setIn(['metadata', action.objectType, action.objectId], fromJS(action.metadata));
       _store = _store.deleteIn(['savingMetadata', action.objectType, action.objectId, action.metadataKey]);
+      if (action.objectType === 'column') {
+        const [ tableId, columnName ] = action.objectId.split(/\.(?=[^\.]+$)/);
+        _store = _store.setIn(['metadata', 'tableColumns', tableId, columnName], fromJS(action.metadata));
+      }
+      return MetadataStore.emitChange();
+
+    case ActionTypes.METADATA_DELETE_SUCCESS:
+      const index = _store.getIn(['metadata', action.objectType, action.objectId]).findIndex((metadata) => {
+        return metadata.get('id') === action.metadataId;
+      });
+      _store = _store.deleteIn(['metadata', action.objectType, action.objectId, index]);
+      if (action.objectType === 'column') {
+        const [ tableId, columnName ] = action.objectId.split(/\.(?=[^\.]+$)/);
+        _store = _store.deleteIn(['metadata', 'tableColumns', tableId, columnName, index]);
+      }
       return MetadataStore.emitChange();
 
     case Constants.ActionTypes.STORAGE_BUCKETS_LOAD_SUCCESS:
@@ -177,12 +211,8 @@ dispatcher.register(function(payload) {
         );
         _.each(table.columnMetadata, function(metadata, columnName) {
           _store = _store
-            .setIn(
-              ['metadata', 'column', table.id + '.' + columnName], fromJS(metadata)
-            )
-            .setIn(
-              ['metadata', 'tableColumns', table.id, columnName], fromJS(metadata)
-            );
+            .setIn(['metadata', 'column', table.id + '.' + columnName], fromJS(metadata))
+            .setIn(['metadata', 'tableColumns', table.id, columnName], fromJS(metadata));
         });
       });
       return MetadataStore.emitChange();
