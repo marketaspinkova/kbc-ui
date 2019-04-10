@@ -391,6 +391,6 @@ export default createReactClass({
       return true;
     }
 
-    return this.props.expandAllColumns;
+    return false;
   }
 });
