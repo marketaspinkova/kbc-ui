@@ -5,7 +5,7 @@ export const validate = (type, value) => {
     }
   }
 
-  if (['decimal', 'number', 'numeric'].includes(type)) {
+  if (['decimal', 'number', 'numeric', 'integer'].includes(type)) {
     if (!/^(?!0)[0-9]+(?:,?[0-9]+)?$/.test(value)) {
       return false;
     }
