@@ -1,21 +1,42 @@
 import { fromJS, Map, List } from 'immutable';
 import { SnowflakeDataTypesMapping } from '../../../Constants';
+import { DataTypeKeys } from "../../../../components/MetadataConstants";
+
+const getDataTypeProvider = (metadata) => {
+  const userTypesExist = metadata.find((entry) => {
+    return entry.get('key') === DataTypeKeys.BASE_TYPE && entry.get('provider') === 'user';
+  });
+  if (userTypesExist) {
+    return 'user';
+  }
+  const baseType = metadata.find((entry) => {
+    return entry.get('key') === DataTypeKeys.BASE_TYPE;
+  });
+  if (!baseType) {
+    return null;
+  }
+  return baseType.get('provider');
+};
 
 const getMetadataDataTypes = (columnMetadata) => {
   return columnMetadata.map((metadata, colname) => {
+    const provider = getDataTypeProvider(metadata);
+    if (!provider) {
+      return null;
+    }
     const baseType = metadata.find((entry) => {
-      return entry.get('key') === 'KBC.datatype.basetype';
+      return entry.get('key') === DataTypeKeys.BASE_TYPE && entry.get('provider') === provider;
     });
     if (!baseType) {
       return null;
     }
 
     const dataTypeLength = metadata.find((entry) => {
-      return entry.get('key') === 'KBC.datatype.length';
+      return entry.get('key') === DataTypeKeys.LENGTH && entry.get('provider') === provider;
     }, null, Map());
 
     const dataTypeNullable = metadata.find((entry) => {
-      return entry.get('key') === 'KBC.datatype.nullable';
+      return entry.get('key') === DataTypeKeys.NULLABLE && entry.get('provider') === provider;
     }, null, Map());
 
     const matchedDataType = SnowflakeDataTypesMapping.find((mappedDatatype) => {
