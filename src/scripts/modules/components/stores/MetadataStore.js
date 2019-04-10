@@ -174,6 +174,7 @@ dispatcher.register(function(payload) {
       return MetadataStore.emitChange();
 
     case ActionTypes.METADATA_SAVE_ERROR:
+    case ActionTypes.METADATA_DELETE_ERROR:
       return MetadataStore.emitChange();
 
     case ActionTypes.METADATA_SAVE_SUCCESS:
@@ -183,9 +184,6 @@ dispatcher.register(function(payload) {
         const [ tableId, columnName ] = action.objectId.split(/\.(?=[^\.]+$)/);
         _store = _store.setIn(['metadata', 'tableColumns', tableId, columnName], fromJS(action.metadata));
       }
-      return MetadataStore.emitChange();
-
-    case ActionTypes.METADATA_DELETE_ERROR:
       return MetadataStore.emitChange();
 
     case ActionTypes.METADATA_DELETE_SUCCESS:
