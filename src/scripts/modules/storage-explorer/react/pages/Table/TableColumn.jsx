@@ -48,7 +48,7 @@ export default createReactClass({
 
   saveUserType(columnName, userDataType) {
     const promises = [];
-    if (!userDataType.has(DataTypeKeys.LENGTH)) {
+    if (this.props.userColumnMetadata.has(columnName) && !userDataType.has(DataTypeKeys.LENGTH)) {
       this.props.userColumnMetadata.get(columnName).forEach((metadata) => {
         if (metadata.get('key') === DataTypeKeys.LENGTH) {
           promises.push(deleteColumnMetadata(this.getColumnId(columnName), metadata.get('id')));
