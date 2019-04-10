@@ -79,6 +79,16 @@ describe('columnTypeValidation', () => {
     it('can not be empty', () => expect(validate('numeric', '')).toEqual(false));
   });
 
+  describe('integer', () => {
+    it('number bigger that zero is fine', () => expect(validate('integer', 10)).toEqual(true));
+    it('even string integer value is fine', () => expect(validate('integer', '5')).toEqual(true));
+    it('can accept precizion', () => expect(validate('integer', '5,2')).toEqual(true));
+    it('dot delimiter is not valid', () => expect(validate('integer', '5.2')).toEqual(false));
+    it('must be bigger that zero', () => expect(validate('integer', 0)).toEqual(false));
+    it('must be integer', () => expect(validate('integer', 'baz')).toEqual(false));
+    it('can not be empty', () => expect(validate('integer', '')).toEqual(false));
+  });
+
   describe('time', () => {
     it('number in range 0-9', () => {
       expect(validate('time', 0)).toEqual(true);
@@ -90,5 +100,10 @@ describe('columnTypeValidation', () => {
     it('number smaller than 0 is invalid', () => expect(validate('time', -1)).toEqual(false));
     it('must be numeric', () => expect(validate('time', 'baz')).toEqual(false));
     it('can not be empty', () => expect(validate('time', '')).toEqual(false));
+  });
+
+  describe('type is not case sensitive', () => {
+    it('number bigger that zero is fine', () => expect(validate('integer', 10)).toEqual(true));
+    it('number bigger that zero is fine', () => expect(validate('INTEGER', 10)).toEqual(true));
   });
 });

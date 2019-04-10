@@ -8,7 +8,7 @@ import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import TableNameEdit from './TableNameEdit';
 import ColumnsEditor from './ColumnsEditor';
 import DataTypes from '../../../templates/dataTypes';
-import columnTypeValidation from '../../../columnTypeValidation';
+import columnTypeValidation from '../../../../components/utils/columnTypeValidation';
 
 import storageApi from '../../../../components/StorageApi';
 import WrDbStore from '../../../store';
