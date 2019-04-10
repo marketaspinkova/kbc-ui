@@ -9,6 +9,7 @@ import InlineEditArea from '../../../../../react/common/InlineEditArea';
 import { Loader } from '@keboola/indigo-ui';
 
 import { DataTypeKeys, BaseTypes } from '../../../../components/MetadataConstants';
+import { validate as isValid } from '../../../../components/utils/columnTypeValidation';
 import ComponentName from '../../../../../react/common/ComponentName';
 import ComponentIcon from '../../../../../react/common/ComponentIcon';
 import ComponentsStore from '../../../../components/stores/ComponentsStore';
@@ -142,7 +143,10 @@ export default createReactClass({
         type="text"
         value={this.state.userDataType.get(DataTypeKeys.LENGTH, '')}
         onChange={this.handleLengthChange}
-        placeholder="Length, eg. 38,0"
+        placeholder={this.state.userDataType.get(DataTypeKeys.BASE_TYPE) === 'STRING'
+          ? 'Length, eg. 255'
+          : 'Length, eg. 38,0'
+        }
       />
     );
   },
@@ -206,7 +210,20 @@ export default createReactClass({
   },
 
   isDisabled() {
-    return this.state.isSaving || this.props.userDataType.equals(this.state.userDataType);
+    const { userDataType } = this.state;
+
+    if (this.props.userDataType.equals(userDataType)) {
+      return true;
+    }
+
+    if (
+      userDataType.get(DataTypeKeys.LENGTH) && 
+      !isValid(userDataType.get(DataTypeKeys.BASE_TYPE), userDataType.get(DataTypeKeys.LENGTH))
+    ) {
+      return true;
+    }
+
+    return this.state.isSaving;
   },
 
   handleSaveDataType() {
