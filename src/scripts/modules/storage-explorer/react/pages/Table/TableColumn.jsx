@@ -30,8 +30,8 @@ export default createReactClass({
     canWriteTable: PropTypes.bool.isRequired,
     machineColumnMetadata: PropTypes.object.isRequired,
     userColumnMetadata: PropTypes.object.isRequired,
+    openColumns: PropTypes.object.isRequired,
     activeColumnId: PropTypes.string,
-    openColumns: PropTypes.object,
   },
 
   getInitialState() {
@@ -387,7 +387,7 @@ export default createReactClass({
       return true;
     }
 
-    if (this.props.openColumns & this.props.openColumns.has(this.getColumnId(column))) {
+    if (this.props.openColumns.has(this.getColumnId(column))) {
       return true;
     }
 
