@@ -1,10 +1,8 @@
+import { Map, fromJS } from 'immutable';
 import Dispatcher from '../../../Dispatcher';
-import { ActionTypes } from '../Constants';
-const constants = { ActionTypes };
-import Immutable from 'immutable';
-const { Map } = Immutable;
 import StoreUtils from '../../../utils/StoreUtils';
-import _ from 'underscore';
+import * as metadataConstants from '../MetadataConstants';
+import * as constants from '../Constants';
 
 let _store = Map({
   tables: Map(),
@@ -116,13 +114,12 @@ Dispatcher.register(function(payload) {
       return StorageTablesStore.emitChange();
 
     case constants.ActionTypes.STORAGE_TABLES_LOAD_SUCCESS:
-      _store = _store.withMutations(function(store) {
-        let storeResult = store.setIn(['tables'], Map());
-        _.each(action.tables, function(table) {
-          const tObj = Immutable.fromJS(table);
-          storeResult = storeResult.setIn(['tables', tObj.get('id')], tObj);
+      _store = _store.withMutations((store) => {
+        store.setIn(['tables'], Map());
+        action.tables.forEach((table) => {
+          store.setIn(['tables', table.id], fromJS(table));
         });
-        return storeResult.set('isLoading', false).set('isLoaded', true);
+        store.set('isLoading', false).set('isLoaded', true);
       });
       return StorageTablesStore.emitChange();
 
@@ -276,6 +273,30 @@ Dispatcher.register(function(payload) {
     case constants.ActionTypes.STORAGE_TABLE_EXPORT_ERROR:
       _store = _store.deleteIn(['pendingTables', 'exporting', action.tableId]);
       return StorageTablesStore.emitChange();
+    
+    case metadataConstants.ActionTypes.METADATA_SAVE_SUCCESS:
+      if (action.objectType === 'table') {
+        _store = _store.setIn(['tables', action.objectId, 'metadata'], fromJS(action.metadata));
+        return StorageTablesStore.emitChange();
+      }
+      if (action.objectType === 'column') {
+        const [ tableId, columnName ] = action.objectId.split(/\.(?=[^.]+$)/);
+        _store = _store.setIn(['tables', tableId, 'columnMetadata', columnName], fromJS(action.metadata));
+        return StorageTablesStore.emitChange();
+      }
+      break;
+    
+    case metadataConstants.ActionTypes.METADATA_DELETE_SUCCESS:
+      if (action.objectType === 'column') {
+        const [ tableId, columnName ] = action.objectId.split(/\.(?=[^.]+$)/);
+        const index = _store.getIn(['tables', tableId, 'columnMetadata', columnName]).findIndex((metadata) => {
+          return metadata.get('id') === action.metadataId;
+        });
+        _store = _store.deleteIn(['tables', tableId, 'columnMetadata', columnName, index]);
+        return StorageTablesStore.emitChange();
+      }
+      break;
+
     default:
   }
 });

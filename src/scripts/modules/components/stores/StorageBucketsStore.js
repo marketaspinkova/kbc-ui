@@ -1,13 +1,8 @@
+import { Map, List, fromJS }  from 'immutable';
 import Dispatcher from '../../../Dispatcher';
-import { ActionTypes } from '../Constants';
-const constants = { ActionTypes };
-
-import Immutable from 'immutable';
-const { Map } = Immutable;
-const { List } = Immutable;
-const { fromJS } = Immutable;
 import StoreUtils from '../../../utils/StoreUtils';
-import _ from 'underscore';
+import * as metadataConstants from '../MetadataConstants';
+import * as constants from '../Constants';
 
 let _store = Map({
   buckets: Map(),
@@ -90,11 +85,10 @@ Dispatcher.register(function(payload) {
       return StorageBucketsStore.emitChange();
 
     case constants.ActionTypes.STORAGE_BUCKETS_LOAD_SUCCESS:
-      _store = _store.withMutations(function(store) {
-        let storeResult = store.setIn(['buckets'], Map());
-        _.each(action.buckets, function(bucket) {
-          const bObj = Immutable.fromJS(bucket);
-          return storeResult.setIn(['buckets', bObj.get('id')], bObj);
+      _store = _store.withMutations((store) => {
+        store.setIn(['buckets'], Map());
+        action.buckets.forEach((bucket) => {
+          store.setIn(['buckets', bucket.id], fromJS(bucket));
         });
         store.set('isLoading', false);
         store.set('isLoaded', true);
@@ -106,43 +100,34 @@ Dispatcher.register(function(payload) {
       return StorageBucketsStore.emitChange();
 
     case constants.ActionTypes.STORAGE_BUCKET_CREDENTIALS_CREATE:
-      var { bucketId } = action;
       _store = _store.setIn(['pendingCredentials', 'creating'], true);
       return StorageBucketsStore.emitChange();
 
     case constants.ActionTypes.STORAGE_BUCKET_CREDENTIALS_CREATE_SUCCESS:
-      ({ bucketId } = action);
-      var newCreds = fromJS(action.credentials);
       _store = _store.setIn(['pendingCredentials', 'creating'], false);
-      var creds = StorageBucketsStore.getCredentials(bucketId) || List();
-      _store = _store.setIn(['credentials', bucketId], creds.push(newCreds));
+      _store = _store.setIn(['credentials', action.bucketId], 
+        (StorageBucketsStore.getCredentials(action.bucketId) || List()).push(fromJS(action.credentials))
+      );
       return StorageBucketsStore.emitChange();
 
     case constants.ActionTypes.STORAGE_BUCKET_CREDENTIALS_LOAD:
-      ({ bucketId } = action);
-      _store = _store.setIn(['pendingCredentials', bucketId, 'loading'], true);
+      _store = _store.setIn(['pendingCredentials', action.bucketId, 'loading'], true);
       return StorageBucketsStore.emitChange();
 
     case constants.ActionTypes.STORAGE_BUCKET_CREDENTIALS_LOAD_SUCCESS:
-      ({ bucketId } = action);
-      var credentials = fromJS(action.credentials);
-      _store = _store.deleteIn(['pendingCredentials', bucketId, 'loading']);
-
-      _store = _store.setIn(['credentials', bucketId], credentials);
+      _store = _store.deleteIn(['pendingCredentials', action.bucketId, 'loading']);
+      _store = _store.setIn(['credentials', action.bucketId], fromJS(action.credentials));
       return StorageBucketsStore.emitChange();
 
     case constants.ActionTypes.STORAGE_BUCKET_CREDENTIALS_DELETE:
-      ({ bucketId } = action);
-      var { credentialsId } = action;
       _store = _store.setIn(['pendingCredentials', 'deleting'], true);
       return StorageBucketsStore.emitChange();
 
     case constants.ActionTypes.STORAGE_BUCKET_CREDENTIALS_DELETE_SUCCESS:
-      ({ bucketId } = action);
-      ({ credentialsId } = action);
       _store = _store.deleteIn(['pendingCredentials', 'deleting']);
-      creds = StorageBucketsStore.getCredentials(bucketId).filter(c => c.get('id') !== credentialsId);
-      _store = _store.setIn(['credentials', bucketId], creds);
+      _store = _store.setIn(['credentials', action.bucketId], 
+        (StorageBucketsStore.getCredentials(action.bucketId) || List()).filter(c => c.get('id') !== action.credentialsId)
+      );
       return StorageBucketsStore.emitChange();
 
     case constants.ActionTypes.STORAGE_BUCKET_CREATE:
@@ -151,7 +136,7 @@ Dispatcher.register(function(payload) {
 
     case constants.ActionTypes.STORAGE_BUCKET_CREATE_SUCCESS:
       _store = _store.setIn(['pendingBuckets', 'creating'], false);
-      _store = _store.setIn(['buckets', action.bucket.id], Immutable.fromJS(action.bucket));
+      _store = _store.setIn(['buckets', action.bucket.id], fromJS(action.bucket));
       return StorageBucketsStore.emitChange();
 
     case constants.ActionTypes.STORAGE_BUCKET_CREATE_ERROR:
@@ -201,6 +186,13 @@ Dispatcher.register(function(payload) {
     case constants.ActionTypes.STORAGE_SHARED_BUCKETS_LOAD_SUCCESS:
       _store = _store.set('sharedBuckets', fromJS(action.sharedBuckets));
       return StorageBucketsStore.emitChange();
+
+    case metadataConstants.ActionTypes.METADATA_SAVE_SUCCESS:
+      if (action.objectType === 'bucket') {
+        _store = _store.setIn(['buckets', action.objectId, 'metadata'], fromJS(action.metadata));
+        return StorageBucketsStore.emitChange();
+      }
+      break;
 
     default:
   }
