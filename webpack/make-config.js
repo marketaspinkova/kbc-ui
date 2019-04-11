@@ -6,6 +6,8 @@ var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 
 module.exports = function(options) {
   var isDevelopment = options.isDevelopment;
+
+  // babel-preset-react-app require set NODE_ENV
   process.env.NODE_ENV = isDevelopment ? 'development' : 'production';
 
   var plugins = [
