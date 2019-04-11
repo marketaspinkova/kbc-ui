@@ -63,6 +63,7 @@ const routes = {
         params => OrchestrationsActionCreators.loadOrchestration(parseInt(params.orchestrationId, 10)),
         params => OrchestrationsActionCreators.loadOrchestrationJobs(parseInt(params.orchestrationId, 10)),
         params => VersionsActionCreators.loadVersions('orchestrator', params.orchestrationId),
+        params => OrchestrationsActionCreators.loadTriggers(params.orchestrationId),
         () => StorageActionCreators.loadTables()
       ],
       title(routerState) {

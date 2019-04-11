@@ -10,6 +10,7 @@ import { List } from 'immutable';
 import dispatcher from '../../Dispatcher';
 import * as constants from './Constants';
 import orchestrationsApi from './OrchestrationsApi';
+import triggersApi from './TriggersAPI';
 import jobsApi from '../jobs/JobsApi';
 import OrchestrationStore from './stores/OrchestrationsStore';
 import OrchestrationJobsStore from './stores/OrchestrationJobsStore';
@@ -17,6 +18,7 @@ import Promise from 'bluebird';
 import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
 import VersionsActionCreators from '../components/VersionsActionCreators';
 import InstalledComponentsActionCreators from '../components/InstalledComponentsActionCreators';
+import TriggersStore from './stores/TriggersStore';
 
 const rephaseTasks = tasks => {
   const isNullPhase = phase => phase === null || phase === 0 || typeof phase === 'undefined';
@@ -95,8 +97,29 @@ export default {
     });
   },
 
+  loadTriggersForce(orchestrationId) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.TRIGGERS_LOAD
+    });
+
+    return triggersApi
+      .listTriggers('orchestrator', orchestrationId)
+      .then((triggers) => {
+        return dispatcher.handleViewAction({
+          type: constants.ActionTypes.TRIGGERS_LOAD_SUCCESS,
+          triggers
+        });
+      })
+    .catch(err => {
+      dispatcher.handleViewAction({
+        type: constants.ActionTypes.TRIGGERS_LOAD_ERROR
+      });
+      throw err;
+    });
+  },
+
   /*
-    Request orchestrations load only if not alread loaded
+    Request orchestrations load only if not already loaded
     @return Promise
   */
   loadOrchestrations() {
@@ -106,6 +129,14 @@ export default {
     }
 
     return this.loadOrchestrationsForce();
+  },
+
+  loadTriggers(orchestrationId) {
+    if (TriggersStore.getIsLoaded(orchestrationId)) {
+      return Promise.resolve();
+    }
+
+    return this.loadTriggersForce(orchestrationId);
   },
 
   /*

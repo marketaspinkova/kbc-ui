@@ -24,7 +24,8 @@ export default createReactClass({
       isSaving: false,
       showModal: false,
       triggerType: ORCHESTRATION_TRIGGER_TYPE.TIME,
-      selectedTables: []
+      selectedTables: [],
+      period: 5
     };
   },
 
@@ -109,7 +110,7 @@ export default createReactClass({
           isDisabled={false}
           saveLabel="Save"
           onCancel={this.close}
-          onSave={this._handleSave}
+          onSave={this._handleEventTriggerSave}
         />
       </Col>
     );
@@ -166,5 +167,14 @@ export default createReactClass({
     return this.setState({
       selected: state.selected
     });
+  },
+
+  _handleEventTriggerSave() {
+    return this._saveEventTrigger(this.state.selectedTables, this.state.period);
+  },
+
+  _saveEventTrigger() {
+
+    return TriggersApi.
   }
 });
