@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
-// import {Map} from 'immutable';
 import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
 import {Modal} from 'react-bootstrap';
-// import {sanitizeTableName, sheetFullName} from '../../common';
+import {Constants} from '../Constants';
 
 export default createReactClass({
 
   propTypes: {
+    endpoint: PropTypes.string.isRequired,
     show: PropTypes.bool.isRequired,
     onHideFn: PropTypes.func,
     localState: PropTypes.object.isRequired,
@@ -62,7 +62,9 @@ export default createReactClass({
     return (
       <div className="form-group">
         {this.createRadioInput('Daily Walk algorithm', 'dailyWalk', 'Will make one request per date in the date range. You will get the most precise results, but it takes a lot of API calls.')}
-        {this.createRadioInput('Adaptive algorithm', 'adaptive', 'Will divide the date range into multiple smaller date ranges. This is way faster, but might not be that precise.')}
+        {this.props.endpoint === Constants.ENDPOINT_REPORT ?
+          this.createRadioInput('Adaptive algorithm', 'adaptive', 'Will divide the date range into multiple smaller date ranges. This is way faster, but might not be that precise.')
+        : null}
         {this.createRadioInput('None', null, 'No anti-sampling algorithm used.')}
       </div>
     );

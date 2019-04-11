@@ -163,7 +163,6 @@ export default createReactClass({
             </div>
           </div>
 
-          {endpoint === Constants.ENDPOINT_REPORT ?
           <div className="form-group">
             <label className="col-md-2 control-label">
               {this.renderOptionsModal()}
@@ -184,7 +183,6 @@ export default createReactClass({
               }
             </div>
           </div>
-          : null}
 
           <DateRangesSelector
             isEditing={isEditing}
@@ -218,6 +216,7 @@ export default createReactClass({
     const ls = this.props.localState.getIn(path, Map());
     return (
       <AntiSamplingModal
+        endpoint={query.get('endpoint', Constants.ENDPOINT_REPORT)}
         show={ls.get('show', false)}
         onHideFn={() => this.props.updateLocalState(path, Map())}
         onSaveFn={(newVal) => onChangeQuery(query.set('antisampling', newVal))}
@@ -225,7 +224,6 @@ export default createReactClass({
       />
     );
   },
-
 
   renderUrlParser() {
     const {localState, query, onChangeQuery} = this.props;
