@@ -168,10 +168,9 @@ export default createReactClass({
         <div className="kbc-inner-padding">
           {this.renderFields()}
           <SshTunnelRow
-            isEditing={this.props.enabled}
-            data={this.props.credentials.get('ssh', Map())}
+            isEditing={enabled}
+            data={this.props.credentials.get('ssh') || Map()}
             onChange={this.sshRowOnChange}
-            disabledCheckbox={false}
           />
           <TestCredentialsButtonGroup
             componentId={componentId}

@@ -11,10 +11,9 @@ import {Loader, ExternalLink} from '@keboola/indigo-ui';
 
 export default createReactClass({
   propTypes: {
-    onChange: PropTypes.func,
-    data: PropTypes.object,
-    isEditing: PropTypes.bool,
-    disabledCheckbox: PropTypes.bool.isRequired
+    onChange: PropTypes.func.isRequired,
+    data: PropTypes.object.isRequired,
+    isEditing: PropTypes.bool.isRequired
   },
 
   getInitialState() {
@@ -51,7 +50,7 @@ export default createReactClass({
         <FormGroup>
           <Col xs={8} xsOffset={4}>
             <Checkbox
-              disabled={!this.props.isEditing || this.props.disabledCheckbox}
+              disabled={!this.props.isEditing}
               checked={this.isEnabled()}
               onChange={() => this.props.onChange(this.props.data.set('enabled', !this.isEnabled()))}
             >
@@ -165,7 +164,7 @@ export default createReactClass({
           <Col xs={8}>
             <FormControl
               type={type}
-              value={this.props.data.get(propName)}
+              value={this.props.data.get(propName, '')}
               onChange={this.handleChange.bind(this, propName)}
             />
           </Col>
