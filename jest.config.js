@@ -10,5 +10,6 @@ module.exports = {
   setupFiles: ['<rootDir>/environment/tests/_setup'],
   snapshotSerializers: ['<rootDir>/node_modules/enzyme-to-json/serializer'],
   testPathIgnorePatterns: [],
-  testRegex: '\\.(test|spec)\\.(js|jsx)$'
+  testRegex: '\\.(test|spec)\\.(js|jsx)$',
+  watchPlugins: ['jest-watch-typeahead/filename', 'jest-watch-typeahead/testname']
 };

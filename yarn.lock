@@ -829,6 +829,15 @@
     chalk "^2.0.1"
     slash "^2.0.0"
 
+"@jest/console@^24.7.1":
+  version "24.7.1"
+  resolved "https://registry.yarnpkg.com/@jest/console/-/console-24.7.1.tgz#32a9e42535a97aedfe037e725bd67e954b459545"
+  integrity sha512-iNhtIy2M8bXlAOULWVTUxmnelTLFneTNEkHCgPmgd+zNwy9zVddJ6oS5rZ9iwoscNdT5mMwUd0C51v/fSlzItg==
+  dependencies:
+    "@jest/source-map" "^24.3.0"
+    chalk "^2.0.1"
+    slash "^2.0.0"
+
 "@jest/core@^24.7.0":
   version "24.7.0"
   resolved "https://registry.yarnpkg.com/@jest/core/-/core-24.7.0.tgz#7fd599fa89e7fcd0109a9f6d33fcce2da17a7f98"
@@ -881,6 +890,15 @@
     jest-message-util "^24.7.0"
     jest-mock "^24.7.0"
 
+"@jest/fake-timers@^24.7.1":
+  version "24.7.1"
+  resolved "https://registry.yarnpkg.com/@jest/fake-timers/-/fake-timers-24.7.1.tgz#56e5d09bdec09ee81050eaff2794b26c71d19db2"
+  integrity sha512-4vSQJDKfR2jScOe12L9282uiwuwQv9Lk7mgrCSZHA9evB9efB/qx8i0KJxsAKtp8fgJYBJdYY7ZU6u3F4/pyjA==
+  dependencies:
+    "@jest/types" "^24.7.0"
+    jest-message-util "^24.7.1"
+    jest-mock "^24.7.0"
+
 "@jest/reporters@^24.7.0":
   version "24.7.0"
   resolved "https://registry.yarnpkg.com/@jest/reporters/-/reporters-24.7.0.tgz#f780e0811bd1de46ed78270eb622097387cbb442"
@@ -922,6 +940,15 @@
   integrity sha512-bl7HcDnMYEemy/myEmc9AaO9YXxANADNYtXJRC9haolx8btNHY6q78YdL+jb/KC4vBmEEoK+OSgMae90C1tZMQ==
   dependencies:
     "@jest/console" "^24.6.0"
+    "@jest/types" "^24.7.0"
+    "@types/istanbul-lib-coverage" "^2.0.0"
+
+"@jest/test-result@^24.7.1":
+  version "24.7.1"
+  resolved "https://registry.yarnpkg.com/@jest/test-result/-/test-result-24.7.1.tgz#19eacdb29a114300aed24db651e5d975f08b6bbe"
+  integrity sha512-3U7wITxstdEc2HMfBX7Yx3JZgiNBubwDqQMh+BXmZXHa3G13YWF3p6cK+5g0hGkN3iufg/vGPl3hLxQXD74Npg==
+  dependencies:
+    "@jest/console" "^24.7.1"
     "@jest/types" "^24.7.0"
     "@types/istanbul-lib-coverage" "^2.0.0"
 
@@ -5532,6 +5559,20 @@ jest-message-util@^24.7.0:
     slash "^2.0.0"
     stack-utils "^1.0.1"
 
+jest-message-util@^24.7.1:
+  version "24.7.1"
+  resolved "https://registry.yarnpkg.com/jest-message-util/-/jest-message-util-24.7.1.tgz#f1dc3a6c195647096a99d0f1dadbc447ae547018"
+  integrity sha512-dk0gqVtyqezCHbcbk60CdIf+8UHgD+lmRHifeH3JRcnAqh4nEyPytSc9/L1+cQyxC+ceaeP696N4ATe7L+omcg==
+  dependencies:
+    "@babel/code-frame" "^7.0.0"
+    "@jest/test-result" "^24.7.1"
+    "@jest/types" "^24.7.0"
+    "@types/stack-utils" "^1.0.1"
+    chalk "^2.0.1"
+    micromatch "^3.1.10"
+    slash "^2.0.0"
+    stack-utils "^1.0.1"
+
 jest-mock@^24.7.0:
   version "24.7.0"
   resolved "https://registry.yarnpkg.com/jest-mock/-/jest-mock-24.7.0.tgz#e49ce7262c12d7f5897b0d8af77f6db8e538023b"
@@ -5664,6 +5705,24 @@ jest-util@^24.7.0:
     slash "^2.0.0"
     source-map "^0.6.0"
 
+jest-util@^24.7.1:
+  version "24.7.1"
+  resolved "https://registry.yarnpkg.com/jest-util/-/jest-util-24.7.1.tgz#b4043df57b32a23be27c75a2763d8faf242038ff"
+  integrity sha512-/KilOue2n2rZ5AnEBYoxOXkeTu6vi7cjgQ8MXEkih0oeAXT6JkS3fr7/j8+engCjciOU1Nq5loMSKe0A1oeX0A==
+  dependencies:
+    "@jest/console" "^24.7.1"
+    "@jest/fake-timers" "^24.7.1"
+    "@jest/source-map" "^24.3.0"
+    "@jest/test-result" "^24.7.1"
+    "@jest/types" "^24.7.0"
+    callsites "^3.0.0"
+    chalk "^2.0.1"
+    graceful-fs "^4.1.15"
+    is-ci "^2.0.0"
+    mkdirp "^0.5.1"
+    slash "^2.0.0"
+    source-map "^0.6.0"
+
 jest-validate@^24.7.0:
   version "24.7.0"
   resolved "https://registry.yarnpkg.com/jest-validate/-/jest-validate-24.7.0.tgz#70007076f338528ee1b1c8a8258b1b0bb982508d"
@@ -5675,6 +5734,31 @@ jest-validate@^24.7.0:
     jest-get-type "^24.3.0"
     leven "^2.1.0"
     pretty-format "^24.7.0"
+
+jest-watch-typeahead@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/jest-watch-typeahead/-/jest-watch-typeahead-0.3.0.tgz#f56d9ee17ea71ecbf8253fed213df3185a1584c9"
+  integrity sha512-+uOtlppt9ysST6k6ZTqsPI0WNz2HLa8bowiZylZoQCQaAVn7XsVmHhZREkz73FhKelrFrpne4hQQjdq42nFEmA==
+  dependencies:
+    ansi-escapes "^3.0.0"
+    chalk "^2.4.1"
+    jest-watcher "^24.3.0"
+    slash "^2.0.0"
+    string-length "^2.0.0"
+    strip-ansi "^5.0.0"
+
+jest-watcher@^24.3.0:
+  version "24.7.1"
+  resolved "https://registry.yarnpkg.com/jest-watcher/-/jest-watcher-24.7.1.tgz#e161363d7f3f4e1ef3d389b7b3a0aad247b673f5"
+  integrity sha512-Wd6TepHLRHVKLNPacEsBwlp9raeBIO+01xrN24Dek4ggTS8HHnOzYSFnvp+6MtkkJ3KfMzy220KTi95e2rRkrw==
+  dependencies:
+    "@jest/test-result" "^24.7.1"
+    "@jest/types" "^24.7.0"
+    "@types/yargs" "^12.0.9"
+    ansi-escapes "^3.0.0"
+    chalk "^2.0.1"
+    jest-util "^24.7.1"
+    string-length "^2.0.0"
 
 jest-watcher@^24.7.0:
   version "24.7.0"

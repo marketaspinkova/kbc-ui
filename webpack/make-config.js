@@ -76,6 +76,9 @@ module.exports = function(options) {
       extensions: ['*', '.js', '.jsx']
     },
     devServer: {
+      host: '0.0.0.0',
+      port: 3000,
+      inline: true,
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': '*'
