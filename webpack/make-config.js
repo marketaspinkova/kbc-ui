@@ -2,11 +2,14 @@ var path = require('path');
 var webpack = require('webpack');
 var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 
 module.exports = function(options) {
   var isDevelopment = options.isDevelopment;
+  process.env.NODE_ENV = isDevelopment ? 'development' : 'production';
 
   var plugins = [
+    new CaseSensitivePathsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         __DEV__: isDevelopment,
