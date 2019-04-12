@@ -71,7 +71,7 @@ export default createReactClass({
             </HelpBlock>
           </Col>
         </FormGroup>
-        {isIncremental && this.props.value.changedSince !== changedSinceConstants.ADAPTIVE_VALUE && 
+        {isIncremental && this.props.value.changedSince !== changedSinceConstants.ADAPTIVE_VALUE &&
          <FormGroup>
            <Col componentClass={ControlLabel} sm={4}>
              Changed In Last
