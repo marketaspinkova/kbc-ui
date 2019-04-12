@@ -27,11 +27,10 @@ export default createReactClass({
   },
 
   renderModal() {
-    const component = this;
     return (
       <Modal
-        onHide={function() {
-          component.setState({ showModal: false });
+        onHide={() => {
+          this.setState({ showModal: false });
         }}
         show={this.state.showModal}
         onRequestRun={this.onClick}
