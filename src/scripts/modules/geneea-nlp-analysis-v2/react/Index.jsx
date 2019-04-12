@@ -203,6 +203,8 @@ export default createReactClass({
             name="language"
             placeholder="autodetect"
             clearable={false}
+            backspaceRemoves={false}
+            deleteRemoves={false}
             value={this.getEditingValue(params.LANGUAGE)}
             valueRenderer={(op) => {
               return op.label;
@@ -398,6 +400,8 @@ export default createReactClass({
       <Select
         key={prop}
         clearable={false}
+        backspaceRemoves={false}
+        deleteRemoves={false}
         value={this.getEditingValue(prop)}
         onChange= {({value}) => this.updateEditingValue(prop, value)}
         options= {selectOptions}/>
