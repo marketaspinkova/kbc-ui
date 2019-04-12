@@ -61,16 +61,6 @@ export default createReactClass({
   },
 
   tooltipWrapper(body) {
-    if (this.props.disabled) {
-      return (
-        <Tooltip
-          tooltip="Clears information about previous runs."
-          placement={this.props.tooltipPlacement}
-        >
-          {body}
-        </Tooltip>
-      );
-    }
     if (this.props.isPending) {
       return (
         <Tooltip tooltip="Clearing state" placement={this.props.tooltipPlacement}>
