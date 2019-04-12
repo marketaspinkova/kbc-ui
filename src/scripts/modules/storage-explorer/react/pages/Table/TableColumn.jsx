@@ -152,6 +152,7 @@ export default createReactClass({
         onSelect={() => this.onSelectColumn(this.getColumnId(column))}
       >
         <ColumnDetails
+          table={this.props.table}
           columnId={this.getColumnId(column)}
           columnName={column}
           machineDataType={getDataType(this.props.machineColumnMetadata.get(column, Map()))}

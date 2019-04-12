@@ -164,9 +164,10 @@ export default createReactClass({
     return (
       <MetadataEditField
         objectType="table"
+        objectId={this.props.table.get('id')}
+        metadata={this.props.table.get('metadata')}
         metadataKey="KBC.description"
         placeholder="Describe table"
-        objectId={this.props.table.get('id')}
         editElement={InlineEditArea}
       />
     );

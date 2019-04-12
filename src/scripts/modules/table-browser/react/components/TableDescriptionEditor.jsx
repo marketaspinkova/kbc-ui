@@ -5,10 +5,8 @@ import InlineEditArea  from '../../../../react/common/InlineEditArea';
 import MetadataEditField from '../../../components/react/components/MetadataEditField';
 
 export default createReactClass({
-  displayName: 'TableDescriptionEditor',
-
   propTypes: {
-    tableId: PropTypes.string.isRequired,
+    table: PropTypes.object.isRequired,
     placeholder: PropTypes.string
   },
 
@@ -23,10 +21,11 @@ export default createReactClass({
       <div className="kbc-metadata-description">
         <MetadataEditField
           objectType="table"
-          objectId={this.props.tableId}
+          objectId={this.props.table.get('id')}
+          metadata={this.props.table.get('metadata')}
           metadataKey="KBC.description"
-          editElement={InlineEditArea}
           placeholder={this.props.placeholder}
+          editElement={InlineEditArea}
         />
       </div>
     );

@@ -1,19 +1,18 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import _ from 'underscore';
 import { fromJS, Map, List } from 'immutable';
 import { Form, FormGroup, FormControl, ControlLabel, Col, HelpBlock } from 'react-bootstrap';
+import { PanelWithDetails } from '@keboola/indigo-ui';
 import Select from '../../../../../react/common/Select';
 import SapiTableSelector from '../../../../components/react/components/SapiTableSelector';
-import DatatypeForm from './input/DatatypeForm';
-import ChangedSinceInput from '../../../../../react/common/ChangedSinceInput';
 import whereOperatorConstants from '../../../../../react/common/whereOperatorConstants';
-import {PanelWithDetails} from '@keboola/indigo-ui';
-import MetadataStore from '../../../../components/stores/MetadataStore';
-import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
+import ChangedSinceInput from '../../../../../react/common/ChangedSinceInput';
 import { SnowflakeDataTypesMapping } from '../../../Constants';
-import { getMetadataDataTypes } from './InputMappingRowSnowflakeEditorHelper';
+import { hasTableColumnMetadataDatatypes } from '../../../../components/utils/tableMetadataHelper';
+import { getMetadataDataTypes  } from './InputMappingRowSnowflakeEditorHelper';
+import DatatypeForm from './input/DatatypeForm';
 
 export default createReactClass({
   propTypes: {
@@ -25,25 +24,20 @@ export default createReactClass({
     isDestinationDuplicate: PropTypes.bool.isRequired
   },
 
-  mixins: [createStoreMixin(MetadataStore)],
-
-  getStateFromStores() {
+  getInitialState() {
     const source = this.props.value.get('source');
+
     return {
-      hasMetadataDatatypes: source ? MetadataStore.tableHasMetadataDatatypes(source) : false,
-      tableColumnMetadata: source ? MetadataStore.getTableColumnsMetadata(source) : Map()
+      tableColumnMetadata: this.props.tables.getIn([source, 'columnMetadata'], Map())
     };
   },
 
   componentWillReceiveProps(nextProps) {
-    if (
-      nextProps.value.has('source')
-      && nextProps.value.get('source') !== this.props.value.get('source')
-      && nextProps.value.get('source') !== ''
-    ) {
+    const source = nextProps.value.get('source');
+
+    if (source !== this.props.value.get('source') && source !== '') {
       this.setState({
-        hasMetadataDatatypes: MetadataStore.tableHasMetadataDatatypes(nextProps.value.get('source')),
-        tableColumnMetadata: MetadataStore.getTableColumnsMetadata(nextProps.value.get('source'))
+        tableColumnMetadata: this.props.tables.getIn([source, 'columnMetadata'], Map())
       });
     }
   },
@@ -198,9 +192,10 @@ export default createReactClass({
   },
 
   getDefaultDatatypes() {
+    const selectedTable = this.props.tables.get(this.props.value.get('source'));
     const filteredColumns = this._getFilteredColumns();
 
-    if (this.state.hasMetadataDatatypes) {
+    if (selectedTable && hasTableColumnMetadataDatatypes(selectedTable)) {
       const metadataSet = this.state.tableColumnMetadata.filter((metadata, colname) => {
         return filteredColumns.indexOf(colname) > -1;
       });
@@ -221,12 +216,13 @@ export default createReactClass({
 
   getInitialDatatypes(sourceTable) {
     const selectedTable = this.props.tables.find(table => table.get('id') === sourceTable);
+
     if (!selectedTable) {
       return Map();
     }
 
-    if (MetadataStore.tableHasMetadataDatatypes(sourceTable)) {
-      const datatypes = getMetadataDataTypes(MetadataStore.getTableColumnsMetadata(sourceTable));
+    if (hasTableColumnMetadataDatatypes(selectedTable)) {
+      const datatypes = getMetadataDataTypes(selectedTable.get('columnMetadata'));
       return this.buildDatatypes(selectedTable.get('columns'), datatypes);
     }
 

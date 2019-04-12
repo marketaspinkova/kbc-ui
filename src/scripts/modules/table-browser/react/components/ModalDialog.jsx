@@ -159,7 +159,7 @@ export default createReactClass({
     return (
       <TableDescriptionTab
         isLoading={this.props.isLoading}
-        tableId={this.props.tableId}
+        table={this.props.table}
         tableExists={this.props.tableExists}
       />
     );
@@ -179,9 +179,7 @@ export default createReactClass({
         onFilterIOEvents={this.props.onFilterIOEvents}
         onShowEventDetail={this.props.onShowEventDetail}
         detailEventId={this.props.detailEventId}
-
       />
-
     );
   },
 

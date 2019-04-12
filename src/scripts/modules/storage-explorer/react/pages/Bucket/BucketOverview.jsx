@@ -98,9 +98,10 @@ export default createReactClass({
     return (
       <MetadataEditField
         objectType="bucket"
+        objectId={this.props.bucket.get('id')}
+        metadata={this.props.bucket.get('metadata')}
         metadataKey="KBC.description"
         placeholder="Describe bucket"
-        objectId={this.props.bucket.get('id')}
         editElement={InlineEditArea}
       />
     );
