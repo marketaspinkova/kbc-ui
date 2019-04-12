@@ -96,8 +96,8 @@ export default createReactClass({
 
     return (
       <span>
-        Table has new data since {' '}
-        <CreatedDate createdTime={this.state.table.get(constants.LAST_IMPORT_DATE_PROPERTY)} />.
+        Source table updated since the previous update {' '}
+        <CreatedDate createdTime={this.state.tableState.get(constants.LAST_IMPORT_DATE_PROPERTY)} />.
         {' '}
         <ClearAdaptiveInputMappingButton
           onClick={this.resetState}

@@ -56,7 +56,7 @@ export default createReactClass({
               Full Load
             </Radio>
             <HelpBlock>
-              Data in the target table will be replaced.
+              Replace all existing rows in the destination table.
             </HelpBlock>
             <Radio
               type="radio"
@@ -67,7 +67,7 @@ export default createReactClass({
               Automatic Incremental Load
             </Radio>
             <HelpBlock>
-              Loads all data that has been added or changed since the last successful run.
+              Append all data that has been added or changed since the last successful run.
               <br />
               <AdaptiveInputMappingLastLoaded
                 tableId={this.props.value.source}
@@ -82,7 +82,7 @@ export default createReactClass({
               Manual Incremental Load
             </Radio>
             <HelpBlock>
-              Selected data will be appended to the target table.
+              Append all selected data.
             </HelpBlock>
           </Col>
         </FormGroup>
