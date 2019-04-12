@@ -20,10 +20,10 @@ export default createReactClass({
     return (
       <Modal show={this.props.show} onHide={this.props.onHide}>
         <Modal.Header closeButton>
-          <Modal.Title>Reset Last Successful Run</Modal.Title>
+          <Modal.Title>Reset Automatic Incremetal Load</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          This will clear the information from the last successful run. Next execution will load all
+          This will clear the information about automatic incremental load. Next execution will load all
           data in the table.
         </Modal.Body>
         <Modal.Footer>

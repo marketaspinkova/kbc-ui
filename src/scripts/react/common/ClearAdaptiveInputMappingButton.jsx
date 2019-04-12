@@ -70,7 +70,7 @@ export default createReactClass({
     }
     return (
       <Tooltip
-        tooltip="Clears information about previous runs."
+        tooltip="Clears information about automatic incremental load."
         placement={this.props.tooltipPlacement}
       >
         {body}
