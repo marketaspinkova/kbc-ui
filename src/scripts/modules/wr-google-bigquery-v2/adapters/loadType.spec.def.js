@@ -1,8 +1,10 @@
+import loadType from './loadType';
+
 export const cases = {
   emptyWithDefaults: {
     localState: {
       source: '',
-      incremental: false,
+      loadType: loadType.loadTypes.FULL,
       changedSince: ''
     },
     configuration: {
@@ -27,7 +29,7 @@ export const cases = {
   simple: {
     localState: {
       source: '',
-      incremental: true,
+      loadType: loadType.loadTypes.INCREMENTAL,
       changedSince: '-1 day'
     },
     configuration: {
@@ -36,6 +38,31 @@ export const cases = {
           tables: [
             {
               changed_since: '-1 day'
+            }
+          ]
+        }
+      },
+      parameters: {
+        tables: [
+          {
+            incremental: true
+          }
+        ]
+      }
+    }
+  },
+  adaptive: {
+    localState: {
+      source: '',
+      loadType: loadType.loadTypes.ADAPTIVE,
+      changedSince: ''
+    },
+    configuration: {
+      storage: {
+        input: {
+          tables: [
+            {
+              changed_since: 'adaptive'
             }
           ]
         }

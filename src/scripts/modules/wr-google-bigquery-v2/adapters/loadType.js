@@ -1,12 +1,27 @@
 import Immutable from 'immutable';
 
+const loadTypes = {
+  FULL: 'full',
+  INCREMENTAL: 'incremental',
+  ADAPTIVE: 'adaptive'
+};
+
 const createConfiguration = function(localState) {
+  let incremental = false;
+  let changedSince = localState.get('changedSince', '');
+  if (localState.get('loadType') === loadTypes.INCREMENTAL) {
+    incremental = true;
+  }
+  if (localState.get('loadType') === loadTypes.ADAPTIVE) {
+    incremental = true;
+    changedSince = 'adaptive';
+  }
   const config = Immutable.fromJS({
     storage: {
       input: {
         tables: [
           {
-            changed_since: localState.get('changedSince', '')
+            changed_since: changedSince
           }
         ]
       }
@@ -14,7 +29,7 @@ const createConfiguration = function(localState) {
     parameters: {
       tables: [
         {
-          incremental: localState.get('incremental', false)
+          incremental: incremental
         }
       ]
     }
@@ -23,10 +38,19 @@ const createConfiguration = function(localState) {
 };
 
 const parseConfiguration = function(configuration, context) {
+  let loadType = loadTypes.FULL;
+  let changedSince = configuration.getIn(['storage', 'input', 'tables', 0, 'changed_since'], '');
+  if (configuration.getIn(['parameters', 'tables', 0, 'incremental']) === true) {
+    loadType = loadTypes.INCREMENTAL;
+    if (changedSince === 'adaptive') {
+      loadType = loadTypes.ADAPTIVE;
+      changedSince = '';
+    }
+  }
   return Immutable.fromJS({
     source: context.get('tableId', ''),
-    incremental: configuration.getIn(['parameters', 'tables', 0, 'incremental'], false),
-    changedSince: configuration.getIn(['storage', 'input', 'tables', 0, 'changed_since'], '')
+    loadType: loadType,
+    changedSince: changedSince
   });
 };
 
@@ -37,5 +61,6 @@ const createEmptyConfiguration = function() {
 export default {
   createConfiguration: createConfiguration,
   parseConfiguration: parseConfiguration,
-  createEmptyConfiguration: createEmptyConfiguration
+  createEmptyConfiguration: createEmptyConfiguration,
+  loadTypes: loadTypes
 };

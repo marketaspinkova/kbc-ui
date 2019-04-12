@@ -4,11 +4,13 @@ import createReactClass from 'create-react-class';
 import {Form, Radio, HelpBlock, FormGroup, ControlLabel, Col} from 'react-bootstrap';
 
 import ChangedSinceInput from '../../../../react/common/ChangedSinceInput';
+import loadType from '../../adapters/loadType';
+import AdaptiveInputMappingLastLoaded from '../../../../react/common/AdaptiveInputMappingLastLoaded';
 
 export default createReactClass({
   propTypes: {
     value: PropTypes.shape({
-      incremental: PropTypes.bool.isRequired,
+      loadType: PropTypes.oneOf([loadType.loadTypes.FULL, loadType.loadTypes.INCREMENTAL, loadType.loadTypes.INCREMENTAL]),
       changedSince: PropTypes.string.isRequired,
       source: PropTypes.string.isRequired
     }),
@@ -17,7 +19,7 @@ export default createReactClass({
   },
 
   renderChangedInLast() {
-    if (this.props.value.incremental) {
+    if (this.props.value.loadType === loadType.loadTypes.INCREMENTAL) {
       return (
         <FormGroup>
           <Col componentClass={ControlLabel} sm={4}>
@@ -27,9 +29,8 @@ export default createReactClass({
             <ChangedSinceInput
               value={this.props.value.changedSince}
               onChange={(newValue) => this.props.onChange({changedSince: newValue})}
-              disabled={this.props.disabled || this.props.value.incremental === false}
+              disabled={this.props.disabled}
               tableId={this.props.value.source}
-              allowAdaptive
             />
           </Col>
         </FormGroup>
@@ -50,8 +51,8 @@ export default createReactClass({
               type="radio"
               title="Full Load"
               disabled={disabled}
-              onChange={() => onChange({incremental: false, changedSince: ''})}
-              checked={value.incremental === false}>
+              onChange={() => onChange({loadType: loadType.loadTypes.FULL, changedSince: ''})}
+              checked={value.loadType === loadType.loadTypes.FULL}>
               Full Load
             </Radio>
             <HelpBlock>
@@ -59,14 +60,29 @@ export default createReactClass({
             </HelpBlock>
             <Radio
               type="radio"
-              title="Incremental"
+              title="Adaptive Incremental"
               disabled={disabled}
-              onChange={() => onChange({incremental: true})}
-              checked={value.incremental === true}>
-              Incremental
+              onChange={() => onChange({loadType: loadType.loadTypes.ADAPTIVE, changedSince: ''})}
+              checked={value.loadType === loadType.loadTypes.ADAPTIVE}>
+              Automatic Incremental Load
             </Radio>
             <HelpBlock>
-              Data will be appended to the target table.
+              Loads all data that has been added or changed since the last successful run.
+              <br />
+              <AdaptiveInputMappingLastLoaded
+                tableId={this.props.value.source}
+              />
+            </HelpBlock>
+            <Radio
+              type="radio"
+              title="Incremental"
+              disabled={disabled}
+              onChange={() => onChange({loadType: loadType.loadTypes.INCREMENTAL})}
+              checked={value.loadType === loadType.loadTypes.INCREMENTAL}>
+              Manual Incremental Load
+            </Radio>
+            <HelpBlock>
+              Selected data will be appended to the target table.
             </HelpBlock>
           </Col>
         </FormGroup>
