@@ -288,7 +288,6 @@ export default createReactClass({
             onChange={diff => this.onUpdateSection(key, diff)}
             value={this.state.configurationBySections.get(key).toJS()}
             actions={actionsData}
-            context={this.state.context}
           />
         </div>
       );
