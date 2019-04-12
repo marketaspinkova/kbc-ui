@@ -208,6 +208,7 @@ export default componentId => {
       const primaryKey = exportInfo.get('primaryKey', List());
       const showIncrementalSetupPath = ['IncrementalSetup', 'show'];
       const tableMapping = this.state.v2Actions.getTableMapping(this.state.tableId);
+      const isAdaptive = tableMapping.get('changed_since') === changedSinceConstants.ADAPTIVE_VALUE ? true : false;
 
       return (
         <div className="row">
@@ -221,7 +222,7 @@ export default componentId => {
               disabled={!!this.state.editingColumns}
               onClick={this._showIncrementalSetupModal}
             >
-              {isIncremental ? 'Incremental Load' : 'Full Load'} <span className="kbc-icon-pencil" />
+              {isIncremental ? (isAdaptive ? 'Automatic Incremental Load' : 'Manual Incremental Load') : 'Full Load'} <span className="kbc-icon-pencil" />
             </button>
             <IncrementalSetupModal
               isSaving={this.state.v2State.get('savingIncremental', false)}
@@ -251,6 +252,11 @@ export default componentId => {
               customFieldsValues={this._getCustomFieldsValues()}
               componentId={componentId}
             />
+            {isIncremental && isAdaptive && (
+              <AdaptiveInputMappingLastLoaded
+                tableId={this.state.tableId}
+              />
+            )}
           </div>
         </div>
       );
@@ -498,11 +504,6 @@ export default componentId => {
               <FiltersDescription value={tableMapping} rootClassName="" />
               <span className="kbc-icon-pencil" />
             </button>
-            {tableMapping.get('changed_since') === changedSinceConstants.ADAPTIVE_VALUE && (
-              <AdaptiveInputMappingLastLoaded
-                tableId={this.state.tableId}
-              />
-            )}
           </div>
         </div>
       );
