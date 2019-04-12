@@ -17,10 +17,16 @@ const getAllComponents = () => {
   const newOrchestratorFlags = allComponents.getIn(['orchestrator', 'flags'], List()).filter((flag) => {
     return flag !== 'excludeFromNewList';
   });
+  const newGdProvisioningFlags = allComponents.getIn(['keboola.gooddata-provisioning', 'flags'], List()).filter((flag) => {
+    return flag !== 'excludeFromNewList';
+  });
+
   return allComponents
     .setIn(['orchestrator', 'id'], 'orchestrator')
     .setIn(['orchestrator', 'name'], 'Orchestrator')
-    .setIn(['orchestrator', 'flags'], newOrchestratorFlags);
+    .setIn(['orchestrator', 'flags'], newOrchestratorFlags)
+    .setIn(['keboola.gooddata-provisioning', 'flags'], newGdProvisioningFlags);
+
 };
 
 export default createReactClass({
