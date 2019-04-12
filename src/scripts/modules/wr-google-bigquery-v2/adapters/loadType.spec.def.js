@@ -5,7 +5,7 @@ export const cases = {
   emptyWithDefaults: {
     localState: {
       source: '',
-      loadType: loadType.loadTypes.FULL,
+      loadType: loadType.constants.FULL,
       changedSince: ''
     },
     configuration: {
@@ -30,7 +30,7 @@ export const cases = {
   simple: {
     localState: {
       source: '',
-      loadType: loadType.loadTypes.INCREMENTAL,
+      loadType: loadType.constants.INCREMENTAL,
       changedSince: '-1 day'
     },
     configuration: {
@@ -55,7 +55,7 @@ export const cases = {
   adaptive: {
     localState: {
       source: '',
-      loadType: loadType.loadTypes.ADAPTIVE,
+      loadType: loadType.constants.ADAPTIVE,
       changedSince: ''
     },
     configuration: {
