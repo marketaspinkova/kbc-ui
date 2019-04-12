@@ -4,6 +4,7 @@ import createReactClass from 'create-react-class';
 import { Loader } from '@keboola/indigo-ui';
 import Tooltip from '../../react/common/Tooltip';
 import Modal from './ClearAdaptiveInputMappingModal';
+import { Button } from 'react-bootstrap';
 
 export default createReactClass({
   propTypes: {
@@ -47,10 +48,14 @@ export default createReactClass({
       </span>
     );
     return (
-      <a onClick={this.onModalOpen}>
+      <Button
+        bsStyle="link"
+        className="btn-link-inline"
+        onClick={this.onModalOpen}
+      >
         {this.renderModal()}
         {this.tooltipWrapper(body)}
-      </a>
+      </Button>
     );
   },
 
