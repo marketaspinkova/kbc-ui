@@ -1,4 +1,5 @@
 import Immutable from 'immutable';
+import changedSinceConstants from '../../../react/common/changedSinceConstants';
 
 const constants = {
   FULL: 'full',
@@ -14,7 +15,7 @@ const createConfiguration = function(localState) {
   }
   if (localState.get('loadType') === constants.ADAPTIVE) {
     incremental = true;
-    changedSince = 'adaptive';
+    changedSince = changedSinceConstants.ADAPTIVE_VALUE;
   }
   const config = Immutable.fromJS({
     storage: {
@@ -42,7 +43,7 @@ const parseConfiguration = function(configuration, context) {
   let changedSince = configuration.getIn(['storage', 'input', 'tables', 0, 'changed_since'], '');
   if (configuration.getIn(['parameters', 'tables', 0, 'incremental']) === true) {
     loadType = constants.INCREMENTAL;
-    if (changedSince === 'adaptive') {
+    if (changedSince === changedSinceConstants.ADAPTIVE_VALUE) {
       loadType = constants.ADAPTIVE;
       changedSince = '';
     }

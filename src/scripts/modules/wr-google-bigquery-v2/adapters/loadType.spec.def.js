@@ -1,4 +1,5 @@
 import loadType from './loadType';
+import changedSinceConstants from '../../../react/common/changedSinceConstants';
 
 export const cases = {
   emptyWithDefaults: {
@@ -62,7 +63,7 @@ export const cases = {
         input: {
           tables: [
             {
-              changed_since: 'adaptive'
+              changed_since: changedSinceConstants.ADAPTIVE_VALUE
             }
           ]
         }
