@@ -31,8 +31,9 @@ export default createReactClass({
     if (newType && this.props.datatype.get('type') !== newType.value) {
       this.props.onChange(
         this.props.datatype
-          .set('length', null)
           .set('type', newType.value)
+          .set('length', null)
+          .set('convertEmptyValuesToNull', false)
       );
     }
   },
