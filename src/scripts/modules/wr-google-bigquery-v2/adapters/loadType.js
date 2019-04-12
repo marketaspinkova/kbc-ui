@@ -1,6 +1,6 @@
 import Immutable from 'immutable';
 
-const loadTypes = {
+const constants = {
   FULL: 'full',
   INCREMENTAL: 'incremental',
   ADAPTIVE: 'adaptive'
@@ -9,10 +9,10 @@ const loadTypes = {
 const createConfiguration = function(localState) {
   let incremental = false;
   let changedSince = localState.get('changedSince', '');
-  if (localState.get('loadType') === loadTypes.INCREMENTAL) {
+  if (localState.get('loadType') === constants.INCREMENTAL) {
     incremental = true;
   }
-  if (localState.get('loadType') === loadTypes.ADAPTIVE) {
+  if (localState.get('loadType') === constants.ADAPTIVE) {
     incremental = true;
     changedSince = 'adaptive';
   }
@@ -38,12 +38,12 @@ const createConfiguration = function(localState) {
 };
 
 const parseConfiguration = function(configuration, context) {
-  let loadType = loadTypes.FULL;
+  let loadType = constants.FULL;
   let changedSince = configuration.getIn(['storage', 'input', 'tables', 0, 'changed_since'], '');
   if (configuration.getIn(['parameters', 'tables', 0, 'incremental']) === true) {
-    loadType = loadTypes.INCREMENTAL;
+    loadType = constants.INCREMENTAL;
     if (changedSince === 'adaptive') {
-      loadType = loadTypes.ADAPTIVE;
+      loadType = constants.ADAPTIVE;
       changedSince = '';
     }
   }
@@ -62,5 +62,5 @@ export default {
   createConfiguration: createConfiguration,
   parseConfiguration: parseConfiguration,
   createEmptyConfiguration: createEmptyConfiguration,
-  loadTypes: loadTypes
+  constants: constants
 };

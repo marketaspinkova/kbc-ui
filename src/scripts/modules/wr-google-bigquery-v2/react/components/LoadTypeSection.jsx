@@ -10,7 +10,7 @@ import AdaptiveInputMappingLastLoaded from '../../../../react/common/AdaptiveInp
 export default createReactClass({
   propTypes: {
     value: PropTypes.shape({
-      loadType: PropTypes.oneOf([loadType.loadTypes.FULL, loadType.loadTypes.INCREMENTAL, loadType.loadTypes.INCREMENTAL]),
+      loadType: PropTypes.oneOf([loadType.constants.FULL, loadType.constants.INCREMENTAL, loadType.constants.INCREMENTAL]),
       changedSince: PropTypes.string.isRequired,
       source: PropTypes.string.isRequired
     }),
@@ -19,7 +19,7 @@ export default createReactClass({
   },
 
   renderChangedInLast() {
-    if (this.props.value.loadType === loadType.loadTypes.INCREMENTAL) {
+    if (this.props.value.loadType === loadType.constants.INCREMENTAL) {
       return (
         <FormGroup>
           <Col componentClass={ControlLabel} sm={4}>
@@ -51,8 +51,8 @@ export default createReactClass({
               type="radio"
               title="Full Load"
               disabled={disabled}
-              onChange={() => onChange({loadType: loadType.loadTypes.FULL, changedSince: ''})}
-              checked={value.loadType === loadType.loadTypes.FULL}>
+              onChange={() => onChange({loadType: loadType.constants.FULL, changedSince: ''})}
+              checked={value.loadType === loadType.constants.FULL}>
               Full Load
             </Radio>
             <HelpBlock>
@@ -62,8 +62,8 @@ export default createReactClass({
               type="radio"
               title="Adaptive Incremental"
               disabled={disabled}
-              onChange={() => onChange({loadType: loadType.loadTypes.ADAPTIVE, changedSince: ''})}
-              checked={value.loadType === loadType.loadTypes.ADAPTIVE}>
+              onChange={() => onChange({loadType: loadType.constants.ADAPTIVE, changedSince: ''})}
+              checked={value.loadType === loadType.constants.ADAPTIVE}>
               Automatic Incremental Load
             </Radio>
             <HelpBlock>
@@ -77,8 +77,8 @@ export default createReactClass({
               type="radio"
               title="Incremental"
               disabled={disabled}
-              onChange={() => onChange({loadType: loadType.loadTypes.INCREMENTAL})}
-              checked={value.loadType === loadType.loadTypes.INCREMENTAL}>
+              onChange={() => onChange({loadType: loadType.constants.INCREMENTAL})}
+              checked={value.loadType === loadType.constants.INCREMENTAL}>
               Manual Incremental Load
             </Radio>
             <HelpBlock>
