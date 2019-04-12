@@ -5,6 +5,8 @@ import {Form, Radio, HelpBlock, FormGroup, ControlLabel, Col, Alert} from 'react
 import {ExternalLink} from '@keboola/indigo-ui';
 import Select from 'react-select';
 import ChangedSinceInput from '../../../../react/common/ChangedSinceInput';
+import changedSinceConstants from '../../../../react/common/changedSinceConstants';
+import AdaptiveInputMappingLastLoaded from '../../../../react/common/AdaptiveInputMappingLastLoaded';
 
 export default createReactClass({
   propTypes: {
@@ -43,18 +45,33 @@ export default createReactClass({
             </HelpBlock>
             <Radio
               type="radio"
-              title="Incremental"
+              title="Automatic Incremental Load"
               disabled={disabled}
-              onChange={() => onChange({changedSince: '-1 days'})}
-              checked={isIncremental}>
-              Incremental
+              onChange={() => onChange({changedSince: changedSinceConstants.ADAPTIVE_VALUE})}
+              checked={isIncremental && this.props.value.changedSince === changedSinceConstants.ADAPTIVE_VALUE}>
+              Automatic Incremental Load
             </Radio>
             <HelpBlock>
-              Data will be appended to the dataset.
+              Only data changed since the last successful run will be appended to the dataset.
+              <br />
+              <AdaptiveInputMappingLastLoaded
+                tableId={this.props.value.tableId}
+              />
+            </HelpBlock>
+            <Radio
+              type="radio"
+              title="Manual Incremental Load"
+              disabled={disabled}
+              onChange={() => onChange({changedSince: '-1 days'})}
+              checked={isIncremental && this.props.value.changedSince !== changedSinceConstants.ADAPTIVE_VALUE}>
+              Manual Incremental Load
+            </Radio>
+            <HelpBlock>
+              Selected data will be appended to the dataset.
             </HelpBlock>
           </Col>
         </FormGroup>
-        {isIncremental &&
+        {isIncremental && this.props.value.changedSince !== changedSinceConstants.ADAPTIVE_VALUE && 
          <FormGroup>
            <Col componentClass={ControlLabel} sm={4}>
              Changed In Last
