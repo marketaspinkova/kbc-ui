@@ -10,12 +10,12 @@ export default createReactClass({
     show: PropTypes.bool.isRequired
   },
 
-  _handleRun: function(e) {
+  _handleRun(e) {
     this.props.onHide();
     return this.props.onRequestRun(e);
   },
 
-  render: function() {
+  render() {
     return (
       <Modal show={this.props.show} onHide={this.props.onHide}>
         <Modal.Header closeButton>

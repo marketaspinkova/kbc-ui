@@ -20,7 +20,7 @@ export default createReactClass({
     };
   },
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       showModal: false
     };
