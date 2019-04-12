@@ -60,7 +60,7 @@ export default createReactClass({
             </HelpBlock>
             <Radio
               type="radio"
-              title="Adaptive Incremental"
+              title="Automatic Incremental Load"
               disabled={disabled}
               onChange={() => onChange({loadType: loadType.constants.ADAPTIVE, changedSince: ''})}
               checked={value.loadType === loadType.constants.ADAPTIVE}>
@@ -75,7 +75,7 @@ export default createReactClass({
             </HelpBlock>
             <Radio
               type="radio"
-              title="Incremental"
+              title="Manual Incremental Load"
               disabled={disabled}
               onChange={() => onChange({loadType: loadType.constants.INCREMENTAL})}
               checked={value.loadType === loadType.constants.INCREMENTAL}>
