@@ -6,7 +6,7 @@ import changedSinceOptionCreator from './changedSinceOptionCreator';
 import changedSinceConstants from './changedSinceConstants';
 import ApplicationStore from '../../stores/ApplicationStore';
 import { FEATURE_ADAPTIVE_INPUT_MAPPING } from '../../constants/KbcConstants';
-import AdaptiveInputMappingLastLoaded from './AdaptiveInputMappingLastLoaded';
+import AutomaticLoadTypeLastUpdated from './AutomaticLoadTypeLastUpdated';
 
 const selectOptions = [
   { label: '10 minutes', value: '-10 minutes' },
@@ -112,7 +112,7 @@ export default createReactClass({
         />
 
         {this.props.tableId !== '' && this.props.value === changedSinceConstants.ADAPTIVE_VALUE && (
-          <AdaptiveInputMappingLastLoaded
+          <AutomaticLoadTypeLastUpdated
             tableId={this.props.tableId}
           />
         )}

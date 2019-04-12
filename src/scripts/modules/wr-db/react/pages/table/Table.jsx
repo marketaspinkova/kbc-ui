@@ -24,7 +24,7 @@ import FiltersDescription from '../../../../components/react/components/generic/
 import IsDockerBasedFn from '../../../templates/dockerProxyApi';
 import IncrementalSetupModal from './IncrementalSetupModal';
 import {Alert} from 'react-bootstrap';
-import AdaptiveInputMappingLastLoaded from '../../../../../react/common/AdaptiveInputMappingLastLoaded';
+import AutomaticLoadTypeLastUpdated from '../../../../../react/common/AutomaticLoadTypeLastUpdated';
 import changedSinceConstants from "../../../../../react/common/changedSinceConstants";
 
 const defaultDataTypes = [
@@ -253,7 +253,7 @@ export default componentId => {
               componentId={componentId}
             />
             {isIncremental && isAdaptive && (
-              <AdaptiveInputMappingLastLoaded
+              <AutomaticLoadTypeLastUpdated
                 tableId={this.state.tableId}
               />
             )}

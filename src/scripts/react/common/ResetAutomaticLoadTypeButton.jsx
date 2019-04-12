@@ -3,7 +3,7 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import { Loader } from '@keboola/indigo-ui';
 import Tooltip from '../../react/common/Tooltip';
-import Modal from './ClearAdaptiveInputMappingModal';
+import Modal from './ResetAutomaticLoadTypeModal';
 import { Button } from 'react-bootstrap';
 
 export default createReactClass({

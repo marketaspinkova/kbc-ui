@@ -5,7 +5,7 @@ import {Form, Radio, HelpBlock, FormGroup, ControlLabel, Col} from 'react-bootst
 
 import ChangedSinceInput from '../../../../react/common/ChangedSinceInput';
 import loadType from '../../adapters/loadType';
-import AdaptiveInputMappingLastLoaded from '../../../../react/common/AdaptiveInputMappingLastLoaded';
+import AutomaticLoadTypeLastUpdated from '../../../../react/common/AutomaticLoadTypeLastUpdated';
 
 export default createReactClass({
   propTypes: {
@@ -69,7 +69,7 @@ export default createReactClass({
             <HelpBlock>
               Append all data that has been added or changed since the last successful run.
               <br />
-              <AdaptiveInputMappingLastLoaded
+              <AutomaticLoadTypeLastUpdated
                 tableId={this.props.value.source}
               />
             </HelpBlock>

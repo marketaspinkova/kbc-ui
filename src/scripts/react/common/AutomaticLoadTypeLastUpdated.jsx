@@ -4,7 +4,7 @@ import createReactClass from 'create-react-class';
 import Immutable from 'immutable';
 
 import CreatedDate from './CreatedDate';
-import ClearAdaptiveInputMappingButton from './ClearAdaptiveInputMappingButton';
+import ResetAutomaticLoadTypeButton from './ResetAutomaticLoadTypeButton';
 
 import { constants } from '../../modules/configurations/utils/configurationState';
 import createStoreMixin from '../mixins/createStoreMixin';
@@ -85,7 +85,7 @@ export default createReactClass({
         <span>
           Table contains no new data.
           {' '}
-          <ClearAdaptiveInputMappingButton
+          <ResetAutomaticLoadTypeButton
             onClick={this.resetState}
             isPending={this.state.resetStatePending}
             disabled={this.state.resetStatePending}
@@ -99,7 +99,7 @@ export default createReactClass({
         Source table updated since the previous update {' '}
         <CreatedDate createdTime={this.state.tableState.get(constants.LAST_IMPORT_DATE_PROPERTY)} />.
         {' '}
-        <ClearAdaptiveInputMappingButton
+        <ResetAutomaticLoadTypeButton
           onClick={this.resetState}
           isPending={this.state.resetStatePending}
           disabled={this.state.resetStatePending}

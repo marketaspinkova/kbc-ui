@@ -6,7 +6,7 @@ import {ExternalLink} from '@keboola/indigo-ui';
 import Select from 'react-select';
 import ChangedSinceInput from '../../../../react/common/ChangedSinceInput';
 import changedSinceConstants from '../../../../react/common/changedSinceConstants';
-import AdaptiveInputMappingLastLoaded from '../../../../react/common/AdaptiveInputMappingLastLoaded';
+import AutomaticLoadTypeLastUpdated from '../../../../react/common/AutomaticLoadTypeLastUpdated';
 
 export default createReactClass({
   propTypes: {
@@ -54,7 +54,7 @@ export default createReactClass({
             <HelpBlock>
               Only data changed since the last successful run will be appended to the dataset.
               <br />
-              <AdaptiveInputMappingLastLoaded
+              <AutomaticLoadTypeLastUpdated
                 tableId={this.props.value.tableId}
               />
             </HelpBlock>

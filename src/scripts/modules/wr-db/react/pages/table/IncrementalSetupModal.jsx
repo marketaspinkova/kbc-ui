@@ -10,7 +10,7 @@ import Select from 'react-select';
 import ChangedSinceInput from '../../../../components/react/components/generic/ChangedSinceFilterInput';
 import DataFilterRow from '../../../../components/react/components/generic/DataFilterRow';
 import ThoughtSpotTypeInput from './ThoughtSpotTypeInput';
-import AdaptiveInputMappingLastLoaded from '../../../../../react/common/AdaptiveInputMappingLastLoaded';
+import AutomaticLoadTypeLastUpdated from '../../../../../react/common/AutomaticLoadTypeLastUpdated';
 import changedSinceConstants from '../../../../../react/common/changedSinceConstants';
 
 
@@ -103,7 +103,7 @@ export default createReactClass({
                 <span className="help-block">
                   Append all data that has been added or changed since the last successful run. If a primary key is specified, updates will be applied to rows with matching primary key column values.
                   <br />
-                  <AdaptiveInputMappingLastLoaded
+                  <AutomaticLoadTypeLastUpdated
                     tableId={this.state.mapping.get('source')}
                   />
                 </span>
