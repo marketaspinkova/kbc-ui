@@ -11,6 +11,7 @@
     "byte-converter": "^0.1.4",
     "classnames": "^2.2.6",
     "codemirror": "^5.45.0",
+    "core-js": "^3.0.1",
     "create-react-class": "^15.6.3",
     "crypto-js": "^3.1.9-1",
     "d3": "~4.3.0",
@@ -75,7 +76,7 @@
     "lint:fix": "node environment/scripts/eslint.js --fix"
   },
   "devDependencies": {
-    "@babel/core": "^7.3.4",
+    "@babel/core": "^7.4.3",
     "@babel/plugin-transform-modules-commonjs": "^7.4.3",
     "babel-eslint": "10.0.1",
     "babel-jest": "^24.1.0",
@@ -106,16 +107,9 @@
     "webpack-dev-server": "^3.2.1",
     "worker-loader": "^2.0.0"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ]
 }

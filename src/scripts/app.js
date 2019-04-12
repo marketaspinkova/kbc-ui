@@ -1,6 +1,7 @@
 /* eslint no-console: 0 */
 console.time('load');
 
+import 'core-js/stable';
 import './utils/ReactErrorHandler';
 import './utils/codemirror/setup';
 
