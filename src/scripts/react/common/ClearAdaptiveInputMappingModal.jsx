@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
-import { Modal, ButtonToolbar, Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
+import ConfirmButtons from './ConfirmButtons';
 
 export default createReactClass({
   propTypes: {
@@ -26,14 +27,15 @@ export default createReactClass({
           data in the table.
         </Modal.Body>
         <Modal.Footer>
-          <ButtonToolbar>
-            <Button bsStyle="link" onClick={this.props.onHide}>
-              Close
-            </Button>
-            <Button bsStyle="primary" onClick={this._handleRun} disabled={this.props.disabled}>
-              Clear
-            </Button>
-          </ButtonToolbar>
+          <ConfirmButtons
+            isSaving={false}
+            onSave={this._handleRun}
+            disabled={this.props.disabled}
+            onCancel={this.props.onHide}
+            saveLabel="Reset"
+            saveStyle="primary"
+            cancelLabel="Close"
+          />
         </Modal.Footer>
       </Modal>
     );
