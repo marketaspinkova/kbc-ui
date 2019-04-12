@@ -31,7 +31,7 @@ export default createReactClass({
     return (
       <Modal
         onHide={function() {
-          component.setState({showModal: false});
+          component.setState({ showModal: false });
         }}
         show={this.state.showModal}
         onRequestRun={this.onClick}
@@ -48,11 +48,7 @@ export default createReactClass({
       </span>
     );
     return (
-      <Button
-        bsStyle="link"
-        className="btn-link-inline"
-        onClick={this.onModalOpen}
-      >
+      <Button bsStyle="link" className="btn-link-inline" onClick={this.onModalOpen}>
         {this.renderModal()}
         {this.tooltipWrapper(body)}
       </Button>
@@ -61,7 +57,7 @@ export default createReactClass({
 
   onModalOpen() {
     if (!this.props.disabled) {
-      this.setState({showModal: true});
+      this.setState({ showModal: true });
     }
   },
 
@@ -78,10 +74,7 @@ export default createReactClass({
     }
     if (this.props.isPending) {
       return (
-        <Tooltip
-          tooltip="Clearing state"
-          placement={this.props.tooltipPlacement}
-        >
+        <Tooltip tooltip="Clearing state" placement={this.props.tooltipPlacement}>
           {body}
         </Tooltip>
       );
@@ -96,7 +89,6 @@ export default createReactClass({
     );
   },
 
-
   onClick(e) {
     if (!this.props.disabled) {
       e.stopPropagation();
@@ -109,11 +101,9 @@ export default createReactClass({
     if (this.props.isPending) {
       return (
         <span>
-          <Loader className="fa-fw"/>
-          {' '}
+          <Loader className="fa-fw" />{' '}
         </span>
       );
     }
   }
 });
-

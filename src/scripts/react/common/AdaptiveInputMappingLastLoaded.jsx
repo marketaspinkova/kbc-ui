@@ -12,7 +12,7 @@ import RoutesStore from '../../stores/RoutesStore';
 import InstalledComponentsStore from '../../modules/components/stores/InstalledComponentsStore';
 import ConfigurationRowActionCreators from '../../modules/configurations/ConfigurationRowsActionCreators';
 import ConfigurationRowsStore from '../../modules/configurations/ConfigurationRowsStore';
-import InstalledComponentsActionCreators from "../../modules/components/InstalledComponentsActionCreators";
+import InstalledComponentsActionCreators from '../../modules/components/InstalledComponentsActionCreators';
 
 export default createReactClass({
   mixins: [createStoreMixin(RoutesStore, InstalledComponentsStore, ConfigurationRowsStore)],
@@ -38,31 +38,41 @@ export default createReactClass({
       configId,
       rowId,
       configurationState: configuration.get('state', Immutable.Map()),
-      resetStatePending: ConfigurationRowsStore.getPendingActions(componentId, configId, rowId).has('clear-state') || InstalledComponentsStore.getPendingActions(componentId, configId).has('clear-state')
-    }
+      resetStatePending:
+        ConfigurationRowsStore.getPendingActions(componentId, configId, rowId).has('clear-state') ||
+        InstalledComponentsStore.getPendingActions(componentId, configId).has('clear-state')
+    };
   },
 
   resetState() {
     if (this.state.rowId) {
-      ConfigurationRowActionCreators.clearInputMappingState(this.state.componentId, this.state.configId, this.state.rowId, this.props.tableId);
+      ConfigurationRowActionCreators.clearInputMappingState(
+        this.state.componentId,
+        this.state.configId,
+        this.state.rowId,
+        this.props.tableId
+      );
     } else {
-      InstalledComponentsActionCreators.clearInputMappingState(this.state.componentId, this.state.configId, this.props.tableId);
+      InstalledComponentsActionCreators.clearInputMappingState(
+        this.state.componentId,
+        this.state.configId,
+        this.props.tableId
+      );
     }
   },
 
   render() {
     const tableState = this.state.configurationState
-      .getIn([constants.STORAGE_NAMESPACE, constants.INPUT_NAMESPACE, constants.TABLES_NAMESPACE], Immutable.Map())
+      .getIn(
+        [constants.STORAGE_NAMESPACE, constants.INPUT_NAMESPACE, constants.TABLES_NAMESPACE],
+        Immutable.Map()
+      )
       .find((item) => item.get('source') === this.props.tableId);
     if (tableState) {
       return (
         <span>
-          Last updated
-          {' '}
-          <CreatedDate
-            createdTime={tableState.get(constants.LAST_IMPORT_DATE_PROPERTY)}
-          />.
-          {' '}
+          Last updated{' '}
+          <CreatedDate createdTime={tableState.get(constants.LAST_IMPORT_DATE_PROPERTY)} />.{' '}
           <ClearAdaptiveInputMappingButton
             onClick={this.resetState}
             isPending={this.state.resetStatePending}
@@ -71,8 +81,6 @@ export default createReactClass({
         </span>
       );
     }
-    return (
-      <span>No information about previous runs.</span>
-    );
+    return <span>No information about previous runs.</span>;
   }
 });

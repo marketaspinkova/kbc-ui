@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
-import {Modal, ButtonToolbar, Button} from 'react-bootstrap';
+import { Modal, ButtonToolbar, Button } from 'react-bootstrap';
 
 export default createReactClass({
   propTypes: {
@@ -17,22 +17,22 @@ export default createReactClass({
 
   render: function() {
     return (
-      <Modal
-        show={this.props.show}
-        onHide={this.props.onHide}
-      >
+      <Modal show={this.props.show} onHide={this.props.onHide}>
         <Modal.Header closeButton>
-          <Modal.Title>
-            Reset Last Successful Run
-          </Modal.Title>
+          <Modal.Title>Reset Last Successful Run</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          This will clear the information from the last successful run. Next execution will load all data in the table.
+          This will clear the information from the last successful run. Next execution will load all
+          data in the table.
         </Modal.Body>
         <Modal.Footer>
           <ButtonToolbar>
-            <Button bsStyle="link" onClick={this.props.onHide}>Close</Button>
-            <Button bsStyle="primary" onClick={this._handleRun} disabled={this.props.disabled}>Clear</Button>
+            <Button bsStyle="link" onClick={this.props.onHide}>
+              Close
+            </Button>
+            <Button bsStyle="primary" onClick={this._handleRun} disabled={this.props.disabled}>
+              Clear
+            </Button>
           </ButtonToolbar>
         </Modal.Footer>
       </Modal>
