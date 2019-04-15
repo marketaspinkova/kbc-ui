@@ -27,10 +27,15 @@ export default createReactClass({
             <Modal.Title>Update filter</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Alert bsStyle="info">
+            {this.renderError()}
+
+            <p>
               You can specify one column to filter by, and comma separated values you&apos;re looking for. The alias table
               will contain only the matching rows.
-            </Alert>
+            </p>
+
+            <br />
+
             <FormGroup>
               <Col sm={3} componentClass={ControlLabel}>
                 Column
@@ -81,11 +86,20 @@ export default createReactClass({
     );
   },
 
+  renderError() {
+    if (!this.state.error) {
+      return null;
+    }
+
+    return <Alert bsStyle="danger">{this.state.error}</Alert>;
+  },
+
   defaultValues() {
     return {
       operator: this.props.table.getIn(['aliasFilter', 'operator'], 'eq'),
       column: this.props.table.getIn(['aliasFilter', 'column'], ''),
-      values: this.props.table.getIn(['aliasFilter', 'values'], List()).join(', ')
+      values: this.props.table.getIn(['aliasFilter', 'values'], List()).join(', '),
+      error: null
     };
   },
 
@@ -109,12 +123,22 @@ export default createReactClass({
 
   onSubmit(event) {
     event.preventDefault();
+
+    if (this.state.error) {
+      this.setState({ error: null });
+    }
+
     const params = {
       operator: this.state.operator,
       column: this.state.column,
       values: this.state.values.split(',').map(value => value.trim())
     };
-    this.props.onSubmit(params).then(this.props.onHide);
+
+    this.props.onSubmit(params).then(this.onHide, (message) => {
+      this.setState({
+        error: message
+      });
+    });
   },
 
   onHide() {
