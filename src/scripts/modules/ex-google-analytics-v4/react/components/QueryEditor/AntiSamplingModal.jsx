@@ -67,13 +67,13 @@ export default createReactClass({
           'adaptive',
           'Will divide the date range into multiple smaller date ranges. This is way faster, but might not be that precise.'
         )}
-        {this.createRadioInput('None', null, 'No anti-sampling algorithm used.')}
+        {this.createRadioInput('None', '', 'No anti-sampling algorithm used.')}
       </div>
     );
   },
 
   createRadioInput(name, value, description) {
-    const currentValue = this.props.localState.get('value');
+    const currentValue = this.props.localState.get('value') || '';
     return (
       <div className="radio">
         <label>
@@ -95,7 +95,7 @@ export default createReactClass({
 
 
   onChange(newVal) {
-    this.props.updateLocalState('value', newVal);
+    this.props.updateLocalState('value', !!newVal ? newVal : null);
   }
 
 });
