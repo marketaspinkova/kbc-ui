@@ -186,8 +186,8 @@ export default createReactClass({
   },
 
   _openSupportModal(e) {
-    contactSupport({ type: 'project' });
     e.preventDefault();
-    return e.stopPropagation();
+    e.stopPropagation();
+    contactSupport();
   }
 });

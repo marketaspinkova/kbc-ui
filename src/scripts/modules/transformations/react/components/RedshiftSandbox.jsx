@@ -11,7 +11,6 @@ import RunComponentButton from '../../../components/react/components/RunComponen
 import DeleteButton from '../../../../react/common/DeleteButton';
 import StorageBucketsStore from '../../../components/stores/StorageBucketsStore';
 import StorageTablesStore from '../../../components/stores/StorageTablesStore';
-import contactSupport from '../../../../utils/contactSupport';
 import Tooltip from './../../../../react/common/Tooltip';
 import RedshiftSSLInfoModal from './RedshiftSSLInfoModal';
 
@@ -34,12 +33,6 @@ export default createReactClass({
       showSSLInfoModal: false,
       sandboxConfiguration: Immutable.Map()
     };
-  },
-
-  _openSupportModal(e) {
-    contactSupport({ type: 'project' });
-    e.preventDefault();
-    e.stopPropagation();
   },
 
   _renderCredentials() {

@@ -38,7 +38,7 @@ export default createReactClass({
             <Button bsStyle="link" onClick={this.props.onClose}>
               Close
             </Button>
-            <Button bsStyle="success" onClick={this._contactSupport}>
+            <Button bsStyle="success" onClick={contactSupport}>
               Contact Support
             </Button>
           </ButtonToolbar>
@@ -56,15 +56,5 @@ export default createReactClass({
       default:
         break;
     }
-  },
-
-  _contactSupport() {
-    const name = this.props.component.get('name');
-    const type = this.props.component.get('type');
-
-    return contactSupport({
-      subject: `${name} ${type} configuration assistance request`,
-      type: 'project'
-    });
   }
 });

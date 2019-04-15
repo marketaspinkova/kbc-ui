@@ -75,7 +75,7 @@ export default createReactClass({
 
   openSupportModal(e) {
     e.preventDefault();
-    contactSupport({ type: 'project' });
+    contactSupport();
   },
 
   openWishlistModal(e) {

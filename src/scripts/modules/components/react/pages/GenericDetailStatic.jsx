@@ -48,7 +48,7 @@ export default createReactClass({
           <div className="row">
             <p>This component has to be configured manually, please contact our support for assistance.</p>
             <div className="kbc-buttons">
-              <Button onClick={this.contactSupport} bsStyle="success">
+              <Button onClick={contactSupport} bsStyle="success">
                 Contact Support
               </Button>
             </div>
@@ -95,13 +95,5 @@ export default createReactClass({
 
   runParams() {
     return () => ({config: this.state.config.get('id')});
-  },
-
-  contactSupport() {
-    contactSupport({
-      type: 'project',
-      subject: 'Configuration assistance request'
-    });
   }
-
 });

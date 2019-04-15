@@ -200,7 +200,7 @@ export default createReactClass({
       <button
         key="contact-support-btn"
         className="btn btn-danger"
-        onClick={this._contactSupport}
+        onClick={contactSupport}
         style={{
           marginTop: '10px'
         }}
@@ -503,13 +503,6 @@ export default createReactClass({
 
   _isGoodDataWriter() {
     return getJobComponentId(this.state.job) === 'gooddata-writer';
-  },
-
-  _contactSupport() {
-    return contactSupport({
-      subject: `Help with job ${this.state.job.get('id')}`,
-      type: 'direct'
-    });
   },
 
   _renderAccordionHeader(text, isActive) {
