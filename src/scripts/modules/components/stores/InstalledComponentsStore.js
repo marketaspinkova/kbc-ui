@@ -1133,7 +1133,7 @@ Dispatcher.register(function(payload) {
     case constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_CLEAR_INPUT_TABLE_STATE_SUCCESS:
       _store = _store
         .deleteIn(['pendingActions', action.componentId, action.configurationId, 'clear-state'])
-        .setIn(['components', action.componentId, 'configurations', action.configId], fromJS(action.configuration));
+        .setIn(['components', action.componentId, 'configurations', action.configurationId], fromJSOrdered(action.configuration));
       return InstalledComponentsStore.emitChange();
     default:
   }
