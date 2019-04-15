@@ -89,17 +89,15 @@ export default createReactClass({
 
   _renderRunButton() {
     return (
-      <OverlayTrigger overlay={<Tooltip id="export_tooltip">Export to TDE File</Tooltip>} placement="top">
-        <RunButtonModal
-          title={`Export ${this.props.table.get('id')} to TDE`}
-          tooltip={`Export ${this.props.table.get('id')} to TDE`}
-          mode="button"
-          component="tde-exporter"
-          runParams={() => this.props.prepareRunDataFn()}
-        >
-          {`You are about export ${this.props.table.get('id')} to TDE.`}
-        </RunButtonModal>
-      </OverlayTrigger>
+      <RunButtonModal
+        title={`Export ${this.props.table.get('id')} to TDE`}
+        tooltip={`Export ${this.props.table.get('id')} to TDE`}
+        mode="button"
+        component="tde-exporter"
+        runParams={() => this.props.prepareRunDataFn()}
+      >
+        {`You are about export ${this.props.table.get('id')} to TDE.`}
+      </RunButtonModal>
     );
   }
 });
