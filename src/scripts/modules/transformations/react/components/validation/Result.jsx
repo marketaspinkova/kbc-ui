@@ -21,7 +21,7 @@ export default createReactClass({
           <h4>Following errors found</h4>
           {this.props.result.map(this.renderResult).toArray()}
           <p>
-            Not an error? Please <a onClick={() => contactSupport({ type: 'project' })}>contact us</a>.
+            Not an error? Please <a onClick={contactSupport}>contact us</a>.
           </p>
         </Alert>
       );

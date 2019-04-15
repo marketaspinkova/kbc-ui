@@ -29,7 +29,6 @@ import InstalledComponentsActionCreators from '../../InstalledComponentsActionCr
 import StorageTablesStore from '../../stores/StorageTablesStore';
 import StorageBucketsStore from '../../stores/StorageBucketsStore';
 import {Map, List} from 'immutable';
-import contactSupport from '../../../../utils/contactSupport';
 import LastUpdateInfo from '../../../../react/common/LastUpdateInfo';
 import Immutable from 'immutable';
 import LatestVersions from '../components/SidebarVersionsWrapper';
@@ -293,13 +292,6 @@ export default createReactClass({
 
   runParams() {
     return () => ({config: this.state.config.get('id')});
-  },
-
-  contactSupport() {
-    contactSupport({
-      type: 'project',
-      subject: 'Configuration assistance request'
-    });
   },
 
   getConfigDataRuntime() {

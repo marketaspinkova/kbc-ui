@@ -42,9 +42,8 @@ export default createReactClass({
   },
 
   openSupportModal(e) {
-    contactSupport({type: 'project'});
     e.preventDefault();
     e.stopPropagation();
+    contactSupport();
   }
-
 });
