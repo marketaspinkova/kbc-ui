@@ -62,9 +62,11 @@ export default createReactClass({
     return (
       <div className="form-group">
         {this.createRadioInput('Daily Walk algorithm', 'dailyWalk', 'Will make one request per date in the date range. You will get the most precise results, but it takes a lot of API calls.')}
-        {this.props.endpoint === Constants.ENDPOINT_REPORT ?
-          this.createRadioInput('Adaptive algorithm', 'adaptive', 'Will divide the date range into multiple smaller date ranges. This is way faster, but might not be that precise.')
-        : null}
+        {this.props.endpoint === Constants.ENDPOINT_REPORT && this.createRadioInput(
+          'Adaptive algorithm',
+          'adaptive',
+          'Will divide the date range into multiple smaller date ranges. This is way faster, but might not be that precise.'
+        )}
         {this.createRadioInput('None', null, 'No anti-sampling algorithm used.')}
       </div>
     );
