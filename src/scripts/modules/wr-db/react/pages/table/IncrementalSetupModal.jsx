@@ -109,9 +109,12 @@ export default createReactClass({
                       If a primary key is specified, updates will be applied to rows with matching
                       primary key column values.
                     </p>
-                    <AutomaticLoadTypeLastUpdated
-                      tableId={this.state.mapping.get('source')}
-                    />
+                    {this.state.isIncremental
+                      && this.state.mapping.get('changed_since') === changedSinceConstants.ADAPTIVE_VALUE && (
+                      <AutomaticLoadTypeLastUpdated
+                        tableId={this.state.mapping.get('source')}
+                      />
+                    )}
                   </div>
                 )}
 
