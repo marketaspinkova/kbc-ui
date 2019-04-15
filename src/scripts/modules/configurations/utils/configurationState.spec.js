@@ -26,12 +26,12 @@ describe('isEmptyComponentState', function() {
 });
 
 describe('emptyComponentState', function() {
-  it('empty legacy state should return empty legacy state', function () {
-    expect({})
+  it('empty legacy state should return empty namespace state', function() {
+    expect({component: {}})
       .toEqual(emptyComponentState(Immutable.fromJS({})).toJS());
   });
-  it('nonempty legacy state should return empty legacy state', function () {
-    expect({})
+  it('nonempty legacy state should return empty namespace state with the rest untouched', function() {
+    expect({key: 'value', component: {}})
       .toEqual(emptyComponentState(Immutable.fromJS({key: 'value'})).toJS());
   });
   it('empty namespace state should return empty namespace state', function () {
