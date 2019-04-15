@@ -6,6 +6,7 @@ import { Map, List } from 'immutable';
 import { Table, Badge, ProgressBar } from 'react-bootstrap';
 import { ExternalLink } from '@keboola/indigo-ui';
 import Tooltip from '../../common/Tooltip';
+import { scoreStyle } from './utils';
 
 export default createReactClass({
   propTypes: {
@@ -101,7 +102,7 @@ export default createReactClass({
           <ProgressBar
             max={1}
             label={`Score ${reability.get('reliabilityScore') * 100} of 100`}
-            bsStyle={this.scoreStyle(reability.get('reliabilityScore'))}
+            bsStyle={scoreStyle(reability.get('reliabilityScore'))}
             now={reability.get('reliabilityScore')} 
           />
 
@@ -119,13 +120,5 @@ export default createReactClass({
       .toKeyedSeq()
       .sort()
       .map((distance) => distance.groupBy((data) => data.get('role')));
-  },
-
-  scoreStyle(score) {
-    if (score > 0.9) return 'success';
-    if (score > 0.7) return 'info';
-    if (score > 0.5) return 'warning';
-
-    return 'danger';
   }
 });

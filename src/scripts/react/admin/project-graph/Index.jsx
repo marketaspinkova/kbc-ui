@@ -6,7 +6,12 @@ import { Map, fromJS } from 'immutable';
 import { Loader } from '@keboola/indigo-ui';
 import { Button, Row, Col, Nav, NavItem, Tab } from 'react-bootstrap';
 import FastFade from '../../common/FastFade';
-import { getLineageInOrganization, getOrganizationReliability, getProjectReliability } from './GraphApi';
+import {
+  getLineageInOrganization,
+  getOrganizationReliability,
+  getProjectReliability
+} from './GraphApi';
+import Overview from './Overview';
 import Lineage from './Lineage';
 import Graph from './Graph';
 
@@ -58,6 +63,9 @@ export default createReactClass({
               <NavItem eventKey="Lineage" disabled={!this.state.data.count()}>
                 Lineage
               </NavItem>
+              <NavItem eventKey="Overview" disabled={!this.state.data.count()}>
+                Overview
+              </NavItem>
             </Nav>
           </Col>
           <Col xs={12}>{this.renderContent()}</Col>
@@ -67,6 +75,8 @@ export default createReactClass({
   },
 
   renderContent() {
+    const projectId = this.props.appData.getIn(['sapi', 'token', 'owner', 'id']);
+
     if (this.state.isLoading) {
       return this.renderLoading();
     }
@@ -78,15 +88,15 @@ export default createReactClass({
     return (
       <Tab.Content animation={FastFade}>
         <Tab.Pane eventKey="Graph" mountOnEnter unmountOnExit>
-          <Graph 
+          <Graph
             nodes={this.state.data.getIn(['lineage', 'nodes'])}
             links={this.state.data.getIn(['lineage', 'links'])}
             urlTemplates={this.props.urlTemplates} 
           />
         </Tab.Pane>
-        <Tab.Pane eventKey="Lineage">
-          <Lineage 
-            lineage={this.state.data.getIn(['lineage', 'lineage'])} 
+        <Tab.Pane eventKey="Lineage" mountOnEnter>
+          <Lineage
+            lineage={this.state.data.getIn(['lineage', 'lineage'])}
             reability={this.state.data.get('organizationReliability')}
             urlTemplates={this.props.urlTemplates} 
           />
@@ -125,28 +135,33 @@ export default createReactClass({
 
   getLineageInOrganization() {
     const token = this.props.appData.getIn(['sapi', 'token', 'token']);
-    const graphServiceUrl = this.props.appData.get('services').find((service) => {
-      return service.get('id') === 'graph'
-    }).get('url');
+    const graphServiceUrl = this.props.appData
+      .get('services')
+      .find((service) => {
+        return service.get('id') === 'graph';
+      })
+      .get('url');
 
     this.setState({ isLoading: true });
     this.loadingPromise = Promise.all([
       getLineageInOrganization(graphServiceUrl, token),
       getOrganizationReliability(graphServiceUrl, token),
       getProjectReliability(graphServiceUrl, token)
-    ]).spread((lineage, organizationReliability, projectReliability) => {
-      this.setState({
-        data: fromJS({
-          lineage,
-          organizationReliability,
-          projectReliability
-        }).update('organizationReliability', (reliability) => {
-          return reliability.toMap().mapKeys((key, row) => row.get('project'))
-        }),
-        activeTab: 'Lineage'
+    ])
+      .spread((lineage, organizationReliability, projectReliability) => {
+        this.setState({
+          data: fromJS({
+            lineage,
+            organizationReliability,
+            projectReliability
+          }).update('organizationReliability', (reliability) => {
+            return reliability.toMap().mapKeys((key, row) => row.get('project'));
+          }),
+          activeTab: 'Overview'
+        });
+      })
+      .finally(() => {
+        this.setState({ isLoading: false });
       });
-    }).finally(() => {
-      this.setState({ isLoading: false });
-    })
   }
 });
