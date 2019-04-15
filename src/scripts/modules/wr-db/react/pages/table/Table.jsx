@@ -253,9 +253,12 @@ export default componentId => {
               componentId={componentId}
             />
             {isIncremental && isAdaptive && (
-              <AutomaticLoadTypeLastUpdated
-                tableId={this.state.tableId}
-              />
+              <span>
+                <br />
+                <AutomaticLoadTypeLastUpdated
+                  tableId={this.state.tableId}
+                />
+              </span>
             )}
           </div>
         </div>
