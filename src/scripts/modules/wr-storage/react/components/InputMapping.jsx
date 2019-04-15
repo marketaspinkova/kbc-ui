@@ -53,7 +53,6 @@ export default createReactClass({
                 onChange={value => this.props.onChange({changedSince: value})}
                 disabled={this.props.disabled}
                 tableId={this.props.value.source}
-                allowAdaptive
               />
             </Col>
           </FormGroup>
