@@ -74,15 +74,15 @@ export default createReactClass({
   render() {
     if (!this.state.tableState || !this.state.tableState.get(constants.LAST_IMPORT_DATE_PROPERTY)) {
       return (
-        <span>
+        <div className="help-block">
           Table has not been loaded yet.
-        </span>
+        </div>
       );
     }
 
     if (this.state.tableState.get(constants.LAST_IMPORT_DATE_PROPERTY) == this.state.table.get(constants.LAST_IMPORT_DATE_PROPERTY)) {
       return (
-        <span>
+        <div className="help-block">
           Table contains no new data.
           {' '}
           <ResetAutomaticLoadTypeButton
@@ -90,12 +90,12 @@ export default createReactClass({
             isPending={this.state.resetStatePending}
             disabled={this.state.resetStatePending}
           />
-        </span>
+        </div>
       );
     }
 
     return (
-      <span>
+      <div className="help-block">
         Source table updated since the previous update {' '}
         <CreatedDate createdTime={this.state.tableState.get(constants.LAST_IMPORT_DATE_PROPERTY)} />.
         {' '}
@@ -104,7 +104,7 @@ export default createReactClass({
           isPending={this.state.resetStatePending}
           disabled={this.state.resetStatePending}
         />
-      </span>
+      </div>
     );
   }
 });

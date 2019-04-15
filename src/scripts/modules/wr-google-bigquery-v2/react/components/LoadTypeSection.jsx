@@ -62,7 +62,7 @@ export default createReactClass({
               Replace all existing rows in the destination table.
             </HelpBlock>
             { ApplicationStore.hasCurrentProjectFeature(FEATURE_ADAPTIVE_INPUT_MAPPING) && (
-              <span>
+              <div>
                 <Radio
                   type="radio"
                   title="Automatic Incremental Load"
@@ -73,12 +73,11 @@ export default createReactClass({
                 </Radio>
                 <HelpBlock>
                   Append all data that has been added or changed since the last successful run.
-                  <br />
-                  <AutomaticLoadTypeLastUpdated
-                    tableId={this.props.value.source}
-                  />
-                </HelpBlock>
-              </span>
+                 </HelpBlock>
+                <AutomaticLoadTypeLastUpdated
+                  tableId={this.props.value.source}
+                />
+              </div>
             )}
             <Radio
               type="radio"

@@ -87,12 +87,12 @@ export default createReactClass({
                     <span>Full Load</span>
                   </label>
                 </div>
-                <span className="help-block">
+                <p className="help-block">
                   Replace all existing rows in the destination table.
-                </span>
+                </p>
 
                 { ApplicationStore.hasCurrentProjectFeature(FEATURE_ADAPTIVE_INPUT_MAPPING) && (
-                  <span>
+                  <div>
                     <div className="radio">
                       <label>
                         <input
@@ -104,14 +104,15 @@ export default createReactClass({
                         <span>Automatic Incremental Load</span>
                       </label>
                     </div>
-                    <span className="help-block">
-                      Append all data that has been added or changed since the last successful run. If a primary key is specified, updates will be applied to rows with matching primary key column values.
-                      <br />
-                      <AutomaticLoadTypeLastUpdated
-                        tableId={this.state.mapping.get('source')}
-                      />
-                    </span>
-                  </span>
+                    <p className="help-block">
+                      Append all data that has been added or changed since the last successful run.
+                      If a primary key is specified, updates will be applied to rows with matching
+                      primary key column values.
+                    </p>
+                    <AutomaticLoadTypeLastUpdated
+                      tableId={this.state.mapping.get('source')}
+                    />
+                  </div>
                 )}
 
                 <div className="radio">
@@ -125,9 +126,9 @@ export default createReactClass({
                     <span>Manual Incremental Load</span>
                   </label>
                 </div>
-                <span className="help-block">
+                <p className="help-block">
                   Append all selected data. If a primary key is specified, updates will be applied to rows with matching primary key column values.
-                </span>
+                </p>
 
               </div>
             </div>
