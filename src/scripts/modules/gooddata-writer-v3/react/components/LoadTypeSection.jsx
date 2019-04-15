@@ -7,6 +7,8 @@ import Select from 'react-select';
 import ChangedSinceInput from '../../../../react/common/ChangedSinceInput';
 import changedSinceConstants from '../../../../react/common/changedSinceConstants';
 import AutomaticLoadTypeLastUpdated from '../../../../react/common/AutomaticLoadTypeLastUpdated';
+import ApplicationStore from '../../../../stores/ApplicationStore';
+import {FEATURE_ADAPTIVE_INPUT_MAPPING} from '../../../../constants/KbcConstants';
 
 export default createReactClass({
   propTypes: {
@@ -43,21 +45,25 @@ export default createReactClass({
             <HelpBlock>
               All data in the GoodData dataset will be replaced by the current Storage table data.
             </HelpBlock>
-            <Radio
-              type="radio"
-              title="Automatic Incremental Load"
-              disabled={disabled}
-              onChange={() => onChange({changedSince: changedSinceConstants.ADAPTIVE_VALUE})}
-              checked={isIncremental && this.props.value.changedSince === changedSinceConstants.ADAPTIVE_VALUE}>
-              Automatic Incremental Load
-            </Radio>
-            <HelpBlock>
-              Only data changed since the last successful run will be appended to the dataset.
-              <br />
-              <AutomaticLoadTypeLastUpdated
-                tableId={this.props.value.tableId}
-              />
-            </HelpBlock>
+            { ApplicationStore.hasCurrentProjectFeature(FEATURE_ADAPTIVE_INPUT_MAPPING) && (
+              <span>
+                <Radio
+                  type="radio"
+                  title="Automatic Incremental Load"
+                  disabled={disabled}
+                  onChange={() => onChange({changedSince: changedSinceConstants.ADAPTIVE_VALUE})}
+                  checked={isIncremental && this.props.value.changedSince === changedSinceConstants.ADAPTIVE_VALUE}>
+                  Automatic Incremental Load
+                </Radio>
+                <HelpBlock>
+                  Only data changed since the last successful run will be appended to the dataset.
+                  <br />
+                  <AutomaticLoadTypeLastUpdated
+                    tableId={this.props.value.tableId}
+                  />
+                </HelpBlock>
+              </span>
+            )}
             <Radio
               type="radio"
               title="Manual Incremental Load"
