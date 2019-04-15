@@ -208,7 +208,7 @@ export default componentId => {
       const primaryKey = exportInfo.get('primaryKey', List());
       const showIncrementalSetupPath = ['IncrementalSetup', 'show'];
       const tableMapping = this.state.v2Actions.getTableMapping(this.state.tableId);
-      const isAdaptive = tableMapping.get('changed_since') === changedSinceConstants.ADAPTIVE_VALUE ? true : false;
+      const isAdaptive = tableMapping.get('changed_since') === changedSinceConstants.ADAPTIVE_VALUE;
 
       return (
         <div className="row">
