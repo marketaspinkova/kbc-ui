@@ -1,7 +1,11 @@
+import loadType from './loadType';
+import changedSinceConstants from '../../../react/common/changedSinceConstants';
+
 export const cases = {
   emptyWithDefaults: {
     localState: {
-      incremental: false,
+      source: '',
+      loadType: loadType.constants.FULL,
       changedSince: ''
     },
     configuration: {
@@ -25,7 +29,8 @@ export const cases = {
   },
   simple: {
     localState: {
-      incremental: true,
+      source: '',
+      loadType: loadType.constants.INCREMENTAL,
       changedSince: '-1 day'
     },
     configuration: {
@@ -34,6 +39,31 @@ export const cases = {
           tables: [
             {
               changed_since: '-1 day'
+            }
+          ]
+        }
+      },
+      parameters: {
+        tables: [
+          {
+            incremental: true
+          }
+        ]
+      }
+    }
+  },
+  adaptive: {
+    localState: {
+      source: '',
+      loadType: loadType.constants.ADAPTIVE,
+      changedSince: ''
+    },
+    configuration: {
+      storage: {
+        input: {
+          tables: [
+            {
+              changed_since: changedSinceConstants.ADAPTIVE_VALUE
             }
           ]
         }

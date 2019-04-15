@@ -83,7 +83,6 @@ export default createReactClass({
           mapping={this.props.mapping}
           disabled={this.props.disabled}
           onChange={this.props.onChange}
-          allowAdaptive
         />
       );
     }

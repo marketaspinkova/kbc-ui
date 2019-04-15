@@ -5,6 +5,10 @@ import {Form, Radio, HelpBlock, FormGroup, ControlLabel, Col, Alert} from 'react
 import {ExternalLink} from '@keboola/indigo-ui';
 import Select from 'react-select';
 import ChangedSinceInput from '../../../../react/common/ChangedSinceInput';
+import changedSinceConstants from '../../../../react/common/changedSinceConstants';
+import AutomaticLoadTypeLastUpdated from '../../../../react/common/AutomaticLoadTypeLastUpdated';
+import ApplicationStore from '../../../../stores/ApplicationStore';
+import {FEATURE_ADAPTIVE_INPUT_MAPPING} from '../../../../constants/KbcConstants';
 
 export default createReactClass({
   propTypes: {
@@ -12,6 +16,7 @@ export default createReactClass({
       changedSince: PropTypes.string.isRequired,
       grainColumns: PropTypes.array.isRequired,
       hasConnectionPoint: PropTypes.bool.isRequired,
+      tableId: PropTypes.string.isRequired,
       grain: PropTypes.array
     }),
     onChange: PropTypes.func.isRequired,
@@ -40,20 +45,38 @@ export default createReactClass({
             <HelpBlock>
               All data in the GoodData dataset will be replaced by the current Storage table data.
             </HelpBlock>
+            { ApplicationStore.hasCurrentProjectFeature(FEATURE_ADAPTIVE_INPUT_MAPPING) && (
+              <span>
+                <Radio
+                  type="radio"
+                  title="Automatic Incremental Load"
+                  disabled={disabled}
+                  onChange={() => onChange({changedSince: changedSinceConstants.ADAPTIVE_VALUE})}
+                  checked={isIncremental && this.props.value.changedSince === changedSinceConstants.ADAPTIVE_VALUE}>
+                  Automatic Incremental Load
+                </Radio>
+                <HelpBlock>
+                  Only data changed since the last successful run will be appended to the dataset.
+                </HelpBlock>
+                <AutomaticLoadTypeLastUpdated
+                  tableId={this.props.value.tableId}
+                />
+              </span>
+            )}
             <Radio
               type="radio"
-              title="Incremental"
+              title="Manual Incremental Load"
               disabled={disabled}
               onChange={() => onChange({changedSince: '-1 days'})}
-              checked={isIncremental}>
-              Incremental
+              checked={isIncremental && this.props.value.changedSince !== changedSinceConstants.ADAPTIVE_VALUE}>
+              Manual Incremental Load
             </Radio>
             <HelpBlock>
-              Data will be appended to the dataset.
+              Selected data will be appended to the dataset.
             </HelpBlock>
           </Col>
         </FormGroup>
-        {isIncremental &&
+        {isIncremental && this.props.value.changedSince !== changedSinceConstants.ADAPTIVE_VALUE &&
          <FormGroup>
            <Col componentClass={ControlLabel} sm={4}>
              Changed In Last
@@ -63,7 +86,7 @@ export default createReactClass({
                value={value.changedSince}
                onChange={(newValue) => this.props.onChange({changedSince: newValue})}
                disabled={disabled}
-               allowAdaptive
+               tableId={value.tableId}
              />
            </Col>
          </FormGroup>

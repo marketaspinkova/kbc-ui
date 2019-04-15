@@ -24,6 +24,8 @@ import FiltersDescription from '../../../../components/react/components/generic/
 import IsDockerBasedFn from '../../../templates/dockerProxyApi';
 import IncrementalSetupModal from './IncrementalSetupModal';
 import {Alert} from 'react-bootstrap';
+import AutomaticLoadTypeLastUpdated from '../../../../../react/common/AutomaticLoadTypeLastUpdated';
+import changedSinceConstants from "../../../../../react/common/changedSinceConstants";
 
 const defaultDataTypes = [
   'INT',
@@ -206,6 +208,7 @@ export default componentId => {
       const primaryKey = exportInfo.get('primaryKey', List());
       const showIncrementalSetupPath = ['IncrementalSetup', 'show'];
       const tableMapping = this.state.v2Actions.getTableMapping(this.state.tableId);
+      const isAdaptive = tableMapping.get('changed_since') === changedSinceConstants.ADAPTIVE_VALUE;
 
       return (
         <div className="row">
@@ -214,12 +217,11 @@ export default componentId => {
           </div>
           <div className="col-sm-9">
             <button
-              className="btn btn-link"
-              style={{ paddingTop: 0, paddingBottom: 0 }}
+              className="btn btn-link btn-link-inline"
               disabled={!!this.state.editingColumns}
               onClick={this._showIncrementalSetupModal}
             >
-              {isIncremental ? 'Incremental Load' : 'Full Load'} <span className="kbc-icon-pencil" />
+              {isIncremental ? (isAdaptive ? 'Automatic Incremental Load' : 'Manual Incremental Load') : 'Full Load'} <span className="kbc-icon-pencil" />
             </button>
             <IncrementalSetupModal
               isSaving={this.state.v2State.get('savingIncremental', false)}
@@ -249,6 +251,11 @@ export default componentId => {
               customFieldsValues={this._getCustomFieldsValues()}
               componentId={componentId}
             />
+            {isIncremental && isAdaptive && (
+              <AutomaticLoadTypeLastUpdated
+                tableId={this.state.tableId}
+              />
+            )}
           </div>
         </div>
       );
@@ -264,8 +271,7 @@ export default componentId => {
           </div>
           <div className="col-sm-9">
             <button
-              className="btn btn-link"
-              style={{ paddingTop: 0, paddingBottom: 0 }}
+              className="btn btn-link btn-link-inline"
               disabled={!!this.state.editingColumns}
               onClick={this._showIncrementalSetupModal}
             >
@@ -285,8 +291,7 @@ export default componentId => {
           </div>
           <div className="col-sm-9">
             <button
-              className="btn btn-link"
-              style={{ paddingTop: 0, paddingBottom: 0 }}
+              className="btn btn-link btn-link-inline"
               disabled={!!this.state.editingColumns}
               onClick={this._showIncrementalSetupModal}
             >
@@ -488,8 +493,7 @@ export default componentId => {
           </div>
           <div className="col-sm-9">
             <button
-              className="btn btn-link"
-              style={{ paddingTop: 0, paddingBottom: 0 }}
+              className="btn btn-link btn-link-inline"
               disabled={!!this.state.editingColumns}
               onClick={this._showIncrementalSetupModal}
             >

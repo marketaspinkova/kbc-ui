@@ -29,7 +29,7 @@ import SidebarJobsContainer from '../../../components/react/components/SidebarJo
 import isParsableConfiguration from '../../utils/isParsableConfiguration';
 import sections from '../../utils/sections';
 import dockerActions from '../../DockerActionsActionCreators';
-import { isEmptyComponentState } from '../../utils/componentState';
+import { isEmptyComponentState } from '../../utils/configurationState';
 
 export default createReactClass({
   mixins: [createStoreMixin(Store, TablesStore, DockerActionsStore)],
@@ -156,7 +156,7 @@ export default createReactClass({
       actions.push(
         <li className={this.state.isClearStatePending || !this.state.hasState ? 'disabled' : ''} key="clear-state">
           <ClearStateButton
-            onClick={() => Actions.clearState(state.componentId, state.configurationId, state.rowId)}
+            onClick={() => Actions.clearComponentState(state.componentId, state.configurationId, state.rowId)}
             isPending={this.state.isClearStatePending}
             disabled={!this.state.hasState}
           >

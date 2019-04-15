@@ -19,6 +19,7 @@ import jobScheduledNotification from './react/components/notifications/jobSchedu
 import configurationRestoredNotification from './react/components/notifications/configurationRestored';
 import configurationMovedToTrash from './react/components/notifications/configurationMovedToTrash';
 import configurationMovedToTrashWithRestore from './react/components/notifications/configurationMovedToTrashWithRestore';
+import {removeTableFromInputTableState} from '../configurations/utils/configurationState';
 
 const storeEncodedConfig = function(componentId, configId, dataToSave, changeDescription) {
   const dataToSavePrepared = JSON.stringify(preferEncryptedAttributes(dataToSave));
@@ -925,5 +926,42 @@ export default {
         });
         throw e;
       });
+  },
+
+  clearInputMappingState: function(componentId, configurationId, tableId) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_CLEAR_INPUT_TABLE_STATE_START,
+      componentId: componentId,
+      configurationId: configurationId,
+      tableId: tableId
+    });
+    return installedComponentsApi.getComponentConfiguration(componentId, configurationId).then(function(response) {
+      const data = {
+        state: JSON.stringify(
+          removeTableFromInputTableState(Immutable.fromJS(response.state), tableId).toJS()
+        )
+      };
+      return installedComponentsApi.updateComponentConfiguration(componentId, configurationId, data)
+        .then(function(response) {
+          VersionActionCreators.loadVersionsForce(componentId, configurationId);
+          dispatcher.handleViewAction({
+            type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_CLEAR_INPUT_TABLE_STATE_SUCCESS,
+            componentId: componentId,
+            configurationId: configurationId,
+            tableId: tableId,
+            configuration: response
+          });
+        }).catch(function(e) {
+          dispatcher.handleViewAction({
+            type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_CLEAR_INPUT_TABLE_STATE_ERROR,
+            componentId: componentId,
+            configurationId: configurationId,
+            tableId: tableId,
+            error: e
+          });
+          throw e;
+        });
+    });
   }
+
 };

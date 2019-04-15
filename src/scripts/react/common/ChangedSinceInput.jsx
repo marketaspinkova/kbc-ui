@@ -4,8 +4,7 @@ import createReactClass from 'create-react-class';
 import { Creatable } from 'react-select';
 import changedSinceOptionCreator from './changedSinceOptionCreator';
 import changedSinceConstants from './changedSinceConstants';
-import ApplicationStore from '../../stores/ApplicationStore';
-import { FEATURE_ADAPTIVE_INPUT_MAPPING } from '../../constants/KbcConstants';
+import AutomaticLoadTypeLastUpdated from './AutomaticLoadTypeLastUpdated';
 
 const selectOptions = [
   { label: '10 minutes', value: '-10 minutes' },
@@ -32,19 +31,19 @@ export default createReactClass({
     value: PropTypes.string,
     disabled: PropTypes.bool.isRequired,
     helpBlock: PropTypes.string,
-    allowAdaptive: PropTypes.bool
+    tableId: PropTypes.string
   },
 
   getDefaultProps() {
     return {
-      allowAdaptive: false
+      tableId: ''
     }
   },
 
   getSelectOptions() {
     const options = [...selectOptions];
 
-    if (ApplicationStore.hasCurrentProjectFeature(FEATURE_ADAPTIVE_INPUT_MAPPING) && this.props.allowAdaptive || this.props.value === changedSinceConstants.ADAPTIVE_VALUE) {
+    if (this.props.value === changedSinceConstants.ADAPTIVE_VALUE) {
       options.unshift({
         label: changedSinceConstants.ADAPTIVE_LABEL,
         value: changedSinceConstants.ADAPTIVE_VALUE
@@ -107,6 +106,13 @@ export default createReactClass({
           trimFilter={true}
           promptTextCreator={this.promptTextCreator}
         />
+
+        {this.props.tableId !== '' && this.props.value === changedSinceConstants.ADAPTIVE_VALUE && (
+          <AutomaticLoadTypeLastUpdated
+            tableId={this.props.tableId}
+          />
+        )}
+
         <span className="help-block">
           Type in any range, e.g. <code>13 hours</code>.
           Supported time dimensions are <code>minutes</code>, <code>hours</code> and <code>days</code>.

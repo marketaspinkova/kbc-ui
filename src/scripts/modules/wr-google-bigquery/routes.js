@@ -4,14 +4,14 @@ import createColumnsEditorSection from '../configurations/utils/createColumnsEdi
 import createOauthSection from '../configurations/utils/createOauthSection';
 import {CollapsibleSection} from '../configurations/utils/renderHelpers';
 
-import TargetTableSection from './react/components/TargetTableSection';
-import targetTable from './adapters/targetTable';
+import TargetTableSection from '../wr-google-bigquery-v2/react/components/TargetTableSection';
+import targetTable from '../wr-google-bigquery-v2/adapters/targetTable';
 
 import TargetDatasetSection from './react/components/TargetDatasetSection';
 import targetDataset from './adapters/targetDataset';
 
-import LoadTypeSection from './react/components/LoadTypeSection';
-import loadType from './adapters/loadType';
+import LoadTypeSection from '../wr-google-bigquery-v2/react/components/LoadTypeSection';
+import loadType from '../wr-google-bigquery-v2/adapters/loadType';
 
 import columnsEditorDefinition from './helpers/columnsEditorDefinition';
 

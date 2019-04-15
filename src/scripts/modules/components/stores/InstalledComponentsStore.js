@@ -1121,6 +1121,20 @@ Dispatcher.register(function(payload) {
         .deleteIn(['configRowsData', action.componentId, action.configurationId, action.rowId]);
 
       return InstalledComponentsStore.emitChange();
+
+    case constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_CLEAR_INPUT_TABLE_STATE_START:
+      _store = _store.setIn(['pendingActions', action.componentId, action.configurationId, 'clear-state'], true);
+      return InstalledComponentsStore.emitChange();
+
+    case constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_CLEAR_INPUT_TABLE_STATE_ERROR:
+      _store = _store.deleteIn(['pendingActions', action.componentId, action.configurationId, 'clear-state']);
+      return InstalledComponentsStore.emitChange();
+
+    case constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_CLEAR_INPUT_TABLE_STATE_SUCCESS:
+      _store = _store
+        .deleteIn(['pendingActions', action.componentId, action.configurationId, 'clear-state'])
+        .setIn(['components', action.componentId, 'configurations', action.configurationId], fromJSOrdered(action.configuration));
+      return InstalledComponentsStore.emitChange();
     default:
   }
 });

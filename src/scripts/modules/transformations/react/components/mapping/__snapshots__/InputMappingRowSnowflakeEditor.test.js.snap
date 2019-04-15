@@ -187,9 +187,9 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok 1`] = `
           sm={10}
         >
           <ChangedSinceInput
-            allowAdaptive={false}
             disabled={false}
             onChange={[Function]}
+            tableId=""
             value={null}
           />
         </Col>
@@ -538,9 +538,9 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source and des
           sm={10}
         >
           <ChangedSinceInput
-            allowAdaptive={false}
             disabled={false}
             onChange={[Function]}
+            tableId=""
             value={null}
           />
         </Col>
@@ -889,9 +889,9 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
           sm={10}
         >
           <ChangedSinceInput
-            allowAdaptive={false}
             disabled={false}
             onChange={[Function]}
+            tableId=""
             value={null}
           />
         </Col>
@@ -1260,9 +1260,9 @@ exports[`<InputMappingRowSnowflakeEditor /> should render ok with source, dest, 
           sm={10}
         >
           <ChangedSinceInput
-            allowAdaptive={false}
             disabled={false}
             onChange={[Function]}
+            tableId=""
             value={null}
           />
         </Col>

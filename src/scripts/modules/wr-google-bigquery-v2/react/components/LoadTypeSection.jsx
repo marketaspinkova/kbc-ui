@@ -4,19 +4,25 @@ import createReactClass from 'create-react-class';
 import {Form, Radio, HelpBlock, FormGroup, ControlLabel, Col} from 'react-bootstrap';
 
 import ChangedSinceInput from '../../../../react/common/ChangedSinceInput';
+import loadType from '../../adapters/loadType';
+import AutomaticLoadTypeLastUpdated from '../../../../react/common/AutomaticLoadTypeLastUpdated';
+
+import ApplicationStore from '../../../../stores/ApplicationStore';
+import { FEATURE_ADAPTIVE_INPUT_MAPPING } from '../../../../constants/KbcConstants';
 
 export default createReactClass({
   propTypes: {
     value: PropTypes.shape({
-      incremental: PropTypes.bool.isRequired,
-      changedSince: PropTypes.string.isRequired
+      loadType: PropTypes.oneOf([loadType.constants.FULL, loadType.constants.INCREMENTAL, loadType.constants.INCREMENTAL]),
+      changedSince: PropTypes.string.isRequired,
+      source: PropTypes.string.isRequired
     }),
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired
   },
 
   renderChangedInLast() {
-    if (this.props.value.incremental) {
+    if (this.props.value.loadType === loadType.constants.INCREMENTAL) {
       return (
         <FormGroup>
           <Col componentClass={ControlLabel} sm={4}>
@@ -26,8 +32,8 @@ export default createReactClass({
             <ChangedSinceInput
               value={this.props.value.changedSince}
               onChange={(newValue) => this.props.onChange({changedSince: newValue})}
-              disabled={this.props.disabled || this.props.value.incremental === false}
-              allowAdaptive
+              disabled={this.props.disabled}
+              tableId={this.props.value.source}
             />
           </Col>
         </FormGroup>
@@ -48,23 +54,41 @@ export default createReactClass({
               type="radio"
               title="Full Load"
               disabled={disabled}
-              onChange={() => onChange({incremental: false, changedSince: ''})}
-              checked={value.incremental === false}>
+              onChange={() => onChange({loadType: loadType.constants.FULL, changedSince: ''})}
+              checked={value.loadType === loadType.constants.FULL}>
               Full Load
             </Radio>
             <HelpBlock>
-              Data in the target table will be replaced.
+              Replace all existing rows in the destination table.
             </HelpBlock>
+            { ApplicationStore.hasCurrentProjectFeature(FEATURE_ADAPTIVE_INPUT_MAPPING) && (
+              <div>
+                <Radio
+                  type="radio"
+                  title="Automatic Incremental Load"
+                  disabled={disabled}
+                  onChange={() => onChange({loadType: loadType.constants.ADAPTIVE, changedSince: ''})}
+                  checked={value.loadType === loadType.constants.ADAPTIVE}>
+                  Automatic Incremental Load
+                </Radio>
+                <HelpBlock>
+                  Append all data that has been added or changed since the last successful run.
+                 </HelpBlock>
+                <AutomaticLoadTypeLastUpdated
+                  tableId={this.props.value.source}
+                />
+              </div>
+            )}
             <Radio
               type="radio"
-              title="Incremental"
+              title="Manual Incremental Load"
               disabled={disabled}
-              onChange={() => onChange({incremental: true})}
-              checked={value.incremental === true}>
-              Incremental
+              onChange={() => onChange({loadType: loadType.constants.INCREMENTAL})}
+              checked={value.loadType === loadType.constants.INCREMENTAL}>
+              Manual Incremental Load
             </Radio>
             <HelpBlock>
-              Data will be appended to the target table.
+              Append all selected data.
             </HelpBlock>
           </Col>
         </FormGroup>

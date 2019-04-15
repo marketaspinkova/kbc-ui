@@ -1,12 +1,28 @@
 import Immutable from 'immutable';
+import changedSinceConstants from '../../../react/common/changedSinceConstants';
+
+const constants = {
+  FULL: 'full',
+  INCREMENTAL: 'incremental',
+  ADAPTIVE: 'adaptive'
+};
 
 const createConfiguration = function(localState) {
+  let incremental = false;
+  let changedSince = localState.get('changedSince', '');
+  if (localState.get('loadType') === constants.INCREMENTAL) {
+    incremental = true;
+  }
+  if (localState.get('loadType') === constants.ADAPTIVE) {
+    incremental = true;
+    changedSince = changedSinceConstants.ADAPTIVE_VALUE;
+  }
   const config = Immutable.fromJS({
     storage: {
       input: {
         tables: [
           {
-            changed_since: localState.get('changedSince', '')
+            changed_since: changedSince
           }
         ]
       }
@@ -14,7 +30,7 @@ const createConfiguration = function(localState) {
     parameters: {
       tables: [
         {
-          incremental: localState.get('incremental', false)
+          incremental: incremental
         }
       ]
     }
@@ -22,10 +38,20 @@ const createConfiguration = function(localState) {
   return config;
 };
 
-const parseConfiguration = function(configuration) {
+const parseConfiguration = function(configuration, context) {
+  let loadType = constants.FULL;
+  let changedSince = configuration.getIn(['storage', 'input', 'tables', 0, 'changed_since'], '');
+  if (configuration.getIn(['parameters', 'tables', 0, 'incremental']) === true) {
+    loadType = constants.INCREMENTAL;
+    if (changedSince === changedSinceConstants.ADAPTIVE_VALUE) {
+      loadType = constants.ADAPTIVE;
+      changedSince = '';
+    }
+  }
   return Immutable.fromJS({
-    incremental: configuration.getIn(['parameters', 'tables', 0, 'incremental'], false),
-    changedSince: configuration.getIn(['storage', 'input', 'tables', 0, 'changed_since'], '')
+    source: context.get('tableId', ''),
+    loadType: loadType,
+    changedSince: changedSince
   });
 };
 
@@ -36,5 +62,6 @@ const createEmptyConfiguration = function() {
 export default {
   createConfiguration: createConfiguration,
   parseConfiguration: parseConfiguration,
-  createEmptyConfiguration: createEmptyConfiguration
+  createEmptyConfiguration: createEmptyConfiguration,
+  constants: constants
 };
