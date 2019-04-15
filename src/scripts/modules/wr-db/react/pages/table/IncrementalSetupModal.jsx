@@ -99,12 +99,17 @@ export default createReactClass({
                     <span>Automatic Incremental Load</span>
                   </label>
                 </div>
-                <span className="help-block">
-                  Append all data that has been added or changed since the last successful run. If a primary key is specified, updates will be applied to rows with matching primary key values.
-                </span>
-                <AutomaticLoadTypeLastUpdated
-                  tableId={this.state.mapping.get('source')}
-                />
+                <p className="help-block">
+                  Append all data that has been added or changed since the last successful run.
+                  If a primary key is specified, updates will be applied to rows with matching
+                  primary key values.
+                </p>
+                {this.state.isIncremental
+                  && this.state.mapping.get('changed_since') === changedSinceConstants.ADAPTIVE_VALUE && (
+                  <AutomaticLoadTypeLastUpdated
+                    tableId={this.state.mapping.get('source')}
+                  />
+                )}
                 <div className="radio">
                   <label>
                     <input
