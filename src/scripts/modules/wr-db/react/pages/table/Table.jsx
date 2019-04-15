@@ -217,8 +217,7 @@ export default componentId => {
           </div>
           <div className="col-sm-9">
             <button
-              className="btn btn-link"
-              style={{ paddingTop: 0, paddingBottom: 0 }}
+              className="btn btn-link btn-link-inline"
               disabled={!!this.state.editingColumns}
               onClick={this._showIncrementalSetupModal}
             >
@@ -275,8 +274,7 @@ export default componentId => {
           </div>
           <div className="col-sm-9">
             <button
-              className="btn btn-link"
-              style={{ paddingTop: 0, paddingBottom: 0 }}
+              className="btn btn-link btn-link-inline"
               disabled={!!this.state.editingColumns}
               onClick={this._showIncrementalSetupModal}
             >
@@ -296,8 +294,7 @@ export default componentId => {
           </div>
           <div className="col-sm-9">
             <button
-              className="btn btn-link"
-              style={{ paddingTop: 0, paddingBottom: 0 }}
+              className="btn btn-link btn-link-inline"
               disabled={!!this.state.editingColumns}
               onClick={this._showIncrementalSetupModal}
             >
@@ -499,8 +496,7 @@ export default componentId => {
           </div>
           <div className="col-sm-9">
             <button
-              className="btn btn-link"
-              style={{ paddingTop: 0, paddingBottom: 0 }}
+              className="btn btn-link btn-link-inline"
               disabled={!!this.state.editingColumns}
               onClick={this._showIncrementalSetupModal}
             >
