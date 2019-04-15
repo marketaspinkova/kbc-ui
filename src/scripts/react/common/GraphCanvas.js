@@ -113,12 +113,16 @@ class Graph {
       const inner = svg.select('g');
       const zoom = d3Zoom().on('zoom', () => inner.attr('transform', event.transform));
       const initialScale = this.data.nodes.length > 10 ? 0.5 : 0.75;
+
+      svg.attr('height', Math.max(this.minHeight, graph.graph().height) * initialScale + 60);
       svg.call(zoom);
       svg.call(zoom.transform, zoomIdentity
-        .translate((svg.attr('width') - graph.graph().width * initialScale) / 2, 30)
+        .translate(
+          (svg.attr('width') - graph.graph().width * initialScale) / 2,
+          (svg.attr('height') * initialScale) / 2
+        )
         .scale(initialScale)
       );
-      svg.attr('height', Math.max(this.minHeight, graph.graph().height * initialScale + 60));
 
       this.handleHover();
     }

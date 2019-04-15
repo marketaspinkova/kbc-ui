@@ -84,6 +84,7 @@ export default createReactClass({
   initGraph() {
     this.graph = new GraphCanvas(this.prepareData(), this.refs.graph);
     this.graph.highlight = true;
+    this.graph.minHeight = 500;
     this.graph.styles = graphUtils.styles();
     this.graph.render();
   },
