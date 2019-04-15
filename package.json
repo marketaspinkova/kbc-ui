@@ -5,7 +5,7 @@
   "author": "Martin Halamicek",
   "dependencies": {
     "@json-editor/json-editor": "^1.3.4",
-    "@keboola/indigo-ui": "^7.5.4",
+    "@keboola/indigo-ui": "^7.6.0",
     "aws-sdk": "^2.437.0",
     "bluebird": "^3.5.3",
     "byte-converter": "^0.1.4",
