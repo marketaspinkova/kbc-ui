@@ -80,7 +80,7 @@ export default createReactClass({
       );
     }
 
-    if (this.state.tableState.get(constants.LAST_IMPORT_DATE_PROPERTY) == this.state.table.get(constants.LAST_IMPORT_DATE_PROPERTY)) {
+    if (this.state.tableState.get(constants.LAST_IMPORT_DATE_PROPERTY) === this.state.table.get(constants.LAST_IMPORT_DATE_PROPERTY)) {
       return (
         <div className="help-block">
           Table contains no new data.
