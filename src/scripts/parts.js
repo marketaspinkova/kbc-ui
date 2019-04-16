@@ -8,6 +8,7 @@ import CurrentUser from './react/layout/CurrentUser';
 import ProjectsList from './react/layout/project-select/List';
 import NewProjectModal from './react/layout/NewProjectModal';
 import UserLinks from './react/layout/UserLinks';
+import ProjectOverview from './react/admin/project-graph/Index';
 
 export default {
   helpers,
@@ -19,6 +20,9 @@ export default {
     CurrentUser,
     UserLinks,
     ProjectsList,
-    NewProjectModal
+    NewProjectModal,
+    admin: {
+      ProjectOverview
+    }
   }
 };
