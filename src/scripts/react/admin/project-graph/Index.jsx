@@ -9,8 +9,6 @@ import { getLineageInOrganization } from './GraphApi';
 import Lineage from './Lineage';
 import Graph from './Graph';
 
-import '../../../../styles/theme-kbc-graph.less';
-
 export default createReactClass({
   propTypes: {
     token: PropTypes.object.isRequired,
