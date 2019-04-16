@@ -119,10 +119,11 @@ class Graph {
       svg.call(zoom.transform, zoomIdentity
         .translate(
           (svg.attr('width') - graph.graph().width * initialScale) / 2,
-          (svg.attr('height') * initialScale) / 2
+          (this.height * initialScale) / 2
         )
         .scale(initialScale)
       );
+      svg.attr('height', this.height + 60);
 
       this.handleHover();
     }
