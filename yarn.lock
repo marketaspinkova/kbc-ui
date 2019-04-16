@@ -834,9 +834,9 @@
   integrity sha512-w4SGutLq8wnQzQoidw7QlQmOq3bknf8xbLrK4TX48eVcAXuDxwnY/ikdjAiJkCSiB+ecK/7qo/Vxzv50AV3p/A==
 
 "@keboola/indigo-ui@^7.6.0":
-  version "7.6.0"
-  resolved "https://registry.yarnpkg.com/@keboola/indigo-ui/-/indigo-ui-7.6.0.tgz#65beafae4e5f81b291f83ee56df54f191bfa0c3e"
-  integrity sha512-GQz6Yv9B1zE1LUU+Lg6PeuxIZ4uXEm4t9jNqcu/v/66sCAA+l/WGev5fzj9RpRGHntDukF0IRDM4RlyOrlfzbQ==
+  version "7.6.1"
+  resolved "https://registry.yarnpkg.com/@keboola/indigo-ui/-/indigo-ui-7.6.1.tgz#90cdea1ae64c580d600a6324252b125f90bfce7c"
+  integrity sha512-GrazfO66Oo3GuIhAVawq4KBLT0IbtoMAUhPGfFOAVPL1RZWXNavA2AXZulitIlVUhJgNv9hac91XBvSU9R6Gfg==
   dependencies:
     bootstrap "^3.3.7"
     classnames "^2.1.0"
@@ -3036,7 +3036,7 @@ d3@~4.3.0:
     d3-voronoi "1.1.0"
     d3-zoom "1.0.3"
 
-"dagre-d3@ ^0.6.3":
+dagre-d3@^0.6.3:
   version "0.6.3"
   resolved "https://registry.yarnpkg.com/dagre-d3/-/dagre-d3-0.6.3.tgz#b7a3ad833d5c3883deeb610558ce4fa9400a3e24"
   integrity sha512-1vAzNp7OR1370JtjNaVFiW04DBjPDq513cJnqNVWxIkZqB0HfIArsc5eriTY9RM9cVMUjxdCJ3z4of5f8HqbdA==
