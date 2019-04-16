@@ -94,7 +94,7 @@ export default createReactClass({
       .get('nodes', List())
       .toMap()
       .mapKeys((index, node) => node.get('id').toString())
-      .map((node) => node.get('isHighlighted', false));
+      .map((node) => node.get('isHighlighted', false) || node.get('isOrigin', false));
 
     return {
       nodes: this.props.data
