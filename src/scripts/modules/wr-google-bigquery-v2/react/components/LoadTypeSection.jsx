@@ -7,9 +7,6 @@ import ChangedSinceInput from '../../../../react/common/ChangedSinceInput';
 import loadType from '../../adapters/loadType';
 import AutomaticLoadTypeLastUpdated from '../../../../react/common/AutomaticLoadTypeLastUpdated';
 
-import ApplicationStore from '../../../../stores/ApplicationStore';
-import { FEATURE_ADAPTIVE_INPUT_MAPPING } from '../../../../constants/KbcConstants';
-
 export default createReactClass({
   propTypes: {
     value: PropTypes.shape({
@@ -61,24 +58,21 @@ export default createReactClass({
             <HelpBlock>
               Replace all existing rows in the destination table.
             </HelpBlock>
-            { ApplicationStore.hasCurrentProjectFeature(FEATURE_ADAPTIVE_INPUT_MAPPING) && (
-              <div>
-                <Radio
-                  type="radio"
-                  title="Automatic Incremental Load"
-                  disabled={disabled}
-                  onChange={() => onChange({loadType: loadType.constants.ADAPTIVE, changedSince: ''})}
-                  checked={value.loadType === loadType.constants.ADAPTIVE}>
-                  Automatic Incremental Load
-                </Radio>
-                <HelpBlock>
-                  Append all data that has been added or changed since the last successful run.
-                 </HelpBlock>
-                <AutomaticLoadTypeLastUpdated
-                  tableId={this.props.value.source}
-                />
-              </div>
-            )}
+            <Radio
+              type="radio"
+              title="Automatic Incremental Load"
+              disabled={disabled}
+              onChange={() => onChange({loadType: loadType.constants.ADAPTIVE, changedSince: ''})}
+              checked={value.loadType === loadType.constants.ADAPTIVE}>
+              Automatic Incremental Load
+            </Radio>
+            <HelpBlock>
+              Append all data that has been added or changed since the last successful run.
+              <br />
+              <AutomaticLoadTypeLastUpdated
+                tableId={this.props.value.source}
+              />
+            </HelpBlock>
             <Radio
               type="radio"
               title="Manual Incremental Load"
