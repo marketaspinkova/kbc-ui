@@ -69,9 +69,11 @@ export default createReactClass({
             <HelpBlock>
               Append all data that has been added or changed since the last successful run.
             </HelpBlock>
-            <AutomaticLoadTypeLastUpdated
-              tableId={this.props.value.source}
-            />
+            {value.loadType === loadType.constants.ADAPTIVE && (
+              <AutomaticLoadTypeLastUpdated
+                tableId={this.props.value.source}
+              />
+            )}
             <Radio
               type="radio"
               title="Manual Incremental Load"

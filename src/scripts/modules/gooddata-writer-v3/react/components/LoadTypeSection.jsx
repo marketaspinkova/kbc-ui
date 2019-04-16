@@ -54,9 +54,12 @@ export default createReactClass({
             <HelpBlock>
               Only data changed since the last successful run will be appended to the dataset.
             </HelpBlock>
-            <AutomaticLoadTypeLastUpdated
-              tableId={this.props.value.tableId}
-            />
+            {isIncremental
+              && this.props.value.changedSince === changedSinceConstants.ADAPTIVE_VALUE && (
+              <AutomaticLoadTypeLastUpdated
+                tableId={this.props.value.tableId}
+              />
+            )}
             <Radio
               type="radio"
               title="Manual Incremental Load"
