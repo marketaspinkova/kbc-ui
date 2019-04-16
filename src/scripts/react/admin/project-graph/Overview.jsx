@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import { List } from 'immutable';
 import _ from 'underscore';
-import { Badge, ProgressBar, Table } from 'react-bootstrap';
+import { ProgressBar, Table } from 'react-bootstrap';
 import { ExternalLink } from '@keboola/indigo-ui';
 import { scoreStyle } from './utils';
 
@@ -49,10 +49,7 @@ export default createReactClass({
 
         <br />
 
-        <h3>
-          Project issues{' '}
-          <Badge title="number of issues">{this.props.reability.get('issueCount', 0)}</Badge>
-        </h3>
+        <h3>Project issues</h3>
 
         {this.props.issues.count() > 0 ? (
           <Table striped responsive className="issues-table">
