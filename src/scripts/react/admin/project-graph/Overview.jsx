@@ -88,7 +88,7 @@ export default createReactClass({
                   return (
                     <p key={index}>
                       <ExternalLink
-                        href={`${projectLink}transformations/bucket/${configurationId}/transformation/${rowId}`}
+                        href={`${projectLink}/transformations/bucket/${configurationId}/transformation/${rowId}`}
                       >
                         Go to transformation {configurationId} ({rowId})
                       </ExternalLink>
@@ -125,7 +125,7 @@ export default createReactClass({
             </td>
             {count > 5 ? (
               <td className="text-right">
-                <ExternalLink href={`${projectLink}tokens`}>Go to tokens page.</ExternalLink>
+                <ExternalLink href={`${projectLink}/tokens`}>Go to tokens page.</ExternalLink>
               </td>
             ) : (
               <td className="text-right">
@@ -134,7 +134,7 @@ export default createReactClass({
                   .map((tokenId, index) => {
                     return (
                       <p key={index}>
-                        <ExternalLink href={`${projectLink}tokens/${tokenId}`}>
+                        <ExternalLink href={`${projectLink}/tokens/${tokenId}`}>
                           Go to token {tokenId}
                         </ExternalLink>
                       </p>
@@ -158,7 +158,7 @@ export default createReactClass({
                 .map((orchestrationId, index) => {
                   return (
                     <p key={index}>
-                      <ExternalLink href={`${projectLink}orchestrations/${orchestrationId}`}>
+                      <ExternalLink href={`${projectLink}/orchestrations/${orchestrationId}`}>
                         Go to ochestration {orchestrationId}
                       </ExternalLink>
                     </p>
@@ -181,7 +181,7 @@ export default createReactClass({
                 .map((orchestrationId, index) => {
                   return (
                     <p key={index}>
-                      <ExternalLink href={`${projectLink}orchestrations/${orchestrationId}`}>
+                      <ExternalLink href={`${projectLink}/orchestrations/${orchestrationId}`}>
                         Go to ochestration {orchestrationId}
                       </ExternalLink>
                     </p>
