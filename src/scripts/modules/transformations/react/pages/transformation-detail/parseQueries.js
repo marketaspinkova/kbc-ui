@@ -1,4 +1,4 @@
-import {List} from 'immutable';
+import { List } from 'immutable';
 
 /**
  * Taken and modified from
@@ -7,9 +7,7 @@ import {List} from 'immutable';
  * @return {Object} List of queries
  */
 export default function(queries) {
-  const regex = '\s*((?:\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|' +
-    '"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"|\#.*|\\/\\*[\\w\\W]*?(?=\\*\\/)\\*\\/|--.*|[^"\';#])+(?:;|$))',
-    re = new RegExp(regex, 'g');
+  const regex = /\s*((?:'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'|"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"|#.*|\\\/\\*[\\w\\W]*?(?=\\*\\\/)\\*\\\/|--.*|[^"';#])+(?:;|$))/g;
 
-  return List(queries.match(re));
+  return List(queries.match(regex));
 }

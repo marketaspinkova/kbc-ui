@@ -181,7 +181,7 @@ dispatcher.register(function(payload) {
       _store = _store.setIn(['metadata', action.objectType, action.objectId], fromJS(action.metadata));
       _store = _store.deleteIn(['savingMetadata', action.objectType, action.objectId, action.metadataKey]);
       if (action.objectType === 'column') {
-        const [ tableId, columnName ] = action.objectId.split(/\.(?=[^\.]+$)/);
+        const [ tableId, columnName ] = action.objectId.split(/\.(?=[^.]+$)/);
         _store = _store.setIn(['metadata', 'tableColumns', tableId, columnName], fromJS(action.metadata));
       }
       return MetadataStore.emitChange();
@@ -192,7 +192,7 @@ dispatcher.register(function(payload) {
       });
       _store = _store.deleteIn(['metadata', action.objectType, action.objectId, index]);
       if (action.objectType === 'column') {
-        const [ tableId, columnName ] = action.objectId.split(/\.(?=[^\.]+$)/);
+        const [ tableId, columnName ] = action.objectId.split(/\.(?=[^.]+$)/);
         _store = _store.deleteIn(['metadata', 'tableColumns', tableId, columnName, index]);
       }
       return MetadataStore.emitChange();

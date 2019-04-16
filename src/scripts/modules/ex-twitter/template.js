@@ -10,7 +10,7 @@ function fromJsOrdered(json) {
 const common = {
   'api': {
     'authentication': {'type': 'oauth10'},
-    'baseUrl': 'https:\/\/api.twitter.com\/1.1\/',
+    'baseUrl': 'https://api.twitter.com/1.1/',
     'pagination': {
       'method': 'multiple',
       'scrollers': {
@@ -299,7 +299,7 @@ const userTimelineTemplate = {
 };
 
 const mentionsTemplate = {
-  'endpoint': 'statuses\/mentions_timeline.json',
+  'endpoint': 'statuses/mentions_timeline.json',
   'scroller': 'cursor_timeline',
   'dataType': 'tweets',
   'userData': {
@@ -315,7 +315,7 @@ const mentionsTemplate = {
 
 
 const followersTemplate = {
-  'endpoint': 'followers\/list.json',
+  'endpoint': 'followers/list.json',
   'scroller': 'param_next_cursor',
   'dataType': 'users',
   'userData': {
