@@ -22,11 +22,7 @@ const isEmptyComponentState = function(state) {
 };
 
 const emptyComponentState = function(currentState) {
-  if (currentState.has(constants.COMPONENT_NAMESPACE)) {
-    return currentState.set(constants.COMPONENT_NAMESPACE, Immutable.Map());
-  } else {
-    return Immutable.fromJS({});
-  }
+  return currentState.set(constants.COMPONENT_NAMESPACE, Immutable.Map());
 };
 
 const removeTableFromInputTableState = function(currentState, tableId) {
