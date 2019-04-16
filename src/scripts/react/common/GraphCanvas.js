@@ -57,11 +57,12 @@ class Graph {
 
   search(query) {
     const svg = select(this.element);
-    svg.selectAll('.node, .edgePath, .edgeLabel').transition().duration(200).style('opacity', 1);
+    svg.selectAll('.node, .edgePath').transition().duration(200).style('opacity', 1);
+    svg.selectAll('.edgeLabel').transition().duration(200).style('opacity', 0);
 
     if (query) {
       svg.selectAll('.node').filter((node) => node !== query).transition().duration(200).style('opacity', 0.2);
-      svg.selectAll('.edgePath, .edgeLabel').transition().duration(200).style('opacity', 0.2);
+      svg.selectAll('.edgePath').transition().duration(200).style('opacity', 0.2);
     }
   }
 
