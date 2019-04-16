@@ -1,9 +1,10 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import _ from 'underscore';
-import { List } from 'immutable';
+import { List, Map } from 'immutable';
 import { Label } from 'react-bootstrap';
+import Select from 'react-select';
 import graphUtils from '../../../utils/graphUtils';
 import GraphCanvas from '../../common/GraphCanvas';
 
@@ -22,12 +23,46 @@ export default createReactClass({
     window.removeEventListener('resize', this.handleResize);
   },
 
+  getInitialState() {
+    return {
+      searched: ''
+    }
+  },
+
   render() {
     return (
       <div className="graph">
+        {this.renderSearch()}
         <div ref="graph" />
         {this.renderNone()}
         {this.renderLegend()}
+      </div>
+    );
+  },
+
+  renderSearch() {
+    const options = this.props.data
+      .get('nodes')
+      .map((node) => ({
+        value: node.get('id'),
+        label: node.get('title')
+      }))
+      .sort((node) => node.label.toLowerCase())
+      .toArray();
+
+    return (
+      <div className="graph-search">
+        <Select
+          value={this.state.searched}
+          onChange={(selected) => {
+            const value = selected ? selected.value : '';
+            this.setState({ searched: value })
+            this.graph.search(value)
+          }}
+          options={options}
+          placeholder="Search project..."
+          noResultsText="No project found"
+        />
       </div>
     );
   },
@@ -48,6 +83,8 @@ export default createReactClass({
 
   initGraph() {
     this.graph = new GraphCanvas(this.prepareData(), this.refs.graph);
+    this.graph.highlight = true;
+    this.graph.height = 600;
     this.graph.styles = graphUtils.styles();
     this.graph.render();
   },
@@ -57,7 +94,10 @@ export default createReactClass({
       .get('nodes', List())
       .toMap()
       .mapKeys((index, node) => node.get('id').toString())
-      .map((node) => node.get('isHighlighted', false));
+      .map((node) => Map({
+        isOrigin: node.get('isOrigin', false),
+        isHighlighted: node.get('isHighlighted', false)
+      }));
 
     return {
       nodes: this.props.data
@@ -90,9 +130,18 @@ export default createReactClass({
   },
 
   getLinkType(link, nodes) {
-    return nodes.get(link.get('source'), false) && nodes.get(link.get('target'), false)
-      ? 'highlighted'
-      : 'data';
+    const target = nodes.get(link.get('target'), Map());
+    const source = nodes.get(link.get('source'), Map());
+
+    if (target.get('isOrigin', false) && source.get('isHighlighted', false)) {
+      return 'highlighted';
+    }
+
+    if (target.get('isHighlighted', false) && source.get('isOrigin', false)) {
+      return 'highlighted';
+    }
+
+    return 'data';
   },
 
   getNodeLink(node) {
