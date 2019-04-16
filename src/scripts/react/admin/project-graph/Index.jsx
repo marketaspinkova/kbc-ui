@@ -56,7 +56,6 @@ export default createReactClass({
         <Row>
           <Col xs={12}>
             <Nav className="col-xs-12" bsStyle="tabs">
-              {this.renderProjectHeader()}
               <NavItem eventKey="Graph" disabled={!this.state.data.count()}>
                 Graph
               </NavItem>
@@ -75,7 +74,7 @@ export default createReactClass({
   },
 
   renderContent() {
-    const projectId = this.props.appData.getIn(['sapi', 'token', 'owner', 'id']);
+    const projectId = this.props.token.getIn(['owner', 'id']);
 
     if (this.state.isLoading) {
       return this.renderLoading();
@@ -99,6 +98,16 @@ export default createReactClass({
             lineage={this.state.data.getIn(['lineage', 'lineage'])}
             reability={this.state.data.get('organizationReliability')}
             urlTemplates={this.props.urlTemplates} 
+          />
+        </Tab.Pane>
+        <Tab.Pane eventKey="Overview">
+          <Overview
+            nodes={this.state.data.getIn(['lineage', 'nodes'])}
+            links={this.state.data.getIn(['lineage', 'links'])}
+            reability={this.state.data.getIn(['organizationReliability', projectId], Map())}
+            issues={this.state.data.get('projectReliability')}
+            projectId={projectId}
+            urlTemplates={this.props.urlTemplates}
           />
         </Tab.Pane>
       </Tab.Content>
@@ -125,22 +134,15 @@ export default createReactClass({
     );
   },
 
-  renderProjectHeader() {
-    return <h3>{this.props.token.getIn(['owner', 'name'])}</h3>;
-  },
-
   handleSelectTab(tab) {
     this.setState({ activeTab: tab });
   },
 
   getLineageInOrganization() {
-    const token = this.props.appData.getIn(['sapi', 'token', 'token']);
-    const graphServiceUrl = this.props.appData
-      .get('services')
-      .find((service) => {
-        return service.get('id') === 'graph';
-      })
-      .get('url');
+    const token = this.props.token.getIn(['token'])
+    const graphServiceUrl = this.props.services.find((service) => {
+      return service.get('id') === 'graph';
+    }).get('url');
 
     this.setState({ isLoading: true });
     this.loadingPromise = Promise.all([
