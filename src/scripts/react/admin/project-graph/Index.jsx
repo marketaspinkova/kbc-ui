@@ -63,7 +63,7 @@ export default createReactClass({
                 Lineage
               </NavItem>
               <NavItem eventKey="Overview" disabled={!this.state.data.count()}>
-                Overview
+                Detail
               </NavItem>
             </Nav>
           </Col>
