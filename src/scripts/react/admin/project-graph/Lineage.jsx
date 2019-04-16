@@ -98,7 +98,7 @@ export default createReactClass({
             </span>
           </Tooltip>
         </div>
-        <div className="lineage-reability">
+        <div className="lineage-reability" style={{ marginBottom: '10px' }}>
           <ProgressBar
             max={1}
             label={`Score ${reability.get('reliabilityScore') * 100} of 100`}
