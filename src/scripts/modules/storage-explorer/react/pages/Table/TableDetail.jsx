@@ -17,6 +17,7 @@ import StorageApi from '../../../../components/StorageApi';
 import { factory as eventsFactory } from '../../../../sapi-events/TableEventsService';
 import { createAliasTable, deleteTable, truncateTable, exportTable, uploadFile, loadTable } from '../../../Actions';
 
+import FastFade from '../../../../../react/common/FastFade';
 import CreateAliasTableAlternativeModal from '../../modals/CreateAliasTableAlternativeModal';
 import TruncateTableModal from '../../modals/TruncateTableModal';
 import DeleteTableModal from '../../modals/DeleteTableModal';
@@ -24,7 +25,6 @@ import LoadTableFromCsvModal from '../../modals/LoadTableFromCsvModal';
 import ExportTableModal from '../../modals/ExportTableModal';
 import DataSample from '../../components/DataSample';
 import TableEvents from '../../components/Events';
-import FastFade from '../../components/FastFade';
 import TableOverview from './TableOverview';
 import TableColumn from './TableColumn';
 import SnapshotRestore from './SnapshotRestore';

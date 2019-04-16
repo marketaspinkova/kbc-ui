@@ -77,6 +77,25 @@ export default {
       },
       '.node.output rect': {
         fill: '#3a87ad'
+      },
+      '.node.project rect': {
+        'stroke-width': '2px',
+        'stroke': '#a1a1a1',
+        fill: '#fff'
+      },
+      '.node.origin-project rect': {
+        'stroke-width': '3px',
+        stroke: '#32b9e9',
+        fill: '#32b9e9'
+      },
+      '.node.highlighted-project rect': {
+        'stroke-width': '3px',
+        stroke: '#32b9e9',
+        fill: '#fff'
+      },
+      'g.edgePath.highlighted': {
+        'stroke-width': '2.5px',
+        stroke: '#32b9e9'
       }
     };
   }
