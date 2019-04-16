@@ -13,8 +13,6 @@ import ThoughtSpotTypeInput from './ThoughtSpotTypeInput';
 import AutomaticLoadTypeLastUpdated from '../../../../../react/common/AutomaticLoadTypeLastUpdated';
 import changedSinceConstants from '../../../../../react/common/changedSinceConstants';
 
-import ApplicationStore from '../../../../../stores/ApplicationStore';
-import {FEATURE_ADAPTIVE_INPUT_MAPPING} from '../../../../../constants/KbcConstants';
 
 export default createReactClass({
   propTypes: {
@@ -90,34 +88,28 @@ export default createReactClass({
                 <p className="help-block">
                   Replace all existing rows in the destination table.
                 </p>
-
-                { ApplicationStore.hasCurrentProjectFeature(FEATURE_ADAPTIVE_INPUT_MAPPING) && (
-                  <div>
-                    <div className="radio">
-                      <label>
-                        <input
-                          type="radio"
-                          label="Automatic Incremental Load"
-                          checked={this.state.isIncremental && this.state.mapping.get('changed_since') === changedSinceConstants.ADAPTIVE_VALUE}
-                          onChange={() => this.setState({isIncremental: true, mapping: this.state.mapping.set('changed_since', changedSinceConstants.ADAPTIVE_VALUE)})}
-                        />
-                        <span>Automatic Incremental Load</span>
-                      </label>
-                    </div>
-                    <p className="help-block">
-                      Append all data that has been added or changed since the last successful run.
-                      If a primary key is specified, updates will be applied to rows with matching
-                      primary key column values.
-                    </p>
-                    {this.state.isIncremental
-                      && this.state.mapping.get('changed_since') === changedSinceConstants.ADAPTIVE_VALUE && (
-                      <AutomaticLoadTypeLastUpdated
-                        tableId={this.state.mapping.get('source')}
-                      />
-                    )}
-                  </div>
+                <div className="radio">
+                  <label>
+                    <input
+                      type="radio"
+                      label="Automatic Incremental Load"
+                      checked={this.state.isIncremental && this.state.mapping.get('changed_since') === changedSinceConstants.ADAPTIVE_VALUE}
+                      onChange={() => this.setState({isIncremental: true, mapping: this.state.mapping.set('changed_since', changedSinceConstants.ADAPTIVE_VALUE)})}
+                    />
+                    <span>Automatic Incremental Load</span>
+                  </label>
+                </div>
+                <p className="help-block">
+                  Append all data that has been added or changed since the last successful run.
+                  If a primary key is specified, updates will be applied to rows with matching
+                  primary key values.
+                </p>
+                {this.state.isIncremental
+                  && this.state.mapping.get('changed_since') === changedSinceConstants.ADAPTIVE_VALUE && (
+                  <AutomaticLoadTypeLastUpdated
+                    tableId={this.state.mapping.get('source')}
+                  />
                 )}
-
                 <div className="radio">
                   <label>
                     <input
@@ -130,7 +122,7 @@ export default createReactClass({
                   </label>
                 </div>
                 <p className="help-block">
-                  Append all selected data. If a primary key is specified, updates will be applied to rows with matching primary key column values.
+                  Append all selected data. If a primary key is specified, updates will be applied to rows with matching primary key values.
                 </p>
 
               </div>
