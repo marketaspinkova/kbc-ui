@@ -11,14 +11,11 @@ import Graph from './Graph';
 
 import '../../../../styles/theme-kbc-graph.less';
 
-const urlTemplates = fromJS({
-  project: '/admin/projects/<%= projectId %>/',
-  organization: '/admin/organizations/<%= projectId %>/'
-});
-
 export default createReactClass({
   propTypes: {
-    appData: PropTypes.object.isRequired
+    token: PropTypes.object.isRequired,
+    services: PropTypes.object.isRequired,
+    urlTemplates: PropTypes.object.isRequired
   },
 
   getInitialState() {
@@ -40,7 +37,6 @@ export default createReactClass({
   render() {
     return (
       <div id="lineage">
-        <h2>Project Overview</h2>
         {this.renderTabs()}
       </div>
     );
@@ -83,10 +79,10 @@ export default createReactClass({
     return (
       <Tab.Content animation={FastFade}>
         <Tab.Pane eventKey="Graph" mountOnEnter unmountOnExit>
-          <Graph data={this.state.data} urlTemplates={urlTemplates} />
+          <Graph data={this.state.data} urlTemplates={this.props.urlTemplates} />
         </Tab.Pane>
         <Tab.Pane eventKey="Lineage">
-          <Lineage data={this.state.data} urlTemplates={urlTemplates} />
+          <Lineage data={this.state.data} urlTemplates={this.props.urlTemplates} />
         </Tab.Pane>
       </Tab.Content>
     );
@@ -113,7 +109,7 @@ export default createReactClass({
   },
 
   renderProjectHeader() {
-    return <h3>{this.props.appData.getIn(['sapi', 'token', 'owner', 'name'])}</h3>;
+    return <h3>{this.props.token.getIn(['owner', 'name'])}</h3>;
   },
 
   handleSelectTab(tab) {
@@ -123,10 +119,10 @@ export default createReactClass({
   getLineageInOrganization() {
     this.setState({ isLoading: true });
     this.loadingPromise = getLineageInOrganization(
-      this.props.appData.get('services').find((service) => {
+      this.props.services.find((service) => {
         return service.get('id') === 'graph'
       }).get('url'),
-      this.props.appData.getIn(['sapi', 'token', 'token'])
+      this.props.token.getIn(['token'])
     )
       .then((data) => {
         this.setState({

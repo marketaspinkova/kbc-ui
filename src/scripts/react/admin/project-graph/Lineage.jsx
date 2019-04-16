@@ -90,7 +90,7 @@ export default createReactClass({
         <Tooltip tooltip="Open project overview" placement="top">
           <span>
             <ExternalLink
-              href={_.template(this.props.urlTemplates.get('organization'))({
+              href={_.template(this.props.urlTemplates.get('projectOverview'))({
                 projectId: project.get('id')
               })}
             >

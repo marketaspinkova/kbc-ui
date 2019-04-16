@@ -120,9 +120,22 @@ const Container = createReactClass({
                   </ul>
                 </div>
                 <div className="col-md-9">
-                  <ProjectGraph
-                    appData={this.props.data}
-                  />
+                  <div className="panel panel-default">
+                    <div className="panel-heading">
+                      <div className="kbc-panel-heading-content">
+                        Project Overview
+                      </div>
+                    </div>
+                    <div className="panel-body">
+                      <div id="kbc-admin-project-overview">
+                        <ProjectGraph
+                          token={this.props.data.getIn(['sapi', 'token'])}
+                          services={this.props.data.get('services')}
+                          urlTemplates={this.props.data.getIn(['kbc', 'urlTemplates'])}
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
