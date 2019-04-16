@@ -1,8 +1,8 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import _ from 'underscore';
-import { List } from 'immutable';
+import { List, Map } from 'immutable';
 import { Label } from 'react-bootstrap';
 import Select from 'react-select';
 import graphUtils from '../../../utils/graphUtils';
@@ -84,7 +84,7 @@ export default createReactClass({
   initGraph() {
     this.graph = new GraphCanvas(this.prepareData(), this.refs.graph);
     this.graph.highlight = true;
-    this.graph.height = 500;
+    this.graph.height = 600;
     this.graph.styles = graphUtils.styles();
     this.graph.render();
   },
@@ -94,7 +94,10 @@ export default createReactClass({
       .get('nodes', List())
       .toMap()
       .mapKeys((index, node) => node.get('id').toString())
-      .map((node) => node.get('isHighlighted', false) || node.get('isOrigin', false));
+      .map((node) => Map({
+        isOrigin: node.get('isOrigin', false),
+        isHighlighted: node.get('isHighlighted', false)
+      }));
 
     return {
       nodes: this.props.data
@@ -127,9 +130,18 @@ export default createReactClass({
   },
 
   getLinkType(link, nodes) {
-    return nodes.get(link.get('source'), false) && nodes.get(link.get('target'), false)
-      ? 'highlighted'
-      : 'data';
+    const target = nodes.get(link.get('target'), Map());
+    const source = nodes.get(link.get('source'), Map());
+
+    if (target.get('isOrigin', false) && source.get('isHighlighted', false)) {
+      return 'highlighted';
+    }
+
+    if (target.get('isHighlighted', false) && source.get('isOrigin', false)) {
+      return 'highlighted';
+    }
+
+    return 'data';
   },
 
   getNodeLink(node) {
