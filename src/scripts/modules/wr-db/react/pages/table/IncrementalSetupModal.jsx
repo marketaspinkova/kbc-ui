@@ -100,7 +100,7 @@ export default createReactClass({
                   </label>
                 </div>
                 <span className="help-block">
-                  Append all data that has been added or changed since the last successful run. If a primary key is specified, updates will be applied to rows with matching primary key column values.
+                  Append all data that has been added or changed since the last successful run. If a primary key is specified, updates will be applied to rows with matching primary key values.
                   <br />
                   <AutomaticLoadTypeLastUpdated
                     tableId={this.state.mapping.get('source')}
@@ -118,7 +118,7 @@ export default createReactClass({
                   </label>
                 </div>
                 <p className="help-block">
-                  Append all selected data. If a primary key is specified, updates will be applied to rows with matching primary key column values.
+                  Append all selected data. If a primary key is specified, updates will be applied to rows with matching primary key values.
                 </p>
 
               </div>
