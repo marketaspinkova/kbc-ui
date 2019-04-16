@@ -7,19 +7,20 @@ export default function(queries) {
     const worker = require('worker-loader?inline!./splitSqlQueriesWorker.js')();
     let success = false;
     worker.onmessage = function(e) {
-      if (e.data === null) {
-        reject(); // immediately
+      // splited queries should be same as original 
+      if (e.data === null || queries !== e.data.join('')) {
+        reject(new Error('Query is not valid')); // immediately
         return;
       }
       success = true;
-      resolve(e.data);
+      resolve(e.data.map((query) => query.trim()).filter(Boolean));
     };
     worker.postMessage({
       queries: queries
     });
     setTimeout(function() {
       if (!success) {
-        reject();
+        reject(new Error('Queries parsing timeout'));
       }
       worker.terminate();
     }, maxSqlExecutionTime);

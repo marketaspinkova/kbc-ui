@@ -5,18 +5,10 @@
 const regex = /\s*((?:'[^'\\]*(?:\\.[^'\\]*)*'|"[^"\\]*(?:\\.[^"\\]*)*"|\/\*[^*]*\*+(?:[^*/][^*]*\*+)*\/|#.*|--.*|[^"';#])+(?:;|$))/g;
 
 self.addEventListener('message', function(e) {
-  const data = e.data;
-  if (data.queries === '') {
+  if (e.data.queries === '') {
     postMessage([]);
     return;
   }
-  const matches = data.queries.match(regex);
-  if (matches === null) {
-    postMessage(null);
-    return;
-  }
-  const response = matches
-    .filter((line) => line.trim() !== '')
-    .map((line) => line.trim());
-  postMessage(response);
+  const matches = e.data.queries.match(regex);
+  postMessage(matches);
 }, false);
