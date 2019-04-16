@@ -61,11 +61,15 @@ export default createReactClass({
   },
 
   renderParentLinks(group) {
-    return group.get('parent', List()).map((project) => this.renderProjectLink(project));
+    return group.get('parent', List())
+      .sortBy((project) => project.get('title').toLowerCase())
+      .map((project) => this.renderProjectLink(project));
   },
 
   renderChildLinks(group) {
-    return group.get('child', List()).map((project) => this.renderProjectLink(project));
+    return group.get('child', List())
+      .sortBy((project) => project.get('title').toLowerCase())
+      .map((project) => this.renderProjectLink(project));
   },
 
   renderProjectLink(project) {
