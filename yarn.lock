@@ -833,10 +833,10 @@
   resolved "https://registry.yarnpkg.com/@json-editor/json-editor/-/json-editor-1.3.4.tgz#730ce407e9816370a513f48fe9b74eb191149200"
   integrity sha512-w4SGutLq8wnQzQoidw7QlQmOq3bknf8xbLrK4TX48eVcAXuDxwnY/ikdjAiJkCSiB+ecK/7qo/Vxzv50AV3p/A==
 
-"@keboola/indigo-ui@^7.6.0":
-  version "7.6.1"
-  resolved "https://registry.yarnpkg.com/@keboola/indigo-ui/-/indigo-ui-7.6.1.tgz#90cdea1ae64c580d600a6324252b125f90bfce7c"
-  integrity sha512-GrazfO66Oo3GuIhAVawq4KBLT0IbtoMAUhPGfFOAVPL1RZWXNavA2AXZulitIlVUhJgNv9hac91XBvSU9R6Gfg==
+"@keboola/indigo-ui@^8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@keboola/indigo-ui/-/indigo-ui-8.0.0.tgz#763f9b093bd3eb35acce2a29b5bd005002364e23"
+  integrity sha512-u20vHSy31LldkgPeQqyNJKTh5jWSkZzbj1x1m71Od3cCRs6WiBuHBOXOKf7AB5TYMdtIvABYDAee4y+HJNuuBg==
   dependencies:
     bootstrap "^3.3.7"
     classnames "^2.1.0"
