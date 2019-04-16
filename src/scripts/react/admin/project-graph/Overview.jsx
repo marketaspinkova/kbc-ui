@@ -195,28 +195,28 @@ export default createReactClass({
       case 'failed-orchestrations':
         return (
           <tr key={issue.get('reason')}>
-            <td>Recently many orchestrations failed</td>
+            <td colSpan="2">Recently many orchestrations failed</td>
           </tr>
         );
 
       case 'failed-jobs':
         return (
           <tr key={issue.get('reason')}>
-            <td>Recently many jobs failed</td>
+            <td colSpan="2">Recently many jobs failed</td>
           </tr>
         );
 
       case 'dead-project':
         return (
           <tr key={issue.get('reason')}>
-            <td>The project seems to be dead. No activity was detected for some time.</td>
+            <td colSpan="2">The project seems to be dead. No activity was detected for some time.</td>
           </tr>
         );
 
       case 'configuration-issue':
         return (
           <tr key={issue.get('reason')}>
-            <td>
+            <td colSpan="2">
               {count} configuration{count > 1 ? 's' : ''} issues
             </td>
           </tr>
