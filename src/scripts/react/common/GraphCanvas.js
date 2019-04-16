@@ -8,7 +8,7 @@ class Graph {
     this.getGraph = this.getGraph.bind(this);
     this.handleHover = this.handleHover.bind(this);
     this.data = data;
-    this.minHeight = 300;
+    this.height = 300;
     this.spacing = 2;
     this.styles = {};
     this.highlight = false;
@@ -52,7 +52,7 @@ class Graph {
   }
 
   adjustCanvasHeight() {
-    select(this.element).attr('height', this.minHeight);
+    select(this.element).attr('height', this.height);
   }
 
   search(query) {
@@ -114,7 +114,7 @@ class Graph {
       const zoom = d3Zoom().on('zoom', () => inner.attr('transform', event.transform));
       const initialScale = this.data.nodes.length > 10 ? 0.5 : 0.75;
 
-      svg.attr('height', Math.max(this.minHeight, graph.graph().height) * initialScale + 60);
+      svg.attr('height', this.height * initialScale + 60);
       svg.call(zoom);
       svg.call(zoom.transform, zoomIdentity
         .translate(
