@@ -9,7 +9,6 @@ class Graph {
     this.handleHover = this.handleHover.bind(this);
     this.data = data;
     this.height = 300;
-    this.spacing = 2;
     this.styles = {};
     this.highlight = false;
 
@@ -19,11 +18,7 @@ class Graph {
 
   getGraph() {
     const graph = new dagreD3.graphlib.Graph().setGraph({
-      rankdir: 'LR',
-      labelpos: 'c',
-      nodesep: 10 * this.spacing,
-      edgesep: 10 * this.spacing,
-      ranksep: 20 * this.spacing
+      rankdir: 'LR'
     });
 
     this.data.nodes.forEach((node) => {
