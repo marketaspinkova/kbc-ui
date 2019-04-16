@@ -101,11 +101,10 @@ export default createReactClass({
                 </div>
                 <span className="help-block">
                   Append all data that has been added or changed since the last successful run. If a primary key is specified, updates will be applied to rows with matching primary key values.
-                  <br />
-                  <AutomaticLoadTypeLastUpdated
-                    tableId={this.state.mapping.get('source')}
-                  />
                 </span>
+                <AutomaticLoadTypeLastUpdated
+                  tableId={this.state.mapping.get('source')}
+                />
                 <div className="radio">
                   <label>
                     <input
