@@ -20,6 +20,7 @@ class Graph {
   getGraph() {
     const graph = new dagreD3.graphlib.Graph().setGraph({
       rankdir: 'LR',
+      labelpos: 'c',
       nodesep: 10 * this.spacing,
       edgesep: 10 * this.spacing,
       ranksep: 20 * this.spacing
@@ -81,11 +82,11 @@ class Graph {
     nodes
       .on('mouseover', (d) => {
         if (!event.ctrlKey) {
-          const highlight = [d].concat(this.data.transitions.filter((path) => path.source === d).map(path => path.target));
+          const highlight = this.data.transitions.filter((path) => path.source === d).map(path => path.target);
           nodesWithPath.transition().duration(300).style('opacity', 0.2);
-          nodes.filter((node) => highlight.includes(node)).transition().duration(300).style('opacity', 1);
-          paths.filter((p) => highlight.includes(p.v) && highlight.includes(p.w)).transition().duration(300).style('opacity', 1);
-          labels.filter((l) => highlight.includes(l.v) && highlight.includes(l.w)).transition().duration(300).style('opacity', 1);
+          nodes.filter((n) => n === d || highlight.includes(n)).transition().duration(300).style('opacity', 1);
+          paths.filter((p) => p.v === d && highlight.includes(p.w)).transition().duration(300).style('opacity', 1);
+          labels.filter((l) => l.v === d && highlight.includes(l.w)).transition().duration(300).style('opacity', 1);
         }
       })
       .on('mouseout', () => {
