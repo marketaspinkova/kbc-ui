@@ -119,9 +119,8 @@ export default createReactClass({
         onChange={(newSshData) => {
           return this.props.changeCredentialsFn(this.props.credentials.set('ssh', newSshData));
         }}
-        data={this.props.credentials.get('ssh', Map())}
+        data={this.props.credentials.get('ssh') || Map()}
         isEditing={this.props.isEditing}
-        disabledCheckbox={false}
       />
     );
   },
