@@ -19,7 +19,6 @@
   "rules": {
     "no-case-declarations": 0,
     "no-extra-boolean-cast": 0,
-    "no-useless-escape": 0,
     "react/display-name": 0,
     "react/no-find-dom-node": 0,
     "react/no-string-refs": 0

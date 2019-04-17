@@ -117,7 +117,7 @@ const installedComponentsApi = {
     } else {
       config = InstalledComponentsStore.getConfig(componentId, configId);
     }
-    description = 'Created from ' + (config.get('name')) + ' version \#' + version;
+    description = 'Created from ' + (config.get('name')) + ' version #' + version;
     if (config.get('description')) {
       description += '\n\n' + (config.get('description'));
     }

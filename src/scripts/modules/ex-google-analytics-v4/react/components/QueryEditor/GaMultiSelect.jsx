@@ -39,15 +39,9 @@ export default createReactClass({
       desc: isNew ? '' : op.attributes.description,
       id: isNew ? op.value : op.id
     };
-    // const filterEscaped = this.escapeRegExp(filter);
     return !!simpleMatch(filter, data.group) ||
            !!simpleMatch(filter, data.name) ||
            !!simpleMatch(filter, data.id);
-    // data.desc.search(filterEscaped) >= 0;
-  },
-
-  escapeRegExp(str) {
-    return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
   },
 
   createNewOption({ label }) {
