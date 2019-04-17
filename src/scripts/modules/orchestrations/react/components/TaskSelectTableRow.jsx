@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import _ from 'underscore';
 import { Tree } from '@keboola/indigo-ui';
-import { OverlayTrigger, Popover } from 'react-bootstrap';
+import { OverlayTrigger, Popover, Button } from 'react-bootstrap';
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
 import ComponentIcon from '../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../react/common/ComponentName';
@@ -57,7 +57,9 @@ export default createReactClass({
 
     return (
       <OverlayTrigger trigger={['focus', 'hover']} placement="bottom" overlay={popover}>
-        <span>Show detail</span>
+        <Button onClick={(event) => {event.stopPropagation()}} className="btn btn-link btn-link-inline">
+          Show parameters
+        </Button>
       </OverlayTrigger>
     );
   },
