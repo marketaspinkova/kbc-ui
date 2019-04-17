@@ -12,6 +12,7 @@ import { SearchBar } from '@keboola/indigo-ui';
 import DeletedComponentRow from '../components/DeletedComponentRow';
 import TrashHeaderButtons from '../components/TrashHeaderButtons';
 import SettingsTabs from '../../../../react/layout/SettingsTabs';
+import ApplicationStore from "../../../../stores/ApplicationStore";
 
 const typeFilterOptions = [
   {
@@ -46,7 +47,8 @@ export default createReactClass({
       installedFilteredComponents: InstalledComponentsStore.getAllDeletedFiltered(),
       deletingConfigurations: InstalledComponentsStore.getDeletingConfigurations(),
       restoringConfigurations: InstalledComponentsStore.getRestoringConfigurations(),
-      components: ComponentsStore.getAll()
+      components: ComponentsStore.getAll(),
+      sapiToken: ApplicationStore.getSapiToken(),
     };
   },
 
@@ -68,6 +70,7 @@ export default createReactClass({
           configurations={this.sortedConfigurations(component)}
           deletingConfigurations={this.state.deletingConfigurations.get(component.get('id'), Map())}
           restoringConfigurations={this.state.restoringConfigurations.get(component.get('id'), Map())}
+          isDeleteEnabled={this.canPurgeTrash()}
           key={component.get('id')}
         />
       ))
@@ -94,8 +97,12 @@ export default createReactClass({
     return 'Trash is empty';
   },
 
+  canPurgeTrash() {
+    return this.state.sapiToken.get('canPurgeTrash', false);
+  },
+
   render() {
-    const additionalActions = [
+    let additionalActions = [
       <Select
         value={this.state.filterType}
         onChange={selected => {
@@ -106,9 +113,14 @@ export default createReactClass({
         placeholder="All components"
         className="settings-trash-select"
         key="searchbar-component-filter"
-      />,
-      <TrashHeaderButtons key="searchbar-trash-header-buttons" />
+      />
     ];
+
+    if (this.canPurgeTrash()) {
+      additionalActions.push(
+        <TrashHeaderButtons key="searchbar-trash-header-buttons" />
+      );
+    }
 
     return (
       <div className="container-fluid">

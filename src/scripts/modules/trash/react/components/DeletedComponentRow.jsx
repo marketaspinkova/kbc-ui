@@ -13,7 +13,8 @@ export default createReactClass({
     component: PropTypes.object.isRequired,
     configurations: PropTypes.object.isRequired,
     deletingConfigurations: PropTypes.object.isRequired,
-    restoringConfigurations: PropTypes.object.isRequired
+    restoringConfigurations: PropTypes.object.isRequired,
+    isDeleteEnabled: PropTypes.bool.isRequired
   },
 
   render() {
@@ -42,6 +43,7 @@ export default createReactClass({
             component={this.props.component}
             config={configuration}
             componentId={this.props.component.get('id')}
+            isDeleteEnabled={this.props.isDeleteEnabled}
             isDeleting={this.props.deletingConfigurations.has(configuration.get('id'))}
             isRestoring={this.props.restoringConfigurations.has(configuration.get('id'))}
             key={configuration.get('id')}
