@@ -281,6 +281,7 @@ Dispatcher.register(function(payload) {
       }
       if (action.objectType === 'column') {
         const [ tableId, columnName ] = action.objectId.split(/\.(?=[^.]+$)/);
+        _store = _store.updateIn(['tables', tableId, 'columnMetadata'], (metadata) => metadata.toMap());
         _store = _store.setIn(['tables', tableId, 'columnMetadata', columnName], fromJS(action.metadata));
         return StorageTablesStore.emitChange();
       }
