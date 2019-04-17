@@ -1,12 +1,12 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
-
+import _ from 'underscore';
+import { Tree } from '@keboola/indigo-ui';
+import { OverlayTrigger, Popover } from 'react-bootstrap';
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
 import ComponentIcon from '../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../react/common/ComponentName';
-import { Tree } from '@keboola/indigo-ui';
 
 export default createReactClass({
   propTypes: {
@@ -49,7 +49,17 @@ export default createReactClass({
       return config.get('name', parameters.get('config'));
     }
 
-    return <Tree data={this.props.task.get('actionParameters')} />;
+    const popover = (
+      <Popover id={_.uniqueId('parameters_')} title="Parameters" style={{ maxWidth: '600px' }}>
+        <Tree data={this.props.task.get('actionParameters')} />
+      </Popover>
+    );
+
+    return (
+      <OverlayTrigger trigger={['focus', 'hover']} placement="bottom" overlay={popover}>
+        <span>Show detail</span>
+      </OverlayTrigger>
+    );
   },
 
   _handleActiveChange() {
