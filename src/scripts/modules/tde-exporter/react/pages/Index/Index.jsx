@@ -19,6 +19,7 @@ import RunButtonModal from '../../../../components/react/components/RunComponent
 import ComponentDescription from '../../../../components/react/components/ComponentDescription';
 import ComponentMetadata from '../../../../components/react/components/ComponentMetadata';
 import DeleteConfigurationButton from '../../../../components/react/components/DeleteConfigurationButton';
+import ScheduleConfigurationButton from '../../../../components/react/components/ScheduleConfigurationButton';
 import TablesByBucketsPanel from '../../../../components/react/components/TablesByBucketsPanel';
 import InstalledComponentsActions from '../../../../components/InstalledComponentsActionCreators';
 import storageActionCreators from '../../../../components/StorageActionCreators';
@@ -124,6 +125,9 @@ export default createReactClass({
           <li>{this._renderSetupDestinationLink()}</li>
           <li>
             <DeleteConfigurationButton componentId={componentId} configId={this.state.configId} />
+          </li>
+          <li>
+            <ScheduleConfigurationButton componentId={componentId} configId={this.state.configId} />
           </li>
         </ul>
         <SidebarJobsContainer

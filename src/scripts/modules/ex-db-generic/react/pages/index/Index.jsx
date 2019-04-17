@@ -17,9 +17,9 @@ import ComponentDescription from '../../../../components/react/components/Compon
 import ComponentMetadata from '../../../../components/react/components/ComponentMetadata';
 import SidebarVersions from '../../../../components/react/components/SidebarVersionsWrapper';
 
-import DeleteConfigurationButton from '../../../../components/react/components/DeleteConfigurationButton';
-
 import SidebarJobsContainer from '../../../../components/react/components/SidebarJobsContainer';
+import DeleteConfigurationButton from '../../../../components/react/components/DeleteConfigurationButton';
+import ScheduleConfigurationButton from '../../../../components/react/components/ScheduleConfigurationButton';
 import RunComponentButton from '../../../../components/react/components/RunComponentButton';
 
 import {Loader} from '@keboola/indigo-ui';
@@ -299,6 +299,12 @@ export default function(componentId) {
               </li>
               <li>
                 <DeleteConfigurationButton
+                  componentId={componentId}
+                  configId={this.state.configId}
+                />
+              </li>
+              <li>
+                <ScheduleConfigurationButton
                   componentId={componentId}
                   configId={this.state.configId}
                 />

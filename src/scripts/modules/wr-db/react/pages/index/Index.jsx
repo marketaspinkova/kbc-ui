@@ -25,6 +25,7 @@ import InstalledComponentsStore from '../../../../components/stores/InstalledCom
 import WrDbStore from '../../../store';
 import WrDbActions from '../../../actionCreators';
 import DeleteConfigurationButton from '../../../../components/react/components/DeleteConfigurationButton';
+import ScheduleConfigurationButton from '../../../../components/react/components/ScheduleConfigurationButton';
 import InstalledComponentsActions from '../../../../components/InstalledComponentsActionCreators';
 import StorageTablesStore from '../../../../components/stores/StorageTablesStore';
 import fieldsTemplate from '../../../templates/credentialsFields';
@@ -254,6 +255,9 @@ export default componentId => {
             </li>
             <li>
               <DeleteConfigurationButton componentId={componentId} configId={this.state.configId} />
+            </li>
+            <li>
+              <ScheduleConfigurationButton componentId={componentId} configId={this.state.configId} />
             </li>
           </ul>
           <SidebarJobsContainer

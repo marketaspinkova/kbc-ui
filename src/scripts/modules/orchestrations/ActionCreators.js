@@ -190,7 +190,7 @@ export default {
       });
   },
 
-  createOrchestration(data) {
+  createOrchestration(data, redirect = true) {
     let newOrchestration = {};
     return orchestrationsApi
       .createOrchestration(data)
@@ -203,6 +203,10 @@ export default {
           type: constants.ActionTypes.ORCHESTRATION_CREATE_SUCCESS,
           orchestration: newOrchestration
         });
+
+        if (!redirect) {
+          return newOrchestration;
+        }
         return RoutesStore.getRouter().transitionTo('orchestration', { orchestrationId: newOrchestration.id });
       });
   },
