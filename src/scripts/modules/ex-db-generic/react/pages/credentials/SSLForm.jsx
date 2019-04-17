@@ -59,9 +59,8 @@ export default createReactClass({
         <Col xs={8}>
           <Textarea
             label={labelValue}
-            type="textarea"
             disabled={!this.props.isEditing}
-            value={this.props.data.get(propName)}
+            value={this.props.data.get(propName, '')}
             onChange={this.handleChange.bind(this, propName)}
             className="form-control"
             minRows={4}
