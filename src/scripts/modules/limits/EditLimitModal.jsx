@@ -57,7 +57,7 @@ export default createReactClass({
                     type="number"
                     name="limitValue"
                     autoFocus
-                    value={this.state.limitValue}
+                    value={this.state.limitValue || ''}
                     onChange={this.handleChange}
                   />
                 )}
