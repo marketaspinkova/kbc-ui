@@ -55,7 +55,6 @@ export default createReactClass({
                 ) : (
                   <FormControl
                     type="number"
-                    name="limitValue"
                     autoFocus
                     value={this.state.limitValue || ''}
                     onChange={this.handleChange}
@@ -67,6 +66,7 @@ export default createReactClass({
               </Col>
             </FormGroup>
             <input type="hidden" name="limitName" value={limit.get('id')} />
+            <input type="hidden" name="limitValue" value={this.state.limitValue} />
             <input type="hidden" name="projectId" value={this.state.projectId} />
             <input type="hidden" name="xsrf" value={this.state.xsrf} />
             {redirectTo && <input type="hidden" name="redirectTo" value={redirectTo} />}
