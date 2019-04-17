@@ -3,14 +3,21 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import { Col, FormControl, FormGroup, HelpBlock, ControlLabel } from 'react-bootstrap';
 import ApplicationStore from '../../stores/ApplicationStore';
-import { Button, ButtonToolbar, Modal } from 'react-bootstrap';
+import { Button, ButtonToolbar, Checkbox, Modal } from 'react-bootstrap';
 
 export default createReactClass({
   propTypes: {
     limit: PropTypes.object.isRequired,
     isOpen: PropTypes.bool.isRequired,
     onHide: PropTypes.func.isRequired,
+    switch: PropTypes.bool,
     redirectTo: PropTypes.string
+  },
+
+  getDefaultProps() {
+    return {
+      switch: false
+    }
   },
 
   getInitialState() {
@@ -37,13 +44,23 @@ export default createReactClass({
             <FormGroup>
               <Col componentClass={ControlLabel} sm={4}>{limit.get('name')}</Col>
               <Col sm={8}>
-                <FormControl
-                  type="number"
-                  name="limitValue"
-                  autoFocus
-                  value={this.state.limitValue}
-                  onChange={this.handleChange}
-                />
+                {this.props.switch ? (
+                  <Checkbox 
+                    autoFocus 
+                    checked={this.state.limitValue === 1}
+                    onChange={this.handleChange} 
+                  >
+                    Enabled
+                  </Checkbox>
+                ) : (
+                  <FormControl
+                    type="number"
+                    name="limitValue"
+                    autoFocus
+                    value={this.state.limitValue || ''}
+                    onChange={this.handleChange}
+                  />
+                )}
                 <HelpBlock>
                   {limit.get('id')}
                 </HelpBlock>
@@ -70,9 +87,15 @@ export default createReactClass({
   },
 
   handleChange(e) {
-    this.setState({
-      limitValue: e.target.value
-    });
+    if (this.props.switch) {
+      this.setState({
+        limitValue: e.target.checked ? 1 : 0
+      });
+    } else {
+      this.setState({
+        limitValue: e.target.value
+      });
+    }
   },
 
   handleSave() {
