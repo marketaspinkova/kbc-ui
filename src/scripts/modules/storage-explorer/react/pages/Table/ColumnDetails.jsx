@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
-import { Map } from 'immutable';
+import { Map, List } from 'immutable';
 import { FormControl, Checkbox, Button } from 'react-bootstrap';
 import Select from 'react-select';
 import MetadataEditField from '../../../../components/react/components/MetadataEditField';
@@ -49,7 +49,7 @@ export default createReactClass({
         <MetadataEditField
           objectType="column"
           objectId={this.props.columnId}
-          metadata={this.props.table.getIn(['columnMetadata', this.props.columnName], Map())}
+          metadata={this.props.table.getIn(['columnMetadata', this.props.columnName], List())}
           metadataKey="KBC.description"
           placeholder="Describe column"
           editElement={InlineEditArea}
