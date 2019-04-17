@@ -114,6 +114,10 @@ export default createReactClass({
             wrapperClassName="cols-sm-offset-3 col-sm-9"
           />
         )}
+        {this.renderFormGroup(
+          'Trash',
+          this.renderTrashAccessInput()
+        )}
         {this.props.isEditing && this.renderFormGroup(
           'Manage Tokens',
           <div className="col-sm-9">
@@ -231,6 +235,43 @@ export default createReactClass({
         </div>
         <span className="help-block">
           Only files uploaded by the token are accessible
+        </span>
+      </div>
+    );
+  },
+
+  renderTrashAccessInput() {
+    const canPurgeTrash = this.props.token.get('canPurgeTrash', false);
+
+    return (
+      <div className="col-sm-9">
+        <div className="radio">
+          <label>
+            <input
+              disabled={this.props.disabled}
+              type="radio"
+              checked={canPurgeTrash}
+              onChange={() => this.props.updateToken('canPurgeTrash', true)}
+            />
+            <span>Full Access</span>
+          </label>
+        </div>
+        <span className="help-block">
+          Token can list, restore and permanently delete configurations in trash.
+        </span>
+        <div className="radio">
+          <label>
+            <input
+              disabled={this.props.disabled}
+              type="radio"
+              checked={!canPurgeTrash}
+              onChange={() => this.props.updateToken('canPurgeTrash', false)}
+            />
+            <span>Restricted Access</span>
+          </label>
+        </div>
+        <span className="help-block">
+          Token can only list and restore configurations in trash.
         </span>
       </div>
     );
