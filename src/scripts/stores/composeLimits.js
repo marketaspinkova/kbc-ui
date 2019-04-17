@@ -33,13 +33,13 @@ const LIMITS_METADATA = fromJS({
     name: 'Docker memory limit'
   },
   'runner.keboola.r-transformation.memoryLimitMBs': {
-    name: 'R Transformation memory limit'
+    name: 'R transformation memory limit'
   },
   'runner.keboola.python-transformation.memoryLimitMBs': {
     name: 'Python transformation memory limit'
   },
   'sandbox.dockerInstanceSizeGroupLarge': {
-    name: 'Docker instance size group large'
+    name: 'Extra large sandbox'
   }
 });
 
