@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
 import { Map } from 'immutable';
-import { Table, FormControl, Checkbox, Button } from 'react-bootstrap';
+import { FormControl, Checkbox, Button } from 'react-bootstrap';
 import Select from 'react-select';
 import MetadataEditField from '../../../../components/react/components/MetadataEditField';
 import InlineEditArea from '../../../../../react/common/InlineEditArea';
@@ -68,7 +68,7 @@ export default createReactClass({
           system fill the form below. Saving a blank type will remove the
           previously set user-defined type.
         </p>
-        <Table striped hover responsive>
+        <table className="table table-striped table-hover">
           <thead>
             <tr>
               <th><strong>Provider</strong></th>
@@ -116,7 +116,7 @@ export default createReactClass({
               </td>
             </tr>
           </tfoot>
-        </Table>
+        </table>
       </div>
     );
   },
