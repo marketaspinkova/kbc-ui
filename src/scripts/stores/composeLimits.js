@@ -31,6 +31,15 @@ const LIMITS_METADATA = fromJS({
   },
   'sandbox.dockerMemoryLimitMBytes': {
     name: 'Docker memory limit'
+  },
+  'runner.keboola.r-transformation.memoryLimitMBs': {
+    name: 'R Transformation memory limit'
+  },
+  'runner.keboola.python-transformation.memoryLimitMBs': {
+    name: 'Python transformation memory limit'
+  },
+  'sandbox.dockerInstanceSizeGroupLarge': {
+    name: 'Docker instance size group large'
   }
 });
 
@@ -89,6 +98,27 @@ function prepareConnectionData(limits, metrics, limitsMetadata) {
       limitValue: limits.getIn(['sandbox.dockerMemoryLimitMBytes', 'value'], null),
       name: limitsMetadata.getIn(['sandbox.dockerMemoryLimitMBytes', 'name']),
       unit: 'MB',
+      hideIfNull: true,
+    },
+    {
+      id: 'runner.keboola.r-transformation.memoryLimitMBs',
+      limitValue: limits.getIn(['runner.keboola.r-transformation.memoryLimitMBs', 'value'], null),
+      name: limitsMetadata.getIn(['runner.keboola.r-transformation.memoryLimitMBs', 'name']),
+      unit: 'MB',
+      hideIfNull: true,
+    },
+    {
+      id: 'runner.keboola.python-transformation.memoryLimitMBs',
+      limitValue: limits.getIn(['runner.keboola.python-transformation.memoryLimitMBs', 'value'], null),
+      name: limitsMetadata.getIn(['runner.keboola.python-transformation.memoryLimitMBs', 'name']),
+      unit: 'MB',
+      hideIfNull: true,
+    },
+    {
+      id: 'sandbox.dockerInstanceSizeGroupLarge',
+      limitValue: limits.getIn(['sandbox.dockerInstanceSizeGroupLarge', 'value'], null),
+      name: limitsMetadata.getIn(['sandbox.dockerInstanceSizeGroupLarge', 'name']),
+      unit: 'flag',
       hideIfNull: true,
     }
   ];
