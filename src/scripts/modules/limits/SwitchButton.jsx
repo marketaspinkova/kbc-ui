@@ -27,7 +27,12 @@ export default createReactClass({
           checked={!!this.props.limit.get('limitValue')}
           onChange={this.handleChange}
         />
-        <EditLimitModal limit={this.props.limit} onHide={this.closeModal} isOpen={this.state.isOpen} />
+        <EditLimitModal
+          switch
+          limit={this.props.limit} 
+          onHide={this.closeModal} 
+          isOpen={this.state.isOpen} 
+        />
       </span>
     );
   },
