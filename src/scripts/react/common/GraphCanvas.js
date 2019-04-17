@@ -9,7 +9,6 @@ class Graph {
     this.handleHover = this.handleHover.bind(this);
     this.data = data;
     this.height = 300;
-    this.spacing = 2;
     this.styles = {};
     this.highlight = false;
 
@@ -19,10 +18,7 @@ class Graph {
 
   getGraph() {
     const graph = new dagreD3.graphlib.Graph().setGraph({
-      rankdir: 'LR',
-      nodesep: 10 * this.spacing,
-      edgesep: 10 * this.spacing,
-      ranksep: 20 * this.spacing
+      rankdir: 'LR'
     });
 
     this.data.nodes.forEach((node) => {
@@ -81,11 +77,11 @@ class Graph {
     nodes
       .on('mouseover', (d) => {
         if (!event.ctrlKey) {
-          const highlight = [d].concat(this.data.transitions.filter((path) => path.source === d).map(path => path.target));
+          const highlight = this.data.transitions.filter((path) => path.source === d).map(path => path.target);
           nodesWithPath.transition().duration(300).style('opacity', 0.2);
-          nodes.filter((node) => highlight.includes(node)).transition().duration(300).style('opacity', 1);
-          paths.filter((p) => highlight.includes(p.v) && highlight.includes(p.w)).transition().duration(300).style('opacity', 1);
-          labels.filter((l) => highlight.includes(l.v) && highlight.includes(l.w)).transition().duration(300).style('opacity', 1);
+          nodes.filter((n) => n === d || highlight.includes(n)).transition().duration(300).style('opacity', 1);
+          paths.filter((p) => p.v === d && highlight.includes(p.w)).transition().duration(300).style('opacity', 1);
+          labels.filter((l) => l.v === d && highlight.includes(l.w)).transition().duration(300).style('opacity', 1);
         }
       })
       .on('mouseout', () => {
@@ -104,7 +100,6 @@ class Graph {
     if (graph) {
       const svg = select(this.element);
       svg.selectAll('*').remove();
-
       new dagreD3.render()(svg.append('g'), graph);
 
       _.each(this.styles, (styles, selector) => {
@@ -113,14 +108,18 @@ class Graph {
 
       const inner = svg.select('g');
       const zoom = d3Zoom().on('zoom', () => inner.attr('transform', event.transform));
-      const initialScale = this.data.nodes.length > 10 ? 0.5 : 0.75;
+      const padding = 30;
+      const bBox = inner.node().getBBox();
+      const hRatio = this.height / (bBox.height + padding);
+      const wRatio = svg.attr('width') / (bBox.width + padding);
+      const initialScale = Math.min(1, hRatio < wRatio ? hRatio : wRatio);
 
-      svg.attr('height', this.height * initialScale + 60);
+      svg.attr('height', this.height + padding);
       svg.call(zoom);
       svg.call(zoom.transform, zoomIdentity
         .translate(
-          (svg.attr('width') - graph.graph().width * initialScale) / 2,
-          (svg.attr('height') * initialScale) / 2
+          (svg.attr('width') - bBox.width * initialScale) / 2,
+          (svg.attr('height') - bBox.height * initialScale) / 2,
         )
         .scale(initialScale)
       );

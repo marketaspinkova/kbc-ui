@@ -1,11 +1,17 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
+import Promise from 'bluebird';
 import { Map, fromJS } from 'immutable';
 import { Loader } from '@keboola/indigo-ui';
 import { Button, Row, Col, Nav, NavItem, Tab } from 'react-bootstrap';
 import FastFade from '../../common/FastFade';
-import { getLineageInOrganization } from './GraphApi';
+import {
+  getLineageInOrganization,
+  getOrganizationReliability,
+  getProjectReliability
+} from './GraphApi';
+import Overview from './Overview';
 import Lineage from './Lineage';
 import Graph from './Graph';
 
@@ -50,12 +56,14 @@ export default createReactClass({
         <Row>
           <Col xs={12}>
             <Nav className="col-xs-12" bsStyle="tabs">
-              {this.renderProjectHeader()}
               <NavItem eventKey="Graph" disabled={!this.state.data.count()}>
                 Graph
               </NavItem>
               <NavItem eventKey="Lineage" disabled={!this.state.data.count()}>
                 Lineage
+              </NavItem>
+              <NavItem eventKey="Overview" disabled={!this.state.data.count()}>
+                Detail
               </NavItem>
             </Nav>
           </Col>
@@ -66,6 +74,8 @@ export default createReactClass({
   },
 
   renderContent() {
+    const projectId = this.props.token.getIn(['owner', 'id']);
+
     if (this.state.isLoading) {
       return this.renderLoading();
     }
@@ -77,10 +87,28 @@ export default createReactClass({
     return (
       <Tab.Content animation={FastFade}>
         <Tab.Pane eventKey="Graph" mountOnEnter unmountOnExit>
-          <Graph data={this.state.data} urlTemplates={this.props.urlTemplates} />
+          <Graph
+            nodes={this.state.data.getIn(['lineage', 'nodes'])}
+            links={this.state.data.getIn(['lineage', 'links'])}
+            urlTemplates={this.props.urlTemplates} 
+          />
         </Tab.Pane>
-        <Tab.Pane eventKey="Lineage">
-          <Lineage data={this.state.data} urlTemplates={this.props.urlTemplates} />
+        <Tab.Pane eventKey="Lineage" mountOnEnter>
+          <Lineage
+            lineage={this.state.data.getIn(['lineage', 'lineage'])}
+            reability={this.state.data.get('organizationReliability')}
+            urlTemplates={this.props.urlTemplates} 
+          />
+        </Tab.Pane>
+        <Tab.Pane eventKey="Overview">
+          <Overview
+            nodes={this.state.data.getIn(['lineage', 'nodes'])}
+            links={this.state.data.getIn(['lineage', 'links'])}
+            reability={this.state.data.getIn(['organizationReliability', projectId], Map())}
+            issues={this.state.data.get('projectReliability')}
+            projectId={projectId}
+            urlTemplates={this.props.urlTemplates}
+          />
         </Tab.Pane>
       </Tab.Content>
     );
@@ -106,26 +134,32 @@ export default createReactClass({
     );
   },
 
-  renderProjectHeader() {
-    return <h3>{this.props.token.getIn(['owner', 'name'])}</h3>;
-  },
-
   handleSelectTab(tab) {
     this.setState({ activeTab: tab });
   },
 
   getLineageInOrganization() {
+    const token = this.props.token.getIn(['token'])
+    const graphServiceUrl = this.props.services.find((service) => {
+      return service.get('id') === 'graph';
+    }).get('url');
+
     this.setState({ isLoading: true });
-    this.loadingPromise = getLineageInOrganization(
-      this.props.services.find((service) => {
-        return service.get('id') === 'graph'
-      }).get('url'),
-      this.props.token.getIn(['token'])
-    )
-      .then((data) => {
+    this.loadingPromise = Promise.all([
+      getLineageInOrganization(graphServiceUrl, token),
+      getOrganizationReliability(graphServiceUrl, token),
+      getProjectReliability(graphServiceUrl, token)
+    ])
+      .spread((lineage, organizationReliability, projectReliability) => {
         this.setState({
-          data: fromJS(data),
-          activeTab: 'Lineage'
+          data: fromJS({
+            lineage,
+            organizationReliability,
+            projectReliability
+          }).update('organizationReliability', (reliability) => {
+            return reliability.toMap().mapKeys((key, row) => row.get('project'));
+          }),
+          activeTab: 'Overview'
         });
       })
       .finally(() => {

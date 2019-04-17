@@ -13,6 +13,24 @@ const getLineageInOrganization = (endpoint, token) => {
     });
 };
 
+const getOrganizationReliability = (endpoint, token) => {
+  return createRequest(endpoint, token, 'GET', 'organization/reliability')
+    .promise()
+    .then(function(response) {
+      return response.body;
+    });
+};
+
+const getProjectReliability = (endpoint, token) => {
+  return createRequest(endpoint, token, 'GET', 'project/reliability')
+    .promise()
+    .then(function(response) {
+      return response.body;
+    });
+};
+
 export {
-  getLineageInOrganization
+  getLineageInOrganization,
+  getOrganizationReliability,
+  getProjectReliability
 }

@@ -2,14 +2,16 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
 import _ from 'underscore';
-import { List } from 'immutable';
-import { Table, Label } from 'react-bootstrap';
+import { Map, List } from 'immutable';
+import { Table, Badge, ProgressBar } from 'react-bootstrap';
 import { ExternalLink } from '@keboola/indigo-ui';
 import Tooltip from '../../common/Tooltip';
+import { scoreStyle } from './utils';
 
 export default createReactClass({
   propTypes: {
-    data: PropTypes.object.isRequired,
+    lineage: PropTypes.object.isRequired,
+    reability: PropTypes.object.isRequired,
     urlTemplates: PropTypes.object.isRequired
   },
 
@@ -23,11 +25,9 @@ export default createReactClass({
               <tr key={level}>
                 <td>Level {level}</td>
                 <td>
-                  {this.renderGroupCountLabel(group, 'parent')}
                   {this.renderParentLinks(group)}
                 </td>
                 <td>
-                  {this.renderGroupCountLabel(group, 'child')}
                   {this.renderChildLinks(group)}
                 </td>
               </tr>
@@ -60,55 +60,66 @@ export default createReactClass({
     );
   },
 
-  renderGroupCountLabel(group, section) {
-    return <Label className="group-label">{group.get(section, List()).count()}</Label>;
-  },
-
   renderParentLinks(group) {
-    return group.get('parent', List()).map((project) => this.renderProjectLink(project));
+    return group.get('parent', List())
+      .sortBy((project) => project.get('title').toLowerCase())
+      .map((project) => this.renderProjectLink(project));
   },
 
   renderChildLinks(group) {
-    return group.get('child', List()).map((project) => this.renderProjectLink(project));
+    return group.get('child', List())
+      .sortBy((project) => project.get('title').toLowerCase())
+      .map((project) => this.renderProjectLink(project));
   },
 
   renderProjectLink(project) {
-    return (
-      <div className="lineage-link" key={project.get('id')}>
-        <Tooltip tooltip="Open project" placement="top">
-          <span>
-            <ExternalLink
-              href={_.template(this.props.urlTemplates.get('project'))({
-                projectId: project.get('id')
-              })}
-            >
-              {project.get('title')}
-            </ExternalLink>
-          </span>
-        </Tooltip>
+    const reability = this.props.reability.get(project.get('id'), Map());
 
-        <Tooltip tooltip="Open project overview" placement="top">
-          <span>
-            <ExternalLink
-              href={_.template(this.props.urlTemplates.get('projectOverview'))({
-                projectId: project.get('id')
-              })}
-            >
-              <i className="fa fa-sitemap" />
-            </ExternalLink>
-          </span>
-        </Tooltip>
+    return (
+      <div className="lineage-item" key={project.get('id')}>
+        <div className="lineage-link">
+          <Tooltip tooltip="Open project" placement="top">
+            <span>
+              <ExternalLink
+                href={_.template(this.props.urlTemplates.get('project'))({
+                  projectId: project.get('id')
+                })}
+              >
+                {project.get('title')}
+              </ExternalLink>
+            </span>
+          </Tooltip>
+
+          <Tooltip tooltip="Open project overview" placement="top">
+            <span>
+              <ExternalLink
+                href={_.template(this.props.urlTemplates.get('projectOverview'))({
+                  projectId: project.get('id')
+                })}
+              >
+                <i className="fa fa-sitemap" />
+              </ExternalLink>
+            </span>
+          </Tooltip>
+        </div>
+        <div className="lineage-reability" style={{ marginBottom: '10px' }}>
+          <ProgressBar
+            max={1}
+            label={`Score ${reability.get('reliabilityScore') * 100} of 100`}
+            bsStyle={scoreStyle(reability.get('reliabilityScore'))}
+            now={reability.get('reliabilityScore')} 
+          />
+
+          <Tooltip tooltip="Project issues" placement="top">
+            <Badge>{reability.get('issueCount', 0)}</Badge>
+          </Tooltip>
+        </div>
       </div>
     );
   },
 
   lineageData() {
-    if (!this.props.data.get('lineage')) {
-      return List();
-    }
-
-    return this.props.data
-      .get('lineage')
+    return this.props.lineage
       .groupBy((data) => data.get('distance'))
       .toKeyedSeq()
       .sort()
