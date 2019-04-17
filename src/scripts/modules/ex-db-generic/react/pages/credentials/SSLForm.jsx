@@ -28,6 +28,16 @@ export default createReactClass({
               'SSL Cipher',
               'cipher',
               'You can optionally provide a list of permissible ciphers to use for the SSL encryption.')}
+            <FormGroup>
+              <Col xs={8} xsOffset={4}>
+                <Checkbox
+                  checked={this.props.data.get('verifyServerCert', true)}
+                  onChange={this.handleToggle.bind(this, 'verifyServerCert')}
+                >
+                  Verify server certificate
+                </Checkbox>
+              </Col>
+            </FormGroup>
           </div>
         )}
       </div>
