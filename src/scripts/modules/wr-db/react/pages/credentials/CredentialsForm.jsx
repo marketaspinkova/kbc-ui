@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import { Map } from 'immutable';
 import _ from 'underscore';
@@ -140,7 +140,7 @@ export default createReactClass({
     inputPropName,
     type = 'text',
     isProtected = false,
-    defaultValue = null,
+    defaultValue = '',
     options = [],
     helpText = null
   ) {
@@ -248,7 +248,7 @@ export default createReactClass({
           <FormControl.Static>
             {isHashed ? (
               <Tooltip tooltip="Encrypted password">
-                <span className="fa fa-fw fa-lock">{null}</span>
+                <span className="fa fa-fw fa-lock" />
               </Tooltip>
             ) : (
               <span>
@@ -274,7 +274,7 @@ export default createReactClass({
           <FormControl
             type="password"
             placeholder={savedValue ? 'type new password to change it' : ''}
-            value={this.props.credentials.get(propName)}
+            value={this.props.credentials.get(propName) || ''}
             onChange={(event) => {
               return this.props.onChangeFn(propName, event);
             }}
@@ -297,7 +297,7 @@ export default createReactClass({
         {labelValue}
         <small>
           <Tooltip placement="top" tooltip={msg}>
-            <span className="fa fa-fw fa-question-circle">{null}</span>
+            <span className="fa fa-fw fa-question-circle" />
           </Tooltip>
         </small>
       </span>
