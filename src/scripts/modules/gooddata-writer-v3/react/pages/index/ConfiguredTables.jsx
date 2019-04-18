@@ -127,13 +127,6 @@ export default createReactClass({
         isActive={!isDisabled}
         isPending={this.props.isTablePending([tableId, 'activate'])}
         onChange={val => this.props.toggleTableExport(tableId, val)}
-      />,
-      <RunLoadButton
-        loadOnly={this.props.loadOnly}
-        tableId={tableId}
-        isTableDisabled={isDisabled}
-        key={`run${tableId}`}
-        getRunParams={this.props.getSingleRunParams}
       />
     ];
   },
