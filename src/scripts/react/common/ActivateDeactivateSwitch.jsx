@@ -1,9 +1,11 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import Switch from 'rc-switch';
 import { Loader } from '@keboola/indigo-ui';
 import Tooltip from './Tooltip';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
     isActive: PropTypes.bool.isRequired,
     isPending: PropTypes.bool.isRequired,
