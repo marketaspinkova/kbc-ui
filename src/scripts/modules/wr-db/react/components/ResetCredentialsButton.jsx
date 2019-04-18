@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Map } from 'immutable';
 import { Loader } from '@keboola/indigo-ui';
 import { Button } from 'react-bootstrap';
@@ -13,7 +14,7 @@ import { States } from '../pages/credentials/StateConstants';
 const renderForState = [States.SHOW_STORED_CREDS, States.CREATE_NEW_CREDS, States.SAVING_NEW_CREDS];
 
 export default (componentId, isProvisioning) => {
-  return React.createClass({
+  return createReactClass({
     mixins: [createStoreMixin(WrDbStore, InstalledComponentsStore)],
 
     getStateFromStores() {

@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import _ from 'underscore';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import WrDbStore from '../../store';
@@ -11,13 +13,13 @@ import { States } from '../pages/credentials/StateConstants';
 import SaveButtons from '../../../../react/common/SaveButtons';
 import credentialsUtils from '../../credentialsUtils';
 
-export default React.createClass({
+export default createReactClass({
   mixins: [createStoreMixin(WrDbStore, InstalledComponentsStore), Navigation],
 
   propTypes: {
-    componentId: React.PropTypes.string.isRequired,
-    configId: React.PropTypes.string.isRequired,
-    driver: React.PropTypes.string.isRequired
+    componentId: PropTypes.string.isRequired,
+    configId: PropTypes.string.isRequired,
+    driver: PropTypes.string.isRequired
   },
 
   getStateFromStores() {
