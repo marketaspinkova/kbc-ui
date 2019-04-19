@@ -7,6 +7,11 @@ const versions = {
       version: ''
     },
     {
+      label: '1.2.11 (R 3.5.2)',
+      version: '1.2.11',
+      until: '2019-05-03'
+    },
+    {
       label: '1.2.10 (R 3.5.2 without TCL/TK)',
       version: '1.2.10',
       until: '2019-02-01'
@@ -26,6 +31,11 @@ const versions = {
     {
       label: 'Latest (recommended and up-to-date environment)',
       version: ''
+    },
+    {
+      label: '1.1.19 (Python 3.7.2)',
+      version: '1.1.19',
+      until: '2019-05-03'
     },
     {
       label: '1.1.18 (Python 3.7.2 without TQDM)',
