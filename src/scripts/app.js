@@ -127,7 +127,7 @@ const startApp = appOptions => {
         // Start pollers for new page
         return (registeredPollers = RoutesStore.getPollersForRoutes(state.routes).map(poller => {
           const callback = () => poller.get('action')(state.params, state.query);
-          Timer.poll(callback, poller.get('interval'));
+          Timer.poll(callback, { interval: poller.get('interval') });
           return callback;
         }));
       })
