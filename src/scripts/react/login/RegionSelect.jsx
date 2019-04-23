@@ -17,18 +17,20 @@ export default createReactClass({
 
   render() {
     return (
-      <Select
-        className="kbc-select-region"
-        clearable={false}
-        deleteRemoves={false}
-        backspaceRemoves={false}
-        arrowRenderer={null}
-        value={this.state.region}
-        onChange={this.onChange}
-        options={regions}
-        optionRenderer={this.renderWithFlag}
-        valueRenderer={this.renderWithFlag}
-      />
+      <span title="Select region">
+        <Select
+          className="kbc-select-region"
+          clearable={false}
+          deleteRemoves={false}
+          backspaceRemoves={false}
+          arrowRenderer={null}
+          value={this.state.region}
+          onChange={this.onChange}
+          options={regions}
+          optionRenderer={this.renderWithFlag}
+          valueRenderer={this.renderWithFlag}
+        />
+      </span>
     );
   },
 
