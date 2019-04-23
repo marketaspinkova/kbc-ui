@@ -61,7 +61,10 @@ class EventsService {
   startAutoReload() {
     if (this._autoReload) { return; }
     this._autoReload = true;
-    return this._timer.poll(this.loadNew, 5, false);
+    return this._timer.poll(this.loadNew, {
+      interval: 5,
+      skipFirst: true
+    });
   }
 
   loadEvent(id) {
