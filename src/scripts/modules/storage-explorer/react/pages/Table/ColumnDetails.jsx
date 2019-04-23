@@ -13,18 +13,14 @@ import { validate as isValid } from '../../../../components/utils/columnTypeVali
 import ComponentName from '../../../../../react/common/ComponentName';
 import ComponentIcon from '../../../../../react/common/ComponentIcon';
 import ComponentsStore from '../../../../components/stores/ComponentsStore';
-import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
-
-const typesSupportingLength = List(['STRING', 'INTEGER', 'NUMERIC']);
 
 const isLengthSupported = (type) => {
-  return typesSupportingLength.contains(type);
+  return ['STRING', 'INTEGER', 'NUMERIC'].includes(type);
 };
 
 export default createReactClass({
-  mixins: [createStoreMixin(ComponentsStore)],
-
   propTypes: {
+    table: PropTypes.object.isRequired,
     columnId: PropTypes.string.isRequired,
     columnName: PropTypes.string.isRequired,
     machineDataType: PropTypes.object.isRequired,
@@ -33,16 +29,9 @@ export default createReactClass({
     saveUserType: PropTypes.func.isRequired,
   },
 
-  getStateFromStores() {
-    return {
-      machineDataTypeComponent: this.props.machineDataType.count() > 0
-        ? ComponentsStore.getComponent(this.props.machineDataType.get('provider'))
-        : Map()
-    };
-  },
-
   getInitialState() {
     return {
+      component: ComponentsStore.getComponent(this.props.machineDataType.get('provider')) || Map(),
       userDataType: this.props.userDataType,
       isSaving: false,
     }
@@ -59,9 +48,10 @@ export default createReactClass({
       <div>
         <MetadataEditField
           objectType="column"
+          objectId={this.props.columnId}
+          metadata={this.props.table.getIn(['columnMetadata', this.props.columnName], List())}
           metadataKey="KBC.description"
           placeholder="Describe column"
-          objectId={this.props.columnId}
           editElement={InlineEditArea}
         />
         {this.renderTypeForm()}
@@ -104,7 +94,6 @@ export default createReactClass({
               <td>
                 {this.state.userDataType.get(DataTypeKeys.BASE_TYPE) && (
                   <Checkbox
-                    name={this.props.columnName + '_nullable'}
                     checked={this.state.userDataType.get(DataTypeKeys.NULLABLE, false)}
                     onChange={this.handleNullableChange}
                   >
@@ -139,7 +128,6 @@ export default createReactClass({
 
     return (
       <FormControl
-        name={this.props.columnName + '_length'}
         type="text"
         value={this.state.userDataType.get(DataTypeKeys.LENGTH, '')}
         onChange={this.handleLengthChange}
@@ -159,8 +147,8 @@ export default createReactClass({
     return (
       <tr>
         <td>
-          <ComponentIcon component={this.state.machineDataTypeComponent} size="32" resizeToSize="16" />
-          <ComponentName component={this.state.machineDataTypeComponent} showType />
+          <ComponentIcon component={this.state.component} size="32" resizeToSize="16" />
+          <ComponentName component={this.state.component} showType />
         </td>
         <td>{this.props.machineDataType.get(DataTypeKeys.BASE_TYPE)}</td>
         <td>
@@ -217,7 +205,7 @@ export default createReactClass({
     }
 
     if (
-      userDataType.get(DataTypeKeys.LENGTH) && 
+      userDataType.get(DataTypeKeys.LENGTH) &&
       !isValid(userDataType.get(DataTypeKeys.BASE_TYPE), userDataType.get(DataTypeKeys.LENGTH))
     ) {
       return true;

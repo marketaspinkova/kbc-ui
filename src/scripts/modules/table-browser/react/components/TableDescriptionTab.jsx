@@ -1,17 +1,14 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
-
 import EmptyState from '../../../components/react/components/ComponentEmptyState';
 import TableDescriptionEditor from './TableDescriptionEditor';
 
 export default createReactClass({
-
   propTypes: {
-    isLoading: PropTypes.bool,
-    tableId: PropTypes.string.isRequired,
-    tableExists: PropTypes.bool.isRequired
+    table: PropTypes.object.isRequired,
+    tableExists: PropTypes.bool.isRequired,
+    isLoading: PropTypes.bool
   },
 
   render() {
@@ -26,10 +23,10 @@ export default createReactClass({
         </EmptyState>
       );
     }
-    const tableId = this.props.tableId;
+
     return (
       <div style={{maxHeight: '80vh', overflow: 'auto'}}>
-        <TableDescriptionEditor tableId={tableId}/>
+        <TableDescriptionEditor table={this.props.table} />
       </div>
     );
   }

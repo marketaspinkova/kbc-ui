@@ -1,18 +1,19 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
-import _ from 'underscore';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+import ImmutableMixin from 'react-immutable-render-mixin';
+import { Map } from 'immutable';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import MetadataActionCreators from '../../MetadataActionCreators';
 import MetadataStore from '../../stores/MetadataStore';
 
 export default createReactClass({
-  mixins: [PureRenderMixin, createStoreMixin(MetadataStore)],
+  mixins: [createStoreMixin(MetadataStore), ImmutableMixin],
 
   propTypes: {
     objectType: PropTypes.oneOf(['bucket', 'table', 'column']).isRequired,
     objectId: PropTypes.string.isRequired,
+    metadata: PropTypes.object.isRequired,
     metadataKey: PropTypes.string.isRequired,
     editElement: PropTypes.func.isRequired,
     placeholder: PropTypes.string,
@@ -26,35 +27,11 @@ export default createReactClass({
     };
   },
 
-  componentDidUpdate(prevProps) {
-    if (!_.isEqual(this.props, prevProps)) {
-      this.setState(this.getState(this.props));
-    }
-  },
-
-  getStateFromStores() {
-    return this.getState(this.props);
-  },
-
-  getState(props) {
+  getStateFromStores(props) {
     return {
-      value: MetadataStore.getMetadataValue(
-        props.objectType,
-        props.objectId,
-        'user',
-        props.metadataKey
-      ),
-      editValue: MetadataStore.getEditingMetadataValue(
-        props.objectType,
-        props.objectId,
-        props.metadataKey
-      ),
-      isEditing: MetadataStore.isEditingMetadata(
-        props.objectType,
-        props.objectId,
-        props.metadataKey
-      ),
-      isSaving: MetadataStore.isSavingMetadata(props.objectType, props.objectId, props.metadataKey)
+      editValue: MetadataStore.getEditingValue(props.objectType, props.objectId, props.metadataKey),
+      isEditing: MetadataStore.isEditing(props.objectType, props.objectId, props.metadataKey),
+      isSaving: MetadataStore.isSaving(props.objectType, props.objectId, props.metadataKey)
     };
   },
 
@@ -63,7 +40,7 @@ export default createReactClass({
 
     return (
       <EditElement
-        text={this.state.isEditing ? this.state.editValue : this.state.value}
+        text={this.state.isEditing ? this.state.editValue : this.metadataValue()}
         placeholder={this.props.placeholder}
         tooltipPlacement={this.props.tooltipPlacement}
         isSaving={this.state.isSaving}
@@ -77,20 +54,18 @@ export default createReactClass({
     );
   },
 
+  metadataValue() {
+    return this.props.metadata
+      .find(row => row.get('provider') === 'user' && row.get('key') === this.props.metadataKey, null, Map())
+      .get('value', '');
+  },
+
   handleEditStart() {
-    MetadataActionCreators.startMetadataEdit(
-      this.props.objectType,
-      this.props.objectId,
-      this.props.metadataKey
-    );
+    this.handleEditChange(this.metadataValue());
   },
 
   handleEditCancel() {
-    MetadataActionCreators.cancelMetadataEdit(
-      this.props.objectType,
-      this.props.objectId,
-      this.props.metadataKey
-    );
+    MetadataActionCreators.cancelMetadataEdit(this.props.objectType, this.props.objectId, this.props.metadataKey);
   },
 
   handleEditChange(newValue) {
@@ -106,7 +81,8 @@ export default createReactClass({
     MetadataActionCreators.saveMetadata(
       this.props.objectType,
       this.props.objectId,
-      this.props.metadataKey
+      this.props.metadataKey,
+      this.state.editValue
     );
   }
 });

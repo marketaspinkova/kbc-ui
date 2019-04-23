@@ -15,6 +15,7 @@ import MetadataStore from '../../../../components/stores/MetadataStore';
 import ColumnsLocalStore from '../../../ColumnsLocalStore';
 import StorageApi from '../../../../components/StorageApi';
 import { factory as eventsFactory } from '../../../../sapi-events/TableEventsService';
+import { getMachineColumnMetadata, getUserColumnMetadata } from '../../../../components/utils/tableMetadataHelper';
 import { createAliasTable, deleteTable, truncateTable, exportTable, uploadFile, loadTable } from '../../../Actions';
 
 import FastFade from '../../../../../react/common/FastFade';
@@ -72,9 +73,9 @@ export default createReactClass({
       exportingTable: TablesStore.getIsExportingTable(table.get('id')),
       tableLinks: this.getTableLinks(table, bucket),
       tableAliases: this.getTableAliases(table, tables, sapiToken),
-      machineColumnMetadata: MetadataStore.getLastUpdatedByColumnMetadata(table.get('id')),
-      userColumnMetadata: MetadataStore.getUserProvidedColumnMetadata(table.get('id')),
       openColumns: ColumnsLocalStore.getOpenedColumns(),
+      machineColumnMetadata: getMachineColumnMetadata(table),
+      userColumnMetadata: getUserColumnMetadata(table)
     };
   },
 
