@@ -21,7 +21,7 @@ export default createReactClass({
         return this.renderWithPanel();
       } else {
         return (
-          <ul>
+          <ul className="kbc-break-all kbc-break-word">
             {this.renderSlicedItems(0, tablesCount)}
           </ul>
         );
@@ -69,14 +69,15 @@ export default createReactClass({
     const labelOpen = tablesCount === 100 ? `More than ${tablesCount - VISIBLE_TABLES_LIMIT} others.` : `Show ${tablesCount - VISIBLE_TABLES_LIMIT} more tables`;
     return (
       <span>
-        <ul className="list-no-bottom-margin">
+        <ul className="list-no-bottom-margin kbc-break-all kbc-break-word">
           {headerRows}
         </ul>
         <PanelWithDetails
           placement="bottom"
           labelOpen={labelOpen}
-          labelCollapse="Show less">
-          <ul>
+          labelCollapse="Show less"
+        >
+          <ul className="kbc-break-all kbc-break-word">
             {panelContentRows}
           </ul>
         </PanelWithDetails>
