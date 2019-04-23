@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
 import {Alert, Button} from 'react-bootstrap';
-import Immutable from 'immutable';
+import { Map } from 'immutable';
 import PureRendererMixin from 'react-immutable-render-mixin';
 import _ from 'underscore';
 import {Link} from 'react-router';
@@ -39,7 +39,7 @@ export default createReactClass({
 
   getInitialState() {
     return {
-      events: Immutable.List(),
+      events: Map(),
       isLoadingOlder: false,
       isLoading: false,
       hasMore: true,

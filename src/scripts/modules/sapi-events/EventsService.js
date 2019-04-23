@@ -61,7 +61,7 @@ class EventsService {
   startAutoReload() {
     if (this._autoReload) { return; }
     this._autoReload = true;
-    return this._timer.poll(this.loadNew, 5);
+    return this._timer.poll(this.loadNew, 5, false);
   }
 
   loadEvent(id) {
@@ -97,7 +97,6 @@ class EventsService {
     this._isLoading = true;
     this._errorMessage = null;
     this._emitChange();
-
     return this._listEvents()
       .then(this._setEvents.bind(this))
       .catch(this._onLoadError.bind(this));
@@ -112,10 +111,15 @@ class EventsService {
     this._isLoading = true;
     this._errorMessage = null;
     this._emitChange();
-    return this._listEvents({
-      limit: 10,
-      sinceId: this.getEvents().first() ? this.getEvents().first().get('id') : null
-    })
+
+    const event = this.getEvents().first();
+    const params = { limit: 10 };
+
+    if (event && event.has('id')) {
+      params.sinceId = event.get('id');
+    }
+
+    return this._listEvents(params)
       .then(this._prependEvents.bind(this))
       .catch(this._onError.bind(this));
   }

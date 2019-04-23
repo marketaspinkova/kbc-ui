@@ -11,8 +11,11 @@ class Timer {
   /*
     Will execute callback every `interval` seconds
   */
-  poll(callback, interval = 30) {
-    this._runAction(callback);
+  poll(callback, interval = 30, runImmediately = true) {
+    if (runImmediately) {
+      this._runAction(callback);
+    }
+
     return this._timers.push({
       callback,
       intervalId: setInterval(() => this._runAction(callback), 1000 * interval)
