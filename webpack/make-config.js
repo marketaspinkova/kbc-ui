@@ -2,11 +2,16 @@ var path = require('path');
 var webpack = require('webpack');
 var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 
 module.exports = function(options) {
   var isDevelopment = options.isDevelopment;
 
+  // babel-preset-react-app require set NODE_ENV
+  process.env.NODE_ENV = isDevelopment ? 'development' : 'production';
+
   var plugins = [
+    new CaseSensitivePathsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         __DEV__: isDevelopment,
@@ -73,6 +78,9 @@ module.exports = function(options) {
       extensions: ['*', '.js', '.jsx']
     },
     devServer: {
+      host: '0.0.0.0',
+      port: 3000,
+      inline: true,
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': '*'

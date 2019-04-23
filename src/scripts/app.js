@@ -1,6 +1,7 @@
 /* eslint no-console: 0 */
 console.time('load');
 
+import 'react-app-polyfill/stable';
 import './utils/ReactErrorHandler';
 import './utils/codemirror/setup';
 
