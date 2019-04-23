@@ -21,7 +21,7 @@ export default createReactClass({
         return this.renderWithPanel();
       } else {
         return (
-          <ul>
+          <ul className="kbc-break-all kbc-break-word">
             {this.renderSlicedItems(0, tablesCount)}
           </ul>
         );
