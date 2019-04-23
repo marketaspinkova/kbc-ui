@@ -1,4 +1,3 @@
-import 'react-app-polyfill/stable';
 import React from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
