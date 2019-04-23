@@ -1,7 +1,7 @@
 /*
   Entry point for non app pages, provides some basic parts implemented in React
 */
-import 'core-js/stable';
+import 'react-app-polyfill/stable';
 import * as helpers from './helpers';
 import ProjectSelect from './react/layout/project-select/ProjectSelect';
 import Wizard from './modules/guide-mode/react/Wizard';
