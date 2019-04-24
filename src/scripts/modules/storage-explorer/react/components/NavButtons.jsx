@@ -9,10 +9,11 @@ export default createReactClass({
   render() {
     const isFilesActive = this.isActive('storage-explorer-files');
     const isJobsActive = this.isActive('storage-explorer-jobs');
+    const isDocumentationActive = this.isActive('storage-explorer-documentation');
 
     return (
       <ul className="nav nav-tabs">
-        <li className={classnames({ active: !isFilesActive && !isJobsActive })}>
+        <li className={classnames({ active: !isFilesActive && !isJobsActive && !isDocumentationActive })}>
           <Link to="storage-explorer">Buckets</Link>
         </li>
         <li className={classnames({ active: isFilesActive })}>
@@ -20,6 +21,9 @@ export default createReactClass({
         </li>
         <li className={classnames({ active: isJobsActive })}>
           <Link to="storage-explorer-jobs">Jobs</Link>
+        </li>
+        <li className={classnames({ active: isDocumentationActive})}>
+          <Link to="storage-explorer-documentation">Documentation</Link>
         </li>
       </ul>
     );
