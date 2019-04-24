@@ -1,18 +1,12 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import {Modal, ListGroupItem, ListGroup, Button} from 'react-bootstrap';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import Remarkable from 'react-remarkable';
 import RoutesStore from '../../../stores/RoutesStore';
 import { hideWizardModalFn, showWizardModalFn } from '../stores/ActionCreators.js';
 import GuideModeImage from './GuideModeImage';
-import Remarkable from 'react-remarkable';
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
-
-const redirectTo = (pathname) => {
-  window.location.assign(window.location.origin + pathname);
-};
-
-const ROUTE_PATH_STORAGE = 'storage';
 
 export default createReactClass({
   propTypes: {
@@ -31,27 +25,10 @@ export default createReactClass({
     scriptsBasePath: PropTypes.string.isRequired
   },
 
-  getProjectPageUrlHref(path) {
-    let delimiter = '/';
-    if (process.env.NODE_ENV === 'production') {
-      if (path === '') {
-        delimiter = '';
-      }
-      return this.props.projectBaseUrl + delimiter + path;
-    }
-    // development
-    if (path === ROUTE_PATH_STORAGE) {
-      return '/index-storage.html';
-    } else {
-      return '/?token=TOKEN#/' + path;
-    }
-  },
-
-  render: function() {
+  render() {
     return (
       <div>
         <Modal
-          enforceFocus={false}
           show={this.props.show} onHide={this.closeLessonModal} backdrop={this.isStepBackdrop()}
           className={'guide-wizard guide-wizard-' + this.getStepPosition()}
         >
@@ -81,8 +58,10 @@ export default createReactClass({
       </div>
     );
   },
+
   getModalBody() {
     this.scrollBodyToTop();
+
     return (
       <div key={this.props.step}>
         {!this.isCongratulations() &&
@@ -100,81 +79,112 @@ export default createReactClass({
       </div>
     );
   },
+
   hasNextStep() {
     return this.props.step + 1 < this.getStepsCount();
   },
+
   hasPreviousStep() {
     return this.props.step > 0;
   },
+
   getNextStepRoute() {
     return this.props.lesson.steps[this.props.step + 1].route;
   },
+
   hasNextStepRoute() {
     return this.props.lesson.steps[this.props.step + 1].hasOwnProperty('route');
   },
+
   hasPreviousStepRoute() {
     return this.props.lesson.steps[this.props.step - 1].hasOwnProperty('route');
   },
+
   getPreviousStepRoute() {
     return this.props.lesson.steps[this.props.step - 1].route;
   },
+
   getActiveStep() {
     return this.props.step;
   },
+
   getLesson() {
     return this.props.lesson;
   },
+
   getLessonSteps() {
     return this.getLesson().steps;
   },
+
   getLessonId() {
     return this.getLesson().id;
   },
+
   getLessonTitle() {
     return this.getLesson().title;
   },
+
   getStepsCount() {
     return this.getLessonSteps().length;
   },
+
   getCurrentStep() {
     return this.getLessonSteps()[this.getActiveStep()];
   },
+
   getStepId() {
     return this.getLessonSteps()[this.getActiveStep()].id;
   },
+
   getStepPosition() {
     return this.getLessonSteps()[this.getActiveStep()].position;
   },
+
   getStepMarkdown() {
     return this.getLessonSteps()[this.getActiveStep()].markdown;
   },
+
   getStepTitle() {
     return this.getLessonSteps()[this.getActiveStep()].title;
   },
+
   getStepMedia() {
     return this.getLessonSteps()[this.getActiveStep()].media;
   },
+
   getStepMediaType() {
     return this.getLessonSteps()[this.getActiveStep()].mediaType;
   },
+
   getStepRoute() {
     return this.getLessonSteps()[this.getActiveStep()].route;
   },
+
   isStepBackdrop() {
     return this.getLessonSteps()[this.getActiveStep()].backdrop;
   },
+
   isCongratulations() {
     return typeof this.getLessonSteps()[this.getActiveStep()].congratulations === 'undefined' ? false : true;
   },
+
   isNavigationVisible() {
     return this.getLessonSteps()[this.getActiveStep()].isNavigationVisible;
   },
+
   getModalTitle() {
-    return (<Modal.Title>{this.getLessonId() + '.' + this.getStepId() + ' ' + this.getStepTitle()}</Modal.Title>);
+    return <Modal.Title>{this.getLessonId() + '.' + this.getStepId() + ' ' + this.getStepTitle()}</Modal.Title>;
   },
+
   getModalTitleExtended() {
-    return (<div><h2>Lesson  {this.getLessonId()}</h2><h1>{this.getLessonTitle()}</h1></div>);
+    return (
+      <div>
+        <h2>Lesson {this.getLessonId()}</h2>
+        <h1>{this.getLessonTitle()}</h1>
+      </div>
+    );
   },
+
   renderMedia() {
     if (this.getStepMediaType() === 'img') {
       return (
@@ -184,8 +194,10 @@ export default createReactClass({
         />
       );
     }
+
     return null;
   },
+
   getStepState(step) {
     let stepState = '';
     if (step.id - 1 < this.props.achievedStep + 1) {
@@ -196,25 +208,11 @@ export default createReactClass({
     }
     return stepState;
   },
-  isCurrentStepStorage() {
-    return this.getStepRoute().name === ROUTE_PATH_STORAGE;
-  },
-  isPrevStepStorage() {
-    return this.hasPreviousStepRoute() && this.getPreviousStepRoute().name === ROUTE_PATH_STORAGE;
-  },
-  isNextStepStorage() {
-    return this.hasNextStepRoute() && this.getNextStepRoute().name === ROUTE_PATH_STORAGE;
-  },
+
   handlePrevStepClick() {
     this.handleStep('prev');
-    if (this.hasPreviousStep()) {
-      if (this.isCurrentStepStorage()) {
-        this.handlePrevStepTransition();
-      } else if (this.isPrevStepStorage()) {
-        RoutesStore.getRouter().transitionTo('storage-explorer');
-      } else if (this.hasPreviousStepRoute()) {
-        this.handlePrevStepTransition();
-      }
+    if (this.hasPreviousStep() && this.hasPreviousStepRoute()) {
+      this.handlePrevStepTransition();
     }
   },
 
@@ -244,16 +242,11 @@ export default createReactClass({
       </Button>
     );
   },
+
   handleNextStepClick() {
     this.handleStep('next');
-    if (this.hasNextStep()) {
-      if (this.isCurrentStepStorage()) {
-        this.handleNextStepTransition();
-      } else if (this.isNextStepStorage()) {
-        RoutesStore.getRouter().transitionTo('storage-explorer');
-      } else if (this.hasNextStepRoute()) {
-        this.handleNextStepTransition();
-      }
+    if (this.hasNextStep() && this.hasNextStepRoute()) {
+      this.handleNextStepTransition();
     }
   },
 
@@ -285,6 +278,7 @@ export default createReactClass({
       </Button>
     );
   },
+
   renderNavigation() {
     return (
       <ListGroup className="guide-navigation">
@@ -305,6 +299,7 @@ export default createReactClass({
       </ListGroup>
     );
   },
+
   renderNextLessonLink() {
     return (
       <Button bsStyle="link" onClick={(e) => {
@@ -315,14 +310,12 @@ export default createReactClass({
       </Button>
     );
   },
+
   closeLessonModal() {
-    if (this.isCurrentStepStorage()) {
-      redirectTo(this.getProjectPageUrlHref(''));
-    } else {
-      RoutesStore.getRouter().transitionTo('app');
-    }
+    RoutesStore.getRouter().transitionTo('app');
     hideWizardModalFn();
   },
+
   handleStep(direction) {
     this.props.setDirection(direction);
     if (direction === 'next') {
@@ -331,6 +324,7 @@ export default createReactClass({
       this.decreaseStep();
     }
   },
+
   decreaseStep() {
     if (this.props.step > 0) {
       const nextStep = this.props.step - 1;
@@ -339,6 +333,7 @@ export default createReactClass({
       this.closeLessonModal();
     }
   },
+
   increaseStep() {
     // try to set achieved lesson on last 2 steps
     if (this.props.step >= this.getStepsCount() - 2) {
@@ -352,11 +347,11 @@ export default createReactClass({
       this.closeLessonModal();
     }
   },
+
   scrollBodyToTop() {
     let modalBody = document.getElementsByClassName('guide-modal-body')[0];
     if (typeof modalBody !== 'undefined') {
       modalBody.scrollTop = 0;
     }
   }
-
 });

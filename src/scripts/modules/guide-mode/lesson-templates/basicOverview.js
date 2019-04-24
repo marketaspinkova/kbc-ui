@@ -40,7 +40,7 @@ export default {
       'media': 'kbc_scheme_light_blue-gen.svg',
       'mediaType': 'img',
       'route': {
-        'name': 'storage',
+        'name': 'storage-explorer',
         'params': []
       },
       'previousLink': 'extractors',

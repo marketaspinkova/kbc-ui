@@ -128,7 +128,7 @@ To continue, click <span class="btn btn-primary btn-sm">Next step <i class="fa f
       'media': '',
       'mediaType': '',
       'route': {
-        'name': 'storage',
+        'name': 'storage-explorer',
         'params': []
       },
       'previousLink': 'jobs',

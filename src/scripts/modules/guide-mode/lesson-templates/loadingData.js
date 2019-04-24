@@ -104,7 +104,7 @@ export default {
       'media': '',
       'mediaType': '',
       'route': {
-        'name': 'storage',
+        'name': 'storage-explorer',
         'params': []
       },
       'previousLink': 'extractors/keboola.ex-db-snowflake',
