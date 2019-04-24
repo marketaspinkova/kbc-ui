@@ -1,8 +1,8 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
-import { Map, fromJS } from 'immutable';
+import { fromJS } from 'immutable';
 import JSONEditor from '@json-editor/json-editor';
 
 export default createReactClass({
@@ -13,24 +13,7 @@ export default createReactClass({
     schema: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,
     readOnly: PropTypes.bool.isRequired,
-    isChanged: PropTypes.bool,
-    disableProperties: PropTypes.bool,
-    disableCollapse: PropTypes.bool
-  },
-
-  getInitialState() {
-    return {
-      blockOnChangeOnce: true
-    };
-  },
-
-  getDefaultProps() {
-    return {
-      readOnly: false,
-      schema: Map(),
-      disableProperties: false,
-      disableCollapse: false
-    };
+    isChanged: PropTypes.bool
   },
 
   jsoneditor: null,
@@ -43,9 +26,12 @@ export default createReactClass({
     const nextValue = resetValue ? nextProps.value || this.props.value : this.props.value;
 
     if (!this.props.schema.equals(nextProps.schema) || resetValue || resetReadOnly) {
-      this.setState({ blockOnChangeOnce: true });
       this.initJsonEditor(nextValue, nextReadOnly);
     }
+  },
+
+  componentDidMount() {
+    this.initJsonEditor(this.props.value, this.props.readOnly);
   },
 
   initJsonEditor(nextValue, nextReadOnly) {
@@ -61,27 +47,13 @@ export default createReactClass({
       custom_validators: [],
       disable_array_delete_last_row: true,
       disable_array_reorder: true,
-      disable_collapse: this.props.disableCollapse,
+      disable_collapse: true,
       disable_edit_json: true,
-      disable_properties: this.props.disableProperties,
+      disable_properties: true,
       object_layout: 'normal',
       show_errors: 'always',
       prompt_before_delete: false
     };
-
-    options.custom_validators.push((schema, value, path) => {
-      let errors = [];
-      if (schema.type === 'string' && schema.template) {
-        if (schema.template !== value) {
-          errors.push({
-            path: path,
-            property: 'value',
-            message: 'Value does not match schema template'
-          });
-        }
-      }
-      return errors;
-    });
 
     if (nextReadOnly) {
       options.disable_array_add = true;
@@ -94,13 +66,7 @@ export default createReactClass({
 
     // When the value of the editor changes, update the JSON output and TODO validation message
     this.jsoneditor.on('change', () => {
-      // editor calls onChange after its init causing isChanged = true without any user input. This will prevent calling onChange after editors init
-      if (this.state.blockOnChangeOnce) {
-        this.setState({ blockOnChangeOnce: false });
-      } else {
-        const json = this.jsoneditor.getValue();
-        this.props.onChange(fromJS(json));
-      }
+      this.props.onChange(fromJS(this.jsoneditor.getValue()));
     });
 
     for (let key in this.jsoneditor.editors) {
@@ -119,10 +85,6 @@ export default createReactClass({
     if (nextReadOnly) {
       this.jsoneditor.disable();
     }
-  },
-
-  componentDidMount() {
-    this.initJsonEditor(this.props.value, this.props.readOnly);
   },
 
   getCurrentValue() {
