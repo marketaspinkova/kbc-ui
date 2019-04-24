@@ -64,7 +64,6 @@ export default createReactClass({
 
     this.jsoneditor = new JSONEditor(this.refs.jsoneditor, options);
 
-    // When the value of the editor changes, update the JSON output and TODO validation message
     this.jsoneditor.on('change', () => {
       this.props.onChange(fromJS(this.jsoneditor.getValue()));
     });
@@ -85,10 +84,6 @@ export default createReactClass({
     if (nextReadOnly) {
       this.jsoneditor.disable();
     }
-  },
-
-  getCurrentValue() {
-    return fromJS(this.jsoneditor.getValue());
   },
 
   render() {
