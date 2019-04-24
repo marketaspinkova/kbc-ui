@@ -58,8 +58,6 @@ export default createReactClass({
     if (nextReadOnly) {
       options.disable_array_add = true;
       options.disable_array_delete = true;
-      options.disable_collapse = true;
-      options.disable_properties = true;
     }
 
     this.jsoneditor = new JSONEditor(this.refs.jsoneditor, options);
