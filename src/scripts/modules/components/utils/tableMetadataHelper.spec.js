@@ -33,8 +33,8 @@ describe('tableMetadataHelper', function() {
     });
 
     it('return false if table has no valid column metadata (no column has defined KBC.datatype.basetype', function() {
-      const tableWithoutMetadata = table.set('columnMetadata', Map());
-      expect(false).toEqual(hasTableColumnMetadataDatatypes(tableWithoutMetadata));
+      const tableWithoutValidMetadata = table.set('columnMetadata', fromJS({ column: [userMetadata] }));
+      expect(false).toEqual(hasTableColumnMetadataDatatypes(tableWithoutValidMetadata));
     });
   });
 
