@@ -10,7 +10,7 @@
     "bluebird": "^3.5.3",
     "byte-converter": "^0.1.4",
     "classnames": "^2.2.6",
-    "codemirror": "^5.45.0",
+    "codemirror": "^5.46.0",
     "create-react-class": "^15.6.3",
     "crypto-js": "^3.1.9-1",
     "d3": "~4.3.0",

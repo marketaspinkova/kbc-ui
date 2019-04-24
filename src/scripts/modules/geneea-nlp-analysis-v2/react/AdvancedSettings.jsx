@@ -23,6 +23,7 @@ export default createReactClass({
     if (this.props.isEditing) {
       return (
         <CodeMirror
+          editorDidMount={(editor) => editor.refresh()}
           value={this.props.data}
           onBeforeChange={this.handleChange}
           options={{
@@ -40,6 +41,7 @@ export default createReactClass({
 
     return (
       <CodeMirror
+        editorDidMount={(editor) => editor.refresh()}
         value={this.props.data}
         options={{
           theme: 'solarized',

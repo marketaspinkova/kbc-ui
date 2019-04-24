@@ -284,6 +284,7 @@ export default createReactClass({
     return (
       <div className="form-control-static">
         <CodeMirror
+          editorDidMount={(editor) => editor.refresh()}
           value={value}
           options={{
             theme: 'solarized',

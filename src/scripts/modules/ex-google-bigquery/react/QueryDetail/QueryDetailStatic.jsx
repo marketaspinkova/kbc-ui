@@ -61,12 +61,13 @@ const QueryDetailStatic = ({ query, componentId }) => {
             <div className="form-control-static">
               {query.get('query').length ? (
                 <CodeMirror
+                  editorDidMount={(editor) => editor.refresh()}
                   value={query.get('query')}
                   options={{
                     theme: 'solarized',
                     mode: editorMode(componentId),
                     lineNumbers: false,
-                    lineWrapping: false,
+                    lineWrapping: true,
                     readOnly: true
                   }}
                   style={{width: '100%'}}

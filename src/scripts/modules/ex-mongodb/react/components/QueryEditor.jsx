@@ -78,6 +78,7 @@ export default createReactClass({
             <Col componentClass={ControlLabel} md={3}>Query</Col>
             <Col md={9}>
               <CodeMirror
+                editorDidMount={(editor) => editor.refresh()}
                 value={this.props.query.has('query') ? this.props.query.get('query') : ''}
                 onBeforeChange={this.handleQueryChange}
                 options={{
@@ -97,6 +98,7 @@ export default createReactClass({
             <Col componentClass={ControlLabel} md={3}>Sort</Col>
             <Col md={9}>
               <CodeMirror
+                editorDidMount={(editor) => editor.refresh()}
                 value={this.props.query.has('sort') ? this.props.query.get('sort').toString() : ''}
                 onBeforeChange={this.handleSortChange}
                 options={{
@@ -171,6 +173,7 @@ export default createReactClass({
           <Col componentClass={ControlLabel} md={3}>Mapping</Col>
           <Col md={9}>
             <CodeMirror
+              editorDidMount={(editor) => editor.refresh()}
               value={mappingValue}
               onBeforeChange={this.handleMappingChange}
               options={{

@@ -153,6 +153,7 @@ export default createReactClass({
           </div>
           <div className="col-xs-10">
             <CodeMirror
+              editorDidMount={(editor) => editor.refresh()}
               value={this.props.settings}
               onBeforeChange={this.handleCrawlerSettingsChange}
               options={{
@@ -186,6 +187,7 @@ export default createReactClass({
   renderCrawlerSettingsForm() {
     const editor = (
       <CodeMirror
+        editorDidMount={(editor) => editor.refresh()}
         value={this.props.settings}
         onBeforeChange={this.handleCrawlerSettingsChange}
         options={{

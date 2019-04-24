@@ -88,6 +88,7 @@ export default createReactClass({
         <p className="kbc-template-editor-toggle"><a onClick={this.switchToTemplateEditor}><small>Switch to templates</small></a></p>
         <p>JSON configuration uses <ExternalLink href="https://developers.keboola.com/extend/generic-extractor/">Generic extractor</ExternalLink> format.</p>
         <CodeMirror
+          editorDidMount={(editor) => editor.refresh()}
           value={this.props.editingString}
           onBeforeChange={this.handleStringChange}
           options={{
