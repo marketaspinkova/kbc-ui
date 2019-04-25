@@ -9,8 +9,10 @@ import BucketsStore from '../../../../components/stores/StorageBucketsStore';
 import TablesStore from '../../../../components/stores/StorageTablesStore';
 import DocumentationLocalStore from '../../../DocumentationLocalStore';
 import Markdown from '../../../../../react/common/Markdown';
+import { SearchBar } from '@keboola/indigo-ui';
+import matchByWords from '../../../../../utils/matchByWords';
 
-import {toggleDocumentationRow} from '../../../Actions';
+import {toggleDocumentationRow, updateDocumentationSearchQuery} from '../../../Actions';
 
 const BUCKET_ROW = 'BUCKET_ROW';
 const TABLE_ROW = 'TABLE_ROW';
@@ -22,9 +24,11 @@ export default createReactClass({
   getStateFromStores() {
     const allBuckets = BucketsStore.getAll().sortBy((bucket) => bucket.get('id').toLowerCase());
     const allTables = TablesStore.getAll();
-    const enhancedBuckets = this.prepareStructure(allBuckets, allTables);
+    const searchQuery = DocumentationLocalStore.getSearchQuery();
+    const enhancedBuckets = this.prepareStructure(allBuckets, allTables, searchQuery);
     return {
       enhancedBuckets,
+      searchQuery,
       openedRows: DocumentationLocalStore.getOpenedRows()
     };
   },
@@ -35,6 +39,11 @@ export default createReactClass({
         <div className="kbc-main-content">
           <div className="storage-explorer storage-documentation">
             <NavButtons />
+            <SearchBar
+              placeholder="Search in descriptions"
+              query={this.state.searchQuery}
+              onChange={updateDocumentationSearchQuery}
+            />
             <Table striped responsive>
               <tbody>{this.renderEnhancedBucketsRows()}</tbody>
             </Table>
@@ -50,7 +59,7 @@ export default createReactClass({
       bucketsMemo.push(
         this.renderOneTableRow(bucketId, bucketId, bucket.get('bucketDescription'), BUCKET_ROW)
       );
-      if (!this.state.openedRows.get(BUCKET_ROW + bucketId)) {
+      if (!this.state.openedRows.get(BUCKET_ROW + bucketId) && !this.state.searchQuery) {
         return bucketsMemo;
       }
       const bucketTablesRows = bucket.get('bucketTables').reduce((tablesMemo, table) => {
@@ -58,11 +67,11 @@ export default createReactClass({
         tablesMemo.push(
           this.renderOneTableRow(tableId, table.get('name'), table.get('tableDescription'), TABLE_ROW)
         );
-        if (!this.state.openedRows.get(TABLE_ROW + tableId)) {
+        if (!this.state.openedRows.get(TABLE_ROW + tableId) && !this.state.searchQuery) {
           return tablesMemo;
         }
-        const columnsRows = table.get('columns').reduce((columnsMemo, column) => {
-          const description = table.getIn(['columnsDescriptions', column]);
+        const columnsRows = table.get('columnsDescriptions').reduce((columnsMemo, description, column) => {
+          // const description = table.getIn(['columnsDescriptions', column]);
           columnsMemo.push(this.renderOneTableRow(tableId + column, column, description, COLUMN_ROW));
           return columnsMemo;
         }, []);
@@ -104,9 +113,8 @@ export default createReactClass({
     );
   },
 
-  prepareStructure(buckets, tables) {
+  prepareStructure(buckets, tables, searchQuery) {
     return buckets.map((bucket) => {
-      const description = this.getDescription(bucket.get('metadata'));
       const bucketId = bucket.get('id');
       const bucketTables = tables
         .filter((table) => table.getIn(['bucket', 'id']) === bucketId)
@@ -120,13 +128,41 @@ export default createReactClass({
                   this.getDescription(table.getIn(['columnMetadata', column], List()))
                 ),
               Map()
+            ).filter((columnDescription) =>
+              this.matchDescription(columnDescription, searchQuery)
             );
+          const tableDescription = this.getDescription(table.get('metadata'));
           return table
-            .set('tableDescription', this.getDescription(table.get('metadata')))
+            .set('tableDescription', tableDescription)
             .set('columnsDescriptions', columnsDescriptions);
+        })
+        .filter(table => {
+          if (searchQuery) {
+            return this.matchDescription(table.get('tableDescription'), searchQuery) || table.get('columnsDescriptions').count() > 0;
+          } else {
+            return true;
+          }
         });
-      return bucket.set('bucketTables', bucketTables).set('bucketDescription', description);
+      const description = this.getDescription(bucket.get('metadata'));
+      return bucket
+        .set('bucketTables', bucketTables)
+        .set('bucketDescription', description);
+    }).filter(bucket => {
+      if (searchQuery) {
+        return this.matchDescription(bucket.get('bucketDescription'), searchQuery) || bucket.get('bucketTables').count() > 0;
+      } else {
+        return true;
+      }
+
     });
+  },
+
+  matchDescription(description, searchQuery) {
+    if(searchQuery) {
+      return matchByWords(description || '', searchQuery);
+    } else {
+      return true;
+    }
   },
 
   getDescription(metadata) {
