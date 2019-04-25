@@ -1,18 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import Select from 'react-select';
 
 const regions = [
-  { value: 'https://connection.keboola.com/', class: 'us', label: 'US' },
-  { value: 'https://connection.eu-central-1.keboola.com/', class: 'eu', label: 'EU' },
-  { value: 'https://www.keboola.com/contact', class: 'au', label: 'AU' }
+  { value: 'US', label: 'US', link: 'https://connection.keboola.com/', class: 'us' },
+  { value: 'EU', label: 'EU', link: 'https://connection.eu-central-1.keboola.com/', class: 'eu' },
+  { value: 'AU', label: 'AU', link: 'https://www.keboola.com/contact', class: 'au' }
 ];
 
 export default createReactClass({
-  getInitialState() {
-    return {
-      region: regions[0] // asi z url zjistit aktuální hodnotu
-    };
+  propTypes: {
+    activeRegion: PropTypes.string.isRequired
   },
 
   render() {
@@ -24,7 +23,7 @@ export default createReactClass({
           deleteRemoves={false}
           backspaceRemoves={false}
           arrowRenderer={null}
-          value={this.state.region}
+          value={this.props.activeRegion}
           onChange={this.onChange}
           options={regions}
           optionRenderer={this.renderWithFlag}
@@ -44,7 +43,6 @@ export default createReactClass({
   },
 
   onChange(region) {
-    // some redirect here.. window.location.href = region.value
-    this.setState({ region });
+    window.location.href = region.link
   }
 });
