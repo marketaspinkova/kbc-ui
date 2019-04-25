@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as helpers from './helpers';
-import Login from './react/login';
+import Login from './react/admin/login';
 
 import '../styles/app.less';
 

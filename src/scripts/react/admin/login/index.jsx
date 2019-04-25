@@ -1,7 +1,7 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
 import RegionSelect from './RegionSelect';
-import OverviewImage from '../../../images/Login.png';
+import OverviewImage from '../../../../images/Login.png';
 
 export default createReactClass({
   render() {
