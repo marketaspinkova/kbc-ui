@@ -10,6 +10,7 @@ import ProjectsList from './react/layout/project-select/List';
 import NewProjectModal from './react/layout/NewProjectModal';
 import UserLinks from './react/layout/UserLinks';
 import ProjectOverview from './react/admin/project-graph/Index';
+import RegionSelect from './react/admin/login/RegionSelect';
 
 export default {
   helpers,
@@ -23,7 +24,8 @@ export default {
     ProjectsList,
     NewProjectModal,
     admin: {
-      ProjectOverview
+      ProjectOverview,
+      RegionSelect
     }
   }
 };

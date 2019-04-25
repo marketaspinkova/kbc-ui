@@ -25,6 +25,10 @@
   };
 
   (function (kbcApp) {
+    if (kbcApp.loginPage) {
+      document.body.classList.add('new-ui');
+    }
+
     var organizations = [
       {
         "name": "Keboola Demo",
