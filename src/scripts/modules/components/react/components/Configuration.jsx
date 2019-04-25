@@ -66,7 +66,7 @@ export default createReactClass({
 
     return (
       <p>
-        This component is configured manually. Read the{' '}
+        Read the{' '}
         <ExternalLink href={this.props.documentationUrl}>configuration documentation</ExternalLink>{' '}
         for more information.
       </p>
