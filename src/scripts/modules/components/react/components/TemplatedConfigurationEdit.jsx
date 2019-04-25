@@ -95,7 +95,6 @@ export default createReactClass({
             mode: 'application/json',
             lineNumbers: true,
             lineWrapping: true,
-            autofocus: true,
             readOnly: this.props.isSaving,
             lint: true,
             gutters: ['CodeMirror-lint-markers'],

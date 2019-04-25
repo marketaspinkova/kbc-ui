@@ -75,7 +75,6 @@ export default createReactClass({
             theme: 'solarized',
             mode: 'application/json',
             lineNumbers: true,
-            autofocus: true,
             lineWrapping: true,
             readOnly: this.props.isSaving,
             lint: true,

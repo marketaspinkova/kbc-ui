@@ -68,7 +68,6 @@ export default createReactClass({
                 mode: resolveHighlightMode(this.props.backend, null),
                 lineNumbers: true,
                 lineWrapping: true,
-                autofocus: true,
                 readOnly: this.props.disabled,
                 placeholder: '-- Your SQL goes here...'
               }}
