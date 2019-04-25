@@ -13,7 +13,7 @@ export default createReactClass({
               <a href="/admin/projects" className="keboola-logo">
                 <span className="kbc-icon-keboola-logo" />
               </a>
-              <RegionSelect />
+              <RegionSelect activeRegion="US"/>
             </section>
             <section>
               <header>
