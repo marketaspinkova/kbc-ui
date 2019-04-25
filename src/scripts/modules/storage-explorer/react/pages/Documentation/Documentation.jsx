@@ -2,7 +2,7 @@ import React from 'react';
 import { List, Map } from 'immutable';
 import createReactClass from 'create-react-class';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
-import { Table, Row } from 'react-bootstrap';
+import { Table} from 'react-bootstrap';
 import NavButtons from '../../components/NavButtons';
 
 import BucketsStore from '../../../../components/stores/StorageBucketsStore';
@@ -32,15 +32,12 @@ export default createReactClass({
   render() {
     return (
       <div className="container-fluid">
-        <div className="kbc-main-content reset-overflow">
-          <div className="storage-explorer">
+        <div className="kbc-main-content">
+          <div className="storage-explorer storage-documentation">
             <NavButtons />
-            <Row>
-
-              <Table striped>
-                <tbody>{this.renderEnhancedBucketsRows()}</tbody>
-              </Table>
-            </Row>
+            <Table striped responsive>
+              <tbody>{this.renderEnhancedBucketsRows()}</tbody>
+            </Table>
           </div>
         </div>
       </div>
@@ -76,14 +73,14 @@ export default createReactClass({
   },
 
   renderOneTableRow(id, name, description, rowType) {
-    let className = 'kbc-cursor-pointer';
+    let className = 'kbc-cursor-pointer bucket-row';
     let rowTypeClassName = 'fa fa-folder';
     if (rowType === TABLE_ROW) {
-      className = 'kbc-cursor-pointer col-xs-offset-1';
+      className = 'kbc-cursor-pointer table-row';
       rowTypeClassName = 'fa fa-table';
     }
     if (rowType === COLUMN_ROW) {
-      className = 'col-xs-offset-2';
+      className = 'column-row';
       rowTypeClassName = 'fa fa-columns';
     }
     const isOpened = this.state.openedRows.get(rowType + id);
@@ -100,7 +97,9 @@ export default createReactClass({
             {name}
           </div>
         </td>
-        <td>{description ? <Markdown source={description} collapsible={true} /> : 'N/A'}</td>
+        <td className="kbc-break-all kbc-break-word">
+          {description ? <Markdown source={description} collapsible={true} /> : 'N/A'}
+        </td>
       </tr>
     );
   },
