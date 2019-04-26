@@ -97,27 +97,6 @@ export default {
     });
   },
 
-  loadTriggersForce(orchestrationId) {
-    dispatcher.handleViewAction({
-      type: constants.ActionTypes.TRIGGERS_LOAD
-    });
-
-    return triggersApi
-      .listTriggers('orchestrator', orchestrationId)
-      .then((triggers) => {
-        return dispatcher.handleViewAction({
-          type: constants.ActionTypes.TRIGGERS_LOAD_SUCCESS,
-          triggers
-        });
-      })
-    .catch(err => {
-      dispatcher.handleViewAction({
-        type: constants.ActionTypes.TRIGGERS_LOAD_ERROR
-      });
-      throw err;
-    });
-  },
-
   /*
     Request orchestrations load only if not already loaded
     @return Promise
@@ -129,14 +108,6 @@ export default {
     }
 
     return this.loadOrchestrationsForce();
-  },
-
-  loadTriggers(orchestrationId) {
-    if (TriggersStore.getIsLoaded(orchestrationId)) {
-      return Promise.resolve();
-    }
-
-    return this.loadTriggersForce(orchestrationId);
   },
 
   /*

@@ -37,7 +37,6 @@ export default createReactClass({
     const jobs = OrchestrationJobsStore.getOrchestrationJobs(orchestrationId);
     const phases = OrchestrationStore.getOrchestrationTasks(orchestrationId);
     const versions = VersionsStore.getVersions('orchestrator', orchestrationId.toString());
-    const trigger = TriggerStore.getTriggers('orchestrator', orchestrationId);
     let tasks = List();
     phases.forEach(phase => (tasks = tasks.concat(phase.get('tasks'))));
 
