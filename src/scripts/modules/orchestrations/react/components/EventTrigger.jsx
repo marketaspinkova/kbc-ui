@@ -1,17 +1,19 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
-import {Col, FormControl, FormGroup, InputGroup, Table} from 'react-bootstrap';
+import {Button, Col, FormControl, FormGroup, InputGroup, Table} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import ControlLabel from 'react-bootstrap/es/ControlLabel';
 import moment from 'moment';
 import date from '../../../../utils/date';
+import Tooltip from '../../../../react/common/Tooltip';
 
 export default createReactClass({
   propTypes: {
     tables: PropTypes.object.isRequired,
     selected: PropTypes.array,
-    onChange: PropTypes.func.isRequired,
+    onAddTable: PropTypes.func.isRequired,
+    onRemoveTable: PropTypes.func.isRequired,
     period: PropTypes.number.isRequired,
     onChangePeriod: PropTypes.func.isRequired
   },
@@ -44,15 +46,12 @@ export default createReactClass({
           <Col sm={12}>
             <Select
               name="selectTables"
-              value={this.props.selected.map(value => ({
-                label: value,
-                value: value
-              }))}
-              multi={true}
+              multi={false}
               options={options}
               delimiter=","
-              onChange={this._onChange}
+              onChange={this._onAddTable}
               placeholder="Add tables..."
+              clearable={true}
             />
           </Col>
         </FormGroup>
@@ -68,8 +67,9 @@ export default createReactClass({
           <thead>
           <tr>
             <th> </th>
-            <th>Name</th>
+            <th>Table</th>
             <th>Last Import</th>
+            <th> </th>
           </tr>
           </thead>
           <tbody>
@@ -77,11 +77,18 @@ export default createReactClass({
             return (
               <tr key={index}>
                 <td><i className="fa fa-fw fa-table" /></td>
-                <td>{item.get('name')}</td>
+                <td>{item.get('id')}</td>
                 <td>
                   <span title={moment(item.get('lastImportDate')).fromNow()}>
                     {date.format(item.get('lastImportDate'))}
                   </span>
+                </td>
+                <td>
+                  <Tooltip placement="top" tooltip="Remove table">
+                    <Button bsStyle="link" onClick={() => this._onRemoveTable(item.get('id'))}>
+                      <i className="fa fa-trash-o" />
+                    </Button>
+                  </Tooltip>
                 </td>
               </tr>
             );
@@ -115,13 +122,19 @@ export default createReactClass({
     );
   },
 
-  _onChange(items) {
-    const values = items.map(item => item.value);
-    return this.props.onChange(values);
+  _onAddTable(item) {
+    return this.props.onAddTable(item.value);
+  },
+
+  _onRemoveTable(tableId) {
+    return this.props.onRemoveTable(tableId);
   },
 
   _getTables() {
-    return this.props.tables.map(table => ({
+    const selected = this.props.selected;
+    const availableTables = this.props.tables.filter(table => !selected.includes(table.get('id')));
+
+    return availableTables.map(table => ({
       label: table.get('id'),
       value: table.get('id')
     })).toArray();

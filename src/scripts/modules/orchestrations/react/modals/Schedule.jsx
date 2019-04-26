@@ -70,7 +70,8 @@ export default createReactClass({
                 tables={this.props.tables}
                 selected={this.state.trigger.tables.map(item => Object.values(item)).flat()}
                 period={parseInt(this.state.trigger.coolDownPeriod)}
-                onChange={this._handleTriggerTableSelect}
+                onAddTable={this._handleTriggerTableAdd}
+                onRemoveTable={this._handleTriggerTableRemove}
                 onChangePeriod={this._handleTriggerPeriodChange}
               />
             }
@@ -183,9 +184,18 @@ export default createReactClass({
     });
   },
 
-  _handleTriggerTableSelect(tableIds) {
+  _handleTriggerTableAdd(tableId) {
     let trigger = fromJS(this.state.trigger);
-    const tables = tableIds.map(tableId => ({ tableId }));
+
+    return this.setState({
+      trigger: trigger.set('tables', trigger.get('tables').push({ tableId })).toJS()
+    });
+  },
+
+  _handleTriggerTableRemove(tableId) {
+    let trigger = fromJS(this.state.trigger);
+    const tables = trigger.get('tables').filter(item => item.get('tableId') !== tableId);
+
     return this.setState({
       trigger: trigger.set('tables', tables).toJS()
     });
