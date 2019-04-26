@@ -41,7 +41,7 @@ export default createReactClass({
             <NavButtons />
             <SearchBar
               className="storage-search-bar"
-              placeholder="Search in descriptions"
+              placeholder="Search in names or descriptions"
               query={this.state.searchQuery}
               onChange={updateDocumentationSearchQuery}
             />
@@ -129,8 +129,8 @@ export default createReactClass({
                   this.getDescription(table.getIn(['columnMetadata', column], List()))
                 ),
               Map()
-            ).filter((columnDescription) =>
-              this.matchDescription(columnDescription, searchQuery)
+            ).filter((columnDescription, columnName) =>
+              this.matchDescription(columnDescription, columnName, searchQuery)
             );
           const tableDescription = this.getDescription(table.get('metadata'));
           return table
@@ -139,7 +139,7 @@ export default createReactClass({
         })
         .filter(table => {
           if (searchQuery) {
-            return this.matchDescription(table.get('tableDescription'), searchQuery) || table.get('columnsDescriptions').count() > 0;
+            return this.matchDescription(table.get('tableDescription'),table.get('name'), searchQuery) || table.get('columnsDescriptions').count() > 0;
           } else {
             return true;
           }
@@ -150,7 +150,7 @@ export default createReactClass({
         .set('bucketDescription', description);
     }).filter(bucket => {
       if (searchQuery) {
-        return this.matchDescription(bucket.get('bucketDescription'), searchQuery) || bucket.get('bucketTables').count() > 0;
+        return this.matchDescription(bucket.get('bucketDescription'), bucket.get('id'), searchQuery) || bucket.get('bucketTables').count() > 0;
       } else {
         return true;
       }
@@ -158,9 +158,9 @@ export default createReactClass({
     });
   },
 
-  matchDescription(description, searchQuery) {
+  matchDescription(description, name, searchQuery) {
     if(searchQuery) {
-      return matchByWords(description || '', searchQuery);
+      return matchByWords(name, searchQuery) || matchByWords(description || '', searchQuery);
     } else {
       return true;
     }
