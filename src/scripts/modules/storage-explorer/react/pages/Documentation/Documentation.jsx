@@ -83,24 +83,27 @@ export default createReactClass({
   },
 
   renderOneTableRow(id, name, description, rowType) {
-    let className = 'kbc-cursor-pointer bucket-row';
+    const pointerClass = !this.state.searchQuery ? 'kbc-cursor-pointer ' : '';
+    let divClassName = pointerClass + 'bucket-row';
+
     let rowTypeClassName = 'fa fa-folder';
     if (rowType === TABLE_ROW) {
-      className = 'kbc-cursor-pointer table-row';
+      divClassName = pointerClass + 'table-row';
       rowTypeClassName = 'fa fa-table';
     }
     if (rowType === COLUMN_ROW) {
-      className = 'column-row';
+      divClassName = 'column-row';
       rowTypeClassName = 'fa fa-columns';
     }
     const isOpened = this.state.openedRows.get(rowType + id);
     const caretClass = isOpened ? 'fa fa-caret-down' : 'fa fa-caret-right';
+    const caret = !this.state.searchQuery ? <i className={caretClass} /> : null;
 
     return (
       <tr key={id}>
         <td className="text-nowrap">
-          <div className={className} onClick={() => toggleDocumentationRow(rowType + id, !isOpened)}>
-            {rowType !== COLUMN_ROW && <i className={caretClass} /> }
+          <div className={divClassName} onClick={() => toggleDocumentationRow(rowType + id, !isOpened)}>
+            {rowType !== COLUMN_ROW && caret }
             {' '}
             <i className={rowTypeClassName} />
             {' '}
