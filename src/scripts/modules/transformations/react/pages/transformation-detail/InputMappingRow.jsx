@@ -34,6 +34,8 @@ export default createReactClass({
   },
 
   render() {
+    const sourceTable = this.props.tables.get(this.props.inputMapping.get('source'), Map());
+
     return (
       <span className="table kbc-break-all kbc-break-word">
         <span className="tbody">
@@ -47,17 +49,13 @@ export default createReactClass({
                   <span className="fa fa-chevron-right fa-fw" />
                 </span>,
                 <span className="td col-xs-6" key="destination">
-                  <TableSizeLabel
-                    size={this.props.tables.getIn([this.props.inputMapping.get('source'), 'dataSizeBytes'])}
-                  />{' '}
-                  {this.props.inputMapping.get('source') !== '' ? this.props.inputMapping.get('source') : 'Not set'}
+                  {sourceTable.count() > 0 && <TableSizeLabel size={sourceTable.get('dataSizeBytes')} />}
+                  {this.props.inputMapping.get('source') || 'Not set'}
                 </span>
               ]
               : [
                 <span className="td col-xs-3" key="icons">
-                  <TableSizeLabel
-                    size={this.props.tables.getIn([this.props.inputMapping.get('source'), 'dataSizeBytes'])}
-                  />{' '}
+                  {sourceTable.count() > 0 && <TableSizeLabel size={sourceTable.get('dataSizeBytes')} />}
                 </span>,
                 <span className="td col-xs-4" key="source">
                   {this.props.inputMapping.get('source', 'Not set')}
