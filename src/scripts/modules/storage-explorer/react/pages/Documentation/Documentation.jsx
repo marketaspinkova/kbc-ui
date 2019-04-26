@@ -40,6 +40,7 @@ export default createReactClass({
           <div className="storage-explorer storage-documentation">
             <NavButtons />
             <SearchBar
+              className="storage-search-bar"
               placeholder="Search in descriptions"
               query={this.state.searchQuery}
               onChange={updateDocumentationSearchQuery}
