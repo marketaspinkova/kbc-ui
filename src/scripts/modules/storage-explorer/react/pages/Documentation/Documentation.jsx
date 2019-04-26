@@ -130,7 +130,7 @@ export default createReactClass({
                 ),
               Map()
             ).filter((columnDescription, columnName) =>
-              this.matchDescription(columnDescription, columnName, searchQuery)
+              this.matchDescriptionOrName(columnDescription, columnName, searchQuery)
             );
           const tableDescription = this.getDescription(table.get('metadata'));
           return table
@@ -139,7 +139,7 @@ export default createReactClass({
         })
         .filter(table => {
           if (searchQuery) {
-            return this.matchDescription(table.get('tableDescription'),table.get('name'), searchQuery) || table.get('columnsDescriptions').count() > 0;
+            return this.matchDescriptionOrName(table.get('tableDescription'),table.get('name'), searchQuery) || table.get('columnsDescriptions').count() > 0;
           } else {
             return true;
           }
@@ -150,7 +150,7 @@ export default createReactClass({
         .set('bucketDescription', description);
     }).filter(bucket => {
       if (searchQuery) {
-        return this.matchDescription(bucket.get('bucketDescription'), bucket.get('id'), searchQuery) || bucket.get('bucketTables').count() > 0;
+        return this.matchDescriptionOrName(bucket.get('bucketDescription'), bucket.get('id'), searchQuery) || bucket.get('bucketTables').count() > 0;
       } else {
         return true;
       }
@@ -158,7 +158,7 @@ export default createReactClass({
     });
   },
 
-  matchDescription(description, name, searchQuery) {
+  matchDescriptionOrName(description, name, searchQuery) {
     if(searchQuery) {
       return matchByWords(name, searchQuery) || matchByWords(description || '', searchQuery);
     } else {
