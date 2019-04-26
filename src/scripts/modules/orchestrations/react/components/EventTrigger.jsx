@@ -7,6 +7,7 @@ import ControlLabel from 'react-bootstrap/es/ControlLabel';
 import moment from 'moment';
 import date from '../../../../utils/date';
 import Tooltip from '../../../../react/common/Tooltip';
+import SapiTableLinkEx from '../../../components/react/components/StorageApiTableLinkEx';
 
 export default createReactClass({
   propTypes: {
@@ -77,7 +78,9 @@ export default createReactClass({
             return (
               <tr key={index}>
                 <td><i className="fa fa-fw fa-table" /></td>
-                <td>{item.get('id')}</td>
+                <td>
+                  <SapiTableLinkEx tableId={item.get('id')} />
+                </td>
                 <td>
                   <span title={moment(item.get('lastImportDate')).fromNow()}>
                     {date.format(item.get('lastImportDate'))}
