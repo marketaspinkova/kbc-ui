@@ -4,18 +4,20 @@ import {Col, FormControl, FormGroup, InputGroup, Table} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import ControlLabel from 'react-bootstrap/es/ControlLabel';
+import moment from 'moment';
+import date from '../../../../utils/date';
 
 export default createReactClass({
   propTypes: {
     tables: PropTypes.object.isRequired,
-    selected: PropTypes.object,
+    selected: PropTypes.array,
     onChange: PropTypes.func.isRequired,
     period: PropTypes.number.isRequired,
     onChangePeriod: PropTypes.func.isRequired
   },
 
   render() {
-    const selectedTables = this._getSelectedTables(this.state.selected);
+    const selectedTables = this._getSelectedTables(this.props.selected);
     return (
       <div>
         {selectedTables.count() ? this.renderTables(selectedTables) : this.renderEmptyIcon()}
@@ -42,7 +44,10 @@ export default createReactClass({
           <Col sm={12}>
             <Select
               name="selectTables"
-              value={this.state.selected}
+              value={this.props.selected.map(value => ({
+                label: value,
+                value: value
+              }))}
               multi={true}
               options={options}
               delimiter=","
@@ -57,24 +62,33 @@ export default createReactClass({
 
   renderTables(tables) {
     return (
-      <Table striped>
-        <thead>
-          <th> </th>
-          <th>Name</th>
-          <th>Last Import</th>
-        </thead>
-        <tbody>
-        {tables.map((item, index) => {
-          return (
-            <tr key={index}>
-              <td><i className="fa fa-fw fa-table" /></td>
-              <td>{item.get('name')}</td>
-              <td>{item.get('lastImportDate')}</td>
-            </tr>
-          );
-        })}
-        </tbody>
-      </Table>
+      <div>
+        <h4>Orchestration will start each time all of these tables are updated:</h4>
+        <Table striped hover>
+          <thead>
+          <tr>
+            <th> </th>
+            <th>Name</th>
+            <th>Last Import</th>
+          </tr>
+          </thead>
+          <tbody>
+          {tables.map((item, index) => {
+            return (
+              <tr key={index}>
+                <td><i className="fa fa-fw fa-table" /></td>
+                <td>{item.get('name')}</td>
+                <td>
+                  <span title={moment(item.get('lastImportDate')).fromNow()}>
+                    {date.format(item.get('lastImportDate'))}
+                  </span>
+                </td>
+              </tr>
+            );
+          })}
+          </tbody>
+        </Table>
+      </div>
     );
   },
 
@@ -83,7 +97,7 @@ export default createReactClass({
       <form className="form-horizontal">
         <FormGroup>
           <Col componentClass={ControlLabel} sm={6}>
-            Check condition every
+            Cooldown period
           </Col>
           <Col sm={6} >
             <InputGroup>
@@ -103,7 +117,7 @@ export default createReactClass({
 
   _onChange(items) {
     const values = items.map(item => item.value);
-    return this.setState({ selected: values }, () => this.props.onChange(this.state));
+    return this.props.onChange(values);
   },
 
   _getTables() {

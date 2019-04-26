@@ -10,6 +10,7 @@ import OrchestrationJobsStore from '../../../stores/OrchestrationJobsStore';
 import RoutesStore from '../../../../../stores/RoutesStore';
 import VersionsStore from '../../../../components/stores/VersionsStore';
 import LatestJobsStore from '../../../../jobs/stores/LatestJobsStore';
+import TriggersStore from '../../../stores/TriggersStore';
 
 // React components
 import ComponentDescription from '../../../../components/react/components/ComponentDescription';
@@ -29,16 +30,17 @@ import {Row, Col} from 'react-bootstrap';
 import StorageTablesStore from '../../../../components/stores/StorageTablesStore';
 
 export default createReactClass({
-  mixins: [createStoreMixin(OrchestrationStore, OrchestrationJobsStore, VersionsStore, LatestJobsStore, StorageTablesStore)],
+  mixins: [createStoreMixin(OrchestrationStore, OrchestrationJobsStore, VersionsStore, LatestJobsStore, StorageTablesStore, TriggersStore)],
 
   getStateFromStores() {
     const orchestrationId = RoutesStore.getCurrentRouteIntParam('orchestrationId');
     const jobs = OrchestrationJobsStore.getOrchestrationJobs(orchestrationId);
     const phases = OrchestrationStore.getOrchestrationTasks(orchestrationId);
     const versions = VersionsStore.getVersions('orchestrator', orchestrationId.toString());
-    const trigger = TriggerStore.getTriggers('orchestrator', orchestrationId);
     let tasks = List();
     phases.forEach(phase => (tasks = tasks.concat(phase.get('tasks'))));
+
+    const trigger = TriggersStore.get();
 
     return {
       orchestration: OrchestrationStore.get(orchestrationId),
@@ -53,7 +55,8 @@ export default createReactClass({
       jobsLoading: OrchestrationJobsStore.isLoading(orchestrationId),
       pendingActions: OrchestrationStore.getPendingActionsForOrchestration(orchestrationId),
       latestJobs: LatestJobsStore.getJobs('orchestration', orchestrationId),
-      tables: StorageTablesStore.getAll()
+      tables: StorageTablesStore.getAll(),
+      trigger: trigger && trigger.toJS()
     };
   },
 
@@ -104,6 +107,7 @@ export default createReactClass({
                   crontabRecord={this.state.orchestration.get('crontabRecord')}
                   orchestrationId={this.state.orchestration.get('id')}
                   tables={this.state.tables}
+                  trigger={this.state.trigger}
                 />
               </Col>
             </Row>

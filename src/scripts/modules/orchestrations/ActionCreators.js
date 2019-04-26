@@ -97,27 +97,6 @@ export default {
     });
   },
 
-  loadTriggersForce(orchestrationId) {
-    dispatcher.handleViewAction({
-      type: constants.ActionTypes.TRIGGERS_LOAD
-    });
-
-    return triggersApi
-      .listTriggers('orchestrator', orchestrationId)
-      .then((triggers) => {
-        return dispatcher.handleViewAction({
-          type: constants.ActionTypes.TRIGGERS_LOAD_SUCCESS,
-          triggers
-        });
-      })
-    .catch(err => {
-      dispatcher.handleViewAction({
-        type: constants.ActionTypes.TRIGGERS_LOAD_ERROR
-      });
-      throw err;
-    });
-  },
-
   /*
     Request orchestrations load only if not already loaded
     @return Promise
@@ -129,14 +108,6 @@ export default {
     }
 
     return this.loadOrchestrationsForce();
-  },
-
-  loadTriggers(orchestrationId) {
-    if (TriggersStore.getIsLoaded(orchestrationId)) {
-      return Promise.resolve();
-    }
-
-    return this.loadTriggersForce(orchestrationId);
   },
 
   /*
@@ -689,5 +660,61 @@ export default {
       type: constants.ActionTypes.ORCHESTRATIONS_LIST_SORT_BY_NAME,
       option
     });
+  },
+
+  /**
+   * Triggers
+   */
+
+  loadTriggersForce(orchestrationId) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.ORCHESTRATION_TRIGGERS_LOAD
+    });
+
+    return triggersApi.list('orchestrator', orchestrationId)
+      .then((triggers) => {
+        return dispatcher.handleViewAction({
+          type: constants.ActionTypes.ORCHESTRATION_TRIGGERS_LOAD_SUCCESS,
+          triggers
+        });
+      })
+      .catch(err => {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.ORCHESTRATION_TRIGGERS_LOAD_ERROR
+        });
+        throw err;
+      });
+  },
+
+  loadTriggers(orchestrationId) {
+    if (TriggersStore.getIsLoaded(orchestrationId)) {
+      return Promise.resolve();
+    }
+
+    return this.loadTriggersForce(orchestrationId);
+  },
+
+  createTrigger(data) {
+    return triggersApi.create(data)
+      .then(res => dispatcher.handleViewAction({
+        type: constants.ActionTypes.ORCHESTRATION_TRIGGERS_CREATE_SUCCESS,
+        trigger: res
+      }));
+  },
+
+  updateTrigger(id, data) {
+    return triggersApi.update(id, data)
+      .then(res => dispatcher.handleViewAction({
+        type: constants.ActionTypes.ORCHESTRATION_TRIGGERS_UPDATE_SUCCESS,
+        trigger: res
+      }));
+  },
+
+  deleteTrigger(id) {
+    return triggersApi.delete(id)
+      .then(res => dispatcher.handleViewAction({
+        type: constants.ActionTypes.ORCHESTRATION_TRIGGERS_DELETE_SUCCESS,
+        trigger: res
+      }));
   },
 };

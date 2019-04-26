@@ -1,41 +1,16 @@
 import Dispatcher from '../../../Dispatcher';
-import { Map, List, fromJS } from 'immutable';
+import { Map, fromJS } from 'immutable';
 import { ActionTypes } from '../Constants';
 import StoreUtils from '../../../utils/StoreUtils';
 
 let _store = Map({
-  triggers: Map(),
-  editing: Map(),
-  saving: Map(),
-  filter: '',
-  isLoading: false,
-  isLoaded: false,
-  loadingTriggers: List()
+  trigger: Map(),
+  isLoaded: false
 });
 
-// const updateTrigger = (store, id, payload) =>
-//   store.updateIn(['triggers', id], trigger => trigger.merge(payload));
-
 const TriggersStore = StoreUtils.createStore({
-
-  getAll() {
-    return _store.get('triggers');
-  },
-
-  getByConfigId(id) {
-    return _store.getIn(['triggers', id]);
-  },
-
-  hasForConfigId(id) {
-    return _store.get('triggers').has(id);
-  },
-
-  getIsLoading() {
-    return _store.get('isLoading');
-  },
-
-  getIsTriggerLoading(id) {
-    return _store.get('loadingTriggers').contains(id);
+  get() {
+    return _store.get('trigger');
   },
 
   getIsLoaded() {
@@ -47,45 +22,24 @@ Dispatcher.register(payload => {
   const { action } = payload;
 
   switch (action.type) {
-    case ActionTypes.TRIGGERS_LOAD:
-      _store = _store.set('isLoading', true);
-      return TriggersStore.emitChange();
-
-    case ActionTypes.TRIGGERS_LOAD_ERROR:
-      _store = _store.set('isLoading', false);
-      return TriggersStore.emitChange();
-
-    case ActionTypes.TRIGGERS_LOAD_SUCCESS:
+    case ActionTypes.ORCHESTRATION_TRIGGERS_LOAD_SUCCESS:
       _store = _store.withMutations(store =>
         store
-          .set('isLoading', false)
           .set('isLoaded', true)
-          .set(
-            'triggers',
-            fromJS(action.triggers)
-              .toMap()
-              .mapKeys((key, item) => item.get('id'))
-          )
+          .set('trigger', fromJS(action.triggers).first())
       );
       return TriggersStore.emitChange();
 
-    case ActionTypes.TRIGGERS_DELETE_START:
-      _store = _store.setIn(['orchestrationsPendingActions', action.orchestrationId, 'delete'], true);
+    case ActionTypes.ORCHESTRATION_TRIGGERS_DELETE_SUCCESS:
+      _store = _store.set('trigger', Map({ tables: [], coolDownPeriod: 5 }));
       return TriggersStore.emitChange();
 
-    case ActionTypes.TRIGGERS_DELETE_ERROR:
-      _store = _store.deleteIn(['orchestrationsPendingActions', action.orchestrationId, 'delete']);
+    case ActionTypes.ORCHESTRATION_TRIGGERS_CREATE_SUCCESS:
+      _store = _store.set('trigger', fromJS(action.trigger));
       return TriggersStore.emitChange();
 
-    case ActionTypes.TRIGGERS_DELETE_SUCCESS:
-      _store = _store.withMutations(store =>
-        store.removeIn(['triggers', action.triggerId])
-      );
-
-      return TriggersStore.emitChange();
-
-    case ActionTypes.TRIGGERS_CREATE_SUCCESS:
-      _store = _store.setIn(['orchestrationsById', action.orchestration.id], fromJS(action.orchestration));
+    case ActionTypes.ORCHESTRATION_TRIGGERS_UPDATE_SUCCESS:
+      _store = _store.set('trigger', fromJS(action.trigger));
       return TriggersStore.emitChange();
 
     default:

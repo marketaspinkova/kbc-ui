@@ -1,17 +1,17 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
-import { ORCHESTRATION_TRIGGER_TYPE } from '../../Constants';
+import { ORCHESTRATION_INVOKE_TYPE } from '../../Constants';
 import { FormGroup, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 
 const scheduleTypes = [
   {
     label: 'Time Schedule',
-    value: ORCHESTRATION_TRIGGER_TYPE.TIME
+    value: ORCHESTRATION_INVOKE_TYPE.TIME
   },
   {
     label: 'Event Trigger',
-    value: ORCHESTRATION_TRIGGER_TYPE.EVENT
+    value: ORCHESTRATION_INVOKE_TYPE.EVENT
   },
 ];
 
@@ -63,7 +63,7 @@ export default createReactClass({
   },
 
   _renderTypeIcon(value) {
-    const iconName = (value === ORCHESTRATION_TRIGGER_TYPE.TIME) ? 'fa-clock-o' : 'fa-list-alt';
+    const iconName = (value === ORCHESTRATION_INVOKE_TYPE.TIME) ? 'fa-clock-o' : 'fa-list-alt';
     return (<i className={`fa fa-fw ${iconName}`} />);
   }
 });

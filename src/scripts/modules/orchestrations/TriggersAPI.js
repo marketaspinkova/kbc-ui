@@ -3,38 +3,37 @@ import ApplicationStore from '../../stores/ApplicationStore';
 
 const createUrl = path => {
   const baseUrl = ApplicationStore.getSapiUrl();
-  return `${baseUrl}/${path}`;
+  return `${baseUrl}/v2/storage/${path}`;
 };
 
 const createRequest = (method, path) =>
   request(method, createUrl(path)).set('X-StorageApi-Token', ApplicationStore.getSapiTokenString());
 
 export default {
-  createTrigger(data) {
+  create(data) {
     return createRequest('POST', 'triggers')
+      .set('Content-Type', 'application/x-www-form-urlencoded')
       .send(data)
-      .promise()
       .then(response => response.body);
   },
 
-  listTriggers(component, configurationId) {
+  list(component, configurationId) {
     return createRequest('GET', 'triggers')
       .query({
         component: component,
         configurationId: configurationId
       })
-      .promise()
       .then(response => response.body);
   },
 
-  updateTrigger(id, data) {
+  update(id, data) {
     return createRequest('PUT', `triggers/${id}`)
-    .send(data)
-    .promise()
-    .then(response => response.body);
+      .set('Content-Type', 'application/x-www-form-urlencoded')
+      .send(data)
+      .then(response => response.body);
   },
 
-  deleteTrigger(id) {
-    return createRequest('DELETE', `triggers/${id}`).promise();
+  delete(id) {
+    return createRequest('DELETE', `triggers/${id}`);
   }
 };

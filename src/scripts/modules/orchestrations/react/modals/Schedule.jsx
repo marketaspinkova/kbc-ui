@@ -7,15 +7,20 @@ import CronScheduler from '../../../../react/common/CronScheduler';
 import OrchestrationsApi from '../../OrchestrationsApi';
 import actionCreators from '../../ActionCreators';
 import VersionsActionCreators from '../../../components/VersionsActionCreators';
-import { ORCHESTRATION_TRIGGER_TYPE } from '../../Constants';
-import TriggerSelect from '../components/TriggerSelect';
+import { ORCHESTRATION_INVOKE_TYPE } from '../../Constants';
+import InvokeSelect from '../components/InvokeSelect';
 import EventTrigger from '../components/EventTrigger';
+import {fromJS} from 'immutable';
+import StorageApi from '../../../components/StorageApi';
+
+const componentId = 'orchestrator';
 
 export default createReactClass({
   propTypes: {
     orchestrationId: PropTypes.number.isRequired,
     tables: PropTypes.object.isRequired,
-    crontabRecord: PropTypes.string
+    crontabRecord: PropTypes.string,
+    trigger: PropTypes.object
   },
 
   getInitialState() {
@@ -23,9 +28,8 @@ export default createReactClass({
       crontabRecord: this.props.crontabRecord || '0 0 * * *',
       isSaving: false,
       showModal: false,
-      triggerType: ORCHESTRATION_TRIGGER_TYPE.TIME,
-      selectedTables: [],
-      period: 5
+      invokeType: ORCHESTRATION_INVOKE_TYPE.TIME,
+      trigger: this.props.trigger || { tables: [], coolDownPeriod: 5 }
     };
   },
 
@@ -39,7 +43,9 @@ export default createReactClass({
     e.preventDefault();
     return this.setState({
       showModal: true,
-      crontabRecord: this.props.crontabRecord || '0 0 * * *'
+      crontabRecord: this.props.crontabRecord || '0 0 * * *',
+      invokeType: ORCHESTRATION_INVOKE_TYPE.TIME,
+      trigger: this.props.trigger || { tables: [], coolDownPeriod: 5 }
     });
   },
 
@@ -52,20 +58,26 @@ export default createReactClass({
             <Modal.Title>Orchestration Schedule</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <TriggerSelect
-              selectedValue={this.state.triggerType}
-              onSelectValue={this._handleTriggerTypeChange}
+            <InvokeSelect
+              selectedValue={this.state.invokeType}
+              onSelectValue={this._handleInvokeTypeChange}
               disabled={this.state.isSaving}
             />
             <hr />
-            {(this.state.triggerType === ORCHESTRATION_TRIGGER_TYPE.TIME) ?
+            {(this.state.invokeType === ORCHESTRATION_INVOKE_TYPE.TIME) ?
               <CronScheduler crontabRecord={this.state.crontabRecord} onChange={this._handleCrontabChange} /> :
-              <EventTrigger tables={this.props.tables} onChange={this._handleTableSelect} />
+              <EventTrigger
+                tables={this.props.tables}
+                selected={this.state.trigger.tables.map(item => Object.values(item)).flat()}
+                period={parseInt(this.state.trigger.coolDownPeriod)}
+                onChange={this._handleTriggerTableSelect}
+                onChangePeriod={this._handleTriggerPeriodChange}
+              />
             }
 
           </Modal.Body>
           <Modal.Footer>
-            {(this.state.triggerType === ORCHESTRATION_TRIGGER_TYPE.TIME) ?
+            {(this.state.invokeType === ORCHESTRATION_INVOKE_TYPE.TIME) ?
               this.renderSchedulerButtons() :
               this.renderEventTriggerButtons()
             }
@@ -76,44 +88,52 @@ export default createReactClass({
   },
 
   renderSchedulerButtons() {
-    return (
-      <div>
-        <div className="col-sm-6">
-          <Button
-            className="pull-left"
-            bsStyle="danger"
-            onClick={this._handleRemoveSchedule}
-            disabled={this.state.isSaving}
-          >
-            Remove Schedule
-          </Button>
-        </div>
-        <div className="col-sm-6">
-          <ConfirmButtons
-            isSaving={this.state.isSaving}
-            isDisabled={false}
-            saveLabel="Save"
-            onCancel={this.close}
-            onSave={this._handleSave}
-          />
-        </div>
-      </div>
-    );
-  },
-
-  renderEventTriggerButtons() {
-    return (
-      <Col sm={12}>
+    return [
+      <Col key={1} sm={6}>
+        <Button
+          className="pull-left"
+          bsStyle="danger"
+          onClick={this._handleRemoveSchedule}
+          disabled={this.state.isSaving}
+        >
+          Remove Schedule
+        </Button>
+      </Col>,
+      <Col key={2} sm={6}>
         <ConfirmButtons
-          className="pull-right"
           isSaving={this.state.isSaving}
           isDisabled={false}
           saveLabel="Save"
           onCancel={this.close}
-          onSave={this._handleEventTriggerSave}
+          onSave={this._handleSave}
         />
       </Col>
-    );
+    ];
+  },
+
+  renderEventTriggerButtons() {
+    return [
+      <Col key={1} sm={6}>
+        <Button
+          className="pull-left"
+          bsStyle="danger"
+          onClick={this._handleRemoveTrigger}
+          disabled={this.state.isSaving || !this.state.trigger.id}
+        >
+          Remove Trigger
+        </Button>
+      </Col>,
+      <Col key={2} sm={6}>
+        <ConfirmButtons
+          className="pull-right"
+          isSaving={this.state.isSaving}
+          isDisabled={!this.state.trigger.tables.length}
+          saveLabel="Save"
+          onCancel={this.close}
+          onSave={this._handleTriggerSave}
+        />
+      </Col>
+    ];
   },
 
   renderOpenButton() {
@@ -143,7 +163,7 @@ export default createReactClass({
   },
 
   _handleSaveSuccess(response) {
-    VersionsActionCreators.loadVersionsForce('orchestrator', this.props.orchestrationId.toString());
+    VersionsActionCreators.loadVersionsForce(componentId, this.props.orchestrationId.toString());
     actionCreators.receiveOrchestration(response);
     this.setState({
       isSaving: false
@@ -157,24 +177,71 @@ export default createReactClass({
     });
   },
 
-  _handleTriggerTypeChange(value) {
+  _handleInvokeTypeChange(value) {
     return this.setState({
-      triggerType: value
+      invokeType: value
     });
   },
 
-  _handleTableSelect(state) {
+  _handleTriggerTableSelect(tableIds) {
+    let trigger = fromJS(this.state.trigger);
+    const tables = tableIds.map(tableId => ({ tableId }));
     return this.setState({
-      selected: state.selected
+      trigger: trigger.set('tables', tables).toJS()
     });
   },
 
-  _handleEventTriggerSave() {
-    return this._saveEventTrigger(this.state.selectedTables, this.state.period);
+  _handleTriggerPeriodChange(event) {
+    let trigger = fromJS(this.state.trigger);
+    return this.setState({
+      trigger: trigger.set('coolDownPeriod', event.target.value).toJS()
+    });
   },
 
-  _saveEventTrigger() {
+  _handleTriggerSave() {
+    this.setState({ isSaving: true });
+    return this._saveTrigger(this.state.trigger.tables, this.state.trigger.coolDownPeriod)
+      .then(() => {
+        this.setState({ isSaving: false });
+        return this.close();
+      });
+  },
 
-    return TriggersApi.
+  _saveTrigger(tableIds, period) {
+    if (this.state.trigger.id) {
+      return actionCreators.updateTrigger(this.state.trigger.id, {
+        coolDownPeriod: period,
+        tableIds: tableIds.map(item => item.tableId)
+      });
+    }
+    return this._createTriggerToken()
+      .then(token => actionCreators.createTrigger({
+        runWithTokenId: token.id,
+        component: componentId,
+        configurationId: this.props.orchestrationId,
+        coolDownPeriod: period,
+        tableIds: tableIds.map(item => item.tableId)
+      }));
+  },
+
+  _createTriggerToken() {
+    const tokenParams = {
+      canManageBuckets: false,
+      canReadAllFileUploads: false,
+      componentAccess: [componentId],
+      description: `Token for triggering an orchestrator`,
+      expiresIn: null
+    };
+
+    return StorageApi.createToken(tokenParams);
+  },
+
+  _handleRemoveTrigger() {
+    this.setState({ isSaving: true });
+    return actionCreators.deleteTrigger(this.state.trigger.id)
+      .then(() => {
+        this.setState({ isSaving: false });
+        return this.close();
+      });
   }
 });
