@@ -152,6 +152,12 @@ export default componentId => {
               </Alert>
               }
             </div>
+            <div className="kbc-row">
+              <h2>
+                <span>Columns</span>
+                {this.state.columns.count() && this._renderEditButtons()}
+              </h2>
+            </div>
             <ColumnsEditor
               onToggleHideIgnored={e => {
                 const path = ['hideIgnored', this.state.tableId];
@@ -166,7 +172,6 @@ export default componentId => {
               filterColumnsFn={this._hideIgnoredFilter}
               filterColumnFn={this._filterColumn}
               dataPreview={this.state.dataPreview}
-              editButtons={this._renderEditButtons()}
               setAllColumnsType={this._renderSetColumnsType()}
               setAllColumnsName={this._renderSetColumnsName()}
               disabledColumnFields={this._getDisabledColumnFields()}
@@ -517,7 +522,7 @@ export default componentId => {
         : null;
 
       return (
-        <div className="kbc-buttons pull-right">
+        <span className="pull-right">
           <EditButtons
             isEditing={!!this.state.editingColumns}
             isSaving={this.state.isSavingColumns}
@@ -527,7 +532,7 @@ export default componentId => {
             onEditStart={this._handleEditColumnsStart}
             editLabel="Edit Columns"
           />
-        </div>
+        </span>
       );
     },
 
