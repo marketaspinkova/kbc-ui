@@ -84,7 +84,7 @@ export default createReactClass({
           </tr>
           <tr>
             <td>Run ID</td>
-            <td>{this.props.job.get('runIn', 'N/A')}</td>
+            <td>{this.props.job.get('runId', 'N/A')}</td>
           </tr>
           <tr>
             <td>File ID</td>
