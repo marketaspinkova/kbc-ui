@@ -43,6 +43,8 @@ export default createReactClass({
   },
 
   onChange(region) {
-    window.location.href = region.link
+    if (this.props.activeRegion !== region.value) {
+      window.location.href = region.link
+    }
   }
 });
