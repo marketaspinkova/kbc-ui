@@ -20,7 +20,7 @@ export default createReactClass({
                 <h1>Welcome back!</h1>
                 <p>Log in to your account</p>
               </header>
-              <form className="outer-content" method="post" action="">
+              <form className="outer-content" method="post" action="" noValidate>
                 {/* <div className="form-group">
                     <input
                       required
