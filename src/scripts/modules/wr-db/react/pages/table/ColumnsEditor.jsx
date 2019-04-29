@@ -107,7 +107,7 @@ export default createReactClass({
 
     return (
       <th>
-        <span>Null </span>
+        <span>Nullable </span>
         {this.props.editingColumns && this._createCheckbox()}
       </th>
     );
