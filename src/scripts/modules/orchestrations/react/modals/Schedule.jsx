@@ -12,6 +12,7 @@ import InvokeSelect from '../components/InvokeSelect';
 import EventTrigger from '../components/EventTrigger';
 import {fromJS} from 'immutable';
 import StorageApi from '../../../components/StorageApi';
+import ApplicationStore from '../../../../stores/ApplicationStore';
 
 const componentId = 'orchestrator';
 
@@ -58,12 +59,13 @@ export default createReactClass({
             <Modal.Title>Orchestration Schedule</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <InvokeSelect
-              selectedValue={this.state.invokeType}
-              onSelectValue={this._handleInvokeTypeChange}
-              disabled={this.state.isSaving}
-            />
-            <hr />
+            {ApplicationStore.hasCurrentProjectFeature('event-orchestration') && (
+              <InvokeSelect
+                selectedValue={this.state.invokeType}
+                onSelectValue={this._handleInvokeTypeChange}
+                disabled={this.state.isSaving}
+              />
+            )}
             {(this.state.invokeType === ORCHESTRATION_INVOKE_TYPE.TIME) ?
               <CronScheduler crontabRecord={this.state.crontabRecord} onChange={this._handleCrontabChange} /> :
               <EventTrigger
