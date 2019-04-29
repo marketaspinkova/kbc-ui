@@ -46,7 +46,7 @@ export default createReactClass({
 
     if (!this.state.table.count()) {
       return (
-        <span>{label}</span>
+        <span className="text-muted">{label}</span>
       );
     }
 
