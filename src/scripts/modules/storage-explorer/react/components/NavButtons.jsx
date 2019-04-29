@@ -22,9 +22,6 @@ export default createReactClass({
         <li className={classnames({ active: isJobsActive })}>
           <Link to="storage-explorer-jobs">Jobs</Link>
         </li>
-        <li className={classnames({ active: isDocumentationActive})}>
-          <Link to="storage-explorer-documentation">Documentation</Link>
-        </li>
       </ul>
     );
   }
