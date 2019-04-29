@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
+import { Map } from 'immutable';
 import { ExternalLink } from '@keboola/indigo-ui';
 import Edit from './ConfigurationEdit';
-import Immutable from 'immutable';
 import Markdown from '../../../../react/common/Markdown';
 
 export default createReactClass({
@@ -29,7 +29,7 @@ export default createReactClass({
       headerText: 'Configuration',
       help: null,
       saveLabel: 'Save configuration',
-      schema: Immutable.Map(),
+      schema: Map(),
       showDocumentationLink: true
     };
   },
@@ -50,6 +50,7 @@ export default createReactClass({
     if (!this.props.editHelp) {
       return null;
     }
+
     return (
       <Markdown
         source={this.props.editHelp}
@@ -59,22 +60,17 @@ export default createReactClass({
   },
 
   renderDocumentationUrl() {
-    if (!this.props.documentationUrl) {
+    if (!this.props.documentationUrl || !this.props.showDocumentationLink) {
       return null;
     }
-    if (this.props.editHelp) {
-      return null;
-    }
-    if (this.props.schema.count()) {
-      return null;
-    }
-    if (this.props.showDocumentationLink) {
-      return (
-        <p className="help-block">This component is configured manually. Read the <ExternalLink href={this.props.documentationUrl}>configuration
-          documentation</ExternalLink> for more information.</p>
-      );
-    }
-    return null;
+
+    return (
+      <p>
+        Read the{' '}
+        <ExternalLink href={this.props.documentationUrl}>configuration documentation</ExternalLink>{' '}
+        for more information.
+      </p>
+    );
   },
 
   renderEditor() {
