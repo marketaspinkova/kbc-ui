@@ -21,20 +21,12 @@ export default createReactClass({
     otherDestinations: PropTypes.object.isRequired,
     componentType: PropTypes.string.isRequired,
     onEditStart: PropTypes.func,
-    definition: PropTypes.object,
-    showFileHint: PropTypes.bool,
-    buttonBsStyle: PropTypes.string,
-    buttonLabel: PropTypes.string,
-    tooltipText: PropTypes.string
+    definition: PropTypes.object
   },
 
   getDefaultProps() {
     return {
-      showFileHint: true,
-      definition: Map(),
-      buttonBsStyle: 'success',
-      buttonLabel: 'New Table Input',
-      tooltipText: 'Edit Input'
+      definition: Map()
     };
   },
 
@@ -74,7 +66,7 @@ export default createReactClass({
   render() {
     return (
       <span>
-        { this.renderOpenButton() }
+        {this.renderOpenButton()}
         <Modal onHide={this.handleCancel} show={this.state.showModal} bsSize="large">
           <Modal.Header closeButton>
             <Modal.Title>
@@ -100,18 +92,20 @@ export default createReactClass({
 
   renderOpenButton() {
     if (this.props.mode === MODE_EDIT) {
+      const editingNonExistentTable = this.editingNonExistentTable();
+
       return (
-        <Tooltip tooltip={this.props.tooltipText} placement="top">
+        <Tooltip tooltip={editingNonExistentTable ? 'Open Input' : 'Edit Input'} placement="top">
           <Button bsStyle="link" onClick={this.handleEditButtonClick}>
-            <span className="fa fa-pencil" />
+            {editingNonExistentTable ? <span className="fa fa-eye" /> : <span className="fa fa-pencil" />}
           </Button>
         </Tooltip>
       );
     }
 
     return (
-      <Button bsStyle={this.props.buttonBsStyle} onClick={this.open}>
-        <i className="kbc-icon-plus" />{this.props.buttonLabel}
+      <Button bsStyle="success" onClick={this.open}>
+        <i className="kbc-icon-plus" /> New Table Input
       </Button>
     );
   },
@@ -128,13 +122,13 @@ export default createReactClass({
   editor() {
     return (
       <Editor
+        showFileHint
         value={this.props.mapping}
         tables={this.props.tables}
         disabled={this.state.isSaving || this.editingNonExistentTable()}
         onChange={this.props.onChange}
         initialShowDetails={resolveTableInputShowDetails(this.props.mapping)}
         isDestinationDuplicate={this.isDestinationDuplicate()}
-        showFileHint={this.props.showFileHint}
         definition={this.props.definition}
         editingNonExistentTable={this.editingNonExistentTable()}
         componentType={this.props.componentType}

@@ -1,12 +1,12 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import { Map } from 'immutable';
 import TableSizeLabel from '../../components/TableSizeLabel';
 import DeleteButton from '../../../../../react/common/DeleteButton';
 import OutputMappingModal from '../../modals/OutputMapping';
 import actionCreators from '../../../ActionCreators';
-import { Map } from 'immutable';
 
 export default createReactClass({
   mixins: [ImmutableRenderMixin],
@@ -34,6 +34,8 @@ export default createReactClass({
   },
 
   render() {
+    const destinationTable = this.props.tables.get(this.props.outputMapping.get('destination'), Map());
+
     return (
       <span className="table kbc-break-all kbc-break-word">
         <span className="tbody">
@@ -47,15 +49,11 @@ export default createReactClass({
                   <span className="fa fa-chevron-right fa-fw" />
                 </span>,
                 <span className="td col-xs-6" key="destination">
-                  <TableSizeLabel
-                    size={this.props.tables.getIn([this.props.outputMapping.get('destination'), 'dataSizeBytes'])}
-                  />{' '}
+                  {destinationTable.count() > 0 && <TableSizeLabel size={destinationTable.get('dataSizeBytes')} />}
                   {this.props.outputMapping.get('incremental') && (
                     <span className="label label-default">Incremental</span>
                   )}
-                  {this.props.outputMapping.get('destination') !== ''
-                    ? this.props.outputMapping.get('destination')
-                    : 'Not set'}
+                  {this.props.outputMapping.get('destination') || 'Not set'}
                 </span>
               ]
               : [
@@ -68,9 +66,7 @@ export default createReactClass({
                   <span className="fa fa-chevron-right fa-fw" />
                 </span>,
                 <span className="td col-xs-3" key="buttons">
-                  <TableSizeLabel
-                    size={this.props.tables.getIn([this.props.outputMapping.get('destination'), 'dataSizeBytes'])}
-                  />{' '}
+                  {destinationTable.count() > 0 && <TableSizeLabel size={destinationTable.get('dataSizeBytes')} />}
                   {this.props.outputMapping.get('incremental') && (
                     <span className="label label-default">Incremental</span>
                   )}
