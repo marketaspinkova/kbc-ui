@@ -1,8 +1,8 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
+import { Table } from 'react-bootstrap';
 import ColumnRow from './ColumnRow';
-import Hint from '../../../../../react/common/Hint';
 import Tooltip from '../../../../../react/common/Tooltip';
 
 export default createReactClass({
@@ -10,7 +10,6 @@ export default createReactClass({
     columns: PropTypes.object.isRequired,
     filterColumnFn: PropTypes.func.isRequired,
     onToggleHideIgnored: PropTypes.func.isRequired,
-    editButtons: PropTypes.object.isRequired,
     disabledColumnFields: PropTypes.array.isRequired,
     onSetAllColumnsNull: PropTypes.func.isRequired,
     editingColumns: PropTypes.object,
@@ -24,6 +23,38 @@ export default createReactClass({
   },
 
   render() {
+    return (
+      <Table responsive striped className="kbc-table-editor">
+        <thead>
+          <tr>
+            <th>Column</th>
+            <th>
+              Database Column Name
+              {this.props.editingColumns && this.props.setAllColumnsName}
+            </th>
+            <th>
+              Data Type
+              <div style={{ margin: 0 }} className="checkbox">
+                <label className="">
+                  <input type="checkbox" label="Hide IGNORED" onChange={this.props.onToggleHideIgnored} />
+                  {' Hide Ignored'}
+                </label>
+              </div>
+              {this.props.editingColumns && this.props.setAllColumnsType}
+            </th>
+            {this.renderNullableHeader()}
+            {this.renderDefaultHeader()}
+            <th>Preview</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.renderRows()}
+        </tbody>
+      </Table>
+    );
+  },
+
+  renderRows() {
     const columns = this.props.columns.filter(column => {
       let fn = column;
       if (this.props.editingColumns) {
@@ -31,6 +62,7 @@ export default createReactClass({
       }
       return this.props.filterColumnFn(fn);
     });
+
     const rows = columns.map((column, index) => {
       const cname = column.get('name');
       let editingColumn = null;
@@ -55,70 +87,38 @@ export default createReactClass({
       );
     });
 
+    if (!rows.count()) {
+      return (
+        <tr>
+          <td colSpan="6">
+            <div className="text-center">No Columns.</div>
+          </td>
+        </tr>
+      );
+    }
+
+    return rows;
+  },
+
+  renderNullableHeader() {
+    if (this.props.disabledColumnFields.includes('nullable')) {
+      return <th />;
+    }
+
     return (
-      <div style={{ overflow: 'scroll' }}>
-        <table className="table table-striped kbc-table-editor">
-          <thead>
-            <tr>
-              <th>Column</th>
-              <th>
-                Database Column Name
-                {this.props.editingColumns && this.props.setAllColumnsName}
-              </th>
-              <th>
-                Data Type
-                <div style={{ margin: 0 }} className="checkbox">
-                  <label className="">
-                    <input type="checkbox" label="Hide IGNORED" onChange={this.props.onToggleHideIgnored} />
-                    {' Hide Ignored'}
-                  </label>
-                </div>
-                {this.props.editingColumns && this.props.setAllColumnsType}
-              </th>
-              {this._renderNullableHeader()}
-              {this._renderDefaultHeader()}
-              <th>{this.props.editButtons}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.count() > 0 ? (
-              rows
-            ) : (
-              <tr>
-                <td colSpan="6">
-                  <div className="text-center">No Columns.</div>
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+      <th>
+        <span>Nullable </span>
+        {this.props.editingColumns && this._createCheckbox()}
+      </th>
     );
   },
 
-  _renderNullableHeader() {
-    if (this.props.disabledColumnFields.includes('nullable')) {
-      return <th />;
-    } else {
-      return (
-        <th>
-          <span>Null</span>{' '}
-          <Hint title="Nullable Column">
-            {'Empty strings in the source data will be replaced with SQL '}
-            <code>NULL</code>.
-          </Hint>
-          {this.props.editingColumns && this._createCheckbox()}
-        </th>
-      );
-    }
-  },
-
-  _renderDefaultHeader() {
+  renderDefaultHeader() {
     if (this.props.disabledColumnFields.includes('default')) {
       return <th />;
-    } else {
-      return <th>Default Value</th>;
     }
+
+    return <th>Default Value</th>;
   },
 
   _createCheckbox() {
