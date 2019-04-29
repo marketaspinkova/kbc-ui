@@ -22,7 +22,6 @@ export default createReactClass({
               options={{
                 theme: 'solarized',
                 mode: 'application/json',
-                autofocus: true,
                 lineNumbers: true,
                 lineWrapping: true,
                 lint: !!this.props.value,

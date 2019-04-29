@@ -40,7 +40,6 @@ export default createReactClass({
                 theme: 'solarized',
                 mode: resolveHighlightMode('docker', this.props.backend),
                 lineNumbers: true,
-                autofocus: true,
                 lineWrapping: true,
                 readOnly: this.props.disabled,
                 ...codeMirrorParams

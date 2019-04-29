@@ -24,23 +24,15 @@ export default createReactClass({
                 placeholder: 'Your JSON config goes here...',
                 lineNumbers: true,
                 lint: true,
-                autofocus: true,
                 lineWrapping: true,
                 readOnly: this.props.disabled,
                 gutters: ['CodeMirror-lint-markers']
               }}
             />
           </div>
-          <div className="small help-block">
-            {this.help()}
-          </div>
         </div>
       </div>
     );
-  },
-
-  help() {
-    return null;
   },
 
   handleChange(editor, data, value) {
