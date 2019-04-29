@@ -111,7 +111,11 @@ export default createReactClass({
                 />
               </Col>
             </Row>
-            <CronRecord crontabRecord={this.state.orchestration.get('crontabRecord')}/>
+            {
+              this.state.trigger
+              ? <span>Event trigger</span>
+              : <CronRecord crontabRecord={this.state.orchestration.get('crontabRecord')}/>
+            }
           </div>
           <div className="kbc-row">
             <Row>
