@@ -40,6 +40,7 @@ export default createReactClass({
   renderJsonArea() {
     return (
       <CodeMirror
+        editorDidMount={(editor) => editor.refresh()}
         value={this.state.parametersString}
         onBeforeChange={this._handleChange}
         options={{

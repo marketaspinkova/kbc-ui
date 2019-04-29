@@ -69,6 +69,7 @@ export default createReactClass({
       <span>
         <p className="help-block small">Properties prefixed with <code>#</code> sign will be encrypted on save. Already encrypted strings will persist.</p>
         <CodeMirror
+          editorDidMount={(editor) => editor.refresh()}
           value={this.props.data}
           onBeforeChange={this.handleChange}
           options={{

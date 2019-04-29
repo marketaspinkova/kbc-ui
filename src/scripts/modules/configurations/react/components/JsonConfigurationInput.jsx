@@ -16,6 +16,7 @@ export default createReactClass({
         <div>
           <div className="edit form-group kbc-json-editor">
             <CodeMirror
+              editorDidMount={(editor) => editor.refresh()}
               value={this.props.value}
               onBeforeChange={this.handleChange}
               options={{

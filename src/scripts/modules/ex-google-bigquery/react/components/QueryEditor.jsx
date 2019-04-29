@@ -123,13 +123,14 @@ export default createReactClass({
             <div className="col-md-10 ">
               <div className="form-control-static">
                 <CodeMirror
+                  editorDidMount={(editor) => editor.refresh()}
                   value={this.props.query.get('query')}
                   onBeforeChange={this._handleQueryChange}
                   options={{
                     theme: 'solarized',
                     mode: editorMode(this.props.componentId),
                     lineNumbers: true,
-                    lineWrapping: false,
+                    lineWrapping: true,
                     placeholder: 'e.g. SELECT `id`, `name` FROM `myTable`'
                   }}
                   style={{width: '100%'}}

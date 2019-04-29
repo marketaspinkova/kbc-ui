@@ -451,13 +451,14 @@ export default createReactClass({
           <label className="control-label">SQL Query</label>
           {this.renderQueryHelpBlock()}
           <CodeMirror
+            editorDidMount={(editor) => editor.refresh()}
             value={this.getQuery()}
             onBeforeChange={this.handleQueryChange}
             options={{
               theme: 'solarized',
               mode: editorMode(this.props.componentId),
               lineNumbers: true,
-              lineWrapping: false,
+              lineWrapping: true,
               placeholder: getQueryEditorPlaceholder(this.props.componentId),
             }}
             style={{ width: '100%' }}

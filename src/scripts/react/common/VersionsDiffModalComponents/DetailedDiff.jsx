@@ -96,6 +96,7 @@ export default createReactClass({
 
     return (
       <CodeMirror
+        editorDidMount={(editor) => editor.refresh()}
         value={multiDiff}
         options={{
           theme: 'solarized',

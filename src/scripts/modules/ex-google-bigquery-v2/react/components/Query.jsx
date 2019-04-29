@@ -46,13 +46,14 @@ export default createReactClass({
           </Col>
           <Col sm={8}>
             <CodeMirror
+              editorDidMount={(editor) => editor.refresh()}
               value={this.props.value.query}
               onBeforeChange={(editor, data, value) => this.props.onChange({query: value})}
               options={{
                 theme: 'solarized',
                 mode: editorMode(ExGoogleBigQueryV2ComponentId),
                 lineNumbers: true,
-                lineWrapping: false,
+                lineWrapping: true,
                 readOnly: this.props.disabled,
                 placeholder: 'e.g. SELECT `id`, `name` FROM `myTable`'
               }}

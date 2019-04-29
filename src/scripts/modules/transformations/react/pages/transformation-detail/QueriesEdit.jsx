@@ -60,7 +60,10 @@ export default createReactClass({
         <div>
           <div className="edit form-group kbc-queries-editor">
             <CodeMirror
-              editorDidMount={editor => { this.editor = editor }}
+              editorDidMount={(editor) => {
+                this.editor = editor;
+                editor.refresh();
+              }}
               value={normalizeNewlines(this.props.queries)}
               onBeforeChange={this.handleChange}
               options={{
