@@ -8,7 +8,6 @@ import TemplateSelector from './ConfigurationTemplateSelector';
 import SaveButtons from '../../../../react/common/SaveButtons';
 
 export default createReactClass({
-
   propTypes: {
     isTemplate: PropTypes.bool.isRequired,
     editingTemplate: PropTypes.object.isRequired,
@@ -48,14 +47,11 @@ export default createReactClass({
     }
     return (
       <JSONSchemaEditor
-        ref="paramsEditor"
         isChanged={this.props.isChanged}
         schema={this.props.paramsSchema}
         value={this.props.editingParams}
         onChange={this.handleParamsChange}
         readOnly={this.props.isSaving}
-        disableCollapse={true}
-        disableProperties={true}
       />
     );
   },
@@ -68,7 +64,7 @@ export default createReactClass({
             <SaveButtons
               isSaving={this.props.isSaving}
               isChanged={this.props.isChanged}
-              onSave={this.handleSave}
+              onSave={this.props.onSave}
               disabled={!this.props.isValid}
               onReset={this.props.onCancel} />
           </div>
@@ -144,14 +140,5 @@ export default createReactClass({
   switchToTemplateEditor() {
     this.setState({showJsonEditor: false});
     this.props.onChangeEditingMode(false);
-  },
-
-  handleSave() {
-    if (this.refs.paramsEditor) {
-      // json-editor doesn't trigger onChange handler on each key stroke
-      // so sometimes not actualized data were saved https://github.com/keboola/kbc-ui/issues/501
-      this.handleParamsChange(this.refs.paramsEditor.getCurrentValue());
-    }
-    this.props.onSave();
   }
 });
