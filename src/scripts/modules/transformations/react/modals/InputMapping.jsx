@@ -1,8 +1,8 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import { Map } from 'immutable';
-import {Button, Modal} from 'react-bootstrap';
+import { Alert, Button, Modal} from 'react-bootstrap';
 import Tooltip from './../../../../react/common/Tooltip';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import InputMappingRowDockerEditor from '../components/mapping/InputMappingRowDockerEditor';
@@ -75,6 +75,11 @@ export default createReactClass({
             <Modal.Title>{title}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
+             {this.editingNonExistentTable() && (
+              <Alert bsStyle="warning">
+                Source table does not exist.
+              </Alert>
+            )}
             {this.editor()}
           </Modal.Body>
           <Modal.Footer>
@@ -83,7 +88,7 @@ export default createReactClass({
               isSaving={this.state.isSaving}
               onCancel={this.handleCancel}
               onSave={this.handleSave}
-              isDisabled={!this.isValid()}
+              isDisabled={!this.isValid() || this.editingNonExistentTable()}
             />
           </Modal.Footer>
         </Modal>
@@ -125,7 +130,7 @@ export default createReactClass({
     const props = {
       value: this.props.mapping,
       tables: this.props.tables,
-      disabled: this.state.isSaving,
+      disabled: this.editingNonExistentTable() || this.state.isSaving,
       onChange: this.props.onChange,
       initialShowDetails: resolveInputShowDetails(this.props.backend, this.props.type, this.props.mapping, this.props.tables),
       isDestinationDuplicate: this.isDestinationDuplicate(),
