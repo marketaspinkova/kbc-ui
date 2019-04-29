@@ -150,7 +150,8 @@ export default createReactClass({
   },
 
   _handleSave() {
-    return this._save(this.state.crontabRecord);
+    return actionCreators.deleteTrigger(this.state.trigger.id)
+      .then(() => this._save(this.state.crontabRecord));
   },
 
   _save(crontabRecord) {
@@ -211,10 +212,7 @@ export default createReactClass({
   _handleTriggerSave() {
     this.setState({ isSaving: true });
     return this._saveTrigger(this.state.trigger.tables, this.state.trigger.coolDownPeriod)
-      .then(() => {
-        this.setState({ isSaving: false });
-        return this.close();
-      });
+      .then(() => this._save(null));
   },
 
   _saveTrigger(tableIds, period) {

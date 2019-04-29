@@ -31,7 +31,7 @@ Dispatcher.register(payload => {
       return TriggersStore.emitChange();
 
     case ActionTypes.ORCHESTRATION_TRIGGERS_DELETE_SUCCESS:
-      _store = _store.set('trigger', Map({ tables: [], coolDownPeriod: 5 }));
+      _store = _store.set('trigger', null);
       return TriggersStore.emitChange();
 
     case ActionTypes.ORCHESTRATION_TRIGGERS_CREATE_SUCCESS:
