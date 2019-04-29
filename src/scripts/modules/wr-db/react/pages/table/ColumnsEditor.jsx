@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
-import { ExternalLink } from "@keboola/indigo-ui";
 import { Table } from 'react-bootstrap';
 import ColumnRow from './ColumnRow';
 import Tooltip from '../../../../../react/common/Tooltip';
@@ -109,11 +108,6 @@ export default createReactClass({
     return (
       <th>
         <span>Null </span>
-        <ExternalLink href="https://help.keboola.com/writers/database/">
-          <Tooltip tooltip="Read more in documentation" placement="top">
-            <i className="fa fa-question-circle fa-fw" />
-          </Tooltip>
-        </ExternalLink>
         {this.props.editingColumns && this._createCheckbox()}
       </th>
     );
