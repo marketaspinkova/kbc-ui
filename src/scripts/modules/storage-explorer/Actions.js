@@ -111,6 +111,12 @@ const navigateToBucketDetail = bucketId => {
   });
 };
 
+const navigateToBucketDocumentation = bucketId => {
+  RoutesStore.getRouter().transitionTo('storage-explorer-documentation-bucket', {
+    bucketId: bucketId
+  });
+};
+
 const createTablePrimaryKey = (tableId, params) => {
   return StorageActionCreators
     .createTablePrimaryKey(tableId, params)
@@ -287,6 +293,22 @@ const filterFiles = query => {
   RoutesStore.getRouter().transitionTo('storage-explorer-files', null, queryParams);
 };
 
+const toggleDocumentationRow = (rowId, isOpen) => {
+  dispatcher.handleViewAction({
+    type: localConstants.ActionTypes.DOCUMENTATION_TOGGLE_OPENED_ROWS,
+    rowId,
+    isOpen
+  });
+
+};
+
+const updateDocumentationSearchQuery = query => {
+  dispatcher.handleViewAction({
+    type: localConstants.ActionTypes.DOCUMENTATION_UPDATE_SEARCH_QUERY,
+    query
+  });
+};
+
 const updateSearchQuery = query => {
   dispatcher.handleViewAction({
     type: localConstants.ActionTypes.UPDATE_SEARCH_QUERY,
@@ -334,6 +356,7 @@ export {
   deleteTable,
   createAliasTable,
   navigateToBucketDetail,
+  navigateToBucketDocumentation,
   createTablePrimaryKey,
   removeTablePrimaryKey,
   deleteTableColumn,
@@ -362,5 +385,7 @@ export {
   resetFilesSearchQuery,
   setOpenedBuckets,
   setOpenedColumns,
+  toggleDocumentationRow,
+  updateDocumentationSearchQuery,
   filterFiles
 };

@@ -2,6 +2,7 @@ import Index from './react/pages/Index/Index';
 import Files from './react/pages/Files/Files';
 import Jobs from './react/pages/Jobs/Jobs';
 import Table from './react/pages/Table/Table';
+import Documentation from './react/pages/Documentation/Documentation';
 import Bucket from './react/pages/Bucket/Bucket';
 import FilesReloaderButton from './react/components/FilesReloaderButton';
 import JobsReloaderButton from './react/components/JobsReloaderButton';
@@ -63,6 +64,12 @@ export default {
         }
       },
       requireData: [() => loadJobs({ limit: jobsLimit })]
+    },
+    {
+      name: 'storage-explorer-documentation',
+      path: 'documentation',
+      defaultRouteHandler: Documentation,
+      title: 'Documentation'
     },
     {
       name: 'storage-explorer-bucket',

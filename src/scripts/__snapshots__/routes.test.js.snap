@@ -3236,7 +3236,7 @@ exports[`routes config should get router configuration 1`] = `
   </Route>
   <Route
     handler={[Function]}
-    key="584"
+    key="586"
     name="storage-explorer"
   >
     <DefaultRoute
@@ -3267,43 +3267,43 @@ exports[`routes config should get router configuration 1`] = `
     </Route>
     <Route
       handler={[Function]}
-      key="583"
-      name="storage-explorer-bucket"
-      path=":bucketId"
+      key="581"
+      name="storage-explorer-documentation"
+      path="documentation"
     >
       <DefaultRoute
         handler={[Function]}
         key="580"
       />
-      <Route
+    </Route>
+    <Route
+      handler={[Function]}
+      key="585"
+      name="storage-explorer-bucket"
+      path=":bucketId"
+    >
+      <DefaultRoute
         handler={[Function]}
         key="582"
+      />
+      <Route
+        handler={[Function]}
+        key="584"
         name="storage-explorer-table"
         path=":tableName"
       >
         <DefaultRoute
           handler={[Function]}
-          key="581"
+          key="583"
         />
       </Route>
     </Route>
   </Route>
   <Route
     handler={[Function]}
-    key="586"
+    key="588"
     name="tables"
     path="tables/:tableId"
-  >
-    <DefaultRoute
-      handler={[Function]}
-      key="585"
-    />
-  </Route>
-  <Route
-    handler={[Function]}
-    key="588"
-    name="settings-trash"
-    path="settings-trash"
   >
     <DefaultRoute
       handler={[Function]}
@@ -3312,41 +3312,42 @@ exports[`routes config should get router configuration 1`] = `
   </Route>
   <Route
     handler={[Function]}
-    key="592"
-    name="tokens"
+    key="590"
+    name="settings-trash"
+    path="settings-trash"
   >
     <DefaultRoute
       handler={[Function]}
       key="589"
     />
+  </Route>
+  <Route
+    handler={[Function]}
+    key="594"
+    name="tokens"
+  >
+    <DefaultRoute
+      handler={[Function]}
+      key="591"
+    />
     <Route
       handler={[Function]}
-      key="590"
+      key="592"
       name="tokens-new"
       path="new-token"
     />
     <Route
       handler={[Function]}
-      key="591"
+      key="593"
       name="tokens-detail"
       path=":tokenId"
     />
   </Route>
   <Route
     handler={[Function]}
-    key="594"
+    key="596"
     name="migrations"
     path="migrations"
-  >
-    <DefaultRoute
-      handler={[Function]}
-      key="593"
-    />
-  </Route>
-  <Route
-    handler={[Function]}
-    key="596"
-    name="data-takeout"
   >
     <DefaultRoute
       handler={[Function]}
@@ -3356,7 +3357,7 @@ exports[`routes config should get router configuration 1`] = `
   <Route
     handler={[Function]}
     key="598"
-    name="settings-limits"
+    name="data-takeout"
   >
     <DefaultRoute
       handler={[Function]}
@@ -3366,11 +3367,21 @@ exports[`routes config should get router configuration 1`] = `
   <Route
     handler={[Function]}
     key="600"
-    name="limits"
+    name="settings-limits"
   >
     <DefaultRoute
       handler={[Function]}
       key="599"
+    />
+  </Route>
+  <Route
+    handler={[Function]}
+    key="602"
+    name="limits"
+  >
+    <DefaultRoute
+      handler={[Function]}
+      key="601"
     />
   </Route>
 </span>

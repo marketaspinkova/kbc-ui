@@ -8,6 +8,8 @@ export const ActionTypes = keyMirror({
   UPDATE_FILES_SEARCH_QUERY: null,
   SET_OPENED_BUCKETS: null,
   SET_OPENED_COLUMNS: null,
+  DOCUMENTATION_UPDATE_SEARCH_QUERY: null,
+  DOCUMENTATION_TOGGLE_OPENED_ROWS: null,
   RELOAD: null,
   RELOAD_SUCCESS: null,
   RELOAD_ERROR: null
