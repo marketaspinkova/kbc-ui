@@ -13,6 +13,7 @@ import EventTrigger from '../components/EventTrigger';
 import {fromJS} from 'immutable';
 import StorageApi from '../../../components/StorageApi';
 import ApplicationStore from '../../../../stores/ApplicationStore';
+import { FEATURE_EVENT_ORCHESTRATIONS } from '../../../../constants/KbcConstants';
 
 const componentId = 'orchestrator';
 
@@ -59,7 +60,7 @@ export default createReactClass({
             <Modal.Title>Orchestration Schedule</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {ApplicationStore.hasCurrentProjectFeature('event-orchestration') && (
+            {ApplicationStore.hasCurrentProjectFeature(FEATURE_EVENT_ORCHESTRATIONS) && (
               <InvokeSelect
                 selectedValue={this.state.invokeType}
                 onSelectValue={this._handleInvokeTypeChange}
