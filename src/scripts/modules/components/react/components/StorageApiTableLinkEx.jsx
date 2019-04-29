@@ -32,21 +32,33 @@ export default createReactClass({
   },
 
   render() {
-    return <span key="mainspan">{this.renderLink()}</span>;
+    return (
+      <span key="mainspan">
+        <Tooltip tooltip={this.renderTooltip()} placement="top">
+          {this.renderBody()}
+        </Tooltip>
+      </span>
+    );
   },
 
-  renderLink() {
+  renderBody() {
+    const label = this.props.children || this.props.linkLabel || this.props.tableId;
+
+    if (!this.state.table.count()) {
+      return (
+        <span className="text-muted">{label}</span>
+      );
+    }
+
     return (
-      <Tooltip tooltip={this.renderTooltip()} placement="top">
-        <Button
-          bsStyle="link"
-          className="btn-link-inline kbc-sapi-table-link"
-          onClick={this.redirectToTablePage}
-        >
-          {this.props.children || this.props.linkLabel || this.props.tableId}
-        </Button>
-      </Tooltip>
-    );
+      <Button
+        bsStyle="link"
+        className="btn-link-inline kbc-sapi-table-link"
+        onClick={this.redirectToTablePage}
+      >
+        {label}
+      </Button>
+    )
   },
 
   renderTooltip() {
