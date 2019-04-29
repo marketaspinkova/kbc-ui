@@ -2,38 +2,17 @@
 import { Map, List } from 'immutable';
 
 const hasTableColumnMetadataDatatypes = table => {
-  const lastUpdateInfo = getTableLastUpdatedInfo(table);
+  const provider = getLastActiveProvider(table);
 
-  if (!lastUpdateInfo) {
+  if (!provider) {
     return false;
   }
 
   return table.get('columnMetadata').filter((metadataList) => {
     return metadataList.filter((metadata) => {
-      return metadata.get('provider') === lastUpdateInfo.component && metadata.get('key') === 'KBC.datatype.basetype';
+      return metadata.get('provider') === provider && metadata.get('key') === 'KBC.datatype.basetype';
     }).count() > 0;
   }).count() > 0;
-};
-
-const getTableLastUpdatedInfo = (table) => {
-  const metadata = table.get('metadata', List()).filter(row => row.get('provider') === 'system', null, Map());
-  let componentFound = metadata.find(row => row.get('key') === 'KBC.lastUpdatedBy.component.id');
-  let configFound = metadata.find(row => row.get('key') === 'KBC.lastUpdatedBy.configuration.id');
-
-  if (!componentFound || !configFound) {
-    componentFound = metadata.find(row => row.get('key') === 'KBC.createdBy.component.id');
-    configFound = metadata.find(row => row.get('key') === 'KBC.createdBy.configuration.id');
-  }
-
-  if (!componentFound || !configFound) {
-    return null;
-  }
-
-  return {
-    'component': componentFound.get('value'),
-    'config': configFound.get('value'),
-    'timestamp': configFound.get('timestamp')
-  };
 };
 
 const getColumnMetadataByProvider = (table, provider) => {
@@ -43,22 +22,32 @@ const getColumnMetadataByProvider = (table, provider) => {
 };
 
 const getMachineColumnMetadata = (table) => {
-  const lastUpdateInfo = getTableLastUpdatedInfo(table);
+  const provider = getLastActiveProvider(table, { exclude: ['user'] });
 
-  if (!lastUpdateInfo || !lastUpdateInfo.component) {
+  if (!provider) {
     return Map();
   }
 
-  return getColumnMetadataByProvider(table, lastUpdateInfo.component);
+  return getColumnMetadataByProvider(table, provider);
 };
 
 const getUserColumnMetadata = (table) => {
   return getColumnMetadataByProvider(table, 'user');
 };
 
+const getLastActiveProvider = (table, options = {}) => {
+  const exclude = options.exclude || [];
+  const latestUpdatedMetadata = table.get('columnMetadata', Map())
+    .reduce((list, metadata) => list.concat(metadata), List())
+    .filter((metadata) => !exclude.includes(metadata.get('provider')))
+    .sortBy((metadata) => -1 * new Date(metadata.get('timestamp')).getTime())
+    .first();
+
+  return latestUpdatedMetadata ? latestUpdatedMetadata.get('provider') : null;
+};
+
 export {
   hasTableColumnMetadataDatatypes,
-  getTableLastUpdatedInfo,
   getColumnMetadataByProvider,
   getMachineColumnMetadata,
   getUserColumnMetadata
