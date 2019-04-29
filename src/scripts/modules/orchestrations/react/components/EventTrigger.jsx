@@ -1,9 +1,8 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
-import {Button, Col, FormControl, FormGroup, HelpBlock, InputGroup, Table} from 'react-bootstrap';
+import {Button, Col, ControlLabel, FormControl, FormGroup, HelpBlock, InputGroup, Table} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
-import ControlLabel from 'react-bootstrap/es/ControlLabel';
 import moment from 'moment';
 import date from '../../../../utils/date';
 import Tooltip from '../../../../react/common/Tooltip';
