@@ -88,7 +88,7 @@ export default createReactClass({
               isSaving={this.state.isSaving}
               onCancel={this.handleCancel}
               onSave={this.handleSave}
-              isDisabled={!this.isValid()}
+              isDisabled={!this.isValid() || this.editingNonExistentTable()}
             />
           </Modal.Footer>
         </Modal>
