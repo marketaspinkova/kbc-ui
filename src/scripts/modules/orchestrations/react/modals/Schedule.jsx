@@ -150,8 +150,11 @@ export default createReactClass({
   },
 
   _handleSave() {
-    return actionCreators.deleteTrigger(this.state.trigger.id)
-      .then(() => this._save(this.state.crontabRecord));
+    if (this.state.trigger.id) {
+      return actionCreators.deleteTrigger(this.state.trigger.id)
+        .then(() => this._save(this.state.crontabRecord));
+    }
+    return this._save(this.state.crontabRecord);
   },
 
   _save(crontabRecord) {
@@ -165,12 +168,12 @@ export default createReactClass({
   },
 
   _handleSaveSuccess(response) {
-    VersionsActionCreators.loadVersionsForce(componentId, this.props.orchestrationId.toString());
-    actionCreators.receiveOrchestration(response);
-    this.setState({
-      isSaving: false
-    });
-    return this.close();
+    return VersionsActionCreators.loadVersionsForce(componentId, this.props.orchestrationId.toString())
+      .then(() => actionCreators.receiveOrchestration(response))
+      .then(() => {
+        this.setState({ isSaving: false });
+        return this.close();
+      });
   },
 
   _handleCrontabChange(newValue) {

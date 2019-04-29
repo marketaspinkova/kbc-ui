@@ -17,6 +17,11 @@ function renderEmptyIcon() {
 }
 
 class EventTrigger extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     const selectedTables = this._getSelectedTables(this.props.selected);
     return (
@@ -119,13 +124,9 @@ class EventTrigger extends React.Component {
     );
   }
 
-  _onAddTable(item) {
-    return this.props.onAddTable(item.value);
-  }
+  _onAddTable = (item) => this.props.onAddTable(item.value);
 
-  _onRemoveTable(tableId) {
-    return this.props.onRemoveTable(tableId);
-  }
+  _onRemoveTable = (tableId) => this.props.onRemoveTable(tableId);
 
   _getTables() {
     const selected = this.props.selected;
@@ -144,11 +145,11 @@ class EventTrigger extends React.Component {
 
 EventTrigger.propTypes = {
   tables: PropTypes.object.isRequired,
-    selected: PropTypes.array,
-    onAddTable: PropTypes.func.isRequired,
-    onRemoveTable: PropTypes.func.isRequired,
-    period: PropTypes.number.isRequired,
-    onChangePeriod: PropTypes.func.isRequired
+  selected: PropTypes.array,
+  onAddTable: PropTypes.func.isRequired,
+  onRemoveTable: PropTypes.func.isRequired,
+  period: PropTypes.number.isRequired,
+  onChangePeriod: PropTypes.func.isRequired
 };
 
 export default EventTrigger;
