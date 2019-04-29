@@ -1,6 +1,6 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
-import {Button, Col, FormControl, FormGroup, InputGroup, Table} from 'react-bootstrap';
+import {Button, Col, FormControl, FormGroup, HelpBlock, InputGroup, Table} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import ControlLabel from 'react-bootstrap/es/ControlLabel';
@@ -63,7 +63,9 @@ export default createReactClass({
   renderTables(tables) {
     return (
       <div>
-        <h4>Orchestration will start each time all of these tables are updated:</h4>
+        <HelpBlock>
+        Orchestration will start each time all of these tables are updated
+        </HelpBlock>
         <Table striped hover>
           <thead>
           <tr>
@@ -119,6 +121,9 @@ export default createReactClass({
               />
               <InputGroup.Addon>Minutes</InputGroup.Addon>
             </InputGroup>
+            <HelpBlock>
+              If event was triggered, it could only be triggered again after this time period
+            </HelpBlock>
           </Col>
         </FormGroup>
       </form>
