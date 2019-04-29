@@ -1,5 +1,4 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import {Button, Col, ControlLabel, FormControl, FormGroup, HelpBlock, InputGroup, Table} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
@@ -8,35 +7,26 @@ import date from '../../../../utils/date';
 import Tooltip from '../../../../react/common/Tooltip';
 import SapiTableLinkEx from '../../../components/react/components/StorageApiTableLinkEx';
 
-export default createReactClass({
-  propTypes: {
-    tables: PropTypes.object.isRequired,
-    selected: PropTypes.array,
-    onAddTable: PropTypes.func.isRequired,
-    onRemoveTable: PropTypes.func.isRequired,
-    period: PropTypes.number.isRequired,
-    onChangePeriod: PropTypes.func.isRequired
-  },
+function renderEmptyIcon() {
+  return (
+    <div className="text-muted" style={{textAlign: 'center'}}>
+      <i className="fa fa-fw fa-table" style={{fontSize: '60px'}} />
+      <p>Add tables from Storage</p>
+    </div>
+  );
+}
 
+class EventTrigger extends React.Component {
   render() {
     const selectedTables = this._getSelectedTables(this.props.selected);
     return (
       <div>
-        {selectedTables.count() ? this.renderTables(selectedTables) : this.renderEmptyIcon()}
+        {selectedTables.count() ? this.renderTables(selectedTables) : renderEmptyIcon()}
         {this.renderAddTableForm()}
         {selectedTables.count() ? this.renderPeriodSelect() : null}
       </div>
     );
-  },
-
-  renderEmptyIcon() {
-    return (
-      <div className="text-muted" style={{textAlign: 'center'}}>
-        <i className="fa fa-fw fa-table" style={{fontSize: '60px'}} />
-        <p>Add tables from Storage</p>
-      </div>
-    );
-  },
+  }
 
   renderAddTableForm() {
     const options = this._getTables();
@@ -57,7 +47,7 @@ export default createReactClass({
         </FormGroup>
       </form>
     );
-  },
+  }
 
   renderTables(tables) {
     return (
@@ -101,7 +91,7 @@ export default createReactClass({
         </Table>
       </div>
     );
-  },
+  }
 
   renderPeriodSelect() {
     return (
@@ -127,15 +117,15 @@ export default createReactClass({
         </FormGroup>
       </form>
     );
-  },
+  }
 
   _onAddTable(item) {
     return this.props.onAddTable(item.value);
-  },
+  }
 
   _onRemoveTable(tableId) {
     return this.props.onRemoveTable(tableId);
-  },
+  }
 
   _getTables() {
     const selected = this.props.selected;
@@ -145,9 +135,20 @@ export default createReactClass({
       label: table.get('id'),
       value: table.get('id')
     })).toArray();
-  },
+  }
 
   _getSelectedTables(selectedOptions) {
     return this.props.tables.filter(table => selectedOptions.includes(table.get('id')));
   }
-});
+}
+
+EventTrigger.propTypes = {
+  tables: PropTypes.object.isRequired,
+    selected: PropTypes.array,
+    onAddTable: PropTypes.func.isRequired,
+    onRemoveTable: PropTypes.func.isRequired,
+    period: PropTypes.number.isRequired,
+    onChangePeriod: PropTypes.func.isRequired
+};
+
+export default EventTrigger;
