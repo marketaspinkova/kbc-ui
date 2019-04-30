@@ -68,7 +68,7 @@ describe('makeColumnDefinition', () => {
       title: 'attribute',
       type: Types.ATTRIBUTE,
       dataType: DataTypes.VARCHAR,
-      dataTypeSize: '258'
+      dataTypeSize: '10010'
     });
 
     const definition2 = makeColumnDefinition({
