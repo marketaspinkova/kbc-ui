@@ -30,7 +30,7 @@ export default createReactClass({
       crontabRecord: this.props.crontabRecord || '0 0 * * *',
       isSaving: false,
       showModal: false,
-      invokeType: ORCHESTRATION_INVOKE_TYPE.TIME,
+      invokeType: this.props.trigger ? ORCHESTRATION_INVOKE_TYPE.EVENT : ORCHESTRATION_INVOKE_TYPE.TIME,
       trigger: this.props.trigger || { tables: [], coolDownPeriod: 5 }
     };
   },
@@ -46,7 +46,7 @@ export default createReactClass({
     return this.setState({
       showModal: true,
       crontabRecord: this.props.crontabRecord || '0 0 * * *',
-      invokeType: ORCHESTRATION_INVOKE_TYPE.TIME,
+      invokeType: this.props.trigger ? ORCHESTRATION_INVOKE_TYPE.EVENT : ORCHESTRATION_INVOKE_TYPE.TIME,
       trigger: this.props.trigger || { tables: [], coolDownPeriod: 5 }
     });
   },
