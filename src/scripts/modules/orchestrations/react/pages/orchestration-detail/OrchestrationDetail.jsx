@@ -10,7 +10,7 @@ import OrchestrationJobsStore from '../../../stores/OrchestrationJobsStore';
 import RoutesStore from '../../../../../stores/RoutesStore';
 import VersionsStore from '../../../../components/stores/VersionsStore';
 import LatestJobsStore from '../../../../jobs/stores/LatestJobsStore';
-import TriggersStore from '../../../stores/TriggersStore';
+import TriggersStore from '../../../../components/stores/StorageTriggersStore';
 
 // React components
 import ComponentDescription from '../../../../components/react/components/ComponentDescription';

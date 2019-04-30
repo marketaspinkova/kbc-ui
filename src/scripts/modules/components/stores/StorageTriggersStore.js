@@ -1,6 +1,6 @@
 import Dispatcher from '../../../Dispatcher';
 import { Map, fromJS } from 'immutable';
-import { ActionTypes } from '../Constants';
+import { ActionTypes } from '../../orchestrations/Constants';
 import StoreUtils from '../../../utils/StoreUtils';
 
 let _store = Map({
@@ -8,7 +8,7 @@ let _store = Map({
   isLoaded: false
 });
 
-const TriggersStore = StoreUtils.createStore({
+const StorageTriggersStore = StoreUtils.createStore({
   get() {
     return _store.get('trigger');
   },
@@ -28,22 +28,22 @@ Dispatcher.register(payload => {
           .set('isLoaded', true)
           .set('trigger', fromJS(action.triggers).first())
       );
-      return TriggersStore.emitChange();
+      return StorageTriggersStore.emitChange();
 
     case ActionTypes.ORCHESTRATION_TRIGGERS_DELETE_SUCCESS:
       _store = _store.set('trigger', null);
-      return TriggersStore.emitChange();
+      return StorageTriggersStore.emitChange();
 
     case ActionTypes.ORCHESTRATION_TRIGGERS_CREATE_SUCCESS:
       _store = _store.set('trigger', fromJS(action.trigger));
-      return TriggersStore.emitChange();
+      return StorageTriggersStore.emitChange();
 
     case ActionTypes.ORCHESTRATION_TRIGGERS_UPDATE_SUCCESS:
       _store = _store.set('trigger', fromJS(action.trigger));
-      return TriggersStore.emitChange();
+      return StorageTriggersStore.emitChange();
 
     default:
   }
 });
 
-export default TriggersStore;
+export default StorageTriggersStore;

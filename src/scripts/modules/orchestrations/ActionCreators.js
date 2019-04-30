@@ -10,7 +10,7 @@ import { List } from 'immutable';
 import dispatcher from '../../Dispatcher';
 import * as constants from './Constants';
 import orchestrationsApi from './OrchestrationsApi';
-import triggersApi from './TriggersAPI';
+import triggersApi from '../components/StorageTriggersAPI';
 import jobsApi from '../jobs/JobsApi';
 import OrchestrationStore from './stores/OrchestrationsStore';
 import OrchestrationJobsStore from './stores/OrchestrationJobsStore';
@@ -18,7 +18,7 @@ import Promise from 'bluebird';
 import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
 import VersionsActionCreators from '../components/VersionsActionCreators';
 import InstalledComponentsActionCreators from '../components/InstalledComponentsActionCreators';
-import TriggersStore from './stores/TriggersStore';
+import TriggersStore from '../components/stores/StorageTriggersStore';
 
 const rephaseTasks = tasks => {
   const isNullPhase = phase => phase === null || phase === 0 || typeof phase === 'undefined';
