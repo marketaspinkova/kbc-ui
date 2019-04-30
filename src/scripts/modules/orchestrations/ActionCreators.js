@@ -10,7 +10,7 @@ import { List } from 'immutable';
 import dispatcher from '../../Dispatcher';
 import * as constants from './Constants';
 import orchestrationsApi from './OrchestrationsApi';
-import triggersApi from '../components/StorageTriggersAPI';
+import storageApi from '../components/StorageApi';
 import jobsApi from '../jobs/JobsApi';
 import OrchestrationStore from './stores/OrchestrationsStore';
 import OrchestrationJobsStore from './stores/OrchestrationJobsStore';
@@ -671,7 +671,7 @@ export default {
       type: constants.ActionTypes.ORCHESTRATION_TRIGGERS_LOAD
     });
 
-    return triggersApi.list('orchestrator', orchestrationId)
+    return storageApi.listTriggers('orchestrator', orchestrationId)
       .then((triggers) => {
         return dispatcher.handleViewAction({
           type: constants.ActionTypes.ORCHESTRATION_TRIGGERS_LOAD_SUCCESS,
@@ -695,7 +695,7 @@ export default {
   },
 
   createTrigger(data) {
-    return triggersApi.create(data)
+    return storageApi.createTrigger(data)
       .then(res => dispatcher.handleViewAction({
         type: constants.ActionTypes.ORCHESTRATION_TRIGGERS_CREATE_SUCCESS,
         trigger: res
@@ -703,7 +703,7 @@ export default {
   },
 
   updateTrigger(id, data) {
-    return triggersApi.update(id, data)
+    return storageApi.updateTrigger(id, data)
       .then(res => dispatcher.handleViewAction({
         type: constants.ActionTypes.ORCHESTRATION_TRIGGERS_UPDATE_SUCCESS,
         trigger: res
@@ -711,7 +711,7 @@ export default {
   },
 
   deleteTrigger(id) {
-    return triggersApi.delete(id)
+    return storageApi.deleteTrigger(id)
       .then(res => dispatcher.handleViewAction({
         type: constants.ActionTypes.ORCHESTRATION_TRIGGERS_DELETE_SUCCESS,
         trigger: res

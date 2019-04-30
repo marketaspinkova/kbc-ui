@@ -365,5 +365,32 @@ export default {
       provider: provider,
       metadata: metadata
     };
+  },
+
+  createTrigger(data) {
+    return createRequest('POST', 'triggers')
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    .send(data)
+    .then(response => response.body);
+  },
+
+  listTriggers(component, configurationId) {
+    return createRequest('GET', 'triggers')
+    .query({
+      component: component,
+      configurationId: configurationId
+    })
+    .then(response => response.body);
+  },
+
+  updateTrigger(id, data) {
+    return createRequest('PUT', `triggers/${id}`)
+    .set('Content-Type', 'application/x-www-form-urlencoded')
+    .send(data)
+    .then(response => response.body);
+  },
+
+  deleteTrigger(id) {
+    return createRequest('DELETE', `triggers/${id}`);
   }
 };
