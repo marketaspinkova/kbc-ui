@@ -15,7 +15,7 @@ export default createReactClass({
     return (
       <Popover title="Maximum possible values" id="gooddata-writer-v3-data-type-hint">
         <ul className="container-fluid">
-          <li>VARCHAR – 255</li>
+          <li>VARCHAR – 10000</li>
           <li>DECIMAL - 15,6</li>
         </ul>
       </Popover>

@@ -16,8 +16,8 @@ function checkDataTypeSize(dataType, dataTypeSize) {
   switch (dataType) {
     case DataTypes.VARCHAR:
       const size = Number(dataTypeSize);
-      if (isNaN(size) || size < 1 || size > 255) {
-        return 'Data size must by valid number between 1 and 255: ' + dataTypeSize;
+      if (isNaN(size) || size < 1 || size > 10000) {
+        return 'Data size must by valid number between 1 and 10000: ' + dataTypeSize;
       }
       return false;
 
