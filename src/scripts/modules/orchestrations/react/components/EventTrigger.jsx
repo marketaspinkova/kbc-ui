@@ -44,7 +44,7 @@ class EventTrigger extends React.Component {
               multi={false}
               options={options}
               delimiter=","
-              onChange={this._onAddTable}
+              onChange={item => this.props.onAddTable(item.value)}
               placeholder="Add tables..."
               clearable={true}
             />
@@ -70,11 +70,11 @@ class EventTrigger extends React.Component {
           </tr>
           </thead>
           <tbody>
-          {tables.map((item, index) => {
+          {tables.valueSeq().map((item, index) => {
             return (
               <tr key={index}>
                 <td><i className="fa fa-fw fa-table" /></td>
-                <td>
+                <td className="kbc-break-all kbc-break-word">
                   <SapiTableLinkEx tableId={item.get('id')} />
                 </td>
                 <td>
@@ -84,7 +84,7 @@ class EventTrigger extends React.Component {
                 </td>
                 <td>
                   <Tooltip placement="top" tooltip="Remove table">
-                    <Button bsStyle="link" onClick={() => this._onRemoveTable(item.get('id'))}>
+                    <Button bsStyle="link" onClick={() => this.props.onRemoveTable(item.get('id'))}>
                       <i className="fa fa-trash-o" />
                     </Button>
                   </Tooltip>
@@ -101,7 +101,7 @@ class EventTrigger extends React.Component {
   renderPeriodSelect() {
     return (
       <form className="form-horizontal">
-        <FormGroup>
+        <FormGroup validationState={this._getValidationState()}>
           <Col componentClass={ControlLabel} sm={6}>
             Cooldown period
           </Col>
@@ -115,19 +115,16 @@ class EventTrigger extends React.Component {
               />
               <InputGroup.Addon>Minutes</InputGroup.Addon>
             </InputGroup>
+            <FormControl.Feedback />
             <HelpBlock>
-              If event was triggered, it could only be triggered again after this time period
+              If event was triggered, it could only be triggered again after this time period.
+              <br /> Minimum is 5 minutes.
             </HelpBlock>
           </Col>
         </FormGroup>
       </form>
     );
   }
-
-  _onAddTable = (item) => this.props.onAddTable(item.value);
-
-  _onRemoveTable = (tableId) => this.props.onRemoveTable(tableId);
-
   _getTables() {
     const selected = this.props.selected;
     const availableTables = this.props.tables.filter(table => !selected.includes(table.get('id')));
@@ -141,6 +138,10 @@ class EventTrigger extends React.Component {
   _getSelectedTables(selectedOptions) {
     return this.props.tables.filter(table => selectedOptions.includes(table.get('id')));
   }
+
+  _getValidationState() {
+    return this.props.period < 5 ? 'error' : null;
+  }
 }
 
 EventTrigger.propTypes = {
@@ -148,7 +149,7 @@ EventTrigger.propTypes = {
   selected: PropTypes.array,
   onAddTable: PropTypes.func.isRequired,
   onRemoveTable: PropTypes.func.isRequired,
-  period: PropTypes.number.isRequired,
+  period: PropTypes.string.isRequired,
   onChangePeriod: PropTypes.func.isRequired
 };
 

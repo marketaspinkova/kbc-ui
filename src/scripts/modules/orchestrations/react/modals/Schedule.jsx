@@ -31,7 +31,7 @@ export default createReactClass({
       isSaving: false,
       showModal: false,
       invokeType: this.props.trigger ? ORCHESTRATION_INVOKE_TYPE.EVENT : ORCHESTRATION_INVOKE_TYPE.TIME,
-      trigger: this.props.trigger || { tables: [], coolDownPeriod: 5 }
+      trigger: this.props.trigger || { tables: [], coolDownPeriod: '5' }
     };
   },
 
@@ -47,7 +47,7 @@ export default createReactClass({
       showModal: true,
       crontabRecord: this.props.crontabRecord || '0 0 * * *',
       invokeType: this.props.trigger ? ORCHESTRATION_INVOKE_TYPE.EVENT : ORCHESTRATION_INVOKE_TYPE.TIME,
-      trigger: this.props.trigger || { tables: [], coolDownPeriod: 5 }
+      trigger: this.props.trigger || { tables: [], coolDownPeriod: '5' }
     });
   },
 
@@ -72,7 +72,7 @@ export default createReactClass({
               <EventTrigger
                 tables={this.props.tables}
                 selected={this.state.trigger.tables.map(item => Object.values(item)).flat()}
-                period={parseInt(this.state.trigger.coolDownPeriod)}
+                period={this.state.trigger.coolDownPeriod}
                 onAddTable={this._handleTriggerTableAdd}
                 onRemoveTable={this._handleTriggerTableRemove}
                 onChangePeriod={this._handleTriggerPeriodChange}
@@ -210,8 +210,9 @@ export default createReactClass({
 
   _handleTriggerPeriodChange(event) {
     let trigger = fromJS(this.state.trigger);
+    const value = event.target.value.toString();
     return this.setState({
-      trigger: trigger.set('coolDownPeriod', event.target.value).toJS()
+      trigger: trigger.set('coolDownPeriod', value).toJS()
     });
   },
 
