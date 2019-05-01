@@ -5,7 +5,6 @@ import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import WrDbStore from '../../store';
 import RoutesStore from '../../../../stores/RoutesStore';
 import ActionCreators from '../../actionCreators';
-import { Navigation } from 'react-router';
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
 import InstalledComponentsActions from '../../../components/InstalledComponentsActionCreators';
 import { Loader } from '@keboola/indigo-ui';
@@ -15,7 +14,7 @@ import provisioningUtils from '../../provisioningUtils';
 
 export default (componentId, driver, isProvisioning) => {
   return createReactClass({
-    mixins: [createStoreMixin(WrDbStore, InstalledComponentsStore), Navigation],
+    mixins: [createStoreMixin(WrDbStore, InstalledComponentsStore)],
 
     getStateFromStores() {
       const configId = RoutesStore.getCurrentRouteParam('config');

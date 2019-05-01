@@ -35,8 +35,7 @@ export default createReactClass({
       StorageBucketsStore,
       VersionsStore
     ),
-    Router.Navigation,
-    Router.State
+    Router.Navigation
   ],
 
   componentWillReceiveProps() {
