@@ -21,7 +21,7 @@
     "deep-equal": "^1.0.1",
     "diff": "^4.0.1",
     "dimple": "https://github.com/keboola/dimple.git",
-    "filesize": "^3.6.1",
+    "filesize": "^4.1.2",
     "flux": "^2.0.0",
     "fuzzaldrin": "^2.1.0",
     "fuzzy": "~0.1.0",
