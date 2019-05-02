@@ -129,11 +129,9 @@ export default createReactClass({
   },
 
   updateCodeMirrorHintTables() {
-    if (this.refs.CodeMirror) {
-      this.refs.CodeMirror.editor.setOption('hintOptions', {
-        tables: this.getTables()
-      });
-    }
+    this.editor.setOption('hintOptions', {
+      tables: this.getTables()
+    });
   },
 
   getTables() {
