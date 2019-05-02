@@ -77,8 +77,6 @@ export default createReactClass({
     const parameters = configData.get('parameters', Map());
     const allSapiTables = storageTablesStore.getAll();
 
-    // console.log(allSapiTables.toJS());
-
     return {
       isSaving: InstalledComponentStore.getSavingConfigData(componentId, configId),
       configId: configId,

@@ -1,6 +1,3 @@
-/* eslint no-console: 0 */
-console.time('load');
-
 import 'react-app-polyfill/stable';
 import './utils/ReactErrorHandler';
 import './utils/codemirror/setup';
@@ -41,7 +38,6 @@ Promise.config({
     - rootNode - mount element
     - locationMode - hash or pushState location
 */
-console.timeEnd('load');
 const startApp = appOptions => {
   initializeData(appOptions.data);
 
@@ -132,8 +128,7 @@ const startApp = appOptions => {
         }));
       })
       .catch(error => {
-        // render error page
-        console.log('route change error', error);
+        console.log('route change error', error); // eslint-disable-line
         RouterActionCreators.routeChangeError(error);
         ReactDOM.render(<Handler isError={true} />, appOptions.rootNode);
       })

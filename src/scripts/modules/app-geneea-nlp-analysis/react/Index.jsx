@@ -72,7 +72,6 @@ export default createReactClass({
     const intable = getInTable(configId);
     const parameters = configData.get('parameters', Map());
     const allSapiTables = storageTablesStore.getAll();
-    // console.log(allSapiTables.toJS());
 
     return {
       configId: configId,
