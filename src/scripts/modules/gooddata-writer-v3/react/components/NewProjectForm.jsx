@@ -67,7 +67,6 @@ export default createReactClass({
         </Col>
         <Col sm={9}>
           <FormControl
-            helpBlock={help}
             placeholder={placeholder}
             type={fieldName === 'password' ? 'password' : 'text'}
             disabled={disabled}
