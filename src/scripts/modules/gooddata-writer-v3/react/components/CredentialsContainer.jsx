@@ -15,7 +15,8 @@ export default createReactClass({
     value: PropTypes.shape({
       pid: PropTypes.string.isRequired,
       login: PropTypes.string.isRequired,
-      password: PropTypes.string.isRequired
+      password: PropTypes.string.isRequired,
+      backendUrl: PropTypes.string
     }),
     onChange: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
@@ -59,14 +60,14 @@ export default createReactClass({
         }
       );
     } else {
-      const {pid, login, password} = newProject;
-      return this.props.onSave({pid, login, password});
+      const {pid, login, password, backendUrl} = newProject;
+      return this.props.onSave({pid, login, password, backendUrl});
     }
   },
 
   resetConfigCredentials() {
-    return this.props.onSave({pid: '', login: '', password: ''}).then( () =>
-      this.props.onChange({pid: '', login: '', password: ''})
+    return this.props.onSave({pid: '', login: '', password: '', backendUrl: ''}).then( () =>
+      this.props.onChange({pid: '', login: '', password: '', backendUrl: ''})
     );
   },
 

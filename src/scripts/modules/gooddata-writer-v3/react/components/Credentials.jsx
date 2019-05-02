@@ -18,7 +18,8 @@ export default createReactClass({
     config: PropTypes.shape({
       pid: PropTypes.string.isRequired,
       login: PropTypes.string.isRequired,
-      password: PropTypes.string.isRequired
+      password: PropTypes.string.isRequired,
+      backendUrl: PropTypes.string
     }),
     disabled: PropTypes.bool.isRequired,
     onHandleCreate: PropTypes.func.isRequired,
