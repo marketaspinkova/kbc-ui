@@ -31,7 +31,7 @@ export default createReactClass({
       isSaving: false,
       showModal: false,
       invokeType: this.props.trigger ? ORCHESTRATION_INVOKE_TYPE.EVENT : ORCHESTRATION_INVOKE_TYPE.TIME,
-      trigger: this.props.trigger || { tables: [], coolDownPeriod: '5' }
+      trigger: this.props.trigger || { tables: [], coolDownPeriodMinutes: '5' }
     };
   },
 
@@ -47,7 +47,7 @@ export default createReactClass({
       showModal: true,
       crontabRecord: this.props.crontabRecord || '0 0 * * *',
       invokeType: this.props.trigger ? ORCHESTRATION_INVOKE_TYPE.EVENT : ORCHESTRATION_INVOKE_TYPE.TIME,
-      trigger: this.props.trigger || { tables: [], coolDownPeriod: '5' }
+      trigger: this.props.trigger || { tables: [], coolDownPeriodMinutes: '5' }
     });
   },
 
@@ -72,7 +72,7 @@ export default createReactClass({
               <EventTrigger
                 tables={this.props.tables}
                 selected={this.state.trigger.tables.map(item => Object.values(item)).flat()}
-                period={this.state.trigger.coolDownPeriod}
+                period={this.state.trigger.coolDownPeriodMinutes}
                 onAddTable={this._handleTriggerTableAdd}
                 onRemoveTable={this._handleTriggerTableRemove}
                 onChangePeriod={this._handleTriggerPeriodChange}
@@ -212,20 +212,20 @@ export default createReactClass({
     let trigger = fromJS(this.state.trigger);
     const value = event.target.value.toString();
     return this.setState({
-      trigger: trigger.set('coolDownPeriod', value).toJS()
+      trigger: trigger.set('coolDownPeriodMinutes', value).toJS()
     });
   },
 
   _handleTriggerSave() {
     this.setState({ isSaving: true });
-    return this._saveTrigger(this.state.trigger.tables, this.state.trigger.coolDownPeriod)
+    return this._saveTrigger(this.state.trigger.tables, this.state.trigger.coolDownPeriodMinutes)
       .then(() => this._save(null));
   },
 
   _saveTrigger(tableIds, period) {
     if (this.state.trigger.id) {
       return actionCreators.updateTrigger(this.state.trigger.id, {
-        coolDownPeriod: period,
+        coolDownPeriodMinutes: period,
         tableIds: tableIds.map(item => item.tableId)
       });
     }
@@ -234,7 +234,7 @@ export default createReactClass({
         runWithTokenId: token.id,
         component: componentId,
         configurationId: this.props.orchestrationId,
-        coolDownPeriod: period,
+        coolDownPeriodMinutes: period,
         tableIds: tableIds.map(item => item.tableId)
       }));
   },
