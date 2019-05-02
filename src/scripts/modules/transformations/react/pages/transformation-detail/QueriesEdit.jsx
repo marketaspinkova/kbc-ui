@@ -1,10 +1,11 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 import { Map, List } from 'immutable';
-import resolveHighlightMode from './resolveHighlightMode';
 import { ExternalLink } from '@keboola/indigo-ui';
+import { HelpBlock } from 'react-bootstrap';
+import resolveHighlightMode from './resolveHighlightMode';
 import normalizeNewlines from './normalizeNewlines';
 
 export default createReactClass({
@@ -92,7 +93,7 @@ export default createReactClass({
               }}
             />
           </div>
-          <div className="small help-block">{this.help()}</div>
+          {this.help()}
         </div>
       </div>
     );
@@ -101,31 +102,22 @@ export default createReactClass({
   help() {
     if (this.props.backend === 'snowflake') {
       return (
-        <span>
+        <HelpBlock>
           Learn more about <ExternalLink href="https://help.keboola.com/manipulation/transformations/snowflake/">using Snowflake</ExternalLink>.{' '}
           Use <code>Ctrl+Space</code> for autocomplete and syntax hints.
-        </span>
+        </HelpBlock>
       );
     }
 
     if (this.props.backend === 'redshift') {
       return (
-        <span>
+        <HelpBlock>
           Learn more about{' '}
           <ExternalLink href="https://help.keboola.com/manipulation/transformations/redshift/">
             using Redshift
           </ExternalLink>
           .
-        </span>
-      );
-    }
-
-    if (this.props.backend === 'mysql') {
-      return (
-        <span>
-          Learn more about <ExternalLink href="https://help.keboola.com/manipulation/transformations/mysql/">using MySQL</ExternalLink>.{' '}
-          Use <code>Ctrl+Space</code> for autocomplete and syntax hints.
-        </span>
+        </HelpBlock>
       );
     }
 
