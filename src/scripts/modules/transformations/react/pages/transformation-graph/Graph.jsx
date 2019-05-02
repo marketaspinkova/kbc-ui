@@ -2,13 +2,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
 import GraphCanvas from '../../../../../react/common/GraphCanvas';
-import { Navigation } from 'react-router';
 
 import graphUtils from '../../../../../utils/graphUtils';
 
 export default createReactClass({
-  mixins: [Navigation],
-
   propTypes: {
     model: PropTypes.object.isRequired,
     centerNodeId: PropTypes.string,
