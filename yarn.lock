@@ -939,6 +939,11 @@
   resolved "https://registry.yarnpkg.com/@json-editor/json-editor/-/json-editor-1.3.5.tgz#b8ec91b2ad53d65a031c90941e3c3bbd084bc321"
   integrity sha512-maU/05CzSvW5waIqWXhhiekLhDKwu8cOkGESIVyV2UrONedRzO/qk+WBFKkBbLmm5TeyRnkwVL6CkKNyaa2d4w==
 
+"@keboola/codemirror-mode-sfsql@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@keboola/codemirror-mode-sfsql/-/codemirror-mode-sfsql-0.1.3.tgz#3a8563203bce129c236a8e827e3ba13c8a9f406b"
+  integrity sha512-3TLOGWQ4fRZYCbL4XGl/tdltDBNTS7mXDapWBHkGnVO4MvU14kMjy0DP9uc8ue+bbUZ5WWeQsevalGmMX5lFfQ==
+
 "@keboola/indigo-ui@^8.0.0":
   version "8.0.5"
   resolved "https://registry.yarnpkg.com/@keboola/indigo-ui/-/indigo-ui-8.0.5.tgz#09956d82642a54cb6c7ed816c2e065a5ac363a1b"
