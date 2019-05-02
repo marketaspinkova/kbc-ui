@@ -71,7 +71,7 @@ export default createReactClass({
             type={fieldName === 'password' ? 'password' : 'text'}
             disabled={disabled}
             onChange={e => this.handleChange({[fieldName]: e.target.value})}
-            value={value[fieldName]}
+            value={value[fieldName] || ''}
           />
           {help && <HelpBlock>{help}</HelpBlock>}
         </Col>
