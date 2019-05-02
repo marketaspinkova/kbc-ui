@@ -20,6 +20,7 @@ export default createReactClass({
     onSave: PropTypes.func.isRequired,
     otherDestinations: PropTypes.object.isRequired,
     componentType: PropTypes.string.isRequired,
+    hasSourceTable: PropTypes.bool,
     onEditStart: PropTypes.func,
     definition: PropTypes.object
   },
@@ -137,8 +138,7 @@ export default createReactClass({
   },
 
   editingNonExistentTable() {
-    return this.props.mode === MODE_EDIT
-      && this.props.tables.get(this.props.mapping.get('source'), Map()).count() === 0;
+    return this.props.mode === MODE_EDIT && !this.props.hasSourceTable;
   },
 
   handleCancel() {

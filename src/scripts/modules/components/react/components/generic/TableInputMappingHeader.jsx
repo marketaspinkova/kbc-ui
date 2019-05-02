@@ -92,6 +92,7 @@ export default createReactClass({
                 otherDestinations={this.props.otherDestinations}
                 definition={this.props.definition}
                 componentType={this.props.componentType}
+                hasSourceTable={sourceTable.count() > 0}
               />
             </span>
           </span>
