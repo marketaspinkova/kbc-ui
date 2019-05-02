@@ -16,10 +16,18 @@ export default createReactClass({
               <RegionSelect activeRegion="US"/>
             </section>
             <section>
-              <header>
+              <div className="header">
                 <h1>Welcome back!</h1>
                 <p>Log in to your account</p>
-              </header>
+                <a href="#" className="back-link">
+                  <svg width="14" height="24" viewBox="0 0 14 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M0.272995 11.3661L11.5392 0.264458C11.9032 -0.0881526 12.4918 -0.0881526 12.8519 0.264458L13.727 1.11222C14.091 1.46483 14.091 2.03501 13.727 2.38387L3.99419 12L13.727 21.6161C14.091 21.9687 14.091 22.5389 13.727 22.8878L12.8519 23.7355C12.4879 24.0882 11.8993 24.0882 11.5392 23.7355L0.272995 12.6339C-0.0909929 12.2888 -0.0909929 11.7187 0.272995 11.3661Z"
+                      fill="#C8CAD9"
+                    />
+                  </svg>
+                </a>
+              </div>
               <form className="outer-content" method="post" action="" noValidate>
                 {/* <div className="form-group">
                     <input
