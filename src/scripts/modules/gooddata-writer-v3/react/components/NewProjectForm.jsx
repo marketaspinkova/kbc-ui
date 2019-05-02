@@ -54,7 +54,8 @@ export default createReactClass({
     return [
       this.renderInputControlGroup('Project Id', 'pid', 'type pid', 'Id of GoodData project'),
       this.renderInputControlGroup('Username', 'login', 'type username', 'Username of GoodData user'),
-      this.renderInputControlGroup('Password', 'password', 'type password', 'Password of GoodData user')
+      this.renderInputControlGroup('Password', 'password', 'type password', 'Password of GoodData user'),
+      this.renderInputControlGroup('Backend Url (optional)', 'backendUrl', 'type url', 'Backend Url, e.g. https://secure.gooddata.com')
     ];
   },
 
@@ -67,12 +68,11 @@ export default createReactClass({
         </Col>
         <Col sm={9}>
           <FormControl
-            helpBlock={help}
             placeholder={placeholder}
             type={fieldName === 'password' ? 'password' : 'text'}
             disabled={disabled}
             onChange={e => this.handleChange({[fieldName]: e.target.value})}
-            value={value[fieldName]}
+            value={value[fieldName] || ''}
           />
           {help && <HelpBlock>{help}</HelpBlock>}
         </Col>

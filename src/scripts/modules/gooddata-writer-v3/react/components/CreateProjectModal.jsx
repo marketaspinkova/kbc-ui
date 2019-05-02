@@ -26,6 +26,7 @@ export default createReactClass({
         login: isCreateNewProject ? '' : this.props.config.login,
         password: isCreateNewProject ? '' : this.props.config.password,
         pid: isCreateNewProject ? '' : this.props.config.pid,
+        backendUrl: '',
         customToken: '',
         tokenType: TokenTypes.DEMO
       }
