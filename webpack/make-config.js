@@ -37,21 +37,12 @@ module.exports = function(options) {
   var entry = {};
   if (isDevelopment) {
     entry = {
-      bundle: [
-        './src/styles/kbc.less',
-        './node_modules/intl/Intl.js',
-        './node_modules/intl/locale-data/jsonp/en.js',
-        options.entry
-      ],
+      bundle: ['./src/styles/kbc.less', options.entry],
       parts: ['./src/styles/kbc.less', './src/scripts/parts']
     };
   } else {
     entry = {
-      bundle: [
-        './node_modules/intl/Intl.js',
-        './node_modules/intl/locale-data/jsonp/en.js',
-        './src/scripts/app'
-      ],
+      bundle: ['./src/scripts/app'],
       parts: ['./src/scripts/parts']
     };
   }

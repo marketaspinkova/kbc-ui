@@ -1,17 +1,9 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import moment from 'moment';
+import { AlertBlock } from '@keboola/indigo-ui';
 import contactSupport from '../../../utils/contactSupport';
-import IntlMessageFormat from 'intl-messageformat';
-import {AlertBlock} from '@keboola/indigo-ui';
-
-const MESSAGES = {
-  DAYS: '{days, plural, ' +
-  '=0 {less than a day}' +
-  '=1 {# day}' +
-  'other {# days}}'
-};
 
 export default createReactClass({
   propTypes: {
@@ -19,9 +11,7 @@ export default createReactClass({
   },
 
   render() {
-    const {expires} = this.props;
-
-    if (!expires || parseInt(this.days(), 10) > 30) {
+    if (!this.props.expires || parseInt(this.days(), 10) > 30) {
       return null;
     }
 
@@ -33,9 +23,15 @@ export default createReactClass({
   },
 
   days() {
-    // Math.round is used for compatibility with ranges computed by backend (settings page)
-    return new IntlMessageFormat(MESSAGES.DAYS).format({
-      days: Math.max(0, Math.round(moment(this.props.expires).diff(moment(), 'days', true)))
-    });
+    const days = Math.max(0, Math.round(moment(this.props.expires).diff(moment(), 'days', true)));
+
+    switch(days) {
+      case 0:
+        return 'less than a day';
+      case 1:
+        return '1 day';
+      default:
+        return `${days} days`;
+    }
   }
 });

@@ -25,8 +25,6 @@
     "fuzzaldrin": "^2.1.0",
     "fuzzy": "~0.1.0",
     "immutable": "~3.7.3",
-    "intl": "^0.1.4",
-    "intl-messageformat": "^1.1.0",
     "keen-js": "^3.4.0",
     "later": "~1.1.6",
     "lodash.defaultsdeep": "^4.6.0",
