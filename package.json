@@ -31,7 +31,7 @@
     "lodash.defaultsdeep": "^4.6.0",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.25",
-    "numeral": "~1.5.3",
+    "numeral": "^2.0.6",
     "prettycron": "^0.10.0",
     "prop-types": "^15.7.2",
     "rc-switch": "~1.7.0",
