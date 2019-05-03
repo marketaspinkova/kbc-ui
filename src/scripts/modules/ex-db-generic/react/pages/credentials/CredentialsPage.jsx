@@ -41,7 +41,6 @@ export default function(
     render() {
       let modalProps = {};
 
-      console.log(this.updatingCredentialsWithSavedQueries()); // eslint-disable-line
       if (this.updatingCredentialsWithSavedQueries()) {
         modalProps = {
           showModal: true,
