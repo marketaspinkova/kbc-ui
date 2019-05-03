@@ -160,6 +160,7 @@ export default createRoute(routeSettings);
 - `row.hasState` - if the component saves state a button will show in the UI to reset the state
 - `row.columns` - columns of the rows table on the **index** page
 - `row.actions` - component sync actions available for row page
+- `row.name` - optional subitem name value, default `Table` for singular and `Tables` for plural
       
 ##### `index.sections`
 
@@ -224,6 +225,18 @@ import columnTypes from '../configurations/utils/columnTypeConstants';
   }
 },
 ````
+
+##### `row.name`
+
+Default values can be overriden and used in all texts and descriptions. Defaults are
+
+```javascript
+{
+    singular: 'Table',
+    plural: 'Tables'
+}
+```
+
 
 #### Helpers
 
