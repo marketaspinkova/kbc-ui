@@ -1,8 +1,9 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
-import {Loader} from '@keboola/indigo-ui';
-import {Link} from 'react-router';
+import { Loader } from '@keboola/indigo-ui';
+import { Link } from 'react-router';
+import RefreshTables from './RefreshTables';
 
 export default createReactClass({
   propTypes: {
@@ -48,20 +49,7 @@ export default createReactClass({
       return (
         <div>
           {tableSelectorElement}
-          <div className="help-block">
-            Not seeing your newest tables?
-            {' '}
-            <a
-              onClick={(e) => {
-                e.preventDefault();
-                this.props.refreshMethod();
-              }}
-            >
-              Reload
-            </a>
-            {' '}
-            the list of tables.
-          </div>
+          <RefreshTables refresh={this.props.refreshMethod} />
         </div>
       );
     }
