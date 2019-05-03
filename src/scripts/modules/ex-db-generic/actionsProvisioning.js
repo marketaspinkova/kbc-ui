@@ -240,6 +240,7 @@ export function createActions(componentId) {
       }
       const diffMsg = 'Update credentials';
       return saveConfigData(configId, newConfigData, ['isSavingCredentials'], diffMsg).then(() => {
+        reloadSourceTables(componentId, configId);
         this.cancelCredentialsEdit(configId);
         if (testedCredentials !== credentials) {
           this.updateLocalState(configId, storeProvisioning.CONNECTION_TESTED_PATH, false);
