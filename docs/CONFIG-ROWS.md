@@ -582,7 +582,8 @@ export function createEmptyConfiguration(tableId) {
 
 #### Testing
 
-All adapters MUST have tests and the tests must cover each possible state of the **local state**.
+All adapters MUST have tests and the tests must cover each possible state of the **local state** 
+([`keboola.ex-storage` example](./src/scripts/modules/ex-storage/adapters)).
 
 ## Integration
 
