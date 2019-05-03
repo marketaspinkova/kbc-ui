@@ -14,22 +14,22 @@ You can use these components as great working examples. You can copy the whole c
 
 Config Rows UI employs hierarchical configurations. Each component can have any number of configurations and each 
 configuration has any number of rows. The end user is allowed to run the whole configuration (all rows) or only 
-a single row. 
+a single configuration row. 
 
-This all is a logical wrapper - imagine a **configuration** being a database you want to connect to and a **row** a single 
+This all is a logical wrapper - imagine a **configuration** being a database you want to connect to and a **configuration row** a single 
 table to be downloaded. 
 
 ### Structure
 
 There is a common hierarchy and a fixed set of pages available
 
- - **Configuration detail**, also **index** - this is the main detail of the configuration where you set the credentials and other stuff 
+ - **Configuration detail**, also **index page** - this is the main detail of the configuration where you set the credentials and other stuff 
  shared for all rows, it also contains a list of rows
  - **Configuration versions** - page of versions for the configuration
- - **Row detail**, also **row** - detail of a single row
+ - **Row detail**, also **row page** - detail of a single row
  - **Row versions** - versions of a given row
    
-Only the **Configuration detail** and **Row detail** pages are customizable.
+Only the **index detail** and **row page** pages are customizable.
  
 ### Sections
 
@@ -46,14 +46,14 @@ The UI usually needs to display configuration in a different way than it is fina
 of processors triggered in a single checkbox). 
 
 Adapters allow you to create a mapping between the physical storage and the best way to display the configuration.
-This mapping is 2 way - so any change in the configuration will result in a change in the UI and vice versa.
+This mapping is 2 way - so any change in the configuration data will result in a change in the UI and vice versa.
 
 ![Adapters Flow](./adapters_flow.png)
 
-The raw configuration (stored in Storage) is referred to as **configuration**, 
+The raw configuration (stored in Storage) is referred to as **configuration data** (**row data** on row page), 
 the mapped configuration is referred to as **local state**.
 
-In case the user wants to modify the configuration further than the UI allows, the form can be switched to a JSON input 
+In case the user wants to modify the configuration data further than the UI allows, the form can be switched to a JSON input 
 without any constraints. Configurations, that cannot be mapped successfully to the local state, will remain as JSON.
 
 ![Validation](./validation.png) 
@@ -120,24 +120,24 @@ const routeSettings = {
       {
         name: 'Name',
         type: columnTypes.VALUE,
-        value: function(row) {
-          return row.get('name') !== '' ? row.get('name') : 'Untitled';
+        value: function(rowData) {
+          return rowData.get('name') !== '' ? rowData.get('name') : 'Untitled';
         }
       },
       {
         name: 'Storage',
         type: columnTypes.TABLE_LINK_DEFAULT_BUCKET,
-        value: function(row) {
-          return row.get('tableName')
+        value: function(rowData) {
+          return rowData.get('tableName')
         }
       },
       {
         name: 'Description',
         type: columnTypes.VALUE,
-        value: function(row) {
+        value: function(rowData) {
           return (
             <small>
-              {row.get('description') !== '' ? row.get('description') : 'No description'}
+              {rowData.get('description') !== '' ? rowData.get('description') : 'No description'}
             </small>
           );
         }
@@ -154,11 +154,11 @@ export default createRoute(routeSettings);
 
 - `componentId` - eg `vendor.ex-mycomponent`
 - `componentType` - `extractor` or `writer`, `writer` will let the user select a table from Storage when creating a new row
-- `index.sections` - sections on the **index** page
+- `index.sections` - sections on the **index page**
 - `index.actions` - component sync actions available for index page
-- `row.sections` - sections on the **row** page
+- `row.sections` - sections on the **row page** 
 - `row.hasState` - if the component saves state a button will show in the UI to reset the state
-- `row.columns` - columns of the rows table on the **index** page (**Name** column is added automatically)
+- `row.columns` - columns of the rows table on the **index page** (**Name** column is added automatically)
 - `row.actions` - component sync actions available for row page
 - `row.name` - optional subitem name value, default `Table` for singular and `Tables` for plural
       
@@ -167,8 +167,8 @@ export default createRoute(routeSettings);
 Each section has the following properties
 
 - `render` - React component to display this section
-- `onSave` - adapter function mapping **local state** to **configuration**
-- `onLoad` - adapter function mapping **configuration** to **local state**
+- `onSave` - adapter function mapping **local state** to **configuration data**
+- `onLoad` - adapter function mapping **configuration data** to **local state**
 
 Example
 
@@ -193,7 +193,7 @@ Each column has these properties
   - `TABLE_LINK_DEFAULT_BUCKET` - link to a table in Storage using default bucket
   - `TABLE_LINK` - link to a table in Storage
   - `VALUE` - displays the value without any further processing
-- `value` - function to retrieve the column value from the row **configuration** (not **local state**)
+- `value` - function to retrieve the column value from the **row data** (not **local state**)
  
 Examples
 
@@ -203,8 +203,8 @@ import columnTypes from '../configurations/utils/columnTypeConstants';
 {
   name: 'Storage',
   type: columnTypes.TABLE_LINK_DEFAULT_BUCKET,
-  value: function(row) {
-    const processorMoveFiles = row.getIn(['processors', 'after'], Immutable.List()).find(
+  value: function(rowData) {
+    const processorMoveFiles = rowData.getIn(['processors', 'after'], Immutable.List()).find(
       function(processor) {
         return processor.getIn(['definition', 'component']) === 'keboola.processor-move-files';
       },
@@ -232,7 +232,7 @@ Default values can be overriden and used in all texts and descriptions. Defaults
 
 ##### `CreateCollapsibleSection`
 
-Creates a collapsible section that collapses once the required fields are filled in. Can be used in both index and row sections.
+Creates a collapsible section that collapses once the required fields are filled in. Can be used in both index page and row page sections.
 
 Properties
 
@@ -264,9 +264,9 @@ The `CollapsibleSection` component can also accept `isComplete` property. `isCom
 Example
 
 ```javascript
-export function isComplete(configuration) {
-  return configuration.getIn(['parameters', 'accessKeyId'], '') !== '' && 
-    configuration.getIn(['parameters', '#secretAccessKey'], '') !== '';
+export function isComplete(configurationData) {
+  return configurationData.getIn(['parameters', 'accessKeyId'], '') !== '' && 
+    configurationData.getIn(['parameters', '#secretAccessKey'], '') !== '';
 }
 ```
 
@@ -274,13 +274,13 @@ export function isComplete(configuration) {
 
 In case you need to make changes in the UI or configuration, always try to make the changes backwards compatible. 
 In case this is not possible, `onConform` is a function, that can bring a small degree of flexibility to backwards 
-compatibility. `onConform` function is executed on the **configuration** before it is passed to the **onLoad** adapter,
-where it can mimic missing properties. Can be applied to both `index` and `row`
+compatibility. `onConform` function is executed on the **configuration data** before it is passed to the **onLoad** adapter,
+where it can mimic missing properties. Can be applied to both index and row pages.
 
 Example
 
 ```javascript
-onConform: (configuration) => {
+onConform: (configurationData) => {
   const configDraft = fromJS({
     storage: {
       input: {
@@ -295,7 +295,7 @@ onConform: (configuration) => {
       incremental: false
     }
   });
-  return configDraft.mergeDeep(configuration);
+  return configDraft.mergeDeep(configurationData);
 }
 ```
 
@@ -355,8 +355,8 @@ and can update it via a callback function.
 
 #### `actions`
 
-Actions allow the UI use sync action from the component. Actions can be defined for `index` and `row` pages, `index` 
-actions are also available in the `row` scope.  
+Actions allow the UI use sync action from the component. Actions can be defined for both index and row pages, index page 
+actions are also available in the row page scope.  
 
 ##### Format
 
@@ -444,7 +444,7 @@ gets passed through.
 
 ##### Definition
 
-Sync actions can be defined in `index` or `row` node.
+Sync actions can be defined for index and row pages.
 
 - `name` - name of the action, serves to identify the action in the `actions` property
 - `cache` - the results will be cached, cache id is derived from the request payload
@@ -468,23 +468,23 @@ Sync actions can be defined in `index` or `row` node.
 
 The function returns an Immutable.js object with the body payload or `false`, if the action should not be executed.
 
-- `index` actions have a single argument, `configuration` with the configuration
-- `row` actions have two arguments, `configuration` and `row` with the respective configurations 
+- index page actions have a single argument, `configurationData` with the configuration data
+- row page actions have two arguments, `configurationData` and `rowData` with the respective configuration data
 
 **Example**
 
 ```javasript
 import Immutable from 'immutable';
 
-const infoAction = function(configuration) {
-  if (!configuration.hasIn(['parameters', '#token']) || !configuration.hasIn(['parameters', 'url'])) {
+const infoAction = function(configurationData) {
+  if (!configurationData.hasIn(['parameters', '#token']) || !configurationData.hasIn(['parameters', 'url'])) {
     return false;
   }
   return Immutable.fromJS({
     configData: {
       parameters: {
-        '#token': configuration.getIn(['parameters', '#token'], ''),
-        url: configuration.getIn(['parameters', 'url'], '')
+        '#token': configurationData.getIn(['parameters', '#token'], ''),
+        url: configurationData.getIn(['parameters', 'url'], '')
       }
     }
   });
@@ -512,10 +512,10 @@ a collapsible OAuth section
 
 ### Adapters
 
-Adapters serve to convert **configuration** to **local state** which is then passed to the React components, 
+Adapters serve to convert **configuration data** to **local state** which is then passed to the React components, 
 React components then change the **local state** and during save the process is reversed. 
 
-Please note that except React components all other functions receive the **configuration**, not the **local state**.
+Please note that except React components all other functions receive the **configuration data**, not the **local state**.
 
 Each React component should have its own set of adapters. All arguments and return values are Immutable.js maps.
 
@@ -525,19 +525,19 @@ Each React component should have its own set of adapters. All arguments and retu
 export default {
   // onSave
   createConfiguration: function(localState) {
-    const config = Immutable.fromJS({
+    const configurationData = Immutable.fromJS({
       parameters: {
         url: localState.get('url', ''),
         '#token': localState.get('token', '')
       }
     });
-    return config;
+    return configurationData;
   },
   // onLoad
-  parseConfiguration: function(configuration) {
+  parseConfiguration: function(configurationData) {
     return Immutable.fromJS({
-      url: configuration.getIn(['parameters', 'url'], ''),
-      token: configuration.getIn(['parameters', '#token'], '')
+      url: configurationData.getIn(['parameters', 'url'], ''),
+      token: configurationData.getIn(['parameters', '#token'], '')
     });
   }
 }
@@ -545,22 +545,22 @@ export default {
 
 #### `onSave`
 
-The function receives data from the **local state** and produces the **configuration** or its part.
+The function receives data from the **local state** and produces the **configuration data** or its part.
 
 ##### Merging
 
-Multiple `onSave` adapters can write into the same `configuration` or its node. Result of all `onSave` adapters are deep 
+Multiple `onSave` adapters can write into the same configuration data or its node. Result of all `onSave` adapters are deep 
 merged in the order of their definition. 
 
 #### `onLoad`
 
-The function receives data from `configuration` or `row` and returns **local state** for the desired component, it is 
+The function receives data from `configuration data` or `row data` and returns **local state** for the desired component, it is 
 a reverse function to `onSave`.
 
 #### `onCreate`
 
 `onCreate` is one way adapter function that typically forwards directly to `onLoad` adapter function but is executed when
- a new row is added and creates default configuration to be stored in Storage. It accepts these arguments 
+ a new configuration row is added and creates default configuration data to be stored in Storage. It accepts these arguments 
   - `name`, `webalizedName` for extractors
   - `tableId` for writers
   
