@@ -1,20 +1,11 @@
-/*
-   Edit buttons
-   When editing Save and Cancel buttons are shown. These buttons are disabled and loader is shown when saving.
- */
-import PropTypes from 'prop-types';
-
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
-
 import {Loader} from '@keboola/indigo-ui';
 import {Button} from 'react-bootstrap';
-
 import SaveButtonsModal from './SaveButtonsModal';
 
 export default createReactClass({
-
   propTypes: {
     isSaving: PropTypes.bool.isRequired,
     isChanged: PropTypes.bool.isRequired,
@@ -85,16 +76,13 @@ export default createReactClass({
   },
 
   modal() {
-    const component = this;
     return (
       <SaveButtonsModal
         title={this.props.modalTitle}
         body={this.props.modalBody}
         show={this.state.modalOpen}
         onSave={this.props.onSave}
-        onHide={function() {
-          return component.setState({modalOpen: false});
-        }}
+        onHide={() => this.setState({modalOpen: false})}
       />
     );
   },
