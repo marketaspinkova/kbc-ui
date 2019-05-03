@@ -158,7 +158,7 @@ export default createRoute(routeSettings);
 - `index.actions` - component sync actions available for index page
 - `row.sections` - sections on the **row** page
 - `row.hasState` - if the component saves state a button will show in the UI to reset the state
-- `row.columns` - columns of the rows table on the **index** page
+- `row.columns` - columns of the rows table on the **index** page (**Name** column is added automatically)
 - `row.actions` - component sync actions available for row page
 - `row.name` - optional subitem name value, default `Table` for singular and `Tables` for plural
       
@@ -197,16 +197,6 @@ Each column has these properties
  
 Examples
 
-```javascript
-import columnTypes from '../configurations/utils/columnTypeConstants';
-{
-  name: 'Name',
-  type: columnTypes.VALUE,
-  value: function(row) {
-    return row.get('name') !== '' ? row.get('name') : 'Untitled';
-  }
-}
-```
 
 ```javascript
 import columnTypes from '../configurations/utils/columnTypeConstants';
@@ -214,7 +204,7 @@ import columnTypes from '../configurations/utils/columnTypeConstants';
   name: 'Storage',
   type: columnTypes.TABLE_LINK_DEFAULT_BUCKET,
   value: function(row) {
-    const processorMoveFiles = row.getIn(['configuration', 'processors', 'after'], Immutable.List()).find(
+    const processorMoveFiles = row.getIn(['processors', 'after'], Immutable.List()).find(
       function(processor) {
         return processor.getIn(['definition', 'component']) === 'keboola.processor-move-files';
       },
