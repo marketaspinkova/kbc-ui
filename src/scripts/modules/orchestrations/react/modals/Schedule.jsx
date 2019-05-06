@@ -17,6 +17,10 @@ import { FEATURE_EVENT_ORCHESTRATIONS } from '../../../../constants/KbcConstants
 
 const componentId = 'orchestrator';
 
+const triggerDefault = { tables: [], coolDownPeriodMinutes: 5 };
+
+const crontabDefault = '0 0 * * *';
+
 export default createReactClass({
   propTypes: {
     orchestrationId: PropTypes.number.isRequired,
@@ -27,11 +31,11 @@ export default createReactClass({
 
   getInitialState() {
     return {
-      crontabRecord: this.props.crontabRecord || '0 0 * * *',
+      crontabRecord: this.props.crontabRecord || crontabDefault,
       isSaving: false,
       showModal: false,
       invokeType: this.props.trigger ? ORCHESTRATION_INVOKE_TYPE.EVENT : ORCHESTRATION_INVOKE_TYPE.TIME,
-      trigger: this.props.trigger || { tables: [], coolDownPeriodMinutes: '5' }
+      trigger: this.props.trigger || triggerDefault
     };
   },
 
@@ -45,9 +49,9 @@ export default createReactClass({
     e.preventDefault();
     return this.setState({
       showModal: true,
-      crontabRecord: this.props.crontabRecord || '0 0 * * *',
+      crontabRecord: this.props.crontabRecord || crontabDefault,
       invokeType: this.props.trigger ? ORCHESTRATION_INVOKE_TYPE.EVENT : ORCHESTRATION_INVOKE_TYPE.TIME,
-      trigger: this.props.trigger || { tables: [], coolDownPeriodMinutes: '5' }
+      trigger: this.props.trigger || triggerDefault
     });
   },
 
@@ -72,10 +76,11 @@ export default createReactClass({
               <EventTrigger
                 tables={this.props.tables}
                 selected={this.state.trigger.tables.map(item => Object.values(item)).flat()}
-                period={this.state.trigger.coolDownPeriodMinutes}
+                period={this.state.trigger.coolDownPeriodMinutes.toString()}
                 onAddTable={this._handleTriggerTableAdd}
                 onRemoveTable={this._handleTriggerTableRemove}
                 onChangePeriod={this._handleTriggerPeriodChange}
+                isPeriodValid={this._getPeriodValidation}
               />
             }
 
@@ -131,7 +136,7 @@ export default createReactClass({
         <ConfirmButtons
           className="pull-right"
           isSaving={this.state.isSaving}
-          isDisabled={!this.state.trigger.tables.length}
+          isDisabled={!this.state.trigger.tables.length || this._getPeriodValidation() === 'error'}
           saveLabel="Save"
           onCancel={this.close}
           onSave={this._handleTriggerSave}
@@ -210,10 +215,16 @@ export default createReactClass({
 
   _handleTriggerPeriodChange(event) {
     let trigger = fromJS(this.state.trigger);
-    const value = event.target.value.toString();
+    const value = event.target.value;
+    const valueInt = Number.isInteger(parseInt(value)) ? parseInt(value) : value.toString();
     return this.setState({
-      trigger: trigger.set('coolDownPeriodMinutes', value).toJS()
+      trigger: trigger.set('coolDownPeriodMinutes', valueInt).toJS()
     });
+  },
+
+  _getPeriodValidation() {
+    const period = parseInt(this.state.trigger.coolDownPeriodMinutes);
+    return !Number.isInteger(period) || period < 5 ? 'error' : null;
   },
 
   _handleTriggerSave() {

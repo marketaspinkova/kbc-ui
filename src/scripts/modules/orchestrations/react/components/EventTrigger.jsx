@@ -101,7 +101,7 @@ class EventTrigger extends React.Component {
   renderPeriodSelect() {
     return (
       <form className="form-horizontal">
-        <FormGroup validationState={this._getValidationState()}>
+        <FormGroup validationState={this.props.isPeriodValid()}>
           <Col componentClass={ControlLabel} sm={6}>
             Cooldown period
           </Col>
@@ -138,10 +138,6 @@ class EventTrigger extends React.Component {
   _getSelectedTables(selectedOptions) {
     return this.props.tables.filter(table => selectedOptions.includes(table.get('id')));
   }
-
-  _getValidationState() {
-    return this.props.period < 5 ? 'error' : null;
-  }
 }
 
 EventTrigger.propTypes = {
@@ -150,7 +146,8 @@ EventTrigger.propTypes = {
   onAddTable: PropTypes.func.isRequired,
   onRemoveTable: PropTypes.func.isRequired,
   period: PropTypes.string.isRequired,
-  onChangePeriod: PropTypes.func.isRequired
+  onChangePeriod: PropTypes.func.isRequired,
+  isPeriodValid: PropTypes.func.isRequired
 };
 
 export default EventTrigger;
