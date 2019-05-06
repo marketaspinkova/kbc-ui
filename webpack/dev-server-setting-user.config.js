@@ -1,4 +1,4 @@
 module.exports = require('./make-config')({
   isDevelopment: true,
-  entry: './src/scripts/settings-users'
+  entry: './src/scripts/dev-settings-users'
 });
