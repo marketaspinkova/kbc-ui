@@ -17,11 +17,6 @@ function renderEmptyIcon() {
 }
 
 class EventTrigger extends React.Component {
-
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const selectedTables = this._getSelectedTables(this.props.selected);
     return (
@@ -43,7 +38,6 @@ class EventTrigger extends React.Component {
               name="selectTables"
               multi={false}
               options={options}
-              delimiter=","
               onChange={item => this.props.onAddTable(item.value)}
               placeholder="Add tables..."
               clearable={true}
@@ -100,7 +94,7 @@ class EventTrigger extends React.Component {
 
   renderPeriodSelect() {
     return (
-      <form className="form-horizontal">
+      <div className="form-horizontal">
         <FormGroup validationState={this.props.isPeriodValid()}>
           <Col componentClass={ControlLabel} sm={6}>
             Cooldown period
@@ -122,7 +116,7 @@ class EventTrigger extends React.Component {
             </HelpBlock>
           </Col>
         </FormGroup>
-      </form>
+      </div>
     );
   }
   _getTables() {
