@@ -13,8 +13,8 @@ const StorageTriggersStore = StoreUtils.createStore({
     return _store.get('trigger');
   },
 
-  getIsLoaded() {
-    return _store.get('isLoaded');
+  getIsLoaded(orchestrationId) {
+    return _store.getIn(['trigger', 'configurationId']) === orchestrationId;
   }
 });
 
