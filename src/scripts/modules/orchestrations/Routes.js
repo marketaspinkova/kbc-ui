@@ -26,6 +26,7 @@ import InstalledComponentsActionsCreators from '../components/InstalledComponent
 import VersionsActionCreators from '../components/VersionsActionCreators';
 
 import createVersionsPageRoute from '../../modules/components/utils/createVersionsPageRoute';
+import StorageActionCreators from '../components/StorageActionCreators';
 
 const routes = {
   name: 'orchestrations',
@@ -61,7 +62,9 @@ const routes = {
       requireData: [
         params => OrchestrationsActionCreators.loadOrchestration(parseInt(params.orchestrationId, 10)),
         params => OrchestrationsActionCreators.loadOrchestrationJobs(parseInt(params.orchestrationId, 10)),
-        params => VersionsActionCreators.loadVersions('orchestrator', params.orchestrationId)
+        params => VersionsActionCreators.loadVersions('orchestrator', params.orchestrationId),
+        params => OrchestrationsActionCreators.loadTriggers(params.orchestrationId),
+        () => StorageActionCreators.loadTables()
       ],
       title(routerState) {
         const orchestrationId = parseInt(routerState.getIn(['params', 'orchestrationId']), 10);

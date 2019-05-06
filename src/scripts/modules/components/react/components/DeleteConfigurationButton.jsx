@@ -63,16 +63,16 @@ export default createReactClass({
           onConfirm={this._handleDelete}
           childrenRootElement="a"
         >
-          {this._renderIcon()}
+          {this._renderTypeIcon()}
           {' Move to Trash'}
         </Confirm>
       );
     }
 
-    return <a onClick={this._handleDelete}>{this._renderIcon()} Move to Trash</a>;
+    return <a onClick={this._handleDelete}>{this._renderTypeIcon()} Move to Trash</a>;
   },
 
-  _renderIcon() {
+  _renderTypeIcon() {
     if (this.state.isDeleting) {
       return <Loader />;
     }

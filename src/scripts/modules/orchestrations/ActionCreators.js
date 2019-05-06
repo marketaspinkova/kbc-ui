@@ -10,6 +10,7 @@ import { List } from 'immutable';
 import dispatcher from '../../Dispatcher';
 import * as constants from './Constants';
 import orchestrationsApi from './OrchestrationsApi';
+import storageApi from '../components/StorageApi';
 import jobsApi from '../jobs/JobsApi';
 import OrchestrationStore from './stores/OrchestrationsStore';
 import OrchestrationJobsStore from './stores/OrchestrationJobsStore';
@@ -17,6 +18,7 @@ import Promise from 'bluebird';
 import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
 import VersionsActionCreators from '../components/VersionsActionCreators';
 import InstalledComponentsActionCreators from '../components/InstalledComponentsActionCreators';
+import TriggersStore from '../components/stores/StorageTriggersStore';
 
 const rephaseTasks = tasks => {
   const isNullPhase = phase => phase === null || phase === 0 || typeof phase === 'undefined';
@@ -96,7 +98,7 @@ export default {
   },
 
   /*
-    Request orchestrations load only if not alread loaded
+    Request orchestrations load only if not already loaded
     @return Promise
   */
   loadOrchestrations() {
@@ -658,5 +660,61 @@ export default {
       type: constants.ActionTypes.ORCHESTRATIONS_LIST_SORT_BY_NAME,
       option
     });
+  },
+
+  /**
+   * Triggers
+   */
+
+  loadTriggersForce(orchestrationId) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.ORCHESTRATION_TRIGGERS_LOAD
+    });
+
+    return storageApi.listTriggers('orchestrator', orchestrationId)
+      .then((triggers) => {
+        return dispatcher.handleViewAction({
+          type: constants.ActionTypes.ORCHESTRATION_TRIGGERS_LOAD_SUCCESS,
+          triggers
+        });
+      })
+      .catch(err => {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.ORCHESTRATION_TRIGGERS_LOAD_ERROR
+        });
+        throw err;
+      });
+  },
+
+  loadTriggers(orchestrationId) {
+    if (TriggersStore.getIsLoaded(orchestrationId)) {
+      return Promise.resolve();
+    }
+
+    return this.loadTriggersForce(orchestrationId);
+  },
+
+  createTrigger(data) {
+    return storageApi.createTrigger(data)
+      .then(res => dispatcher.handleViewAction({
+        type: constants.ActionTypes.ORCHESTRATION_TRIGGERS_CREATE_SUCCESS,
+        trigger: res
+      }));
+  },
+
+  updateTrigger(id, data) {
+    return storageApi.updateTrigger(id, data)
+      .then(res => dispatcher.handleViewAction({
+        type: constants.ActionTypes.ORCHESTRATION_TRIGGERS_UPDATE_SUCCESS,
+        trigger: res
+      }));
+  },
+
+  deleteTrigger(id) {
+    return storageApi.deleteTrigger(id)
+      .then(res => dispatcher.handleViewAction({
+        type: constants.ActionTypes.ORCHESTRATION_TRIGGERS_DELETE_SUCCESS,
+        trigger: res
+      }));
   },
 };

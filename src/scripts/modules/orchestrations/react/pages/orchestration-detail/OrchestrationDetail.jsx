@@ -10,6 +10,7 @@ import OrchestrationJobsStore from '../../../stores/OrchestrationJobsStore';
 import RoutesStore from '../../../../../stores/RoutesStore';
 import VersionsStore from '../../../../components/stores/VersionsStore';
 import LatestJobsStore from '../../../../jobs/stores/LatestJobsStore';
+import TriggersStore from '../../../../components/stores/StorageTriggersStore';
 
 // React components
 import ComponentDescription from '../../../../components/react/components/ComponentDescription';
@@ -26,9 +27,10 @@ import OrchestrationDeleteButton from '../../components/OrchestrationDeleteButto
 import OrchestrationActiveButton from '../../components/OrchestrationActiveButton';
 import {ExternalLink} from '@keboola/indigo-ui';
 import {Row, Col} from 'react-bootstrap';
+import StorageTablesStore from '../../../../components/stores/StorageTablesStore';
 
 export default createReactClass({
-  mixins: [createStoreMixin(OrchestrationStore, OrchestrationJobsStore, VersionsStore, LatestJobsStore)],
+  mixins: [createStoreMixin(OrchestrationStore, OrchestrationJobsStore, VersionsStore, LatestJobsStore, StorageTablesStore, TriggersStore)],
 
   getStateFromStores() {
     const orchestrationId = RoutesStore.getCurrentRouteIntParam('orchestrationId');
@@ -37,6 +39,8 @@ export default createReactClass({
     const versions = VersionsStore.getVersions('orchestrator', orchestrationId.toString());
     let tasks = List();
     phases.forEach(phase => (tasks = tasks.concat(phase.get('tasks'))));
+
+    const trigger = TriggersStore.get();
 
     return {
       orchestration: OrchestrationStore.get(orchestrationId),
@@ -50,7 +54,9 @@ export default createReactClass({
       graphJobs: jobs.filter(job => job.get('startTime') && job.get('endTime')),
       jobsLoading: OrchestrationJobsStore.isLoading(orchestrationId),
       pendingActions: OrchestrationStore.getPendingActionsForOrchestration(orchestrationId),
-      latestJobs: LatestJobsStore.getJobs('orchestration', orchestrationId)
+      latestJobs: LatestJobsStore.getJobs('orchestration', orchestrationId),
+      tables: StorageTablesStore.getAll(),
+      trigger: trigger && trigger.toJS()
     };
   },
 
@@ -94,16 +100,22 @@ export default createReactClass({
           <div className="kbc-row">
             <Row>
               <Col sm={9}>
-                <h2>Schedule</h2>
+                {this.state.trigger ? <h2>Event Trigger</h2> : (<h2>Schedule</h2>)}
               </Col>
               <Col sm={3}>
                 <ScheduleModal
                   crontabRecord={this.state.orchestration.get('crontabRecord')}
                   orchestrationId={this.state.orchestration.get('id')}
+                  tables={this.state.tables}
+                  trigger={this.state.trigger}
                 />
               </Col>
             </Row>
-            <CronRecord crontabRecord={this.state.orchestration.get('crontabRecord')}/>
+            {
+              this.state.trigger
+              ? this.renderEventTrigger()
+              : <CronRecord crontabRecord={this.state.orchestration.get('crontabRecord')}/>
+            }
           </div>
           <div className="kbc-row">
             <Row>
@@ -191,6 +203,17 @@ export default createReactClass({
             limit={3}
           />
         </Col>
+      </div>
+    );
+  },
+
+  renderEventTrigger() {
+    const tables = this.state.trigger.tables;
+    const period = this.state.trigger.coolDownPeriodMinutes;
+    return (
+      <div>
+        <span>Tables to check: {tables.length}</span><br />
+        <span>Cooldown period: {period} minutes</span>
       </div>
     );
   }
