@@ -5,7 +5,7 @@ import Select from 'react-select';
 import moment from 'moment';
 import date from '../../../../utils/date';
 import Tooltip from '../../../../react/common/Tooltip';
-import SapiTableLinkEx from '../../../components/react/components/StorageApiTableLinkEx';
+import SapiTableLink from '../../../components/react/components/StorageApiTableLink';
 
 function renderEmptyIcon() {
   return (
@@ -63,7 +63,6 @@ class EventTrigger extends React.Component {
         <Table striped hover>
           <thead>
           <tr>
-            <th> </th>
             <th>Table</th>
             <th>Last Import</th>
             <th> </th>
@@ -73,9 +72,10 @@ class EventTrigger extends React.Component {
           {tables.valueSeq().map((item, index) => {
             return (
               <tr key={index}>
-                <td><i className="fa fa-fw fa-table" /></td>
                 <td className="kbc-break-all kbc-break-word">
-                  <SapiTableLinkEx tableId={item.get('id')} />
+                  <SapiTableLink tableId={item.get('id')}>
+                    {item.get('id')}
+                  </SapiTableLink>
                 </td>
                 <td>
                   <span title={moment(item.get('lastImportDate')).fromNow()}>
