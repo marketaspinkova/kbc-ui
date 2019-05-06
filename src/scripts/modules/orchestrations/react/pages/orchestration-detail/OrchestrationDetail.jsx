@@ -28,7 +28,6 @@ import OrchestrationActiveButton from '../../components/OrchestrationActiveButto
 import {ExternalLink} from '@keboola/indigo-ui';
 import {Row, Col} from 'react-bootstrap';
 import StorageTablesStore from '../../../../components/stores/StorageTablesStore';
-import SapiTableLink from '../../../../components/react/components/StorageApiTableLink';
 
 export default createReactClass({
   mixins: [createStoreMixin(OrchestrationStore, OrchestrationJobsStore, VersionsStore, LatestJobsStore, StorageTablesStore, TriggersStore)],
@@ -211,22 +210,11 @@ export default createReactClass({
   renderEventTrigger() {
     const tables = this.state.trigger.tables;
     const period = this.state.trigger.coolDownPeriodMinutes;
-    return (<div>
-      <span>Cooldown period: {period} minutes</span><br />
-      <span>Run when these tables are updated:</span>
-      {tables.length > 0 && (
-        <ul>
-          {tables.map((item, index) => {
-            return (
-              <li key={index}>
-                <SapiTableLink tableId={item.tableId}>
-                  {item.tableId}
-                </SapiTableLink>
-              </li>
-            );
-          })}
-        </ul>
-      )}
-    </div>);
+    return (
+      <div>
+        <span>Tables to check: {tables.length}</span><br />
+        <span>Cooldown period: {period} minutes</span>
+      </div>
+    );
   }
 });
