@@ -1,4 +1,4 @@
 module.exports = require('./make-config')({
   isDevelopment: true,
-  entry: './src/scripts/projectsList'
+  entry: './src/scripts/dev-projects-list'
 });
