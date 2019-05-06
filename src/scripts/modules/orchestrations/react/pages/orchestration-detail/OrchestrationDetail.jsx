@@ -28,6 +28,7 @@ import OrchestrationActiveButton from '../../components/OrchestrationActiveButto
 import {ExternalLink} from '@keboola/indigo-ui';
 import {Row, Col} from 'react-bootstrap';
 import StorageTablesStore from '../../../../components/stores/StorageTablesStore';
+import SapiTableLink from '../../../../components/react/components/StorageApiTableLink';
 
 export default createReactClass({
   mixins: [createStoreMixin(OrchestrationStore, OrchestrationJobsStore, VersionsStore, LatestJobsStore, StorageTablesStore, TriggersStore)],
@@ -100,7 +101,7 @@ export default createReactClass({
           <div className="kbc-row">
             <Row>
               <Col sm={9}>
-                <h2>Schedule</h2>
+                {this.state.trigger ? <h2>Event Trigger</h2> : (<h2>Schedule</h2>)}
               </Col>
               <Col sm={3}>
                 <ScheduleModal
@@ -113,7 +114,7 @@ export default createReactClass({
             </Row>
             {
               this.state.trigger
-              ? <span>Event trigger</span>
+              ? this.renderEventTrigger()
               : <CronRecord crontabRecord={this.state.orchestration.get('crontabRecord')}/>
             }
           </div>
@@ -205,5 +206,27 @@ export default createReactClass({
         </Col>
       </div>
     );
+  },
+
+  renderEventTrigger() {
+    const tables = this.state.trigger.tables;
+    const period = this.state.trigger.coolDownPeriodMinutes;
+    return (<div>
+      <span>Cooldown period: {period} minutes</span><br />
+      <span>Run when these tables are updated:</span>
+      {tables.length > 0 && (
+        <ul>
+          {tables.map((item, index) => {
+            return (
+              <li key={index}>
+                <SapiTableLink tableId={item.tableId}>
+                  {item.tableId}
+                </SapiTableLink>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </div>);
   }
 });
