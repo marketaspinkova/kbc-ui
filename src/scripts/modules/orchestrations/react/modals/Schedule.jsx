@@ -98,7 +98,7 @@ export default createReactClass({
           className="pull-left"
           bsStyle="danger"
           onClick={this._handleRemoveSchedule}
-          disabled={this.state.isSaving}
+          disabled={this.state.isSaving || !this.props.crontabRecord}
         >
           Remove Schedule
         </Button>
