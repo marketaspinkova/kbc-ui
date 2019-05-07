@@ -18,10 +18,6 @@ const TableBrowserStore = StoreUtils.createStore({
 
   getLocalState(tableId) {
     return _store.getIn(['localStateByTableId', tableId], Map());
-  },
-
-  getCurrenTableLocalState() {
-    return this.getLocalState(this.getCurrentTableId());
   }
 });
 
