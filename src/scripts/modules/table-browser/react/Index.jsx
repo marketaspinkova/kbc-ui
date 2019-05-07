@@ -37,14 +37,6 @@ export default createReactClass({
 
   render() {
     return (
-      <span key="mainspan">
-        {this.renderModal()}
-      </span>
-    );
-  },
-
-  renderModal() {
-    return (
       <TableLinkModalDialog
         tableId={this.state.tableId}
         reload={this.reload}
