@@ -11,6 +11,7 @@ export default {
       const actions = createActionsProvisioning(routerState.tableId);
       tableBrowserActions.setCurrentTableId(routerState.tableId, actions.initLocalState());
       actions.loadAll();
+      return null;
     });
   },
   defaultRouteHandler: Index
