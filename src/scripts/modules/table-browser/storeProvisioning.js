@@ -23,7 +23,6 @@ export default function(tableId) {
     table: table,
     isLoading: isLoading,
     isLoadingAll: () => isLoading || getLocalState('loadingPreview') || eventService.getIsLoading(),
-    tableExists: tableExists,
-    isRedshift: () => tableExists() && table.getIn(['bucket', 'backend']) === 'redshift'
+    tableExists: tableExists
   };
 }
