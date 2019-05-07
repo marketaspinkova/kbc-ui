@@ -46,7 +46,7 @@ export default createReactClass({
             onChange={this.handleChangeSearchQuery}
           />
         </div>
-        <div className="projects-list">
+        <div className="projects-list kbc-break-all kbc-break-word">
           {!this.hasResults() && <p className="organization-list">No project found</p>}
           {this.props.organizations
             .sortBy((organization) => organization.get('name').toLowerCase())
