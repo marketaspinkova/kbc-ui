@@ -58,6 +58,10 @@ export default createReactClass({
                 projects = projects.filter((project) =>
                   matchByWords(project.get('name').toLowerCase(), searchQuery)
                 );
+
+                if (!projects.count()) {
+                  return null;
+                }
               }
 
               return (
