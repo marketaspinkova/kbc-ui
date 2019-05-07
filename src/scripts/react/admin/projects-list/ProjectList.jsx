@@ -60,20 +60,18 @@ export default createReactClass({
                 );
               }
 
-              if (!projects.count()) {
-                return null;
-              }
-
               return (
                 <div key={organization.get('id')} className="organization-list">
                   {this.renderOrganization(organization)}
-                  <ul>
-                    {projects
-                      .sortBy((project) => project.get('name').toLowerCase())
-                      .map((project) => (
-                        <li key={project.get('id')}>{this.renderProject(project)}</li>
-                      ))}
-                  </ul>
+                  {projects.count() > 0 && (
+                    <ul>
+                      {projects
+                        .sortBy((project) => project.get('name').toLowerCase())
+                        .map((project) => (
+                          <li key={project.get('id')}>{this.renderProject(project)}</li>
+                        ))}
+                    </ul>
+                  )}
                 </div>
               );
             })}
