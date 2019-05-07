@@ -17,7 +17,6 @@
     .form-control {
       color: #333333;
       font-size: 18px;
-      font-weight: 500;
       line-height: 24px;
       background: transparent;
       padding: 10px 15px 10px 0px;
@@ -25,6 +24,7 @@
       border-radius: 0;
       border-bottom: 1px solid #e6e6e7;
       box-shadow: none;
+      transition: border-color 300ms ease-in-out;
 
       &:focus,
       &:active,
@@ -35,13 +35,13 @@
   }
 
   .organization-list {
-    padding: 15px 0px;
+    padding: 16px 0px;
 
     & + .organization-list {
       border-top: 1px solid #e3e9f3;
     }
 
-    & > a {
+    & > .organization-link {
       font-weight: 500;
       font-size: 14px;
       color: #7f8198;
@@ -52,6 +52,10 @@
         color: #228dff;
         text-decoration: none;
       }
+
+      &.disabled {
+        cursor: not-allowed;
+      }
     }
 
     ul {
@@ -61,14 +65,14 @@
 
       li {
         display: block;
-        margin: 5px 0px;
+        margin: 8px 0px;
 
         &:last-of-type {
           margin-bottom: 0px;
         }
       }
 
-      a {
+      .project-link {
         font-weight: 500;
         font-size: 18px;
         color: #333333;
@@ -78,6 +82,10 @@
         &:active {
           color: #228dff;
           text-decoration: none;
+        }
+
+        &.disabled {
+          cursor: not-allowed;
         }
       }
     }

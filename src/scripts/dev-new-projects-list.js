@@ -11,6 +11,8 @@ export default {
   start: function(app) {
     ReactDOM.render(
       <ProjectsList
+        user={fromJS(app.data.kbc.admin)}
+        maintainers={fromJS(app.data.maintainers)}
         organizations={fromJS(app.data.organizations)}
         urlTemplates={fromJS(app.data.kbc.urlTemplates)}
       />,
