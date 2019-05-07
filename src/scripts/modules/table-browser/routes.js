@@ -9,7 +9,7 @@ export default {
   requireData: (routerState) => {
     return storageActions.loadTables().then(() => {
       const actions = createActionsProvisioning(routerState.tableId);
-      tableBrowserActions.setCurrentTableId(routerState.tableId, actions.initLocalState(routerState.tableId));
+      tableBrowserActions.setCurrentTableId(routerState.tableId, actions.initLocalState());
       actions.loadAll();
     });
   },
