@@ -4,6 +4,7 @@ import createReactClass from 'create-react-class';
 import _ from 'underscore';
 import { FormControl } from 'react-bootstrap';
 import matchByWords from '../../../utils/matchByWords';
+import Tooltip from '../../../react/common/Tooltip';
 
 import './projects-list.less';
 
@@ -23,7 +24,13 @@ export default createReactClass({
     return (
       <div className="projects-list-box">
         <div className="projects-list-searchbar">
-          <svg width="24" height="24" viewBox="0 0 24 24" className="search-icon" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            className="search-icon"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <path
               fillRule="evenodd"
               clipRule="evenodd"
@@ -40,6 +47,7 @@ export default createReactClass({
           />
         </div>
         <div className="projects-list">
+          {!this.hasResults() && <p className="organization-list">No project found</p>}
           {this.props.organizations.map((organization) => {
             let projects = organization.get('projects');
 
@@ -56,10 +64,12 @@ export default createReactClass({
 
             return (
               <div key={organization.get('id')} className="organization-list">
-                <a href={this.organizationUrl(organization.get('id'))}>
-                  {organization.get('name')}
-                </a>
-                <ul>{this.renderProjects(projects)}</ul>
+                {this.renderOrganization(organization)}
+                <ul>
+                  {projects.map((project) => (
+                    <li key={project.get('id')}>{this.renderProject(project)}</li>
+                  ))}
+                </ul>
               </div>
             );
           })}
@@ -68,23 +78,62 @@ export default createReactClass({
     );
   },
 
-  renderProjects(projects) {
-    return projects.map((project) => (
-      <li key={project.get('id')}>
-        <a href={this.projectUrl(project.get('id'))}>{project.get('name')}</a>
-      </li>
-    ));
+  renderOrganization(organization) {
+    if (!organization.get('hasAccess')) {
+      return <span className="disabled organization-link">{organization.get('name')}</span>;
+    }
+
+    return (
+      <a href={this.organizationUrl(organization.get('id'))} className="organization-link">
+        {organization.get('name')}
+      </a>
+    );
+  },
+
+  renderProject(project) {
+    if (project.get('isDisabled')) {
+      return (
+        <Tooltip tooltip={`Project is disabled. ${project.get('disabledReason')}`} placement="top">
+          <span className="disabled project-link">{project.get('name')}</span>
+        </Tooltip>
+      );
+    }
+
+    return (
+      <a href={this.projectUrl(project.get('id'))} className="project-link">
+        {project.get('name')}
+      </a>
+    );
   },
 
   handleChangeSearchQuery(e) {
     this.setState({ searchQuery: e.target.value });
   },
 
+  organizationUrl(id) {
+    return _.template(this.props.urlTemplates.get('organization'))({ organizationId: id });
+  },
+
   projectUrl(id) {
     return _.template(this.props.urlTemplates.get('project'))({ projectId: id });
   },
 
-  organizationUrl(id) {
-    return _.template(this.props.urlTemplates.get('organization'))({ organizationId: id });
+  hasResults() {
+    const searchQuery = this.state.searchQuery.toLowerCase();
+    return (
+      this.props.organizations
+        .filter((organization) => {
+          let projects = organization.get('projects');
+
+          if (searchQuery) {
+            projects = projects.filter((project) =>
+              matchByWords(project.get('name').toLowerCase(), searchQuery)
+            );
+          }
+
+          return projects.count() > 0;
+        })
+        .count() > 0
+    );
   }
 });

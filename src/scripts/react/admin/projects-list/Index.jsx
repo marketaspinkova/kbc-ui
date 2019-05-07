@@ -3,9 +3,12 @@ import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import OverviewImage from '../../../../images/Login.png';
 import ProjectList from './ProjectList';
+import CurrentUser from './CurrentUser';
 
 export default createReactClass({
   propTypes: {
+    user: PropTypes.object.isRequired,
+    maintainers: PropTypes.object.isRequired,
     organizations: PropTypes.object.isRequired,
     urlTemplates: PropTypes.object.isRequired
   },
@@ -19,6 +22,12 @@ export default createReactClass({
               <a href="/admin/projects" className="keboola-logo">
                 <span className="kbc-icon-keboola-logo" />
               </a>
+              <CurrentUser
+                canManageApps
+                user={this.props.user}
+                maintainers={this.props.maintainers}
+                urlTemplates={this.props.urlTemplates}
+              />
             </section>
             <section>
               <ProjectList
