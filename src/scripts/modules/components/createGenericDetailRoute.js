@@ -13,7 +13,6 @@ import ComponentsStore from './stores/ComponentsStore';
 import JobsActionCreators from '../jobs/ActionCreators';
 import ComponentsActionCreators from './ComponentsActionCreators';
 import * as OauthUtils from '../oauth-v2/OauthUtils';
-import { createTablesRoute } from '../table-browser/routes';
 
 export default componentType => {
   return {
@@ -69,7 +68,6 @@ export default componentType => {
           }
         },
         childRoutes: [
-          createTablesRoute(`generic-detail-${componentType}-config`),
           createVersionsPageRoute(null, 'config', componentType + '-versions'),
           OauthUtils.createRedirectRoute(
             `generic-${componentType}-oauth-redirect`,

@@ -12,6 +12,7 @@ import { ActionTypes as JobsActionTypes } from '../modules/jobs/Constants';
 let _store = Map({
   router: null,
   isPending: false,
+  previousPathname: null,
   routerState: Map(),
   routesByName: Map(),
   breadcrumbs: List()
@@ -135,6 +136,10 @@ const RoutesStore = StoreUtils.createStore({
 
   getBreadcrumbs() {
     return _store.get('breadcrumbs');
+  },
+
+  getPreviousPathname() {
+    return _store.get('previousPathname');
   },
 
   getCurrentRouteConfig() {
@@ -288,6 +293,7 @@ Dispatcher.register(payload => {
       // like search in jobs
       const currentState = RoutesStore.getRouterState();
       if (!(currentState && currentState.get('pathname') === action.routerState.pathname)) {
+        _store = _store.set('previousPathname', currentState.get('pathname'));
         _store = _store.set('isPending', true);
       }
       return RoutesStore.emitChange();

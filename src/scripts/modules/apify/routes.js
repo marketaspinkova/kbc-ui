@@ -3,7 +3,6 @@ import installedComponentsActions from '../components/InstalledComponentsActionC
 // import storageActions from '../components/StorageActionCreators';
 import jobsActionCreators from '../jobs/ActionCreators';
 import versionsActions from '../components/VersionsActionCreators';
-import {createTablesRoute} from '../table-browser/routes';
 
 const componentId = 'apify.apify';
 
@@ -19,6 +18,5 @@ export default {
   poll: {
     interval: 7,
     action: (params) => jobsActionCreators.loadComponentConfigurationLatestJobs(componentId, params.config)
-  },
-  childRoutes: [ createTablesRoute(componentId)]
+  }
 };

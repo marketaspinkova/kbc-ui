@@ -4,7 +4,6 @@ import installedComponentsActions from '../components/InstalledComponentsActionC
 import versionsActions from '../components/VersionsActionCreators';
 import jobsActions from '../jobs/ActionCreators';
 import InstalledComponentsStore from '../components/stores/InstalledComponentsStore';
-import {createTablesRoute} from '../table-browser/routes';
 
 const COMPONENT_ID = 'keboola.ex-s3';
 
@@ -26,6 +25,5 @@ export default {
     (params) => versionsActions.loadVersions(COMPONENT_ID, params.config),
     () => storageActions.loadTables(),
     () => storageActions.loadBuckets()
-  ],
-  childRoutes: [ createTablesRoute(COMPONENT_ID)]
+  ]
 };

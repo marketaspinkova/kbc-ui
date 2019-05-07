@@ -4,7 +4,6 @@ import storageActions from '../components/StorageActionCreators';
 import jobsActionCreators from '../jobs/ActionCreators';
 import versionsActions from '../components/VersionsActionCreators';
 import * as oauthUtils from '../oauth-v2/OauthUtils';
-import {createTablesRoute} from '../table-browser/routes';
 
 export default function(componentId) {
   return {
@@ -22,7 +21,6 @@ export default function(componentId) {
     poll: {
       interval: 5,
       action: (params) => jobsActionCreators.loadComponentConfigurationLatestJobs(componentId, params.config)
-    },
-    childRoutes: [createTablesRoute(componentId)]
+    }
   };
 }

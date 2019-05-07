@@ -8,8 +8,6 @@ import storageActions from '../components/StorageActionCreators';
 import jobsActionCreators from '../jobs/ActionCreators';
 import versionsActions from '../components/VersionsActionCreators';
 
-import {createTablesRoute} from '../table-browser/routes';
-
 const componentId = 'keboola.gooddata-writer';
 export default {
   name: componentId,
@@ -34,8 +32,7 @@ export default {
       name: componentId + '-table',
       path: 'table/:table',
       defaultRouteHandler: Table,
-      title: (routerState) => routerState.getIn(['params', 'table']),
-      childRoutes: [ createTablesRoute(componentId)]
+      title: (routerState) => routerState.getIn(['params', 'table'])
     }
   ]
 };

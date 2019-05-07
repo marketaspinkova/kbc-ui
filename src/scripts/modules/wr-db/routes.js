@@ -2,7 +2,6 @@ import VersionsActionCreators from '../components/VersionsActionCreators';
 import InstalledComponentsStore from '../components/stores/InstalledComponentsStore';
 import storageActionCreators from '../components/StorageActionCreators';
 import JobsActionCreators from '../jobs/ActionCreators';
-import {createTablesRoute} from '../table-browser/routes';
 
 // OLD WR DB MODULES and stuff
 import dbwrIndex from './react/pages/index/Index';
@@ -42,7 +41,6 @@ export default function(componentId, driver, isProvisioning) {
       params => VersionsActionCreators.loadVersions(componentId, params.config)
     ],
     childRoutes: [
-      createTablesRoute(componentId),
       {
         name: componentId + '-table',
         path: 'table/:tableId',

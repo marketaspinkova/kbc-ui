@@ -16,7 +16,6 @@ import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
 import storageActionCreators from '../components/StorageActionCreators';
 import RouterStore from '../../stores/RoutesStore';
 import VersionsActionCreators from '../components/VersionsActionCreators';
-import { createTablesRoute } from '../table-browser/routes';
 import {Constants} from '../oauth-v2/Constants';
 
 const componentId = 'tde-exporter';
@@ -163,7 +162,6 @@ export default {
   },
 
   childRoutes: [
-    createTablesRoute(componentId),
     {
       name: 'tde-exporter-table',
       path: 'table/:tableId',

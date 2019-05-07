@@ -5,7 +5,7 @@ import { factory as EventsServiceFactory} from '../sapi-events/EventsService';
 import storeProvisioning from './storeProvisioning';
 import tableBrowserActions from './flux/actions';
 
-const  IMPORT_EXPORT_EVENTS = ['tableImportStarted', 'tableImportDone', 'tableImportError', 'tableExported'];
+const IMPORT_EXPORT_EVENTS = ['tableImportStarted', 'tableImportDone', 'tableImportError', 'tableExported'];
 
 function runExportDataSample(tableId, onSucceed, onFail) {
   return storageApi
@@ -117,16 +117,12 @@ export default function(tableId) {
     startEventService: startEventService,
     stopEventService: stopEventService,
     resetTableEvents: resetTableEvents,
-
     exportDataSample: exportDataSample,
-
     setEventsFilter: setEventsFilter,
-
     loadAll: () => {
       exportDataSample();
       startEventService();
     },
-
     initLocalState: () => {
       const es = EventsServiceFactory({limit: 10});
       const eventOptions = {omitFetches: true, omitExports: false, filterIOEvents: false};

@@ -11,7 +11,6 @@ import jobsActions from '../../jobs/ActionCreators';
 import InstalledComponentsStore from '../../components/stores/InstalledComponentsStore';
 import ComponentsStore from '../../components/stores/ComponentsStore';
 import ConfigurationRowsStore from '../ConfigurationRowsStore';
-import {createTablesRoute} from '../../table-browser/routes';
 import {loadCredentialsFromConfig as loadOauthCredentials} from '../../oauth-v2/OauthUtils';
 import matchByWords from '../../../utils/matchByWords';
 
@@ -90,7 +89,6 @@ export default function(settings) {
       ],
       defaultRouteHandler: Row,
       childRoutes: [
-        createTablesRoute(settingsWithDefaults.componentId + '-row'),
         {
           name: settingsWithDefaults.componentId + '-row-versions',
           settings: settingsWithDefaults,

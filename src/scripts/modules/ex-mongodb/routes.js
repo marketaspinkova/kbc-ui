@@ -11,7 +11,6 @@ import ExDbQueryName from './react/components/QueryName';
 import JobsActionCreators from '../jobs/ActionCreators';
 import StorageActionCreators from '../components/StorageActionCreators';
 import VersionsActionsCreators from '../components/VersionsActionCreators';
-import { createTablesRoute } from '../table-browser/routes';
 import * as storeProvisioning from './storeProvisioning';
 import * as credentialsTemplate from './credentials';
 
@@ -42,7 +41,6 @@ export default {
   },
   defaultRouteHandler: ExDbIndex(componentId),
   childRoutes: [
-    createTablesRoute(componentId),
     {
       name: 'ex-mongodb-query',
       path: 'query/:query',
@@ -62,8 +60,7 @@ export default {
         }
       ],
       defaultRouteHandler: ExDbQueryDetail(componentId, actionsProvisioning, storeProvisioning),
-      headerButtonsHandler: ExDbQueryHeaderButtons(componentId, actionsProvisioning, storeProvisioning, 'Export'),
-      childRoutes: [createTablesRoute('ex-mongodb-query')]
+      headerButtonsHandler: ExDbQueryHeaderButtons(componentId, actionsProvisioning, storeProvisioning, 'Export')
     },
     {
       name: 'ex-mongodb-credentials',

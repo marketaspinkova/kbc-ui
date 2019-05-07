@@ -18,8 +18,6 @@ import * as storeProvisioning from './storeProvisioning';
 import * as credentialsTemplate from './templates/credentials';
 import hasSshTunnel from '../ex-db-generic/templates/hasSshTunnel';
 
-import {createTablesRoute} from '../table-browser/routes';
-
 export default function(componentId) {
   return {
     name: componentId,
@@ -41,7 +39,6 @@ export default function(componentId) {
     },
     defaultRouteHandler: ExDbIndex(componentId),
     childRoutes: [
-      createTablesRoute(componentId),
       createVersionsPageRoute(componentId, 'config'),
       {
         name: 'ex-db-generic-' + componentId + '-query',
@@ -65,8 +62,7 @@ export default function(componentId) {
           () => StorageActionCreators.loadTables()
         ],
         defaultRouteHandler: ExDbQueryDetail(componentId, actionsProvisioning, storeProvisioning),
-        headerButtonsHandler: ExDbQueryHeaderButtons(componentId, actionsProvisioning, storeProvisioning),
-        childRoutes: [ createTablesRoute('ex-db-generic-' + componentId + '-query')]
+        headerButtonsHandler: ExDbQueryHeaderButtons(componentId, actionsProvisioning, storeProvisioning)
       }, {
         name: 'ex-db-generic-' + componentId + '-credentials',
         path: 'credentials',

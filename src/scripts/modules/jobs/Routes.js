@@ -7,7 +7,6 @@ import JobDetailReloaderButton from './react/components/JobDetailReloaderButton'
 import JobDetailButtons from './react/components/JobDetailButtons';
 import JobsStore from './stores/JobsStore';
 import InstalledComponentsActionCreators from '../components/InstalledComponentsActionCreators';
-import { createTablesRoute } from '../table-browser/routes';
 import { getJobComponentId } from './utils';
 
 export default {
@@ -84,8 +83,7 @@ export default {
               return InstalledComponentsActionCreators.loadComponentConfigsData(getJobComponentId(job));
             }
           })
-      ],
-      childRoutes: [createTablesRoute('jobDetail')]
+      ]
     }
   ]
 };

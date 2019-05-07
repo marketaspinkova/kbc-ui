@@ -12,7 +12,6 @@ import installedComponentsActions from '../components/InstalledComponentsActionC
 import jobsActionCreators from '../jobs/ActionCreators';
 import versionsActions from '../components/VersionsActionCreators';
 import storageActions from '../components/StorageActionCreators';
-import {createTablesRoute} from '../table-browser/routes';
 
 const ROUTE_PREFIX = 'ex-db-generic-';
 const COMPONENT_ID = 'keboola.ex-google-bigquery';
@@ -39,7 +38,6 @@ export default {
     action: (params) => jobsActionCreators.loadComponentConfigurationLatestJobs(COMPONENT_ID, params.config)
   },
   childRoutes: [
-    createTablesRoute(COMPONENT_ID),
     oauthUtils.createRedirectRouteSimple(COMPONENT_ID),
     {
       name: ROUTE_PREFIX + COMPONENT_ID + '-query',
@@ -50,8 +48,7 @@ export default {
         const configId = routerState.getIn(['params', 'config']);
         const query = routerState.getIn(['params', 'query']);
         return store(configId).getConfigQuery(query).get('name');
-      },
-      childRoutes: [ createTablesRoute(ROUTE_PREFIX + COMPONENT_ID + '-query')]
+      }
     },
     {
       name: ROUTE_PREFIX + COMPONENT_ID + '-new-query',

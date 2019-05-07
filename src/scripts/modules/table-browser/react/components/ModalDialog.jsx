@@ -1,24 +1,18 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
-import TablesPaginator from './TablesPaginator';
+import immutableMixin from 'react-immutable-render-mixin';
+import {Modal, Tabs, Tab} from 'react-bootstrap';
+import {RefreshIcon} from '@keboola/indigo-ui';
 import EventsTab from './EventsTab';
 import GeneralInfoTab from './GeneralInfoTab';
 import DataSampleTab from './DataSampleTab';
 import ColumnsInfoTab from './ColumnsInfoTab';
 import TableDescriptionTab from './TableDescriptionTab';
-
 import SapiTableLink from '../../../components/react/components/StorageApiTableLink';
-import immutableMixin from 'react-immutable-render-mixin';
-
-import {Modal, Tabs, Tab} from 'react-bootstrap';
-import {RefreshIcon} from '@keboola/indigo-ui';
-
 
 export default createReactClass({
-
   propTypes: {
-    moreTables: PropTypes.array,
     tableId: PropTypes.string.isRequired,
     reload: PropTypes.func.isRequired,
     tableExists: PropTypes.bool.isRequired,
@@ -46,18 +40,6 @@ export default createReactClass({
   },
 
   render() {
-    const modalBody = this.renderModalBody();
-    let tableLink = (<small className="disabled btn btn-link"> Explore in Console</small>);
-    if (this.props.tableExists) {
-      tableLink =
-        (
-          <SapiTableLink
-            tableId={this.props.tableId}>
-            <small className="btn btn-link">
-              Explore in Console
-            </small>
-          </SapiTableLink>);
-    }
     return (
       <Modal.Dialog
         className="kbc-table-browser"
@@ -65,60 +47,42 @@ export default createReactClass({
         onKeyDown={this.onKeyDown}
       >
         <Modal.Header>
-          <button onClick={this.props.onHideFn}
-            type="button" className="close" ref="close" data-dismiss="modal">&times;</button>
+          <button 
+            onClick={this.props.onHideFn}
+            type="button" 
+            className="close" 
+            ref="close" 
+            data-dismiss="modal"
+          >&times;
+          </button>
           <Modal.Title>
             {this.props.tableId}
-            {tableLink}
+            {this.props.tableExists ? (
+              <SapiTableLink tableId={this.props.tableId}>
+                <small className="btn btn-link">
+                  Explore in Console
+                </small>
+              </SapiTableLink>
+            ) : (
+              <small className="disabled btn btn-link"> Explore in Console</small>
+            )}
             <RefreshIcon
               isLoading={this.props.isLoading}
               onClick={this.props.reload}
             />
           </Modal.Title>
-          {/* this.renderPaginator() */}
         </Modal.Header>
         <Modal.Body>
-          {modalBody}
+          {this.renderModalBody()}
         </Modal.Body>
       </Modal.Dialog>
     );
-  },
-
-  renderPaginator() {
-    if (this.props.moreTables.length - 1 > 0) {
-      return (
-        <TablesPaginator
-          nextTable={this.getNextTable()}
-          previousTable={this.getPreviousTable()}
-          onChangeTable={this.props.onChangeTable} />
-      );
-    }
-  },
-
-  getNextTable() {
-    const tables = this.props.moreTables;
-    const position = tables.indexOf(this.props.tableId);
-    return position + 1 < tables.length ? tables[position + 1] : null;
-  },
-
-  getPreviousTable() {
-    const tables = this.props.moreTables;
-    const position = tables.indexOf(this.props.tableId);
-    return position - 1 >= 0 ? tables[position - 1] : null;
   },
 
   onKeyDown(e) {
     if (e.key === 'Escape') {
       this.props.onHideFn();
     }
-    /* const arrowRight = e.key === 'ArrowRight';
-     * const arrowLeft = e.key === 'ArrowLeft';
-     * if (arrowRight && this.getNextTable()) {
-     *   return this.props.onChangeTable(this.getNextTable());
-     * }
-     * if (arrowLeft && this.getPreviousTable()) {
-     *   return this.props.onChangeTable(this.getPreviousTable());
-     * }*/
   },
 
   renderModalBody() {

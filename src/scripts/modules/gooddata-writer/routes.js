@@ -12,7 +12,6 @@ import ModelPage from './react/pages/model/Model';
 import storageActionCreators from '../components/StorageActionCreators';
 import JobsActionCreators from '../jobs/ActionCreators';
 import VersionsActionCreators from '../components/VersionsActionCreators';
-import { createTablesRoute } from '../table-browser/routes';
 
 export default {
   name: 'gooddata-writer',
@@ -40,7 +39,6 @@ export default {
     return InstalledComponentsStore.getConfig('gooddata-writer', configId).get('name');
   },
   childRoutes: [
-    createTablesRoute('gooddata-writer'),
     {
       name: 'gooddata-writer-table',
       path: 'table/:table',

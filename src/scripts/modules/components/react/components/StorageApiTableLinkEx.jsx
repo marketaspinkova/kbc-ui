@@ -3,10 +3,9 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import moment from 'moment';
 import { Map } from 'immutable';
-import { Button } from 'react-bootstrap';
+import { Link } from 'react-router';
 import formatCardinalNumber from '../../../../utils/formatCardinalNumber';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
-import RoutesStore from '../../../../stores/RoutesStore';
 import TablesStore from '../../stores/StorageTablesStore';
 import StorageActions from '../../StorageActionCreators';
 import Tooltip from '../../../../react/common/Tooltip';
@@ -45,20 +44,18 @@ export default createReactClass({
     const label = this.props.children || this.props.linkLabel || this.props.tableId;
 
     if (!this.state.table.count()) {
-      return (
-        <span className="text-muted">{label}</span>
-      );
+      return <span className="text-muted">{label}</span>;
     }
 
     return (
-      <Button
-        bsStyle="link"
+      <Link
+        to="tablePreview"
+        params={{ tableId: this.props.tableId }}
         className="btn-link-inline kbc-sapi-table-link"
-        onClick={this.redirectToTablePage}
       >
         {label}
-      </Button>
-    )
+      </Link>
+    );
   },
 
   renderTooltip() {
@@ -79,12 +76,5 @@ export default createReactClass({
         <div>{formatCardinalNumber(this.state.table.get('rowsCount'))} rows</div>
       </span>
     );
-  },
-
-  redirectToTablePage(event) {
-    event.preventDefault();
-    event.stopPropagation();
-    const path = RoutesStore.getRouterState().get('pathname');
-    RoutesStore.getRouter().transitionTo(`${path}/tables/${this.props.tableId}`);
   }
 });

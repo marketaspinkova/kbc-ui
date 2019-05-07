@@ -23,7 +23,6 @@ import TransformationNameEdit from './react/components/TransformationNameEditFie
 import ApplicationsStore from '../../stores/ApplicationStore';
 import JobsActionCreators from '../jobs/ActionCreators';
 import injectProps from '../components/react/injectProps';
-import { createTablesRoute } from '../table-browser/routes';
 import rowVersionsActions from '../configurations/RowVersionsActionCreators';
 
 const routes = {
@@ -103,7 +102,6 @@ const routes = {
           },
           childRoutes: [
             createRowVersionsPageRoute('transformation'),
-            createTablesRoute('transformationDetail'),
             {
               name: 'transformationDetailGraph',
               path: 'graph',

@@ -1,25 +1,17 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
-import Immutable, {List, Map, fromJS} from 'immutable';
-
 import Promise from 'bluebird';
-
+import { Map } from 'immutable';
+import createStoreMixin from '../../../react/mixins/createStoreMixin';
+import RoutesStore from '../../../stores/RoutesStore';
 import storageActions from '../../components/StorageActionCreators';
 import tablesStore from '../../components/stores/StorageTablesStore';
-
-import TableLinkModalDialog from './components/ModalDialog';
-
-import createStoreMixin from '../../../react/mixins/createStoreMixin';
-
-import RoutesStore from '../../../stores/RoutesStore';
-import {PATH_PREFIX} from '../routes';
-import tableBrowserStore from '../flux/store';
-import tableBrowserActions from '../flux/actions';
 import createActionsProvisioning from '../actionsProvisioning';
 import createStoreProvisioning from '../storeProvisioning';
+import tableBrowserStore from '../flux/store';
+import TableLinkModalDialog from './components/ModalDialog';
 
 export default createReactClass({
-
   mixins: [createStoreMixin(tablesStore, tableBrowserStore)],
 
   getStateFromStores() {
@@ -28,7 +20,6 @@ export default createReactClass({
     const table = tables.get(tableId, Map());
 
     return {
-      moreTables: List(), // context tables TBA
       tableId: tableId,
       table: table,
       actions: createActionsProvisioning(tableId),
@@ -55,7 +46,6 @@ export default createReactClass({
   renderModal() {
     return (
       <TableLinkModalDialog
-        moreTables={this.state.moreTables.toArray()}
         tableId={this.state.tableId}
         reload={this.reload}
         tableExists={this.state.store.tableExists()}
@@ -69,7 +59,6 @@ export default createReactClass({
         onOmitExportsFn={this.state.actions.setEventsFilter('omitExports')}
         onOmitFetchesFn={this.state.actions.setEventsFilter('omitFetches')}
         events={this.getLocalState('events')}
-        onChangeTable={this.changeTable}
         filterIOEvents={this.getLocalState('filterIOEvents')}
         onFilterIOEvents={this.state.actions.setEventsFilter('filterIOEvents')}
         onShowEventDetail={(eventId) => this.state.actions.setLocalState({detailEventId: eventId})}
@@ -78,45 +67,16 @@ export default createReactClass({
     );
   },
 
-  redirectBack() {
-    const routerState = RoutesStore.getRouterState();
-    const currentPath = routerState.get('path') || '';
-    const parts = currentPath.split(`/${PATH_PREFIX}/`);
-    const backPath = parts ? parts[0] : '/';
-    RoutesStore.getRouter().transitionTo(backPath || '/');
-  },
-
   onHide() {
     this.state.actions.stopEventService();
-    this.redirectBack();
+    RoutesStore.getRouter().transitionTo(RoutesStore.getPreviousPathname() || '/');
   },
 
   reload() {
-    Promise.props( {
-      'loadAllTablesFore': storageActions.loadTablesForce(),
-      'exportData': this.state.actions.exportDataSample(),
-      'loadEvents': this.state.store.eventService.load()
-    });
-  },
-
-  loadAll() {
-    this.state.actions.exportDataSample();
-    this.state.actions.startEventService();
-  },
-
-  changeTable(newTableId, dontLoadAll) {
-    const initLocalState = fromJS({
-      detailEventId: null,
-      loadingPreview: false,
-      dataPreview: Immutable.List(),
-      dataPreviewError: null,
-      events: Immutable.List()
-    });
-    tableBrowserActions.setCurrentTableId(newTableId, initLocalState);
-    if (!dontLoadAll) {
-      this.state.actions.resetTableEvents();
-      this.loadAll();
-    }
+    Promise.all([
+      storageActions.loadTablesForce(),
+      this.state.actions.exportDataSample(),
+      this.state.store.eventService.load()
+    ]);
   }
-
 });

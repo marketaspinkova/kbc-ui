@@ -8,7 +8,6 @@ import NewQueryHeaderButtons from './react/NewQuery/HeaderButtons';
 import storageActions from '../components/StorageActionCreators';
 import jobsActionCreators from '../jobs/ActionCreators';
 import versionsActions from '../components/VersionsActionCreators';
-import {createTablesRoute} from '../table-browser/routes';
 
 import store from './storeProvisioning';
 import InstalledComponentsStore from '../components/stores/InstalledComponentsStore';
@@ -38,7 +37,6 @@ export default function(componentId) {
     },
 
     childRoutes: [
-      createTablesRoute(componentId),
       oauthUtils.createRedirectRouteSimple(componentId),
       {
         name: componentId + '-query-detail',
@@ -49,8 +47,7 @@ export default function(componentId) {
           const configId = routerState.getIn(['params', 'config']);
           const queryId = routerState.getIn(['params', 'queryId']);
           return store(configId, componentId).getConfigQuery(queryId).get('name');
-        },
-        childRoutes: [ createTablesRoute(componentId + '-query-detail')]
+        }
       },
       {
         name: componentId + '-new-query',
