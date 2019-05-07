@@ -105,18 +105,10 @@ export default function(tableId) {
     };
   };
 
-  const resetTableEvents = () => {
-    const q = prepareEventQuery();
-    stopEventService();
-    getLocalState('eventService').reset();
-    getLocalState('eventService').setQuery(q);
-  };
-
   return {
     setLocalState: setLocalState,
     startEventService: startEventService,
     stopEventService: stopEventService,
-    resetTableEvents: resetTableEvents,
     exportDataSample: exportDataSample,
     setEventsFilter: setEventsFilter,
     loadAll: () => {
