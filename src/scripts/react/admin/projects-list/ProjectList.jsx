@@ -48,31 +48,35 @@ export default createReactClass({
         </div>
         <div className="projects-list">
           {!this.hasResults() && <p className="organization-list">No project found</p>}
-          {this.props.organizations.map((organization) => {
-            let projects = organization.get('projects');
+          {this.props.organizations
+            .sortBy((organization) => organization.get('name').toLowerCase())
+            .map((organization) => {
+              let projects = organization.get('projects');
 
-            if (this.state.searchQuery) {
-              const searchQuery = this.state.searchQuery.toLowerCase();
-              projects = projects.filter((project) =>
-                matchByWords(project.get('name').toLowerCase(), searchQuery)
+              if (this.state.searchQuery) {
+                const searchQuery = this.state.searchQuery.toLowerCase();
+                projects = projects.filter((project) =>
+                  matchByWords(project.get('name').toLowerCase(), searchQuery)
+                );
+              }
+
+              if (!projects.count()) {
+                return null;
+              }
+
+              return (
+                <div key={organization.get('id')} className="organization-list">
+                  {this.renderOrganization(organization)}
+                  <ul>
+                    {projects
+                      .sortBy((project) => project.get('name').toLowerCase())
+                      .map((project) => (
+                        <li key={project.get('id')}>{this.renderProject(project)}</li>
+                      ))}
+                  </ul>
+                </div>
               );
-            }
-
-            if (!projects.count()) {
-              return null;
-            }
-
-            return (
-              <div key={organization.get('id')} className="organization-list">
-                {this.renderOrganization(organization)}
-                <ul>
-                  {projects.map((project) => (
-                    <li key={project.get('id')}>{this.renderProject(project)}</li>
-                  ))}
-                </ul>
-              </div>
-            );
-          })}
+            })}
         </div>
       </div>
     );
