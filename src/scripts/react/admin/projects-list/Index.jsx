@@ -49,10 +49,12 @@ export default createReactClass({
             </section>
           </div>
           <div className="hidden-xs col-sm-6 col-md-7 col-lg-8 overview">
-            <img src={OverviewImage} className="img-responsive" alt="New dashboard features" />
-            <div className="overview-text">
-              <h2>New dashboard</h2>
-              <p>Important informations always visible to you, no need to look for them.</p>
+            <div style={{ position: 'fixed' }}>
+              <img src={OverviewImage} className="img-responsive" alt="New dashboard features" />
+              <div className="overview-text">
+                <h2>New dashboard</h2>
+                <p>Important informations always visible to you, no need to look for them.</p>
+              </div>
             </div>
           </div>
         </div>
