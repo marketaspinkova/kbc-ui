@@ -232,7 +232,7 @@ export default createReactClass({
           <Col sm={10} smOffset={2}>
             <Checkbox
               name="incremental"
-              checked={this.props.value.get('incremental')}
+              checked={this.props.value.get('incremental', false)}
               disabled={this.props.disabled}
               onChange={this._handleChangeIncremental}
             >
