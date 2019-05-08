@@ -54,7 +54,7 @@ export default createReactClass({
           <ListGroupItem className="row">
             <strong className="col-md-4">Optional</strong>
             <span className="col-md-8">
-              <Check isChecked={this.props.inputMapping.get('optional')} />
+              <Check isChecked={this.props.inputMapping.get('optional', false)} />
             </span>
           </ListGroupItem>
         )}

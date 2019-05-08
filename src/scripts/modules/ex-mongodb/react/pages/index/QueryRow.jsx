@@ -39,7 +39,7 @@ export default createReactClass({
           {query.get('name') ? query.get('name') : <span className="text-muted">Untitled</span>}
         </span>
         <span className="td">
-          <Check isChecked={query.get('incremental')} />
+          <Check isChecked={query.get('incremental', false)} />
         </span>
         <span className="td text-right kbc-no-wrap">
           <QueryDeleteButton
