@@ -128,10 +128,7 @@ export default createReactClass({
       <FormControl
         componentClass="select"
         type="select"
-        autosize={false}
-        clearable={false}
         value={column[fieldName]}
-        options={options}
         onChange={e => this.onChangeColumn(fieldName, e.target.value)}
         disabled={disabled}>
         {!settings.strict && <option value=""/>}
