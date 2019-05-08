@@ -34,7 +34,7 @@ export default createReactClass({
         <FormGroup>
           <Col sm={9} smOffset={3}>
             <Checkbox
-              checked={value.includeTime}
+              checked={!!value.includeTime}
               onChange={() => this.handleChange({includeTime: !value.includeTime})}>
               Include Time
             </Checkbox>
