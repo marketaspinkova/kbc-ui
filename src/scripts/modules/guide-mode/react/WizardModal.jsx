@@ -15,8 +15,6 @@ export default createReactClass({
     setDirection: PropTypes.func.isRequired,
     setAchievedLessonFn: PropTypes.func.isRequired,
     show: PropTypes.bool.isRequired,
-    backdrop: PropTypes.bool.isRequired,
-    position: PropTypes.string.isRequired,
     direction: PropTypes.string.isRequired,
     step: PropTypes.number.isRequired,
     achievedStep: PropTypes.number.isRequired,
@@ -27,35 +25,36 @@ export default createReactClass({
 
   render() {
     return (
-      <div>
-        <Modal
-          show={this.props.show} onHide={this.closeLessonModal} backdrop={this.isStepBackdrop()}
-          className={'guide-wizard guide-wizard-' + this.getStepPosition()}
-        >
-          <Modal.Header closeButton>
-            { this.getStepPosition() === 'center' ? (
-              this.getModalTitleExtended()
-            ) : (
-              this.getModalTitle()
-            )}
-          </Modal.Header>
-          <Modal.Body className="guide-modal-body">
-            <TransitionGroup>
-              <CSSTransition
-                key={this.props.step}
-                classNames={'guide-wizard-animated-' + this.props.direction}
-                timeout={200}
-              >
-                {this.getModalBody()}
-              </CSSTransition>
-            </TransitionGroup>
-          </Modal.Body>
-          <Modal.Footer>
-            {this.hasPreviousStep() && this.renderButtonPrev()}
-            {this.renderButtonNext()}
-          </Modal.Footer>
-        </Modal>
-      </div>
+      <Modal
+        show={this.props.show} 
+        onHide={this.closeLessonModal} 
+        backdrop={this.isStepBackdrop()}
+        className={'guide-wizard guide-wizard-' + this.getStepPosition()}
+        enforceFocus={false}
+      >
+        <Modal.Header closeButton>
+          {this.getStepPosition() === 'center' ? (
+            this.getModalTitleExtended()
+          ) : (
+            this.getModalTitle()
+          )}
+        </Modal.Header>
+        <Modal.Body className="guide-modal-body">
+          <TransitionGroup>
+            <CSSTransition
+              key={this.props.step}
+              classNames={'guide-wizard-animated-' + this.props.direction}
+              timeout={200}
+            >
+              {this.getModalBody()}
+            </CSSTransition>
+          </TransitionGroup>
+        </Modal.Body>
+        <Modal.Footer>
+          {this.hasPreviousStep() && this.renderButtonPrev()}
+          {this.renderButtonNext()}
+        </Modal.Footer>
+      </Modal>
     );
   },
 
