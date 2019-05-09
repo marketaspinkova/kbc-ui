@@ -61,7 +61,9 @@ export default createReactClass({
 
   onHide() {
     this.state.actions.stopEventService();
-    RoutesStore.getRouter().transitionTo(RoutesStore.getPreviousPathname() || '/');
+    const context = RoutesStore.getRouterState().getIn(['query', 'context']);
+    const previousPathname = RoutesStore.getPreviousPathname() || '/';
+    RoutesStore.getRouter().transitionTo(context || previousPathname);
   },
 
   reload() {
