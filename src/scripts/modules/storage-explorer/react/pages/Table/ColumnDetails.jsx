@@ -27,6 +27,7 @@ export default createReactClass({
     userDataType: PropTypes.object.isRequired,
     deleteUserType: PropTypes.func.isRequired,
     saveUserType: PropTypes.func.isRequired,
+    canEdit: PropTypes.bool.isRequired
   },
 
   getInitialState() {
@@ -53,6 +54,7 @@ export default createReactClass({
           metadataKey="KBC.description"
           placeholder="Describe column"
           editElement={InlineEditArea}
+          readOnly={!this.props.canEdit}
         />
         {this.renderTypeForm()}
       </div>
@@ -63,11 +65,13 @@ export default createReactClass({
     return (
       <div>
         <h3>Data types</h3>
-        <p>
-          To set a custom data type or to override the data type set by the
-          system fill the form below. Saving a blank type will remove the
-          previously set user-defined type.
-        </p>
+        {this.props.canEdit && (
+          <p>
+            To set a custom data type or to override the data type set by the
+            system fill the form below. Saving a blank type will remove the
+            previously set user-defined type.
+          </p>
+        )}
         <table className="table table-striped table-hover">
           <thead>
             <tr>
@@ -86,6 +90,7 @@ export default createReactClass({
                   value={this.state.userDataType.get(DataTypeKeys.BASE_TYPE)}
                   options={BaseTypes.map(type => ({ label: type, value: type }))}
                   onChange={this.handleBaseTypeChange}
+                  disabled={!this.props.canEdit}
                 />
               </td>
               <td>
@@ -96,6 +101,7 @@ export default createReactClass({
                   <Checkbox
                     checked={this.state.userDataType.get(DataTypeKeys.NULLABLE, false)}
                     onChange={this.handleNullableChange}
+                    disabled={!this.props.canEdit}
                   >
                     Nullable
                   </Checkbox>
@@ -103,19 +109,21 @@ export default createReactClass({
               </td>
             </tr>
           </tbody>
-          <tfoot>
-            <tr>
-              <td colSpan={4} className="text-right">
-                <Button bsStyle="success" onClick={this.handleSaveDataType} disabled={this.isDisabled()}>
-                  {this.state.isSaving ? (
-                    <span><Loader /> Saving...</span>
-                  ) : (
-                    <span>Save</span>
-                  )}
-                </Button>
-              </td>
-            </tr>
-          </tfoot>
+          {this.props.canEdit && (
+            <tfoot>
+              <tr>
+                <td colSpan={4} className="text-right">
+                  <Button bsStyle="success" onClick={this.handleSaveDataType} disabled={this.isDisabled()}>
+                    {this.state.isSaving ? (
+                      <span><Loader /> Saving...</span>
+                    ) : (
+                      <span>Save</span>
+                    )}
+                  </Button>
+                </td>
+              </tr>
+            </tfoot>
+          )}
         </table>
       </div>
     );
@@ -131,6 +139,7 @@ export default createReactClass({
         type="text"
         value={this.state.userDataType.get(DataTypeKeys.LENGTH, '')}
         onChange={this.handleLengthChange}
+        disabled={!this.props.canEdit}
         placeholder={this.state.userDataType.get(DataTypeKeys.BASE_TYPE) === 'STRING'
           ? 'Length, eg. 255'
           : 'Length, eg. 38,0'

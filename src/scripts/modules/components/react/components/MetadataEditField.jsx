@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import ImmutableMixin from 'react-immutable-render-mixin';
 import { Map } from 'immutable';
+import Markdown from '../../../../react/common/Markdown';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import MetadataActionCreators from '../../MetadataActionCreators';
 import MetadataStore from '../../stores/MetadataStore';
@@ -17,13 +18,15 @@ export default createReactClass({
     metadataKey: PropTypes.string.isRequired,
     editElement: PropTypes.func.isRequired,
     placeholder: PropTypes.string,
-    tooltipPlacement: PropTypes.string
+    tooltipPlacement: PropTypes.string,
+    readOnly: PropTypes.bool
   },
 
   getDefaultProps() {
     return {
       placeholder: 'Describe this ...',
-      tooltipPlacement: 'top'
+      tooltipPlacement: 'top',
+      readOnly: false
     };
   },
 
@@ -36,6 +39,12 @@ export default createReactClass({
   },
 
   render() {
+    if (this.props.readOnly) {
+      return (
+        <Markdown source={this.metadataValue()} collapsible />
+      );
+    }
+
     const EditElement = this.props.editElement;
 
     return (
