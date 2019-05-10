@@ -56,9 +56,7 @@ export default createReactClass({
           setAchievedLessonFn={setAchievedLesson}
           show={this.state.wizard.showLessonModal}
           onHide={hideWizardModalFn}
-          position="aside"
           lesson={this.state.currentLesson}
-          backdrop={true}
           scriptsBasePath={this.props.scriptsBasePath}
         />
       );
