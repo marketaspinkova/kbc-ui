@@ -28,22 +28,17 @@ class EventTrigger extends React.Component {
   }
 
   renderAddTableForm() {
-    const options = this._getTables();
     return (
-      <form className="form-horizontal">
-        <FormGroup>
-          <Col sm={12}>
-            <Select
-              name="selectTables"
-              multi={false}
-              options={options}
-              onChange={item => this.props.onAddTable(item.value)}
-              placeholder="Add tables..."
-              clearable={true}
-            />
-          </Col>
-        </FormGroup>
-      </form>
+      <FormGroup>
+        <Select
+          options={this._getTables()}
+          onChange={item => this.props.onAddTable(item.value)}
+          placeholder="Add table..."
+          clearable={false}
+          deleteRemoves={false}
+          backspaceRemoves={false}
+        />
+      </FormGroup>
     );
   }
 
@@ -120,6 +115,7 @@ class EventTrigger extends React.Component {
       </div>
     );
   }
+
   _getTables() {
     const selected = this.props.selected;
     const availableTables = this.props.tables.filter(table => !selected.includes(table.get('id')));
