@@ -18,8 +18,6 @@ import InstalledComponentStore from '../../../../components/stores/InstalledComp
 import StorageTablesStore from '../../../../components/stores/StorageTablesStore';
 import ComponentsStore from '../../../../components/stores/ComponentsStore';
 import installedComponentsActions from '../../../../components/InstalledComponentsActionCreators';
-import ApplicationStore from '../../../../../stores/ApplicationStore';
-import { FEATURE_UI_DEVEL_PREVIEW, FEATURE_EARLY_ADOPTER_PREVIEW } from '../../../../../constants/KbcConstants';
 
 import { GoodDataWriterTokenTypes } from '../../../../components/Constants';
 import AddNewTableButton from '../../components/AddNewTableButton';
@@ -95,13 +93,10 @@ export default createReactClass({
     const writer = this.state.writer.get('config');
     return (
       <div className="container-fluid">
-        {(ApplicationStore.hasCurrentAdminFeature(FEATURE_UI_DEVEL_PREVIEW)
-          || ApplicationStore.hasCurrentAdminFeature(FEATURE_EARLY_ADOPTER_PREVIEW)) && (
-          <MigrationRow
-            componentId="gooddata-writer"
-            replacementAppId="keboola.gooddata-writer"
-          />
-        )}
+        <MigrationRow
+          componentId="gooddata-writer"
+          replacementAppId="keboola.gooddata-writer"
+        />
         <div className="col-md-9 kbc-main-content">
           <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
             <ComponentDescription componentId="gooddata-writer" configId={writer.get('id')} />
