@@ -1,7 +1,7 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
 import Promise from 'bluebird';
-import { Map } from 'immutable';
+import { Map, List } from 'immutable';
 import { Tab, Nav, NavItem, NavDropdown, MenuItem, Row } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 
@@ -40,11 +40,9 @@ export default createReactClass({
     const tableName = RoutesStore.getCurrentRouteParam('tableName');
     const sapiToken = ApplicationStore.getSapiToken();
     const tables = TablesStore.getAll();
-    const table = TablesStore.getAll().find(item => {
-      return item.getIn(['bucket', 'id']) === bucketId && item.get('name') === tableName;
-    }, null, Map());
     const buckets = BucketsStore.getAll();
-    const bucket = BucketsStore.getAll().find(item => item.get('id') === bucketId);
+    const table = tables.find(item => item.getIn(['bucket', 'id']) === bucketId && item.get('name') === tableName, null, Map());
+    const bucket = buckets.find(item => item.get('id') === bucketId, null, Map());
 
     return {
       sapiToken,
@@ -88,10 +86,10 @@ export default createReactClass({
   },
 
   render() {
-    if (!this.state.table.count()) {
+    if (!this.state.bucket.count() || !this.state.table.count()) {
       return (
         <div className="kbc-inner-padding">
-          <p>Table not found</p>
+          <p>{!this.state.bucket.count() ? 'Bucket' : 'Table'} not found</p>
         </div>
       );
     }
@@ -409,7 +407,7 @@ export default createReactClass({
       return foundLinks;
     }
 
-    bucket.get('linkedBy').forEach(bucket => {
+    bucket.get('linkedBy', List()).forEach(bucket => {
       foundLinks.push(bucket.merge({ tableName: table.get('name') }));
     });
 
