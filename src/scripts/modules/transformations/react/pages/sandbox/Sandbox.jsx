@@ -13,9 +13,11 @@ import ApplicationStore from '../../../../../stores/ApplicationStore';
 
 export default createReactClass({
   getInitialState() {
+    const token = ApplicationStore.getSapiToken();
+
     return {
-      hasRedshift: ApplicationStore.getSapiToken().getIn(['owner', 'hasRedshift'], false),
-      hasSnowflake: ApplicationStore.getSapiToken().getIn(['owner', 'hasSnowflake'], false),
+      hasRedshift: token.getIn(['owner', 'hasRedshift'], false),
+      hasSnowflake: token.getIn(['owner', 'hasSnowflake'], false),
       loading: false
     };
   },
