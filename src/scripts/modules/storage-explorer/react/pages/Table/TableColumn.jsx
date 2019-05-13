@@ -1,19 +1,19 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import Promise from 'bluebird';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
+import Promise from 'bluebird';
 import { Map } from 'immutable';
 import classnames from 'classnames';
-import { Table, Button, Row, Label, PanelGroup, Panel, Col } from 'react-bootstrap';
+import { Button, Row, Label, PanelGroup, Panel, Col } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 
 import Tooltip from '../../../../../react/common/Tooltip';
 import CreateColumnModal from '../../modals/CreateColumnModal';
 import DeleteColumnModal from '../../modals/DeleteColumnModal';
-import ColumnDetails from './ColumnDetails';
 import { DataTypeKeys } from '../../../../components/MetadataConstants';
 import { getDataType } from "../../../../components/utils/datatypeHelpers";
 import { deleteTableColumn, addTableColumn, setOpenedColumns, deleteColumnMetadata, saveColumnMetadata } from '../../../Actions';
+import ColumnDetails from './ColumnDetails';
 
 export default createReactClass({
   propTypes: {
@@ -76,12 +76,13 @@ export default createReactClass({
   },
 
   render() {
+    const canEdit = this.canEditColumns();
     const addingColumn = this.props.addingColumn.get(this.props.table.get('id'), false);
 
     return (
       <div>
         <h2 className="clearfix">
-          {this.canAddColumn() && (
+          {canEdit && (
             <div className="kbc-buttons pull-right">
               <Button bsStyle="success" onClick={this.openCreateColumnModal} disabled={addingColumn}>
                 {addingColumn ? (
@@ -96,50 +97,19 @@ export default createReactClass({
           )}
           Columns
         </h2>
-
-        {this.canAddColumn() ? (
-          <PanelGroup className="kbc-accordion">
-            {this.props.table
-              .get('columns')
-              .map(this.renderColumnPanel)
-              .toArray()}
-          </PanelGroup>
-        ) : (
-          <Row>
-            <Table responsive striped>
-              <tbody>
-              {this.props.table
-                .get('columns')
-                .map(this.renderColumn)
-                .toArray()}
-              </tbody>
-            </Table>
-          </Row>
-        )}
-
+        <PanelGroup className="kbc-accordion">
+          {this.props.table
+            .get('columns')
+            .map((column) => this.renderColumnPanel(column, canEdit))
+            .toArray()}
+        </PanelGroup>
         {this.renderCreateColumnModal()}
         {this.renderDeleteColumnModal()}
       </div>
     );
   },
 
-  renderColumn(column) {
-    return (
-      <tr key={column}>
-        <td>{column}</td>
-        <td>
-          {this.isColumnInPrimaryKey(column) && (
-            <span className="label label-info" title="Primary key">
-              PK
-            </span>
-          )}
-        </td>
-        <td className="actions text-right">{this.renderActions(column)}</td>
-      </tr>
-    );
-  },
-
-  renderColumnPanel(column) {
+  renderColumnPanel(column, canEdit) {
     return (
       <Panel
         collapsible
@@ -159,54 +129,51 @@ export default createReactClass({
           userDataType={this.getUserDefinedType(column)}
           deleteUserType={this.deleteUserType}
           saveUserType={this.saveUserType}
+          canEdit={canEdit}
         />
       </Panel>
     );
   },
 
   renderColumnHeader(column) {
+    return (
+      <div>
+        <Row>
+          <Col sm={3}>{column}</Col>
+          <Col sm={7}>{this.renderDatatypes(column)}</Col>
+          <Col sm={1}>{this.renderPrimaryKeyLabel(column)}</Col>
+          <Col sm={1}>{this.renderActions(column)}</Col>
+        </Row>
+      </div>
+    );
+  },
+
+  renderDatatypes(column) {
     const userDataType = this.getUserDefinedType(column);
     const systemDataType = getDataType(this.props.machineColumnMetadata.get(column, Map()));
     const columnDataType = userDataType.has(DataTypeKeys.BASE_TYPE)
       ? userDataType.set('provider', 'user')
       : systemDataType;
 
+    if (!columnDataType.has('provider')) {
+      return null;
+    }
+
     return (
       <div>
-        <Row>
-          <Col sm={3}>
-            {column}
-          </Col>
-          <Col sm={7}>
-            {
-              (columnDataType.has('provider')) ?
-                  <div>
-                    {columnDataType.get('KBC.datatype.basetype') && (
-                      columnDataType.get('KBC.datatype.basetype')
-                    )}
-                    {columnDataType.get('KBC.datatype.length') && (
-                      `(${columnDataType.get('KBC.datatype.length')})`
-                    )}
-                    {columnDataType.get('KBC.datatype.nullable') && (
-                      `, Nullable`
-                    )}
-                  </div>
-              : null
-            }
-          </Col>
-          <Col sm={1}>
-            {this.isColumnInPrimaryKey(column) && (
-              <Label bsStyle="info">
-                PK
-              </Label>
-            )}
-          </Col>
-          <Col sm={1}>
-            {this.renderActions(column)}
-          </Col>
-        </Row>
+        {columnDataType.get('KBC.datatype.basetype') && columnDataType.get('KBC.datatype.basetype')}
+        {columnDataType.get('KBC.datatype.length') && `(${columnDataType.get('KBC.datatype.length')})`}
+        {columnDataType.get('KBC.datatype.nullable') && `, Nullable`}
       </div>
     );
+  },
+
+  renderPrimaryKeyLabel(column) {
+    if (!this.isColumnInPrimaryKey(column)) {
+      return null;
+    }
+
+    return <Label bsStyle="info">PK</Label>;
   },
 
   renderActions(column) {
@@ -285,7 +252,7 @@ export default createReactClass({
     return this.props.table.get('primaryKey').find(item => item === column);
   },
 
-  canAddColumn() {
+  canEditColumns() {
     const { table } = this.props;
 
     if (!this.props.canWriteTable || table.getIn(['bucket', 'backend']) === 'redshift') {
