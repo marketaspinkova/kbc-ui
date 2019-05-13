@@ -12,7 +12,7 @@ export default createReactClass({
   },
 
   getDefaultProps() {
-    return { rootClassName: 'col-md-6' };
+    return { rootClassName: 'col-md-8' };
   },
 
   render() {

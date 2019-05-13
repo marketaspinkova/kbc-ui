@@ -17,30 +17,30 @@ export default createReactClass({
 
   render() {
     return (
-      <ListGroup>
-        <ListGroupItem className="row" key="destination">
+      <ListGroup className="clearfix">
+        <ListGroupItem className="row">
           <strong className="col-md-4">Destination table</strong>
-          <span className="col-md-6">
+          <span className="col-md-8">
             <TableLinkEx tableId={this.props.outputMapping.get('destination')} />
           </span>
         </ListGroupItem>
-        <ListGroupItem className="row" key="primaryKey">
+        <ListGroupItem className="row">
           <strong className="col-md-4">Primary key</strong>
-          <span className="col-md-6">
+          <span className="col-md-8">
             {this.props.outputMapping.get('primaryKey', List()).count()
               ? this.props.outputMapping.get('primaryKey').join(', ')
               : 'N/A'}
           </span>
         </ListGroupItem>
-        <ListGroupItem className="row" key="incremental">
+        <ListGroupItem className="row">
           <strong className="col-md-4">Incremental</strong>
-          <span className="col-md-6">
+          <span className="col-md-8">
             <Check isChecked={this.props.outputMapping.get('incremental')} />
           </span>
         </ListGroupItem>
-        <ListGroupItem className="row" key="deleteWhere">
+        <ListGroupItem className="row">
           <strong className="col-md-4">Delete rows</strong>
-          <span className="col-md-6">
+          <span className="col-md-8">
             {this.props.outputMapping.get('deleteWhereColumn') && this.props.outputMapping.get('deleteWhereValues') ? (
               <span>
                 {'Where '}

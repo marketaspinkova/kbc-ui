@@ -19,13 +19,13 @@ export default createReactClass({
       <ListGroup className="clearfix">
         <ListGroupItem className="row">
           <strong className="col-md-4">Source table</strong>
-          <span className="col-md-6">
+          <span className="col-md-8">
             <TableLinkEx tableId={this.props.value.get('source')} />
           </span>
         </ListGroupItem>
         <ListGroupItem className="row">
           <strong className="col-md-4">Columns</strong>
-          <span className="col-md-6">
+          <span className="col-md-8">
             {this.props.value.get('columns', List()).count()
               ? this.props.value.get('columns').join(', ')
               : 'Use all columns'}
