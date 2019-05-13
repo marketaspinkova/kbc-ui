@@ -10,7 +10,6 @@ import TransformationGraph from './react/pages/transformation-graph/Transformati
 import Sandbox from './react/pages/sandbox/Sandbox';
 import InstalledComponentsActionCreators from './../components/InstalledComponentsActionCreators';
 import VersionsActionCreators from '../components/VersionsActionCreators';
-import ProvisioningActionCreators from '../provisioning/ActionCreators';
 import StorageActionCreators from '../components/StorageActionCreators';
 import TransformationsIndexReloaderButton from './react/components/TransformationsIndexReloaderButton';
 import TransformationBucketButtons from './react/components/TransformationBucketButtons';
@@ -20,7 +19,6 @@ import createVersionsPageRoute from '../../modules/components/utils/createVersio
 import createRowVersionsPageRoute from '../../modules/components/utils/createRowVersionsPageRoute';
 import ComponentNameEdit from '../components/react/components/ComponentName';
 import TransformationNameEdit from './react/components/TransformationNameEditField';
-import ApplicationsStore from '../../stores/ApplicationStore';
 import JobsActionCreators from '../jobs/ActionCreators';
 import injectProps from '../components/react/injectProps';
 import { createTablesRoute } from '../table-browser/routes';
@@ -118,26 +116,8 @@ const routes = {
     },
     {
       name: 'sandbox',
-      title() {
-        return 'Sandbox';
-      },
-      defaultRouteHandler: Sandbox,
-      requireData: [
-        () => {
-          if (ApplicationsStore.getSapiToken().getIn(['owner', 'hasRedshift'])) {
-            return ProvisioningActionCreators.loadRedshiftSandboxCredentials();
-          }
-        },
-        () => {
-          if (ApplicationsStore.getSapiToken().getIn(['owner', 'hasSnowflake'])) {
-            return ProvisioningActionCreators.loadSnowflakeSandboxCredentials();
-          }
-        },
-        () => ProvisioningActionCreators.loadRStudioSandboxCredentials(),
-        () => ProvisioningActionCreators.loadJupyterSandboxCredentials(),
-        () => StorageActionCreators.loadBuckets(),
-        () => StorageActionCreators.loadTables()
-      ]
+      title: 'Sandbox',
+      defaultRouteHandler: Sandbox
     }
   ]
 };
