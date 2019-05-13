@@ -19,7 +19,7 @@ export default createReactClass({
       <ListGroup className="clearfix">
         <ListGroupItem className="row">
           <strong className="col-md-4">Destination table</strong>
-          <span className="col-md-6">
+          <span className="col-md-8">
             {this.props.value.get('destination') ? (
               <TableLinkEx tableId={this.props.value.get('destination')} />
             ) : (
@@ -29,13 +29,13 @@ export default createReactClass({
         </ListGroupItem>
         <ListGroupItem className="row">
           <strong className="col-md-4">Incremental</strong>
-          <span className="col-md-6">
+          <span className="col-md-8">
             <Check isChecked={this.props.value.get('incremental', false)} />
           </span>
         </ListGroupItem>
         <ListGroupItem className="row">
           <strong className="col-md-4">Primary key</strong>
-          <span className="col-md-6">
+          <span className="col-md-8">
             {this.props.value.get('primary_key', List()).count()
               ? this.props.value.get('primary_key').join(', ')
               : 'N/A'}
@@ -43,7 +43,7 @@ export default createReactClass({
         </ListGroupItem>
         <ListGroupItem className="row">
           <strong className="col-md-4">Delete rows</strong>
-          <span className="col-md-6">
+          <span className="col-md-8">
             {this.props.value.get('delete_where_column') && this.props.value.get('delete_where_values') ? (
               <span>
                 {'Where '}

@@ -16,26 +16,26 @@ export default createReactClass({
   render() {
     return (
       <ListGroup className="clearfix">
-        <ListGroupItem>
+        <ListGroupItem className="row">
           <strong className="col-md-4">Source</strong>
-          <span className="col-md-6">
+          <span className="col-md-8">
             out/files/
             {this.props.value.get('source')}
           </span>
         </ListGroupItem>
-        <ListGroupItem>
+        <ListGroupItem className="row">
           <strong className="col-md-4">Tags</strong>
-          <span className="col-md-6">{this.renderTags()}</span>
+          <span className="col-md-8">{this.renderTags()}</span>
         </ListGroupItem>
-        <ListGroupItem>
+        <ListGroupItem className="row">
           <strong className="col-md-4">Is public</strong>
-          <span className="col-md-6">
+          <span className="col-md-8">
             <Check isChecked={this.props.value.get('is_public')} />
           </span>
         </ListGroupItem>
-        <ListGroupItem>
+        <ListGroupItem className="row">
           <strong className="col-md-4">Is permanent</strong>
-          <span className="col-md-6">
+          <span className="col-md-8">
             <Check isChecked={this.props.value.get('is_permanent')} />
           </span>
         </ListGroupItem>

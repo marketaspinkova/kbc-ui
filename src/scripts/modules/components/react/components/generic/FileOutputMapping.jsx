@@ -97,7 +97,7 @@ export default createReactClass({
         expanded={this.props.openMappings.get('file-output-' + key, false)}
         header={this.renderHeader(output, key)}
       >
-        <Detail fill value={output} />
+        <Detail value={output} />
       </Panel>
     );
   },

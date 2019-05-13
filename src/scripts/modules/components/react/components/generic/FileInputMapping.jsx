@@ -81,7 +81,7 @@ export default createReactClass({
         expanded={this.props.openMappings.get('file-input-' + key, false)}
         header={this.renderHeader(input, key)}
       >
-        <Detail fill value={input} />
+        <Detail value={input} />
       </Panel>
     );
   },

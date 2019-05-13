@@ -307,7 +307,6 @@ export default createReactClass({
                         }
                       >
                         <InputMappingDetail
-                          fill
                           transformationBackend={this.props.transformation.get('backend')}
                           inputMapping={input}
                           tables={this.props.tables}
@@ -315,7 +314,7 @@ export default createReactClass({
                         />
                       </Panel>
                     );
-                  }, this)
+                  })
                   .toArray()}
               </div>
             ) : (

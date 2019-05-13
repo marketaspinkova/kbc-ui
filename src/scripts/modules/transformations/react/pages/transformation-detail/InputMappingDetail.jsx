@@ -26,9 +26,9 @@ export default createReactClass({
   render() {
     return (
       <ListGroup className="clearfix">
-        <ListGroupItem className="row" key="source">
+        <ListGroupItem className="row">
           <strong className="col-md-4">Source table</strong>
-          <span className="col-md-6">
+          <span className="col-md-8">
             {this.props.inputMapping.get('source') ? (
               <TableLinkEx tableId={this.props.inputMapping.get('source')} />
             ) : (
@@ -38,9 +38,9 @@ export default createReactClass({
         </ListGroupItem>
 
         {this.props.transformationBackend === 'snowflake' && (
-          <ListGroupItem className="row" key="load-type">
+          <ListGroupItem className="row">
             <strong className="col-md-4">Load Type</strong>
-            <span className="col-md-6">
+            <span className="col-md-8">
               {this.props.inputMapping.get('loadType') === 'clone' ? (
                 'Clone Table'
               ) : (
@@ -51,9 +51,9 @@ export default createReactClass({
         )}
 
         {(this.props.transformationBackend === 'redshift') && (
-          <ListGroupItem className="row" key="optional">
+          <ListGroupItem className="row">
             <strong className="col-md-4">Optional</strong>
-            <span className="col-md-6">
+            <span className="col-md-8">
               <Check isChecked={this.props.inputMapping.get('optional')} />
             </span>
           </ListGroupItem>
@@ -62,7 +62,7 @@ export default createReactClass({
         {this.props.inputMapping.get('loadType') !== 'clone' && [
           <ListGroupItem className="row" key="columns">
             <strong className="col-md-4">Columns</strong>
-            <span className="col-md-6">
+            <span className="col-md-8">
               {this.props.inputMapping.get('columns', List()).count()
                 ? this.props.inputMapping.get('columns').join(', ')
                 : 'Use all columns'}
@@ -70,7 +70,7 @@ export default createReactClass({
           </ListGroupItem>,
           <ListGroupItem className="row" key="whereColumn">
             <strong className="col-md-4">Filters</strong>
-            <span className="col-md-6">
+            <span className="col-md-8">
               {this.props.inputMapping.get('whereColumn') &&
                 this.props.inputMapping.get('whereValues') && (
                 <span>
@@ -124,10 +124,10 @@ export default createReactClass({
         {(this.props.transformationBackend === 'redshift' ||
           this.props.transformationBackend === 'snowflake')
         && this.props.inputMapping.get('loadType') !== 'clone' && (
-          <ListGroupItem className="row" key="datatypes">
+          <ListGroupItem className="row">
             <div className="clearfix">
               <strong className="col-md-4">Data types</strong>
-              <span className="col-md-6">
+              <span className="col-md-8">
                 {this.props.inputMapping.get('datatypes', List()).count() ? (
                   <ul>
                     {this.props.inputMapping
@@ -149,9 +149,9 @@ export default createReactClass({
         )}
 
         {this.props.transformationBackend === 'redshift' && (
-          <ListGroupItem className="row" key="sortKey">
+          <ListGroupItem className="row">
             <strong className="col-md-4">Sort key</strong>
-            <span className="col-md-6">
+            <span className="col-md-8">
               {this.props.inputMapping.get('sortKey')
                 ? this.props.inputMapping
                   .get('sortKey')
@@ -163,9 +163,9 @@ export default createReactClass({
         )}
 
         {this.props.transformationBackend === 'redshift' && (
-          <ListGroupItem className="row" key="distStyle">
+          <ListGroupItem className="row">
             <strong className="col-md-4">Distribution</strong>
-            <span className="col-md-6">
+            <span className="col-md-8">
               {this.props.inputMapping.get('distStyle')
                 ? this.props.inputMapping.get('distStyle') + ' ' + this.props.inputMapping.get('distKey')
                 : 'No distribution set'}
