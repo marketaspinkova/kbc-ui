@@ -64,16 +64,6 @@ export default createReactClass({
         icon: 'kbc-icon-transformations'
       },
       {
-        id: 'extractors',
-        title: 'Extractors',
-        icon: 'kbc-icon-extractors'
-      },
-      {
-        id: 'writers',
-        title: 'Writers',
-        icon: 'kbc-icon-writers'
-      },
-      {
         id: 'jobs',
         title: 'Jobs',
         icon: 'kbc-icon-jobs'
