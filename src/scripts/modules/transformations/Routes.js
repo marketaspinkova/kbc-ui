@@ -1,8 +1,5 @@
-/* eslint-disable react/no-multi-comp */
-// ^ due to false positive
 import React from 'react';
-
-
+import Promise from 'bluebird';
 import TransformationsIndex from './react/pages/transformations-index/TransformationsIndex';
 import TransformationBucket from './react/pages/transformation-bucket/TransformationBucket';
 import TransformationDetail from './react/pages/transformation-detail/TransformationDetail';
@@ -10,6 +7,7 @@ import TransformationGraph from './react/pages/transformation-graph/Transformati
 import Sandbox from './react/pages/sandbox/Sandbox';
 import InstalledComponentsActionCreators from './../components/InstalledComponentsActionCreators';
 import VersionsActionCreators from '../components/VersionsActionCreators';
+import ProvisioningActionCreators from '../provisioning/ActionCreators';
 import StorageActionCreators from '../components/StorageActionCreators';
 import TransformationsIndexReloaderButton from './react/components/TransformationsIndexReloaderButton';
 import TransformationBucketButtons from './react/components/TransformationBucketButtons';
@@ -19,6 +17,7 @@ import createVersionsPageRoute from '../../modules/components/utils/createVersio
 import createRowVersionsPageRoute from '../../modules/components/utils/createRowVersionsPageRoute';
 import ComponentNameEdit from '../components/react/components/ComponentName';
 import TransformationNameEdit from './react/components/TransformationNameEditField';
+import ApplicationsStore from '../../stores/ApplicationStore';
 import JobsActionCreators from '../jobs/ActionCreators';
 import injectProps from '../components/react/injectProps';
 import { createTablesRoute } from '../table-browser/routes';
@@ -117,7 +116,22 @@ const routes = {
     {
       name: 'sandbox',
       title: 'Sandbox',
-      defaultRouteHandler: Sandbox
+      defaultRouteHandler: Sandbox,
+      requireData: [
+        () => StorageActionCreators.loadTables(),
+        () => StorageActionCreators.loadBuckets(),
+        () => {
+          if (ApplicationsStore.getSapiToken().getIn(['owner', 'hasSnowflake'], false)) {
+            ProvisioningActionCreators.loadSnowflakeSandboxCredentials();
+          }
+          if (ApplicationsStore.getSapiToken().getIn(['owner', 'hasRedshift'], false)) {
+            ProvisioningActionCreators.loadRedshiftSandboxCredentials();
+          }
+          ProvisioningActionCreators.loadRStudioSandboxCredentials();
+          ProvisioningActionCreators.loadJupyterSandboxCredentials();
+          return Promise.resolve();
+        }
+      ]
     }
   ]
 };

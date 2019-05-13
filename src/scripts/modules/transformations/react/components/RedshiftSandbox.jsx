@@ -1,18 +1,18 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
-import Immutable from 'immutable';
-
+import { Map, List, fromJS } from 'immutable';
+import { Loader } from '@keboola/indigo-ui';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import RedshiftSandboxCredentialsStore from '../../../provisioning/stores/RedshiftSandboxCredentialsStore';
 import CredentialsActionCreators from '../../../provisioning/ActionCreators';
 import RedshiftCredentials from '../../../provisioning/react/components/RedshiftCredentials';
-import ConfigureSandbox from './ConfigureSandbox';
 import RunComponentButton from '../../../components/react/components/RunComponentButton';
 import DeleteButton from '../../../../react/common/DeleteButton';
 import StorageBucketsStore from '../../../components/stores/StorageBucketsStore';
 import StorageTablesStore from '../../../components/stores/StorageTablesStore';
 import Tooltip from './../../../../react/common/Tooltip';
 import RedshiftSSLInfoModal from './RedshiftSSLInfoModal';
+import ConfigureSandbox from './ConfigureSandbox';
 
 export default createReactClass({
   mixins: [createStoreMixin(RedshiftSandboxCredentialsStore, StorageBucketsStore, StorageTablesStore)],
@@ -22,7 +22,6 @@ export default createReactClass({
       credentials: RedshiftSandboxCredentialsStore.getCredentials(),
       pendingActions: RedshiftSandboxCredentialsStore.getPendingActions(),
       isLoading: RedshiftSandboxCredentialsStore.getIsLoading(),
-      isLoaded: RedshiftSandboxCredentialsStore.getIsLoaded(),
       tables: StorageTablesStore.getAll(),
       buckets: StorageBucketsStore.getAll()
     };
@@ -31,7 +30,7 @@ export default createReactClass({
   getInitialState() {
     return {
       showSSLInfoModal: false,
-      sandboxConfiguration: Immutable.Map()
+      sandboxConfiguration: Map()
     };
   },
 
@@ -61,10 +60,10 @@ export default createReactClass({
               runParams={() => this.state.sandboxConfiguration}
               modalOnHide={() => {
                 this.setState({
-                  sandboxConfiguration: Immutable.Map()
+                  sandboxConfiguration: Map()
                 });
               }}
-              modalRunButtonDisabled={this.state.sandboxConfiguration.get('include', Immutable.List()).size === 0}
+              modalRunButtonDisabled={this.state.sandboxConfiguration.get('include', List()).size === 0}
             >
               <ConfigureSandbox
                 backend="redshift"
@@ -72,7 +71,7 @@ export default createReactClass({
                 buckets={this.state.buckets}
                 onChange={params => {
                   this.setState({
-                    sandboxConfiguration: Immutable.fromJS(params)
+                    sandboxConfiguration: fromJS(params)
                   });
                 }}
               />
@@ -122,12 +121,14 @@ export default createReactClass({
     return (
       <div className="kbc-row">
         <h4>
-          Redshift
+          Redshift {this.state.isLoading && <Loader />}
         </h4>
-        <div className="row">
-          <div className="col-md-9">{this._renderCredentials()}</div>
-          <div className="col-md-3">{this._renderControlButtons()}</div>
-        </div>
+        {!this.state.isLoading && (
+          <div className="row">
+            <div className="col-md-9">{this._renderCredentials()}</div>
+            <div className="col-md-3">{this._renderControlButtons()}</div>
+          </div>
+        )}
       </div>
     );
   },

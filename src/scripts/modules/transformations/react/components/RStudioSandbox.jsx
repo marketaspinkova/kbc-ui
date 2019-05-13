@@ -1,6 +1,7 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
-import Immutable from 'immutable';
+import { Map, List, fromJS } from 'immutable';
+import { Loader } from '@keboola/indigo-ui';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import RStudioSandboxCredentialsStore from '../../../provisioning/stores/RStudioSandboxCredentialsStore';
 import CredentialsActionCreators from '../../../provisioning/ActionCreators';
@@ -11,27 +12,27 @@ import StorageTablesStore from '../../../components/stores/StorageTablesStore';
 import CreateDockerSandboxModal from '../modals/CreateDockerSandboxModal';
 import ExtendRStudioCredentials from '../../../provisioning/react/components/ExtendRStudioCredentials';
 
-var RStudioSandbox = createReactClass({
+export default createReactClass({
   mixins: [createStoreMixin(RStudioSandboxCredentialsStore, StorageBucketsStore, StorageTablesStore)],
-  displayName: 'RStudioSandbox',
-  getStateFromStores: function() {
+
+  getStateFromStores() {
     return {
       credentials: RStudioSandboxCredentialsStore.getCredentials(),
       validUntil: RStudioSandboxCredentialsStore.getValidUntil(),
       pendingActions: RStudioSandboxCredentialsStore.getPendingActions(),
       isLoading: RStudioSandboxCredentialsStore.getIsLoading(),
-      isLoaded: RStudioSandboxCredentialsStore.getIsLoaded(),
-      tables: StorageTablesStore.getAll(),
-      buckets: StorageBucketsStore.getAll()
+      tables: StorageTablesStore.getAll()
     };
   },
+
   getInitialState() {
     return {
       showModal: false,
-      sandboxConfiguration: Immutable.Map()
+      sandboxConfiguration: Map()
     };
   },
-  _renderCredentials: function() {
+
+  _renderCredentials() {
     return (
       <span>
         <RStudioCredentials
@@ -42,7 +43,8 @@ var RStudioSandbox = createReactClass({
       </span>
     );
   },
-  _renderControlButtons: function() {
+
+  _renderControlButtons() {
     if (this.state.credentials.get('id')) {
       return (
         <div>
@@ -87,7 +89,7 @@ var RStudioSandbox = createReactClass({
             tables={this.tablesList()}
             type="RStudio"
             onConfigurationChange={this.onConfigurationChange}
-            disabled={this.state.sandboxConfiguration.getIn(['input', 'tables'], Immutable.List()).size === 0}
+            disabled={this.state.sandboxConfiguration.getIn(['input', 'tables'], List()).size === 0}
           />
           <button className="btn btn-link" onClick={this.openModal}>
             <i className="fa fa-fw fa-plus" />
@@ -107,7 +109,7 @@ var RStudioSandbox = createReactClass({
     );
   },
 
-  render: function() {
+  render() {
     return (
       <div className="kbc-row">
         <h4>
@@ -120,39 +122,43 @@ var RStudioSandbox = createReactClass({
               BETA
             </a>
           </span>
+          {' '}
+          {this.state.isLoading && <Loader />}
         </h4>
-        <div className="row">
-          <div className="col-md-9">{this._renderCredentials()}</div>
-          <div className="col-md-3">{this._renderControlButtons()}</div>
-        </div>
+        {!this.state.isLoading && (
+          <div className="row">
+            <div className="col-md-9">{this._renderCredentials()}</div>
+            <div className="col-md-3">{this._renderControlButtons()}</div>
+          </div>
+        )}
       </div>
     );
   },
-  _createCredentials: function() {
+
+  _createCredentials() {
     return CredentialsActionCreators.createRStudioSandboxCredentials(this.state.sandboxConfiguration.toJS());
   },
-  _dropCredentials: function() {
+
+  _dropCredentials() {
     return CredentialsActionCreators.dropRStudioSandboxCredentials();
   },
+
   handleClose() {
     this.setState({
       showModal: false,
-      sandboxConfiguration: Immutable.Map()
+      sandboxConfiguration: Map()
     });
   },
+
   openModal() {
     this.setState({ showModal: true });
   },
+
   onConfigurationChange(configuration) {
-    this.setState({ sandboxConfiguration: Immutable.fromJS(configuration) });
+    this.setState({ sandboxConfiguration: fromJS(configuration) });
   },
+
   tablesList() {
-    return this.state.tables
-      .map(function(table) {
-        return table.get('id');
-      })
-      .toList();
+    return this.state.tables.map((table) => table.get('id')).toList();
   }
 });
-
-export default RStudioSandbox;

@@ -1,37 +1,37 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
-import Immutable from 'immutable';
+import { Map, List, fromJS} from 'immutable';
+import { Loader } from '@keboola/indigo-ui';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import SnowflakeSandboxCredentialsStore from '../../../provisioning/stores/SnowflakeSandboxCredentialsStore';
 import CredentialsActionCreators from '../../../provisioning/ActionCreators';
 import SnowflakeCredentials from '../../../provisioning/react/components/SnowflakeCredentials';
-import ConfigureSandbox from './ConfigureSandbox';
 import RunComponentButton from '../../../components/react/components/RunComponentButton';
 import DeleteButton from '../../../../react/common/DeleteButton';
 import StorageBucketsStore from '../../../components/stores/StorageBucketsStore';
 import StorageTablesStore from '../../../components/stores/StorageTablesStore';
+import ConfigureSandbox from './ConfigureSandbox';
 
-var SnowflakeSandbox = createReactClass({
+export default createReactClass({
   mixins: [createStoreMixin(SnowflakeSandboxCredentialsStore, StorageBucketsStore, StorageTablesStore)],
-  displayName: 'SnowflakeSandbox',
-  getStateFromStores: function() {
+
+  getStateFromStores() {
     return {
       credentials: SnowflakeSandboxCredentialsStore.getCredentials(),
       pendingActions: SnowflakeSandboxCredentialsStore.getPendingActions(),
       isLoading: SnowflakeSandboxCredentialsStore.getIsLoading(),
-      isLoaded: SnowflakeSandboxCredentialsStore.getIsLoaded(),
       tables: StorageTablesStore.getAll(),
       buckets: StorageBucketsStore.getAll()
     };
   },
 
-  getInitialState: function() {
+  getInitialState() {
     return {
-      sandboxConfiguration: Immutable.Map()
+      sandboxConfiguration: Map()
     };
   },
 
-  _renderCredentials: function() {
+  _renderCredentials() {
     return (
       <span>
         <SnowflakeCredentials
@@ -42,7 +42,7 @@ var SnowflakeSandbox = createReactClass({
     );
   },
 
-  _renderControlButtons: function() {
+  _renderControlButtons() {
     const connectLink =
       'https://' + this.state.credentials.get('hostname') + '/console/login#/?returnUrl=sql/worksheet';
     if (this.state.credentials.get('id')) {
@@ -58,11 +58,11 @@ var SnowflakeSandbox = createReactClass({
               runParams={() => this.state.sandboxConfiguration.toJS()}
               modalOnHide={() => {
                 this.setState({
-                  sandboxConfiguration: Immutable.Map()
+                  sandboxConfiguration: Map()
                 });
               }}
               disabled={this.state.pendingActions.size > 0}
-              modalRunButtonDisabled={this.state.sandboxConfiguration.get('include', Immutable.List()).size === 0}
+              modalRunButtonDisabled={this.state.sandboxConfiguration.get('include', List()).size === 0}
             >
               <ConfigureSandbox
                 backend="snowflake"
@@ -70,7 +70,7 @@ var SnowflakeSandbox = createReactClass({
                 buckets={this.state.buckets}
                 onChange={params => {
                   this.setState({
-                    sandboxConfiguration: Immutable.fromJS(params)
+                    sandboxConfiguration: fromJS(params)
                   });
                 }}
               />
@@ -113,25 +113,28 @@ var SnowflakeSandbox = createReactClass({
       );
     }
   },
-  render: function() {
+
+  render() {
     return (
       <div className="kbc-row">
         <h4>
-          Snowflake
+          Snowflake {this.state.isLoading && <Loader />}
         </h4>
-        <div className="row">
-          <div className="col-md-9">{this._renderCredentials()}</div>
-          <div className="col-md-3">{this._renderControlButtons()}</div>
-        </div>
+        {!this.state.isLoading && (
+          <div className="row">
+            <div className="col-md-9">{this._renderCredentials()}</div>
+            <div className="col-md-3">{this._renderControlButtons()}</div>
+          </div>
+        )}
       </div>
     );
   },
-  _createCredentials: function() {
+
+  _createCredentials() {
     return CredentialsActionCreators.createSnowflakeSandboxCredentials();
   },
-  _dropCredentials: function() {
+
+  _dropCredentials() {
     return CredentialsActionCreators.dropSnowflakeSandboxCredentials();
   }
 });
-
-export default SnowflakeSandbox;
