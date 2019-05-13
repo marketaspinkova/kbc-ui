@@ -1,11 +1,10 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
-import { Map } from 'immutable';
+import { Map, List } from 'immutable';
 import { Table, Button, Row } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 import { Link } from 'react-router';
-
 import MetadataEditField from '../../../../components/react/components/MetadataEditField';
 import InlineEditArea from '../../../../../react/common/InlineEditArea';
 import CreatedWithIcon from '../../../../../react/common/CreatedWithIcon';
@@ -99,7 +98,7 @@ export default createReactClass({
       <MetadataEditField
         objectType="bucket"
         objectId={this.props.bucket.get('id')}
-        metadata={this.props.bucket.get('metadata')}
+        metadata={this.props.bucket.get('metadata', List())}
         metadataKey="KBC.description"
         placeholder="Describe bucket"
         editElement={InlineEditArea}

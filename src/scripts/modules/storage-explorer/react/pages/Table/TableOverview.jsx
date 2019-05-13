@@ -1,11 +1,11 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import { Link } from 'react-router';
+import { List } from 'immutable';
 import { Table, Button, Row } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
-
 import MetadataEditField from '../../../../components/react/components/MetadataEditField';
 import TableUpdatedByComponentInfo from '../../../../../react/common/TableUpdatedByComponentInfo';
 import InlineEditArea from '../../../../../react/common/InlineEditArea';
@@ -165,7 +165,7 @@ export default createReactClass({
       <MetadataEditField
         objectType="table"
         objectId={this.props.table.get('id')}
-        metadata={this.props.table.get('metadata')}
+        metadata={this.props.table.get('metadata', List())}
         metadataKey="KBC.description"
         placeholder="Describe table"
         editElement={InlineEditArea}
