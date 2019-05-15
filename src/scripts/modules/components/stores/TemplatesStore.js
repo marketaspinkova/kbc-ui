@@ -15,23 +15,6 @@ const TemplatesStore = StoreUtils.createStore({
     return _store.hasIn(['templates', componentId]);
   },
 
-  // TODO -> installedcomponentsstore
-  getParamsSchema(componentId) {
-    return _store.getIn(['templates', componentId, 'templates', 'params'], Map());
-  },
-
-  // TODO -> installedcomponentsstore
-  getPureParamsSchema(componentId) {
-    let schema = _store.getIn(['templates', componentId, 'templates', 'params'], Map());
-    if (schema.hasIn(['properties', 'jobs'])) {
-      schema = schema.deleteIn(['properties', 'jobs']);
-    }
-    if (schema.hasIn(['properties', 'mappings'])) {
-      schema = schema.deleteIn(['properties', 'mappings']);
-    }
-    return schema;
-  },
-
   // new
   getConfigTemplates(componentId) {
     return _store.getIn(['templates', componentId, 'templates', 'config'], Map());
