@@ -1,6 +1,7 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
+import { Map, List } from 'immutable';
 import { FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 import Select from 'react-select';
 import ApplicationActionCreators from '../../../../actions/ApplicationActionCreators';
@@ -33,7 +34,8 @@ export default createReactClass({
 
   getStateFromStores() {
     return {
-      config: InstalledComponentsStore.getConfig(this.props.componentId, this.props.configId)
+      config: InstalledComponentsStore.getConfig(this.props.componentId, this.props.configId),
+      component: InstalledComponentsStore.getComponent(this.props.componentId) || Map()
     };
   },
 
@@ -47,7 +49,7 @@ export default createReactClass({
   },
 
   render() {
-    if (!this.state.config.count()) {
+    if (!this.state.config.count() || this.state.component.get('flags', List()).includes('excludeRun')) {
       return null;
     }
 
