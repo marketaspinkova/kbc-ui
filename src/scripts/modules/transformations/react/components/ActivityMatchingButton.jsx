@@ -19,29 +19,29 @@ export default createReactClass({
   },
 
   render() {
-    if (this.props.disabled) {
-      return <a>{this.renderLabel()}</a>;
-    }
-
     return (
-      <a onClick={() => this.setState({ showModal: true })}>
-        {this.renderLabel()}
+      <a onClick={this.openModal} className={classnames({ 'text-muted': this.props.disabled })}>
+        <i className="fa fa-fw fa-align-justify" /> Activity Matching{' '}
+        <Label bsStyle="info">BETA</Label>
         <ActivityMatchingModal
           transformation={this.props.transformation}
           tables={this.props.tables}
           show={this.state.showModal}
-          onHide={() => this.setState({ showModal: false })}
+          onHide={this.closeModal}
         />
       </a>
     );
   },
 
-  renderLabel() {
-    return (
-      <span className={classnames({ 'text-muted': this.props.disabled })}>
-        <i className="fa fa-fw fa-align-justify" /> Activity Matching{' '}
-        <Label bsStyle="info">BETA</Label>
-      </span>
-    );
+  openModal() {
+    if (this.props.disabled) {
+      return;
+    }
+
+    this.setState({ showModal: true });
+  },
+
+  closeModal() {
+    this.setState({ showModal: false });
   }
 });
