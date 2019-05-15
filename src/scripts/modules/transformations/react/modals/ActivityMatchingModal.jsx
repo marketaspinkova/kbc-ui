@@ -134,9 +134,8 @@ export default createReactClass({
     this.setState({ isLoading: true });
     StorageApi.getActivityMatchingData()
       .then((data) => {
-        this.setState({ data: fromJS(data), isLoading: false });
+        this.setState({ data: fromJS(data), isLoading: false }, this.findMatches);
       })
-      .then(this.findMatches)
       .finally(() => {
         this.setState({ isLoading: false });
       });
