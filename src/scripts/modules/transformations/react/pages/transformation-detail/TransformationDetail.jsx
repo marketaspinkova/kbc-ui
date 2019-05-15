@@ -200,10 +200,11 @@ export default createReactClass({
                 />
               </li>
             )}
-            <li>
+            <li className={classnames({ disabled: this.state.transformation.get('input').count() === 0 })}>
               <ActivityMatchingButton
                 transformation={this.state.transformation}
                 tables={this.state.tables}
+                disabled={this.state.transformation.get('input').count() === 0}
               />
             </li>
             {(backend === 'redshift' ||
