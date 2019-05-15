@@ -18,6 +18,7 @@ import Confirm from '../../../../../react/common/Confirm';
 import CreateSandboxButton from '../../components/CreateSandboxButton';
 
 import SqlDepButton from '../../components/SqlDepButton';
+import ActivityMatchingButton from '../../components/ActivityMatchingButton';
 import ValidateQueriesButton from '../../components/ValidateQueriesButton';
 import * as sandboxUtils from '../../../utils/sandboxUtils';
 
@@ -199,6 +200,12 @@ export default createReactClass({
                 />
               </li>
             )}
+            <li>
+              <ActivityMatchingButton
+                transformation={this.state.transformation}
+                tables={this.state.tables}
+              />
+            </li>
             {(backend === 'redshift' ||
               backend === 'snowflake') && (
               <li>
