@@ -9,7 +9,7 @@ export default createReactClass({
   propTypes: {
     transformation: PropTypes.object.isRequired,
     tables: PropTypes.object.isRequired,
-    disabled: PropTypes.object.isRequired
+    disabled: PropTypes.bool.isRequired
   },
 
   getInitialState() {
