@@ -34,9 +34,9 @@ export default createReactClass({
       <Modal
         bsSize="large"
         show={this.props.show}
-        onHide={this.props.onHide}
+        onHide={this.onHide}
         onEntering={this.loadDataAndRunSearch}
-        onExit={() => this.setState({ INITIAL_STATE })}
+        onExit={this.onHide}
       >
         <Modal.Header closeButton>
           <Modal.Title>Activity Matching</Modal.Title>
@@ -169,8 +169,13 @@ export default createReactClass({
     this.setState({ matches });
   },
 
-  goToTransformation(config) {
+  onHide() {
+    this.setState(INITIAL_STATE);
     this.props.onHide();
+  },
+
+  goToTransformation(config) {
+    this.onHide();
     RoutesStore.getRouter().transitionTo('transformationDetail', {
       config: config.get('configurationId'),
       row: config.get('rowId')
