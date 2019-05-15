@@ -392,5 +392,12 @@ export default {
 
   deleteTrigger(id) {
     return createRequest('DELETE', `triggers/${id}`);
+  },
+
+  getActivityMatchingData() {
+    return request('GET', 'https://p7pjgem0zb.execute-api.eu-west-1.amazonaws.com/dev/project/match')
+      .set('X-StorageApi-Token', ApplicationStore.getSapiTokenString())
+      .promise()
+      .then((response) => response.body);
   }
 };

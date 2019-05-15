@@ -5,9 +5,8 @@ import { Map, fromJS } from 'immutable';
 import { Button, Col, Row, Modal, Well } from 'react-bootstrap';
 import { Loader, ExternalLink } from '@keboola/indigo-ui';
 import RoutesStore from '../../../../stores/RoutesStore';
-import ApplicationStore from '../../../../stores/ApplicationStore';
+import StorageApi from '../../../components/StorageApi';
 import date from '../../../../utils/date';
-import request from '../../../../utils/request';
 import JobStatusLabel from '../../../../react/common/JobStatusLabel';
 import TableSizeLabel from '../components/TableSizeLabel';
 
@@ -133,11 +132,9 @@ export default createReactClass({
 
   loadDataAndRunSearch() {
     this.setState({ isLoading: true });
-    request('GET', 'https://p7pjgem0zb.execute-api.eu-west-1.amazonaws.com/dev/project/match')
-      .set('X-StorageApi-Token', ApplicationStore.getSapiTokenString())
-      .promise()
-      .then((response) => {
-        this.setState({ data: fromJS(response.body), isLoading: false });
+    StorageApi.getActivityMatchingData()
+      .then((data) => {
+        this.setState({ data: fromJS(data), isLoading: false });
       })
       .then(this.findMatches)
       .finally(() => {
