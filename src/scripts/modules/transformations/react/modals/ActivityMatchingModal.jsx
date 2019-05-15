@@ -39,7 +39,9 @@ export default createReactClass({
         onExit={this.onHide}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Activity Matching</Modal.Title>
+          <Modal.Title>
+            <i className="fa fa-fw fa-align-justify" /> Activity Matching
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>{this.renderBody()}</Modal.Body>
       </Modal>
