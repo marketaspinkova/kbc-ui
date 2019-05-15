@@ -65,60 +65,68 @@ export default createReactClass({
           Looks like someone already did transformation using same inputs before. Lets save time and
           reuse it.
         </p>
-        {this.props.transformation
-          .get('input')
-          .map(this.renderInputMappingRow)
-          .toArray()}
+        {this.renderInputMappingRows()}
         <br />
-        {this.state.matches.map(this.renderMatch).toArray()}
+        {this.renderMatches()}
       </div>
     );
   },
 
-  renderInputMappingRow(mapping, idx) {
-    const sourceTable = this.props.tables.get(mapping.get('source'), Map());
+  renderInputMappingRows() {
+    return this.props.transformation
+      .get('input')
+      .map((mapping, idx) => {
+        const sourceTable = this.props.tables.get(mapping.get('source'), Map());
 
-    return (
-      <Well key={idx} style={{ marginBottom: '5px' }}>
-        {sourceTable.count() > 0 && <TableSizeLabel size={sourceTable.get('dataSizeBytes')} />}{' '}
-        {mapping.get('source')}
-      </Well>
-    );
+        return (
+          <Well key={idx} style={{ marginBottom: '5px' }}>
+            {sourceTable.count() > 0 && <TableSizeLabel size={sourceTable.get('dataSizeBytes')} />}{' '}
+            {mapping.get('source')}
+          </Well>
+        );
+      })
+      .toArray();
   },
 
-  renderMatch(match, idx) {
-    const config = match.first();
+  renderMatches() {
+    return this.state.matches
+      .map((match, idx) => {
+        const config = match.first();
 
-    return (
-      <Well key={idx}>
-        <Row>
-          <Col sm={6}>
-            <p style={{ margin: '0 0 5px', display: 'flex', alignItems: 'center' }}>
-              <strong style={{ fontSize: '1.2em', marginRight: '10px' }}>
-                {config.get('rowName')} #{config.get('rowVersion')}
-              </strong>{' '}
-              <JobStatusLabel status={config.get('lastRunStatus')} />
-            </p>
-            <p>
-              <ExternalLink href={`mailto:${config.get('configurationCreated')}`}>
-                {config.get('configurationCreated')}
-              </ExternalLink>
-            </p>
-            <Button
-              bsStyle="default"
-              bsSize="large"
-              onClick={() => this.goToTransformation(config)}
-            >
-              Check this transformation
-            </Button>
-          </Col>
-          <Col sm={6} className="text-right text-muted">
-            <p style={{ margin: '0 0 5px' }}>Last run: {date.format(config.get('lastRunAt'))}</p>
-            <p>Last edit: {date.format(config.get('rowLastModifiedAt'))}</p>
-          </Col>
-        </Row>
-      </Well>
-    );
+        return (
+          <Well key={idx}>
+            <Row>
+              <Col sm={6}>
+                <p style={{ margin: '0 0 5px', display: 'flex', alignItems: 'center' }}>
+                  <strong style={{ fontSize: '1.2em', marginRight: '10px' }}>
+                    {config.get('rowName')} #{config.get('rowVersion')}
+                  </strong>{' '}
+                  <JobStatusLabel status={config.get('lastRunStatus')} />
+                </p>
+                <p>
+                  <ExternalLink href={`mailto:${config.get('configurationCreated')}`}>
+                    {config.get('configurationCreated')}
+                  </ExternalLink>
+                </p>
+                <Button
+                  bsStyle="default"
+                  bsSize="large"
+                  onClick={() => this.goToTransformation(config)}
+                >
+                  Check this transformation
+                </Button>
+              </Col>
+              <Col sm={6} className="text-right text-muted">
+                <p style={{ margin: '0 0 5px' }}>
+                  Last run: {date.format(config.get('lastRunAt'))}
+                </p>
+                <p>Last edit: {date.format(config.get('rowLastModifiedAt'))}</p>
+              </Col>
+            </Row>
+          </Well>
+        );
+      })
+      .toArray();
   },
 
   loadDataAndRunSearch() {
