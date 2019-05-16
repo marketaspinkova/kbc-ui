@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import immutableMixin from 'react-immutable-render-mixin';
+import { List } from 'immutable';
 import { Alert } from 'react-bootstrap';
 import Clipboard from '../../../../react/common/Clipboard';
 import SaveButtons from '../../../../react/common/SaveButtons';
@@ -13,12 +14,12 @@ export default createReactClass({
   propTypes: {
     value: PropTypes.string,
     isEditingValid: PropTypes.bool.isRequired,
-    schemaErrors: PropTypes.object.isRequired,
     isSaving: PropTypes.bool.isRequired,
     onEditCancel: PropTypes.func.isRequired,
     onEditChange: PropTypes.func.isRequired,
     onEditSubmit: PropTypes.func.isRequired,
     isChanged: PropTypes.bool.isRequired,
+    schemaErrors: PropTypes.object,
     showSaveModal: PropTypes.bool,
     saveModalTitle: PropTypes.string,
     saveModalBody: PropTypes.any
@@ -26,7 +27,8 @@ export default createReactClass({
 
   getDefaultProps() {
     return {
-      value: ''
+      value: '',
+      schemaErrors: List()
     };
   },
 
