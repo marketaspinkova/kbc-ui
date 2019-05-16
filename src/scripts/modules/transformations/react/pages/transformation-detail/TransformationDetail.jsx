@@ -9,6 +9,8 @@ import TransformationsStore from '../../../stores/TransformationsStore';
 import TransformationBucketsStore from '../../../stores/TransformationBucketsStore';
 import StorageTablesStore from '../../../../components/stores/StorageTablesStore';
 import StorageBucketsStore from '../../../../components/stores/StorageBucketsStore';
+import ApplicationStore from '../../../../../stores/ApplicationStore';
+import { FEATURE_UI_DEVEL_PREVIEW, FEATURE_EARLY_ADOPTER_PREVIEW } from '../../../../../constants/KbcConstants'
 import RoutesStore from '../../../../../stores/RoutesStore';
 import VersionsStore from '../../../../components/stores/VersionsStore';
 import TransformationsActionCreators from '../../../ActionCreators';
@@ -200,13 +202,16 @@ export default createReactClass({
                 />
               </li>
             )}
-            <li className={classnames({ disabled: this.state.transformation.get('input').count() === 0 })}>
-              <ActivityMatchingButton
-                transformation={this.state.transformation}
-                tables={this.state.tables}
-                disabled={this.state.transformation.get('input').count() === 0}
-              />
-            </li>
+            {(ApplicationStore.hasCurrentAdminFeature(FEATURE_EARLY_ADOPTER_PREVIEW) ||
+              ApplicationStore.hasCurrentAdminFeature(FEATURE_UI_DEVEL_PREVIEW)) && (
+              <li className={classnames({ disabled: this.state.transformation.get('input').count() === 0 })}>
+                <ActivityMatchingButton
+                  transformation={this.state.transformation}
+                  tables={this.state.tables}
+                  disabled={this.state.transformation.get('input').count() === 0}
+                />
+              </li>
+            )}
             {(backend === 'redshift' ||
               backend === 'snowflake') && (
               <li>
