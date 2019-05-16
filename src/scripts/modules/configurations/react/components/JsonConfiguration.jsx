@@ -1,10 +1,11 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
-import Input from './JsonConfigurationInput';
+import immutableMixin from 'react-immutable-render-mixin';
+import { Alert } from 'react-bootstrap';
 import Clipboard from '../../../../react/common/Clipboard';
 import SaveButtons from '../../../../react/common/SaveButtons';
-import immutableMixin from 'react-immutable-render-mixin';
+import Input from './JsonConfigurationInput';
 
 export default createReactClass({
   mixins: [immutableMixin],
@@ -12,6 +13,7 @@ export default createReactClass({
   propTypes: {
     value: PropTypes.string,
     isEditingValid: PropTypes.bool.isRequired,
+    schemaErrors: PropTypes.object.isRequired,
     isSaving: PropTypes.bool.isRequired,
     onEditCancel: PropTypes.func.isRequired,
     onEditChange: PropTypes.func.isRequired,
@@ -38,7 +40,12 @@ export default createReactClass({
           </small>
         </h2>
         {this.renderButtons()}
-        <Input value={this.props.value} disabled={this.props.isSaving} onChange={this.props.onEditChange} />
+        {this.renderErrors()}
+        <Input
+          value={this.props.value}
+          disabled={this.props.isSaving}
+          onChange={this.props.onEditChange}
+        />
       </div>
     );
   },
@@ -48,7 +55,7 @@ export default createReactClass({
       <div className="text-right">
         <SaveButtons
           isSaving={this.props.isSaving}
-          disabled={!this.props.isEditingValid}
+          disabled={!this.props.isEditingValid || this.props.schemaErrors.count() > 0}
           isChanged={this.props.isChanged}
           onSave={this.props.onEditSubmit}
           onReset={this.props.onEditCancel}
@@ -57,6 +64,22 @@ export default createReactClass({
           modalBody={this.props.saveModalBody}
         />
       </div>
+    );
+  },
+
+  renderErrors() {
+    if (!this.props.schemaErrors.count()) {
+      return null;
+    }
+
+    return (
+      <Alert bsStyle="danger" style={{ marginTop: '10px' }}>
+        <ul>
+          {this.props.schemaErrors.map((error, index) => (
+            <li key={index}>{error}</li>
+          ))}
+        </ul>
+      </Alert>
     );
   }
 });
