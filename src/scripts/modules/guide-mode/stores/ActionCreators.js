@@ -37,7 +37,7 @@ export const setAchievedLesson = (lessonId) => {
 };
 
 export const showWizardModalFn = (lessonNumber) => {
-  return Dispatcher.handleViewAction({
+  Dispatcher.handleViewAction({
     type: ActionTypes.GUIDE_MODE_UPDATE_MODAL_STATE,
     showLessonModal: true,
     step: 0,

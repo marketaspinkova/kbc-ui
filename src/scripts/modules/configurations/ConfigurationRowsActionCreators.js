@@ -44,12 +44,13 @@ export default {
       .then(function(response) {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
         createCallback(response.id);
-        return Dispatcher.handleViewAction({
+        Dispatcher.handleViewAction({
           type: Constants.ActionTypes.CONFIGURATION_ROWS_CREATE_SUCCESS,
           componentId: componentId,
           configurationId: configurationId,
           data: response
         });
+        return null;
       }).catch(function(e) {
         Dispatcher.handleViewAction({
           type: Constants.ActionTypes.CONFIGURATION_ROWS_CREATE_ERROR,
