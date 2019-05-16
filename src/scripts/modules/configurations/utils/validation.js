@@ -1,6 +1,7 @@
 import { List } from 'immutable';
+import { object } from 'yup';
 
-export default function(value, schema) {
+export default function(value, schema = object().nullable()) {
   try {
     schema.validateSync(value, { strict: true, abortEarly: false });
   } catch (error) {
