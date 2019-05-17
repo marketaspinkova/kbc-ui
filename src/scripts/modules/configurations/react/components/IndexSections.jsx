@@ -19,6 +19,7 @@ import isParsableConfiguration from '../../utils/isParsableConfiguration';
 import JsonConfiguration from '../components/JsonConfiguration';
 import dockerActions from '../../DockerActionsActionCreators';
 import DockerActionsStore from '../../DockerActionsStore';
+import validation from '../../utils/schemaValidation/validation';
 
 export default createReactClass({
   mixins: [createStoreMixin(InstalledComponentsStore, Store, DockerActionsStore)],
@@ -45,6 +46,8 @@ export default createReactClass({
     );
 
     const isJsonConfigurationValid = Store.isEditingJsonConfigurationValid(componentId, configurationId);
+    const editingJsonConfiguration = Store.getEditingJsonConfiguration(componentId, configurationId)
+    const schemaErrors = validation(editingJsonConfiguration, settings.getIn(['index', 'schema']));
 
     const storedConfigurationSections = parseBySectionsFn(Store.getConfiguration(componentId, configurationId));
 
@@ -60,11 +63,13 @@ export default createReactClass({
       jsonConfigurationValue: Store.getEditingJsonConfigurationString(componentId, configurationId),
       isJsonConfigurationSaving: Store.getPendingActions(componentId, configurationId).has('save-json'),
       isJsonConfigurationValid: isJsonConfigurationValid,
+      schemaErrors: schemaErrors,
       isJsonConfigurationChanged: Store.isEditingJsonConfiguration(componentId, configurationId),
       isJsonConfigurationParsable:
         isJsonConfigurationValid &&
+        !schemaErrors.count() &&
         isParsableConfiguration(
-          conformFn(Immutable.fromJS(Store.getEditingJsonConfiguration(componentId, configurationId))),
+          conformFn(Immutable.fromJS(editingJsonConfiguration)),
           parseBySectionsFn,
           createBySectionsFn
         ),
@@ -163,6 +168,7 @@ export default createReactClass({
         isSaving={this.state.isJsonConfigurationSaving}
         value={this.state.jsonConfigurationValue}
         isEditingValid={this.state.isJsonConfigurationValid}
+        schemaErrors={this.state.schemaErrors}
         isChanged={this.state.isJsonConfigurationChanged}
         onEditCancel={() => Actions.resetJsonConfiguration(state.componentId, state.configurationId)}
         onEditChange={parameters =>
