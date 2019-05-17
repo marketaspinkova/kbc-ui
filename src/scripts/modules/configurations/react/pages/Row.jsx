@@ -30,7 +30,7 @@ import isParsableConfiguration from '../../utils/isParsableConfiguration';
 import sections from '../../utils/sections';
 import dockerActions from '../../DockerActionsActionCreators';
 import { isEmptyComponentState } from '../../utils/configurationState';
-import validation from '../../utils/validation';
+import validation from '../../utils/schemaValidation/validation';
 
 export default createReactClass({
   mixins: [createStoreMixin(Store, TablesStore, DockerActionsStore)],

@@ -1,4 +1,5 @@
-import { array, boolean, object, string } from 'yup';
+import { boolean, object, string } from 'yup';
+import processors from '../../configurations/utils/schemaValidation/processors';
 
 export default object()
   .nullable()
@@ -9,20 +10,5 @@ export default object()
       includeSubfolders: boolean(),
       newFilesOnly: boolean()
     }),
-    processors: object().shape({
-      after: array().of(
-        object().shape({
-          definition: object().shape({
-            component: string()
-          }),
-          parameters: object().shape({
-            delimiter: string(),
-            enclosure: string(),
-            incremental: boolean(),
-            primary_key: array(),
-            columns: array()
-          })
-        })
-      )
-    })
+    processors
   });
