@@ -33,6 +33,7 @@ export default createReactClass({
             lineWrapping: true,
             readOnly: this.props.isSaving,
             lint: true,
+            tabSize: 2,
             gutters: ['CodeMirror-lint-markers']
           }}
         />
@@ -49,7 +50,8 @@ export default createReactClass({
           lineNumbers: true,
           readOnly: true,
           lineWrapping: true,
-          cursorHeight: 0
+          cursorHeight: 0,
+          tabSize: 2,
         }}
       />
     );
