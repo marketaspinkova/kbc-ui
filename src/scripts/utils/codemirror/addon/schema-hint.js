@@ -12,22 +12,50 @@ CodeMirror.registerHelper('hint', 'json', function(cm) {
     return;
   }
 
-  let start = token.start;
-  let end = cur.ch;
-  let result = [];
+  const lines = []
+    .concat(...cm.getDoc().children.map((leaf) => leaf.lines))
+    .slice(0, cur.line + 1)
+    .reverse();
+  const current = lines.shift().text;
 
-  const extractFields = (schema) => {
-    if (schema.fields) {
-      result.push(...Object.keys(schema.fields).map((field) => `"${field}"`));
-      Object.values(schema.fields).forEach(extractFields);
+  if (current.trim() !== '"') {
+    return;
+  }
+
+  let parents = [];
+  let indent = 2;
+  lines.forEach(({ text }) => {
+    if (text.indexOf('": {') !== -1 && startsWith(text, current.slice(indent))) {
+      parents.push(text.split('"')[1]);
+      indent += 2;
+    } else if (text.indexOf('": [') !== -1 && startsWith(text, current.slice(indent + 2))) {
+      parents.push(text.split('"')[1]);
+      indent += 4;
+    }
+  });
+  parents = parents.reverse();
+
+  let result = [];
+  const extractFields = (schema, deep = 0) => {
+    const fields = schema._type === 'object' ? schema.fields : schema._subType.fields;
+    if (fields) {
+      if (parents.length === deep) {
+        result.push(...Object.keys(fields).map((field) => `"${field}"`));
+      } else {
+        Object.entries(fields).forEach(([name, innerSchema]) => {
+          if (name === parents[deep]) {
+            extractFields(innerSchema, deep + 1);
+          }
+        });
+      }
     }
   };
   extractFields(schema);
 
-  if (result.length)
+  if (result.length > 0)
     return {
       list: result.filter((result) => startsWith(result, token.string)),
-      from: CodeMirror.Pos(cur.line, start),
-      to: CodeMirror.Pos(cur.line, end)
+      from: CodeMirror.Pos(cur.line, token.start),
+      to: CodeMirror.Pos(cur.line, cur.ch)
     };
 });
