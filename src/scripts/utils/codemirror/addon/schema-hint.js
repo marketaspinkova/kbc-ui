@@ -23,6 +23,7 @@ CodeMirror.registerHelper('hint', 'json', function(cm) {
   }
 
   let parents = [];
+  let used = [];
   let indent = 2;
   lines.forEach(({ text }) => {
     if (text.indexOf('": {') !== -1 && startsWith(text, current.slice(indent))) {
@@ -31,6 +32,8 @@ CodeMirror.registerHelper('hint', 'json', function(cm) {
     } else if (text.indexOf('": [') !== -1 && startsWith(text, current.slice(indent + 2))) {
       parents.push(text.split('"')[1]);
       indent += 4;
+    } else if (indent === 2 && startsWith(text, current)) {
+      used.push(text.split('"')[1]);
     }
   });
   parents = parents.reverse();
@@ -40,7 +43,11 @@ CodeMirror.registerHelper('hint', 'json', function(cm) {
     const fields = schema._type === 'object' ? schema.fields : schema._subType.fields;
     if (fields) {
       if (parents.length === deep) {
-        result.push(...Object.keys(fields).map((field) => `"${field}"`));
+        result.push(
+          ...Object.keys(fields)
+            .filter((field) => !used.includes(field))
+            .map((field) => `"${field}"`)
+        );
       } else {
         Object.entries(fields).forEach(([name, innerSchema]) => {
           if (name === parents[deep]) {
