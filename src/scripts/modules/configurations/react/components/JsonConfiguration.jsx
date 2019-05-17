@@ -19,9 +19,10 @@ export default createReactClass({
     onEditSubmit: PropTypes.func.isRequired,
     isChanged: PropTypes.bool.isRequired,
     schemaErrors: PropTypes.object.isRequired,
+    schema: PropTypes.object,
     showSaveModal: PropTypes.bool,
     saveModalTitle: PropTypes.string,
-    saveModalBody: PropTypes.any
+    saveModalBody: PropTypes.any,
   },
 
   getDefaultProps() {
@@ -45,6 +46,7 @@ export default createReactClass({
           value={this.props.value}
           disabled={this.props.isSaving}
           onChange={this.props.onEditChange}
+          schema={this.props.schema}
         />
       </div>
     );

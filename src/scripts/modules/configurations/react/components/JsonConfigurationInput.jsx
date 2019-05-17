@@ -7,7 +7,8 @@ export default createReactClass({
   propTypes: {
     value: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
-    disabled: PropTypes.bool.isRequired
+    disabled: PropTypes.bool.isRequired,
+    schema: PropTypes.object
   },
 
   render() {
@@ -27,7 +28,9 @@ export default createReactClass({
                 lint: true,
                 lineWrapping: true,
                 readOnly: this.props.disabled,
-                gutters: ['CodeMirror-lint-markers']
+                gutters: ['CodeMirror-lint-markers'],
+                extraKeys: { 'Ctrl-Space': 'autocomplete' },
+                hintOptions: { schema: this.props.schema }
               }}
             />
           </div>

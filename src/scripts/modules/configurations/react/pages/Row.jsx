@@ -77,6 +77,7 @@ export default createReactClass({
       isJsonConfigurationSaving: Store.getPendingActions(componentId, configurationId, rowId).has('save-json'),
       isJsonConfigurationValid: isJsonConfigurationValid,
       schemaErrors: schemaErrors,
+      schema: settings.getIn(['row', 'schema']),
       isJsonConfigurationChanged: Store.isEditingJsonConfiguration(componentId, configurationId, rowId),
       isJsonConfigurationParsable:
         isJsonConfigurationValid &&
@@ -412,6 +413,7 @@ export default createReactClass({
         value={this.state.jsonConfigurationValue}
         isEditingValid={this.state.isJsonConfigurationValid}
         schemaErrors={this.state.schemaErrors}
+        schema={this.state.schema}
         isChanged={this.state.isJsonConfigurationChanged}
         onEditCancel={() => Actions.resetJsonConfiguration(state.componentId, state.configurationId, state.rowId)}
         onEditChange={parameters =>

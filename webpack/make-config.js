@@ -96,12 +96,8 @@ module.exports = function(options) {
           use: [isDevelopment ? 'react-hot-loader' : false, 'babel-loader'].filter(Boolean)
         },
         {
-          test: /\.less$/,
-          use: [
-            isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
-            'css-loader',
-            'less-loader'
-          ]
+          test: /\.(less|css)$/,
+          use: [isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader', 'less-loader']
         },
         {
           test: /.(png|woff|woff2|eot|ttf|svg|jpg|mp3)/,
