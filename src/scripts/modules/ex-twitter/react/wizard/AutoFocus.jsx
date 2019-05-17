@@ -6,7 +6,7 @@ import { FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap
 export default createReactClass({
   propTypes: {
     currentStep: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
+    label: PropTypes.node.isRequired,
     value: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
     autoFocus: PropTypes.bool,
