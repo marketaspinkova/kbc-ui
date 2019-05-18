@@ -24,7 +24,6 @@ import SaveButtons from '../../../../react/common/SaveButtons';
 import ComponentDescription from '../../../components/react/components/ComponentDescription';
 import ComponentMetadata from '../../../components/react/components/ComponentMetadata';
 import DeleteConfigurationButton from '../../../components/react/components/DeleteConfigurationButton';
-import ScheduleConfigurationButton from '../../../components/react/components/ScheduleConfigurationButton';
 import LatestVersions from '../../../components/react/components/SidebarVersionsWrapper';
 
 // utils
@@ -157,12 +156,6 @@ export default createReactClass({
           <ul className="nav nav-stacked">
             <li>
               <DeleteConfigurationButton
-                componentId={COMPONENT_ID}
-                configId={this.state.configId}
-              />
-            </li>
-            <li>
-              <ScheduleConfigurationButton
                 componentId={COMPONENT_ID}
                 configId={this.state.configId}
               />
