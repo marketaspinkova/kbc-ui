@@ -19,6 +19,7 @@ import lessons from '../../guide-mode/WizardLessons';
 import { List } from 'immutable';
 import ProjectDescription from './ProjectDescription';
 import DeprecatedOAuth from './DeprecatedOAuth';
+import AdblockDetector from './AdblockDetector';
 import oAuthComponents from '../../components/utils/oAuthComponents';
 
 export default createReactClass({
@@ -92,6 +93,7 @@ export default createReactClass({
   render() {
     return (
       <div className="container-fluid">
+        <AdblockDetector />
         {this.countOverviewComponent() > 0  &&
         <div className="kbc-overview-component-container">
           {this.state.projectHasGuideModeOn && (
