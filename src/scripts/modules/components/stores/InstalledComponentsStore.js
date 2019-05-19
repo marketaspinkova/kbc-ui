@@ -637,16 +637,13 @@ Dispatcher.register(function(payload) {
       return InstalledComponentsStore.emitChange();
 
     case constants.ActionTypes.DELETED_COMPONENTS_DELETE_CONFIGURATION_SUCCESS:
-      _store = _store.withMutations(function(store) {
-        let storeResult = store
-          .deleteIn(['deletedComponents', action.componentId, 'configurations', action.configurationId])
-          .deleteIn(['deletingConfigurations', action.componentId, action.configurationId]);
-
-        if (!storeResult.getIn(['deletedComponents', action.componentId, 'configurations']).count()) {
-          return (storeResult = storeResult.deleteIn(['deletedComponents', action.componentId]));
+      _store = _store.withMutations((store) => {
+        store.deleteIn(['deletedComponents', action.componentId, 'configurations', action.configurationId]);
+        store.deleteIn(['deletingConfigurations', action.componentId, action.configurationId]);
+        if (!store.getIn(['deletedComponents', action.componentId, 'configurations'], Map()).count()) {
+          store.deleteIn(['deletedComponents', action.componentId]);
         }
       });
-
       return InstalledComponentsStore.emitChange();
 
     case constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ERROR:

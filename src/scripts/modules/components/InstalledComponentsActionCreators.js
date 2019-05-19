@@ -477,16 +477,10 @@ export default {
     });
   },
   deleteAllConfigurationsPermanently: function() {
-    var actions, promises;
-    promises = [];
-    actions = this;
-    InstalledComponentsStore.getAllDeleted().forEach(function(component) {
-      var componentId;
-      componentId = component.get('id');
-      component.get('configurations').forEach(function(configuration) {
-        var configurationId;
-        configurationId = configuration.get('id');
-        promises.push(actions.deleteConfigurationPermanently(componentId, configurationId, false));
+    const promises = [];
+    InstalledComponentsStore.getAllDeleted().forEach((component) => {
+      component.get('configurations').forEach((configuration) => {
+        promises.push(this.deleteConfigurationPermanently(component.get('id'), configuration.get('id'), false));
       });
     });
     return Promise.all(promises);
