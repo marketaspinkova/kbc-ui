@@ -1,3 +1,7 @@
+//
+// Extracted from https://github.com/sitexw/BlockAdBlock, since npm package does
+// not work well with webpack
+//
 export default function() {
   let detected = false;
 
