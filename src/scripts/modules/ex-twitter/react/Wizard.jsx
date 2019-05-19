@@ -89,17 +89,17 @@ export default createReactClass({
               currentStep={this.props.step}
               value={this.props.settings.getIn(['search', 'query'])}
               onChange={this.onSearchQueryChange}
-              label={
-                <span>
-                  Query (
-                  <ExternalLink href="https://developer.twitter.com/en/docs/api-reference-index">
-                    documentation
-                  </ExternalLink>
-                  )
-                </span>
-              }
+              label="Query"
               autoFocus={true}
               disabled={this.isStatic()}
+              help={(
+                <span>
+                  Read more about searching in the{' '}
+                  <ExternalLink href="https://developer.twitter.com/en/docs/tweets/search/overview">
+                    documentation.
+                  </ExternalLink>
+                </span>
+              )}
             />
           </div>
         </WizardStep>
