@@ -121,9 +121,11 @@ export default createReactClass({
     return (
       <div className="kbc-row">
         <h4>
-          Redshift {this.state.isLoading && <Loader />}
+          Redshift
         </h4>
-        {!this.state.isLoading && (
+        {this.state.isLoading ? (
+          <span><Loader /> Loading...</span>
+        ) : (
           <div className="row">
             <div className="col-md-9">{this._renderCredentials()}</div>
             <div className="col-md-3">{this._renderControlButtons()}</div>
