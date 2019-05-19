@@ -206,6 +206,7 @@ export default createReactClass({
               ApplicationStore.hasCurrentAdminFeature(FEATURE_UI_DEVEL_PREVIEW)) && (
               <li className={classnames({ disabled: this.state.transformation.get('input').count() === 0 })}>
                 <ActivityMatchingButton
+                  key={`${this.state.transformationId}-${this.state.transformation.get('input').count()}`}
                   transformation={this.state.transformation}
                   tables={this.state.tables}
                   disabled={this.state.transformation.get('input').count() === 0}

@@ -1,42 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
-import { Map, fromJS } from 'immutable';
+import { Map } from 'immutable';
 import { Button, Col, Row, Modal, Well } from 'react-bootstrap';
 import { Loader, ExternalLink } from '@keboola/indigo-ui';
 import RoutesStore from '../../../../stores/RoutesStore';
-import StorageApi from '../../../components/StorageApi';
+
 import date from '../../../../utils/date';
 import JobStatusLabel from '../../../../react/common/JobStatusLabel';
 import TableSizeLabel from '../components/TableSizeLabel';
 
-const INITIAL_STATE = {
-  data: Map(),
-  matches: Map(),
-  isLoading: false
-};
-
 export default createReactClass({
   propTypes: {
+    matches: PropTypes.object.isRequired,
+    isLoading: PropTypes.bool.isRequired,
     transformation: PropTypes.object.isRequired,
     tables: PropTypes.object.isRequired,
     show: PropTypes.bool.isRequired,
     onHide: PropTypes.func.isRequired
   },
 
-  getInitialState() {
-    return INITIAL_STATE;
-  },
-
   render() {
     return (
-      <Modal
-        bsSize="large"
-        show={this.props.show}
-        onHide={this.onHide}
-        onEntering={this.loadDataAndRunSearch}
-        onExit={this.onHide}
-      >
+      <Modal bsSize="large" show={this.props.show} onHide={this.props.onHide}>
         <Modal.Header closeButton>
           <Modal.Title>
             <i className="fa fa-fw fa-align-justify" /> Activity Matching
@@ -48,7 +34,7 @@ export default createReactClass({
   },
 
   renderBody() {
-    if (this.state.isLoading) {
+    if (this.props.isLoading) {
       return (
         <p>
           <Loader /> searching matches
@@ -56,7 +42,7 @@ export default createReactClass({
       );
     }
 
-    if (!this.state.matches.count()) {
+    if (!this.props.matches.count()) {
       return <p>No matches with same input mappings found.</p>;
     }
 
@@ -90,7 +76,7 @@ export default createReactClass({
   },
 
   renderMatches() {
-    return this.state.matches
+    return this.props.matches
       .map((match, idx) => {
         const config = match.first();
 
@@ -130,58 +116,8 @@ export default createReactClass({
       .toArray();
   },
 
-  loadDataAndRunSearch() {
-    this.setState({ isLoading: true });
-    StorageApi.getActivityMatchingData()
-      .then((data) => {
-        this.setState({ data: fromJS(data || []) }, this.findMatches);
-      })
-      .finally(() => {
-        this.setState({ isLoading: false });
-      });
-  },
-
-  findMatches() {
-    const sources = this.props.transformation
-      .get('input')
-      .map((mapping) => mapping.get('source'))
-      .toSet()
-      .toList();
-    const tables = this.state.data
-      .filter((row) => sources.includes(row.get('table')))
-      .map((row) => row.get('usedIn'));
-
-    if (sources.count() > tables.count()) {
-      return;
-    }
-
-    const matches = tables
-      .flatten(1)
-      .filter((row) => row.get('rowId') !== this.props.transformation.get('id'))
-      .groupBy((row) => row.get('rowId'))
-      .filter((configuration) => configuration.count() === sources.count())
-      .sortBy((configuration) => {
-        const lastRun = configuration.first().get('lastRunAt');
-        return -1 * new Date(lastRun).getTime();
-      })
-      .sortBy((configuration) => {
-        const status = configuration.first().get('lastRunStatus');
-        if (status === 'success') return -1;
-        if (status === 'error' || status === 'terminated') return 1;
-        return 0;
-      })
-      .slice(0, 3);
-
-    this.setState({ matches });
-  },
-
-  onHide() {
-    this.setState(INITIAL_STATE);
-    this.props.onHide();
-  },
-
   goToTransformation(config) {
-    this.onHide();
+    this.props.onHide();
     RoutesStore.getRouter().transitionTo('transformationDetail', {
       config: config.get('configurationId'),
       row: config.get('rowId')
