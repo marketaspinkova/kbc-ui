@@ -94,6 +94,7 @@ export default createReactClass({
             lineWrapping: true,
             readOnly: this.props.isSaving,
             lint: true,
+            tabSize: 2,
             gutters: ['CodeMirror-lint-markers'],
             placeholder: '{}'
           }}

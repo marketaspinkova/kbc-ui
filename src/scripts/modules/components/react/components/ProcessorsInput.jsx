@@ -26,6 +26,7 @@ export default createReactClass({
                 lineNumbers: true,
                 lineWrapping: true,
                 lint: !!this.props.value,
+                tabSize: 2,
                 readOnly: this.props.disabled,
                 gutters: ['CodeMirror-lint-markers'],
                 placeholder: JSON.stringify({before: [], after: []}, null, 2)

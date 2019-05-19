@@ -164,6 +164,7 @@ export default createReactClass({
                 lineWrapping: true,
                 autofocus: false,
                 lint: true,
+                tabSize: 2,
                 gutters: ['CodeMirror-lint-markers']
               }}
             />
@@ -198,6 +199,7 @@ export default createReactClass({
           lineWrapping: true,
           autofocus: false,
           lint: true,
+          tabSize: 2,
           gutters: ['CodeMirror-lint-markers']
         }}
       />

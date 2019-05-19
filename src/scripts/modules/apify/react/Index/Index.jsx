@@ -293,6 +293,7 @@ export default createReactClass({
             readOnly: true,
             lineWrapping: true,
             cursorHeight: 0,
+            tabSize: 2,
           }}
         />
       </div>

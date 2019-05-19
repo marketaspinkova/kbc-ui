@@ -53,6 +53,7 @@ export default createReactClass({
           lineNumbers: true,
           lineWrapping: true,
           lint: true,
+          tabSize: 2,
           gutters: ['CodeMirror-lint-markers']
         }}
       />

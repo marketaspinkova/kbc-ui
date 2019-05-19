@@ -87,6 +87,7 @@ export default createReactClass({
                   lineNumbers: true,
                   lineWrapping: true,
                   lint: true,
+                  tabSize: 2,
                   placeholder: 'optional, e.g. {"isActive": 1, "isDeleted": 0}'
                 }}
               />
@@ -107,6 +108,7 @@ export default createReactClass({
                   lineNumbers: true,
                   lineWrapping: true,
                   lint: true,
+                  tabSize: 2,
                   placeholder: 'optional, e.g. {"creationDate": -1}'
                 }}
               />
@@ -182,6 +184,7 @@ export default createReactClass({
                 lineNumbers: true,
                 lineWrapping: true,
                 lint: true,
+                tabSize: 2,
                 placeholder: 'e.g. {"_id.$oid": "id", "name": "name"}'
               }}
             />
