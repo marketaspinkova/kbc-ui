@@ -1,15 +1,16 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
-import InputAutoFocused from './wizard/AutoFocus';
-import {Steps, COMPONENT_ID} from '../constants';
+import { Map } from 'immutable';
+import { ExternalLink } from '@keboola/indigo-ui';
+import EditButtons from '../../../react/common/EditButtons';
 import AuthorizationRow from '../../oauth-v2/react/AuthorizationRow';
+import { deleteCredentialsAndConfigAuth } from '../../oauth-v2/OauthUtils';
+import { Steps, COMPONENT_ID } from '../constants';
+import WizardButtons from './wizard/WizardButtons';
+import InputAutoFocused from './wizard/AutoFocus';
 import WizardCommon from './wizard/WizardCommon';
 import WizardStep from './wizard/WizardStep';
-import WizardButtons from './wizard/WizardButtons';
-import {Map} from 'immutable';
-import EditButtons from '../../../react/common/EditButtons';
-import {deleteCredentialsAndConfigAuth} from '../../oauth-v2/OauthUtils';
 
 export default createReactClass({
   propTypes: {
@@ -91,6 +92,14 @@ export default createReactClass({
               label="Query"
               autoFocus={true}
               disabled={this.isStatic()}
+              help={(
+                <span>
+                  Read more about searching in the{' '}
+                  <ExternalLink href="https://developer.twitter.com/en/docs/tweets/search/overview">
+                    documentation.
+                  </ExternalLink>
+                </span>
+              )}
             />
           </div>
         </WizardStep>
@@ -109,7 +118,7 @@ export default createReactClass({
         componentId={this.props.componentId}
         configId={this.props.configId}
         nextAction={this.goToUserTimeline}
-        nextActionEnabled={this.props.oauthCredentials}
+        nextActionEnabled={!!this.props.oauthCredentials}
       />
     );
 
