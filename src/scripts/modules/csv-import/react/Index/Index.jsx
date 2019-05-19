@@ -2,7 +2,6 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import { Alert } from 'react-bootstrap';
 
-// stores
 import ComponentStore from '../../../components/stores/ComponentsStore';
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
 import StorageTablesStore from '../../../components/stores/StorageTablesStore';
@@ -10,38 +9,23 @@ import StorageBucketsStore from '../../../components/stores/StorageBucketsStore'
 import RoutesStore from '../../../../stores/RoutesStore';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import storeProvisioning from '../../storeProvisioning';
-
-// actions
 import actionsProvisioning from '../../actionsProvisioning';
 
-// specific components
 import Upload from '../components/Upload';
-// import SettingsStatic from '../components/SettingsStatic';
 import Settings from '../components/Settings';
 import SaveButtons from '../../../../react/common/SaveButtons';
 
-// global components
 import ComponentDescription from '../../../components/react/components/ComponentDescription';
 import ComponentMetadata from '../../../components/react/components/ComponentMetadata';
 import DeleteConfigurationButton from '../../../components/react/components/DeleteConfigurationButton';
 import LatestVersions from '../../../components/react/components/SidebarVersionsWrapper';
 
-// utils
-import {getDefaultTable} from '../../utils';
+import { getDefaultTable } from '../../utils';
 
-// CONSTS
 const COMPONENT_ID = 'keboola.csv-import';
 
-/*
-
-notes
-
-- vpravo by to mohlo ukazovat importní joby storage (nevím jak)
-
- */
 
 export default createReactClass({
-  // TODO ještě store na joby ve storage
   mixins: [createStoreMixin(InstalledComponentsStore, StorageTablesStore, StorageBucketsStore)],
 
   getStateFromStores() {
