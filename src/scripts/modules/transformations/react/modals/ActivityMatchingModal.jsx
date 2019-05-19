@@ -43,7 +43,7 @@ export default createReactClass({
     }
 
     if (!this.props.matches.count()) {
-      return <p>No matches with same input mappings found.</p>;
+      return <p>No relevant matches with same input mappings found.</p>;
     }
 
     return (

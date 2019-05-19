@@ -80,7 +80,7 @@ export default createReactClass({
       .toSet()
       .toList();
     const tables = data
-      .filter((row) => sources.includes(row.get('table')))
+      .filter((row) => sources.includes(row.get('inputTable')))
       .map((row) => row.get('usedIn'));
 
     if (sources.count() > tables.count()) {
@@ -92,6 +92,7 @@ export default createReactClass({
       .filter((row) => row.get('rowId') !== this.props.transformation.get('id'))
       .groupBy((row) => row.get('rowId'))
       .filter((configuration) => configuration.count() === sources.count())
+      .filter((configuration) => configuration.first().get('lastRunAt'))
       .sortBy((configuration) => {
         const lastRun = configuration.first().get('lastRunAt');
         return -1 * new Date(lastRun).getTime();
