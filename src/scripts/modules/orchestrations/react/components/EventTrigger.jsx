@@ -8,8 +8,8 @@ import SapiTableLink from '../../../components/react/components/StorageApiTableL
 
 function renderEmptyIcon() {
   return (
-    <div className="text-muted" style={{textAlign: 'center'}}>
-      <i className="fa fa-fw fa-table" style={{fontSize: '60px'}} />
+    <div className="text-muted text-center kbc-inner-padding">
+      <i className="fa fa-4x fa-table" />
       <p>Add tables from Storage</p>
     </div>
   );
