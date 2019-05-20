@@ -26,7 +26,9 @@ export default createReactClass({
   },
 
   componentDidMount() {
-    this.loadDataAndRunSearch();
+    if (!this.props.disabled) {
+      this.loadDataAndRunSearch();
+    }
   },
 
   render() {
