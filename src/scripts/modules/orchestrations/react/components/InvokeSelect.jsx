@@ -29,8 +29,7 @@ export default createReactClass({
           name="scheduleType"
           value={this.props.selectedValue}
           onChange={this.props.onSelectValue}
-          vertical
-          block
+          justified
         >
           {scheduleTypes.map((item) => {
             return (
@@ -40,26 +39,16 @@ export default createReactClass({
                 value={item.value}
                 disabled={this.props.disabled}
                 bsSize="large"
-                block
               >
-                <div className="text-left">
-                  {this._renderCircleIcon(this.props.selectedValue === item.value)}
-                  {'  '}
-                  {this._renderTypeIcon(item.value)}
-                  {' '}
-                  <strong>{item.label}</strong>
-                  </div>
+                {this._renderTypeIcon(item.value)}
+                {' '}
+                <strong>{item.label}</strong>
               </ToggleButton>
             );
           })}
         </ToggleButtonGroup>
       </FormGroup>
     );
-  },
-
-  _renderCircleIcon(active) {
-    const iconName = active ? 'fa-dot-circle-o' : 'fa-circle-o';
-    return (<i className={`fa fa-fw ${iconName}`} />);
   },
 
   _renderTypeIcon(value) {
