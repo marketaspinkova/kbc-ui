@@ -1,15 +1,13 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
-
-import {FormGroup, FormControl, Form, ControlLabel, Col, Checkbox, HelpBlock, Accordion, Panel} from 'react-bootstrap';
+import { List } from 'immutable';
+import Select from 'react-select';
+import {FormGroup, FormControl, ControlLabel, Col, Checkbox, HelpBlock, Accordion, Panel} from 'react-bootstrap';
 import CsvDelimiterInput from '../../../react/common/CsvDelimiterInput';
 import SaveButtons from '../../../react/common/SaveButtons';
-import Select from '../../../react/common/Select';
 
 export default createReactClass({
-
   propTypes: {
     requestedEmail: PropTypes.string.isRequired,
     incremental: PropTypes.bool.isRequired,
@@ -40,7 +38,7 @@ export default createReactClass({
   },
 
   onChangePrimaryKey(value) {
-    this.props.onChange('primaryKey', value);
+    this.props.onChange('primaryKey', List(value));
   },
 
   renderButtons() {
@@ -75,15 +73,14 @@ export default createReactClass({
   },
 
   render() {
-    const component = this;
     return (
       <Accordion
         className="kbc-accordion"
-        onSelect={function(activeTab) {
-          if (activeTab === component.state.accordionActiveTab) {
-            component.setState({accordionActiveTab: null});
+        onSelect={(activeTab) => {
+          if (activeTab === this.state.accordionActiveTab) {
+            this.setState({accordionActiveTab: null});
           } else {
-            component.setState({accordionActiveTab: activeTab});
+            this.setState({accordionActiveTab: activeTab});
           }
         }}
         defaultActiveKey="settings"
@@ -92,7 +89,7 @@ export default createReactClass({
           header={this.accordionHeader('Import Settings', this.state.accordionActiveTab === 'settings')}
           eventKey="settings"
         >
-          <Form horizontal>
+          <div className="form-horizontal">
             {this.renderButtons()}
             <br/>
             <CsvDelimiterInput
@@ -123,21 +120,17 @@ export default createReactClass({
                 Primary Key
               </Col>
               <Col sm={8}>
-                <Select
-                  name="primaryKey"
-                  value={this.props.primaryKey}
-                  multi={true}
-                  allowCreate={true}
-                  delimiter=","
+                <Select.Creatable
+                  multi
                   placeholder="Add a column"
-                  emptyStrings={false}
+                  value={this.props.primaryKey.toJS()}
                   onChange={this.onChangePrimaryKey}
                 />
                 <HelpBlock>Primary key of the table. If a primary key is set, updates can be done on the table by selecting <strong>incremental loads</strong>. The primary key can consist of multiple columns.</HelpBlock>
               </Col>
             </FormGroup>
             <FormGroup>
-              <Col sm={8} smPush={4}>
+              <Col sm={8} smOffset={4}>
                 <Checkbox
                   checked={this.props.incremental}
                   onChange={this.onChangeIncremental}>
@@ -147,7 +140,7 @@ export default createReactClass({
                   a primary key will have rows updated, tables without a primary key will have rows appended.</HelpBlock>
               </Col>
             </FormGroup>
-          </Form>
+          </div>
         </Panel>
       </Accordion>
     );
