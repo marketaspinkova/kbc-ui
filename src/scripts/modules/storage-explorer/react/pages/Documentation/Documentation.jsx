@@ -2,24 +2,27 @@ import React from 'react';
 import { List, Map } from 'immutable';
 import createReactClass from 'create-react-class';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
-import { Table} from 'react-bootstrap';
+import { Table, Button} from 'react-bootstrap';
 import NavButtons from '../../components/NavButtons';
 
 import BucketsStore from '../../../../components/stores/StorageBucketsStore';
 import TablesStore from '../../../../components/stores/StorageTablesStore';
+import FilesStore from '../../../../components/stores/StorageFilesStore';
 import DocumentationLocalStore from '../../../DocumentationLocalStore';
 import Markdown from '../../../../../react/common/Markdown';
-import { SearchBar } from '@keboola/indigo-ui';
+import { SearchBar, Loader } from '@keboola/indigo-ui';
 import matchByWords from '../../../../../utils/matchByWords';
 
-import {toggleDocumentationRow, updateDocumentationSearchQuery} from '../../../Actions';
+import {toggleDocumentationRow, updateDocumentationSearchQuery, uploadFile} from '../../../Actions';
 
 const BUCKET_ROW = 'BUCKET_ROW';
 const TABLE_ROW = 'TABLE_ROW';
 const COLUMN_ROW = 'COLUMN_ROW';
 
+const UPLOAD_SNAPSHOT = 'upload-documentation-snapshot';
+
 export default createReactClass({
-  mixins: [createStoreMixin(BucketsStore, TablesStore, DocumentationLocalStore)],
+  mixins: [createStoreMixin(BucketsStore, TablesStore, DocumentationLocalStore, FilesStore)],
 
   getStateFromStores() {
     const allBuckets = BucketsStore.getAll().sortBy((bucket) => bucket.get('id').toLowerCase());
@@ -27,6 +30,7 @@ export default createReactClass({
     const searchQuery = DocumentationLocalStore.getSearchQuery();
     const enhancedBuckets = this.prepareStructure(allBuckets, allTables, searchQuery);
     return {
+      snapshotingProgress: FilesStore.getUploadingProgress(UPLOAD_SNAPSHOT) || 0,
       enhancedBuckets,
       searchQuery,
       openedRows: DocumentationLocalStore.getOpenedRows()
@@ -34,11 +38,20 @@ export default createReactClass({
   },
 
   render() {
+    const isSnapshoting = this.state.snapshotingProgress > 0 && this.state.snapshotingProgress < 100;
     return (
       <div className="container-fluid">
         <div className="kbc-main-content">
           <div className="storage-explorer storage-documentation">
             <NavButtons />
+            <div>
+              <Button disabled={isSnapshoting}
+                bsStyle="primary"
+                onClick={this.snapshotDocumentation}>
+                Snapshot Documentation
+                {isSnapshoting && <Loader />}
+              </Button>
+            </div>
             <SearchBar
               className="storage-search-bar"
               placeholder="Search in names or descriptions"
@@ -52,6 +65,52 @@ export default createReactClass({
         </div>
       </div>
     );
+  },
+
+  snapshotDocumentation() {
+    const documentationArray = this.buildDocumentationToMarkdown();
+    let file = new Blob(documentationArray, {type: 'text/plain'});
+    const params = {
+      isPublic: true,
+      isPermanent: true,
+      tags: ['storage-documentation']
+    };
+    file.name = 'documentation';
+
+    return uploadFile(UPLOAD_SNAPSHOT, file, params);
+  },
+
+  buildDocumentationToMarkdown() {
+    return this.state.enhancedBuckets.reduce((bucketsMemo, bucket) => {
+      const bucketId = bucket.get('id');
+      bucketsMemo.push(
+        this.createMarkdownPart(bucketId, bucket.get('bucketDescription'), BUCKET_ROW)
+      );
+      const bucketTablesRows = bucket.get('bucketTables').reduce((tablesMemo, table) => {
+        tablesMemo.push(
+          this.createMarkdownPart(table.get('name'), table.get('tableDescription'), TABLE_ROW)
+        );
+        const columnsRows = table.get('columnsDescriptions').reduce((columnsMemo, description, column) => {
+          columnsMemo.push(this.createMarkdownPart(column, description, COLUMN_ROW));
+          return columnsMemo;
+        }, []);
+        return tablesMemo.concat(columnsRows);
+      }, []);
+      return bucketsMemo.concat(bucketTablesRows);
+    }, []);
+  },
+
+  createMarkdownPart(name, partDescription, partType) {
+    const description = partDescription || 'N/A';
+    switch (partType) {
+      case BUCKET_ROW:
+        return `## ${name} \n ${description}\n`;
+      case TABLE_ROW:
+        return `### ${name} \n ${description}\n`;
+      case COLUMN_ROW:
+        return `### ${name} \n ${description}\n`;
+    }
+
   },
 
   renderEnhancedBucketsRows() {
