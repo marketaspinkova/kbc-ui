@@ -4,6 +4,8 @@ import createReactClass from 'create-react-class';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import { Table, Button} from 'react-bootstrap';
 import NavButtons from '../../components/NavButtons';
+import {Link} from 'react-router';
+import FileLink from '../../../../sapi-events/react/FileLink';
 
 import BucketsStore from '../../../../components/stores/StorageBucketsStore';
 import TablesStore from '../../../../components/stores/StorageTablesStore';
@@ -33,18 +35,28 @@ export default createReactClass({
       snapshotingProgress: FilesStore.getUploadingProgress(UPLOAD_SNAPSHOT) || 0,
       enhancedBuckets,
       searchQuery,
+      lastSnapshot: DocumentationLocalStore.getLastSnapshot(),
       openedRows: DocumentationLocalStore.getOpenedRows()
     };
   },
 
   render() {
     const isSnapshoting = this.state.snapshotingProgress > 0 && this.state.snapshotingProgress < 100;
+    const lastSnapshot = this.state.lastSnapshot;
     return (
       <div className="container-fluid">
         <div className="kbc-main-content">
           <div className="storage-explorer storage-documentation">
             <NavButtons />
             <div>
+              {lastSnapshot &&
+               <FileLink file={lastSnapshot} showFilesize={false}>
+                 Last Snapshot({lastSnapshot.get('created')})
+               </FileLink>
+              }
+              <Link to="storage-explorer-files" query={{q: 'tags:storage-documentation'}}>
+                All Snapshots
+              </Link>
               <Button disabled={isSnapshoting}
                 bsStyle="primary"
                 onClick={this.snapshotDocumentation}>
@@ -76,7 +88,6 @@ export default createReactClass({
       tags: ['storage-documentation']
     };
     file.name = 'documentation';
-
     return uploadFile(UPLOAD_SNAPSHOT, file, params);
   },
 
