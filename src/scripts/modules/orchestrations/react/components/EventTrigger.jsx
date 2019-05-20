@@ -6,23 +6,25 @@ import CreatedDate from '../../../../react/common/CreatedDate';
 import Tooltip from '../../../../react/common/Tooltip';
 import SapiTableLink from '../../../components/react/components/StorageApiTableLink';
 
-function renderEmptyIcon() {
-  return (
-    <div className="text-muted text-center kbc-inner-padding">
-      <i className="fa fa-4x fa-table" />
-      <p>Add tables from Storage</p>
-    </div>
-  );
-}
-
 class EventTrigger extends React.Component {
   render() {
     const selectedTables = this._getSelectedTables(this.props.selected);
+    if (!selectedTables.count()) {
+      return (
+        <div>
+          <div className="text-muted text-center kbc-inner-padding">
+            <i className="fa fa-4x fa-table" />
+            <p>Add tables from Storage</p>
+          </div>
+          {this.renderAddTableForm()}
+        </div>
+      );
+    }
     return (
       <div>
-        {selectedTables.count() ? this.renderTables(selectedTables) : renderEmptyIcon()}
+        {this.renderTables(selectedTables)}
         {this.renderAddTableForm()}
-        {selectedTables.count() ? this.renderPeriodSelect() : null}
+        {this.renderPeriodSelect()}
       </div>
     );
   }
