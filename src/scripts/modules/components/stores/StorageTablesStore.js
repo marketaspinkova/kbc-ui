@@ -6,6 +6,7 @@ import * as constants from '../Constants';
 
 let _store = Map({
   tables: Map(),
+  tablesUsages: Map(),
   isLoaded: false,
   isLoading: false,
   pendingTables: Map() // (creating/loading)
@@ -14,6 +15,10 @@ let _store = Map({
 const StorageTablesStore = StoreUtils.createStore({
   getAll() {
     return _store.get('tables');
+  },
+
+  getAllUsages() {
+    return _store.get('tablesUsages');
   },
 
   hasTable(tableId) {
@@ -272,6 +277,13 @@ Dispatcher.register(function(payload) {
 
     case constants.ActionTypes.STORAGE_TABLE_EXPORT_ERROR:
       _store = _store.deleteIn(['pendingTables', 'exporting', action.tableId]);
+      return StorageTablesStore.emitChange();
+
+    case constants.ActionTypes.ACTIVITY_MATCHING_DATA_LOADED:
+      const usages = action.data.toMap().mapKeys((index, row) => row.get('inputTable'));
+      _store = _store.set('tablesUsages', _store.get('tables').map((table) => {
+        return usages.getIn([table.get('id'), 'countRows'], 0);
+      }));
       return StorageTablesStore.emitChange();
     
     case metadataConstants.ActionTypes.METADATA_SAVE_SUCCESS:

@@ -3,6 +3,7 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import DeleteButton from '../../../../../react/common/DeleteButton';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
+import TableUsagesLabel from '../../components/TableUsagesLabel';
 import TableSizeLabel from '../../components/TableSizeLabel';
 import TransformationTableTypeLabel from '../../components/TransformationTableTypeLabel';
 import InputMappingModal from '../../modals/InputMapping';
@@ -15,6 +16,7 @@ export default createReactClass({
   propTypes: {
     inputMapping: PropTypes.object.isRequired,
     tables: PropTypes.object.isRequired,
+    tablesUsages: PropTypes.object.isRequired,
     transformation: PropTypes.object.isRequired,
     bucket: PropTypes.object.isRequired,
     editingId: PropTypes.string.isRequired,
@@ -55,6 +57,7 @@ export default createReactClass({
               ]
               : [
                 <span className="td col-xs-3" key="icons">
+                  <TableUsagesLabel usages={this.props.tablesUsages.get(sourceTable.get('id'))} />
                   {sourceTable.count() > 0 && <TableSizeLabel size={sourceTable.get('dataSizeBytes')} />}
                 </span>,
                 <span className="td col-xs-4" key="source">

@@ -6,6 +6,7 @@ import { Map, fromJS } from 'immutable';
 import { Badge } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 import { getActivityMatchingData } from '../../../../react/admin/project-graph/GraphApi';
+import StorageActionCreators from '../../../components/StorageActionCreators';
 import ApplicationStore from '../../../../stores/ApplicationStore';
 import ServicesStore from '../../../services/Store';
 import ActivityMatchingModal from '../modals/ActivityMatchingModal';
@@ -74,7 +75,11 @@ export default createReactClass({
 
     this.setState({ isLoading: true });
     getActivityMatchingData(graphUrl, token)
-      .then((data) => this.findMatches(fromJS(data || [])))
+      .then((result) => fromJS(result || []))
+      .then((data) => {
+        StorageActionCreators.activityMatchingDataLoaded(data);
+        this.findMatches(data);
+      })
       .finally(() => {
         this.setState({ isLoading: false });
       });

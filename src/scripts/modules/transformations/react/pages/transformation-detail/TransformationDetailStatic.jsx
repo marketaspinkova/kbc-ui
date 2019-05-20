@@ -42,6 +42,7 @@ export default createReactClass({
     transformations: PropTypes.object.isRequired,
     pendingActions: PropTypes.object.isRequired,
     tables: PropTypes.object.isRequired,
+    tablesUsages: PropTypes.object.isRequired,
     buckets: PropTypes.object.isRequired,
     bucketId: PropTypes.string.isRequired,
     transformationId: PropTypes.string.isRequired,
@@ -295,6 +296,7 @@ export default createReactClass({
                               bucket={this.props.bucket}
                               inputMapping={input}
                               tables={this.props.tables}
+                              tablesUsages={this.props.tablesUsages}
                               editingInputMapping={this.props.editingFields.get(`input-${key}`, input)}
                               editingId={`input-${key}`}
                               mappingIndex={key.toString()}

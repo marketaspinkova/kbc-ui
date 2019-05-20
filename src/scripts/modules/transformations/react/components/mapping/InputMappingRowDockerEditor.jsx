@@ -143,7 +143,8 @@ export default createReactClass({
               disabled={this.props.disabled}
               placeholder="Source table"
               onSelectTableFn={this._handleChangeSource}
-              autoFocus={true}
+              autoFocus
+              tablesUsages
             />
           </Col>
         </FormGroup>

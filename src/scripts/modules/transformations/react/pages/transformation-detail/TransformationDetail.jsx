@@ -62,6 +62,7 @@ export default createReactClass({
       editingFields: TransformationsStore.getTransformationEditingFields(bucketId, transformationId),
       pendingActions: TransformationsStore.getTransformationPendingActions(bucketId, transformationId),
       tables: StorageTablesStore.getAll(),
+      tablesUsages: StorageTablesStore.getAllUsages(),
       buckets: StorageBucketsStore.getAll(),
       bucketId,
       transformationId,
@@ -139,6 +140,7 @@ export default createReactClass({
             transformations={this.state.transformations}
             pendingActions={this.state.pendingActions}
             tables={this.state.tables}
+            tablesUsages={this.state.tablesUsages}
             buckets={this.state.buckets}
             bucketId={this.state.bucketId}
             transformationId={this.state.transformationId}
