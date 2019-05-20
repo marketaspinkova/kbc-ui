@@ -51,6 +51,7 @@ export default createReactClass({
                   <span className="fa fa-chevron-right fa-fw" />
                 </span>,
                 <span className="td col-xs-6" key="destination">
+                  <TableUsagesLabel usages={this.props.tablesUsages.get(sourceTable.get('id'))} />
                   {sourceTable.count() > 0 && <TableSizeLabel size={sourceTable.get('dataSizeBytes')} />}
                   {this.props.inputMapping.get('source') || 'Not set'}
                 </span>
