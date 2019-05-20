@@ -1,8 +1,5 @@
-/* eslint-disable react/no-multi-comp */
-// ^ due to false positive
 import React from 'react';
-
-
+import Promise from 'bluebird';
 import TransformationsIndex from './react/pages/transformations-index/TransformationsIndex';
 import TransformationBucket from './react/pages/transformation-bucket/TransformationBucket';
 import TransformationDetail from './react/pages/transformation-detail/TransformationDetail';
@@ -118,25 +115,22 @@ const routes = {
     },
     {
       name: 'sandbox',
-      title() {
-        return 'Sandbox';
-      },
+      title: 'Sandbox',
       defaultRouteHandler: Sandbox,
       requireData: [
-        () => {
-          if (ApplicationsStore.getSapiToken().getIn(['owner', 'hasRedshift'])) {
-            return ProvisioningActionCreators.loadRedshiftSandboxCredentials();
-          }
-        },
-        () => {
-          if (ApplicationsStore.getSapiToken().getIn(['owner', 'hasSnowflake'])) {
-            return ProvisioningActionCreators.loadSnowflakeSandboxCredentials();
-          }
-        },
-        () => ProvisioningActionCreators.loadRStudioSandboxCredentials(),
-        () => ProvisioningActionCreators.loadJupyterSandboxCredentials(),
+        () => StorageActionCreators.loadTables(),
         () => StorageActionCreators.loadBuckets(),
-        () => StorageActionCreators.loadTables()
+        () => {
+          if (ApplicationsStore.getSapiToken().getIn(['owner', 'hasSnowflake'], false)) {
+            ProvisioningActionCreators.loadSnowflakeSandboxCredentials();
+          }
+          if (ApplicationsStore.getSapiToken().getIn(['owner', 'hasRedshift'], false)) {
+            ProvisioningActionCreators.loadRedshiftSandboxCredentials();
+          }
+          ProvisioningActionCreators.loadRStudioSandboxCredentials();
+          ProvisioningActionCreators.loadJupyterSandboxCredentials();
+          return Promise.resolve();
+        }
       ]
     }
   ]
