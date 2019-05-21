@@ -35,7 +35,7 @@ export default createReactClass({
         <ListGroupItem className="row">
           <strong className="col-md-4">Incremental</strong>
           <span className="col-md-8">
-            <Check isChecked={this.props.outputMapping.get('incremental')} />
+            <Check isChecked={this.props.outputMapping.get('incremental', false)} />
           </span>
         </ListGroupItem>
         <ListGroupItem className="row">

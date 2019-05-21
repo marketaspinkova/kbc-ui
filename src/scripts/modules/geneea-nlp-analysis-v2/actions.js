@@ -87,7 +87,7 @@ export function startEditing(configId) {
     }
     return memo.setIn([].concat(key), value);
   }, Map());
-  editingData = editingData.set('intable', getInTable(configId) || Map());
+  editingData = editingData.set('intable', getInTable(configId) || '');
   setEditingData(configId, editingData);
 }
 

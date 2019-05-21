@@ -194,8 +194,8 @@ export default createReactClass({
           <SapiTableSelector
             placeholder="Select..."
             value={this.getEditingValue('intable')}
-            onSelectTableFn= {this.intableChange}
-            excludeTableFn= { () => false}/>, 'Table conatining documents to analyze')
+            onSelectTableFn={this.intableChange}
+          />, 'Table conatining documents to analyze')
         }
         {this.renderFormElement(this.renderFilterLabel(), this.renderDataFilter(), 'Input table data filtered by specified rules, the filtered columns must be indexed.')}
         {this.renderColumnSelect('Id columns', params.PRIMARYKEY, 'Column of the input table uniquely identifying a row in the table.', true)}
@@ -503,16 +503,13 @@ export default createReactClass({
         <div className="col-sm-9 ">
           <ul className="nav nav-stacked">
             <li>
-              <SapiTableLinkEx
-                tableId={`${bucketId}.analysis-result-documents`}/>
+              <SapiTableLinkEx tableId={`${bucketId}.analysis-result-documents`} />
             </li>
             <li>
-              <SapiTableLinkEx
-                tableId={`${bucketId}.analysis-result-entities`}/>
+              <SapiTableLinkEx tableId={`${bucketId}.analysis-result-entities`} />
             </li>
             <li>
-              <SapiTableLinkEx
-                tableId={`${bucketId}.analysis-result-relations`}/>
+              <SapiTableLinkEx tableId={`${bucketId}.analysis-result-relations`} />
             </li>
           </ul>
         </div>
@@ -537,15 +534,12 @@ export default createReactClass({
   },
 
   renderIntableStatic() {
-    const tableId = this.state.intable;
     const link = (
-      <p label="Input Table"
-        className="form-control-static">
-        <SapiTableLinkEx
-          tableId={tableId}/>
+      <p className="form-control-static">
+        <SapiTableLinkEx tableId={this.state.intable || ''} />
       </p>
     );
-    return this.renderFormElement((<span>Input Table</span>), link);
+    return this.renderFormElement(<span>Input Table</span>, link);
   },
 
   RenderStaticInput(label, value, isBetaCheckobx = false) {
@@ -554,9 +548,7 @@ export default createReactClass({
         <Col componentClass={ControlLabel} sm={3}>{label}</Col>
         <Col sm={9}>
           <FormControl.Static>
-            {isBetaCheckobx ? <Check
-                isChecked={value}/>
-              : value || 'n/a'}
+            {isBetaCheckobx ? <Check isChecked={!!value} /> : value || 'n/a'}
           </FormControl.Static>
         </Col>
       </FormGroup>

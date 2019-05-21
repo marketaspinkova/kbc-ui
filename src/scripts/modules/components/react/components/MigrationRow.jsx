@@ -327,10 +327,10 @@ export default createReactClass({
                       {this.renderOrchestrationLink(row.get('id'), row.get('name'))}
                     </td>
                     <td>
-                      <Check isChecked={row.get('hasOld')} />
+                      <Check isChecked={row.get('hasOld', false)} />
                     </td>
                     <td>
-                      <Check isChecked={row.get('hasNew')} />
+                      <Check isChecked={row.get('hasNew', false)} />
                     </td>
                   </tr>
                 );

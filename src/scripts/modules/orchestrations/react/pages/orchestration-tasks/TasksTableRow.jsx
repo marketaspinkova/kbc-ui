@@ -53,10 +53,10 @@ export default createReactClass({
           <span className="label label-info">{this.props.task.get('action')}</span>
         </td>
         <td>
-          <Check isChecked={this.props.task.get('active')} />
+          <Check isChecked={this.props.task.get('active', false)} />
         </td>
         <td>
-          <Check isChecked={this.props.task.get('continueOnFailure')} />
+          <Check isChecked={this.props.task.get('continueOnFailure', false)} />
         </td>
         <td>
           <div className="pull-right">

@@ -25,7 +25,7 @@ export default createReactClass({
       <tr>
         <td>{dimension.get('name')}</td>
         <td>
-          <Check isChecked={dimension.get('includeTime')} />
+          <Check isChecked={dimension.get('includeTime', false)} />
         </td>
         <td>{dimension.get('identifier')}</td>
         <td>{dimension.get('template')}</td>

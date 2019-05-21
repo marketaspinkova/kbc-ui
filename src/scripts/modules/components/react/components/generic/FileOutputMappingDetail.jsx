@@ -30,13 +30,13 @@ export default createReactClass({
         <ListGroupItem className="row">
           <strong className="col-md-4">Is public</strong>
           <span className="col-md-8">
-            <Check isChecked={this.props.value.get('is_public')} />
+            <Check isChecked={this.props.value.get('is_public', false)} />
           </span>
         </ListGroupItem>
         <ListGroupItem className="row">
           <strong className="col-md-4">Is permanent</strong>
           <span className="col-md-8">
-            <Check isChecked={this.props.value.get('is_permanent')} />
+            <Check isChecked={this.props.value.get('is_permanent', false)} />
           </span>
         </ListGroupItem>
       </ListGroup>

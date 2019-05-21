@@ -131,11 +131,11 @@ export default createReactClass({
                   >
                     <div className="td">{dimension.getIn(['data', 'name'])}</div>
                     <div className="td">
-                      <Check isChecked={dimension.getIn(['data', 'includeTime'])} />
+                      <Check isChecked={dimension.getIn(['data', 'includeTime'], false)} />
                     </div>
                     <div className="td">
                       {dimension.get('name') === this.props.column.get('dateDimension') && (
-                        <Check isChecked={true} />
+                        <Check isChecked />
                       )}
                     </div>
                   </a>
