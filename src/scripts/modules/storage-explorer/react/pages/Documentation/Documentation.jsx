@@ -10,6 +10,7 @@ import FileLink from '../../../../sapi-events/react/FileLink';
 import BucketsStore from '../../../../components/stores/StorageBucketsStore';
 import TablesStore from '../../../../components/stores/StorageTablesStore';
 import FilesStore from '../../../../components/stores/StorageFilesStore';
+import ApplicationStore from '../../../../../stores/ApplicationStore';
 import DocumentationLocalStore from '../../../DocumentationLocalStore';
 import Markdown from '../../../../../react/common/Markdown';
 import { SearchBar, Loader, Finished } from '@keboola/indigo-ui';
@@ -93,7 +94,16 @@ export default createReactClass({
 
   snapshotDocumentation() {
     const documentationArray = this.buildDocumentationToMarkdown();
-    let file = new Blob(documentationArray, { type: 'text/plain' });
+    const currentProject = ApplicationStore.getCurrentProject();
+    const projectId = currentProject.get('id');
+    const projectName = currentProject.get('name');
+    const createdDate = new Date().toISOString();
+    const basicInfoArray = [
+      `# Documentation of ${projectName}(${projectId}) project \n`,
+      `created ${createdDate}\n`
+    ];
+
+    let file = new Blob(basicInfoArray.concat(documentationArray), { type: 'text/plain' });
     const params = {
       isPublic: true,
       isPermanent: true,
@@ -107,14 +117,15 @@ export default createReactClass({
     return this.state.enhancedBuckets.reduce((bucketsMemo, bucket) => {
       const bucketId = bucket.get('id');
       bucketsMemo.push(
-        this.createMarkdownPart(bucketId, bucket.get('bucketDescription'), BUCKET_ROW)
+        this.createMarkdownPart(`${bucketId} bucket`, bucket.get('bucketDescription'), BUCKET_ROW)
       );
       const bucketTablesRows = bucket.get('bucketTables').reduce((tablesMemo, table) => {
+        const tableId = table.get('id');
         tablesMemo.push(
-          this.createMarkdownPart(table.get('name'), table.get('tableDescription'), TABLE_ROW)
+          this.createMarkdownPart(`${tableId} table`, table.get('tableDescription'), TABLE_ROW)
         );
         const columnsRows = table.get('columnsDescriptions').reduce((columnsMemo, description, column) => {
-          columnsMemo.push(this.createMarkdownPart(column, description, COLUMN_ROW));
+          columnsMemo.push(this.createMarkdownPart(`${tableId} ${column} column`, description, COLUMN_ROW));
           return columnsMemo;
         }, []);
         return tablesMemo.concat(columnsRows);
