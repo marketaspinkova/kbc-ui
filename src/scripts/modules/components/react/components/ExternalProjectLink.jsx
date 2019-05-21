@@ -1,9 +1,10 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
-import ApplicationStore from '../../../../stores/ApplicationStore';
 import { ExternalLink } from '@keboola/indigo-ui';
 import _ from 'underscore';
+import { trim, rtrim } from 'underscore.string';
+import ApplicationStore from '../../../../stores/ApplicationStore';
 
 export default createReactClass({
   propTypes: {
@@ -16,7 +17,8 @@ export default createReactClass({
     const projectPath = _.template(ApplicationStore.getProjectUrlTemplate())({
       projectId: this.props.projectId
     });
-    return this.props.stackUrl + projectPath.substring(1, projectPath.length - 1);
+
+    return `${rtrim(this.props.stackUrl, '/')}/${trim(projectPath, '/')}`;
   },
 
   render() {
@@ -30,5 +32,4 @@ export default createReactClass({
       return this.props.children;
     }
   }
-
 });
