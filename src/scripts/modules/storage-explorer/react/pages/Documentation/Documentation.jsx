@@ -49,31 +49,31 @@ export default createReactClass({
           <div className="storage-explorer storage-documentation">
             <NavButtons />
             <div className="col-sm-12">
-              <div className="col-sm-2">
-                <Link to="storage-explorer-files" query={{ q: 'tags:storage-documentation' }}>
-                  All Snapshots
-                </Link>
-              </div>
-              <div className="col-sm-6">
-                {lastSnapshot ?
-                  <div>
-                    <FileLink file={lastSnapshot} showFilesize={false}>
-                      Last Snapshot
-                    </FileLink>
-                    - <Finished showIcon endTime={lastSnapshot.get('created')} />
-                    {' by '}
-                    {lastSnapshot.getIn(['creatorToken', 'description'])}
-                  </div>
-                  : 'N/A'
-                }
-              </div>
               <div className="col-sm-4">
                 <Button disabled={isSnapshoting}
                   bsStyle="primary"
                   onClick={this.snapshotDocumentation}>
-                  Snapshot Documentation
+                  Create Documentation Snapshot
                 {isSnapshoting && <Loader />}
                 </Button>
+              </div>
+              <div className="col-sm-8">
+                <Link to="storage-explorer-files" query={{ q: 'tags:storage-documentation' }}>
+                    All Documentation Snapshots
+                </Link>
+                <div>
+                  {lastSnapshot ?
+                    <div>
+                      <FileLink file={lastSnapshot} showFilesize={false}>
+                        Last Documentation Snapshot
+                      </FileLink>
+                      - <Finished showIcon endTime={lastSnapshot.get('created')} />
+                      {' by '}
+                      {lastSnapshot.getIn(['creatorToken', 'description'])}
+                    </div>
+                    : 'N/A'
+                  }
+                </div>
               </div>
             </div>
             <SearchBar
