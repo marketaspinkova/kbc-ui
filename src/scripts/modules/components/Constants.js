@@ -244,7 +244,9 @@ const ActionTypes = keyMirror({
 
   STORAGE_JOBS_LOAD_MORE: null,
   STORAGE_JOBS_LOAD_MORE_SUCCESS: null,
-  STORAGE_JOBS_LOAD_MORE_ERROR: null
+  STORAGE_JOBS_LOAD_MORE_ERROR: null,
+
+  ACTIVITY_MATCHING_DATA_LOADED: null
 });
 
 const GoodDataWriterModes = keyMirror({

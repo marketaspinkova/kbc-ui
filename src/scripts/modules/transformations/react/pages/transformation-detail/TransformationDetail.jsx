@@ -9,6 +9,8 @@ import TransformationsStore from '../../../stores/TransformationsStore';
 import TransformationBucketsStore from '../../../stores/TransformationBucketsStore';
 import StorageTablesStore from '../../../../components/stores/StorageTablesStore';
 import StorageBucketsStore from '../../../../components/stores/StorageBucketsStore';
+import ApplicationStore from '../../../../../stores/ApplicationStore';
+import { FEATURE_UI_DEVEL_PREVIEW, FEATURE_EARLY_ADOPTER_PREVIEW } from '../../../../../constants/KbcConstants'
 import RoutesStore from '../../../../../stores/RoutesStore';
 import VersionsStore from '../../../../components/stores/VersionsStore';
 import TransformationsActionCreators from '../../../ActionCreators';
@@ -18,6 +20,7 @@ import Confirm from '../../../../../react/common/Confirm';
 import CreateSandboxButton from '../../components/CreateSandboxButton';
 
 import SqlDepButton from '../../components/SqlDepButton';
+import ActivityMatchingButton from '../../components/ActivityMatchingButton';
 import ValidateQueriesButton from '../../components/ValidateQueriesButton';
 import * as sandboxUtils from '../../../utils/sandboxUtils';
 
@@ -59,6 +62,7 @@ export default createReactClass({
       editingFields: TransformationsStore.getTransformationEditingFields(bucketId, transformationId),
       pendingActions: TransformationsStore.getTransformationPendingActions(bucketId, transformationId),
       tables: StorageTablesStore.getAll(),
+      tablesUsages: StorageTablesStore.getAllUsages(),
       buckets: StorageBucketsStore.getAll(),
       bucketId,
       transformationId,
@@ -136,6 +140,7 @@ export default createReactClass({
             transformations={this.state.transformations}
             pendingActions={this.state.pendingActions}
             tables={this.state.tables}
+            tablesUsages={this.state.tablesUsages}
             buckets={this.state.buckets}
             bucketId={this.state.bucketId}
             transformationId={this.state.transformationId}
@@ -196,6 +201,17 @@ export default createReactClass({
                   backend={backend}
                   transformationType={transformationType}
                   runParams={sandboxUtils.generateRunParameters(this.state.transformation, bucketId, latestVersionId)}
+                />
+              </li>
+            )}
+            {(ApplicationStore.hasCurrentAdminFeature(FEATURE_EARLY_ADOPTER_PREVIEW) ||
+              ApplicationStore.hasCurrentAdminFeature(FEATURE_UI_DEVEL_PREVIEW)) && (
+              <li className={classnames({ disabled: this.state.transformation.get('input').count() === 0 })}>
+                <ActivityMatchingButton
+                  key={`${this.state.transformationId}-${this.state.transformation.get('input').count()}`}
+                  transformation={this.state.transformation}
+                  tables={this.state.tables}
+                  disabled={this.state.transformation.get('input').count() === 0}
                 />
               </li>
             )}

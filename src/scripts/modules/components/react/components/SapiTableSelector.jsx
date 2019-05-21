@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
 import Select from 'react-select';
+import TableUsagesLabel from '../../../transformations/react/components/TableUsagesLabel';
 import storageActionCreators from '../../StorageActionCreators';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import storageTablesStore from '../../stores/StorageTablesStore';
@@ -17,7 +18,8 @@ export default createReactClass({
     allowedBuckets: PropTypes.array,
     disabled: PropTypes.bool,
     clearable: PropTypes.bool,
-    autoFocus: PropTypes.bool
+    autoFocus: PropTypes.bool,
+    tablesUsages: PropTypes.bool
   },
 
   getDefaultProps() {
@@ -26,14 +28,16 @@ export default createReactClass({
       allowedBuckets: ['in', 'out'],
       disabled: false,
       autoFocus: false,
-      clearable: false
+      clearable: false,
+      tablesUsages: false
     };
   },
 
   getStateFromStores() {
     return {
       isTablesLoading: storageTablesStore.getIsLoading(),
-      tables: storageTablesStore.getAll()
+      tables: storageTablesStore.getAll(),
+      tablesUsages: storageTablesStore.getAllUsages(),
     };
   },
 
@@ -42,7 +46,11 @@ export default createReactClass({
   },
 
   shouldComponentUpdate(nextProps, nextState) {
-    return nextProps.value !== this.props.value || nextState.isTablesLoading !== this.state.isTablesLoading;
+    return (
+      nextProps.value !== this.props.value || 
+      nextState.isTablesLoading !== this.state.isTablesLoading ||
+      !nextState.tablesUsages.equals(this.state.tablesUsages)
+    );
   },
 
   render() {
@@ -90,10 +98,13 @@ export default createReactClass({
       })
       .sort((a, b) => a.get('id').localeCompare(b.get('id')))
       .map(table => {
-        return {
-          label: table.get('id'),
-          value: table.get('id')
-        };
+        let label = table.get('id');
+
+        if (this.props.tablesUsages) {
+          label = <span><TableUsagesLabel usages={this.state.tablesUsages.get(table.get('id'))} /> {label}</span>;
+        }
+
+        return { label, value: table.get('id') };
       })
       .toList()
       .toJS();

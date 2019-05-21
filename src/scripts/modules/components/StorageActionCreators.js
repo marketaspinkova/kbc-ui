@@ -1038,5 +1038,12 @@ export default {
         });
         throw error;
       });
+  },
+
+  activityMatchingDataLoaded: function(data) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.ACTIVITY_MATCHING_DATA_LOADED,
+      data
+    });
   }
 };
