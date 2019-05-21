@@ -8,7 +8,7 @@ describe('findMatches', () => {
   it('should return empty Map when transformation has some table in IM which we have no usages data for', () => {
     data = fromJS([{ inputTable: 'prvni' }]);
 
-    expect(Map()).toEqual(findMatches(transformation, data));
+    expect(findMatches(transformation, data)).toEqual(Map());
   });
 
   it('should return empty OrderedMap when no relevant matches is found', () => {
@@ -23,7 +23,7 @@ describe('findMatches', () => {
       }
     ]);
 
-    expect(OrderedMap()).toEqual(findMatches(transformation, data));
+    expect(findMatches(transformation, data)).toEqual(OrderedMap());
   });
 
   it('should return OrderedMap with relevant matches transformations', () => {
@@ -46,7 +46,7 @@ describe('findMatches', () => {
       }
     ]);
 
-    expect(1).toEqual(findMatches(transformation, data).count());
+    expect(findMatches(transformation, data).count()).toEqual(1);
   });
 
   it('should return OrderedMap with relevant matches sorted by most recent successful run', () => {
@@ -70,9 +70,9 @@ describe('findMatches', () => {
       }
     ]);
 
-    expect(2).toEqual(findMatches(transformation, data).count());
-    expect(3).toEqual(findMatches(transformation, data).first().first().get('rowId'));
-    expect(2).toEqual(findMatches(transformation, data).last().first().get('rowId'));
+    expect(findMatches(transformation, data).count()).toEqual(2);
+    expect(findMatches(transformation, data).first().first().get('rowId')).toEqual(3);
+    expect(findMatches(transformation, data).last().first().get('rowId')).toEqual(2);
   });
 
   it('should return OrderedMap limited by setted limit', () => {
@@ -95,7 +95,7 @@ describe('findMatches', () => {
       }
     ]);
 
-    expect(1).toEqual(findMatches(transformation, data, 1).count());
+    expect(findMatches(transformation, data, 1).count()).toEqual(1);
   });
 
   it('should filter out never runned transformations', () => {
@@ -118,7 +118,7 @@ describe('findMatches', () => {
       }
     ]);
 
-    expect(1).toEqual(findMatches(transformation, data).count());
-    expect(2).toEqual(findMatches(transformation, data).first().first().get('rowId'));
+    expect(findMatches(transformation, data).count()).toEqual(1);
+    expect(findMatches(transformation, data).first().first().get('rowId')).toEqual(2);
   });
 });

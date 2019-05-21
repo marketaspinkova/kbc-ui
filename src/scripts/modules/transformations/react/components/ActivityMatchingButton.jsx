@@ -11,17 +11,20 @@ import ApplicationStore from '../../../../stores/ApplicationStore';
 import ServicesStore from '../../../services/Store';
 import ActivityMatchingModal from '../modals/ActivityMatchingModal';
 import findMatches from './activity-matching/findMatches';
+import findUsages from './activity-matching/findUsages';
 
 export default createReactClass({
   propTypes: {
     transformation: PropTypes.object.isRequired,
     tables: PropTypes.object.isRequired,
+    tablesUsages: PropTypes.object.isRequired,
     disabled: PropTypes.bool.isRequired
   },
 
   getInitialState() {
     return {
       matches: Map(),
+      usages: Map(),
       isLoading: false,
       showModal: false
     };
@@ -44,9 +47,11 @@ export default createReactClass({
         {!this.state.isLoading && <Badge>{this.state.matches.count()}</Badge>}
         <ActivityMatchingModal
           matches={this.state.matches}
+          usages={this.state.usages}
           isLoading={this.state.isLoading}
           transformation={this.props.transformation}
           tables={this.props.tables}
+          tablesUsages={this.props.tablesUsages}
           show={this.state.showModal}
           onHide={this.closeModal}
         />
@@ -83,7 +88,10 @@ export default createReactClass({
       .then((result) => fromJS(result || []))
       .then((data) => {
         StorageActionCreators.activityMatchingDataLoaded(data);
-        this.setState({ matches: findMatches(this.props.transformation, data) });
+        this.setState({ 
+          matches: findMatches(this.props.transformation, data),
+          usages: findUsages(this.props.transformation, data)
+        });
       })
       .finally(() => {
         this.setState({ isLoading: false });
