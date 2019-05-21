@@ -81,14 +81,14 @@ export default createReactClass({
 
   snapshotDocumentation() {
     const documentationArray = this.buildDocumentationToMarkdown();
-    let file = new Blob(documentationArray, {type: 'text/plain'});
+    let file = new Blob(documentationArray, { type: 'text/plain' });
     const params = {
       isPublic: true,
       isPermanent: true,
       tags: ['storage-documentation']
     };
     file.name = 'documentation';
-    return uploadFile(UPLOAD_SNAPSHOT, file, params);
+    return uploadFile(UPLOAD_SNAPSHOT, file, params).then(result => result).then(loadLastDocumentationSnapshot);
   },
 
   buildDocumentationToMarkdown() {

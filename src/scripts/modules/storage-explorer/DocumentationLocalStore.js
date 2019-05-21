@@ -1,4 +1,4 @@
-import { Map } from 'immutable';
+import { Map, fromJS } from 'immutable';
 import StoreUtils from '../../utils/StoreUtils';
 import dispatcher from '../../Dispatcher';
 import * as constants from './Constants';
@@ -38,7 +38,7 @@ dispatcher.register(payload => {
     case constants.ActionTypes.DOCUMENTATION_LOAD_SNAPSHOTS_SUCCESS:
       _store= _store.set('lastSnapshot', null);
       if (action.files.length > 0) {
-        _store= _store.set('lastSnapshot', Map(action.files[0]));
+        _store= _store.set('lastSnapshot', fromJS(action.files[0]));
       }
       return DocumentationLocalStore.emitChange();
     case constants.ActionTypes.DOCUMENTATION_LOAD_SNAPSHOTS_ERROR:
