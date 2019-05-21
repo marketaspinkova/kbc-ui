@@ -108,6 +108,13 @@ export default createReactClass({
                   Last run: {date.format(config.get('lastRunAt'))}
                 </p>
                 <p>Last edit: {date.format(config.get('rowLastModifiedAt'))}</p>
+                <Button
+                  disabled
+                  bsStyle="success"
+                  bsSize="large"
+                >
+                  Show data results (private beta)
+                </Button>
               </Col>
             </Row>
           </Well>
