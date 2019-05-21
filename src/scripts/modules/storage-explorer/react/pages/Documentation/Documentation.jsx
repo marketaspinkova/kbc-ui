@@ -77,7 +77,8 @@ export default createReactClass({
                   {lastSnapshot && (
                     <MenuItem
                       className="text-right"
-                      href={lastSnapshot.get('url')} target="_blank"
+                      href={lastSnapshot.get('url')} 
+                      target="_blank"
                     >
                       Load Last Snapshot
                     </MenuItem>
