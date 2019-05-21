@@ -2,20 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import { Map } from 'immutable';
-import { Button, Col, Row, Modal, Well } from 'react-bootstrap';
+import { Link } from 'react-router';
+import { Button, Col, Row, Modal, Table, Label, Panel, Well } from 'react-bootstrap';
 import { Loader, ExternalLink } from '@keboola/indigo-ui';
 import RoutesStore from '../../../../stores/RoutesStore';
-
 import date from '../../../../utils/date';
 import JobStatusLabel from '../../../../react/common/JobStatusLabel';
+import TableUsagesLabel from '../components/TableUsagesLabel';
 import TableSizeLabel from '../components/TableSizeLabel';
 
 export default createReactClass({
   propTypes: {
     matches: PropTypes.object.isRequired,
+    usages: PropTypes.object.isRequired,
     isLoading: PropTypes.bool.isRequired,
     transformation: PropTypes.object.isRequired,
     tables: PropTypes.object.isRequired,
+    tablesUsages: PropTypes.object.isRequired,
     show: PropTypes.bool.isRequired,
     onHide: PropTypes.func.isRequired
   },
@@ -66,10 +69,72 @@ export default createReactClass({
         const sourceTable = this.props.tables.get(mapping.get('source'), Map());
 
         return (
-          <Well key={idx} style={{ marginBottom: '5px' }}>
-            {sourceTable.count() > 0 && <TableSizeLabel size={sourceTable.get('dataSizeBytes')} />}{' '}
-            {mapping.get('source')}
-          </Well>
+          <Panel
+            key={idx}
+            collapsible
+            header={
+              <div>
+                <TableUsagesLabel usages={this.props.tablesUsages.get(sourceTable.get('id'))} />
+                {sourceTable.count() > 0 && (
+                  <TableSizeLabel size={sourceTable.get('dataSizeBytes')} />
+                )}{' '}
+                {mapping.get('source')}
+              </div>
+            }
+          >
+            <Table className="table-no-margin" fill striped responsive hover>
+              <thead>
+                <tr>
+                  <th>Bucket</th>
+                  <th>Transformation</th>
+                  <th>Last run</th>
+                  <th>Last run status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.props.usages.get(sourceTable.get('id')).map((row) => {
+                  return (
+                    <tr key={row.get('rowId')}>
+                      <td>
+                        <Link
+                          to="transformationBucket"
+                          params={{ config: row.get('configurationId') }}
+                        >
+                          {row.get('configurationName')}
+                        </Link>
+                      </td>
+                      <td>
+                        {this.props.transformation.get('id') === row.get('rowId') ? (
+                          <span>
+                            {row.get('rowName')} <Label>Current</Label>
+                          </span>
+                        ) : (
+                          <Link
+                            to="transformationDetail"
+                            params={{ row: row.get('rowId'), config: row.get('configurationId') }}
+                          >
+                            {row.get('rowName')}
+                          </Link>
+                        )}
+                      </td>
+                      <td>
+                        {row.has('lastRunAt') ? (
+                          <span>{date.format(row.get('lastRunAt'))}</span>
+                        ) : (
+                          'Never runned'
+                        )}
+                      </td>
+                      <td>
+                        {row.has('lastRunStatus') && (
+                          <JobStatusLabel status={row.get('lastRunStatus')} />
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
+          </Panel>
         );
       })
       .toArray();
