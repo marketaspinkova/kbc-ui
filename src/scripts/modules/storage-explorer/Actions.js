@@ -316,6 +316,25 @@ const updateSearchQuery = query => {
   });
 };
 
+const loadLastDocumentationSnapshot = () => {
+  return StorageApi
+    .getFiles({q: 'tags:storage-documentation'})
+    .then(function(files) {
+      dispatcher.handleViewAction({
+        type: localConstants.ActionTypes.DOCUMENTATION_LOAD_SNAPSHOTS_SUCCESS,
+        files: files
+      });
+    })
+    .catch(function(error) {
+      dispatcher.handleViewAction({
+        type: localConstants.ActionTypes.DOCUMENTATION_LOAD_SNAPSHOTS_ERROR,
+        errors: error
+      });
+      throw error;
+    });
+};
+
+
 const updateFilesSearchQuery = query => {
   dispatcher.handleViewAction({
     type: localConstants.ActionTypes.UPDATE_FILES_SEARCH_QUERY,
@@ -387,5 +406,6 @@ export {
   setOpenedColumns,
   toggleDocumentationRow,
   updateDocumentationSearchQuery,
+  loadLastDocumentationSnapshot,
   filterFiles
 };
