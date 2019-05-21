@@ -2,9 +2,9 @@ import React from 'react';
 import { List, Map } from 'immutable';
 import createReactClass from 'create-react-class';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
-import { Table, Button} from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 import NavButtons from '../../components/NavButtons';
-import {Link} from 'react-router';
+import { Link } from 'react-router';
 import FileLink from '../../../../sapi-events/react/FileLink';
 
 import BucketsStore from '../../../../components/stores/StorageBucketsStore';
@@ -12,10 +12,10 @@ import TablesStore from '../../../../components/stores/StorageTablesStore';
 import FilesStore from '../../../../components/stores/StorageFilesStore';
 import DocumentationLocalStore from '../../../DocumentationLocalStore';
 import Markdown from '../../../../../react/common/Markdown';
-import { SearchBar, Loader } from '@keboola/indigo-ui';
+import { SearchBar, Loader, Finished } from '@keboola/indigo-ui';
 import matchByWords from '../../../../../utils/matchByWords';
 
-import {toggleDocumentationRow, updateDocumentationSearchQuery, uploadFile} from '../../../Actions';
+import { toggleDocumentationRow, updateDocumentationSearchQuery, uploadFile, loadLastDocumentationSnapshot } from '../../../Actions';
 
 const BUCKET_ROW = 'BUCKET_ROW';
 const TABLE_ROW = 'TABLE_ROW';
@@ -48,21 +48,33 @@ export default createReactClass({
         <div className="kbc-main-content">
           <div className="storage-explorer storage-documentation">
             <NavButtons />
-            <div>
-              {lastSnapshot &&
-               <FileLink file={lastSnapshot} showFilesize={false}>
-                 Last Snapshot({lastSnapshot.get('created')})
-               </FileLink>
-              }
-              <Link to="storage-explorer-files" query={{q: 'tags:storage-documentation'}}>
-                All Snapshots
-              </Link>
-              <Button disabled={isSnapshoting}
-                bsStyle="primary"
-                onClick={this.snapshotDocumentation}>
-                Snapshot Documentation
+            <div className="col-sm-12">
+              <div className="col-sm-2">
+                <Link to="storage-explorer-files" query={{ q: 'tags:storage-documentation' }}>
+                  All Snapshots
+                </Link>
+              </div>
+              <div className="col-sm-6">
+                {lastSnapshot ?
+                  <div>
+                    <FileLink file={lastSnapshot} showFilesize={false}>
+                      Last Snapshot
+                    </FileLink>
+                    - <Finished showIcon endTime={lastSnapshot.get('created')} />
+                    {' by '}
+                    {lastSnapshot.getIn(['creatorToken', 'description'])}
+                  </div>
+                  : 'N/A'
+                }
+              </div>
+              <div className="col-sm-4">
+                <Button disabled={isSnapshoting}
+                  bsStyle="primary"
+                  onClick={this.snapshotDocumentation}>
+                  Snapshot Documentation
                 {isSnapshoting && <Loader />}
-              </Button>
+                </Button>
+              </div>
             </div>
             <SearchBar
               className="storage-search-bar"
@@ -173,7 +185,7 @@ export default createReactClass({
       <tr key={id}>
         <td className="text-nowrap">
           <div className={divClassName} onClick={() => toggleDocumentationRow(rowType + id, !isOpened)}>
-            {rowType !== COLUMN_ROW && caret }
+            {rowType !== COLUMN_ROW && caret}
             {' '}
             <i className={rowTypeClassName} />
             {' '}
@@ -212,7 +224,7 @@ export default createReactClass({
         })
         .filter(table => {
           if (searchQuery) {
-            return this.matchDescriptionOrName(table.get('tableDescription'),table.get('name'), searchQuery) || table.get('columnsDescriptions').count() > 0;
+            return this.matchDescriptionOrName(table.get('tableDescription'), table.get('name'), searchQuery) || table.get('columnsDescriptions').count() > 0;
           } else {
             return true;
           }
@@ -232,7 +244,7 @@ export default createReactClass({
   },
 
   matchDescriptionOrName(description, name, searchQuery) {
-    if(searchQuery) {
+    if (searchQuery) {
       return matchByWords(name, searchQuery) || matchByWords(description || '', searchQuery);
     } else {
       return true;
