@@ -2,10 +2,9 @@ import React from 'react';
 import { List, Map } from 'immutable';
 import createReactClass from 'create-react-class';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
-import { Table, Button } from 'react-bootstrap';
+import { Table, SplitButton, MenuItem } from 'react-bootstrap';
 import NavButtons from '../../components/NavButtons';
-import { Link } from 'react-router';
-import FileLink from '../../../../sapi-events/react/FileLink';
+import { Navigation } from 'react-router';
 import ApplicationActionCreators from '../../../../../actions/ApplicationActionCreators';
 
 import BucketsStore from '../../../../components/stores/StorageBucketsStore';
@@ -14,7 +13,7 @@ import FilesStore from '../../../../components/stores/StorageFilesStore';
 import ApplicationStore from '../../../../../stores/ApplicationStore';
 import DocumentationLocalStore from '../../../DocumentationLocalStore';
 import Markdown from '../../../../../react/common/Markdown';
-import { SearchBar, Loader, Finished } from '@keboola/indigo-ui';
+import { SearchBar, Loader } from '@keboola/indigo-ui';
 import matchByWords from '../../../../../utils/matchByWords';
 
 import { toggleDocumentationRow, updateDocumentationSearchQuery, uploadFile, loadLastDocumentationSnapshot } from '../../../Actions';
@@ -26,7 +25,7 @@ const COLUMN_ROW = 'COLUMN_ROW';
 const UPLOAD_SNAPSHOT = 'upload-documentation-snapshot';
 
 export default createReactClass({
-  mixins: [createStoreMixin(BucketsStore, TablesStore, DocumentationLocalStore, FilesStore)],
+  mixins: [createStoreMixin(BucketsStore, TablesStore, DocumentationLocalStore, FilesStore), Navigation],
 
   getStateFromStores() {
     const allBuckets = BucketsStore.getAll().sortBy((bucket) => bucket.get('id').toLowerCase());
@@ -45,44 +44,46 @@ export default createReactClass({
   render() {
     const isSnapshoting = this.state.snapshotingProgress > 0 && this.state.snapshotingProgress < 100;
     const lastSnapshot = this.state.lastSnapshot;
+
     return (
       <div className="container-fluid">
         <div className="kbc-main-content">
           <div className="storage-explorer storage-documentation">
             <NavButtons />
-            <div className="col-sm-12">
-              <div className="col-sm-4">
-                <Button disabled={isSnapshoting}
-                  bsStyle="primary"
-                  onClick={this.snapshotDocumentation}>
-                  Create Documentation Snapshot
-                {isSnapshoting && <Loader />}
-                </Button>
-              </div>
-              <div className="col-sm-8">
-                <Link to="storage-explorer-files" query={{ q: 'tags:storage-documentation' }}>
-                    All Documentation Snapshots
-                </Link>
-                <div>
-                  {lastSnapshot ?
-                    <div>
-                      <FileLink file={lastSnapshot} showFilesize={false}>
-                        Last Documentation Snapshot
-                      </FileLink>
-                      - <Finished showIcon endTime={lastSnapshot.get('created')} />
-                      {' by '}
-                      {lastSnapshot.getIn(['creatorToken', 'description'])}
-                    </div>
-                    : 'N/A'
-                  }
-                </div>
-              </div>
-            </div>
             <SearchBar
               className="storage-search-bar"
               placeholder="Search in names or descriptions"
               query={this.state.searchQuery}
               onChange={updateDocumentationSearchQuery}
+              additionalActions={
+                <SplitButton
+                  id="documentation-snapshots-button"
+                  bsStyle="primary"
+                  disabled={isSnapshoting}
+                  title={
+                    <span>
+                      {isSnapshoting ? <Loader /> : <i className="fa fa-arrow-circle-o-up" />} Create Snapshot
+                    </span>
+                  }
+                  onClick={this.snapshotDocumentation}
+                  pullRight
+                >
+                  <MenuItem
+                    className="text-right"
+                    href={this.makeHref('storage-explorer-files', {}, { q: 'tags:storage-documentation' })}
+                  >
+                    Show All Snapshots
+                  </MenuItem>
+                  {lastSnapshot && (
+                    <MenuItem
+                      className="text-right"
+                      href={lastSnapshot.get('url')} target="_blank"
+                    >
+                      Load Last Snapshot
+                    </MenuItem>
+                  )}
+                </SplitButton>
+              }
             />
             <Table striped responsive>
               <tbody>{this.renderEnhancedBucketsRows()}</tbody>
@@ -111,8 +112,8 @@ export default createReactClass({
       tags: ['storage-documentation']
     };
     file.name = 'documentation';
-    return uploadFile(UPLOAD_SNAPSHOT, file, params).then( () => {
-      ApplicationActionCreators.sendNotification({message: 'Storage documentation snapshot created'});
+    return uploadFile(UPLOAD_SNAPSHOT, file, params).then(() => {
+      ApplicationActionCreators.sendNotification({ message: 'Storage documentation snapshot created' });
       return loadLastDocumentationSnapshot();
     });
   },
