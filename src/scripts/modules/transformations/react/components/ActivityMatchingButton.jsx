@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import classnames from 'classnames';
 import { Map, fromJS } from 'immutable';
-import { Badge } from 'react-bootstrap';
+import { Badge, Button } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
 import { getActivityMatchingData } from '../../../../react/admin/project-graph/GraphApi';
 import StorageActionCreators from '../../../components/StorageActionCreators';
@@ -35,7 +35,11 @@ export default createReactClass({
 
   render() {
     return (
-      <a onClick={this.openModal} className={classnames({ 'text-muted': this.props.disabled })}>
+      <Button
+        bsStyle="link"
+        onClick={this.openModal}
+        className={classnames({ 'text-muted': this.props.disabled }, 'btn-block')}
+      >
         {this.renderIcon()} Activity Matching{' '}
         {!this.state.isLoading && <Badge>{this.state.matches.count()}</Badge>}
         <ActivityMatchingModal
@@ -46,7 +50,7 @@ export default createReactClass({
           show={this.state.showModal}
           onHide={this.closeModal}
         />
-      </a>
+      </Button>
     );
   },
 
