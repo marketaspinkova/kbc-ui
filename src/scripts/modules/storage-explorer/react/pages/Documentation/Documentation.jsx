@@ -131,7 +131,7 @@ export default createReactClass({
       case TABLE_ROW:
         return `### ${name} \n ${description}\n`;
       case COLUMN_ROW:
-        return `### ${name} \n ${description}\n`;
+        return `#### ${name} \n ${description}\n`;
     }
 
   },
