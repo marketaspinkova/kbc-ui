@@ -16,7 +16,7 @@ export default createReactClass({
     const projectPath = _.template(ApplicationStore.getProjectUrlTemplate())({
       projectId: this.props.projectId
     });
-    return this.props.stackUrl + projectPath.substring(1, projectPath.length - 1);
+    return this.props.stackUrl + projectPath.substring(1, projectPath.length);
   },
 
   render() {
