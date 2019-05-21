@@ -82,7 +82,7 @@ export default createReactClass({
               </div>
             }
           >
-            <Table className="table-no-margin" striped responsive hover>
+            <Table className="table-no-margin" fill striped responsive hover>
               <thead>
                 <tr>
                   <th>Bucket</th>
