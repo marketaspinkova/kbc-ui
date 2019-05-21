@@ -282,7 +282,7 @@ Dispatcher.register(function(payload) {
     case constants.ActionTypes.ACTIVITY_MATCHING_DATA_LOADED:
       const usages = action.data.toMap().mapKeys((index, row) => row.get('inputTable'));
       _store = _store.set('tablesUsages', _store.get('tables').map((table) => {
-        return usages.getIn([table.get('id'), 'countRows'], 0);
+        return parseInt(usages.getIn([table.get('id'), 'countRows'], 0));
       }));
       return StorageTablesStore.emitChange();
     
