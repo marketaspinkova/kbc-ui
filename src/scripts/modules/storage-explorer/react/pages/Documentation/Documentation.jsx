@@ -6,6 +6,7 @@ import { Table, Button } from 'react-bootstrap';
 import NavButtons from '../../components/NavButtons';
 import { Link } from 'react-router';
 import FileLink from '../../../../sapi-events/react/FileLink';
+import ApplicationActionCreators from '../../../../../actions/ApplicationActionCreators';
 
 import BucketsStore from '../../../../components/stores/StorageBucketsStore';
 import TablesStore from '../../../../components/stores/StorageTablesStore';
@@ -110,22 +111,25 @@ export default createReactClass({
       tags: ['storage-documentation']
     };
     file.name = 'documentation';
-    return uploadFile(UPLOAD_SNAPSHOT, file, params).then(result => result).then(loadLastDocumentationSnapshot);
+    return uploadFile(UPLOAD_SNAPSHOT, file, params).then( () => {
+      ApplicationActionCreators.sendNotification({message: 'Storage documentation snapshot created'});
+      return loadLastDocumentationSnapshot();
+    });
   },
 
   buildDocumentationToMarkdown() {
     return this.state.enhancedBuckets.reduce((bucketsMemo, bucket) => {
       const bucketId = bucket.get('id');
       bucketsMemo.push(
-        this.createMarkdownPart(`${bucketId} bucket`, bucket.get('bucketDescription'), BUCKET_ROW)
+        this.createMarkdownPart(`Bucket ${bucketId}`, bucket.get('bucketDescription'), BUCKET_ROW)
       );
       const bucketTablesRows = bucket.get('bucketTables').reduce((tablesMemo, table) => {
         const tableId = table.get('id');
         tablesMemo.push(
-          this.createMarkdownPart(`${tableId} table`, table.get('tableDescription'), TABLE_ROW)
+          this.createMarkdownPart(`Table ${tableId}`, table.get('tableDescription'), TABLE_ROW)
         );
         const columnsRows = table.get('columnsDescriptions').reduce((columnsMemo, description, column) => {
-          columnsMemo.push(this.createMarkdownPart(`${tableId} ${column} column`, description, COLUMN_ROW));
+          columnsMemo.push(this.createMarkdownPart(`Column ${column}`, description, COLUMN_ROW));
           return columnsMemo;
         }, []);
         return tablesMemo.concat(columnsRows);
