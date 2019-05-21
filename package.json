@@ -66,6 +66,7 @@
     "start-settings-users": "webpack-dev-server --config webpack/dev-server-setting-user.config.js --hot --progress --colors --https",
     "start-project-graph": "webpack-dev-server --config webpack/dev-server-project-graph.config.js --hot --progress --colors --https",
     "start-login": "webpack-dev-server --config webpack/dev-server-login.config.js --hot --progress --colors --https",
+    "start-dummy-markup": "webpack-dev-server --config webpack/dev-server-dummy-markup.config.js --hot --progress --colors --https",
     "build": "webpack --config webpack/production.config.js --profile --colors --bail && node webpack/generate-manifest.js",
     "pretest": "yarn run lint",
     "test": "yarn run jest",
