@@ -8,7 +8,12 @@ import StorageTablesStore from '../../../../components/stores/StorageTablesStore
 import RoutesStore from '../../../../../stores/RoutesStore';
 
 import QueryEditor from '../../components/QueryEditor';
-import {CONNECTION_ERROR_PATH, INCREMENTAL_CANDIDATES_PATH, LOADING_SOURCE_TABLES_PATH} from '../../../storeProvisioning';
+import {
+  CONNECTION_ERROR_PATH, 
+  INCREMENTAL_CANDIDATES_PATH, 
+  LOADING_COLUMNS_PATH, 
+  LOADING_SOURCE_TABLES_PATH
+} from '../../../storeProvisioning';
 import {SOURCE_TABLES_PATH} from '../../../storeProvisioning';
 import {SOURCE_TABLES_ERROR_PATH} from '../../../storeProvisioning';
 
@@ -77,8 +82,8 @@ export default function(componentId, actionsProvisioning, storeProvisioning) {
       return ExDbActionCreators.saveQueryEdit(this.state.configId, this.state.editingQuery.get('id'));
     },
 
-    handleRefreshSourceTables() {
-      return reloadSourceTables(componentId, this.state.configId);
+    handleRefreshSourceTables(queryId) {
+      return reloadSourceTables(componentId, this.state.configId, queryId);
     },
 
     getDefaultOutputTableId(name) {
@@ -97,6 +102,7 @@ export default function(componentId, actionsProvisioning, storeProvisioning) {
           componentId={componentId}
           getDefaultOutputTable={this.getDefaultOutputTableId}
           isLoadingSourceTables={this.state.localState.getIn(LOADING_SOURCE_TABLES_PATH, false)}
+          isLoadingColumns={this.state.localState.getIn(LOADING_COLUMNS_PATH, false)}
           isTestingConnection={this.state.isTestingConnection}
           validConnection={this.state.validConnection}
           connectionError={this.state.localState.getIn(CONNECTION_ERROR_PATH)}
