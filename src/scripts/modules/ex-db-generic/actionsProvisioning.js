@@ -1,5 +1,6 @@
 import * as storeProvisioning from './storeProvisioning';
 import {List, Map, fromJS} from 'immutable';
+import ApplicationStore from '../../stores/ApplicationStore';
 import RoutesStore from '../../stores/RoutesStore';
 
 import componentsActions from '../components/InstalledComponentsActionCreators';
@@ -32,10 +33,10 @@ export function loadSourceTables(componentId, configId) {
   }
 }
 
-export function reloadSourceTables(componentId, configId) {
+export function reloadSourceTables(componentId, configId, queryId) {
   if (componentSupportsSimpleSetup(componentId)) {
     createActions(componentId).updateLocalState(configId, storeProvisioning.LOADING_SOURCE_TABLES_PATH, true);
-    return createActions(componentId).getSourceTables(configId);
+    return createActions(componentId).getSourceTables(configId, queryId);
   }
 }
 
@@ -508,13 +509,32 @@ export function createActions(componentId) {
       return updateLocalState(configId, path, data);
     },
 
-    getSourceTables(configId) {
+    getSourceTables(configId, queryId) {
       const store = getStore(configId);
       if (store.isConnectionValid()) {
         updateLocalState(configId, storeProvisioning.LOADING_SOURCE_TABLES_PATH, true);
         let runData = store.configData.setIn(['parameters', 'db'], store.getCredentials());
         if (!store.isRowConfiguration()) {
           runData = runData.setIn(['parameters', 'tables'], List());
+        }
+        if (componentId === 'keboola.ex-db-pgsql' && ApplicationStore.hasCurrentProjectFeature('pgsql-split-loading')) {
+          runData = runData.setIn(['parameters', 'tableListFilter', 'listColumns'], false);
+
+          if (queryId) {
+            const queries = store.getQueries().concat(store.getEditingQueries());
+            const query = queries.find((query) => query.get('id') === queryId);
+            updateLocalState(configId, storeProvisioning.LOADING_SOURCE_TABLES_PATH, false);
+            updateLocalState(configId, storeProvisioning.LOADING_COLUMNS_PATH, true);
+            runData = runData.setIn(['parameters', 'tableListFilter'], {
+              listColumns: true,
+              tablesToList: [
+                {
+                  schema: query.getIn(['table', 'schema']),
+                  tableName: query.getIn(['table', 'tableName'])
+                }
+              ]
+            });
+          }
         }
         const params = {
           configData: runData.toJS()
@@ -525,12 +545,24 @@ export function createActions(componentId) {
           } else if (data.status === 'success') {
             updateLocalState(configId, storeProvisioning.SOURCE_TABLES_ERROR_PATH, null);
           }
-          updateLocalState(configId, storeProvisioning.SOURCE_TABLES_PATH, fromJS(data.tables));
-          if (store.isRowConfiguration() && data.tables) {
-            const candidates = getIncrementalCandidates(fromJS(data.tables));
-            updateLocalState(configId, storeProvisioning.INCREMENTAL_CANDIDATES_PATH, candidates);
+          if (queryId) {
+            const updated = data.tables[0];
+            const tables = store.getSourceTables().map((table) => {
+              if (table.get('name') === updated.name && table.get('schema') === updated.schema) {
+                return fromJS(updated);
+              }
+              return table;
+            });
+            updateLocalState(configId, storeProvisioning.SOURCE_TABLES_PATH, tables);
+          } else {
+            updateLocalState(configId, storeProvisioning.SOURCE_TABLES_PATH, fromJS(data.tables));
+            if (store.isRowConfiguration() && data.tables) {
+              const candidates = getIncrementalCandidates(fromJS(data.tables));
+              updateLocalState(configId, storeProvisioning.INCREMENTAL_CANDIDATES_PATH, candidates);
+            }
           }
           updateLocalState(configId, storeProvisioning.LOADING_SOURCE_TABLES_PATH, false);
+          updateLocalState(configId, storeProvisioning.LOADING_COLUMNS_PATH, false);
         });
       }
     },

@@ -75,7 +75,7 @@ const ApplicationStore = StoreUtils.createStore({
   },
 
   hasCurrentProjectFeature(feature) {
-    return this.getCurrentProjectFeatures().includes(feature);
+    return [...this.getCurrentProjectFeatures(), 'pgsql-split-loading'].includes(feature);
   },
 
   getCurrentAdmin() {

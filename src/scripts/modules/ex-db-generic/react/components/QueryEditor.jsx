@@ -1,17 +1,19 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import Immutable from 'immutable';
 import _ from 'underscore';
 import { Controlled as CodeMirror } from 'react-codemirror2'
 import { Button, Alert, FormGroup, ControlLabel, HelpBlock, Checkbox, Col } from 'react-bootstrap';
 
+import ApplicationStore from '../../../../stores/ApplicationStore';
 import Select from '../../../../react/common/Select';
 import TableSelectorForm from '../../../../react/common/TableSelectorForm';
 import Tooltip from '../../../../react/common/Tooltip';
 
 import AsynchActionError from './AsynchActionError';
 import TableLoader from './TableLoaderQueryEditor';
+import ColumnLoader from './ColumnLoaderQueryEditor';
 
 import {getQueryEditorPlaceholder, getQueryEditorHelpText} from '../../templates/helpAndHints';
 
@@ -29,6 +31,7 @@ export default createReactClass({
     getDefaultOutputTable: PropTypes.func.isRequired,
     componentId: PropTypes.string.isRequired,
     isLoadingSourceTables: PropTypes.bool.isRequired,
+    isLoadingColumns: PropTypes.bool.isRequired,
     isTestingConnection: PropTypes.bool.isRequired,
     validConnection: PropTypes.bool.isRequired,
     connectionError: PropTypes.string,
@@ -225,10 +228,15 @@ export default createReactClass({
       .set('table', (newValue === '') ? newValue : Immutable.fromJS(newValue))
       .set('name', newName ? newName : '')
       .set('primaryKey', primaryKeys);
+
     if (this.props.isConfigRow) {
       newQuery = newQuery.set('incrementalFetchingColumn', '');
     }
-    return this.props.onChange(newQuery);
+    this.props.onChange(newQuery);
+
+    if (this.props.componentId === 'keboola.ex-db-pgsql' && ApplicationStore.hasCurrentProjectFeature('pgsql-split-loading')) {
+      this.props.refreshMethod(this.props.query.get('id'));
+    }
   },
 
   getColumnsOptions() {
@@ -511,19 +519,27 @@ export default createReactClass({
 
     const columnsOptions = this.getColumnsOptions();
     const isDisabled = this.props.disabled || !this.props.query.get('table');
+    const columnSelector = (
+      <Select
+        multi
+        name="columns"
+        value={this.props.query.get('columns', Immutable.List())}
+        disabled={isDisabled}
+        placeholder="All columns will be imported"
+        onChange={this.handleChangeColumns}
+        options={columnsOptions}
+      />
+    );
 
     return (
       <FormGroup>
         <Col componentClass={ControlLabel} md={3}>Columns</Col>
         <Col md={9}>
-          <Select
-            multi
-            name="columns"
-            value={this.props.query.get('columns', Immutable.List())}
-            disabled={isDisabled}
-            placeholder="All columns will be imported"
-            onChange={this.handleChangeColumns}
-            options={columnsOptions}
+          <ColumnLoader
+            componentId={this.props.componentId}
+            isLoadingColumns={this.props.isLoadingColumns}
+            columnSelector={columnSelector}
+            refreshMethod={() => this.props.refreshMethod(this.props.query.get('id'))}
           />
           <HelpBlock>
             If you only need to exclude a couple of columns, you can{' '}
