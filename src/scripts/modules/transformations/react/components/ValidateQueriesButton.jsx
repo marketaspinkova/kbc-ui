@@ -1,7 +1,7 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
-import { Label } from 'react-bootstrap';
+import { Button, Label } from 'react-bootstrap';
 import Modal from '../modals/ValidateQueriesModal';
 
 export default createReactClass({
@@ -15,14 +15,9 @@ export default createReactClass({
     isSaved: PropTypes.bool.isRequired
   },
 
-  handleOpenButtonClick(e) {
-    e.preventDefault();
-    this.props.onModalOpen();
-  },
-
   render() {
     return (
-      <a onClick={this.handleOpenButtonClick}>
+      <Button bsStyle="link" className="btn-block" onClick={this.props.onModalOpen}>
         <i className="fa fa-check-square-o fa-fw" /> Validate <Label bsStyle="info">BETA</Label>
         <Modal
           backend={this.props.backend}
@@ -32,7 +27,7 @@ export default createReactClass({
           onHide={this.props.onModalClose}
           isSaved={this.props.isSaved}
         />
-      </a>
+      </Button>
     );
   }
 });

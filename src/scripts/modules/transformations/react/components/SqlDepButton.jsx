@@ -1,6 +1,7 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
+import { Button, Label } from 'react-bootstrap';
 import Modal from '../modals/SqlDepModal';
 
 export default createReactClass({
@@ -17,7 +18,7 @@ export default createReactClass({
   },
 
   close() {
-    return this.setState({
+    this.setState({
       showModal: false
     });
   },
@@ -29,21 +30,17 @@ export default createReactClass({
   },
 
   betaWarning() {
-    if (this.props.backend === 'snowflake') {
-      return (
-        <span>{' '}
-          <span className="label label-info">BETA</span>
-        </span>
-      );
+    if (this.props.backend !== 'snowflake') {
+      return null;
     }
+
+    return <Label bsStyle="info">BETA</Label>;
   },
 
   render() {
     return (
-      <a onClick={this.handleOpenButtonClick}>
-        <i className="fa fa-sitemap fa-fw" />
-        {' '}SQLdep
-        {this.betaWarning()}
+      <Button bsStyle="link" className="btn-block" onClick={this.open}>
+        <i className="fa fa-sitemap fa-fw" /> SQLdep {this.betaWarning()}
         <Modal
           transformationId={this.props.transformationId}
           bucketId={this.props.bucketId}
@@ -51,12 +48,7 @@ export default createReactClass({
           show={this.state.showModal}
           onHide={this.close}
         />
-      </a>
+      </Button>
     );
-  },
-
-  handleOpenButtonClick(e) {
-    e.preventDefault();
-    return this.open();
   }
 });

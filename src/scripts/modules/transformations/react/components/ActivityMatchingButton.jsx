@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
-import classnames from 'classnames';
 import { Map, fromJS } from 'immutable';
 import { Badge, Button } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
@@ -40,8 +39,8 @@ export default createReactClass({
     return (
       <Button
         bsStyle="link"
+        className="btn-block"
         onClick={this.openModal}
-        className={classnames({ 'text-muted': this.props.disabled }, 'btn-block')}
       >
         {this.renderIcon()} Activity Matching{' '}
         {!this.state.isLoading && <Badge>{this.state.matches.count()}</Badge>}
