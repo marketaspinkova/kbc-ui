@@ -1,6 +1,8 @@
-import StoreUtils from '../../utils/StoreUtils';
 import Immutable from 'immutable';
+import StoreUtils from '../../utils/StoreUtils';
 import dispatcher from '../../Dispatcher';
+import * as TransformationsConstants from '../transformations/Constants'
+import ConfigurationRowsConstants from './ConfigurationRowsConstants';
 import Constants from './RowVersionsConstants';
 
 var Map = Immutable.Map, List = Immutable.List;
@@ -120,6 +122,14 @@ dispatcher.register(function(payload) {
 
     case Constants.ActionTypes.ROW_VERSIONS_MULTI_PENDING_STOP:
       _store = _store.deleteIn(['multiLoadPending', action.componentId, action.configId, action.rowId, action.pivotVersion]);
+      return RowVersionsStore.emitChange();
+
+    case ConfigurationRowsConstants.ActionTypes.CONFIGURATION_ROWS_DELETE_SUCCESS:
+      _store = _store.deleteIn(['versions', action.componentId, action.configurationId, action.rowId]);
+      return RowVersionsStore.emitChange();
+
+    case TransformationsConstants.ActionTypes.TRANSFORMATION_DELETE_SUCCESS:
+      _store = _store.deleteIn(['versions', 'transformation', action.bucketId, action.transformationId]);
       return RowVersionsStore.emitChange();
 
     default:
