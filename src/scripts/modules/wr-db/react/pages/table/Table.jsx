@@ -75,7 +75,7 @@ export default componentId => {
         isSavingColumns,
         v2Actions,
         v2State: localState.get('v2', Map()),
-        v2ConfigTable: v2Actions.configTables.find(t => t.get('tableId') === tableId)
+        v2ConfigTable: v2Actions.configTables.find(t => t.get('tableId') === tableId, null, Map())
       };
     },
 
