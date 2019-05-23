@@ -1,6 +1,5 @@
 import * as storeProvisioning from './storeProvisioning';
 import {List, Map, fromJS} from 'immutable';
-import ApplicationStore from '../../stores/ApplicationStore';
 import RoutesStore from '../../stores/RoutesStore';
 
 import componentsActions from '../components/InstalledComponentsActionCreators';
@@ -9,6 +8,7 @@ import callDockerAction from '../components/DockerActionsApi';
 import getDefaultPort from './templates/defaultPorts';
 import {getProtectedProperties} from './templates/credentials';
 import {incrementalFetchingTypes} from './templates/incrementalFetchingCandidates';
+import {supportSplitLoading} from './utils';
 
 export function loadConfiguration(componentId, configId) {
   return componentsActions.loadComponentConfigData(componentId, configId);
@@ -517,7 +517,7 @@ export function createActions(componentId) {
         if (!store.isRowConfiguration()) {
           runData = runData.setIn(['parameters', 'tables'], List());
         }
-        if (componentId === 'keboola.ex-db-pgsql' && ApplicationStore.hasCurrentProjectFeature('pgsql-split-loading')) {
+        if (supportSplitLoading(componentId)) {
           runData = runData.setIn(['parameters', 'tableListFilter', 'listColumns'], false);
 
           if (queryId) {
