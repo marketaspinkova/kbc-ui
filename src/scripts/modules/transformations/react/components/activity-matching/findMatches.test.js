@@ -75,29 +75,6 @@ describe('findMatches', () => {
     expect(findMatches(transformation, data).last().first().get('rowId')).toEqual(2);
   });
 
-  it('should return OrderedMap limited by setted limit', () => {
-    data = fromJS([
-      {
-        inputTable: 'prvni',
-        usedIn: [
-          { rowId: 1, lastRunAt: '2017-02-13T12:01:05+0100', lastRunStatus: 'success' },
-          { rowId: 2, lastRunAt: '2018-02-13T12:01:05+0100', lastRunStatus: 'success' },
-          { rowId: 3, lastRunAt: '2019-02-13T12:01:05+0100', lastRunStatus: 'success' }
-        ]
-      },
-      {
-        inputTable: 'druha',
-        usedIn: [
-          { rowId: 1, lastRunAt: '2017-02-13T12:01:05+0100', lastRunStatus: 'success' },
-          { rowId: 2, lastRunAt: '2018-02-13T12:01:05+0100', lastRunStatus: 'success' },
-          { rowId: 3, lastRunAt: '2019-02-13T12:01:05+0100', lastRunStatus: 'success' }
-        ]
-      }
-    ]);
-
-    expect(findMatches(transformation, data, 1).count()).toEqual(1);
-  });
-
   it('should filter out never runned transformations', () => {
     data = fromJS([
       {

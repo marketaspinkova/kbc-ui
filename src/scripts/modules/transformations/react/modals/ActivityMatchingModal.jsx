@@ -24,6 +24,12 @@ export default createReactClass({
     onHide: PropTypes.func.isRequired
   },
 
+  getInitialState() {
+    return {
+      matchesLimit: 5
+    }
+  },
+
   render() {
     return (
       <Modal bsSize="large" show={this.props.show} onHide={this.props.onHide}>
@@ -59,6 +65,7 @@ export default createReactClass({
         {this.renderInputMappingRows()}
         <br />
         {this.renderMatches()}
+        {this.renderShowMore()}
       </div>
     );
   },
@@ -148,6 +155,7 @@ export default createReactClass({
 
   renderMatches() {
     return this.props.matches
+      .slice(0, this.state.matchesLimit)
       .map((match, idx) => {
         const config = match.first();
 
@@ -194,5 +202,23 @@ export default createReactClass({
         );
       })
       .toArray();
+  },
+
+  renderShowMore() {
+    const matches = this.props.matches.count();
+
+    if (matches <= this.state.matchesLimit) {
+      return null;
+    }
+
+    return (
+      <Button
+        bsStyle="link"
+        className="btn-link-inline"
+        onClick={() => this.setState({ matchesLimit: matches })}
+      >
+        Show more matches
+      </Button>
+    );
   }
 });
