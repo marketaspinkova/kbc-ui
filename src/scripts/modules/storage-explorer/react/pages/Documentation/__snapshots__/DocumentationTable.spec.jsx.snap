@@ -1,0 +1,1115 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<DocumentationTable /> should render buckets only documentation tree 1`] = `
+<Table
+  bordered={false}
+  bsClass="table"
+  condensed={false}
+  hover={false}
+  responsive={true}
+  striped={true}
+>
+  <tbody>
+    <tr
+      key="bucket1"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="kbc-cursor-pointer bucket-row"
+          onClick={[Function]}
+        >
+          <i
+            className="fa fa-caret-right"
+          />
+           
+          <i
+            className="fa fa-folder"
+          />
+           
+          bucket1
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        <Markdown
+          collapsible={true}
+          size="normal"
+          source="this is bucket1 description"
+        />
+      </td>
+    </tr>
+    <tr
+      key="emptyBucketNoDescription"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="kbc-cursor-pointer bucket-row"
+          onClick={[Function]}
+        >
+          <i
+            className="fa fa-caret-right"
+          />
+           
+          <i
+            className="fa fa-folder"
+          />
+           
+          emptyBucketNoDescription
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        N/A
+      </td>
+    </tr>
+    <tr
+      key="emptyBucket"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="kbc-cursor-pointer bucket-row"
+          onClick={[Function]}
+        >
+          <i
+            className="fa fa-caret-right"
+          />
+           
+          <i
+            className="fa fa-folder"
+          />
+           
+          emptyBucket
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        <Markdown
+          collapsible={true}
+          size="normal"
+          source="this is emptyBucket description"
+        />
+      </td>
+    </tr>
+  </tbody>
+</Table>
+`;
+
+exports[`<DocumentationTable /> should render empty documentation tree 1`] = `
+<Table
+  bordered={false}
+  bsClass="table"
+  condensed={false}
+  hover={false}
+  responsive={true}
+  striped={true}
+>
+  <tbody />
+</Table>
+`;
+
+exports[`<DocumentationTable /> should render toggled bucket and table documentation tree 1`] = `
+<Table
+  bordered={false}
+  bsClass="table"
+  condensed={false}
+  hover={false}
+  responsive={true}
+  striped={true}
+>
+  <tbody>
+    <tr
+      key="bucket1"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="kbc-cursor-pointer bucket-row"
+          onClick={[Function]}
+        >
+          <i
+            className="fa fa-caret-down"
+          />
+           
+          <i
+            className="fa fa-folder"
+          />
+           
+          bucket1
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        <Markdown
+          collapsible={true}
+          size="normal"
+          source="this is bucket1 description"
+        />
+      </td>
+    </tr>
+    <tr
+      key="bucket1.table1"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="kbc-cursor-pointer table-row"
+          onClick={[Function]}
+        >
+          <i
+            className="fa fa-caret-down"
+          />
+           
+          <i
+            className="fa fa-table"
+          />
+           
+          table1
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        <Markdown
+          collapsible={true}
+          size="normal"
+          source="this is table1 description"
+        />
+      </td>
+    </tr>
+    <tr
+      key="bucket1.table1column1"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="column-row"
+          onClick={[Function]}
+        >
+           
+          <i
+            className="fa fa-columns"
+          />
+           
+          column1
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        <Markdown
+          collapsible={true}
+          size="normal"
+          source="this is column1 description"
+        />
+      </td>
+    </tr>
+    <tr
+      key="bucket1.table1column2"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="column-row"
+          onClick={[Function]}
+        >
+           
+          <i
+            className="fa fa-columns"
+          />
+           
+          column2
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        N/A
+      </td>
+    </tr>
+    <tr
+      key="bucket1.table1column3"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="column-row"
+          onClick={[Function]}
+        >
+           
+          <i
+            className="fa fa-columns"
+          />
+           
+          column3
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        <Markdown
+          collapsible={true}
+          size="normal"
+          source="column3 description blabla ###heading blabla"
+        />
+      </td>
+    </tr>
+    <tr
+      key="bucket1.table2"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="kbc-cursor-pointer table-row"
+          onClick={[Function]}
+        >
+          <i
+            className="fa fa-caret-right"
+          />
+           
+          <i
+            className="fa fa-table"
+          />
+           
+          table2
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        N/A
+      </td>
+    </tr>
+    <tr
+      key="emptyBucketNoDescription"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="kbc-cursor-pointer bucket-row"
+          onClick={[Function]}
+        >
+          <i
+            className="fa fa-caret-right"
+          />
+           
+          <i
+            className="fa fa-folder"
+          />
+           
+          emptyBucketNoDescription
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        N/A
+      </td>
+    </tr>
+    <tr
+      key="emptyBucket"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="kbc-cursor-pointer bucket-row"
+          onClick={[Function]}
+        >
+          <i
+            className="fa fa-caret-right"
+          />
+           
+          <i
+            className="fa fa-folder"
+          />
+           
+          emptyBucket
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        <Markdown
+          collapsible={true}
+          size="normal"
+          source="this is emptyBucket description"
+        />
+      </td>
+    </tr>
+  </tbody>
+</Table>
+`;
+
+exports[`<DocumentationTable /> should render toggled bucket documentation tree 1`] = `
+<Table
+  bordered={false}
+  bsClass="table"
+  condensed={false}
+  hover={false}
+  responsive={true}
+  striped={true}
+>
+  <tbody>
+    <tr
+      key="bucket1"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="kbc-cursor-pointer bucket-row"
+          onClick={[Function]}
+        >
+          <i
+            className="fa fa-caret-down"
+          />
+           
+          <i
+            className="fa fa-folder"
+          />
+           
+          bucket1
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        <Markdown
+          collapsible={true}
+          size="normal"
+          source="this is bucket1 description"
+        />
+      </td>
+    </tr>
+    <tr
+      key="bucket1.table1"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="kbc-cursor-pointer table-row"
+          onClick={[Function]}
+        >
+          <i
+            className="fa fa-caret-right"
+          />
+           
+          <i
+            className="fa fa-table"
+          />
+           
+          table1
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        <Markdown
+          collapsible={true}
+          size="normal"
+          source="this is table1 description"
+        />
+      </td>
+    </tr>
+    <tr
+      key="bucket1.table2"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="kbc-cursor-pointer table-row"
+          onClick={[Function]}
+        >
+          <i
+            className="fa fa-caret-right"
+          />
+           
+          <i
+            className="fa fa-table"
+          />
+           
+          table2
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        N/A
+      </td>
+    </tr>
+    <tr
+      key="emptyBucketNoDescription"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="kbc-cursor-pointer bucket-row"
+          onClick={[Function]}
+        >
+          <i
+            className="fa fa-caret-right"
+          />
+           
+          <i
+            className="fa fa-folder"
+          />
+           
+          emptyBucketNoDescription
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        N/A
+      </td>
+    </tr>
+    <tr
+      key="emptyBucket"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="kbc-cursor-pointer bucket-row"
+          onClick={[Function]}
+        >
+          <i
+            className="fa fa-caret-right"
+          />
+           
+          <i
+            className="fa fa-folder"
+          />
+           
+          emptyBucket
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        <Markdown
+          collapsible={true}
+          size="normal"
+          source="this is emptyBucket description"
+        />
+      </td>
+    </tr>
+  </tbody>
+</Table>
+`;
+
+exports[`<DocumentationTable /> should render whole documentation tree 1`] = `
+<Table
+  bordered={false}
+  bsClass="table"
+  condensed={false}
+  hover={false}
+  responsive={true}
+  striped={true}
+>
+  <tbody>
+    <tr
+      key="bucket1"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="bucket-row"
+          onClick={[Function]}
+        >
+           
+          <i
+            className="fa fa-folder"
+          />
+           
+          bucket1
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        <Markdown
+          collapsible={true}
+          size="normal"
+          source="this is bucket1 description"
+        />
+      </td>
+    </tr>
+    <tr
+      key="bucket1.table1"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="table-row"
+          onClick={[Function]}
+        >
+           
+          <i
+            className="fa fa-table"
+          />
+           
+          table1
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        <Markdown
+          collapsible={true}
+          size="normal"
+          source="this is table1 description"
+        />
+      </td>
+    </tr>
+    <tr
+      key="bucket1.table1column1"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="column-row"
+          onClick={[Function]}
+        >
+           
+          <i
+            className="fa fa-columns"
+          />
+           
+          column1
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        <Markdown
+          collapsible={true}
+          size="normal"
+          source="this is column1 description"
+        />
+      </td>
+    </tr>
+    <tr
+      key="bucket1.table1column2"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="column-row"
+          onClick={[Function]}
+        >
+           
+          <i
+            className="fa fa-columns"
+          />
+           
+          column2
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        N/A
+      </td>
+    </tr>
+    <tr
+      key="bucket1.table1column3"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="column-row"
+          onClick={[Function]}
+        >
+           
+          <i
+            className="fa fa-columns"
+          />
+           
+          column3
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        <Markdown
+          collapsible={true}
+          size="normal"
+          source="column3 description blabla ###heading blabla"
+        />
+      </td>
+    </tr>
+    <tr
+      key="bucket1.table2"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="table-row"
+          onClick={[Function]}
+        >
+           
+          <i
+            className="fa fa-table"
+          />
+           
+          table2
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        N/A
+      </td>
+    </tr>
+    <tr
+      key="bucket1.table2column1"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="column-row"
+          onClick={[Function]}
+        >
+           
+          <i
+            className="fa fa-columns"
+          />
+           
+          column1
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        N/A
+      </td>
+    </tr>
+    <tr
+      key="bucket1.table2column2"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="column-row"
+          onClick={[Function]}
+        >
+           
+          <i
+            className="fa fa-columns"
+          />
+           
+          column2
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        N/A
+      </td>
+    </tr>
+    <tr
+      key="bucket1.table2column3"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="column-row"
+          onClick={[Function]}
+        >
+           
+          <i
+            className="fa fa-columns"
+          />
+           
+          column3
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        N/A
+      </td>
+    </tr>
+    <tr
+      key="emptyBucketNoDescription"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="bucket-row"
+          onClick={[Function]}
+        >
+           
+          <i
+            className="fa fa-folder"
+          />
+           
+          emptyBucketNoDescription
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        N/A
+      </td>
+    </tr>
+    <tr
+      key="emptyBucket"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="bucket-row"
+          onClick={[Function]}
+        >
+           
+          <i
+            className="fa fa-folder"
+          />
+           
+          emptyBucket
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        <Markdown
+          collapsible={true}
+          size="normal"
+          source="this is emptyBucket description"
+        />
+      </td>
+    </tr>
+  </tbody>
+</Table>
+`;
+
+exports[`<DocumentationTable /> should render whole tree if has toggled bucket and table 1`] = `
+<Table
+  bordered={false}
+  bsClass="table"
+  condensed={false}
+  hover={false}
+  responsive={true}
+  striped={true}
+>
+  <tbody>
+    <tr
+      key="bucket1"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="bucket-row"
+          onClick={[Function]}
+        >
+           
+          <i
+            className="fa fa-folder"
+          />
+           
+          bucket1
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        <Markdown
+          collapsible={true}
+          size="normal"
+          source="this is bucket1 description"
+        />
+      </td>
+    </tr>
+    <tr
+      key="bucket1.table1"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="table-row"
+          onClick={[Function]}
+        >
+           
+          <i
+            className="fa fa-table"
+          />
+           
+          table1
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        <Markdown
+          collapsible={true}
+          size="normal"
+          source="this is table1 description"
+        />
+      </td>
+    </tr>
+    <tr
+      key="bucket1.table1column1"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="column-row"
+          onClick={[Function]}
+        >
+           
+          <i
+            className="fa fa-columns"
+          />
+           
+          column1
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        <Markdown
+          collapsible={true}
+          size="normal"
+          source="this is column1 description"
+        />
+      </td>
+    </tr>
+    <tr
+      key="bucket1.table1column2"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="column-row"
+          onClick={[Function]}
+        >
+           
+          <i
+            className="fa fa-columns"
+          />
+           
+          column2
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        N/A
+      </td>
+    </tr>
+    <tr
+      key="bucket1.table1column3"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="column-row"
+          onClick={[Function]}
+        >
+           
+          <i
+            className="fa fa-columns"
+          />
+           
+          column3
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        <Markdown
+          collapsible={true}
+          size="normal"
+          source="column3 description blabla ###heading blabla"
+        />
+      </td>
+    </tr>
+    <tr
+      key="bucket1.table2"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="table-row"
+          onClick={[Function]}
+        >
+           
+          <i
+            className="fa fa-table"
+          />
+           
+          table2
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        N/A
+      </td>
+    </tr>
+    <tr
+      key="bucket1.table2column1"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="column-row"
+          onClick={[Function]}
+        >
+           
+          <i
+            className="fa fa-columns"
+          />
+           
+          column1
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        N/A
+      </td>
+    </tr>
+    <tr
+      key="bucket1.table2column2"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="column-row"
+          onClick={[Function]}
+        >
+           
+          <i
+            className="fa fa-columns"
+          />
+           
+          column2
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        N/A
+      </td>
+    </tr>
+    <tr
+      key="bucket1.table2column3"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="column-row"
+          onClick={[Function]}
+        >
+           
+          <i
+            className="fa fa-columns"
+          />
+           
+          column3
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        N/A
+      </td>
+    </tr>
+    <tr
+      key="emptyBucketNoDescription"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="bucket-row"
+          onClick={[Function]}
+        >
+           
+          <i
+            className="fa fa-folder"
+          />
+           
+          emptyBucketNoDescription
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        N/A
+      </td>
+    </tr>
+    <tr
+      key="emptyBucket"
+    >
+      <td
+        className="text-nowrap"
+      >
+        <div
+          className="bucket-row"
+          onClick={[Function]}
+        >
+           
+          <i
+            className="fa fa-folder"
+          />
+           
+          emptyBucket
+        </div>
+      </td>
+      <td
+        className="kbc-break-all kbc-break-word"
+      >
+        <Markdown
+          collapsible={true}
+          size="normal"
+          source="this is emptyBucket description"
+        />
+      </td>
+    </tr>
+  </tbody>
+</Table>
+`;
