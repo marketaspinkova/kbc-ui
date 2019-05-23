@@ -60,7 +60,7 @@ module.exports = function(options) {
         filename: isDevelopment ? '[name].js' : '[name].min.js',
         publicPath: isDevelopment ? '/scripts/' : '',
         libraryExport: 'default',
-        library: 'kbcApp'
+        library: 'kbcAppNotDefined'
       },
       isDevelopment ? { globalObject: 'this' } : {}
     ),
