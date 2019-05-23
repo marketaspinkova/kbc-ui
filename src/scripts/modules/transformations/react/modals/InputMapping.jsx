@@ -117,11 +117,14 @@ export default createReactClass({
   },
 
   editingNonExistentTable() {
-    return (
-      this.props.mode === MODE_EDIT &&
-      this.props.tables.get(this.props.mapping.get('source'), Map()).count() === 0 &&
-      this.props.type !== 'openrefine'
-    );
+    const source = this.props.mapping.get('source');
+    const tableNotFound = this.props.tables.get(source, Map()).count() === 0;
+
+    if (this.props.type === 'openrefine') {
+      return source && tableNotFound;
+    }
+
+    return this.props.mode === MODE_EDIT && tableNotFound;
   },
 
   handleOpenButtonLink(e) {
