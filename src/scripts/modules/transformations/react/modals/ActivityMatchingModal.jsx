@@ -144,8 +144,7 @@ export default createReactClass({
               <Col sm={6}>
                 <p style={{ margin: '0 0 5px', display: 'flex', alignItems: 'center' }}>
                   <strong style={{ fontSize: '1.2em', marginRight: '10px' }}>
-                    {config.get('configurationName')} - {config.get('rowName')} #
-                    {config.get('rowVersion')}
+                    {config.get('configurationName')} - {config.get('rowName')} #{config.get('rowVersion')}
                   </strong>{' '}
                   <JobStatusLabel status={config.get('lastRunStatus')} />
                 </p>
