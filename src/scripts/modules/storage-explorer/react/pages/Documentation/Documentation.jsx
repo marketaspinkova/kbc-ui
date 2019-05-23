@@ -14,7 +14,7 @@ import DocumentationLocalStore from '../../../DocumentationLocalStore';
 import Markdown from '../../../../../react/common/Markdown';
 import { SearchBar, Loader } from '@keboola/indigo-ui';
 
-import {prepareStructure, rowTypes, buildDocumentationToMarkdown} from '../../../DocumentationUtils';
+import {createDocumentationTree, rowTypes, buildDocumentationToMarkdown} from '../../../DocumentationUtils';
 
 import { toggleDocumentationRow, updateDocumentationSearchQuery, uploadFile, loadLastDocumentationSnapshot } from '../../../Actions';
 
@@ -29,10 +29,10 @@ export default createReactClass({
     const allBuckets = BucketsStore.getAll().sortBy((bucket) => bucket.get('id').toLowerCase());
     const allTables = TablesStore.getAll();
     const searchQuery = DocumentationLocalStore.getSearchQuery();
-    const enhancedBuckets = prepareStructure(allBuckets, allTables, searchQuery);
+    const documentationTree = createDocumentationTree(allBuckets, allTables, searchQuery);
     return {
       snapshotingProgress: FilesStore.getUploadingProgress(UPLOAD_SNAPSHOT) || 0,
-      enhancedBuckets,
+      documentationTree,
       searchQuery,
       lastSnapshot: DocumentationLocalStore.getLastSnapshot(),
       openedRows: DocumentationLocalStore.getOpenedRows()
@@ -85,7 +85,7 @@ export default createReactClass({
               }
             />
             <Table striped responsive>
-              <tbody>{this.renderEnhancedBucketsRows()}</tbody>
+              <tbody>{this.renderDocumentationTree()}</tbody>
             </Table>
           </div>
         </div>
@@ -94,7 +94,7 @@ export default createReactClass({
   },
 
   snapshotDocumentation() {
-    const documentationArray = buildDocumentationToMarkdown(this.state.enhancedBuckets);
+    const documentationArray = buildDocumentationToMarkdown(this.state.documentationTree);
     const currentProject = ApplicationStore.getCurrentProject();
     const projectId = currentProject.get('id');
     const projectName = currentProject.get('name');
@@ -117,8 +117,8 @@ export default createReactClass({
     });
   },
 
-  renderEnhancedBucketsRows() {
-    return this.state.enhancedBuckets.reduce((bucketsMemo, bucket) => {
+  renderDocumentationTree() {
+    return this.state.documentationTree.reduce((bucketsMemo, bucket) => {
       const bucketId = bucket.get('id');
       bucketsMemo.push(
         this.renderOneTableRow(bucketId, bucketId, bucket.get('bucketDescription'), rowTypes.BUCKET_ROW)
