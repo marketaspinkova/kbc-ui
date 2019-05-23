@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {Table} from 'react-bootstrap';
 
 import Markdown from '../../../../../react/common/Markdown';
-import {rowTypes} from '../../../DocumentationUtils';
+import {rowTypes, reduceDocumentationTree} from '../../../DocumentationUtils';
 
 export default createReactClass({
 
@@ -18,37 +18,50 @@ export default createReactClass({
   render() {
     return (
       <Table striped responsive>
-       <tbody>{this.renderDocumentationTree()}</tbody>
+        <tbody>{this.renderDocumentationTree()}</tbody>
       </Table>
     );
   },
 
   renderDocumentationTree() {
-    return this.props.documentationTree.reduce((bucketsMemo, bucket) => {
-      const bucketId = bucket.get('id');
-      bucketsMemo.push(
-        this.renderOneTableRow(bucketId, bucketId, bucket.get('bucketDescription'), rowTypes.BUCKET_ROW)
-      );
-      if (!this.props.openedRows.get(rowTypes.BUCKET_ROW + bucketId) && !this.props.isSearchQuery) {
-        return bucketsMemo;
+    return reduceDocumentationTree(this.props.documentationTree,this.createRowRender, []);
+  },
+
+  createRowRender(allRows, nodeType, node, parentNode) {
+    const {openedRows, isSearchQuery} = this.props;
+    switch(nodeType) {
+      case rowTypes.BUCKET_ROW: {
+        const bucketId = node.get('id');
+        const bucketDescription = node.get('bucketDescription');
+        allRows.push(this.renderOneTableRow(bucketId, bucketId, bucketDescription, nodeType));
+        break;
       }
-      const bucketTablesRows = bucket.get('bucketTables').reduce((tablesMemo, table) => {
-        const tableId = table.get('id');
-        tablesMemo.push(
-          this.renderOneTableRow(tableId, table.get('name'), table.get('tableDescription'), rowTypes.TABLE_ROW)
-        );
-        if (!this.props.openedRows.get(rowTypes.TABLE_ROW + tableId) && !this.props.isSearchQuery) {
-          return tablesMemo;
+      case rowTypes.TABLE_ROW: {
+        const tableId = node.get('id');
+        const tableName = node.get('name');
+        const tableDescription = node.get('tableDescription')
+        const bucketId = parentNode.get('id');
+        if (openedRows.get(rowTypes.BUCKET_ROW + bucketId) || isSearchQuery) {
+          allRows.push(
+            this.renderOneTableRow(tableId, tableName, tableDescription, nodeType)
+          );
         }
-        const columnsRows = table.get('columnsDescriptions').reduce((columnsMemo, description, column) => {
-          // const description = table.getIn(['columnsDescriptions', column]);
-          columnsMemo.push(this.renderOneTableRow(tableId + column, column, description, rowTypes.COLUMN_ROW));
-          return columnsMemo;
-        }, []);
-        return tablesMemo.concat(columnsRows);
-      }, []);
-      return bucketsMemo.concat(bucketTablesRows);
-    }, []);
+        break;
+      }
+      case rowTypes.COLUMN_ROW: {
+        const tableId = parentNode.get('id');
+        const column = node.get('column');
+        const columnDescription = node.get('description');
+        if (openedRows.get(rowTypes.TABLE_ROW + tableId) || this.props.isSearchQuery) {
+          allRows.push(
+            this.renderOneTableRow(tableId + column, column, columnDescription, nodeType)
+          );
+        }
+        break;
+      }
+      default:
+    }
+    return allRows;
   },
 
   renderOneTableRow(id, name, description, rowType) {

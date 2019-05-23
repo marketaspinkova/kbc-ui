@@ -7,38 +7,37 @@ const BUCKET_ROW = 'BUCKET_ROW';
 const TABLE_ROW = 'TABLE_ROW';
 const COLUMN_ROW = 'COLUMN_ROW';
 
-function createMarkdownPart(name, partDescription, partType) {
-  const description = partDescription || 'N/A';
-  switch (partType) {
+function createMarkdownPart(memo, nodeType, node) {
+  switch (nodeType) {
     case BUCKET_ROW:
-      return `## ${name} \n ${description}\n`;
+      memo.push(`## Bucket ${node.get('id')} \n ${node.get('bucketDescription') || 'N/A'}\n`);
+      break;
     case TABLE_ROW:
-      return `### ${name} \n ${description}\n`;
+      memo.push(`### Table ${node.get('id')} \n ${node.get('tableDescription') || 'N/A'}\n`);
+      break;
     case COLUMN_ROW:
-      return `#### ${name} \n ${description}\n`;
+      memo.push(`#### Column ${node.get('column')} \n ${node.get('description') || 'N/A'}\n`);
+      break;
   }
+  return memo;
+}
 
+// DFS walk the tree and call reduceNodeFn for each node
+function reduceDocumentationTree(documentationTree, reduceNodeFn, initValue) {
+  return documentationTree.reduce((bucketsMemo, bucket) => {
+    const reducedBucketMemo = reduceNodeFn(bucketsMemo, BUCKET_ROW, bucket, null);
+    return bucket.get('bucketTables').reduce((tablesMemo, table) => {
+      const reducedTablesMemo = reduceNodeFn(tablesMemo, TABLE_ROW, table, bucket);
+      return table.get('columnsDescriptions').reduce((columnsMemo, description, column) => {
+        const columnObject = Map({column, description});
+        return reduceNodeFn(columnsMemo, COLUMN_ROW, columnObject, table);
+      }, reducedTablesMemo);
+    }, reducedBucketMemo);
+  }, initValue);
 }
 
 function buildDocumentationToMarkdown(documentationTree) {
-  return documentationTree.reduce((bucketsMemo, bucket) => {
-    const bucketId = bucket.get('id');
-    bucketsMemo.push(
-      createMarkdownPart(`Bucket ${bucketId}`, bucket.get('bucketDescription'), BUCKET_ROW)
-    );
-    const bucketTablesRows = bucket.get('bucketTables').reduce((tablesMemo, table) => {
-      const tableId = table.get('id');
-      tablesMemo.push(
-        createMarkdownPart(`Table ${tableId}`, table.get('tableDescription'), TABLE_ROW)
-      );
-      const columnsRows = table.get('columnsDescriptions').reduce((columnsMemo, description, column) => {
-        columnsMemo.push(createMarkdownPart(`Column ${column}`, description, COLUMN_ROW));
-        return columnsMemo;
-      }, []);
-      return tablesMemo.concat(columnsRows);
-    }, []);
-    return bucketsMemo.concat(bucketTablesRows);
-  }, []);
+  return reduceDocumentationTree(documentationTree, createMarkdownPart, []);
 }
 
 function matchDescriptionOrName(description, name, searchQuery) {
@@ -105,5 +104,6 @@ const rowTypes = {BUCKET_ROW, TABLE_ROW, COLUMN_ROW};
 export {
   createDocumentationTree,
   buildDocumentationToMarkdown,
+  reduceDocumentationTree,
   rowTypes
 };
