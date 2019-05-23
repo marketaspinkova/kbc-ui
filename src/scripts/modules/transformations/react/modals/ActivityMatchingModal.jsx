@@ -135,7 +135,8 @@ export default createReactClass({
               <Col sm={6}>
                 <p style={{ margin: '0 0 5px', display: 'flex', alignItems: 'center' }}>
                   <strong style={{ fontSize: '1.2em', marginRight: '10px' }}>
-                    {config.get('configurationName')} - {config.get('rowName')} #{config.get('rowVersion')}
+                    {config.get('configurationName')} - {config.get('rowName')} #
+                    {config.get('rowVersion')}
                   </strong>{' '}
                   <JobStatusLabel status={config.get('lastRunStatus')} />
                 </p>
@@ -185,13 +186,17 @@ export default createReactClass({
     const lastModifiedAt = date.format(row.get('configurationCreatedAt'));
     const lastModifiedBy = row.get('configurationCreated');
 
+    const transformationName = (
+      <Tooltip tooltip={`Last edit ${lastModifiedAt} by ${lastModifiedBy}`} placement="top">
+        <span>{row.get('rowName')}</span>
+      </Tooltip>
+    );
+
     if (this.props.transformation.get('id') === row.get('rowId')) {
       return (
-        <Tooltip tooltip={`Last edit ${lastModifiedAt} by ${lastModifiedBy}`} placement="top">
-          <span>
-            {row.get('rowName')} <Label>Current</Label>
-          </span>
-        </Tooltip>
+        <span>
+          {transformationName} <Label>Current</Label>
+        </span>
       );
     }
 
@@ -200,9 +205,7 @@ export default createReactClass({
         to="transformationDetail"
         params={{ row: row.get('rowId'), config: row.get('configurationId') }}
       >
-        <Tooltip tooltip={`Last edit ${lastModifiedAt} by ${lastModifiedBy}`} placement="top">
-          <span>{row.get('rowName')}</span>
-        </Tooltip>
+        {transformationName}
       </Link>
     );
   },
