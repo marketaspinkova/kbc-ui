@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import { Button, HelpBlock, FormControl } from 'react-bootstrap';
 import { Loader } from '@keboola/indigo-ui';
-import ApplicationStore from '../../../../stores/ApplicationStore';
+import { supportSplitLoading } from '../../utils';
 
 export default createReactClass({
   propTypes: {
@@ -25,7 +25,7 @@ export default createReactClass({
     return (
       <div>
         {this.props.columnSelector}
-        {this.showColumnsReloader() && (
+        {supportSplitLoading(this.props.componentId) && (
           <HelpBlock>
             Not seeing all columns?{' '}
             <Button bsStyle="link" className="btn-link-inline" onClick={this.props.refreshMethod}>
@@ -35,13 +35,6 @@ export default createReactClass({
           </HelpBlock>
         )}
       </div>
-    );
-  },
-
-  showColumnsReloader() {
-    return (
-      this.props.componentId === 'keboola.ex-db-pgsql' &&
-      ApplicationStore.hasCurrentProjectFeature('pgsql-split-loading')
     );
   }
 });

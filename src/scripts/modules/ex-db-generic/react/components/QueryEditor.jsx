@@ -6,7 +6,6 @@ import _ from 'underscore';
 import { Controlled as CodeMirror } from 'react-codemirror2'
 import { Button, Alert, FormGroup, ControlLabel, HelpBlock, Checkbox, Col } from 'react-bootstrap';
 
-import ApplicationStore from '../../../../stores/ApplicationStore';
 import Select from '../../../../react/common/Select';
 import TableSelectorForm from '../../../../react/common/TableSelectorForm';
 import Tooltip from '../../../../react/common/Tooltip';
@@ -19,6 +18,7 @@ import {getQueryEditorPlaceholder, getQueryEditorHelpText} from '../../templates
 
 import editorMode from '../../templates/editorMode';
 import { getCustomFieldsForComponent } from '../../templates/customFields';
+import { supportSplitLoading } from '../../utils';
 
 export default createReactClass({
   propTypes: {
@@ -234,7 +234,7 @@ export default createReactClass({
     }
     this.props.onChange(newQuery);
 
-    if (this.props.componentId === 'keboola.ex-db-pgsql' && ApplicationStore.hasCurrentProjectFeature('pgsql-split-loading')) {
+    if (supportSplitLoading(this.props.componentId)) {
       this.props.refreshMethod(this.props.query.get('id'));
     }
   },
