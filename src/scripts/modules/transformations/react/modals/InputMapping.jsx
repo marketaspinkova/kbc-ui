@@ -120,11 +120,7 @@ export default createReactClass({
     const source = this.props.mapping.get('source');
     const tableNotFound = this.props.tables.get(source, Map()).count() === 0;
 
-    if (this.props.type === 'openrefine') {
-      return source && tableNotFound;
-    }
-
-    return this.props.mode === MODE_EDIT && tableNotFound;
+    return this.props.mode === MODE_EDIT && source && tableNotFound;
   },
 
   handleOpenButtonLink(e) {
