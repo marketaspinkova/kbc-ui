@@ -541,21 +541,23 @@ export default createReactClass({
             columnSelector={columnSelector}
             refreshMethod={() => this.props.refreshMethod(this.props.query.get('id'))}
           />
-          <HelpBlock>
-            If you only need to exclude a couple of columns, you can{' '}
-            <Button
-              bsStyle="link"
-              className="btn-link-inline"
-              disabled={isDisabled}
-              onClick={() => {
-                const allColumns = columnsOptions.map(option => option.value);
-                this.handleChangeColumns(allColumns);
-              }}
-            >
-              add all columns
-            </Button>{' '}
-            and then remove the ones you don&apos;t want.
-          </HelpBlock>
+          {columnsOptions.length > 0 && (
+            <HelpBlock>
+              If you only need to exclude a couple of columns, you can{' '}
+              <Button
+                bsStyle="link"
+                className="btn-link-inline"
+                disabled={isDisabled}
+                onClick={() => {
+                  const allColumns = columnsOptions.map(option => option.value);
+                  this.handleChangeColumns(allColumns);
+                }}
+              >
+                add all columns
+              </Button>{' '}
+              and then remove the ones you don&apos;t want.
+            </HelpBlock>
+          )}
         </Col>
       </FormGroup>
     );
