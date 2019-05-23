@@ -10,7 +10,7 @@ export default createReactClass({
 
   propTypes: {
     documentationTree: PropTypes.object.isRequired,
-    searchQuery: PropTypes.string,
+    isSearchQuery: PropTypes.bool.isRequired,
     openedRows: PropTypes.object.isRequired,
     toggleDocumentationRow: PropTypes.func.isRequired
   },
@@ -29,7 +29,7 @@ export default createReactClass({
       bucketsMemo.push(
         this.renderOneTableRow(bucketId, bucketId, bucket.get('bucketDescription'), rowTypes.BUCKET_ROW)
       );
-      if (!this.props.openedRows.get(rowTypes.BUCKET_ROW + bucketId) && !this.props.searchQuery) {
+      if (!this.props.openedRows.get(rowTypes.BUCKET_ROW + bucketId) && !this.props.isSearchQuery) {
         return bucketsMemo;
       }
       const bucketTablesRows = bucket.get('bucketTables').reduce((tablesMemo, table) => {
@@ -37,7 +37,7 @@ export default createReactClass({
         tablesMemo.push(
           this.renderOneTableRow(tableId, table.get('name'), table.get('tableDescription'), rowTypes.TABLE_ROW)
         );
-        if (!this.props.openedRows.get(rowTypes.TABLE_ROW + tableId) && !this.props.searchQuery) {
+        if (!this.props.openedRows.get(rowTypes.TABLE_ROW + tableId) && !this.props.isSearchQuery) {
           return tablesMemo;
         }
         const columnsRows = table.get('columnsDescriptions').reduce((columnsMemo, description, column) => {
@@ -52,7 +52,7 @@ export default createReactClass({
   },
 
   renderOneTableRow(id, name, description, rowType) {
-    const pointerClass = !this.props.searchQuery ? 'kbc-cursor-pointer ' : '';
+    const pointerClass = !this.props.isSearchQuery ? 'kbc-cursor-pointer ' : '';
     let divClassName = pointerClass + 'bucket-row';
 
     let rowTypeClassName = 'fa fa-folder';
@@ -66,7 +66,7 @@ export default createReactClass({
     }
     const isOpened = this.props.openedRows.get(rowType + id);
     const caretClass = isOpened ? 'fa fa-caret-down' : 'fa fa-caret-right';
-    const caret = !this.props.searchQuery ? <i className={caretClass} /> : null;
+    const caret = !this.props.isSearchQuery ? <i className={caretClass} /> : null;
 
     return (
       <tr key={id}>

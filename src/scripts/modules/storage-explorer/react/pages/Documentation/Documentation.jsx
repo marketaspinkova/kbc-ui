@@ -88,7 +88,7 @@ export default createReactClass({
             <DocumentationTable
               documentationTree={this.state.documentationTree}
               openedRows={this.state.openedRows}
-              searchQuery={this.state.searchQuery}
+              isSearchQuery={!!this.state.searchQuery}
               toggleDocumentationRow={toggleDocumentationRow}
             />
           </div>
