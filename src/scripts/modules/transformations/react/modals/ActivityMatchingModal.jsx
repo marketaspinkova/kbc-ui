@@ -67,6 +67,11 @@ export default createReactClass({
       .get('input')
       .map((mapping, idx) => {
         const sourceTable = this.props.tables.get(mapping.get('source'), Map());
+        const usage = this.props.usages.get(sourceTable.get('id'));
+
+        if (!usage) {
+          return null;
+        }
 
         return (
           <Panel
@@ -92,7 +97,7 @@ export default createReactClass({
                 </tr>
               </thead>
               <tbody>
-                {this.props.usages.get(sourceTable.get('id')).map((row) => {
+                {usage.map((row) => {
                   return (
                     <tr key={row.get('rowId')}>
                       <td>
