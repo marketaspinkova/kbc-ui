@@ -13,7 +13,7 @@ import FilesStore from '../../../../components/stores/StorageFilesStore';
 import ApplicationStore from '../../../../../stores/ApplicationStore';
 import DocumentationLocalStore from '../../../DocumentationLocalStore';
 
-import { createDocumentationTree, buildDocumentationToMarkdown } from '../../../DocumentationUtils';
+import { createDocumentationTree, buildDocumentationToMarkdown } from './DocumentationUtils';
 
 import ApplicationActionCreators from '../../../../../actions/ApplicationActionCreators';
 import {

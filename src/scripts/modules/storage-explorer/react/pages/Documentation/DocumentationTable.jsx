@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {Table} from 'react-bootstrap';
 
 import Markdown from '../../../../../react/common/Markdown';
-import {rowTypes, reduceDocumentationTree} from '../../../DocumentationUtils';
+import {rowTypes, reduceDocumentationTree} from './DocumentationUtils';
 
 export default createReactClass({
 

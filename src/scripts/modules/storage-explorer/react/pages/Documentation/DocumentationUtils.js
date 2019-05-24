@@ -1,4 +1,4 @@
-import matchByWords from '../../utils/matchByWords';
+import matchByWords from '../../../../../utils/matchByWords';
 import { List, Map } from 'immutable';
 
 const BUCKET_ROW = 'BUCKET_ROW';
