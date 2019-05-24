@@ -393,9 +393,15 @@ describe('DecumentationUtils', function () {
   describe('buildDocumentationToMarkdown', function () {
     const createdDocumentationTree = createDocumentationTree(buckets, tables, '');
     it('should create empty markdown', function() {
-      const createdMarkdownString = buildDocumentationToMarkdown(createdDocumentationTree).join('');
+      const createdMarkdownArray = buildDocumentationToMarkdown(
+        createdDocumentationTree,
+        '123',
+        'myproject'
+      ).filter(markdownString => !markdownString.startsWith('created'));
+      const createdMarkdownString = createdMarkdownArray.join('');
       const expectedMarkdownString =
-      `## Bucket bucket1
+      `# Documentation of myproject(123) project
+      ## Bucket bucket1
       bucket1 description
       ### Table bucket1.table11
       table11 description

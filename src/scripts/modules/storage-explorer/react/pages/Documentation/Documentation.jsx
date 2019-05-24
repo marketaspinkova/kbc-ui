@@ -19,8 +19,6 @@ import {createDocumentationTree, buildDocumentationToMarkdown} from '../../../Do
 
 import {toggleDocumentationRow, updateDocumentationSearchQuery, uploadFile, loadLastDocumentationSnapshot } from '../../../Actions';
 
-
-
 const UPLOAD_SNAPSHOT = 'upload-documentation-snapshot';
 
 export default createReactClass({
@@ -98,23 +96,18 @@ export default createReactClass({
   },
 
   snapshotDocumentation() {
-    const documentationArray = buildDocumentationToMarkdown(this.state.documentationTree);
     const currentProject = ApplicationStore.getCurrentProject();
     const projectId = currentProject.get('id');
     const projectName = currentProject.get('name');
-    const createdDate = new Date().toISOString();
-    const basicInfoArray = [
-      `# Documentation of ${projectName}(${projectId}) project \n`,
-      `created ${createdDate}\n`
-    ];
-
-    let file = new Blob(basicInfoArray.concat(documentationArray), { type: 'text/plain' });
+    const stringArray = buildDocumentationToMarkdown(this.state.documentationTree, projectId, projectName);
     const params = {
       isPublic: true,
       isPermanent: true,
       tags: ['storage-documentation']
     };
+    let file = new Blob(stringArray, { type: 'text/plain' });
     file.name = 'documentation';
+
     return uploadFile(UPLOAD_SNAPSHOT, file, params).then(() => {
       ApplicationActionCreators.sendNotification({ message: 'Storage documentation snapshot created' });
       return loadLastDocumentationSnapshot();

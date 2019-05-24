@@ -40,8 +40,13 @@ function reduceDocumentationTree(documentationTree, reduceNodeFn, initValue) {
   }, initValue);
 }
 
-function buildDocumentationToMarkdown(documentationTree) {
-  return reduceDocumentationTree(documentationTree, createMarkdownPart, []);
+function buildDocumentationToMarkdown(documentationTree, projectId, projectName) {
+  const createdDate = new Date().toISOString();
+  const basicInfoArray = [
+    `# Documentation of ${projectName}(${projectId}) project \n`,
+    `created ${createdDate}\n`
+  ];
+  return basicInfoArray.concat(reduceDocumentationTree(documentationTree, createMarkdownPart, []));
 }
 
 function matchDescriptionOrName(description, name, searchQuery) {
