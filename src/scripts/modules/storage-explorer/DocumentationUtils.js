@@ -7,22 +7,28 @@ const BUCKET_ROW = 'BUCKET_ROW';
 const TABLE_ROW = 'TABLE_ROW';
 const COLUMN_ROW = 'COLUMN_ROW';
 
-function createMarkdownPart(memo, nodeType, node) {
+function createMarkdownPart(resultMarkdownArray, nodeType, node) {
   switch (nodeType) {
     case BUCKET_ROW:
-      memo.push(`## Bucket ${node.get('id')} \n ${node.get('bucketDescription') || 'N/A'}\n`);
+      resultMarkdownArray.push(
+        `## Bucket ${node.get('id')} \n ${node.get('bucketDescription') || 'N/A'}\n`
+      );
       break;
     case TABLE_ROW:
-      memo.push(`### Table ${node.get('id')} \n ${node.get('tableDescription') || 'N/A'}\n`);
+      resultMarkdownArray.push(
+        `### Table ${node.get('id')} \n ${node.get('tableDescription') || 'N/A'}\n`
+      );
       break;
     case COLUMN_ROW:
-      memo.push(`#### Column ${node.get('column')} \n ${node.get('description') || 'N/A'}\n`);
+      resultMarkdownArray.push(
+        `#### Column ${node.get('column')} \n ${node.get('description') || 'N/A'}\n`
+      );
       break;
   }
-  return memo;
+  return resultMarkdownArray;
 }
 
-// DFS walk the tree and call reduceNodeFn for each node
+// DFS walk the tree(bucketA->tableA->column, bucketA->tableB->column) and call reduceNodeFn for each node
 function reduceDocumentationTree(documentationTree, reduceNodeFn, initValue) {
   return documentationTree.reduce((bucketsMemo, bucket) => {
     const reducedBucketMemo = reduceNodeFn(bucketsMemo, BUCKET_ROW, bucket, null);

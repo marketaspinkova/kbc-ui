@@ -27,13 +27,15 @@ export default createReactClass({
     return reduceDocumentationTree(this.props.documentationTree,this.createRowRender, []);
   },
 
-  createRowRender(allRows, nodeType, node, parentNode) {
+  createRowRender(resultTableRowsArray, nodeType, node, parentNode) {
     const {openedRows, isSearchQuery} = this.props;
     switch(nodeType) {
       case rowTypes.BUCKET_ROW: {
         const bucketId = node.get('id');
         const bucketDescription = node.get('bucketDescription');
-        allRows.push(this.renderOneTableRow(bucketId, bucketId, bucketDescription, nodeType));
+        resultTableRowsArray.push(
+          this.renderOneTableRow(bucketId, bucketId, bucketDescription, nodeType)
+        );
         break;
       }
       case rowTypes.TABLE_ROW: {
@@ -42,7 +44,7 @@ export default createReactClass({
         const tableDescription = node.get('tableDescription')
         const bucketId = parentNode.get('id');
         if (openedRows.get(rowTypes.BUCKET_ROW + bucketId) || isSearchQuery) {
-          allRows.push(
+          resultTableRowsArray.push(
             this.renderOneTableRow(tableId, tableName, tableDescription, nodeType)
           );
         }
@@ -53,7 +55,7 @@ export default createReactClass({
         const column = node.get('column');
         const columnDescription = node.get('description');
         if (openedRows.get(rowTypes.TABLE_ROW + tableId) || this.props.isSearchQuery) {
-          allRows.push(
+          resultTableRowsArray.push(
             this.renderOneTableRow(tableId + column, column, columnDescription, nodeType)
           );
         }
@@ -61,7 +63,7 @@ export default createReactClass({
       }
       default:
     }
-    return allRows;
+    return resultTableRowsArray;
   },
 
   renderOneTableRow(id, name, description, rowType) {
