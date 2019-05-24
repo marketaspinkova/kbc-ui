@@ -118,7 +118,7 @@ export default createReactClass({
       tags: [STORAGE_DOCUMENTATION_TAG]
     };
     let file = new Blob(stringArray, { type: 'text/plain' });
-    file.name = 'documentation';
+    file.name = 'documentation.md';
 
     return uploadFile(UPLOAD_SNAPSHOT, file, params).then(() => {
       ApplicationActionCreators.sendNotification({
