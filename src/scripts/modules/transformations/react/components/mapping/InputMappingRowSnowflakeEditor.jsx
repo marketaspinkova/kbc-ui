@@ -49,8 +49,9 @@ export default createReactClass({
       mapping.set('source', value);
       mapping.set('destination', destination);
       mapping.set('datatypes', this.getInitialDatatypes(value));
-      mapping.set('whereColumn', '');
       mapping.delete('loadType');
+      mapping.delete('changedSince');
+      mapping.set('whereColumn', '');
       mapping.set('whereValues', List());
       mapping.set('whereOperator', 'eq');
       mapping.set('columns', List());
@@ -88,7 +89,7 @@ export default createReactClass({
       } else {
         mapping.delete('loadType');
       }
-      mapping.set('changedSince', '');
+      mapping.delete('changedSince');
       mapping.set('whereColumn', '');
       mapping.set('whereValues', List());
       mapping.set('whereOperator', 'eq');
