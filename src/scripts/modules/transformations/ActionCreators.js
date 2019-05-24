@@ -403,7 +403,7 @@ export default {
     const transformationEditingFields = TransformationsStore.getTransformationEditingFields(bucketId, transformationId);
     const pendingAction = 'save-queries';
     const changeDescription = transformationEditingFields.get('description', 'Change Scripts in ' + transformation.get('name'));
-    transformation = transformation.set('queries', List([transformationEditingFields.get('queriesString')]));
+    transformation = transformation.set('queries', List(transformationEditingFields.get('queriesString').split(/\n/)));
     dispatcher.handleViewAction({
       type: constants.ActionTypes.TRANSFORMATION_EDIT_SAVE_START,
       transformationId: transformationId,
