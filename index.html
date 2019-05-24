@@ -8,17 +8,21 @@
 <body>
 <section id="react"></section>
 <script src="/scripts/bundle.js"></script>
+<!-- Start of keboola1558697127 Zendesk Widget script -->
+<script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=9917e8d7-6ada-4ec6-803e-0b70dfeaa0d9"></script>
+<!-- End of keboola1558697127 Zendesk Widget script -->
+
 <script>
   // New zendesk widget global mock
-  var zE = function () {
-  };
-  zE.activate = function (options) {
-    console.log('activate', options);
-    alert('This will open Zendesk Widget on production');
-  };
-  zE.hide = function () {
-    console.log('hide')
-  };
+  zE('webWidget', 'hide');
+  zE('webWidget', 'setLocale', 'en');
+  zE('webWidget', 'prefill', { 
+    name: { value: 'John Doe', readOnly: true },
+    email: { value: 'John@doe.com', readOnly: true }
+  });
+  zE('webWidget:on', 'close', function() {
+    zE('webWidget', 'hide'); 
+  });
 
   var ga = function() {
     console.log('ga', arguments);
