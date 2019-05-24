@@ -88,6 +88,7 @@ export default createReactClass({
       } else {
         mapping.delete('loadType');
       }
+      mapping.set('changedSince', '');
       mapping.set('whereColumn', '');
       mapping.set('whereValues', List());
       mapping.set('whereOperator', 'eq');
