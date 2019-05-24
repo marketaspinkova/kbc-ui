@@ -124,7 +124,7 @@ export default createReactClass({
                   multi
                   placeholder="Add a column"
                   options={this.props.primaryKey.map((value) => ({ label: value, value })).toJS()}
-                  value={this.props.primaryKey.toJS()}
+                  value={List.isList(this.props.primaryKey) ? this.props.primaryKey.toJS() : []}
                   onChange={this.onChangePrimaryKey}
                 />
                 <HelpBlock>Primary key of the table. If a primary key is set, updates can be done on the table by selecting <strong>incremental loads</strong>. The primary key can consist of multiple columns.</HelpBlock>
