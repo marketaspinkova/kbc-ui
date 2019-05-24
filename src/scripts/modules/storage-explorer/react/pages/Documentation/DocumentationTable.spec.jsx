@@ -1,6 +1,6 @@
 import React from 'react';
 import DocumentationTable from './DocumentationTable';
-import {fromJS, Map} from 'immutable';
+import { fromJS, Map } from 'immutable';
 
 const documentationTree = fromJS([
   {
@@ -83,7 +83,7 @@ describe('<DocumentationTable />', function() {
         documentationTree={documentationTree}
         isSearchQuery={false}
         openedRows={fromJS({
-          'BUCKET_ROWbucket1': true
+          BUCKET_ROWbucket1: true
         })}
         toggleDocumentationRow={() => null}
       />
@@ -96,7 +96,7 @@ describe('<DocumentationTable />', function() {
         documentationTree={documentationTree}
         isSearchQuery={false}
         openedRows={fromJS({
-          'BUCKET_ROWbucket1': true,
+          BUCKET_ROWbucket1: true,
           'TABLE_ROWbucket1.table1': true
         })}
         toggleDocumentationRow={() => null}
@@ -110,8 +110,8 @@ describe('<DocumentationTable />', function() {
         documentationTree={documentationTree}
         isSearchQuery={true}
         openedRows={fromJS({
-          'BUCKET_ROWbucket1': true,
-          'TABLE_ROWtable1': true
+          BUCKET_ROWbucket1: true,
+          TABLE_ROWtable1: true
         })}
         toggleDocumentationRow={() => null}
       />

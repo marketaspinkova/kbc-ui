@@ -1,13 +1,12 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
-import {Table} from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 
 import Markdown from '../../../../../react/common/Markdown';
-import {rowTypes, reduceDocumentationTree} from './DocumentationUtils';
+import { rowTypes, reduceDocumentationTree } from './DocumentationUtils';
 
 export default createReactClass({
-
   propTypes: {
     documentationTree: PropTypes.object.isRequired,
     isSearchQuery: PropTypes.bool.isRequired,
@@ -24,12 +23,12 @@ export default createReactClass({
   },
 
   renderDocumentationTree() {
-    return reduceDocumentationTree(this.props.documentationTree,this.createRowRender, []);
+    return reduceDocumentationTree(this.props.documentationTree, this.createRowRender, []);
   },
 
   createRowRender(resultTableRowsArray, nodeType, node, parentNode) {
-    const {openedRows, isSearchQuery} = this.props;
-    switch(nodeType) {
+    const { openedRows, isSearchQuery } = this.props;
+    switch (nodeType) {
       case rowTypes.BUCKET_ROW: {
         const bucketId = node.get('id');
         const bucketDescription = node.get('bucketDescription');
@@ -41,7 +40,7 @@ export default createReactClass({
       case rowTypes.TABLE_ROW: {
         const tableId = node.get('id');
         const tableName = node.get('name');
-        const tableDescription = node.get('tableDescription')
+        const tableDescription = node.get('tableDescription');
         const bucketId = parentNode.get('id');
         if (openedRows.get(rowTypes.BUCKET_ROW + bucketId) || isSearchQuery) {
           resultTableRowsArray.push(
@@ -86,12 +85,11 @@ export default createReactClass({
     return (
       <tr key={id}>
         <td className="text-nowrap">
-          <div className={divClassName} onClick={() => this.props.toggleDocumentationRow(rowType + id, !isOpened)}>
-            {rowType !== rowTypes.COLUMN_ROW && caret}
-            {' '}
-            <i className={rowTypeClassName} />
-            {' '}
-            {name}
+          <div
+            className={divClassName}
+            onClick={() => this.props.toggleDocumentationRow(rowType + id, !isOpened)}
+          >
+            {rowType !== rowTypes.COLUMN_ROW && caret} <i className={rowTypeClassName} /> {name}
           </div>
         </td>
         <td className="kbc-break-all kbc-break-word">
@@ -99,5 +97,5 @@ export default createReactClass({
         </td>
       </tr>
     );
-  },
+  }
 });

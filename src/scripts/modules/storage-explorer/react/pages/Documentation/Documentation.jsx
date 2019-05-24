@@ -90,7 +90,11 @@ export default createReactClass({
       >
         <MenuItem
           className="text-right"
-          href={this.makeHref('storage-explorer-files', {}, { q: `tags:${STORAGE_DOCUMENTATION_TAG}` })}
+          href={this.makeHref(
+            'storage-explorer-files',
+            {},
+            { q: `tags:${STORAGE_DOCUMENTATION_TAG}` }
+          )}
         >
           Show All Snapshots
         </MenuItem>
