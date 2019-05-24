@@ -6,8 +6,6 @@ import { FormControl } from 'react-bootstrap';
 import matchByWords from '../../../utils/matchByWords';
 import Tooltip from '../../../react/common/Tooltip';
 
-import './projects-list.less';
-
 export default createReactClass({
   propTypes: {
     organizations: PropTypes.object.isRequired,

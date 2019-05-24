@@ -4,8 +4,6 @@ import createReactClass from 'create-react-class';
 import _ from 'underscore';
 import { Dropdown, MenuItem } from 'react-bootstrap';
 
-import './current-user.less';
-
 export default createReactClass({
   propTypes: {
     user: PropTypes.object.isRequired,
