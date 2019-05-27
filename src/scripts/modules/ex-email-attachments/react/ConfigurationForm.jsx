@@ -89,61 +89,71 @@ export default createReactClass({
           header={this.accordionHeader('Import Settings', this.state.accordionActiveTab === 'settings')}
           eventKey="settings"
         >
-          <div className="form-horizontal">
-            {this.renderButtons()}
-            <br/>
-            <CsvDelimiterInput
-              placeholder="Field delimeter used in CSV files"
-              label="Delimiter"
-              value={this.props.delimiter}
-              onChange={this.onChangeDelimiter}
-              help={(
-                <span>Field delimiter used in the CSV file. The default value is <code>,</code>. Use <code>\t</code> for tabulator.</span>)}
-              disabled={false}
-            />
-            <FormGroup>
-              <Col componentClass={ControlLabel} sm={4}>
-                Enclosure
-              </Col>
-              <Col sm={8}>
-                <FormControl
-                  type="text"
-                  placeholder="Field enclosure used in the CSV files"
-                  value={this.props.enclosure}
-                  onChange={this.onChangeEnclosure}
-                />
-                <HelpBlock>Field enclosure used in the CSV file. The default value is <code>&quot;</code>.</HelpBlock>
-              </Col>
-            </FormGroup>
-            <FormGroup>
-              <Col componentClass={ControlLabel} sm={4}>
-                Primary Key
-              </Col>
-              <Col sm={8}>
-                <Select.Creatable
-                  multi
-                  placeholder="Add a column"
-                  options={this.props.primaryKey.map((value) => ({ label: value, value })).toJS()}
-                  value={List.isList(this.props.primaryKey) ? this.props.primaryKey.toJS() : []}
-                  onChange={this.onChangePrimaryKey}
-                />
-                <HelpBlock>Primary key of the table. If a primary key is set, updates can be done on the table by selecting <strong>incremental loads</strong>. The primary key can consist of multiple columns.</HelpBlock>
-              </Col>
-            </FormGroup>
-            <FormGroup>
-              <Col sm={8} smOffset={4}>
-                <Checkbox
-                  checked={this.props.incremental}
-                  onChange={this.onChangeIncremental}>
-                  Incremental load
-                </Checkbox>
-                <HelpBlock>If incremental load is turned on, the table will be updated instead of rewritten. Tables with
-                  a primary key will have rows updated, tables without a primary key will have rows appended.</HelpBlock>
-              </Col>
-            </FormGroup>
-          </div>
+          {this.renderForm()}
         </Panel>
       </Accordion>
+    );
+  },
+
+  renderForm() {
+    const primaryKeys = List.isList(this.props.primaryKey) ? this.props.primaryKey.toJS() : [];
+
+    return (
+      <div className="form-horizontal">
+        {this.renderButtons()}
+        <br/>
+        <CsvDelimiterInput
+          placeholder="Field delimeter used in CSV files"
+          label="Delimiter"
+          value={this.props.delimiter}
+          onChange={this.onChangeDelimiter}
+          help={(
+            <span>Field delimiter used in the CSV file. The default value is <code>,</code>. Use <code>\t</code> for tabulator.</span>)}
+          disabled={false}
+        />
+        <FormGroup>
+          <Col componentClass={ControlLabel} sm={4}>
+            Enclosure
+          </Col>
+          <Col sm={8}>
+            <FormControl
+              type="text"
+              placeholder="Field enclosure used in the CSV files"
+              value={this.props.enclosure}
+              onChange={this.onChangeEnclosure}
+            />
+            <HelpBlock>Field enclosure used in the CSV file. The default value is <code>&quot;</code>.</HelpBlock>
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col componentClass={ControlLabel} sm={4}>
+            Primary Key
+          </Col>
+          <Col sm={8}>
+            <Select.Creatable
+              multi
+              placeholder="Add a column"
+              options={primaryKeys.map((value) => ({ label: value, value }))}
+              value={primaryKeys}
+              onChange={this.onChangePrimaryKey}
+            />
+            <HelpBlock>Primary key of the table. If a primary key is set, updates can be done on the table by selecting <strong>incremental loads</strong>. The primary key can consist of multiple columns.</HelpBlock>
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col sm={8} smOffset={4}>
+            <Checkbox
+              checked={this.props.incremental}
+              onChange={this.onChangeIncremental}>
+              Incremental load
+            </Checkbox>
+            <HelpBlock>
+              If incremental load is turned on, the table will be updated instead of rewritten. Tables with
+              a primary key will have rows updated, tables without a primary key will have rows appended.
+            </HelpBlock>
+          </Col>
+        </FormGroup>
+      </div>
     );
   }
 });
