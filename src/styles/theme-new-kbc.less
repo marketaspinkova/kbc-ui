@@ -192,24 +192,23 @@ strong {
   }
 
   .kbc-notification-access {
-    color: @primary;
-    font-size: 26px;
+    position: relative;
 
     .kbc-notification-icon-badge {
-      top: -10px;
-      right: -5px;
-      width: 20px;
-      height: 20px;
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      width: 15px;
+      height: 15px;
 
       .kbc-notification-icon-badge-inner {
         color: #fff;
         background-color: @primary;
-        border: 2px solid #fff;
+        border-radius: 50%;
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 12px;
-        font-weight: 500;
+        font-size: 11px;
       }
     }
   }
