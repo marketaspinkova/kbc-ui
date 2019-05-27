@@ -54,15 +54,10 @@ function getSnowflakeMetadataDataTypes(columnMetadata) {
     const nullable = data.find(entry => entry.get('key') === 'KBC.datatype.nullable', null, Map());
     const defaultValue = data.find(entry => entry.get('key') === 'KBC.datatype.default', null, Map());
     const length = data.find(entry => entry.get('key') === 'KBC.datatype.length', null, Map());
-    const parsedLength = parseInt(length.get('value', 0), 10);
-    const size =
-      datatype.get('size') && parsedLength > 0
-        ? Math.min(parsedLength, datatype.get('maxLength', Number.MAX_SAFE_INTEGER))
-        : '';
 
     return fromJS({
       column,
-      size,
+      size: length.get('value'),
       type: datatype.get('name'),
       defaultValue: defaultValue.get('value', ''),
       nullable: !!parseInt(nullable.get('value', 0), 10)
