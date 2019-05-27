@@ -57,7 +57,7 @@ function getSnowflakeMetadataDataTypes(columnMetadata) {
 
     return fromJS({
       column,
-      size: length.get('value'),
+      size: length.get('value', ''),
       type: datatype.get('name'),
       defaultValue: defaultValue.get('value', ''),
       nullable: !!parseInt(nullable.get('value', 0), 10)
