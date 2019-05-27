@@ -1,6 +1,7 @@
 import { fromJS, Map, List } from 'immutable';
 import { SnowflakeDataTypesMapping } from '../../../Constants';
 import { DataTypeKeys } from "../../../../components/MetadataConstants";
+import { isNullable } from '../../../../components/utils/datatypeHelpers'
 
 const getDataTypeProvider = (metadata) => {
   const userTypesExist = metadata.find((entry) => {
@@ -55,7 +56,7 @@ const getMetadataDataTypes = (columnMetadata) => {
       column: colname,
       type: dataTypeName,
       length: length,
-      convertEmptyValuesToNull: [true, 1, 'true', '1'].includes(dataTypeNullable.get('value'))
+      convertEmptyValuesToNull: isNullable(dataTypeNullable.get('value'))
     });
   });
 };
