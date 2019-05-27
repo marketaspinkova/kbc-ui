@@ -1,4 +1,4 @@
-import { getDataType } from './datatypeHelpers';
+import { getDataType, isNullable } from './datatypeHelpers';
 import { fromJS } from 'immutable';
 import { DataTypeKeys } from '../MetadataConstants';
 
@@ -178,5 +178,22 @@ describe('getDataType', function() {
         }
       ]
     )));
+  });
+});
+
+describe('isNullable', function() {
+  it('should return true when value is truthy', function() {
+    expect(isNullable(1)).toEqual(true);
+    expect(isNullable("1")).toEqual(true);
+    expect(isNullable(true)).toEqual(true);
+    expect(isNullable("true")).toEqual(true);
+  });
+
+  it('should return false when value is falsy', function() {
+    expect(isNullable("")).toEqual(false);
+    expect(isNullable(0)).toEqual(false);
+    expect(isNullable("0")).toEqual(false);
+    expect(isNullable(false)).toEqual(false);
+    expect(isNullable("false")).toEqual(false);
   });
 });
