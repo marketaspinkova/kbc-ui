@@ -3,6 +3,7 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 
 import storeProvisioning, {storeMixins} from '../storeProvisioning';
+import InstalledComponentStore from '../../components/stores/InstalledComponentsStore';
 import RoutesStore from '../../../stores/RoutesStore';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 
@@ -20,16 +21,18 @@ import ScheduleConfigurationButton from '../../components/react/components/Sched
 import SidebarJobsContainer from '../../components/react/components/SidebarJobsContainer';
 import ConfigurationForm from './ConfigurationForm';
 import StorageTablesStore from '../../components/stores/StorageTablesStore';
+import StorageBucketsStore from '../../components/stores/StorageBucketsStore';
 import ClipboardButton from '../../../react/common/Clipboard';
 import SapiTableLinkEx from '../../components/react/components/StorageApiTableLinkEx';
 import getDefaultBucket from '../../../utils/getDefaultBucket';
-import {Alert, FormGroup, FormControl, ControlLabel, Col, InputGroup, Button, HelpBlock} from 'react-bootstrap';
+import {Alert, FormGroup, FormControl, Form, ControlLabel, Col, InputGroup, Button, HelpBlock} from 'react-bootstrap';
 import Processors from '../../components/react/components/Processors';
+
 
 const COMPONENT_ID = 'keboola.ex-email-attachments';
 
 export default createReactClass({
-  mixins: [createStoreMixin(...storeMixins, StorageTablesStore)],
+  mixins: [createStoreMixin(...storeMixins, InstalledComponentStore, StorageTablesStore, StorageBucketsStore)],
 
   getStateFromStores() {
     const configId = RoutesStore.getCurrentRouteParam('config');
@@ -40,6 +43,7 @@ export default createReactClass({
       configId: configId,
       store: store,
       actions: actions,
+      tables: StorageTablesStore.getAll(),
       localState: store.getLocalState(),
       settings: store.settings,
       processors: store.processors
@@ -67,7 +71,7 @@ export default createReactClass({
         </Col>
         <Col sm={8}>
           <InputGroup>
-            <SapiTableLinkEx tableId={this.getDefaultBucketName()} />
+            <SapiTableLinkEx tableId={this.getDefaultBucketName()}/>
           </InputGroup>
           <HelpBlock>
             Table in Storage, where the .csv attachments will be imported. If the table or bucket does not exist, it will be created.
@@ -90,10 +94,10 @@ export default createReactClass({
           {this.state.store.requestedEmail ?
             <div>
               <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
-                <div className="form-horizontal">
+                <Form horizontal>
                   <FormGroup>
                     <Col componentClass={ControlLabel} sm={4}>
-                      Email address
+                  Email address
                     </Col>
                     <Col sm={8}>
                       <InputGroup>
@@ -116,7 +120,7 @@ export default createReactClass({
                     </Col>
                   </FormGroup>
                   {this.renderImportedResult()}
-                </div>
+                </Form>
               </div>
               <ConfigurationForm
                 incremental={this.state.settings.get('incremental')}
@@ -181,15 +185,16 @@ export default createReactClass({
   renderInitConfig() {
     if (this.state.store.error) {
       return this.renderError();
+    } else {
+      // if we either have email or it is being generated
+      return (
+        <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
+          <p>
+            <RefreshIcon isLoading={true}/> Generating email address, please wait.
+          </p>
+        </div>
+      );
     }
-
-    return (
-      <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
-        <p>
-          <RefreshIcon isLoading /> Generating email address, please wait.
-        </p>
-      </div>
-    );
   },
 
   renderError() {
