@@ -2,16 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import { Map } from 'immutable';
-import { Link } from 'react-router';
+import { Link, Navigation } from 'react-router';
 import { Button, Col, Row, Modal, Table, Label, Panel, Well } from 'react-bootstrap';
 import { Loader, ExternalLink } from '@keboola/indigo-ui';
-import RoutesStore from '../../../../stores/RoutesStore';
 import date from '../../../../utils/date';
 import JobStatusLabel from '../../../../react/common/JobStatusLabel';
 import TableUsagesLabel from '../components/TableUsagesLabel';
 import TableSizeLabel from '../components/TableSizeLabel';
 
 export default createReactClass({
+  mixins: [Navigation],
+
   propTypes: {
     matches: PropTypes.object.isRequired,
     usages: PropTypes.object.isRequired,
@@ -165,13 +166,15 @@ export default createReactClass({
                     {config.get('configurationCreated')}
                   </ExternalLink>
                 </p>
-                <Button
-                  bsStyle="default"
-                  bsSize="large"
-                  onClick={() => this.goToTransformation(config)}
+                <a
+                  className="btn btn-default btn-lg"
+                  href={this.makeHref('transformationDetail', {
+                    config: config.get('configurationId'),
+                    row: config.get('rowId')
+                  })}
                 >
                   Check this transformation
-                </Button>
+                </a>
               </Col>
               <Col sm={6} className="text-right text-muted">
                 <p style={{ margin: '0 0 5px' }}>
@@ -191,13 +194,5 @@ export default createReactClass({
         );
       })
       .toArray();
-  },
-
-  goToTransformation(config) {
-    this.props.onHide();
-    RoutesStore.getRouter().transitionTo('transformationDetail', {
-      config: config.get('configurationId'),
-      row: config.get('rowId')
-    });
   }
 });
