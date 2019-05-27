@@ -105,20 +105,26 @@ strong {
     margin-bottom: 0;
 
     .navbar-link {
+      height: 60px;
       color: #a2a2a2;
       display: flex;
       align-items: center;
       padding: 20px;
       font-size: 16px;
       font-weight: 500;
+      transition: fill 200ms ease-in-out;
 
-      &.active {
-        color: @primary;
+      &:hover svg path,
+      &:focus svg path {
+        fill: #272837;
       }
 
-      .kbc-icon {
-        font-size: 24px;
-        margin-right: 5px;
+      &.active svg path {
+        fill: @primary;
+      }
+
+      svg {
+        margin-right: 9px;
       }
     }
   }
