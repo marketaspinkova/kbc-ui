@@ -37,8 +37,8 @@ export default createReactClass({
     this.props.onChange('incremental', !this.props.incremental);
   },
 
-  onChangePrimaryKey(value) {
-    this.props.onChange('primaryKey', List(value));
+  onChangePrimaryKey(selected) {
+    this.props.onChange('primaryKey', List(selected.map((option) => option.value)));
   },
 
   renderButtons() {
@@ -123,6 +123,7 @@ export default createReactClass({
                 <Select.Creatable
                   multi
                   placeholder="Add a column"
+                  options={this.props.primaryKey.map((value) => ({ label: value, value })).toJS()}
                   value={this.props.primaryKey.toJS()}
                   onChange={this.onChangePrimaryKey}
                 />
