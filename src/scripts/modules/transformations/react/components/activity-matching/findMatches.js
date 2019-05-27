@@ -1,6 +1,6 @@
 import { Map } from 'immutable';
 
-const findMatches = (transformation, data, limit = 5) => {
+const findMatches = (transformation, data) => {
   const sources = transformation
     .get('input')
     .map((mapping) => mapping.get('source'))
@@ -30,8 +30,7 @@ const findMatches = (transformation, data, limit = 5) => {
       if (status === 'success') return -1;
       if (status === 'error' || status === 'terminated') return 1;
       return 0;
-    })
-    .slice(0, limit);
+    });
 };
 
 export default findMatches;
