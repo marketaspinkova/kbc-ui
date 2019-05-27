@@ -19,7 +19,7 @@ const table = fromJS({
 });
 
 function metadataSnowflakeType(column) {
-  return { name: column, dbName: column, type: 'varchar', nullable: true, default: 'value', size: 16777216 };
+  return { name: column, dbName: column, type: 'varchar', nullable: true, default: 'value', size: '16777216' };
 }
 
 function defaultSnowflakeType(column) {
@@ -54,11 +54,5 @@ describe('prepareColumnsTypes', function() {
     const uknownMetadataBasetype = table.setIn(['columnMetadata', 'country', 0, 'value'], 'UNKNOWN');
     const expected = fromJS([defaultSnowflakeType('country'), defaultSnowflakeType('cars')]);
     expect(expected).toEqual(prepareColumnsTypes(SnowflakeComponentId, uknownMetadataBasetype));
-  });
-
-  it('if length value from metadata is bigger than allowed, default size is used', () => {
-    const updatedTable = table.setIn(['columnMetadata', 'country', 3, 'value'], 26777216);
-    const expected = fromJS([metadataSnowflakeType('country'), defaultSnowflakeType('cars')]);
-    expect(expected).toEqual(prepareColumnsTypes(SnowflakeComponentId, updatedTable));
   });
 });
