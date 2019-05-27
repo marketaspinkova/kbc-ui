@@ -111,12 +111,6 @@ const navigateToBucketDetail = bucketId => {
   });
 };
 
-const navigateToBucketDocumentation = bucketId => {
-  RoutesStore.getRouter().transitionTo('storage-explorer-documentation-bucket', {
-    bucketId: bucketId
-  });
-};
-
 const createTablePrimaryKey = (tableId, params) => {
   return StorageActionCreators
     .createTablePrimaryKey(tableId, params)
@@ -375,7 +369,6 @@ export {
   deleteTable,
   createAliasTable,
   navigateToBucketDetail,
-  navigateToBucketDocumentation,
   createTablePrimaryKey,
   removeTablePrimaryKey,
   deleteTableColumn,
