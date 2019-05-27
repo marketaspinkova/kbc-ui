@@ -104,7 +104,12 @@ strong {
   .navbar {
     margin-bottom: 0;
 
-    .navbar-link {
+    #navbar-applications {
+      padding: 0px;
+    }
+
+    .navbar-link,
+    .dropdown > a > span {
       height: 60px;
       color: #a2a2a2;
       display: flex;
@@ -129,6 +134,20 @@ strong {
 
       svg {
         margin-right: 9px;
+      }
+    }
+
+    .dropdown-menu {
+      border-bottom-right-radius: 6px;
+      border-bottom-left-radius: 6px;
+      border: 1px solid rgba(162, 165, 169, 0.15);
+      box-shadow: 0px 10px 20px rgba(100, 135, 153, 0.18);
+      border-top: none;
+
+      .navbar-link {
+        height: 40px;
+        font-weight: 400;
+        padding: 8px 20px;
       }
     }
   }
