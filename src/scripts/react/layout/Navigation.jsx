@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
-import { Dropdown } from 'react-bootstrap';
+import { NavDropdown } from 'react-bootstrap';
 import ApplicationStore from '../../stores/ApplicationStore';
 import NotificationsAccess from '../common/NotificationsAccess';
 
@@ -23,7 +23,7 @@ export default createReactClass({
               <span>Dashboard</span>
             </Link>
           </li>
-          <Dropdown
+          <NavDropdown
             id="navbar-applications"
             noCaret
             title={(
@@ -59,7 +59,7 @@ export default createReactClass({
                 <span>Writers</span>
               </Link>
             </li>
-          </Dropdown>
+          </NavDropdown>
           <li>
             <Link to="storage-explorer" className="navbar-link">
               <svg width="24" height="20" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg">
