@@ -129,9 +129,9 @@ export default {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGSDATA_LOAD_SUCCESS,
         componentId: componentId,
-        configData: configData
+        configData: configData || []
       });
-      return configData;
+      return null;
     }).catch(function(error) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGSDATA_LOAD_ERROR,
