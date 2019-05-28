@@ -26,7 +26,6 @@ export default createReactClass({
     const bucketId = RoutesStore.getCurrentRouteParam('bucketId');
 
     return {
-      bucketId,
       bucket: BucketsStore.getAll().find(item => item.get('id') === bucketId),
       sapiToken: ApplicationStore.getSapiToken(),
       urlTemplates: ApplicationStore.getUrlTemplates(),
@@ -49,7 +48,7 @@ export default createReactClass({
   },
 
   componentDidMount() {
-    if (!this.state.sapiToken.hasIn(['bucketPermissions', this.state.bucketId])) {
+    if (this.state.bucket && !this.state.sapiToken.hasIn(['bucketPermissions', this.state.bucket.get('id')])) {
       tokenVerify();
     }
   },

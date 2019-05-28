@@ -45,7 +45,6 @@ export default createReactClass({
     const bucket = buckets.find(item => item.get('id') === bucketId, null, Map());
 
     return {
-      bucketId,
       sapiToken,
       tables,
       table,
@@ -87,7 +86,11 @@ export default createReactClass({
   },
 
   componentDidMount() {
-    if (!this.state.sapiToken.hasIn(['bucketPermissions', this.state.bucketId])) {
+    if (
+      this.state.bucket.count() > 0 &&
+      this.state.table.count() > 0 &&
+      !this.state.sapiToken.hasIn(['bucketPermissions', this.state.table.getIn(['bucket', 'id'])])
+    ) {
       tokenVerify();
     }
   },
