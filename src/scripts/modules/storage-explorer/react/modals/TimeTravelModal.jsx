@@ -156,6 +156,11 @@ export default createReactClass({
   },
 
   isDisabled() {
-    return !this.state.timestamp || !this.state.destinationBucket || !this.state.tableName;
+    return (
+      !this.state.timestamp ||
+      !moment.isMoment(this.state.timestamp) ||
+      !this.state.destinationBucket ||
+      !this.state.tableName
+    );
   }
 });
