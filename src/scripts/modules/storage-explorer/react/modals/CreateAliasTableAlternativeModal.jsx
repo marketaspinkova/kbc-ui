@@ -218,13 +218,12 @@ export default createReactClass({
   },
 
   allowedBuckets() {
-    const permissions = this.props.sapiToken.get('bucketPermissions');
     const neededPermissions = ['write', 'manage'];
     const alowedStages = ['out', 'in'];
 
     return this.props.buckets
       .filter((bucket) => {
-        const bucketPermission = permissions.get(bucket.get('id'), '');
+        const bucketPermission = this.props.sapiToken.getIn(['bucketPermissions', bucket.get('id')], '');
         return neededPermissions.includes(bucketPermission) && alowedStages.includes(bucket.get('stage'));
       })
       .sortBy((bucket) => bucket.get('id').toLowerCase())
