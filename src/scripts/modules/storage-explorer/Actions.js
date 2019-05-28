@@ -45,10 +45,6 @@ const reload = () => {
 };
 
 const tokenVerify = () => {
-  if (ApplicationStore.getSapiToken().has('bucketPermissions')) {
-    return Promise.resolve();
-  }
-
   return StorageActionCreators.tokenVerify();
 };
 

@@ -16,7 +16,7 @@ import ColumnsLocalStore from '../../../ColumnsLocalStore';
 import StorageApi from '../../../../components/StorageApi';
 import { factory as eventsFactory } from '../../../../sapi-events/TableEventsService';
 import { getMachineColumnMetadata, getUserColumnMetadata } from '../../../../components/utils/tableMetadataHelper';
-import { createAliasTable, deleteTable, truncateTable, exportTable, uploadFile, loadTable } from '../../../Actions';
+import { createAliasTable, deleteTable, truncateTable, exportTable, uploadFile, loadTable, tokenVerify } from '../../../Actions';
 
 import FastFade from '../../../../../react/common/FastFade';
 import CreateAliasTableAlternativeModal from '../../modals/CreateAliasTableAlternativeModal';
@@ -83,6 +83,16 @@ export default createReactClass({
       openActionModal: false,
       actionModalType: null
     };
+  },
+
+  componentDidMount() {
+    if (
+      this.state.bucket.count() > 0 &&
+      this.state.table.count() > 0 &&
+      !this.state.sapiToken.hasIn(['bucketPermissions', this.state.table.getIn(['bucket', 'id'])])
+    ) {
+      tokenVerify();
+    }
   },
 
   render() {

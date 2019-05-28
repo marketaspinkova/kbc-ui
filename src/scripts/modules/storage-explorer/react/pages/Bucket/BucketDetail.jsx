@@ -10,7 +10,7 @@ import BucketsStore from '../../../../components/stores/StorageBucketsStore';
 import TablesStore from '../../../../components/stores/StorageTablesStore';
 import FilesStore from '../../../../components/stores/StorageFilesStore';
 import { factory as eventsFactory } from '../../../../sapi-events/BucketEventsService';
-import { createTable, deleteBucket, createAliasTable, createTableFromTextInput, uploadFile } from '../../../Actions';
+import { createTable, deleteBucket, createAliasTable, createTableFromTextInput, uploadFile, tokenVerify } from '../../../Actions';
 
 import Tooltip from '../../../../../react/common/Tooltip';
 import FastFade from '../../../../../react/common/FastFade';
@@ -45,6 +45,12 @@ export default createReactClass({
       activeTab: 'overview',
       openDeleteBucketModal: false
     };
+  },
+
+  componentDidMount() {
+    if (this.state.bucket && !this.state.sapiToken.hasIn(['bucketPermissions', this.state.bucket.get('id')])) {
+      tokenVerify();
+    }
   },
 
   render() {
@@ -174,6 +180,14 @@ export default createReactClass({
 
     if (this.state.bucket.has('sourceBucket')) {
       return <span><i className="fa fa-chain-broken"></i> Unlink bucket</span>;
+    }
+
+    if (!this.canManageBucket()) {
+      return (
+        <Tooltip tooltip="You do not have required permission" placement="top">
+          <span><i className="fa fa-trash-o"></i> Delete bucket</span>
+        </Tooltip>
+      );
     }
 
     return <span><i className="fa fa-trash-o"></i> Delete bucket</span>;
