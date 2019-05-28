@@ -1,16 +1,16 @@
 import Dispatcher from '../../../Dispatcher';
 import { Map, List, fromJS } from 'immutable';
 import { ActionTypes } from '../Constants';
-import StoreUtils from '../../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../../utils/StoreUtils';
 
-let _store = Map({
+let _store = initStore('OrchestrationJobsStore', Map({
   jobsByOrchestrationId: Map(),
   editing: Map(), // [jobId][tasks] - edit value
   loadingOrchestrationJobs: List(),
   loadingJobs: List(),
   terminatingJobs: List(),
   retryingJobs: List()
-});
+}));
 
 const addToLoadingOrchestrations = (store, orchestrationId) =>
   store.update('loadingOrchestrationJobs', loadingOrchestrationJobs => loadingOrchestrationJobs.push(orchestrationId));

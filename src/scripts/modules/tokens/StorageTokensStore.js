@@ -2,11 +2,11 @@ import Dispatcher from '../../Dispatcher';
 import constants from './constants';
 
 import {Map, List, fromJS} from 'immutable';
-import StoreUtils from '../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../utils/StoreUtils';
 
 const ActionTypes = constants.ActionTypes;
 
-let _store = Map({
+let _store = initStore('StorageTokensStore', Map({
   tokens: List(),
   isLoaded: false,
   isLoading: false,
@@ -14,7 +14,7 @@ let _store = Map({
   refreshingTokens: Map(),
   sendingTokens: Map(),
   localState: Map()
-});
+}));
 
 const StorageTokensStore = StoreUtils.createStore({
   getAll: () => _store.get('tokens'),

@@ -6,13 +6,13 @@ import underscoreString from 'underscore.string';
 import camelize from 'underscore.string/camelize';
 import fuzzy from 'fuzzy';
 import fuzzaldrin from 'fuzzaldrin';
-import StoreUtils from '../../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../../utils/StoreUtils';
 import ApplicationStore from '../../../stores/ApplicationStore';
 
-let _store = Map({
+let _store = initStore('ComponentsStore', Map({
   components: Map(),
   filter: Map()
-});
+}));
 
 const ComponentsStore = StoreUtils.createStore({
   getComponentsTypes() {

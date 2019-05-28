@@ -2,10 +2,10 @@ import Dispatcher from '../../../Dispatcher';
 import { Map, List, fromJS } from 'immutable';
 import { ActionTypes } from '../Constants';
 import { ActionTypes as InstalledComponentsActionTypes } from '../../components/Constants';
-import StoreUtils from '../../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../../utils/StoreUtils';
 import parseBuckets from '../utils/parseBuckets';
 
-let _store = Map({
+let _store = initStore('TransformationBucketsStore', Map({
   bucketsById: Map(),
   isLoading: false,
   isLoaded: false,
@@ -13,7 +13,7 @@ let _store = Map({
   pendingActions: Map(), // by bucket id id
   filters: Map(),
   toggles: Map()
-});
+}));
 
 const TransformationBucketsStore = StoreUtils.createStore({
   getAll() {

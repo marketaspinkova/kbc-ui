@@ -1,9 +1,9 @@
 import { Map, List, fromJS } from 'immutable';
-import StoreUtils from '../../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../../utils/StoreUtils';
 import * as constants from '../Constants';
 import Dispatcher from '../../../Dispatcher';
 
-let _store = Map({
+let _store = initStore('JobsStore', Map({
   jobsById: Map(),
   loadingJobs: List(),
   terminatingJobs: List(), // waiting for terminate request send
@@ -14,7 +14,7 @@ let _store = Map({
   loadJobsErrorCnt: 0,
   limit: 50,
   offset: 0
-});
+}));
 
 const JobsStore = StoreUtils.createStore({
   loadJobsErrorCount() {

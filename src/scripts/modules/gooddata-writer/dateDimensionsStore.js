@@ -3,18 +3,18 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-import StoreUtils from '../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../utils/StoreUtils';
 import Immutable from 'immutable';
 import dispatcher from '../../Dispatcher';
 import * as constants from './constants';
 
 const { Map, List } = Immutable;
 
-let _store = Map({
+let _store = initStore('GooddataWriterDateDimensionsStore', Map({
   dimensionsById: Map(),
   newDimensions: Map(),
   isLoading: Map()
-});
+}));
 
 const DimensionsStore = StoreUtils.createStore({
   getAll(configurationId) {

@@ -1,14 +1,14 @@
 import Dispatcher from '../../../Dispatcher';
 import { Map, fromJS } from 'immutable';
-import storeUtils from '../../../utils/StoreUtils';
+import storeUtils, { initStore } from '../../../utils/StoreUtils';
 import constants from '../Constants';
 
-let _store = Map({
+let _store = initStore('WrDbCredentialsStore', Map({
   credentials: Map(),
   loadingCredentials: Map(),
   creatingCredentials: Map(),
   droppingCredentials: Map()
-});
+}));
 
 const provisioningStore = storeUtils.createStore({
   getCredentials(type, token) {

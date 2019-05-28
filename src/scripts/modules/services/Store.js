@@ -1,12 +1,12 @@
-import StoreUtils from '../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../utils/StoreUtils';
 import {Map} from 'immutable';
 import Immutable from 'immutable';
 import dispatcher from '../../Dispatcher';
 import Constants from './Constants';
 
-var store = Map({
+var store = initStore('ServicesStore', Map({
   services: Map()
-});
+}));
 
 const ServicesStore = StoreUtils.createStore({
   getService(serviceId) {

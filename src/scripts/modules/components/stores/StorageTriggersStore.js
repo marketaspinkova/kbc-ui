@@ -1,12 +1,12 @@
 import Dispatcher from '../../../Dispatcher';
 import { Map, fromJS } from 'immutable';
 import { ActionTypes } from '../../orchestrations/Constants';
-import StoreUtils from '../../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../../utils/StoreUtils';
 
-let _store = Map({
+let _store = initStore('StorageTriggersStore', Map({
   trigger: Map(),
   isLoaded: false
-});
+}));
 
 const StorageTriggersStore = StoreUtils.createStore({
   get() {

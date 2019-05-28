@@ -1,12 +1,12 @@
-import StoreUtils from '../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../utils/StoreUtils';
 import { Map } from 'immutable';
 import dispatcher from '../../Dispatcher';
 import * as Constants from './Constants';
 
-let _store = Map({
+let _store = initStore('OauthV2Store', Map({
   deletingCredentials: Map(),
   credentials: Map()
-});
+}));
 
 const OAuthStore = StoreUtils.createStore({
   hasCredentials(componentId, id) {

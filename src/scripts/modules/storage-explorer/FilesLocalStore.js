@@ -1,11 +1,11 @@
 import { Map } from 'immutable';
-import StoreUtils from '../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../utils/StoreUtils';
 import dispatcher from '../../Dispatcher';
 import * as constants from './Constants';
 
-let _store = Map({
+let _store = initStore('StorageFilesLocalStore', Map({
   searchQuery: ''
-});
+}));
 
 const FilesLocalStore = StoreUtils.createStore({
   getSearchQuery() {
