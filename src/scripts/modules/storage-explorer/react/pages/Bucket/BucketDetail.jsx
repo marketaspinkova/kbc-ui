@@ -176,6 +176,14 @@ export default createReactClass({
       return <span><i className="fa fa-chain-broken"></i> Unlink bucket</span>;
     }
 
+    if (!this.canManageBucket()) {
+      return (
+        <Tooltip tooltip="You do not have required permission" placement="top">
+          <span><i className="fa fa-trash-o"></i> Delete bucket</span>
+        </Tooltip>
+      );
+    }
+
     return <span><i className="fa fa-trash-o"></i> Delete bucket</span>;
   },
 
