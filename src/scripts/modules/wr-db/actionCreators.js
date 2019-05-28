@@ -133,7 +133,7 @@ export default {
     return api(componentId)
       .postTable(configId, tableId, table, sapiTable)
       .then(() => {
-        return this.loadTableConfig(componentId, configId, tableId).then(() =>
+        return this.loadTableConfigForce(componentId, configId, tableId).then(() =>
           dispatcher.handleViewAction({
             type: constants.ActionTypes.WR_DB_ADD_TABLE_SUCCESS,
             componentId,
