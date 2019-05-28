@@ -10,7 +10,7 @@ import BucketsStore from '../../../../components/stores/StorageBucketsStore';
 import TablesStore from '../../../../components/stores/StorageTablesStore';
 import FilesStore from '../../../../components/stores/StorageFilesStore';
 import { factory as eventsFactory } from '../../../../sapi-events/BucketEventsService';
-import { createTable, deleteBucket, createAliasTable, createTableFromTextInput, uploadFile } from '../../../Actions';
+import { createTable, deleteBucket, createAliasTable, createTableFromTextInput, uploadFile, tokenVerify } from '../../../Actions';
 
 import Tooltip from '../../../../../react/common/Tooltip';
 import FastFade from '../../../../../react/common/FastFade';
@@ -26,6 +26,7 @@ export default createReactClass({
     const bucketId = RoutesStore.getCurrentRouteParam('bucketId');
 
     return {
+      bucketId,
       bucket: BucketsStore.getAll().find(item => item.get('id') === bucketId),
       sapiToken: ApplicationStore.getSapiToken(),
       urlTemplates: ApplicationStore.getUrlTemplates(),
@@ -45,6 +46,12 @@ export default createReactClass({
       activeTab: 'overview',
       openDeleteBucketModal: false
     };
+  },
+
+  componentDidMount() {
+    if (!this.state.sapiToken.hasIn(['bucketPermissions', this.state.bucketId])) {
+      tokenVerify();
+    }
   },
 
   render() {

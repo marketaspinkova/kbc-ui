@@ -1,12 +1,10 @@
 import Promise from 'bluebird';
 import _ from 'underscore';
-import { Map } from 'immutable';
 import dispatcher from '../../Dispatcher';
 import * as constants from '../components/Constants';
 import * as localConstants from './Constants';
 import RoutesStore from '../../stores/RoutesStore';
 import ApplicationStore from '../../stores/ApplicationStore';
-import StorageBucketsStore from '../components/stores/StorageBucketsStore';
 import StorageActionCreators from '../components/StorageActionCreators';
 import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
 import jobPoller from '../../utils/jobPoller';
@@ -47,13 +45,6 @@ const reload = () => {
 };
 
 const tokenVerify = () => {
-  const bucketPermissions = ApplicationStore.getSapiToken().get('bucketPermissions', Map()).keySeq().sort();
-  const buckets = StorageBucketsStore.getAll().keySeq().sort();
-
-  if (bucketPermissions.equals(buckets)) {
-    return Promise.resolve();
-  }
-
   return StorageActionCreators.tokenVerify();
 };
 
@@ -66,7 +57,7 @@ const loadMoreJobs = (params) => {
 };
 
 const loadBuckets = () => {
-  return StorageActionCreators.loadBuckets().then(tokenVerify);
+  return StorageActionCreators.loadBuckets();
 };
 
 const loadSharedBuckets = () => {
