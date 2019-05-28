@@ -54,12 +54,17 @@ const domainOptions = [
 
   },
   {
-    label: 'Hospitality Customer Care',
-    value: 'hcc'
+    label: 'Voice of the Customer - Hospitality',
+    value: 'voc-hospitality'
 
   },
   {
-    label: 'Transportation Customer Care',
+    label: 'Voice of the Customer - Banking',
+    value: 'voc-banking'
+
+  },
+  {
+    label: 'Voice of the Customer - Transportation',
     value: 'tcc'
 
   }
