@@ -3,11 +3,11 @@ import * as constants from '../Constants';
 import { Map, fromJS } from 'immutable';
 import TemplatesStore from './TemplatesStore';
 import ComponentsStore from './ComponentsStore';
-import StoreUtils from '../../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../../utils/StoreUtils';
 import fromJSOrdered from '../../../utils/fromJSOrdered';
 import matchByWords from '../../../utils/matchByWords';
 
-let _store = Map({
+let _store = initStore('InstalledComponentsStore', Map({
   configData: Map(), // componentId #configId
   configRowsData: Map(), // componentId #configId #rowId
   configRows: Map(), // componentId #configId #rowId
@@ -46,7 +46,7 @@ let _store = Map({
   openMappings: Map(),
 
   filters: Map()
-});
+}));
 
 var InstalledComponentsStore = StoreUtils.createStore({
   getLocalState(componentId, configId) {

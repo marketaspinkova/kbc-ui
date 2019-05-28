@@ -1,11 +1,11 @@
-import StoreUtils from '../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../utils/StoreUtils';
 import Immutable from 'immutable';
 import * as constants from './DockerActionsConstants';
 import dispatcher from '../../Dispatcher';
 
-var _store = Immutable.Map({
+var _store = initStore('DockerActionsStore', Immutable.Map({
   actions: Immutable.Map()
-});
+}));
 
 function constructActionPath(componentId, actionName, cacheId) {
   return ['actions', componentId, actionName, cacheId];

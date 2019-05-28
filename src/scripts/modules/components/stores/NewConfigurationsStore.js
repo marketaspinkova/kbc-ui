@@ -1,12 +1,12 @@
 import Dispatcher from '../../../Dispatcher';
 import * as Constants from '../Constants';
 import { Map, fromJS } from 'immutable';
-import StoreUtils from '../../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../../utils/StoreUtils';
 
-let _store = Map({
+let _store = initStore('NewConfigurationsStore', Map({
   configurations: Map(), // indexed by component id
   saving: Map()
-});
+}));
 
 const _defaults = fromJS({
   'gooddata-writer': {

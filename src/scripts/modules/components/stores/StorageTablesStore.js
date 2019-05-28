@@ -1,16 +1,16 @@
 import { Map, fromJS } from 'immutable';
 import Dispatcher from '../../../Dispatcher';
-import StoreUtils from '../../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../../utils/StoreUtils';
 import * as metadataConstants from '../MetadataConstants';
 import * as constants from '../Constants';
 
-let _store = Map({
+let _store = initStore('StorageTablesStore', Map({
   tables: Map(),
   tablesUsages: Map(),
   isLoaded: false,
   isLoading: false,
   pendingTables: Map() // (creating/loading)
-});
+}));
 
 const StorageTablesStore = StoreUtils.createStore({
   getAll() {

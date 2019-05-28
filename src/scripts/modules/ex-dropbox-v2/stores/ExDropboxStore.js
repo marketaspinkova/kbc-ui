@@ -1,11 +1,11 @@
 import Dispatcher from '../../../Dispatcher';
-import StoreUtils from '../../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../../utils/StoreUtils';
 import { Map } from 'immutable';
 import { ActionTypes } from '../constants';
 
-var dropboxStore = Map({
+var dropboxStore = initStore('ExDropboxStore', Map({
   fileNames: Map()
-});
+}));
 
 let ExDropboxStore = StoreUtils.createStore({
   getCsvFiles() {

@@ -1,11 +1,11 @@
 import Dispatcher from '../Dispatcher';
 import { Map, List } from 'immutable';
 import * as Constants from '../constants/KbcConstants';
-import StoreUtils from '../utils/StoreUtils';
+import StoreUtils, { initStore } from '../utils/StoreUtils';
 
-let _store = Map({
+let _store = initStore('NotificationsStore', Map({
   notifications: List()
-});
+}));
 
 const hasNotificationWithId = id => {
   if (!id) {

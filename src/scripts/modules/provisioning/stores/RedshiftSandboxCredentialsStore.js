@@ -1,14 +1,14 @@
 import { fromJS, Map } from 'immutable';
-import StoreUtils from '../../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../../utils/StoreUtils';
 import Constants from '../Constants';
 import Dispatcher from '../../../Dispatcher';
 
-let _store = Map({
+let _store = initStore('RedshiftSandboxCredentialsStore', Map({
   credentials: Map(),
   pendingActions: Map(),
   isLoading: false,
   isLoaded: false
-});
+}));
 
 const RedshiftSandboxCredentialsStore = StoreUtils.createStore({
   getCredentials() {

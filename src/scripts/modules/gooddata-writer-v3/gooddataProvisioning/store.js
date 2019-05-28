@@ -1,14 +1,14 @@
-import StoreUtils from '../../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../../utils/StoreUtils';
 import {Map, fromJS} from 'immutable';
 import dispatcher from '../../../Dispatcher';
 import {ProvisioningActionTypes} from '../constants';
 
-let _store = Map({
+let _store = initStore('GooddataProvisioningStore', Map({
   isCreating: false,
   isLoading: Map(),
   isDeleting: Map(),
   provisioning: Map() // pid -> {}
-});
+}));
 
 const ProvisioningStore = StoreUtils.createStore({
   getIsCreating: () => _store.getIn(['isCreating'], false),

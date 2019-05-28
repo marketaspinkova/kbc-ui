@@ -1,10 +1,10 @@
 import { Map, List, fromJS }  from 'immutable';
 import Dispatcher from '../../../Dispatcher';
-import StoreUtils from '../../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../../utils/StoreUtils';
 import * as metadataConstants from '../MetadataConstants';
 import * as constants from '../Constants';
 
-let _store = Map({
+let _store = initStore('StorageBucketsStore', Map({
   buckets: Map(),
   isLoaded: false,
   isLoading: false,
@@ -12,7 +12,7 @@ let _store = Map({
   pendingCredentials: Map(), // (loading, deleting, creating)
   pendingBuckets: Map(), // (creating)
   sharedBuckets: Map()
-});
+}));
 
 const StorageBucketsStore = StoreUtils.createStore({
   getAll() {

@@ -1,15 +1,15 @@
 import Dispatcher from '../Dispatcher';
 import { Map, List, fromJS } from 'immutable';
 import * as Constants from '../constants/KbcConstants';
-import StoreUtils from '../utils/StoreUtils';
+import StoreUtils, { initStore } from '../utils/StoreUtils';
 import composeLimits from './composeLimits';
 
-let _store = Map({
+let _store = initStore('ApplicationStore', Map({
   sapiToken: Map(),
   organizations: List(),
   sapiUrl: '',
   kbc: Map() // contains - projectBaseUrl, admin (object)
-});
+}));
 
 const ApplicationStore = StoreUtils.createStore({
   getSapiToken() {

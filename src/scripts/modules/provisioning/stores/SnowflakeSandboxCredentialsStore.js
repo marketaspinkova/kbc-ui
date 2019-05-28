@@ -1,14 +1,14 @@
 import Immutable from 'immutable';
-import StoreUtils from '../../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../../utils/StoreUtils';
 import Constants from '../Constants';
 import Dispatcher from '../../../Dispatcher';
 
-var _store = Immutable.Map({
+var _store = initStore('SnowflakeSandboxCredentialsStore', Immutable.Map({
   credentials: Immutable.Map(),
   pendingActions: Immutable.Map(),
   isLoading: false,
   isLoaded: false
-});
+}));
 
 var SnowflakeSandboxCredentialsStore = StoreUtils.createStore({
   getCredentials: function() {

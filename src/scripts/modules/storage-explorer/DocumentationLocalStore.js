@@ -1,13 +1,13 @@
 import { Map, fromJS } from 'immutable';
-import StoreUtils from '../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../utils/StoreUtils';
 import dispatcher from '../../Dispatcher';
 import * as constants from './Constants';
 
-let _store = Map({
+let _store = initStore('StorageDocumentationLocalStore', Map({
   searchQuery: '',
   lastSnapshot: null,
   openedRows: Map() // rowType -> name
-});
+}));
 
 const DocumentationLocalStore = StoreUtils.createStore({
   getSearchQuery() {

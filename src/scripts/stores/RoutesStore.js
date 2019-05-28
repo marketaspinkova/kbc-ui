@@ -3,19 +3,19 @@ import _ from 'underscore';
 import { Map, List, fromJS } from 'immutable';
 import { createPresentationalError } from '../utils/errors/helpers';
 import Error from '../utils/errors/Error';
-import StoreUtils from '../utils/StoreUtils';
+import StoreUtils, { initStore } from '../utils/StoreUtils';
 import JobsStore from '../modules/jobs/stores/JobsStore';
 import { ActionTypes as ComponentsConstants, Routes } from '../modules/components/Constants';
 import * as Constants from '../constants/KbcConstants';
 import { ActionTypes as JobsActionTypes } from '../modules/jobs/Constants';
 
-let _store = Map({
+let _store = initStore('RoutesStore', Map({
   router: null,
   isPending: false,
   routerState: Map(),
   routesByName: Map(),
   breadcrumbs: List()
-});
+}));
 
 const genericDetailRoutesNames = ['extractor', 'writer', 'application'].map(
   componentType => Routes.GENERIC_DETAIL_PREFIX + componentType + '-config'
