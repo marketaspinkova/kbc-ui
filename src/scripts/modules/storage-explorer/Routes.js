@@ -1,3 +1,5 @@
+import Promise from 'bluebird';
+import ApplicationStore from '../../stores/ApplicationStore';
 import Index from './react/pages/Index/Index';
 import Files from './react/pages/Files/Files';
 import Jobs from './react/pages/Jobs/Jobs';
@@ -7,13 +9,20 @@ import Bucket from './react/pages/Bucket/Bucket';
 import FilesReloaderButton from './react/components/FilesReloaderButton';
 import JobsReloaderButton from './react/components/JobsReloaderButton';
 import { filesLimit, jobsLimit } from './Constants';
-import { loadBuckets, loadTables, loadSharedBuckets, loadJobs, loadFiles, updateFilesSearchQuery, loadLastDocumentationSnapshot } from './Actions';
+import { tokenVerify, loadBuckets, loadTables, loadSharedBuckets, loadJobs, loadFiles, updateFilesSearchQuery, loadLastDocumentationSnapshot } from './Actions';
 
 export default {
   name: 'storage-explorer',
   title: 'Storage',
   defaultRouteHandler: Index,
   requireData: [
+    () => {
+      if (ApplicationStore.getSapiToken().has('bucketPermissions')) {
+        return Promise.resolve();
+      }
+
+      return tokenVerify();
+    },
     () => loadBuckets(),
     () => loadTables(),
     () => loadSharedBuckets()
