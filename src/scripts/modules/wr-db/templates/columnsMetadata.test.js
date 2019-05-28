@@ -55,4 +55,22 @@ describe('prepareColumnsTypes', function() {
     const expected = fromJS([defaultSnowflakeType('country'), defaultSnowflakeType('cars')]);
     expect(expected).toEqual(prepareColumnsTypes(SnowflakeComponentId, uknownMetadataBasetype));
   });
+
+  it('user defined metadata is preferred over system defined metadata', () => {
+    const updatedTable = table.setIn(['columnMetadata', 'country'], fromJS([
+      { key: 'KBC.datatype.basetype', value: 'STRING', provider: 'system' },
+      { key: 'KBC.datatype.type', value: 'TEXT', provider: 'system' },
+      { key: 'KBC.datatype.nullable', value: '1', provider: 'system' },
+      { key: 'KBC.datatype.length', value: '16777216', provider: 'system' },
+      { key: 'KBC.datatype.default', value: 'value', provider: 'system' },
+      { key: 'KBC.datatype.basetype', value: 'INTEGER', provider: 'user' },
+      { key: 'KBC.datatype.type', value: 'INTEGER', provider: 'user' },
+      { key: 'KBC.datatype.nullable', value: '0', provider: 'user' },
+      { key: 'KBC.datatype.length', value: '10,2', provider: 'user' },
+      { key: 'KBC.datatype.default', value: '30', provider: 'user' },
+    ]));
+    const expectedMetadata = { name: 'country', dbName: 'country', type: 'integer', nullable: false, default: '30', size: '10,2' };
+    const expected = fromJS([expectedMetadata, defaultSnowflakeType('cars')]);
+    expect(prepareColumnsTypes(SnowflakeComponentId, updatedTable)).toEqual(expected);
+  });
 });
