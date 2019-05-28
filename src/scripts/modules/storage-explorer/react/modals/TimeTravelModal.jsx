@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
 import moment from 'moment';
-import { Modal, Col, Alert, Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
+import {Modal, Col, Alert, Form, FormGroup, FormControl, ControlLabel, HelpBlock} from 'react-bootstrap';
 import Select from 'react-select';
 import DateTime from 'react-datetime';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
@@ -63,6 +63,9 @@ export default createReactClass({
                   onChange={this.handleTimestamp}
                   isValidDate={this.isValidDate}
                 />
+                <HelpBlock>
+                  Date in <code>YYYY-MM-DD hh:mm:ss</code> format.
+                </HelpBlock>
               </Col>
             </FormGroup>
             <FormGroup>
@@ -107,7 +110,7 @@ export default createReactClass({
   handleTimestamp(timestamp) {
     let tableName = this.state.tableName;
 
-    if (this.state.tableName.match(/_\d{14}$/)) {
+    if (this.state.tableName.match(/_\d{14}$/) && moment.isMoment(timestamp)) {
       tableName = this.props.table.get('name') + '_' + moment(timestamp).format('YYYYMMDDHHmmss');
     }
 
@@ -156,6 +159,11 @@ export default createReactClass({
   },
 
   isDisabled() {
-    return !this.state.timestamp || !this.state.destinationBucket || !this.state.tableName;
+    return (
+      !this.state.timestamp ||
+      !moment.isMoment(this.state.timestamp) ||
+      !this.state.destinationBucket ||
+      !this.state.tableName
+    );
   }
 });
