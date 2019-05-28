@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
 import moment from 'moment';
-import { Modal, Col, Alert, Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
+import {Modal, Col, Alert, Form, FormGroup, FormControl, ControlLabel, HelpBlock} from 'react-bootstrap';
 import Select from 'react-select';
 import DateTime from 'react-datetime';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
@@ -63,6 +63,9 @@ export default createReactClass({
                   onChange={this.handleTimestamp}
                   isValidDate={this.isValidDate}
                 />
+                <HelpBlock>
+                  Date in <code>YYYY-MM-DD hh:mm:ss</code> format.
+                </HelpBlock>
               </Col>
             </FormGroup>
             <FormGroup>
