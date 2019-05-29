@@ -5,6 +5,7 @@ import { Map } from 'immutable';
 import { Link, Navigation } from 'react-router';
 import { Button, Col, Row, Modal, Table, Label, Panel, Well } from 'react-bootstrap';
 import { Loader, ExternalLink } from '@keboola/indigo-ui';
+import Tooltip from '../../../../react/common/Tooltip';
 import date from '../../../../utils/date';
 import JobStatusLabel from '../../../../react/common/JobStatusLabel';
 import TableUsagesLabel from '../components/TableUsagesLabel';
@@ -52,18 +53,18 @@ export default createReactClass({
       );
     }
 
-    if (!this.props.matches.count()) {
-      return <p>No relevant matches with same input mappings found.</p>;
-    }
-
     return (
       <div>
-        <p>
-          Looks like someone already did transformation using same inputs before. Lets save time and
-          reuse it.
-        </p>
         {this.renderInputMappingRows()}
         <br />
+        {this.props.matches.count() > 0 ? (
+          <p>
+            Looks like someone already did transformation using same inputs before. Lets save time
+            and reuse it.
+          </p>
+        ) : (
+          <p>No relevant matches with same input mappings found.</p>
+        )}
         {this.renderMatches()}
         {this.renderShowMore()}
       </div>
@@ -71,6 +72,10 @@ export default createReactClass({
   },
 
   renderInputMappingRows() {
+    if (!this.props.usages.count() || !this.props.tablesUsages.count()) {
+      return null;
+    }
+
     return this.props.transformation
       .get('input')
       .map((mapping, idx) => {
@@ -108,35 +113,9 @@ export default createReactClass({
                 {usage.map((row) => {
                   return (
                     <tr key={row.get('rowId')}>
-                      <td>
-                        <Link
-                          to="transformationBucket"
-                          params={{ config: row.get('configurationId') }}
-                        >
-                          {row.get('configurationName')}
-                        </Link>
-                      </td>
-                      <td>
-                        {this.props.transformation.get('id') === row.get('rowId') ? (
-                          <span>
-                            {row.get('rowName')} <Label>Current</Label>
-                          </span>
-                        ) : (
-                          <Link
-                            to="transformationDetail"
-                            params={{ row: row.get('rowId'), config: row.get('configurationId') }}
-                          >
-                            {row.get('rowName')}
-                          </Link>
-                        )}
-                      </td>
-                      <td>
-                        {row.has('lastRunAt') ? (
-                          <span>{date.format(row.get('lastRunAt'))}</span>
-                        ) : (
-                          'Never runned'
-                        )}
-                      </td>
+                      <td>{this.renderTransformationBucketLink(row)}</td>
+                      <td>{this.renderTransformationLink(row)}</td>
+                      <td>{this.renderLastRun(row)}</td>
                       <td>
                         {row.has('lastRunStatus') && (
                           <JobStatusLabel status={row.get('lastRunStatus')} />
@@ -165,7 +144,8 @@ export default createReactClass({
               <Col sm={6}>
                 <p style={{ margin: '0 0 5px', display: 'flex', alignItems: 'center' }}>
                   <strong style={{ fontSize: '1.2em', marginRight: '10px' }}>
-                    {config.get('configurationName')} - {config.get('rowName')} #{config.get('rowVersion')}
+                    {config.get('configurationName')} - {config.get('rowName')} #
+                    {config.get('rowVersion')}
                   </strong>{' '}
                   <JobStatusLabel status={config.get('lastRunStatus')} />
                 </p>
@@ -189,11 +169,7 @@ export default createReactClass({
                   Last run: {date.format(config.get('lastRunAt'))}
                 </p>
                 <p>Last edit: {date.format(config.get('rowLastModifiedAt'))}</p>
-                <Button
-                  disabled
-                  bsStyle="success"
-                  bsSize="large"
-                >
+                <Button disabled bsStyle="success" bsSize="large">
                   Show data results (private beta)
                 </Button>
               </Col>
@@ -219,6 +195,59 @@ export default createReactClass({
       >
         Show more matches
       </Button>
+    );
+  },
+
+  renderTransformationBucketLink(row) {
+    const createdAt = date.format(row.get('configurationCreatedAt'));
+    const createdBy = row.get('configurationCreated');
+
+    return (
+      <Link to="transformationBucket" params={{ config: row.get('configurationId') }}>
+        <Tooltip tooltip={`Created ${createdAt} by ${createdBy}`} placement="top">
+          <span>{row.get('configurationName')}</span>
+        </Tooltip>
+      </Link>
+    );
+  },
+
+  renderTransformationLink(row) {
+    const lastModifiedAt = date.format(row.get('configurationCreatedAt'));
+    const lastModifiedBy = row.get('configurationCreated');
+
+    const transformationName = (
+      <Tooltip tooltip={`Last edit ${lastModifiedAt} by ${lastModifiedBy}`} placement="top">
+        <span>{row.get('rowName')}</span>
+      </Tooltip>
+    );
+
+    if (this.props.transformation.get('id') === row.get('rowId')) {
+      return (
+        <span>
+          {transformationName} <Label>Current</Label>
+        </span>
+      );
+    }
+
+    return (
+      <Link
+        to="transformationDetail"
+        params={{ row: row.get('rowId'), config: row.get('configurationId') }}
+      >
+        {transformationName}
+      </Link>
+    );
+  },
+
+  renderLastRun(row) {
+    if (!row.has('lastRunAt')) {
+      return <span>Never runned</span>;
+    }
+
+    return (
+      <Tooltip tooltip={`Triggered by ${row.get('lastRunBy')}`} placement="top">
+        <span>{date.format(row.get('lastRunAt'))}</span>
+      </Tooltip>
     );
   }
 });
