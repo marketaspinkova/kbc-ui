@@ -59,7 +59,7 @@ export default createReactClass({
           />
         )}
         <div className="kbc-main-content">
-          <FormHeader component={this.state.component} withButtons={false} />
+          <FormHeader component={this.state.component} />
           <div className="row">
             <div className="col-md-6">
               <AppUsageInfo component={this.state.component} />
