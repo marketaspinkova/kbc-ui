@@ -1,6 +1,7 @@
 import Promise from 'bluebird';
-import ComponentsStore from './stores/ComponentsStore';
 import dispatcher from '../../Dispatcher';
+import SimpleError from '../../utils/errors/SimpleError';
+import ComponentsStore from './stores/ComponentsStore';
 import { ActionTypes } from './Constants';
 
 export default {
@@ -22,8 +23,8 @@ export default {
   loadComponent(componentId) {
     if (ComponentsStore.hasComponent(componentId)) {
       return Promise.resolve();
-    } else {
-      return Promise.reject(new Error(`Component ${componentId} not exist.`));
     }
+
+    return Promise.reject(new SimpleError('Component not exist', `Component ${componentId} not exist.`));
   }
 };
