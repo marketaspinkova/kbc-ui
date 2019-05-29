@@ -1,12 +1,12 @@
-import StoreUtils from '../../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../../utils/StoreUtils';
 import { Map } from 'immutable';
 import dispatcher from '../../../Dispatcher';
 import { ActionTypes } from '../MetadataConstants';
 
-var _store = Map({
+var _store = initStore('MetadataStore', Map({
   editing: Map(),
   isSaving: Map()
-});
+}));
 
 var MetadataStore = StoreUtils.createStore({
   getEditingValue(objectType, objectId, metadataKey) {

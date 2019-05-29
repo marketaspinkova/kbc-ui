@@ -1,11 +1,11 @@
-import StoreUtils from '../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../utils/StoreUtils';
 import Immutable from 'immutable';
 import dispatcher from '../../Dispatcher';
 import Constants from './RowVersionsConstants';
 
 var Map = Immutable.Map, List = Immutable.List;
 
-var _store = Map({
+var _store = initStore('RowVersionsStore', Map({
   loadingVersions: Map(),
   versions: Map(),
   versionsConfigs: Map(),
@@ -13,7 +13,7 @@ var _store = Map({
   searchFilters: Map(),
   pending: Map(),
   multiLoadPending: Map()
-});
+}));
 
 var RowVersionsStore = StoreUtils.createStore({
   hasVersions: function(componentId, configId, rowId) {

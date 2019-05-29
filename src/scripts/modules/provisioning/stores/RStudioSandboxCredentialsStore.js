@@ -1,15 +1,15 @@
 import Immutable from 'immutable';
-import StoreUtils from '../../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../../utils/StoreUtils';
 import Constants from '../Constants';
 import Dispatcher from '../../../Dispatcher';
 
-var _store = Immutable.Map({
+var _store = initStore('RStudioSandboxCredentialsStore', Immutable.Map({
   credentials: Immutable.Map(),
   touch: null,
   pendingActions: Immutable.Map(),
   isLoading: false,
   isLoaded: false
-});
+}));
 
 var RStudioSandboxCredentialsStore = StoreUtils.createStore({
   getCredentials: function() {

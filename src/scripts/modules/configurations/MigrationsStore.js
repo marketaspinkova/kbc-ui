@@ -1,11 +1,11 @@
-import StoreUtils from '../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../utils/StoreUtils';
 import {Map} from 'immutable';
 import dispatcher from '../../Dispatcher';
 import Constants from './MigrationsConstants';
 
-var _store = Map({
+var _store = initStore('MigrationsStore', Map({
   pendingLegacyUIMigrations: Map()
-});
+}));
 
 var MigrationsStore = StoreUtils.createStore({
   isPendingLegacyUIMigration: function(componentId, configId) {

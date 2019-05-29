@@ -1,15 +1,15 @@
 import Dispatcher from '../../../Dispatcher';
 import * as constants from '../Constants';
 import { Map, fromJS } from 'immutable';
-import StoreUtils from '../../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../../utils/StoreUtils';
 import { jobsLimit } from '../../storage-explorer/Constants';
 
-let _store = Map({
+let _store = initStore('StorageJobsStore', Map({
   jobs: Map(),
   hasMore: true,
   isLoading: false,
   isLoadingMore: false
-});
+}));
 
 const StorageJobsStore = StoreUtils.createStore({
   getAll() {

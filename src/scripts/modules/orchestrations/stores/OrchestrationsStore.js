@@ -2,9 +2,9 @@ import Dispatcher from '../../../Dispatcher';
 import { Map, List, fromJS } from 'immutable';
 import { ActionTypes } from '../Constants';
 import matchByWords from '../../../utils/matchByWords';
-import StoreUtils from '../../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../../utils/StoreUtils';
 
-let _store = Map({
+let _store = initStore('OrchestrationsStore', Map({
   orchestrationsById: Map(),
   orchestrationsPendingActions: Map(), // by orchestration id
   tasksToRun: Map(), // [orchestrationId] - tasks
@@ -16,7 +16,7 @@ let _store = Map({
   isLoading: false,
   isLoaded: false,
   loadingOrchestrations: List()
-});
+}));
 
 const addEmptyPhase = tasks => {
   const phaseIds = tasks.map(phase => phase.get('id')).toJS();

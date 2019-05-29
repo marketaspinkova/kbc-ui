@@ -1,14 +1,14 @@
 import Dispatcher from '../../../Dispatcher';
-import StoreUtils from '../../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../../utils/StoreUtils';
 import {Map} from 'immutable';
 import keyMirror from 'fbjs/lib/keyMirror';
 
 export const ActionTypes = keyMirror({TABLEBROWSER_SET_LOCALSTATE: null, TABLEBROWSER_SET_CURRENT_TABLEID: null});
 
-let _store = Map({
+let _store = initStore('TableBrowserStore', Map({
   currentTableId: null,
   localStateByTableId: Map()
-});
+}));
 
 const TableBrowserStore = StoreUtils.createStore({
 

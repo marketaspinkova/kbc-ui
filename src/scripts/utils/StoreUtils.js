@@ -24,4 +24,12 @@ const StoreUtils = {
   }
 };
 
+const initStore = (name, store) => {
+  return store;
+};
+
+export {
+  initStore
+}
+
 export default StoreUtils;

@@ -3,16 +3,16 @@ import Constants from './ConfigurationsConstants';
 import RowConstants from './ConfigurationRowsConstants';
 import Immutable from 'immutable';
 import {Map} from 'immutable';
-import StoreUtils from '../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../utils/StoreUtils';
 import * as InstalledComponentsConstants from '../components/Constants';
 import isParsableConfiguration from './utils/isParsableConfiguration';
 
-var _store = Map({
+var _store = initStore('ConfigurationsStore', Map({
   configurations: Map(),
   pendingActions: Map(),
   editing: Map(),
   jsonEditor: Map()
-});
+}));
 
 let ConfigurationsStore = StoreUtils.createStore({
   get: function(componentId, configurationId) {

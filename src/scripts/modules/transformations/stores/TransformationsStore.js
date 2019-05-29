@@ -3,11 +3,11 @@ import { Map, List, fromJS } from 'immutable';
 import { ActionTypes } from '../Constants';
 import { ActionTypes as InstalledComponentsActionTypes } from '../../components/Constants';
 import InstalledComponentsStore from '../../components/stores/InstalledComponentsStore';
-import StoreUtils from '../../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../../utils/StoreUtils';
 import _ from 'underscore';
 import parseBuckets from '../utils/parseBuckets';
 
-let _store = Map({
+let _store = initStore('TransformationsStore', Map({
   transformationsByBucketId: Map(),
   loadingTransformationBuckets: List(),
   pendingActions: Map(),
@@ -17,7 +17,7 @@ let _store = Map({
   openInputMappings: Map(),
   openOutputMappings: Map(),
   editingTransformationsFields: Map()
-});
+}));
 
 const enhanceTransformation = transformation => {
   if (transformation.get('backend') === 'docker') {

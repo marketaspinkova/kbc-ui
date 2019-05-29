@@ -1,13 +1,13 @@
 import { Map, Set } from 'immutable';
-import StoreUtils from '../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../utils/StoreUtils';
 import dispatcher from '../../Dispatcher';
 import * as constants from './Constants';
 
-let _store = Map({
+let _store = initStore('StorageBucketsLocalStore', Map({
   searchQuery: '',
   openedBuckets: Set(),
   isReloading: false
-});
+}));
 
 const BucketsLocalStore = StoreUtils.createStore({
   getSearchQuery() {

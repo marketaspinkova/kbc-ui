@@ -1,11 +1,11 @@
-import StoreUtils from '../../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../../utils/StoreUtils';
 import Immutable from 'immutable';
 import dispatcher from '../../../Dispatcher';
 import Constants from '../VersionsConstants';
 
 var Map = Immutable.Map, List = Immutable.List;
 
-var _store = Map({
+var _store = initStore('VersionsStore', Map({
   loadingVersions: Map(),
   versions: Map(),
   versionsConfigs: Map(),
@@ -13,7 +13,7 @@ var _store = Map({
   searchFilters: Map(),
   pending: Map(),
   multiLoadPending: Map()
-});
+}));
 
 var VersionsStore = StoreUtils.createStore({
   hasVersions: function(componentId, configId) {

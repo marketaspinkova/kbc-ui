@@ -1,4 +1,4 @@
-import StoreUtils from '../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../utils/StoreUtils';
 import Immutable from 'immutable';
 import dispatcher from '../../Dispatcher';
 import * as constants from './constants';
@@ -10,14 +10,14 @@ const { fromJS, Map, List } = Immutable;
 
 const NonTitleTypes = [ColumnTypes.IGNORE, ColumnTypes.DATE, ColumnTypes.REFERENCE];
 
-let _store = Map({
+let _store = initStore('GooddataWriterStore', Map({
   writers: Map(),
   tables: Map(),
   tableColumns: Map(),
   filters: Map(), // by [writer_id][tables] = value
   referenceableTables: Map(),
   pending: Map()
-});
+}));
 
 const extendTable = function(table) {
   const tableId = table.get('id') || table.get('tableId');

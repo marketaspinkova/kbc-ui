@@ -1,5 +1,5 @@
 import { Map, List, fromJS, Record } from 'immutable';
-import StoreUtils from '../../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../../utils/StoreUtils';
 import * as constants from '../Constants';
 import Dispatcher from '../../../Dispatcher';
 
@@ -9,7 +9,7 @@ const JobsRecord = Record({
   jobs: List()
 });
 
-let _store = Map();
+let _store = initStore('LatestJobsStore', Map());
 
 const JobsStore = StoreUtils.createStore({
   getJobs(componentId, configurationId) {

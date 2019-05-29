@@ -1,5 +1,5 @@
 import {fromJS, Map} from 'immutable';
-import StoreUtils from '../../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../../utils/StoreUtils';
 import keyMirror from 'fbjs/lib/keyMirror';
 import Dispatcher from '../../../Dispatcher';
 import {loadMetadata} from '../AnalyticsMetadata';
@@ -15,14 +15,14 @@ const ActionTypes = keyMirror({
   GAPI_METADATA_LOAD_SUCCESS: null
 });
 
-let _store = Map({
+let _store = initStore('GoogleUtilsStore', Map({
   isInitializing: false,
   isInitialized: false,
   isPicking: Map(), // what true/false
   metadata: Map(),
   isLoadingMetadata: false,
   isLoadedMetadata: false
-});
+}));
 
 
 export const GapiStore = StoreUtils.createStore({

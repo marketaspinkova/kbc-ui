@@ -1,11 +1,11 @@
 import Dispatcher from '../../Dispatcher';
 import { Map, fromJS } from 'immutable';
 import _ from 'underscore';
-import StoreUtils from '../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../utils/StoreUtils';
 import versionsConstants from '../components/VersionsConstants';
 import constants from './constants';
 
-let _store = Map({
+let _store = initStore('WrDbStore', Map({
   credentials: Map(), // componentId#configId
   tables: Map(), // componentId#configId
   tablesConfig: Map(), // componentId#configId#tableId
@@ -16,7 +16,7 @@ let _store = Map({
   provisioningCredentials: Map(), // componentId#configId
   loadingProvCredentials: Map(), // componentId#configId
   deletingTables: Map()
-}); // componentId#configId
+})); // componentId#configId
 
 const WrDbStore = StoreUtils.createStore({
   getDeletingTables(componentId, configId) {

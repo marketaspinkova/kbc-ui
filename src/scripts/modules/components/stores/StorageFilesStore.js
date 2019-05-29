@@ -1,10 +1,10 @@
 import Dispatcher from '../../../Dispatcher';
 import * as constants from '../Constants';
 import { Map, List, fromJS } from 'immutable';
-import StoreUtils from '../../../utils/StoreUtils';
+import StoreUtils, { initStore } from '../../../utils/StoreUtils';
 import { filesLimit } from '../../storage-explorer/Constants';
 
-let _store = Map({
+let _store = initStore('StorageFilesStore', Map({
   files: List(),
   hasMoreFiles: true,
   isLoaded: false,
@@ -12,7 +12,7 @@ let _store = Map({
   uploadingProgress: Map(),
   isLoadingMore: false,
   isDeleting: Map()
-});
+}));
 
 const StorageFilesStore = StoreUtils.createStore({
   getAll() {
