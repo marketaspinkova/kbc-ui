@@ -1,12 +1,12 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
+import { Map } from 'immutable';
 import ComponentConfigurationRowLink from '../../../../components/react/components/ComponentConfigurationRowLink';
 import TransformationsStore from '../../../stores/TransformationsStore';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 
 export default createReactClass({
-
   mixins: [createStoreMixin(TransformationsStore)],
 
   propTypes: {
@@ -19,7 +19,7 @@ export default createReactClass({
 
   getStateFromStores() {
     return {
-      transformation: TransformationsStore.getTransformation(this.props.bucketId, this.props.transformationId)
+      transformation: TransformationsStore.getTransformation(this.props.bucketId, this.props.transformationId) || Map()
     };
   },
 
@@ -32,7 +32,7 @@ export default createReactClass({
           rowId={this.props.transformationId}
           onClick={this.props.onClick}
         >
-          Transformation {this.state.transformation.get('name')}, output mapping of {this.props.tableId}
+          Transformation {this.state.transformation.get('name', this.props.transformationId)}, output mapping of {this.props.tableId}
         </ComponentConfigurationRowLink>
         <br />
         {this.props.message}
