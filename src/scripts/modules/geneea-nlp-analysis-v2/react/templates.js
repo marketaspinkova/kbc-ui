@@ -8,6 +8,22 @@ const languageOptions = [
     value: 'cs'
   },
   {
+    label: 'Slovak',
+    value: 'sk'
+  },
+  {
+    label: 'German',
+    value: 'de'
+  },
+  {
+    label: 'Spanish',
+    value: 'es'
+  },
+  {
+    label: 'Polish',
+    value: 'pl'
+  },
+  {
     label: 'autodetect',
     value: ''
   }
@@ -17,7 +33,7 @@ const analysisTypes = {
   tags: {
     name: 'Tags',
     description:
-      'The objective of a topic tag is to describe the content of a text whether an email, commercial contract, or a news article. A tag can be cancel subscription, safe car, or terrible cook. Again, we can easily adjust tags to your domain and to your needs.'
+      'The objective of a topic tag is to describe the content of a text whether it is an email, commercial contract, or a news article. A tag can be cancel subscription, safe car, or terrible cook. Again, we can easily adjust tags to your domain and to your needs.'
   },
 
   entities: {
