@@ -25,6 +25,6 @@ export default {
       return Promise.resolve();
     }
 
-    return Promise.reject(new SimpleError('Component not exist', `Component ${componentId} not exist.`));
+    return Promise.reject(new SimpleError('Component not found', `Component ${componentId} does not exist.`));
   }
 };
