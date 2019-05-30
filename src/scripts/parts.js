@@ -10,7 +10,11 @@ import ProjectsList from './react/layout/project-select/List';
 import NewProjectModal from './react/layout/NewProjectModal';
 import UserLinks from './react/layout/UserLinks';
 import ProjectOverview from './react/admin/project-graph/Index';
+// New UI
 import RegionSelect from './react/admin/login/RegionSelect';
+import NewUiProjectsList from './react/admin/projects-list/ProjectList';
+import NewUiCurrentUser from './react/admin/projects-list/CurrentUser';
+import NewUiPendingInvitations from './react/admin/projects-list/PendingInvitations';
 
 export default {
   helpers,
@@ -25,7 +29,10 @@ export default {
     NewProjectModal,
     admin: {
       ProjectOverview,
-      RegionSelect
+      RegionSelect,
+      ProjectsList: NewUiProjectsList,
+      CurrentUser: NewUiCurrentUser,
+      PendingInvitations: NewUiPendingInvitations,
     }
   }
 };
