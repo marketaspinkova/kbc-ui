@@ -4,9 +4,12 @@ import OverviewImage from '../images/Login.png';
 import * as helpers from './helpers';
 
 const DummyCurrentUser = () => (
-  <div style={{ width: '140px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px', border: '1px solid #f5f5f5', borderRadius: '5px' }}>
-    <div style={{ display: 'inline-block', width: '80px', height: '10px', background: '#f5f5f5', borderRadius: '5px' }} />
-    <div style={{ display: 'inline-block', width: '30px', height: '10px', background: '#f5f5f5', borderRadius: '5px' }}/>
+  <div style={{ width: '150px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '42px' }}>
+    <div style={{ display: 'inline-block', width: '90px', height: '40px', textAlign: 'right' }}>
+      <div style={{ display: 'inline-block', width: '70px', height: '10px', background: '#efefef', borderRadius: '5px' }} />
+      <div style={{ display: 'inline-block', width: '90px', height: '10px', background: '#f5f5f5', borderRadius: '5px' }} />
+    </div>
+    <div style={{ display: 'inline-block', width: '40px', height: '40px', background: '#f5f5f5', borderRadius: '50%', marginLeft: '15px' }}/>
   </div>
 );
 
