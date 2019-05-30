@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
-import Remarkable from 'react-remarkable';
+import Markdown from 'react-markdown';
 import { PanelWithDetails } from '@keboola/indigo-ui';
 
 export default createReactClass({
@@ -44,10 +44,10 @@ export default createReactClass({
             preview={this.props.size}
             labelCollapse="Show less"
             labelOpen="Show more">
-            <Remarkable source={this.props.source}/>
+            <Markdown source={this.props.source}/>
           </PanelWithDetails>
         ) : (
-          <Remarkable source={this.props.source}/>
+          <Markdown source={this.props.source}/>
         )}
       </div>
     );

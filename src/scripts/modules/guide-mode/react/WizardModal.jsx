@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import {Modal, ListGroupItem, ListGroup, Button} from 'react-bootstrap';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
-import Remarkable from 'react-remarkable';
+import Markdown from 'react-markdown/with-html';
 import RoutesStore from '../../../stores/RoutesStore';
 import { hideWizardModalFn, showWizardModalFn } from '../stores/ActionCreators.js';
 import GuideModeImage from './GuideModeImage';
@@ -64,14 +64,14 @@ export default createReactClass({
     return (
       <div key={this.props.step}>
         {!this.isCongratulations() &&
-        <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
+        <Markdown source={this.getStepMarkdown()} escapeHtml={false} />
         }
         <div className="guide-media">
           {this.renderMedia()}
         </div>
         {this.isCongratulations() &&
         <span className="guide-congratulations">
-          <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
+          <Markdown source={this.getStepMarkdown()} escapeHtml={false} />
         </span>
         }
         {this.isNavigationVisible() && this.renderNavigation()}
