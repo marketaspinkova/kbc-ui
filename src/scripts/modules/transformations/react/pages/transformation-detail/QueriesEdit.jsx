@@ -23,7 +23,7 @@ export default createReactClass({
     const splitQueries = this.props.splitQueries;
     const query = splitQueries.get(this.props.highlightQueryNumber - 1);
     const positionStart = this.props.queries.indexOf(query);
-    if (positionStart === -1) {
+    if (!query || positionStart === -1) {
       return;
     }
     const lineStart = (this.props.queries.substring(0, positionStart).match(/\n/g) || []).length;
