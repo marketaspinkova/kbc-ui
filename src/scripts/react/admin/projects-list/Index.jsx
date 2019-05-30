@@ -4,6 +4,7 @@ import createReactClass from 'create-react-class';
 import OverviewImage from '../../../../images/Login.png';
 import ProjectList from './ProjectList';
 import CurrentUser from './CurrentUser';
+import PendingInvitations from './PendingInvitations';
 
 export default createReactClass({
   propTypes: {
@@ -30,6 +31,9 @@ export default createReactClass({
               />
             </section>
             <section>
+              <PendingInvitations
+                invitationsCount={2}
+              />
               <ProjectList
                 organizations={this.props.organizations}
                 urlTemplates={this.props.urlTemplates}
