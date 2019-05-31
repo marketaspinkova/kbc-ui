@@ -1,10 +1,9 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
+import { Alert } from 'react-bootstrap';
 
 export default createReactClass({
-
   propTypes: {
     invitationsCount: PropTypes.number.isRequired
   },
@@ -19,17 +18,16 @@ export default createReactClass({
     }
 
     return (
-      <a
-        href="/admin/account/projects-invitations"
-        className="btn btn-lg btn-block btn-warning text-left action-button"
-      >
-        <span className="raquo">&raquo;</span>
-        <strong className="h2">Pending Invitations</strong><br/>
-        <span className="small">
-          You have <strong>{this.props.invitationsCount}</strong> pending
-          {' '}<strong>invitation{this.pluralText()}</strong><br/>
-          {' '}waiting for your response.
-        </span>
+      <a href="/admin/account/projects-invitations" className="no-underline">
+        <Alert bsStyle="warning" className="alert-as-link">
+          <strong>Pending Invitations</strong>
+          <br />
+          <span>
+            You have <strong>{this.props.invitationsCount}</strong> pending{' '}
+            <strong>invitation{this.pluralText()}</strong>
+            <br /> waiting for your response.
+          </span>
+        </Alert>
       </a>
     );
   }

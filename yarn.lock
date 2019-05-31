@@ -945,9 +945,9 @@
   integrity sha512-3TLOGWQ4fRZYCbL4XGl/tdltDBNTS7mXDapWBHkGnVO4MvU14kMjy0DP9uc8ue+bbUZ5WWeQsevalGmMX5lFfQ==
 
 "@keboola/indigo-ui@^8.0.0":
-  version "8.0.8"
-  resolved "https://registry.yarnpkg.com/@keboola/indigo-ui/-/indigo-ui-8.0.8.tgz#6e44caa2bcb9f088f03495eae34d42636193ae89"
-  integrity sha512-PVsWvj7LmLVmX/BBDuFcvWtnOjc5gWOEI9SePc2ENgHx7OnLr3HtYup5XyG0EL795wzx9UdKS/WcS6o+gqRUpw==
+  version "8.0.10"
+  resolved "https://registry.yarnpkg.com/@keboola/indigo-ui/-/indigo-ui-8.0.10.tgz#106bd7fb575432dc0aed922b29000e6c261a149e"
+  integrity sha512-ao+AkhYrumZX1StOHPJQa9EdsKiXnZCuX8uUrAw0ekIHAFnROmzyTr50ga3ZriqQRvLfSxdUBwAzJMI3Fo8RNQ==
   dependencies:
     bootstrap "^3.3.7"
     classnames "^2.1.0"
