@@ -19,7 +19,7 @@ export default createReactClass({
 
     return (
       <a href="/admin/account/projects-invitations" className="no-underline">
-        <Alert bsStyle="warning" classname="alert-as-link">
+        <Alert bsStyle="warning" className="alert-as-link">
           <strong>Pending Invitations</strong>
           <br />
           <span>
