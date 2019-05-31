@@ -10,7 +10,7 @@ export const incrementalFetchingTypes = Immutable.Map({
   ),
   'keboola.ex-db-mssql': Immutable.List(
     [
-      'datetime', 'datetime2', 'smalldatetime',
+      'datetime', 'datetime2', 'smalldatetime', 'timestamp',
       'integer', 'int', 'smallint', 'bigint',
       'numeric', 'decimal', 'real', 'float'
     ]
