@@ -55,30 +55,28 @@ export default createReactClass({
             </span>
         </Tooltip>
       );
-    } else {
-      return (
-        <RestoreConfigurationButton
-          tooltip="Restore"
-          isPending={this.props.isRestoring}
-          confirm={this.restoreConfirmProps()}
-        />
-      );
     }
+    return (
+      <RestoreConfigurationButton
+        tooltip="Restore"
+        isPending={this.props.isRestoring}
+        confirm={this.restoreConfirmProps()}
+      />
+    );
   },
 
   deleteButton() {
     if (!this.props.isDeleteEnabled) {
-      return (null);
-    } else {
-      return (
-        <DeleteButton
-          tooltip="Delete Forever"
-          icon="fa-times"
-          isPending={this.props.isDeleting}
-          confirm={this.deleteConfirmProps()}
-        />
-      );
+      return null;
     }
+    return (
+      <DeleteButton
+        tooltip="Delete Forever"
+        icon="fa-times"
+        isPending={this.props.isDeleting}
+        confirm={this.deleteConfirmProps()}
+      />
+    );
   },
 
   description() {
