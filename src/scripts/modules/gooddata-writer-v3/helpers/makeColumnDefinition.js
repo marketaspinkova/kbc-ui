@@ -6,6 +6,8 @@ const BASE_TYPES = [
   Types.FACT
 ];
 
+const DATATYPE_SUPPORT = [...BASE_TYPES, Types.LABEL]
+
 // export const mustHave;
 
 function checkEmpty(value, label) {
@@ -51,11 +53,11 @@ function prepareFields(column) {
     },
 
     dataType: {
-      show: BASE_TYPES.includes(type)
+      show: DATATYPE_SUPPORT.includes(type)
     },
 
     dataTypeSize: {
-      show: BASE_TYPES.includes(type) && [DataTypes.VARCHAR, DataTypes.DECIMAL].includes(dataType),
+      show: DATATYPE_SUPPORT.includes(type) && [DataTypes.VARCHAR, DataTypes.DECIMAL].includes(dataType),
       invalidReason: checkDataTypeSize(dataType, column.dataTypeSize),
       defaultValue: column.dataType === DataTypes.VARCHAR ? '255' : '12,2',
       onChange: (newColumn, oldColumn) => {
