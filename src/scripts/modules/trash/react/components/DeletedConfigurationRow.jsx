@@ -17,6 +17,7 @@ export default createReactClass({
     config: PropTypes.object.isRequired,
     component: PropTypes.object.isRequired,
     componentId: PropTypes.string.isRequired,
+    isDeleteEnabled: PropTypes.bool.isRequired,
     isDeleting: PropTypes.bool.isRequired,
     isRestoring: PropTypes.bool.isRequired
   },
@@ -33,48 +34,48 @@ export default createReactClass({
             Removed by <strong>{this.props.config.getIn(['currentVersion', 'creatorToken', 'description'])}</strong>{' '}
             <Finished endTime={this.props.config.getIn(['currentVersion', 'created'])} />
           </span>
-          {this.buttons()}
+          <span>
+            {this.restoreButton()}
+            {this.deleteButton()}
+          </span>
         </span>
       </span>
     );
   },
 
-  buttons() {
+  restoreButton() {
     if (isObsoleteComponent(this.props.componentId)) {
       return (
-        <span>
-          <Tooltip
-            placement="top"
-            tooltip="Configuration restore is not supported by component"
-          >
+        <Tooltip
+          placement="top"
+          tooltip="Configuration restore is not supported by component"
+        >
             <span className="btn btn-link">
               <i className="fa fa-exclamation-triangle" />
             </span>
-          </Tooltip>
-          <DeleteButton
-            tooltip="Delete Forever"
-            icon="fa-times"
-            isPending={this.props.isDeleting}
-            confirm={this.deleteConfirmProps()}
-          />
-        </span>
+        </Tooltip>
       );
     }
-
     return (
-      <span>
-        <RestoreConfigurationButton
-          tooltip="Restore"
-          isPending={this.props.isRestoring}
-          confirm={this.restoreConfirmProps()}
-        />
-        <DeleteButton
-          tooltip="Delete Forever"
-          icon="fa-times"
-          isPending={this.props.isDeleting}
-          confirm={this.deleteConfirmProps()}
-        />
-      </span>
+      <RestoreConfigurationButton
+        tooltip="Restore"
+        isPending={this.props.isRestoring}
+        confirm={this.restoreConfirmProps()}
+      />
+    );
+  },
+
+  deleteButton() {
+    if (!this.props.isDeleteEnabled) {
+      return null;
+    }
+    return (
+      <DeleteButton
+        tooltip="Delete Forever"
+        icon="fa-times"
+        isPending={this.props.isDeleting}
+        confirm={this.deleteConfirmProps()}
+      />
     );
   },
 
