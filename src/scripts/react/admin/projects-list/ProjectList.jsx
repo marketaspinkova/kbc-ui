@@ -24,7 +24,10 @@ export default createReactClass({
         <div className="projects-list-box no-projects">
           <h2>You are not a member of any project yet.</h2>
           <p>
-            <a href="mailto:support@keboola.com">Contact us</a> to get started.
+            <a href="mailto:support@keboola.com" className="underline">
+              Contact us
+            </a>{' '}
+            to get started.
           </p>
         </div>
       );
