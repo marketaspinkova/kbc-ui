@@ -17,7 +17,7 @@ export default createReactClass({
       <div className="current-user">
         <Dropdown id="current-user-dropdown">
           <Dropdown.Toggle noCaret bsStyle="link">
-            <div className="current-user-box text-overflow-ellipsis">
+            <div className="current-user-box">
               <span className="current-user-name" title={this.props.user.get('name')}>
                 {this.props.user.get('name')}
               </span>
