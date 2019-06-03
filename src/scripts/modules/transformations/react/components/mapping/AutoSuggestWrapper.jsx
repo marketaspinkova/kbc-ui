@@ -1,8 +1,8 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import AutoSuggest from 'react-autosuggest';
-import {List} from 'immutable';
+import { List } from 'immutable';
 
 function sortSuggestionsByGeneric(item) {
   return item;
@@ -89,8 +89,8 @@ export default createReactClass({
   },
 
   handleChange(e, options) {
-    this.setState({value: options.newValue});
-    this.props.onChange(options.newValue);
+    const value = options.newValue.trim();
+    this.setState({ value });
+    this.props.onChange(value);
   }
-
 });
