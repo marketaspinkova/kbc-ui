@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import _ from 'underscore';
-import { FormControl } from 'react-bootstrap';
+import { Button, FormControl } from 'react-bootstrap';
 import matchByWords from '../../../utils/matchByWords';
 import Tooltip from '../../../react/common/Tooltip';
+import contactSupport from '../../../utils/contactSupport';
 
 export default createReactClass({
   propTypes: {
@@ -24,9 +25,9 @@ export default createReactClass({
         <div className="projects-list-box no-projects">
           <h2>You are not a member of any project yet.</h2>
           <p>
-            <a href="mailto:support@keboola.com" className="underline">
+            <Button onClick={contactSupport} bsStyle="link" className="btn-link-inline underline">
               Contact us
-            </a>{' '}
+            </Button>{' '}
             to get started.
           </p>
         </div>
