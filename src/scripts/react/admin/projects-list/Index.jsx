@@ -18,7 +18,7 @@ export default createReactClass({
     return (
       <div className="container-fluid login-page">
         <div className="row">
-          <div className="col-xs-12 col-sm-6 col-md-5 col-lg-4 main">
+          <div className="col-xs-12 col-sm-7 col-md-6 col-lg-4 main">
             <section className="top-content">
               <a href="/admin/projects" className="keboola-logo">
                 <span className="kbc-icon-keboola-logo" />
@@ -52,8 +52,8 @@ export default createReactClass({
               </p>
             </section>
           </div>
-          <div className="hidden-xs col-sm-6 col-md-7 col-lg-8 overview">
-            <div style={{ position: 'fixed' }}>
+          <div className="hidden-xs col-sm-5 col-md-6 col-lg-8 overview">
+            <div>
               <img src={OverviewImage} className="img-responsive" alt="New dashboard features" />
               <div className="overview-text">
                 <h2>New dashboard</h2>
