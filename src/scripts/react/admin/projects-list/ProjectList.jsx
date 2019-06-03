@@ -19,6 +19,17 @@ export default createReactClass({
   },
 
   render() {
+    if (!this.props.organizations.count()) {
+      return (
+        <div className="projects-list-box no-projects">
+          <h2>You are not a member of any project yet.</h2>
+          <p>
+            <a href="mailto:support@keboola.com">Contact us</a> to get started.
+          </p>
+        </div>
+      );
+    }
+
     return (
       <div className="projects-list-box">
         <div className="projects-list-searchbar">
