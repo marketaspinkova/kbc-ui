@@ -42,7 +42,7 @@ The result contains these tables:
 * \`analysis-result-sentences\` -- sentences level results with the following columns 
     * all \`id\` -- columns from the input table
     * \`index\` -- a zero-based index of the sentence in the document
-    * \`segment\` -- segment of the document - ``text``. ``title`` or ``lead``
+    * \`segment\` -- segment of the document - \`text\`. \`title\` or \`lead\`
     * \`text\` -- text of the sentence
     * \`sentimentValue\`  -- detected sentiment of the sentence (a decimal number between *-1* and *1*)
     * \`sentimentPolarity\` -- polarity of _sentimentValue_ (_1_, _0_ or _-1_)
