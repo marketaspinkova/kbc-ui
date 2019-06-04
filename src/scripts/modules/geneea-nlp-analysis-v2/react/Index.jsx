@@ -471,19 +471,6 @@ export default createReactClass({
     );
   },
 
-  renderResultLabel() {
-    return (
-      <Tooltip tooltip="show results explanation">
-        <span>
-          Analysis results {' '}
-          <span
-            onClick={this.showResultsHelpModal}
-            className="fa fa-question-circle kbc-cursor-pointer" />
-        </span>
-      </Tooltip>
-    );
-  },
-
   showResultsHelpModal() {
     this.updateLocalState(['showResultsHelpModal'], true);
   },
@@ -502,9 +489,12 @@ export default createReactClass({
     const bucketId = getDefaultBucket('out', componentId, this.state.configId);
     return (
       <div className="form-group">
-        <label className="col-sm-3 control-label">
-          {this.renderResultLabel()}
-        </label>
+        <div className="col-sm-3">
+          <label className="control-label">Analysis results</label><br />
+          <button className="btn btn-link btn-link-inline" onClick={this.showResultsHelpModal}>
+            <i className="fa fa-question-circle" /> Show explanation
+          </button>
+        </div>
         <div className="col-sm-9 ">
           <ul className="nav nav-stacked">
             <li>
