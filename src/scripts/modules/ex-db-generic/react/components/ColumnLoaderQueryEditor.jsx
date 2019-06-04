@@ -17,7 +17,7 @@ export default createReactClass({
     if (this.props.isLoadingColumns) {
       return (
         <FormControl.Static>
-          <Loader /> Fetching list of column
+          <Loader /> Fetching list of columns
         </FormControl.Static>
       );
     }
