@@ -545,7 +545,7 @@ export function createActions(componentId) {
           } else if (data.status === 'success') {
             updateLocalState(configId, storeProvisioning.SOURCE_TABLES_ERROR_PATH, null);
           }
-          if (queryId && data.tables.length > 0) {
+          if (queryId && data.tables && data.tables.length > 0) {
             const tables = store.getSourceTables().map((table) => {
               if (table.get('name') === data.tables[0].name && table.get('schema') === data.tables[0].schema) {
                 return fromJS(data.tables[0]);
