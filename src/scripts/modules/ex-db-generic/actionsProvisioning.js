@@ -8,6 +8,7 @@ import callDockerAction from '../components/DockerActionsApi';
 import getDefaultPort from './templates/defaultPorts';
 import {getProtectedProperties} from './templates/credentials';
 import {incrementalFetchingTypes} from './templates/incrementalFetchingCandidates';
+import {supportSplitLoading} from './utils';
 
 export function loadConfiguration(componentId, configId) {
   return componentsActions.loadComponentConfigData(componentId, configId);
@@ -32,10 +33,10 @@ export function loadSourceTables(componentId, configId) {
   }
 }
 
-export function reloadSourceTables(componentId, configId) {
+export function reloadSourceTables(componentId, configId, queryId) {
   if (componentSupportsSimpleSetup(componentId)) {
     createActions(componentId).updateLocalState(configId, storeProvisioning.LOADING_SOURCE_TABLES_PATH, true);
-    return createActions(componentId).getSourceTables(configId);
+    return createActions(componentId).getSourceTables(configId, queryId);
   }
 }
 
@@ -508,13 +509,32 @@ export function createActions(componentId) {
       return updateLocalState(configId, path, data);
     },
 
-    getSourceTables(configId) {
+    getSourceTables(configId, queryId) {
       const store = getStore(configId);
       if (store.isConnectionValid()) {
         updateLocalState(configId, storeProvisioning.LOADING_SOURCE_TABLES_PATH, true);
         let runData = store.configData.setIn(['parameters', 'db'], store.getCredentials());
         if (!store.isRowConfiguration()) {
           runData = runData.setIn(['parameters', 'tables'], List());
+        }
+        if (supportSplitLoading(componentId)) {
+          runData = runData.setIn(['parameters', 'tableListFilter', 'listColumns'], false);
+
+          if (queryId) {
+            const queries = store.getQueries().concat(store.getEditingQueries());
+            const query = queries.find((query) => query.get('id') === queryId);
+            updateLocalState(configId, storeProvisioning.LOADING_SOURCE_TABLES_PATH, false);
+            updateLocalState(configId, storeProvisioning.LOADING_COLUMNS_PATH, true);
+            runData = runData.setIn(['parameters', 'tableListFilter'], {
+              listColumns: true,
+              tablesToList: [
+                {
+                  schema: query.getIn(['table', 'schema']),
+                  tableName: query.getIn(['table', 'tableName'])
+                }
+              ]
+            });
+          }
         }
         const params = {
           configData: runData.toJS()
@@ -525,12 +545,23 @@ export function createActions(componentId) {
           } else if (data.status === 'success') {
             updateLocalState(configId, storeProvisioning.SOURCE_TABLES_ERROR_PATH, null);
           }
-          updateLocalState(configId, storeProvisioning.SOURCE_TABLES_PATH, fromJS(data.tables));
-          if (store.isRowConfiguration() && data.tables) {
-            const candidates = getIncrementalCandidates(fromJS(data.tables));
-            updateLocalState(configId, storeProvisioning.INCREMENTAL_CANDIDATES_PATH, candidates);
+          if (queryId && data.tables && data.tables.length > 0) {
+            const tables = store.getSourceTables().map((table) => {
+              if (table.get('name') === data.tables[0].name && table.get('schema') === data.tables[0].schema) {
+                return fromJS(data.tables[0]);
+              }
+              return table;
+            });
+            updateLocalState(configId, storeProvisioning.SOURCE_TABLES_PATH, tables);
+          } else if (!queryId) {
+            updateLocalState(configId, storeProvisioning.SOURCE_TABLES_PATH, fromJS(data.tables));
+            if (store.isRowConfiguration() && data.tables) {
+              const candidates = getIncrementalCandidates(fromJS(data.tables));
+              updateLocalState(configId, storeProvisioning.INCREMENTAL_CANDIDATES_PATH, candidates);
+            }
           }
           updateLocalState(configId, storeProvisioning.LOADING_SOURCE_TABLES_PATH, false);
+          updateLocalState(configId, storeProvisioning.LOADING_COLUMNS_PATH, false);
         });
       }
     },

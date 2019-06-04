@@ -19,6 +19,7 @@ export const SOURCE_TABLES_PATH = ['sourceTables', 'data'];
 export const INCREMENTAL_CANDIDATES_PATH = ['sourceTables', 'incrementalCandidates'];
 export const SOURCE_TABLES_ERROR_PATH = ['sourceTables', 'error'];
 export const LOADING_SOURCE_TABLES_PATH = ['sourceTables', 'loading'];
+export const LOADING_COLUMNS_PATH = ['sourceTables', 'columnsLoading'];
 export const TESTING_CONNECTION_PATH = ['connection', 'testing'];
 export const CONNECTION_ERROR_PATH = ['connection', 'error'];
 export const CONNECTION_VALID_PATH = ['connection', 'valid'];
