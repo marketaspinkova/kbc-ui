@@ -546,14 +546,16 @@ export function createActions(componentId) {
             updateLocalState(configId, storeProvisioning.SOURCE_TABLES_ERROR_PATH, null);
           }
           if (queryId) {
-            const updated = data.tables[0];
-            const tables = store.getSourceTables().map((table) => {
-              if (table.get('name') === updated.name && table.get('schema') === updated.schema) {
-                return fromJS(updated);
-              }
-              return table;
-            });
-            updateLocalState(configId, storeProvisioning.SOURCE_TABLES_PATH, tables);
+            const tableWithColumns = data.tables.shift();
+            if (tableWithColumns) {
+              const tables = store.getSourceTables().map((table) => {
+                if (table.get('name') === tableWithColumns.name && table.get('schema') === tableWithColumns.schema) {
+                  return fromJS(tableWithColumns);
+                }
+                return table;
+              });
+              updateLocalState(configId, storeProvisioning.SOURCE_TABLES_PATH, tables);
+            }
           } else {
             updateLocalState(configId, storeProvisioning.SOURCE_TABLES_PATH, fromJS(data.tables));
             if (store.isRowConfiguration() && data.tables) {
